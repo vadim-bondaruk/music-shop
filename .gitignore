@@ -1,0 +1,8 @@
+*.suo
+PVT.Q1.2017.Shop/.vs/
+PVT.Q1.2017.Shop/packages/
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/bin/
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop.Tests/obj/
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop.Tests/bin/
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/obj/
+*.user
