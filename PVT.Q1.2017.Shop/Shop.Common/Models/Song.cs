@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Shop.Common.Models
 {
@@ -8,6 +9,16 @@ namespace Shop.Common.Models
 
         public string Name { get; set; }
 
+        public TimeSpan Duration { get; set; }
+
+        public byte[] TrackFile { get; set; }
+
+        public string Genre { get; set; }
+
+        public DateTime? Birthday { get; set; }
+
+        public byte[] Image { get; set; }
+
         public virtual Artist Artist { get; set; }
 
         public virtual Album Album { get; set; }
@@ -16,7 +27,6 @@ namespace Shop.Common.Models
 
         public virtual IEnumerable<Feedback> Feedbacks { get; set; }
 
-        public virtual IEnumerable<Vote> Votes { get; set;
-        }
+        public virtual IEnumerable<Vote> Votes { get; set; }
     }
 }

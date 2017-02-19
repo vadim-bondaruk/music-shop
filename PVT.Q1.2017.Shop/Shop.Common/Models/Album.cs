@@ -8,6 +8,8 @@ namespace Shop.Common.Models
 
         public string Name { get; set; }
 
+        public byte[] Cover { get; set; }
+
         public virtual Artist Artist { get; set; }
 
         public virtual IEnumerable<Song> Songs { get; set; }
