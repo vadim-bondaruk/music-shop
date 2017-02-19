@@ -15,7 +15,7 @@ namespace Shop.Common.Models
 
         public string Genre { get; set; }
 
-        public DateTime? Birthday { get; set; }
+        public int? Year { get; set; }
 
         public byte[] Image { get; set; }
 
