@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
+using Ship.Infrastructure.Models;
+
 namespace Shop.Common.Models
 {
-    public class AlbumPrice
+    public class AlbumPrice : BaseEntity
     {
-        public int Id { get; set; }
-
         public decimal Amount { get; set; }
 
         public Currency Currency { get; set; }

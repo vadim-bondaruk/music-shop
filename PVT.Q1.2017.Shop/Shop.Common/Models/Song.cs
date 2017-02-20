@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Ship.Infrastructure.Models;
+
 namespace Shop.Common.Models
 {
-    public class Song
+    public class Song : BaseEntity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
-        public TimeSpan Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
 
         public byte[] TrackFile { get; set; }
 

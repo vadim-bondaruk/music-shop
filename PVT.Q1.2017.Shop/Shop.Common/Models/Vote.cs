@@ -1,10 +1,10 @@
 ﻿
+using Ship.Infrastructure.Models;
+
 namespace Shop.Common.Models
 {
-    public class Vote
+    public class Vote : BaseEntity
     {
-        public int Id { get; set; }
-
         public Mark Mark { get; set; }
 
         public virtual User User { get; set; }

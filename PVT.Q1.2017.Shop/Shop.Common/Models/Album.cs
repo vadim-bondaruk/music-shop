@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
+using Ship.Infrastructure.Models;
+
 namespace Shop.Common.Models
 {
-    public class Album
+    public class Album : BaseEntity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public byte[] Cover { get; set; }
