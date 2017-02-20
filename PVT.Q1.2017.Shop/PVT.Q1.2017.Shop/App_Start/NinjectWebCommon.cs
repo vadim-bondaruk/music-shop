@@ -1,3 +1,7 @@
+using System.Web.Mvc;
+using Shop.BLL;
+using Shop.DAL;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(PVT.Q1._2017.Shop.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(PVT.Q1._2017.Shop.App_Start.NinjectWebCommon), "Stop")]
 
@@ -39,7 +43,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            var kernel = new StandardKernel(new BllDependenciesRegister(), new DalDepenciesRegister(),new WebDependeciesRegister());
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
@@ -60,7 +64,8 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
-        {
+        {     
+            DependencyResolver.SetResolver(new CustomDependecyResolver(kernel));
         }        
     }
 }

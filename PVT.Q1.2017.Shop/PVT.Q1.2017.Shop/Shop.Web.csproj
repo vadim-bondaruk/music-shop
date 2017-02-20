@@ -173,8 +173,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\CustomDependecyResolver.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="WebDependeciesRegister.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -207,11 +210,29 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
+      <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>
+      <Name>Shop.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.BLL\Shop.BLL.csproj">
+      <Project>{14cd3c31-4dca-4798-82d5-de66a5c72602}</Project>
+      <Name>Shop.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Common\Shop.Common.csproj">
+      <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
+      <Name>Shop.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.DAL\Shop.DAL.csproj">
+      <Project>{c30727da-8c05-4773-a9c9-b01c8e951fb4}</Project>
+      <Name>Shop.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
