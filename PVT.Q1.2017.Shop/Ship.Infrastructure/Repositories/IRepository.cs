@@ -1,38 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Ship.Infrastructure.Repositories
 {
-    public interface IRepository<TEntity, in TKey> where TEntity : class
+    public interface IRepository<TModel, TKey> where TModel : class
     {
         /// <summary>
-        /// Returns all items from the current repository.
+        /// Returns all models from the current repository.
         /// </summary>
-        /// <returns>All items from the current repository.</returns>
-        IEnumerable<TEntity> GetAll();
+        /// <returns>All models from the current repository.</returns>
+        IEnumerable<TModel> GetAll();
 
         /// <summary>
-        /// Tries to find an item by the specified <paramref name="key"/>.
+        /// Returns all models from the current repository which are satisfy the specified <paramref name="filter"/>.
         /// </summary>
-        /// <param name="key">An unique item identifier.</param>
-        /// <returns>An item from the repository or null in case if an item with such <paramref name="key"/> doesn't exist.</returns>
-        TEntity Find(TKey key);
+        /// <returns>All models from the current repository which are satisfy the specified <paramref name="filter"/>.</returns>
+        IEnumerable<TModel> GetAll(Expression filter);
 
         /// <summary>
-        /// Adds a new <paramref name="item"/> into the current repository.
+        /// Tries to find a model by the specified <paramref name="key"/>.
         /// </summary>
-        /// <param name="item">The item to add.</param>
-        void Add(TEntity item);
+        /// <param name="key">An unique model identifier.</param>
+        /// <returns>A model from the repository or null in case if a model with such <paramref name="key"/> doesn't exist.</returns>
+        TModel GetById(TKey key);
 
         /// <summary>
-        /// Update the specified <paramref name="item"/>.
+        /// Adds a new <paramref name="model"/> into the current repository.
         /// </summary>
-        /// <param name="item">The item to update.</param>
-        void Update(TEntity item);
+        /// <param name="model">A model to add.</param>
+        void Add(Action<TModel> model);
 
         /// <summary>
-        /// Deletes the <paramref name="item"/> from the current repository.
+        /// Update the specified <paramref name="model"/>.
         /// </summary>
-        /// <param name="item">The item to delete.</param>
-        void Delete(TEntity item);
+        /// <param name="model">A model to update.</param>
+        void Update(Action<TModel> model);
+
+        /// <summary>
+        /// Deletes the specified <paramref name="model"/> from the current repository.
+        /// </summary>
+        /// <param name="model">A model to delete.</param>
+        void Delete(Action<TModel> model);
+
+        /// <summary>
+        /// Deletes a model by the specified <paramref name="key"/> from the current repository.
+        /// </summary>
+        /// <param name="key">A model key to indentify a model in the current repository.</param>
+        void Delete(Action<TKey> key);
     }
 }
