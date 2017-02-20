@@ -7,6 +7,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            //dummy code
             return Content("Hello");
         }
     }

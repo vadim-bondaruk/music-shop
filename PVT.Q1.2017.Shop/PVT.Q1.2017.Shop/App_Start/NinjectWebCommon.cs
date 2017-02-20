@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using Ninject.Modules;
 using Shop.BLL;
 using Shop.DAL;
 
@@ -43,7 +44,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel(new BllDependenciesRegister(), new DalDepenciesRegister(),new WebDependeciesRegister());
+            var kernel = new StandardKernel();
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
@@ -65,7 +66,18 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {     
+            kernel.Load(GetModules());
             DependencyResolver.SetResolver(new CustomDependecyResolver(kernel));
-        }        
+        }
+
+        private static INinjectModule[] GetModules()
+        {
+            return new INinjectModule[]
+            {
+                new BllNinjectModule(),
+                new DalNinjectModule(),
+                new WebNinjectModule()
+            };
+        }
     }
 }

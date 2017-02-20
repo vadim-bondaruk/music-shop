@@ -1,11 +1,13 @@
 ﻿using Ninject.Modules;
 
-namespace Shop.DAL
+namespace Shop.BLL
 {
-    public class DalDepenciesRegister: NinjectModule
+    public class BllNinjectModule: NinjectModule
     {
         public override void Load()
         {
+            
+
         }
     }
 }
