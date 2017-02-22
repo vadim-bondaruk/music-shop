@@ -7,6 +7,31 @@ namespace Shop.BLL.Validators
 {
     public class TrackValidator : IValidator<Track>
     {
+        #region Fields
+
+        private readonly IValidator<Artist> _artistValidator;
+        private readonly IValidator<Album> _albumValidator;
+
+        #endregion //Fields
+
+        #region Constructors
+
+        public TrackValidator(IValidator<Artist> artistValidator, IValidator<Album> albumValidator)
+        {
+            if (artistValidator == null)
+            {
+                throw new ArgumentNullException(nameof(artistValidator));
+            }
+            if (albumValidator == null)
+            {
+                throw new ArgumentNullException(nameof(albumValidator));
+            }
+            _artistValidator = artistValidator;
+            _albumValidator = albumValidator;
+        }
+
+        #endregion //Constructors
+
         #region Public Methods
 
         public void Validate(Track track)
@@ -21,13 +46,11 @@ namespace Shop.BLL.Validators
                 throw new InvalidTrackException("Invalid track name specified.");
             }
 
-            ArtistValidator artistValidator = new ArtistValidator();
-            artistValidator.Validate(track.Artist);
+            _artistValidator.Validate(track.Artist);
 
             if (track.Album != null)
             {
-                AlbumValidator albumValidator = new AlbumValidator();
-                albumValidator.Validate(track.Album);
+                _albumValidator.Validate(track.Album);
             }
         }
 
