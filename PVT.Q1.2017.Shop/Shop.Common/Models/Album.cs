@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Shop.Infrastructure.Models;
 
 namespace Shop.Common.Models
@@ -8,6 +9,8 @@ namespace Shop.Common.Models
         public string Name { get; set; }
 
         public byte[] Cover { get; set; }
+
+        public DateTime RelaseDate { get; set; }
 
         public virtual Artist Artist { get; set; }
 
