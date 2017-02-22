@@ -14,3 +14,4 @@ PVT.Q1.2017.Shop/Shop.Common/bin
 PVT.Q1.2017.Shop/Shop.Common/obj
 PVT.Q1.2017.Shop/Shop.DAL/bin
 PVT.Q1.2017.Shop/Shop.DAL/obj
+*.Cache
