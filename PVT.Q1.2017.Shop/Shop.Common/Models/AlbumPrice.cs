@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-
-using Ship.Infrastructure.Models;
+using Shop.Infrastructure.Models;
 
 namespace Shop.Common.Models
 {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using Ship.Infrastructure.Models;
+using Shop.Infrastructure.Models;
 
 namespace Shop.Common.Models
 {
-    public class Song : BaseEntity
+    public class Track : BaseEntity
     {
         public string Name { get; set; }
 
@@ -23,7 +22,7 @@ namespace Shop.Common.Models
 
         public virtual Album Album { get; set; }
 
-        public virtual IEnumerable<SongPrice> SongPrices { get; set; }
+        public virtual IEnumerable<TrackPrice> TrackPrices { get; set; }
 
         public virtual IEnumerable<Feedback> Feedbacks { get; set; }
 

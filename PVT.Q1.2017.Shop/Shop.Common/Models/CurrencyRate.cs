@@ -1,4 +1,4 @@
-﻿using Ship.Infrastructure.Models;
+﻿using Shop.Infrastructure.Models;
 
 namespace Shop.Common.Models
 {

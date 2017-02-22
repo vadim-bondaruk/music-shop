@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-
-using Ship.Infrastructure.Models;
+using Shop.Infrastructure.Models;
 
 namespace Shop.Common.Models
 {
@@ -12,7 +11,7 @@ namespace Shop.Common.Models
 
         public virtual Artist Artist { get; set; }
 
-        public virtual IEnumerable<Song> Songs { get; set; }
+        public virtual IEnumerable<Track> Tracks { get; set; }
 
         public virtual IEnumerable<AlbumPrice> AlbumPrices { get; set; }
     }

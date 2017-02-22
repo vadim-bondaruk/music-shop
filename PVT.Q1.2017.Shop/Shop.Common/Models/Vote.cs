@@ -1,5 +1,5 @@
 ﻿
-using Ship.Infrastructure.Models;
+using Shop.Infrastructure.Models;
 
 namespace Shop.Common.Models
 {
@@ -9,6 +9,6 @@ namespace Shop.Common.Models
 
         public virtual User User { get; set; }
 
-        public virtual Song Song { get; set; }
+        public virtual Track Track { get; set; }
     }
 }

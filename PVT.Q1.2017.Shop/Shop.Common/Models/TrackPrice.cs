@@ -1,13 +1,13 @@
-﻿using Ship.Infrastructure.Models;
+﻿using Shop.Infrastructure.Models;
 
 namespace Shop.Common.Models
 {
-    public class SongPrice : BaseEntity
+    public class TrackPrice : BaseEntity
     {
         public decimal Amount { get; set; }
 
         public Currency Currency { get; set; }
 
-        public virtual Song Song { get; set; }
+        public virtual Track Track { get; set; }
     }
 }

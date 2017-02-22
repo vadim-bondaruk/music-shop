@@ -47,8 +47,8 @@
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Mark.cs" />
-    <Compile Include="Models\Song.cs" />
-    <Compile Include="Models\SongPrice.cs" />
+    <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\TrackPrice.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
