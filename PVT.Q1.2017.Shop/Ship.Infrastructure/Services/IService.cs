@@ -1,6 +1,6 @@
-﻿using Ship.Infrastructure.Models;
+﻿using Shop.Infrastructure.Models;
 
-namespace Ship.Infrastructure.Services
+namespace Shop.Infrastructure.Services
 {
     /// <summary>
     /// Base service contract (dummy)
