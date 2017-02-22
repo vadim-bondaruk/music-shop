@@ -14,8 +14,6 @@ namespace Shop.Common.Models
 
         public string Genre { get; set; }
 
-        public int? Year { get; set; }
-
         public byte[] Image { get; set; }
 
         public virtual Artist Artist { get; set; }
