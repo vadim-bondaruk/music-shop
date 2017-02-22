@@ -1,3 +1,8 @@
+using System.Web.Mvc;
+using Ninject.Modules;
+using Shop.BLL;
+using Shop.DAL;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(PVT.Q1._2017.Shop.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(PVT.Q1._2017.Shop.App_Start.NinjectWebCommon), "Stop")]
 
@@ -60,7 +65,19 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
+        {     
+            kernel.Load(GetModules());
+            DependencyResolver.SetResolver(new CustomDependecyResolver(kernel));
+        }
+
+        private static INinjectModule[] GetModules()
         {
-        }        
+            return new INinjectModule[]
+            {
+                new BllNinjectModule(),
+                new DalNinjectModule(),
+                new WebNinjectModule()
+            };
+        }
     }
 }
