@@ -46,6 +46,7 @@
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Mark.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\TrackPrice.cs" />

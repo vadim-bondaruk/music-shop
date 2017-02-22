@@ -41,7 +41,7 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the genre.
         /// </summary>
-        public string Genre { get; set; }
+        public Genre Genre { get; set; }
 
         /// <summary>
         /// Gets or sets the image.
