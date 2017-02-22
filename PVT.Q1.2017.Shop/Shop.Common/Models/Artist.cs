@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Artist.cs" company="">
-//   
+// <copyright file="Artist.cs" company="PVT Q1 2017">
+//   All rights reserved
 // </copyright>
 // <summary>
 //   Defines the Artist type.
@@ -11,8 +11,7 @@ namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
-
-    using Shop.Infrastructure.Models;
+    using Infrastructure.Models;
 
     /// <summary>
     /// The artist.
@@ -25,9 +24,14 @@ namespace Shop.Common.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the biography.
+        /// </summary>
+        public string Biography { get; set; }
+
+        /// <summary>
         /// Gets or sets the birthday.
         /// </summary>
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         /// <summary>
         /// Gets or sets the photo.
@@ -35,18 +39,13 @@ namespace Shop.Common.Models
         public byte[] Photo { get; set; }
 
         /// <summary>
-        /// Gets or sets the biography.
+        /// Gets or sets all tracks of the current artist.
         /// </summary>
-        public string Biography { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tracks.
-        /// </summary>
-        public virtual IEnumerable<Track> Tracks { get; set; }
+        public ICollection<Track> Tracks { get; set; }
 
         /// <summary>
         /// Gets or sets the albums.
         /// </summary>
-        public virtual IEnumerable<Album> Albums { get; set; }
+        public ICollection<Album> Albums { get; set; }
     }
 }
