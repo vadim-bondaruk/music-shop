@@ -1,39 +1,75 @@
-﻿using System;
-using Shop.BLL.Exceptions;
-using Shop.Common.Models;
-using Shop.Infrastructure.Validators;
-
-namespace Shop.BLL.Validators
+﻿namespace Shop.BLL.Validators
 {
+    using System;
+    using Common.Models;
+    using Exceptions;
+    using Infrastructure.Validators;
+
+    /// <summary>
+    /// The track validator.
+    /// </summary>
     public class TrackValidator : IValidator<Track>
     {
         #region Fields
 
+        /// <summary>
+        /// The artist validator.
+        /// </summary>
         private readonly IValidator<Artist> _artistValidator;
+
+        /// <summary>
+        /// The album validator.
+        /// </summary>
         private readonly IValidator<Album> _albumValidator;
 
         #endregion //Fields
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackValidator"/> class.
+        /// </summary>
+        /// <param name="artistValidator">
+        /// The artist validator.
+        /// </param>
+        /// <param name="albumValidator">
+        /// The album validator.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="artistValidator"/> or <paramref name="albumValidator"/> is null.
+        /// </exception>
         public TrackValidator(IValidator<Artist> artistValidator, IValidator<Album> albumValidator)
         {
             if (artistValidator == null)
             {
                 throw new ArgumentNullException(nameof(artistValidator));
             }
+
             if (albumValidator == null)
             {
                 throw new ArgumentNullException(nameof(albumValidator));
             }
-            _artistValidator = artistValidator;
-            _albumValidator = albumValidator;
+
+            this._artistValidator = artistValidator;
+            this._albumValidator = albumValidator;
         }
 
         #endregion //Constructors
 
         #region Public Methods
 
+        /// <summary>
+        /// Validates the specified <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track to validate.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="track"/> or artist or album is null.
+        /// </exception>
+        /// <exception cref="InvalidTrackException">
+        /// When the <paramref name="track"/> is invalid.
+        /// </exception>
         public void Validate(Track track)
         {
             if (track == null)
@@ -41,19 +77,24 @@ namespace Shop.BLL.Validators
                 throw new ArgumentNullException(nameof(track));
             }
 
-            if (!IsTrackNameValid(track.Name))
+            if (!this.IsTrackNameValid(track.Name))
             {
                 throw new InvalidTrackException("Invalid track name specified.");
             }
 
-            _artistValidator.Validate(track.Artist);
-
-            if (track.Album != null)
-            {
-                _albumValidator.Validate(track.Album);
-            }
+            this._artistValidator.Validate(track.Artist);
+            this._albumValidator.Validate(track.Album);
         }
 
+        /// <summary>
+        /// Deterines whether the <paramref name="track"/> is valid.
+        /// </summary>
+        /// <param name="track">
+        /// The track to verify.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if track is valid; otherwise <b>false</b>.
+        /// </returns>
         public bool IsValid(Track track)
         {
             if (track == null)
@@ -61,7 +102,7 @@ namespace Shop.BLL.Validators
                 return false;
             }
 
-            if (!IsTrackNameValid(track.Name))
+            if (!this.IsTrackNameValid(track.Name))
             {
                 return false;
             }
@@ -84,6 +125,15 @@ namespace Shop.BLL.Validators
             return true;
         }
 
+        /// <summary>
+        /// Determines whether the track name is valid.
+        /// </summary>
+        /// <param name="trackName">
+        /// The track name.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if track name is valid; otherwise <b>false</b>.
+        /// </returns>
         public bool IsTrackNameValid(string trackName)
         {
             return !string.IsNullOrWhiteSpace(trackName);

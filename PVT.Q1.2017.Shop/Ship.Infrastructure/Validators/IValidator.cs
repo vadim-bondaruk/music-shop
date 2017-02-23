@@ -1,11 +1,30 @@
-﻿using Shop.Infrastructure.Models;
-
-namespace Shop.Infrastructure.Validators
+﻿namespace Shop.Infrastructure.Validators
 {
-    public interface IValidator<in T> where T: BaseEntity
-    {
-        void Validate(T entity);
+    using Models;
 
-        bool IsValid(T entity);
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="T">
+    /// </typeparam>
+    public interface IValidator<in T> where T : BaseEntity
+    {
+        /// <summary>
+        /// Validates the specified <paramref name="model"/>
+        /// </summary>
+        /// <param name="model">
+        /// The model to validate.
+        /// </param>
+        void Validate(T model);
+
+        /// <summary>
+        /// Determines whether the specified <paramref name="model"/> is valid.
+        /// </summary>
+        /// <param name="model">
+        /// The model to validate.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the specified <paramref name="model"/> is valid; otherwise <b>false</b>.
+        /// </returns>
+        bool IsValid(T model);
     }
 }

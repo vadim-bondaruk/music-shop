@@ -14,6 +14,5 @@
         /// Soft deleted flag
         /// </summary>
         public bool IsDeleted { get; set; }
-        
     }
 }
