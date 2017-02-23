@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Ship.Infrastructure.Models;
+using Shop.Infrastructure.Models;
 
-namespace Ship.Infrastructure.Repositories
+namespace Shop.Infrastructure.Repositories
 {
     public interface IRepository<TEntity> where TEntity: BaseEntity, new()
     {
