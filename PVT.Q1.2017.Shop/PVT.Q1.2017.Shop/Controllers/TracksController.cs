@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TracksController.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="TracksController.cs" company="PVT Q1 2017">
+//   PVT Q1 2017
 // </copyright>
 // <summary>
 //   Defines the TracksController type.
@@ -26,12 +26,6 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </summary>
         private TrackRepository _trackRepository;
 
-        public ActionResult ArtistList()
-        {
-            return this.View(this._trackRepository.GetArtistList());
-        }
-
-
         /// <summary>
         /// </summary>
         /// <returns>
@@ -44,13 +38,22 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// <summary>
         /// </summary>
         /// <param name="artistId">
-        /// The artist id.
+        ///     The artist id.
         /// </param>
         /// <returns>
         /// </returns>
         public ActionResult AlbumList(int artistId)
         {
-            return this.View(this._trackRepository.GetAlbumList(id));
+            return this.View(this._trackRepository.GetAlbumList(artistId));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public ActionResult ArtistList()
+        {
+            return this.View(this._trackRepository.GetArtistList());
         }
 
         /// <summary>
@@ -58,6 +61,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// NotImplementedException
         /// </exception>
         public ActionResult TrackList()
         {
@@ -74,9 +78,19 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </param>
         /// <returns>
         /// </returns>
-        public ActionResult TrackList(int albumId, int artistId)
+        public ActionResult TrackList(int? albumId, int? artistId)
         {
-            return this.View(this._trackRepository.GetTrackList(artistId));
+            if (albumId == null && artistId != null)
+            {
+                return this.View(this._trackRepository.GetTrackList(null, artistId));
+            }
+
+            if (artistId == null && albumId != null)
+            {
+                return this.View(this._trackRepository.GetTrackList(albumId, null));
+            }
+
+            throw new Exception("No parameters!");
         }
 
         /// <summary>
