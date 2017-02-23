@@ -1,30 +1,34 @@
-﻿namespace Shop.BLL.Validators
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TrackValidator.cs" company="PurpleTeam">
+//   PurpleTeam
+// </copyright>
+// <summary>
+//   The track validator.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.BLL.Validators
 {
     using System;
-    using Common.Models;
-    using Exceptions;
-    using Infrastructure.Validators;
+
+    using Shop.BLL.Exceptions;
+    using Shop.Common.Models;
+    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The track validator.
     /// </summary>
     public class TrackValidator : IValidator<Track>
     {
-        #region Fields
-
-        /// <summary>
-        /// The artist validator.
-        /// </summary>
-        private readonly IValidator<Artist> _artistValidator;
-
         /// <summary>
         /// The album validator.
         /// </summary>
         private readonly IValidator<Album> _albumValidator;
 
-        #endregion //Fields
-
-        #region Constructors
+        /// <summary>
+        /// The artist validator.
+        /// </summary>
+        private readonly IValidator<Artist> _artistValidator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackValidator"/> class.
@@ -54,9 +58,58 @@
             this._albumValidator = albumValidator;
         }
 
-        #endregion //Constructors
+        /// <summary>
+        /// Determines whether the track name is valid.
+        /// </summary>
+        /// <param name="trackName">
+        /// The track name.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if track name is valid; otherwise <b>false</b>.
+        /// </returns>
+        public bool IsTrackNameValid(string trackName)
+        {
+            return !string.IsNullOrWhiteSpace(trackName);
+        }
 
-        #region Public Methods
+        /// <summary>
+        /// Deterines whether the <paramref name="track"/> is valid.
+        /// </summary>
+        /// <param name="track">
+        /// The track to verify.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if track is valid; otherwise <b>false</b>.
+        /// </returns>
+        public bool IsValid(Track track)
+        {
+            if (track == null)
+            {
+                return false;
+            }
+
+            if (!this.IsTrackNameValid(track.Name))
+            {
+                return false;
+            }
+
+            var artistValidator = new ArtistValidator();
+            if (!artistValidator.IsValid(track.Artist))
+            {
+                return false;
+            }
+
+            if (track.Album != null)
+            {
+                var albumValidator = new AlbumValidator();
+                if (!albumValidator.IsValid(track.Album))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// Validates the specified <paramref name="track"/>.
@@ -85,60 +138,5 @@
             this._artistValidator.Validate(track.Artist);
             this._albumValidator.Validate(track.Album);
         }
-
-        /// <summary>
-        /// Deterines whether the <paramref name="track"/> is valid.
-        /// </summary>
-        /// <param name="track">
-        /// The track to verify.
-        /// </param>
-        /// <returns>
-        /// <b>true</b> if track is valid; otherwise <b>false</b>.
-        /// </returns>
-        public bool IsValid(Track track)
-        {
-            if (track == null)
-            {
-                return false;
-            }
-
-            if (!this.IsTrackNameValid(track.Name))
-            {
-                return false;
-            }
-
-            ArtistValidator artistValidator = new ArtistValidator();
-            if (!artistValidator.IsValid(track.Artist))
-            {
-                return false;
-            }
-
-            if (track.Album != null)
-            {
-                AlbumValidator albumValidator = new AlbumValidator();
-                if (!albumValidator.IsValid(track.Album))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Determines whether the track name is valid.
-        /// </summary>
-        /// <param name="trackName">
-        /// The track name.
-        /// </param>
-        /// <returns>
-        /// <b>true</b> if track name is valid; otherwise <b>false</b>.
-        /// </returns>
-        public bool IsTrackNameValid(string trackName)
-        {
-            return !string.IsNullOrWhiteSpace(trackName);
-        }
-
-        #endregion //Public Methods
     }
 }

@@ -16,7 +16,7 @@ namespace Shop.Common.Models
     /// <summary>
     /// The track.
     /// </summary>
-    public class Track : BaseEntity
+    public class Track : BaseEntity, ITrack
     {
         /// <summary>
         /// Gets or sets the name.

@@ -1,4 +1,13 @@
-﻿namespace Shop.BLL.Exceptions
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="InvalidTrackException.cs" company="PurpleTeam">
+//   PurpleTeam
+// </copyright>
+// <summary>
+//   Defines the InvalidTrackException type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.BLL.Exceptions
 {
     using System;
     using System.Runtime.Serialization;
@@ -9,8 +18,6 @@
     [Serializable]
     public class InvalidTrackException : Exception
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
         /// </summary>
@@ -24,7 +31,8 @@
         /// <param name="message">
         /// The message.
         /// </param>
-        public InvalidTrackException(string message) : base(message)
+        public InvalidTrackException(string message)
+            : base(message)
         {
         }
 
@@ -37,7 +45,8 @@
         /// <param name="inner">
         /// The inner exception.
         /// </param>
-        public InvalidTrackException(string message, Exception inner) : base(message, inner)
+        public InvalidTrackException(string message, Exception inner)
+            : base(message, inner)
         {
         }
 
@@ -51,10 +60,9 @@
         /// The context.
         /// </param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected InvalidTrackException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected InvalidTrackException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
-
-        #endregion //Constructors
     }
 }

@@ -1,4 +1,13 @@
-﻿namespace Shop.BLL
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BllNinjectModule.cs" company="PurpleTeam">
+//   PurpleTeam
+// </copyright>
+// <summary>
+//   Cofiguration module.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.BLL
 {
     using Ninject.Modules;
 

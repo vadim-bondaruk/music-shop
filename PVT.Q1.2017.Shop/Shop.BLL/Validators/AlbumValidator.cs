@@ -1,24 +1,22 @@
-﻿namespace Shop.BLL.Validators
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AlbumValidator.cs" company="PurpleTeam">
+//   PurpleTeam
+// </copyright>
+// <summary>
+//   The album validator.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.BLL.Validators
 {
-    using Common.Models;
-    using Infrastructure.Validators;
+    using Shop.Common.Models;
+    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The album validator.
     /// </summary>
     public class AlbumValidator : IValidator<Album>
     {
-        /// <summary>
-        /// Validates the specified <paramref name="album"/>.
-        /// </summary>
-        /// <param name="album">
-        /// The album to validate.
-        /// </param>
-        public void Validate(Album album)
-        {
-            throw new System.NotImplementedException();
-        }
-
         /// <summary>
         /// Deterines whether the <paramref name="album"/> is valid.
         /// </summary>
@@ -29,6 +27,17 @@
         /// <b>true</b> if the <paramref name="album"/> is valid; otherwise <b>false</b>.
         /// </returns>
         public bool IsValid(Album album)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Validates the specified <paramref name="album"/>.
+        /// </summary>
+        /// <param name="album">
+        /// The album to validate.
+        /// </param>
+        public void Validate(Album album)
         {
             throw new System.NotImplementedException();
         }
