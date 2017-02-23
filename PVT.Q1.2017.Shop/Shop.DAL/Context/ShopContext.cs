@@ -1,7 +1,6 @@
 ﻿namespace Shop.DAL.Context
 {
     using System.Data.Entity;
-
     using Common.Models;
 
     /// <summary>
