@@ -16,9 +16,15 @@ namespace PVT.Q1._2017.Shop.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class NinjectWebCommon 
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
@@ -27,7 +33,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
         
         /// <summary>
@@ -35,7 +41,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// </summary>
         public static void Stop()
         {
-            bootstrapper.ShutDown();
+            Bootstrapper.ShutDown();
         }
         
         /// <summary>
@@ -70,6 +76,10 @@ namespace PVT.Q1._2017.Shop.App_Start
             DependencyResolver.SetResolver(new CustomDependecyResolver(kernel));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private static INinjectModule[] GetModules()
         {
             return new INinjectModule[]

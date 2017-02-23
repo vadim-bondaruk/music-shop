@@ -1,14 +1,20 @@
-﻿using System.Web.Mvc;
-
-namespace PVT.Q1._2017.Shop.Controllers
+﻿namespace PVT.Q1._2017.Shop.Controllers
 {
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class HomeController : Controller
     {
-        // GET: Home
+        /// <summary>
+        /// GET: Home
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
-            //dummy code
-            return Content("Hello");
+            ////dummy code
+            return this.Content("Hello");
         }
     }
 }

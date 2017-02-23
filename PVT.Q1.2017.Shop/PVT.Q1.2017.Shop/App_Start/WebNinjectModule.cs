@@ -1,13 +1,17 @@
-﻿using Ninject.Modules;
-
-namespace PVT.Q1._2017.Shop
+﻿namespace PVT.Q1._2017.Shop
 {
-    public class WebNinjectModule: NinjectModule
-    {
-        public override void Load()
-        {
-            
+    using Ninject.Modules;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class WebNinjectModule : NinjectModule
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void Load()
+        {            
         }
     }
 }
