@@ -1,4 +1,4 @@
-﻿namespace Ship.Infrastructure.Models
+﻿namespace Shop.Infrastructure.Models
 {
     /// <summary>
     /// Base class for entities
@@ -14,6 +14,5 @@
         /// Soft deleted flag
         /// </summary>
         public bool IsDeleted { get; set; }
-        
     }
 }
