@@ -21,6 +21,5 @@
         /// Code of Currency
         /// </summary>
         public int Code { get; set; }
-
     }
 }
