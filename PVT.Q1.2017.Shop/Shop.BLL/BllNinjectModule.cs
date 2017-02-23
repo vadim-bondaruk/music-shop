@@ -1,13 +1,17 @@
-﻿using Ninject.Modules;
-
-namespace Shop.BLL
+﻿namespace Shop.BLL
 {
-    public class BllNinjectModule: NinjectModule
-    {
-        public override void Load()
-        {
-            
+    using Ninject.Modules;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class BllNinjectModule : NinjectModule
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void Load()
+        {         
         }
     }
 }

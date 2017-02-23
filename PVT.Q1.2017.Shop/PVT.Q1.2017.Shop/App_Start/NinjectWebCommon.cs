@@ -16,28 +16,34 @@ namespace PVT.Q1._2017.Shop.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
-    public static class NinjectWebCommon 
+    /// <summary>
+    /// Base implementation that adds injection support
+    /// </summary>
+    public static class NinjectWebCommon
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        /// <summary>
+        /// A basic Bootstrapper that can be used to setup web applications
+        /// </summary>
+        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
         public static void Stop()
         {
-            bootstrapper.ShutDown();
+            Bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -65,11 +71,15 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
-        {     
+        {
             kernel.Load(GetModules());
             DependencyResolver.SetResolver(new CustomDependecyResolver(kernel));
         }
 
+        /// <summary>
+        /// Retrieves All ninject Modules
+        /// </summary>
+        /// <returns>Returns Ninject Modules from BLL, DAL and Web</returns>
         private static INinjectModule[] GetModules()
         {
             return new INinjectModule[]
