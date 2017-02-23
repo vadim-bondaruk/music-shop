@@ -6,8 +6,8 @@ namespace Ship.Infrastructure.Services
     /// Base service contract (dummy)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface IService<TEntity> where TEntity: BaseEntity, new()
+    public interface IService<TEntity> where TEntity : BaseEntity, new()
     {
-        
+
     }
 }
