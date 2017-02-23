@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace PVT.Q1._2017.Shop
+﻿namespace PVT.Q1._2017.Shop
 {
-    public class MvcApplication : System.Web.HttpApplication
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+
+    /// <summary>
+    /// Base class in an ASP.NET application
+    /// </summary>
+    public class MvcApplication : HttpApplication
     {
+        /// <summary>
+        /// Start application
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
