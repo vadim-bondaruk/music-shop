@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Currency.cs" company="">
-//   
+// <copyright file="Currency.cs" company="PVT Q1 2017">
+//   All rights reserved
 // </copyright>
 // <summary>
 //   Defines the Currency type.
@@ -15,23 +15,23 @@ namespace Shop.Common.Models
     public enum Currency
     {
         /// <summary>
-        /// The usd.
+        /// The USD.
         /// </summary>
-        USD = 840,
+        Usd = 840,
 
         /// <summary>
-        /// The eur.
+        /// The EUR.
         /// </summary>
-        EUR = 978,
+        Eur = 978,
 
         /// <summary>
-        /// The rub.
+        /// The Rub.
         /// </summary>
-        RUB = 810,
+        Rub = 810,
 
         /// <summary>
-        /// The byn.
+        /// The Byn.
         /// </summary>
-        BYN = 933
+        Byn = 933
     }
 }
