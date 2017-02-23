@@ -8,7 +8,7 @@
     using Ninject;
 
     /// <summary>
-    /// 
+    /// qq
     /// </summary>
     public class CustomDependecyResolver : IDependencyResolver
     {

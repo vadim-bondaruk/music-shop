@@ -6,7 +6,7 @@
     using Shop.Infrastructure.Models;
 
     /// <summary>
-    /// Main Repository
+    /// Main Repository 
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public interface IRepository<TEntity> where TEntity : BaseEntity, new()

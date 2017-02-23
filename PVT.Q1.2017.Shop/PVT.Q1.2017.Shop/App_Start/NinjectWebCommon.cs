@@ -17,7 +17,7 @@ namespace PVT.Q1._2017.Shop.App_Start
     using Ninject.Web.Common;
 
     /// <summary>
-    /// 
+    /// qq
     /// </summary>
     public static class NinjectWebCommon 
     {
