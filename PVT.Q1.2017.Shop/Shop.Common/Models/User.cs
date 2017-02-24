@@ -59,5 +59,10 @@
         /// 
         /// </summary>
         public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Role Role { get; set; }
     }
 }
