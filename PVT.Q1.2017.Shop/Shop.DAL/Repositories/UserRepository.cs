@@ -2,11 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
     using Ship.Infrastructure.Repositories;
     using Shop.DAL.Data;
-    using Shop.DAL.Entities;
+    using Common.Models;
 
     /// <summary>
     /// 

@@ -1,11 +1,8 @@
 ﻿namespace Shop.DAL.Data
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Shop.Common.Enums;
-    using Shop.DAL.Entities;
+    using Common.Models;
 
     /// <summary>
     /// Demo storage for entities of users

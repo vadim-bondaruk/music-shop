@@ -9,7 +9,6 @@
     /// </summary>
     public class User : BaseEntity
     {
-
         /// <summary>
         /// Users first name
         /// </summary>

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.BLL.Services
+﻿namespace Shop.BLL.Services
 {
-    class UserService
+    using Ship.Infrastructure.Services;
+    using Shop.Common.Models;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class UserService : IService<User>
     {
     }
 }

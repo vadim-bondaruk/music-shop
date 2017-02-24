@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
-    class Role:BaseEntity
+    using System.Collections.Generic;
+    using Ship.Infrastructure.Models;    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Role : BaseEntity
     {
         /// <summary>
         /// Name of the role
@@ -17,7 +17,5 @@ namespace Shop.Common.Models
         /// Collection of users in this role
         /// </summary>
         public ICollection<User> Users { get; set; }
-
-    
     }
 }
