@@ -1,15 +1,19 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TrackPrice.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="TrackPrice.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the TrackPrice type.
+//   The track price.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
+    #region
+
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
     /// The track price.

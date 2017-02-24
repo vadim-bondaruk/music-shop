@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Track.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="Track.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   The track.
@@ -9,20 +9,20 @@
 
 namespace Shop.Common.Models
 {
+    #region
+
     using System;
     using System.Collections.Generic;
-    using Infrastructure.Models;
+
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
     /// The track.
     /// </summary>
     public class Track : BaseEntity, ITrack
     {
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
         /// <summary>
         /// Gets or sets the album.
         /// </summary>
@@ -39,6 +39,11 @@ namespace Shop.Common.Models
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
+        /// Gets or sets all user feedbacks the current track.
+        /// </summary>
+        public ICollection<Feedback> Feedbacks { get; set; }
+
+        /// <summary>
         /// Gets or sets the genre.
         /// </summary>
         public Genre Genre { get; set; }
@@ -47,6 +52,11 @@ namespace Shop.Common.Models
         /// Gets or sets the image.
         /// </summary>
         public byte[] Image { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the track file.
@@ -62,10 +72,5 @@ namespace Shop.Common.Models
         /// Gets or sets all user votes for the current track.
         /// </summary>
         public ICollection<Vote> Votes { get; set; }
-
-        /// <summary>
-        /// Gets or sets all user feedbacks the current track.
-        /// </summary>
-        public ICollection<Feedback> Feedbacks { get; set; }
     }
 }

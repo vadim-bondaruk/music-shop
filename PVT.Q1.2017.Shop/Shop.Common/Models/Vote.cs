@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Vote.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="Vote.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   The user vote.
@@ -9,7 +9,11 @@
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
+    #region
+
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
     /// The user vote.

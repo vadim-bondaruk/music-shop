@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ITrack.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="ITrack.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   Defines the ITrack type.

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TrackRepository.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="TrackRepository.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   Defines the TrackRepository type.
@@ -92,7 +92,7 @@ namespace Shop.DAL.Repositories
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public object GetTrackList(int albumId, int artistId)
+        public object GetTrackList(int? albumId, int? artistId)
         {
             throw new NotImplementedException();
         }

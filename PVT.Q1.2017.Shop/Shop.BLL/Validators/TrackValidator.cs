@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TrackValidator.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="TrackValidator.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   The track validator.
@@ -9,11 +9,15 @@
 
 namespace Shop.BLL.Validators
 {
+    #region
+
     using System;
 
     using Shop.BLL.Exceptions;
     using Shop.Common.Models;
     using Shop.Infrastructure.Validators;
+
+    #endregion
 
     /// <summary>
     /// The track validator.
@@ -108,7 +112,9 @@ namespace Shop.BLL.Validators
                 }
             }
 
-            return true;
+            {
+                return true;
+            }
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HomeController.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="HomeController.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   Controller of Home page

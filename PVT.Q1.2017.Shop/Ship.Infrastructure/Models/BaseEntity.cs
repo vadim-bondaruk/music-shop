@@ -1,4 +1,13 @@
-﻿namespace Shop.Infrastructure.Models
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BaseEntity.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
+// </copyright>
+// <summary>
+//   Base class for entities
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.Infrastructure.Models
 {
     /// <summary>
     /// Base class for entities

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InvalidTrackException.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="InvalidTrackException.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   Defines the InvalidTrackException type.
@@ -9,9 +9,13 @@
 
 namespace Shop.BLL.Exceptions
 {
+    #region
+
     using System;
     using System.Runtime.Serialization;
     using System.Security.Permissions;
+
+    #endregion
 
     /// <summary>
     /// </summary>

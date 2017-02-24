@@ -1,15 +1,19 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CurrencyRate.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="CurrencyRate.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the CurrencyRate type.
+//   The currency rate.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
+    #region
+
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
     /// The currency rate.

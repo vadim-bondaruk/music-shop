@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BllNinjectModule.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="BllNinjectModule.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   Cofiguration module.
@@ -9,7 +9,11 @@
 
 namespace Shop.BLL
 {
+    #region
+
     using Ninject.Modules;
+
+    #endregion
 
     /// <summary>
     /// Cofiguration module.

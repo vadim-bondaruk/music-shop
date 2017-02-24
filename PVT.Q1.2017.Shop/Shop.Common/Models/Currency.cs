@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Currency.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="Currency.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the Currency type.
+//   The currency.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AlbumValidator.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="AlbumValidator.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   The album validator.
@@ -9,8 +9,12 @@
 
 namespace Shop.BLL.Validators
 {
+    #region
+
     using Shop.Common.Models;
     using Shop.Infrastructure.Validators;
+
+    #endregion
 
     /// <summary>
     /// The album validator.

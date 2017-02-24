@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ArtistValidator.cs" company="PurpleTeam">
-//   PurpleTeam
+// <copyright file="ArtistValidator.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   Defines the ArtistValidator type.
@@ -9,10 +9,14 @@
 
 namespace Shop.BLL.Validators
 {
+    #region
+
     using System;
 
     using Shop.Common.Models;
     using Shop.Infrastructure.Validators;
+
+    #endregion
 
     /// <summary>
     /// </summary>

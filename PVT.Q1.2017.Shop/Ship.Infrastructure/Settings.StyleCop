@@ -1,4 +1,17 @@
 <StyleCopSettings Version="105">
+  <Parsers>
+    <Parser ParserId="StyleCop.CSharp.CsParser">
+      <ParserSettings>
+        <CollectionProperty Name="GeneratedFileFilters">
+          <Value>\.g\.cs$</Value>
+          <Value>\.generated\.cs$</Value>
+          <Value>\.g\.i\.cs$</Value>
+          <Value>Ninject</Value>
+          <Value>TemporaryGeneratedFile_.*\.cs$</Value>
+        </CollectionProperty>
+      </ParserSettings>
+    </Parser>
+  </Parsers>
   <Analyzers>
     <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
       <Rules>
@@ -44,8 +57,8 @@
         </Rule>
       </Rules>
       <AnalyzerSettings>
-        <StringProperty Name="CompanyName">PurpleTeam</StringProperty>
-        <StringProperty Name="Copyright">PurpleTeam</StringProperty>
+        <StringProperty Name="CompanyName">PVT.Q1.2017</StringProperty>
+        <StringProperty Name="Copyright">PVT.Q1.2017</StringProperty>
       </AnalyzerSettings>
     </Analyzer>
   </Analyzers>

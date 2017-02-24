@@ -1,5 +1,18 @@
-﻿using System.Reflection;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
+// </copyright>
+// <summary>
+//   AssemblyInfo.cs
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+#region
+
+using System.Reflection;
 using System.Runtime.InteropServices;
+
+#endregion
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information

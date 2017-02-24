@@ -1,36 +1,39 @@
-﻿namespace Shop.DAL.Context
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ShopContext.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
+// </copyright>
+// <summary>
+//   Music shop Db
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.DAL.Context
 {
+    #region
+
     using System.Data.Entity;
 
-    using Common.Models;
+    using Shop.Common.Models;
+
+    #endregion
 
     /// <summary>
     /// Music shop Db
     /// </summary>
     public class ShopContext : DbContext
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ShopContext"/> class.
         /// </summary>
-        public ShopContext() : base("ShopConnection")
+        public ShopContext()
+            : base("ShopConnection")
         {
         }
 
-        #endregion //Constructors
-
-        #region Properties
-
         /// <summary>
-        /// Gets or sets the tracks.
+        /// Gets or sets the album prices.
         /// </summary>
-        public DbSet<Track> Tracks { get; set; }
-
-        /// <summary>
-        /// Gets or sets the artists.
-        /// </summary>
-        public DbSet<Artist> Artists { get; set; }
+        public DbSet<AlbumPrice> AlbumPrices { get; set; }
 
         /// <summary>
         /// Gets or sets the albums.
@@ -38,14 +41,9 @@
         public DbSet<Album> Albums { get; set; }
 
         /// <summary>
-        /// Gets or sets the track prices.
+        /// Gets or sets the artists.
         /// </summary>
-        public DbSet<TrackPrice> TrackPrices { get; set; }
-
-        /// <summary>
-        /// Gets or sets the album prices.
-        /// </summary>
-        public DbSet<AlbumPrice> AlbumPrices { get; set; }
+        public DbSet<Artist> Artists { get; set; }
 
         /// <summary>
         /// Gets or sets the currency rates.
@@ -58,15 +56,23 @@
         public DbSet<Feedback> Feedbacks { get; set; }
 
         /// <summary>
-        /// Gets or sets the votes.
-        /// </summary>
-        public DbSet<Vote> Votes { get; set; }
-
-        /// <summary>
         /// Gets or sets the genres.
         /// </summary>
         public DbSet<Genre> Genres { get; set; }
-        
-        #endregion //Properties
+
+        /// <summary>
+        /// Gets or sets the track prices.
+        /// </summary>
+        public DbSet<TrackPrice> TrackPrices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tracks.
+        /// </summary>
+        public DbSet<Track> Tracks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the votes.
+        /// </summary>
+        public DbSet<Vote> Votes { get; set; }
     }
 }
