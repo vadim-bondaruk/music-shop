@@ -9,7 +9,7 @@
     #endregion
 
     /// <summary>
-    /// Summary description for DataBaseTest
+    ///     Summary description for <see cref="DataBaseTest" />
     /// </summary>
     [TestClass]
     public class DataBaseTest
@@ -19,19 +19,19 @@
         private TestContext testContextInstance;
 
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
+        ///     Gets or sets the test context which provides information about and
+        ///     functionality for the current test run.
+        /// </summary>
         public TestContext TestContext
         {
             get
             {
-                return this.testContextInstance;
+                return testContextInstance;
             }
 
             set
             {
-                this.testContextInstance = value;
+                testContextInstance = value;
             }
         }
 
@@ -48,9 +48,10 @@
             }
         }
 
-        // You can use the following additional attributes as you write your tests:
-        // Use ClassInitialize to run code before running the first test in the class
         // [ClassInitialize()]
+        // Use ClassInitialize to run code before running the first test in the class
+
+        // You can use the following additional attributes as you write your tests:
         // public static void MyClassInitialize(TestContext testContext) { }
         // Use ClassCleanup to run code after all tests in a class have run
         // [ClassCleanup()]

@@ -35,7 +35,7 @@ namespace PVT.Q1._2017.Shop
         /// <param name="kernel">Kernel</param>
         public CustomDependencyResolver(IKernel kernel)
         {
-            this._kernel = kernel;
+            _kernel = kernel;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace PVT.Q1._2017.Shop
         /// <returns>The requested service or object</returns>
         public object GetService(Type serviceType)
         {
-            return this._kernel.Get(serviceType);
+            return _kernel.Get(serviceType);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace PVT.Q1._2017.Shop
         /// <returns>The requested services</returns>
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return this._kernel.GetAll(serviceType);
+            return _kernel.GetAll(serviceType);
         }
     }
 }

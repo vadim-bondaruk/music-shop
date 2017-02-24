@@ -26,7 +26,7 @@ namespace Shop.DAL.Migrations
         /// </summary>
         public Configuration()
         {
-            this.AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = false;
         }
 
         /// <summary>

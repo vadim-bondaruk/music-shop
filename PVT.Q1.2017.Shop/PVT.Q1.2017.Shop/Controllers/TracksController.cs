@@ -32,7 +32,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult AlbumList()
         {
-            return this.View(this._trackRepository.GetAlbumList());
+            return View(_trackRepository.GetAlbumList());
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult AlbumList(int artistId)
         {
-            return this.View(this._trackRepository.GetAlbumList(artistId));
+            return View(_trackRepository.GetAlbumList(artistId));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult ArtistList()
         {
-            return this.View(this._trackRepository.GetArtistList());
+            return View(_trackRepository.GetArtistList());
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </exception>
         public ActionResult TrackList()
         {
-            return this.View(this._trackRepository.GetTrackList());
+            return View(_trackRepository.GetTrackList());
         }
 
         /// <summary>
@@ -82,12 +82,12 @@ namespace PVT.Q1._2017.Shop.Controllers
         {
             if (albumId == null && artistId != null)
             {
-                return this.View(this._trackRepository.GetTrackList(null, artistId));
+                return View(_trackRepository.GetTrackList(null, artistId));
             }
 
             if (artistId == null && albumId != null)
             {
-                return this.View(this._trackRepository.GetTrackList(albumId, null));
+                return View(_trackRepository.GetTrackList(albumId, null));
             }
 
             throw new Exception("No parameters!");
@@ -102,7 +102,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         private ActionResult Details(int id)
         {
-            return this.View(this._trackRepository.GetTrack(id));
+            return View(_trackRepository.GetTrack(id));
         }
     }
 }

@@ -58,8 +58,8 @@ namespace Shop.BLL.Validators
                 throw new ArgumentNullException(nameof(albumValidator));
             }
 
-            this._artistValidator = artistValidator;
-            this._albumValidator = albumValidator;
+            _artistValidator = artistValidator;
+            _albumValidator = albumValidator;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Shop.BLL.Validators
                 return false;
             }
 
-            if (!this.IsTrackNameValid(track.Name))
+            if (!IsTrackNameValid(track.Name))
             {
                 return false;
             }
@@ -136,13 +136,13 @@ namespace Shop.BLL.Validators
                 throw new ArgumentNullException(nameof(track));
             }
 
-            if (!this.IsTrackNameValid(track.Name))
+            if (!IsTrackNameValid(track.Name))
             {
                 throw new InvalidTrackException("Invalid track name specified.");
             }
 
-            this._artistValidator.Validate(track.Artist);
-            this._albumValidator.Validate(track.Album);
+            _artistValidator.Validate(track.Artist);
+            _albumValidator.Validate(track.Album);
         }
     }
 }
