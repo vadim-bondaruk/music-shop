@@ -16,7 +16,7 @@ namespace Shop.Common.Models
     #endregion
 
     /// <summary>
-    /// The temporary user model.
+    ///     The temporary user model.
     /// </summary>
     public class User : BaseEntity
     {

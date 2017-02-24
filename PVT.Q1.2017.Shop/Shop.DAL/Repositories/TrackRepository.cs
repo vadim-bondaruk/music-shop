@@ -23,10 +23,9 @@ namespace Shop.DAL.Repositories
     {
         /// <summary>
         /// </summary>
+        /// <exception cref="System.NotImplementedException" />
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         public object GetAlbumList()
         {
             throw new NotImplementedException();
@@ -34,13 +33,10 @@ namespace Shop.DAL.Repositories
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
+        /// <param name="id">The id.</param>
+        /// <exception cref="System.NotImplementedException" />
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         public object GetAlbumList(int id)
         {
             throw new NotImplementedException();
@@ -48,10 +44,9 @@ namespace Shop.DAL.Repositories
 
         /// <summary>
         /// </summary>
+        /// <exception cref="System.NotImplementedException" />
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         public object GetArtistList()
         {
             throw new NotImplementedException();
@@ -59,9 +54,7 @@ namespace Shop.DAL.Repositories
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
+        /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
         public ITrack GetTrack(int id)
@@ -71,10 +64,9 @@ namespace Shop.DAL.Repositories
 
         /// <summary>
         /// </summary>
+        /// <exception cref="System.NotImplementedException" />
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         public object GetTrackList()
         {
             throw new NotImplementedException();
@@ -82,16 +74,11 @@ namespace Shop.DAL.Repositories
 
         /// <summary>
         /// </summary>
-        /// <param name="albumId">
-        /// The album id.
-        /// </param>
-        /// <param name="artistId">
-        /// The artist id.
-        /// </param>
+        /// <param name="albumId">The album id.</param>
+        /// <param name="artistId">The artist id.</param>
+        /// <exception cref="System.NotImplementedException" />
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         public object GetTrackList(int? albumId, int? artistId)
         {
             throw new NotImplementedException();

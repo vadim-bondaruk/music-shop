@@ -16,12 +16,12 @@ namespace PVT.Q1._2017.Shop
     #endregion
 
     /// <summary>
-    /// Defines bindings for application
+    ///     Defines bindings for application
     /// </summary>
     public class WebNinjectModule : NinjectModule
     {
         /// <summary>
-        /// Loads the module into the kernel.
+        ///     Loads the module into the kernel.
         /// </summary>
         public override void Load()
         {

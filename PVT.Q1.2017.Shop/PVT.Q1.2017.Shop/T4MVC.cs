@@ -25,7 +25,8 @@ using T4MVC;
 
 /// <summary>
 /// </summary>
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+[GeneratedCode("T4MVC", "2.0")]
+[DebuggerNonUserCode]
 public static class MVC
 {
     /// <summary>
@@ -43,7 +44,8 @@ namespace T4MVC
 {
     /// <summary>
     /// </summary>
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    [GeneratedCode("T4MVC", "2.0")]
+    [DebuggerNonUserCode]
     public class Dummy
     {
         /// <summary>
@@ -51,7 +53,8 @@ namespace T4MVC
         public static Dummy Instance = new Dummy();
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="Dummy"/> class from being created.
+        ///     Prevents a default instance of the <see cref="Dummy" /> class from
+        ///     being created.
         /// </summary>
         private Dummy()
         {
@@ -71,7 +74,8 @@ namespace Links
 
     /// <summary>
     /// </summary>
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    [GeneratedCode("T4MVC", "2.0")]
+    [DebuggerNonUserCode]
     public static class Scripts
     {
         /// <summary>
@@ -184,9 +188,7 @@ namespace Links
 
         /// <summary>
         /// </summary>
-        /// <param name="fileName">
-        /// The file name.
-        /// </param>
+        /// <param name="fileName">The file name.</param>
         /// <returns>
         /// </returns>
         public static string Url(string fileName)
@@ -197,7 +199,8 @@ namespace Links
 
     /// <summary>
     /// </summary>
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    [GeneratedCode("T4MVC", "2.0")]
+    [DebuggerNonUserCode]
     public static class Content
     {
         /// <summary>
@@ -233,9 +236,7 @@ namespace Links
 
         /// <summary>
         /// </summary>
-        /// <param name="fileName">
-        /// The file name.
-        /// </param>
+        /// <param name="fileName">The file name.</param>
         /// <returns>
         /// </returns>
         public static string Url(string fileName)
@@ -246,7 +247,8 @@ namespace Links
 
     /// <summary>
     /// </summary>
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    [GeneratedCode("T4MVC", "2.0")]
+    [DebuggerNonUserCode]
     public static class Bundles
     {
         /// <summary>
@@ -337,7 +339,8 @@ namespace Links
 
 /// <summary>
 /// </summary>
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+[GeneratedCode("T4MVC", "2.0")]
+[DebuggerNonUserCode]
 internal static class T4MVCHelpers
 {
     // Calling ProcessVirtualPath through delegate to allow it to be replaced for unit testing
@@ -365,9 +368,7 @@ internal static class T4MVCHelpers
     // return "http://localhost" + path + "?foo=bar";
     /// <summary>
     /// </summary>
-    /// <param name="virtualPath">
-    /// The virtual path.
-    /// </param>
+    /// <param name="virtualPath">The <see langword="virtual" /> path.</param>
     /// <returns>
     /// </returns>
     private static string ProcessVirtualPathDefault(string virtualPath)

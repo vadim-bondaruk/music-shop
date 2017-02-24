@@ -19,37 +19,37 @@ namespace Shop.Common.Models
     #endregion
 
     /// <summary>
-    /// The artist.
+    ///     The artist.
     /// </summary>
     public class Artist : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the albums.
+        ///     Gets or sets the albums.
         /// </summary>
         public ICollection<Album> Albums { get; set; }
 
         /// <summary>
-        /// Gets or sets the biography.
+        ///     Gets or sets the biography.
         /// </summary>
         public string Biography { get; set; }
 
         /// <summary>
-        /// Gets or sets the birthday.
+        ///     Gets or sets the birthday.
         /// </summary>
         public DateTime? Birthday { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the photo.
+        ///     Gets or sets the photo.
         /// </summary>
         public byte[] Photo { get; set; }
 
         /// <summary>
-        /// Gets or sets all tracks of the current artist.
+        ///     Gets or sets all tracks of the current artist.
         /// </summary>
         public ICollection<Track> Tracks { get; set; }
     }

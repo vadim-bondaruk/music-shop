@@ -16,12 +16,12 @@ namespace Shop.BLL
     #endregion
 
     /// <summary>
-    /// Cofiguration module.
+    ///     Cofiguration module.
     /// </summary>
     public class BllNinjectModule : NinjectModule
     {
         /// <summary>
-        /// Loads configuration settings.
+        ///     Loads configuration settings.
         /// </summary>
         public override void Load()
         {

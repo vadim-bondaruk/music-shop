@@ -16,20 +16,22 @@ namespace PVT.Q1._2017.Shop.Controllers
     #endregion
 
     /// <summary>
-    /// Controller of Home page
+    ///     Controller of Home page
     /// </summary>
     public class HomeController : Controller
     {
         // GET: Home
 
         /// <summary>
-        /// Default start page
+        ///     Default start page
         /// </summary>
-        /// <returns>View of index page</returns>
+        /// <returns>
+        ///     View of index page
+        /// </returns>
         public ActionResult Index()
         {
             ////dummy code
-            return Content("Hello");
+            return this.Content("Hello");
         }
     }
 }

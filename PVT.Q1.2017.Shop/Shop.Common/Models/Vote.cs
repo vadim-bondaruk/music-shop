@@ -16,22 +16,22 @@ namespace Shop.Common.Models
     #endregion
 
     /// <summary>
-    /// The user vote.
+    ///     The user vote.
     /// </summary>
     public class Vote : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the mark.
+        ///     Gets or sets the mark.
         /// </summary>
         public Mark Mark { get; set; }
 
         /// <summary>
-        /// Gets or sets the track.
+        ///     Gets or sets the track.
         /// </summary>
         public Track Track { get; set; }
 
         /// <summary>
-        /// Gets or sets the user.
+        ///     Gets or sets the user.
         /// </summary>
         public User User { get; set; }
     }

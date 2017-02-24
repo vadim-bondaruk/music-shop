@@ -23,13 +23,18 @@ namespace Shop.BLL.Validators
     public class ArtistValidator : IValidator<Artist>
     {
         /// <summary>
-        /// Deterines whether the <paramref name="artist"/> is valid.
+        ///     Deterines whether the <paramref name="artist" /> is valid.
         /// </summary>
-        /// <param name="artist">
-        /// The artist to verify.
-        /// </param>
+        /// <param name="artist">The artist to verify.</param>
         /// <returns>
-        /// <b>true</b> if the <paramref name="artist"/> is valid; otherwise <b>false</b>.
+        ///     <b>
+        ///         <see langword="true" />
+        ///     </b>
+        ///     if the <paramref name="artist" /> is valid; otherwise
+        ///     <b>
+        ///         <see langword="false" />
+        ///     </b>
+        ///     .
         /// </returns>
         public bool IsValid(Artist artist)
         {
@@ -37,11 +42,9 @@ namespace Shop.BLL.Validators
         }
 
         /// <summary>
-        /// Validates the specified <paramref name="artist"/>.
+        ///     Validates the specified <paramref name="artist" /> .
         /// </summary>
-        /// <param name="artist">
-        /// The artist to validate.
-        /// </param>
+        /// <param name="artist">The artist to validate.</param>
         public void Validate(Artist artist)
         {
             throw new NotImplementedException();

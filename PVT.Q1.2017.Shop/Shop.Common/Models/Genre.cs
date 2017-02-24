@@ -16,12 +16,12 @@ namespace Shop.Common.Models
     #endregion
 
     /// <summary>
-    /// The genre.
+    ///     The genre.
     /// </summary>
     public class Genre : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
     }

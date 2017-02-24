@@ -17,12 +17,12 @@ namespace PVT.Q1._2017.Shop
     #endregion
 
     /// <summary>
-    /// Global filters of route table
+    ///     Global filters of route table
     /// </summary>
     public class RouteConfig
     {
         /// <summary>
-        /// Set default routes
+        ///     Set default <paramref name="routes" />
         /// </summary>
         /// <param name="routes">Collection of routes</param>
         public static void RegisterRoutes(RouteCollection routes)

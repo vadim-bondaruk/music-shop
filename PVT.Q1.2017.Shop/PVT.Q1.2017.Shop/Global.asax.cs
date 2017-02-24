@@ -18,12 +18,12 @@ namespace PVT.Q1._2017.Shop
     #endregion
 
     /// <summary>
-    /// Base class in an ASP.NET application
+    ///     Base class in an ASP.NET application
     /// </summary>
     public class MvcApplication : HttpApplication
     {
         /// <summary>
-        /// Start application
+        ///     Start application
         /// </summary>
         protected void Application_Start()
         {

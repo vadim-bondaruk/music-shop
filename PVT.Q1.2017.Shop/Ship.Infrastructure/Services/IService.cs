@@ -16,7 +16,7 @@ namespace Shop.Infrastructure.Services
     #endregion
 
     /// <summary>
-    /// Base service contract (dummy)
+    ///     Base service contract (dummy)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public interface IService<TEntity>

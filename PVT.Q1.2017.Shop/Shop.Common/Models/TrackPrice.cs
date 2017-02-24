@@ -16,22 +16,22 @@ namespace Shop.Common.Models
     #endregion
 
     /// <summary>
-    /// The track price.
+    ///     The track price.
     /// </summary>
     public class TrackPrice : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the amount.
+        ///     Gets or sets the amount.
         /// </summary>
         public decimal Amount { get; set; }
 
         /// <summary>
-        /// Gets or sets the currency.
+        ///     Gets or sets the currency.
         /// </summary>
         public Currency Currency { get; set; }
 
         /// <summary>
-        /// Gets or sets the track.
+        ///     Gets or sets the track.
         /// </summary>
         public Track Track { get; set; }
     }

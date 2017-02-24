@@ -26,12 +26,12 @@
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
 
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
@@ -48,10 +48,10 @@
             }
         }
 
-        // [ClassInitialize()]
+        // You can use the following additional attributes as you write your tests:
         // Use ClassInitialize to run code before running the first test in the class
 
-        // You can use the following additional attributes as you write your tests:
+        // [ClassInitialize()]
         // public static void MyClassInitialize(TestContext testContext) { }
         // Use ClassCleanup to run code after all tests in a class have run
         // [ClassCleanup()]

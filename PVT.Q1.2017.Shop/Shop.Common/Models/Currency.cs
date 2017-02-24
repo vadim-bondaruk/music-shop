@@ -10,27 +10,27 @@
 namespace Shop.Common.Models
 {
     /// <summary>
-    /// The currency.
+    ///     The currency.
     /// </summary>
     public enum Currency
     {
         /// <summary>
-        /// The USD.
+        ///     The USD.
         /// </summary>
         Usd = 840,
 
         /// <summary>
-        /// The EUR.
+        ///     The EUR.
         /// </summary>
         Eur = 978,
 
         /// <summary>
-        /// The Rub.
+        ///     The Rub.
         /// </summary>
         Rub = 810,
 
         /// <summary>
-        /// The Byn.
+        ///     The Byn.
         /// </summary>
         Byn = 933
     }

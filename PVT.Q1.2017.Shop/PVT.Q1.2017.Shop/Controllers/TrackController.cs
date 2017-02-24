@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TracksController.cs" company="PVT.Q1.2017">
+// <copyright file="TrackController.cs" company="PVT.Q1.2017">
 //   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the TracksController type.
+//   Defines the TrackController type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ namespace PVT.Q1._2017.Shop.Controllers
 
     /// <summary>
     /// </summary>
-    public class TracksController : Controller
+    public class TrackController : Controller
     {
         /// <summary>
         /// </summary>
@@ -32,19 +32,17 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult AlbumList()
         {
-            return View(_trackRepository.GetAlbumList());
+            return this.View(this._trackRepository.GetAlbumList());
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="artistId">
-        ///     The artist id.
-        /// </param>
+        /// <param name="artistId">The artist id.</param>
         /// <returns>
         /// </returns>
         public ActionResult AlbumList(int artistId)
         {
-            return View(_trackRepository.GetAlbumList(artistId));
+            return this.View(this._trackRepository.GetAlbumList(artistId));
         }
 
         /// <summary>
@@ -53,41 +51,37 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult ArtistList()
         {
-            return View(_trackRepository.GetArtistList());
+            return this.View(this._trackRepository.GetArtistList());
         }
 
         /// <summary>
         /// </summary>
+        /// <exception cref="System.NotImplementedException">
+        ///     NotImplementedException
+        /// </exception>
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// NotImplementedException
-        /// </exception>
         public ActionResult TrackList()
         {
-            return View(_trackRepository.GetTrackList());
+            return this.View(this._trackRepository.GetTrackList());
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="albumId">
-        ///     The album id.
-        /// </param>
-        /// <param name="artistId">
-        ///     The artist id.
-        /// </param>
+        /// <param name="albumId">The album id.</param>
+        /// <param name="artistId">The artist id.</param>
         /// <returns>
         /// </returns>
         public ActionResult TrackList(int? albumId, int? artistId)
         {
             if (albumId == null && artistId != null)
             {
-                return View(_trackRepository.GetTrackList(null, artistId));
+                return this.View(this._trackRepository.GetTrackList(null, artistId));
             }
 
             if (artistId == null && albumId != null)
             {
-                return View(_trackRepository.GetTrackList(albumId, null));
+                return this.View(this._trackRepository.GetTrackList(albumId, null));
             }
 
             throw new Exception("No parameters!");
@@ -95,14 +89,12 @@ namespace PVT.Q1._2017.Shop.Controllers
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
+        /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
         private ActionResult Details(int id)
         {
-            return View(_trackRepository.GetTrack(id));
+            return this.View(this._trackRepository.GetTrack(id));
         }
     }
 }

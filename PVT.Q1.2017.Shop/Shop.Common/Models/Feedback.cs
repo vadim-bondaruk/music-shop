@@ -16,22 +16,26 @@ namespace Shop.Common.Models
     #endregion
 
     /// <summary>
-    /// The feedback.
+    ///     The feedback.
     /// </summary>
     public class Feedback : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the <see cref="User"/> comments.
+        ///     Gets or sets the <see cref="Shop.Common.Models.Feedback.User" />
+        ///     comments.
         /// </summary>
         public string Comments { get; set; }
 
         /// <summary>
-        /// Gets or sets the track for which the <see cref="User"/> have written the <see cref="Comments"/>.
+        ///     Gets or sets the track for which the
+        ///     <see cref="Shop.Common.Models.Feedback.User" /> have written the
+        ///     <see cref="Shop.Common.Models.Feedback.Comments" /> .
         /// </summary>
         public Track Track { get; set; }
 
         /// <summary>
-        /// Gets or sets the user who wrote the <see cref="Comments"/>.
+        ///     Gets or sets the user who wrote the
+        ///     <see cref="Shop.Common.Models.Feedback.Comments" /> .
         /// </summary>
         public User User { get; set; }
     }

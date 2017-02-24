@@ -22,18 +22,17 @@ namespace Shop.DAL.Migrations
     internal sealed class Configuration : DbMigrationsConfiguration<ShopContext>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Configuration"/> class.
+        ///     Initializes a new instance of the <see cref="Configuration" />
+        ///     class.
         /// </summary>
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            this.AutomaticMigrationsEnabled = false;
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
+        /// <param name="context">The context.</param>
         protected override void Seed(ShopContext context)
         {
             // This method will be called after migrating to the latest version.

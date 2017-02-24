@@ -16,22 +16,22 @@ namespace Shop.Common.Models
     #endregion
 
     /// <summary>
-    /// The album price.
+    ///     The album price.
     /// </summary>
     public class AlbumPrice : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the album.
+        ///     Gets or sets the album.
         /// </summary>
         public Album Album { get; set; }
 
         /// <summary>
-        /// Gets or sets the album cost amount.
+        ///     Gets or sets the album cost amount.
         /// </summary>
         public decimal Amount { get; set; }
 
         /// <summary>
-        /// Gets or sets the currency.
+        ///     Gets or sets the currency.
         /// </summary>
         public Currency Currency { get; set; }
     }
