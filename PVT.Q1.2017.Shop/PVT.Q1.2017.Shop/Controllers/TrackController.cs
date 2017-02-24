@@ -120,7 +120,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
-        private ActionResult Details(int id)
+        public ActionResult Details(int id)
         {
             using (var context = new ShopContext())
             {
