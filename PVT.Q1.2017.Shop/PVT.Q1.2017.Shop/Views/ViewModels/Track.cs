@@ -9,8 +9,6 @@
 
 namespace PVT.Q1._2017.Shop.ViewModels
 {
-    using global::Shop.Infrastructure.Models;
-
     /// <summary>
     /// </summary>
     public class Track
@@ -73,7 +71,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the image url.
+        ///     Gets the image url.
         /// </summary>
         public string ImageUrl
         {

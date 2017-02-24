@@ -21,7 +21,7 @@ namespace Shop.Common.Models
     /// <summary>
     ///     The track.
     /// </summary>
-    public class Track : BaseEntity, ITrack
+    public class Track : BaseEntity
     {
         /// <summary>
         ///     Gets or sets the album.
