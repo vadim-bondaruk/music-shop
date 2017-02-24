@@ -191,7 +191,10 @@
     </None>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Styles\trackList.css" />
+    <Content Include="Styles\AddToCartButton.css" />
+    <Content Include="Styles\ListSplitters.css" />
+    <Content Include="Styles\TrackDetails.css" />
+    <Content Include="Styles\TrackList.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -213,7 +216,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Track.cs" />
+    <Compile Include="Views\ViewModels\Track.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

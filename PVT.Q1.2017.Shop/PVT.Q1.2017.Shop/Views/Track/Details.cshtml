@@ -1,71 +1,69 @@
-﻿IEnumerable<PVT.Q1._2017.Shop.ViewModels.Track>
+﻿@model PVT.Q1._2017.Shop.ViewModels.Track
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Details</title>
-    </head>
-    <body>
-        <div id="trackInfo">
-            <div id="text-block">
-                <h1>Track details</h1>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Details</title>
+</head>
+<body>
+<div id="trackInfo">
+    <div id="text-block">
+        <h1>Track details</h1>
 
-                <ul class="detailsList">
-                    <li>
-                        <span class="titles">Artist:</span> <a href="https://www.google.by/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=" +@Model.Artist>@(@Model.Artist)</a>
-                    </li>
+        <ul class="detailsList">
+            <li>
+                <span class="titles">Artist:</span> <a href="https://www.google.by/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=" +@Model.Artist>@(Model.Artist)</a>
+            </li>
 
-                    <li>
-                        <span class="titles">Name:</span> <a href="#">@Model.Name</a>
-                    </li>
+            <li>
+                <span class="titles">Name:</span> <a href="#">@Model.</a>
+            </li>
 
-                    <li>
-                        <span class="titles">Album:</span> <a href="#">Unknown album</a>
-                    </li>
+            <li>
+                <span class="titles">Album:</span> <a href="#">Unknown album</a>
+            </li>
 
-                    <li>
-                        <span class="titles">Genre:</span> <a>@Model.Genre</a>
-                    </li>
+            <li>
+                <span class="titles">Genre:</span> <a>@Model.Genre</a>
+            </li>
 
-                    <li>
-                        <span class="titles">Release date:</span> @Model.ReleaseDate
-                    </li>
-                    <li>
-                        <span class="titles">Duration:</span> 04:15
-                    </li>
-                    <li>
-                        <span class="titles">Price:</span> 1.35 $
-                    </li>
-                </ul>
+            <li>
+                <span class="titles">Release date:</span> @Model.ReleaseDate
+            </li>
+            <li>
+                <span class="titles">Duration:</span> 04:15
+            </li>
+            <li>
+                <span class="titles">Price:</span> 1.35 $
+            </li>
+        </ul>
 
-                <img src=@Model.ImageUrl alt="album cover" id="trackImage" />
-                <div class="button-wrapper">
-                    <a href="#" class="a-btn">
-                        <span class="a-btn-slide-text">$1.35$</span>
-                        <img src="/img/cart.png" alt="cart" />
-                        <span class="a-btn-text">Add to cart</span>
-                        <span class="a-btn-icon-right">
-                            <span></span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-
+        <img src="@Model.ImageUrl" alt="album cover" id="trackImage"/>
+        <div class="button-wrapper">
+            <a href="#" class="a-btn">
+                <span class="a-btn-slide-text">$1.35$</span>
+                <img src="/img/cart.png" alt="cart"/>
+                <span class="a-btn-text">Add to cart</span>
+                <span class="a-btn-icon-right">
+                    <span></span>
+                </span>
+            </a>
         </div>
+    </div>
 
-    </body>
+</div>
+
+</body>
+
 </html>
 
-@section trackDetails{
-    <link href="/Styles/songDetails.css" rel="stylesheet" type="text/css" />
+@section TrackDetails{
+    <link href="/Styles/TrackDetails.css" rel="stylesheet" type="text/css"/>
 }
-
-@section addToCartButton{
-    <link href="/Styles/addToCartButton.css" rel="stylesheet" type="text/css" />
-}
-
-@section trackFieds{
-    <link href="/Styles/ListSplitters.css" rel="stylesheet" type="text/css" />
-}
+@section AddToCartButton{
+    <link href="/Styles/AddToCartButton.css" rel="stylesheet" type="text/css"/>
+}@section ListSplitters{
+     <link href="/Styles/ListSplitters.css" rel="stylesheet" type="text/css"/>
+ }

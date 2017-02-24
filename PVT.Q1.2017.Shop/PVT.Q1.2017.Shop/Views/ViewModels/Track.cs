@@ -29,7 +29,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the album.
+        ///     Gets the album.
         /// </summary>
         public string Album
         {
@@ -40,7 +40,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the artist.
+        ///     Gets the artist.
         /// </summary>
         public string Artist
         {
@@ -51,7 +51,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the genre.
+        ///     Gets the genre.
         /// </summary>
         public string Genre
         {
@@ -62,7 +62,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the id.
+        ///     Gets the id.
         /// </summary>
         public int Id
         {
@@ -73,7 +73,18 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the name.
+        /// Gets the image url.
+        /// </summary>
+        public string ImageUrl
+        {
+            get
+            {
+                return this._track.Year;
+            }
+        }
+
+        /// <summary>
+        ///     Gets the name.
         /// </summary>
         public string Name
         {
@@ -84,7 +95,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the release date.
+        ///     Gets the release date.
         /// </summary>
         public string ReleaseDate
         {
@@ -95,7 +106,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         }
 
         /// <summary>
-        /// Gets the year.
+        ///     Gets the year.
         /// </summary>
         public string Year
         {
