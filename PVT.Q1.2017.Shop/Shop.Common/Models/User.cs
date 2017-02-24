@@ -1,8 +1,8 @@
-﻿namespace Shop.DAL.Entities
+﻿namespace Shop.Common.Models
 {
     using System;
     using Ship.Infrastructure.Models;
-    using Common.Enums;
+    using Shop.Common.Enums;
 
     /// <summary>
     /// Basic user model
