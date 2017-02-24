@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\ShopContext.cs" />
+    <Compile Include="Context\UserConfiguration.cs" />
     <Compile Include="Context\UserContext.cs" />
     <Compile Include="DalNinjectModule.cs" />
     <Compile Include="Data\ListOfUsers.cs" />
