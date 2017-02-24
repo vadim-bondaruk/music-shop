@@ -191,6 +191,7 @@
     </None>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Styles\trackList.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -220,7 +221,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="T4MVC.tt.hooks.t4" />
-    <Content Include="Views\TracksList\TrackList.cshtml" />
+    <Content Include="Views\Track\List.cshtml" />
+    <Content Include="Views\Track\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -230,7 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Home\" />
-    <Folder Include="Views\TrackDetails\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
