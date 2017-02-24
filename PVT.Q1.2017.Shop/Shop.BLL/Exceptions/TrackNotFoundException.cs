@@ -5,32 +5,30 @@
     using System.Security.Permissions;
 
     /// <summary>
-    /// The invalid track exception.
     /// </summary>
-    [Serializable]
-    public class InvalidTrackException : Exception
+    public class TrackNotFoundException : Exception
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="TrackNotFoundException"/> class.
         /// </summary>
-        public InvalidTrackException()
+        public TrackNotFoundException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="TrackNotFoundException"/> class.
         /// </summary>
         /// <param name="message">
         /// The message.
         /// </param>
-        public InvalidTrackException(string message) : base(message)
+        public TrackNotFoundException(string message) : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="TrackNotFoundException"/> class.
         /// </summary>
         /// <param name="message">
         /// The message.
@@ -38,12 +36,12 @@
         /// <param name="inner">
         /// The inner exception.
         /// </param>
-        public InvalidTrackException(string message, Exception inner) : base(message, inner)
+        public TrackNotFoundException(string message, Exception inner) : base(message, inner)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="TrackNotFoundException"/> class.
         /// </summary>
         /// <param name="info">
         /// The info.
@@ -52,7 +50,7 @@
         /// The context.
         /// </param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected InvalidTrackException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected TrackNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

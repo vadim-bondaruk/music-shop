@@ -5,46 +5,15 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Expressions;
+    using Context;
     using Infrastructure.Models;
     using Infrastructure.Repositories;
 
     /// <summary>
     /// The models repository.
     /// </summary>
-    public class Repository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : BaseEntity, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
     {
-        #region Fields
-
-        /// <summary>
-        /// The Db context.
-        /// </summary>
-        private readonly DbContext _dbContext;
-
-        #endregion //Fields
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.
-        /// </summary>
-        /// <param name="dbContext">
-        /// The Db context.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// When <paramref name="dbContext"/> is null.
-        /// </exception>
-        public Repository(DbContext dbContext)
-        {
-            if (dbContext == null)
-            {
-                throw new ArgumentNullException(nameof(dbContext));
-            }
-
-            this._dbContext = dbContext;
-        }
-
-        #endregion //Constructors
-
         #region IRepository<TEntity> Members
 
         /// <summary>
@@ -58,8 +27,11 @@
         /// </returns>
         public TEntity GetById(int id)
         {
-            var currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.Find(id);
+            using (var dbContext = new ShopContext())
+            {
+                var currentTable = dbContext.Set<TEntity>();
+                return currentTable.Find(id);
+            }
         }
 
         /// <summary>
@@ -70,8 +42,11 @@
         /// </returns>
         public ICollection<TEntity> GetAll()
         {
-            var currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.ToList();
+            using (var dbContext = new ShopContext())
+            {
+                var currentTable = dbContext.Set<TEntity>();
+                return currentTable.ToList();
+            }
         }
 
         /// <summary>
@@ -81,8 +56,11 @@
         /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
         public ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
         {
-            var currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.Where(filter).ToList();
+            using (var dbContext = new ShopContext())
+            {
+                var currentTable = dbContext.Set<TEntity>();
+                return currentTable.Where(filter).ToList();
+            }
         }
 
         /// <summary>
@@ -98,24 +76,29 @@
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var currentTable = this._dbContext.Set<TEntity>();
-
-            if (model.Id > 0)
+            using (var dbContext = new ShopContext())
             {
-                var originalTrack = currentTable.Find(model.Id);
+                var currentTable = dbContext.Set<TEntity>();
 
-                // if the model exists in Db
-                if (originalTrack != null)
+                if (model.Id > 0)
                 {
-                    var entry = this._dbContext.Entry(originalTrack);
-                    entry.CurrentValues.SetValues(model);
-                    entry.State = EntityState.Modified;
-                    return;
+                    var originalTrack = currentTable.Find(model.Id);
+
+                    // if the model exists in Db
+                    if (originalTrack != null)
+                    {
+                        var entry = dbContext.Entry(originalTrack);
+                        entry.CurrentValues.SetValues(model);
+                        entry.State = EntityState.Modified;
+                        dbContext.SaveChanges();
+                        return;
+                    }
                 }
+
+                // if it is a new model
+                currentTable.Add(model);
+                dbContext.SaveChanges();
             }
-            
-            // if it is a new model
-            currentTable.Add(model);
         }
 
         /// <summary>
@@ -124,11 +107,15 @@
         /// <param name="id">The model key.</param>
         public void Delete(int id)
         {
-            var currentTable = this._dbContext.Set<TEntity>();
-            var model = currentTable.Find(id);
-            if (model != null)
+            using (var dbContext = new ShopContext())
             {
-                currentTable.Remove(model);
+                var currentTable = dbContext.Set<TEntity>();
+                var model = currentTable.Find(id);
+                if (model != null)
+                {
+                    currentTable.Remove(model);
+                    dbContext.SaveChanges();
+                }
             }
         }
 
@@ -140,40 +127,19 @@
         /// </param>
         public void Delete(TEntity model)
         {
-            if (model == null)
+            using (var dbContext = new ShopContext())
             {
-                throw new ArgumentNullException(nameof(model));
-            }
+                if (model == null)
+                {
+                    throw new ArgumentNullException(nameof(model));
+                }
 
-            var currentTable = this._dbContext.Set<TEntity>();
-            currentTable.Remove(model);
+                var currentTable = dbContext.Set<TEntity>();
+                currentTable.Remove(model);
+                dbContext.SaveChanges();
+            }
         }
 
         #endregion //IRepository<TEntity> Members
-
-        #region IDisposable Pattern
-
-        /// <summary>
-        /// Disposes resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Disposes resources in case if <paramref name="disposing"/> is <b>true</b>
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                this._dbContext?.Dispose();
-            }
-        }
-
-        #endregion //IDisposable Pattern
     }
 }

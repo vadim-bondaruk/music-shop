@@ -80,15 +80,9 @@ namespace PVT.Q1._2017.Shop.Tests
         public void AddModelTest()
         {
             string trackName = "Hello";
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
-
-                repository.AddOrUpdate(new Track { Name = trackName });
-                context.SaveChanges();
-
-                Assert.IsTrue(context.Tracks.Any(t => t.Name == trackName));
-            }
+            var repository = new Repository<Track>();
+            repository.AddOrUpdate(new Track { Name = trackName });
+            Assert.IsTrue(repository.GetAll(t => t.Name == trackName).Any());
         }
 
         [TestMethod]
@@ -98,17 +92,14 @@ namespace PVT.Q1._2017.Shop.Tests
             string track2Name = "Track 2";
             string track3Name = "Track 3";
 
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
+            var repository = new Repository<Track>();
 
-                repository.AddOrUpdate(new Track { Name = track1Name });
-                repository.AddOrUpdate(new Track { Name = track2Name });
-                repository.AddOrUpdate(new Track { Name = track3Name });
-                context.SaveChanges();
+            repository.AddOrUpdate(new Track { Name = track1Name });
+            repository.AddOrUpdate(new Track { Name = track2Name });
+            repository.AddOrUpdate(new Track { Name = track3Name });
 
-                Assert.IsTrue(repository.GetAll(t => t.Name.StartsWith("Track")).Count >= 3);
-            }
+            Assert.IsTrue(repository.GetAll(t => t.Name.StartsWith("Track")).Count >= 3);
+            
         }
 
         [TestMethod]
@@ -118,41 +109,32 @@ namespace PVT.Q1._2017.Shop.Tests
             string track2Name = "Track 2";
             string track3Name = "Track 3";
 
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
+            var repository = new Repository<Track>();
 
-                repository.AddOrUpdate(new Track { Name = track1Name });
-                repository.AddOrUpdate(new Track { Name = track2Name });
-                repository.AddOrUpdate(new Track { Name = track3Name });
-                context.SaveChanges();
+            repository.AddOrUpdate(new Track { Name = track1Name });
+            repository.AddOrUpdate(new Track { Name = track2Name });
+            repository.AddOrUpdate(new Track { Name = track3Name });
 
-                Assert.IsTrue(repository.GetAll().Count >= 3, repository.GetAll().Count.ToString());
-            }
+            Assert.IsTrue(repository.GetAll().Count >= 3, repository.GetAll().Count.ToString());
         }
 
         [TestMethod]
         public void UpdateModelTest()
         {
             string trackName = "Hello";
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
+            var repository = new Repository<Track>();
 
-                repository.AddOrUpdate(new Track { Name = trackName });
-                context.SaveChanges();
+            repository.AddOrUpdate(new Track { Name = trackName });
 
-                var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
-                Assert.IsNotNull(track);
+            var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
+            Assert.IsNotNull(track);
 
-                var duration = new TimeSpan(0, 2, 46);
-                track.Duration = duration;
+            var duration = new TimeSpan(0, 2, 46);
+            track.Duration = duration;
 
-                repository.AddOrUpdate(track);
-                context.SaveChanges();
+            repository.AddOrUpdate(track);
 
-                Assert.IsTrue(context.Tracks.Any(t => t.Duration == duration));
-            }
+            Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
         }
     }
 }
