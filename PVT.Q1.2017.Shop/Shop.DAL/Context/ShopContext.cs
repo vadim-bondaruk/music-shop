@@ -65,6 +65,11 @@
         /// Gets or sets the genres.
         /// </summary>
         public DbSet<Genre> Genres { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Carts
+        /// </summary>
+        public DbSet<Cart> Carts { get; set; }
         
         #endregion //Properties
     }

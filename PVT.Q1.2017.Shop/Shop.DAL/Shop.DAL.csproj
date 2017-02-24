@@ -58,16 +58,19 @@
     <Compile Include="DalNinjectModule.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CartRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
+      <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>
+      <Name>Shop.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shop.Common\Shop.Common.csproj">
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
