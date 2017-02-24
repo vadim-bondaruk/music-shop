@@ -1,0 +1,25 @@
+﻿@model IEnumerable<PVT.Q1._2017.Shop.ViewModels.Track>
+@{
+    ViewBag.Title = "Top200";
+}
+
+<h1 id="tl-title">Tracklist</h1>
+
+<div class="rounded">
+
+
+    @foreach (var track in Model)
+    {
+        <a href=/MusicChart/Details?songId=@track.Id id=@track.Id>
+            <p>
+                @track.Artist
+            </p>
+            <p>@track.Name</p>
+        </a>
+    }
+</div>
+
+@section roundedList
+{
+    <link href="/Styles/RoundedList.css" rel="stylesheet" type="text/css"/>
+}
