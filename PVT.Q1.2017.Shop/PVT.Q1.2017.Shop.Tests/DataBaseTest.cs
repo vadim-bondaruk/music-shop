@@ -2,7 +2,12 @@
 {
     #region
 
+    using System;
+    using System.Linq;
+
+    using global::Shop.Common.Models;
     using global::Shop.DAL.Context;
+    using global::Shop.DAL.Repositories;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -38,29 +43,104 @@
         /// <summary>
         /// </summary>
         [TestMethod]
+        public void AddModelTest()
+        {
+            var trackName = "Hello";
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Track>(context);
+
+                repository.AddOrUpdate(new Track { Name = trackName });
+                context.SaveChanges();
+
+                Assert.IsTrue(context.Tracks.Any(t => t.Name == trackName));
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        [TestMethod]
         public void CreateDataBaseTest()
         {
             using (var context = new ShopContext())
             {
-                if (context.Database.Exists()) context.Database.Delete();
+                if (context.Database.Exists())
+                {
+                    context.Database.Delete();
+                }
 
                 context.Database.Create();
             }
         }
 
-        // You can use the following additional attributes as you write your tests:
-        // Use ClassInitialize to run code before running the first test in the class
+        /// <summary>
+        /// </summary>
+        [TestMethod]
+        public void GetAllModelWithExpressionTest()
+        {
+            var track1Name = "Track 1";
+            var track2Name = "Track 2";
+            var track3Name = "Track 3";
 
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Track>(context);
+
+                repository.AddOrUpdate(new Track { Name = track1Name });
+                repository.AddOrUpdate(new Track { Name = track2Name });
+                repository.AddOrUpdate(new Track { Name = track3Name });
+                context.SaveChanges();
+
+                Assert.IsTrue(repository.GetAll(t => t.Name.StartsWith("Track")).Count >= 3);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        [TestMethod]
+        public void GetAllModelWithoutExpressionTest()
+        {
+            var track1Name = "Track 1";
+            var track2Name = "Track 2";
+            var track3Name = "Track 3";
+
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Track>(context);
+
+                repository.AddOrUpdate(new Track { Name = track1Name });
+                repository.AddOrUpdate(new Track { Name = track2Name });
+                repository.AddOrUpdate(new Track { Name = track3Name });
+                context.SaveChanges();
+
+                Assert.IsTrue(repository.GetAll().Count >= 3, repository.GetAll().Count.ToString());
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        [TestMethod]
+        public void UpdateModelTest()
+        {
+            var trackName = "Hello";
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Track>(context);
+
+                repository.AddOrUpdate(new Track { Name = trackName });
+                context.SaveChanges();
+
+                var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
+                Assert.IsNotNull(track);
+
+                var duration = new TimeSpan(0, 2, 46);
+                track.Duration = duration;
+
+                repository.AddOrUpdate(track);
+                context.SaveChanges();
+
+                Assert.IsTrue(context.Tracks.Any(t => t.Duration == duration));
+            }
+        }
     }
 }

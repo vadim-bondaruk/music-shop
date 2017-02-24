@@ -11,9 +11,10 @@ namespace PVT.Q1._2017.Shop.Controllers
 {
     #region
 
-    using System;
     using System.Web.Mvc;
 
+    using global::Shop.Common.Models;
+    using global::Shop.DAL.Context;
     using global::Shop.DAL.Repositories;
 
     #endregion
@@ -24,15 +25,15 @@ namespace PVT.Q1._2017.Shop.Controllers
     {
         /// <summary>
         /// </summary>
-        private TrackRepository _trackRepository;
-
-        /// <summary>
-        /// </summary>
         /// <returns>
         /// </returns>
         public ActionResult AlbumList()
         {
-            return this.View(this._trackRepository.GetAlbumList());
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Album>(context);
+                return this.View(repository.GetAll());
+            }
         }
 
         /// <summary>
@@ -42,7 +43,29 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult AlbumList(int artistId)
         {
-            return this.View(this._trackRepository.GetAlbumList(artistId));
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Album>(context);
+                return this.View(repository.GetAll(a => a.Artist.Id.Equals(artistId)));
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public ActionResult AlbumTracks(int id)
+        {
+            {
+                using (var context = new ShopContext())
+                {
+                    var repository = new Repository<Track>(context);
+                    return this.View(repository.GetAll(a => a.Album.Id.Equals(id)));
+                }
+            }
         }
 
         /// <summary>
@@ -51,7 +74,29 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult ArtistList()
         {
-            return this.View(this._trackRepository.GetArtistList());
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Artist>(context);
+                return this.View(repository.GetAll());
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public ActionResult ArtistTracks(int id)
+        {
+            {
+                using (var context = new ShopContext())
+                {
+                    var repository = new Repository<Track>(context);
+                    return this.View(repository.GetAll(a => a.Album.Id.Equals(id)));
+                }
+            }
         }
 
         /// <summary>
@@ -63,28 +108,11 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public ActionResult TrackList()
         {
-            return this.View(this._trackRepository.GetTrackList());
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="albumId">The album id.</param>
-        /// <param name="artistId">The artist id.</param>
-        /// <returns>
-        /// </returns>
-        public ActionResult TrackList(int? albumId, int? artistId)
-        {
-            if (albumId == null && artistId != null)
+            using (var context = new ShopContext())
             {
-                return this.View(this._trackRepository.GetTrackList(null, artistId));
+                var repository = new Repository<Track>(context);
+                return this.View(repository.GetAll());
             }
-
-            if (artistId == null && albumId != null)
-            {
-                return this.View(this._trackRepository.GetTrackList(albumId, null));
-            }
-
-            throw new Exception("No parameters!");
         }
 
         /// <summary>
@@ -94,7 +122,11 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         private ActionResult Details(int id)
         {
-            return this.View(this._trackRepository.GetTrack(id));
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Track>(context);
+                return this.View(repository.GetAll(t => t.Id.Equals(id)));
+            }
         }
     }
 }
