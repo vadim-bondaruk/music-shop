@@ -17,13 +17,13 @@ namespace PVT.Q1._2017.Shop.ViewModels
     {
         /// <summary>
         /// </summary>
-        private readonly ITrack _track;
+        private readonly Track _track;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="Track" /> class.
         /// </summary>
         /// <param name="track">The track.</param>
-        public Track(ITrack track)
+        public Track(Track track)
         {
             this._track = track;
         }
