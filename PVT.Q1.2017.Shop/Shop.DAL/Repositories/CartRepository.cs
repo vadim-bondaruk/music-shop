@@ -119,5 +119,65 @@
                 result.Remove(model);
             }
         }
+
+        /// <summary>
+        /// Add track to User's Cart
+        /// </summary>
+        /// <param name="cartId">User's Cart ID</param>
+        /// <param name="trackId">Added Track ID</param>
+        public void AddTrack(int cartId, int trackId)
+        {
+            var cart = this.GetById(cartId);
+            var track = this._dbContext.Set<Track>().Find(trackId);
+            if (track == null)
+            {
+                throw new Exception("Incorrect Track Id");
+            }
+            cart.Tracks.Add(track);
+            this.AddOrUpdate(cart);
+        }
+
+        /// <summary>
+        /// Add track list to User's Cart
+        /// </summary>
+        /// <param name="cartId">User's Cart ID</param>
+        /// <param name="trackIds">Added Tracks IDs</param>
+        public void AddTrack(int cartId, int[] trackIds)
+        {
+            foreach (var trackId in trackIds)
+            {
+                this.AddTrack(cartId, trackId);
+            }
+        }
+
+        /// <summary>
+        /// Remove track from User's Cart
+        /// </summary>
+        /// <param name="cartId">User's Cart ID</param>
+        /// <param name="trackId">Removed Track ID</param>
+        public void RemoveTrack(int cartId, int trackId)
+        {
+            var cart = this.GetById(cartId);
+            var track = this._dbContext.Set<Track>().Find(trackId);
+            if (track == null)
+            {
+                throw new Exception("Incorrect Track Id");
+            }
+            cart.Tracks.Remove(track);
+            this.AddOrUpdate(cart);
+        }
+
+        /// <summary>
+        /// Remove track list from User's Cart
+        /// </summary>
+        /// <param name="cartId">User's Cart ID</param>
+        /// <param name="trackId">Removed Tracks IDs</param>
+        public void RemoveTrack(int cartId, int[] trackIds)
+        {
+            foreach (var trackId in trackIds)
+            {
+                this.RemoveTrack(cartId, trackId);
+            }
+        }
     }
 }
