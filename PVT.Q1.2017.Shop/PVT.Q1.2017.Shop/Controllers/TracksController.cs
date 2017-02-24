@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TracksController.cs" company="PVT Q1 2017">
-//   PVT Q1 2017
+// <copyright file="TracksController.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   Defines the TracksController type.
