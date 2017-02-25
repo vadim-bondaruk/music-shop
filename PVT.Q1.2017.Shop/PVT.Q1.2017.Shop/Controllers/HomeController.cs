@@ -31,7 +31,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         public ActionResult Index()
         {
             ////dummy code
-            return this.Content("Hello");
+            return this.View("Index");
         }
     }
 }

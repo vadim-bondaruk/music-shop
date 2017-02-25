@@ -11,6 +11,8 @@ namespace PVT.Q1._2017.Shop
 {
     #region
 
+    using System.Threading;
+
     using Ninject.Modules;
 
     #endregion
@@ -25,6 +27,8 @@ namespace PVT.Q1._2017.Shop
         /// </summary>
         public override void Load()
         {
+            Thread.Sleep(1);
+
         }
     }
 }

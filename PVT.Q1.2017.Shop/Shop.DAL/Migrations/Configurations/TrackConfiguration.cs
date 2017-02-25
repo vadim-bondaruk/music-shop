@@ -17,9 +17,6 @@
             ToTable("tbTracks");
             HasKey(t => t.Id);
             Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            Property(t => t.Duration).IsOptional();
-            Property(t => t.Image).IsOptional();
-            Property(t => t.TrackFile).IsOptional();
         }
     }
 }

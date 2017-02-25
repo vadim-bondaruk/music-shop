@@ -216,7 +216,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewModels\Track.cs" />
+    <Compile Include="Models\AlbumViewModel.cs" />
+    <Compile Include="Models\TrackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -226,6 +227,7 @@
     <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="Views\Track\List.cshtml" />
     <Content Include="Views\Track\Details.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -233,9 +235,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Home\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

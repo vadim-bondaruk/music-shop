@@ -62,6 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201702252327541_New.cs" />
+    <Compile Include="Migrations\201702252327541_New.Designer.cs">
+      <DependentUpon>201702252327541_New.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\GenreConfiguration.cs" />
     <Compile Include="Migrations\Configurations\VoteConfiguration.cs" />
@@ -88,6 +92,11 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702252327541_New.resx">
+      <DependentUpon>201702252327541_New.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
