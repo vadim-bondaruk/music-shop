@@ -1,28 +1,30 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Genre.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   The genre.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿// // --------------------------------------------------------------------------------------------------------------------
+// // <copyright file="Genre.cs" company="PVT Q1 2017">
+// //   All rights reserved
+// // </copyright>
+// // <summary>
+// //   Defines the Genre type.
+// // </summary>
+// // --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.Common.Models
 {
-    #region
-
-    using Shop.Infrastructure.Models;
-
-    #endregion
+    using System.Collections.Generic;
+    using Infrastructure.Models;
 
     /// <summary>
-    ///     The genre.
+    /// The genre.
     /// </summary>
     public class Genre : BaseEntity
     {
         /// <summary>
-        ///     Gets or sets the name.
+        /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tracks.
+        /// </summary>
+        public ICollection<Track> Tracks { get; set; }
     }
 }

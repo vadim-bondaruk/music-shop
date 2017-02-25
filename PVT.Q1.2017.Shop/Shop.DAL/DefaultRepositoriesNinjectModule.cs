@@ -20,13 +20,6 @@
         {
             Bind<DbContext>().To<ShopContext>();
 
-            Bind<IRepository<Track>>().To<Repository<Track>>();
-            Bind<IRepository<Artist>>().To<Repository<Artist>>();
-            Bind<IRepository<Album>>().To<Repository<Album>>();
-            Bind<IRepository<Feedback>>().To<Repository<Feedback>>();
-            Bind<IRepository<Vote>>().To<Repository<Vote>>();
-            Bind<IRepository<Genre>>().To<Repository<Genre>>();
-
             this.ConfigureRepositoryFactory();
         }
 

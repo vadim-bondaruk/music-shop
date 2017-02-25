@@ -101,7 +101,7 @@
         }
 
         /// <summary>
-        /// Deterines whether the <paramref name="track"/> is valid.
+        /// Determines whether the <paramref name="track"/> is valid.
         /// </summary>
         /// <param name="track">
         /// The track to verify.

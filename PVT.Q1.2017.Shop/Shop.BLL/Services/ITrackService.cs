@@ -30,5 +30,13 @@
         /// All tracks with the specified <paramref name="genre"/>.
         /// </returns>
         ICollection<Track> GetTracksByGenre(Genre genre);
+
+        /// <summary>
+        /// Returns all registered tracks.
+        /// </summary>
+        /// <returns>
+        /// All registered tracks.
+        /// </returns>
+        ICollection<Track> GetAllRegisteredTracks();
     }
 }
