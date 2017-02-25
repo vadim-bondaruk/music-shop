@@ -9,9 +9,9 @@
     using Repositories;
 
     /// <summary>
-    /// The DAL bindings configuration
+    /// The default repositories bindings configuration
     /// </summary>
-    public class DalNinjectModule : NinjectModule
+    public class DefaultRepositoriesNinjectModule : NinjectModule
     {
         /// <summary>
         /// Loads the module into the kernel.
@@ -33,7 +33,7 @@
         /// <summary>
         /// Configures the repository factory.
         /// </summary>
-        private void ConfigureRepositoryFactory()
+        protected virtual void ConfigureRepositoryFactory()
         {
             Bind<IDisposableRepository<Track>>().To<Repository<Track>>();
             Bind<IDisposableRepository<Artist>>().To<Repository<Artist>>();

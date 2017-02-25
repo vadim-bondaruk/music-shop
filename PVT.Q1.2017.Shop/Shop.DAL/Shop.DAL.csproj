@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IRepositoryFactory.cs" />
     <Compile Include="Migrations\201702251050405_Initial.cs" />
     <Compile Include="Migrations\201702251050405_Initial.Designer.cs">
       <DependentUpon>201702251050405_Initial.cs</DependentUpon>
@@ -79,7 +78,7 @@
     <Compile Include="Migrations\Configurations\AlbumConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackConfiguration.cs" />
     <Compile Include="Context\ShopContext.cs" />
-    <Compile Include="DalNinjectModule.cs" />
+    <Compile Include="DefaultRepositoriesNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Repository.cs" />
   </ItemGroup>

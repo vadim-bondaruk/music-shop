@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
+using Shop.BLL;
 using Shop.Common.Models;
 using Shop.DAL;
 using Shop.DAL.Context;
@@ -24,7 +25,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
         public DataBaseTest()
         {
-            this._kernel = new StandardKernel(new DalNinjectModule());
+            this._kernel = new StandardKernel(new DefaultServicesNinjectModule());
         }
 
         private TestContext testContextInstance;
@@ -94,7 +95,7 @@ namespace PVT.Q1._2017.Shop.Tests
             string trackName = "Hello";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.CreateRepository<Track>())
             {
                 repository.AddOrUpdate(new Track { Name = trackName });
                 repository.SaveChanges();
@@ -111,7 +112,7 @@ namespace PVT.Q1._2017.Shop.Tests
             string artist3Name = "Artist 3";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateArtistRepository())
+            using (var repository = repositoryFactory.CreateRepository<Artist>())
             {
                 repository.AddOrUpdate(new Artist { Name = artist1Name });
                 repository.AddOrUpdate(new Artist { Name = artist2Name });
@@ -130,7 +131,7 @@ namespace PVT.Q1._2017.Shop.Tests
             string album3Name = "Album 3";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateAlbumRepository())
+            using (var repository = repositoryFactory.CreateRepository<Album>())
             {
                 repository.AddOrUpdate(new Album { Name = album1Name });
                 repository.AddOrUpdate(new Album { Name = album2Name });
