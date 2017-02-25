@@ -5,15 +5,51 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Expressions;
-    using Context;
     using Infrastructure.Models;
     using Infrastructure.Repositories;
 
     /// <summary>
     /// The models repository.
     /// </summary>
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
+    public class Repository<TEntity> : IDisposableRepository<TEntity> where TEntity : BaseEntity, new()
     {
+        #region Fields
+
+        /// <summary>
+        /// The Db context.
+        /// </summary>
+        private readonly DbContext _dbContext;
+
+        /// <summary>
+        /// Indicates whether the repository state was changed.
+        /// </summary>
+        private bool _stateChanged;
+
+        #endregion //Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.
+        /// </summary>
+        /// <param name="dbContext">
+        /// The Db context.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="dbContext"/> is null.
+        /// </exception>
+        public Repository(DbContext dbContext)
+        {
+            if (dbContext == null)
+            {
+                throw new ArgumentNullException(nameof(dbContext));
+            }
+
+            this._dbContext = dbContext;
+        }
+
+        #endregion //Constructors
+
         #region IRepository<TEntity> Members
 
         /// <summary>
@@ -27,11 +63,8 @@
         /// </returns>
         public TEntity GetById(int id)
         {
-            using (var dbContext = new ShopContext())
-            {
-                var currentTable = dbContext.Set<TEntity>();
-                return currentTable.Find(id);
-            }
+            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
+            return currentTable.FirstOrDefault(x => x.Id == id);
         }
 
         /// <summary>
@@ -42,11 +75,8 @@
         /// </returns>
         public ICollection<TEntity> GetAll()
         {
-            using (var dbContext = new ShopContext())
-            {
-                var currentTable = dbContext.Set<TEntity>();
-                return currentTable.ToList();
-            }
+            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
+            return currentTable.ToList();
         }
 
         /// <summary>
@@ -56,11 +86,8 @@
         /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
         public ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
         {
-            using (var dbContext = new ShopContext())
-            {
-                var currentTable = dbContext.Set<TEntity>();
-                return currentTable.Where(filter).ToList();
-            }
+            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
+            return currentTable.Where(filter).ToList();
         }
 
         /// <summary>
@@ -76,28 +103,19 @@
                 throw new ArgumentNullException(nameof(model));
             }
 
-            using (var dbContext = new ShopContext())
+            // if the model exists in Db then we have to update it
+            var originalTrack = this.GetById(model.Id);
+            if (originalTrack != null)
             {
-                var currentTable = dbContext.Set<TEntity>();
-
-                if (model.Id > 0)
-                {
-                    var originalTrack = currentTable.Find(model.Id);
-
-                    // if the model exists in Db
-                    if (originalTrack != null)
-                    {
-                        var entry = dbContext.Entry(originalTrack);
-                        entry.CurrentValues.SetValues(model);
-                        entry.State = EntityState.Modified;
-                        dbContext.SaveChanges();
-                        return;
-                    }
-                }
-
-                // if it is a new model
-                currentTable.Add(model);
-                dbContext.SaveChanges();
+                var entry = this._dbContext.Entry(originalTrack);
+                entry.CurrentValues.SetValues(model);
+                this._stateChanged = true;
+            }
+            else
+            {
+                // if it is a new model then we have to insert it
+                this._dbContext.Set<TEntity>().Add(model);
+                this._stateChanged = true;
             }
         }
 
@@ -107,15 +125,10 @@
         /// <param name="id">The model key.</param>
         public void Delete(int id)
         {
-            using (var dbContext = new ShopContext())
+            var model = this.GetById(id);
+            if (model != null)
             {
-                var currentTable = dbContext.Set<TEntity>();
-                var model = currentTable.Find(id);
-                if (model != null)
-                {
-                    currentTable.Remove(model);
-                    dbContext.SaveChanges();
-                }
+                Delete(model);
             }
         }
 
@@ -127,19 +140,59 @@
         /// </param>
         public void Delete(TEntity model)
         {
-            using (var dbContext = new ShopContext())
+            if (model == null)
             {
-                if (model == null)
-                {
-                    throw new ArgumentNullException(nameof(model));
-                }
-
-                var currentTable = dbContext.Set<TEntity>();
-                currentTable.Remove(model);
-                dbContext.SaveChanges();
+                throw new ArgumentNullException(nameof(model));
             }
+
+            this._dbContext.Set<TEntity>().Remove(model);
+            this._stateChanged = true;
         }
 
         #endregion //IRepository<TEntity> Members
+
+        #region IDisposableRepository Members
+
+        /// <summary>
+        /// Saves all changes.
+        /// </summary>
+        public void SaveChanges()
+        {
+            if (this._stateChanged)
+            {
+                this._dbContext.SaveChanges();
+                this._stateChanged = false;
+            }
+        }
+
+        #endregion //IDisposableRepository Members
+
+        #region IDisposable Pattern
+
+        /// <summary>
+        /// Disposes resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Disposes resources in case if <paramref name="disposing"/> is <b>true</b>
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            // to ensure that the changes are not lost
+            this.SaveChanges();
+
+            if (disposing)
+            {
+                this._dbContext?.Dispose();
+            }
+        }
+
+        #endregion //IDisposable Pattern
     }
 }

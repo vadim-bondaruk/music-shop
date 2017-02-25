@@ -59,6 +59,20 @@
         #region Public Methods
 
         /// <summary>
+        /// Determines whether the track name is valid.
+        /// </summary>
+        /// <param name="trackName">
+        /// The track name.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if track name is valid; otherwise <b>false</b>.
+        /// </returns>
+        public static bool IsTrackNameValid(string trackName)
+        {
+            return !string.IsNullOrWhiteSpace(trackName);
+        }
+
+        /// <summary>
         /// Validates the specified <paramref name="track"/>.
         /// </summary>
         /// <param name="track">
@@ -77,7 +91,7 @@
                 throw new ArgumentNullException(nameof(track));
             }
 
-            if (!this.IsTrackNameValid(track.Name))
+            if (!IsTrackNameValid(track.Name))
             {
                 throw new InvalidTrackException("Invalid track name specified.");
             }
@@ -102,7 +116,7 @@
                 return false;
             }
 
-            if (!this.IsTrackNameValid(track.Name))
+            if (!IsTrackNameValid(track.Name))
             {
                 return false;
             }
@@ -123,20 +137,6 @@
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Determines whether the track name is valid.
-        /// </summary>
-        /// <param name="trackName">
-        /// The track name.
-        /// </param>
-        /// <returns>
-        /// <b>true</b> if track name is valid; otherwise <b>false</b>.
-        /// </returns>
-        public bool IsTrackNameValid(string trackName)
-        {
-            return !string.IsNullOrWhiteSpace(trackName);
         }
 
         #endregion //Public Methods

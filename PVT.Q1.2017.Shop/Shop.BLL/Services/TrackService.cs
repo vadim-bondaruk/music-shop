@@ -1,83 +1,91 @@
 ﻿namespace Shop.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
     using Common.Models;
     using Exceptions;
     using Infrastructure.Repositories;
     using Infrastructure.Validators;
+    using Validators;
 
     /// <summary>
     /// The track service.
     /// </summary>
-    public class TrackService
+    public class TrackService : Service<Track>, ITrackService
     {
-        #region Fields
-
-        /// <summary>
-        /// The tracks repository.
-        /// </summary>
-        private readonly IRepository<Track> _repository;
-
-        #endregion //Fields
-
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackService"/> class.
         /// </summary>
-        /// <param name="repository">
-        /// The repository with tracks.
+        /// <param name="repositoryFactory">
+        /// The repository factory.
         /// </param>
-        public TrackService(IRepository<Track> repository)
+        /// <param name="validator">
+        /// The track validator.
+        /// </param>
+        public TrackService(IRepositoryFactory repositoryFactory, IValidator<Track> validator) : base(repositoryFactory, validator)
         {
-            this._repository = repository;
         }
 
         #endregion //Constructors
 
-        #region Properties
+        #region Public Methods
 
         /// <summary>
-        /// Gets or sets the track validator.
+        /// Returns all tracks with the specified <paramref name="name"/>.
         /// </summary>
-        public IValidator<Track> TrackValidator { get; set; }
-
-        #endregion //Properties
-
-        /// <summary>
-        /// Registers new <paramref name="track"/>.
-        /// </summary>
-        /// <param name="track">
-        /// The track to register.
+        /// <param name="name">
+        /// The track name.
         /// </param>
-        public void RegisterNewTrack(Track track)
+        /// <returns>
+        /// All tracks with the specified <paramref name="name"/>.
+        /// </returns>
+        public ICollection<Track> GetTracksByName(string name)
         {
-            if (this.TrackValidator != null)
+            if (!TrackValidator.IsTrackNameValid(name))
             {
-                this.TrackValidator.Validate(track);
+                return new List<Track>();
             }
 
-            this._repository.AddOrUpdate(track);
+            using (var repository = this.RepositoryFactory.CreateRepository<Track>())
+            {
+                return repository.GetAll(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         /// <summary>
-        /// Updates the specified <paramref name="track"/>.
+        /// Returns all tracks with the specified <paramref name="genre"/>.
         /// </summary>
-        /// <param name="track">
-        /// The track to update.
+        /// <param name="genre">
+        /// The track genre.
         /// </param>
-        public void UpdateTrack(Track track)
+        /// <returns>
+        /// All tracks with the specified <paramref name="genre"/>.
+        /// </returns>
+        public ICollection<Track> GetTracksByGenre(Genre genre)
         {
-            if (this.TrackValidator != null)
+            using (var repository = this.RepositoryFactory.CreateRepository<Track>())
             {
-                this.TrackValidator.Validate(track);
+                return repository.GetAll(t => t.Genre == genre);
             }
-
-            if (track.Id < 0)
-            {
-                throw new TrackNotFoundException();
-            }
-
-            this._repository.AddOrUpdate(track);
         }
+
+        #endregion //Public Methods
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Occurs when the service tries to update a non-existent track.
+        /// </summary>
+        /// <exception cref="TrackNotFoundException">
+        /// When a track doesn't exist in the system.
+        /// </exception>
+        protected override void OnUpdateEntityNotFoundException()
+        {
+            throw new EntityNotFoundException("The model doesn't exist. Nothing to update.");
+        }
+
+        #endregion //Protected Methods
     }
 }
