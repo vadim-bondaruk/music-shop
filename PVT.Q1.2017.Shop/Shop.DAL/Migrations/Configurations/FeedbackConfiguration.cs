@@ -16,6 +16,8 @@
             this.ToTable("tbFeedbacks");
             this.HasKey(t => t.Id);
             this.Property(t => t.Comments).IsRequired().IsUnicode().IsVariableLength();
+
+            this.HasRequired(f => f.Track).WithMany(t => t.Feedbacks);
         }
     }
 }
