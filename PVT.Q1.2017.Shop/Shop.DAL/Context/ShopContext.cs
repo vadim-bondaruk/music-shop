@@ -3,6 +3,8 @@
     using System.Data.Entity;
 
     using Common.Models;
+    using Migrations;
+    using Migrations.Configurations;
 
     /// <summary>
     /// Music shop Db
@@ -14,8 +16,19 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ShopContext"/> class.
         /// </summary>
-        public ShopContext() : base("ShopConnection")
+        public ShopContext() : this("ShopConnection")
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShopContext"/> class.
+        /// </summary>
+        /// <param name="connectionStringOrName">
+        /// The connection string or Db name.
+        /// </param>
+        public ShopContext(string connectionStringOrName) : base(connectionStringOrName)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShopContext, Configuration>());
         }
 
         #endregion //Constructors
@@ -66,7 +79,28 @@
         /// Gets or sets the genres.
         /// </summary>
         public DbSet<Genre> Genres { get; set; }
-        
+
         #endregion //Properties
+
+        #region Protected Methods
+
+        /// <summary>
+        /// The Db configuration.
+        /// </summary>
+        /// <param name="modelBuilder">
+        /// The model builder.
+        /// </param>
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new TrackConfiguration())
+                        .Add(new ArtistConfiguration())
+                        .Add(new AlbumConfiguration())
+                        .Add(new FeedbackConfiguration())
+                        .Add(new VoteConfiguration())
+                        .Add(new GenreConfiguration());
+            base.OnModelCreating(modelBuilder);
+        }
+
+        #endregion //Protected Methods
     }
 }
