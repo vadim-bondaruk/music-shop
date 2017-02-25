@@ -21,6 +21,11 @@
         private readonly DbContext _dbContext;
 
         /// <summary>
+        /// The current Db table.
+        /// </summary>
+        private readonly IDbSet<TEntity> _currentDbSet;
+
+        /// <summary>
         /// Indicates whether the repository state was changed.
         /// </summary>
         private bool _stateChanged;
@@ -46,6 +51,7 @@
             }
 
             this._dbContext = dbContext;
+            this._currentDbSet = this._dbContext.Set<TEntity>();
         }
 
         #endregion //Constructors
@@ -63,8 +69,7 @@
         /// </returns>
         public TEntity GetById(int id)
         {
-            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.FirstOrDefault(x => x.Id == id);
+            return this._currentDbSet.FirstOrDefault(x => x.Id == id);
         }
 
         /// <summary>
@@ -75,8 +80,7 @@
         /// </returns>
         public ICollection<TEntity> GetAll()
         {
-            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.ToList();
+            return this._currentDbSet.ToList();
         }
 
         /// <summary>
@@ -86,8 +90,7 @@
         /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
         public ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
         {
-            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.Where(filter).ToList();
+            return this._currentDbSet.Where(filter).ToList();
         }
 
         /// <summary>
@@ -114,7 +117,7 @@
             else
             {
                 // if it is a new model then we have to insert it
-                this._dbContext.Set<TEntity>().Add(model);
+                this._currentDbSet.Add(model);
                 this._stateChanged = true;
             }
         }
@@ -128,7 +131,8 @@
             var model = this.GetById(id);
             if (model != null)
             {
-                Delete(model);
+                this._currentDbSet.Remove(model);
+                this._stateChanged = true;
             }
         }
 
@@ -145,8 +149,7 @@
                 throw new ArgumentNullException(nameof(model));
             }
 
-            this._dbContext.Set<TEntity>().Remove(model);
-            this._stateChanged = true;
+            Delete(model.Id);
         }
 
         #endregion //IRepository<TEntity> Members
