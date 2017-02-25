@@ -11,7 +11,7 @@
     /// <summary>
     /// The models repository.
     /// </summary>
-    public class Repository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : BaseEntity, new()
+    public class Repository<TEntity> : IDisposableRepository<TEntity> where TEntity : BaseEntity, new()
     {
         #region Fields
 
@@ -19,6 +19,11 @@
         /// The Db context.
         /// </summary>
         private readonly DbContext _dbContext;
+
+        /// <summary>
+        /// Indicates whether the repository state was changed.
+        /// </summary>
+        private bool _stateChanged;
 
         #endregion //Fields
 
@@ -104,11 +109,13 @@
             {
                 var entry = this._dbContext.Entry(originalTrack);
                 entry.CurrentValues.SetValues(model);
+                this._stateChanged = true;
             }
             else
             {
                 // if it is a new model then we have to insert it
                 this._dbContext.Set<TEntity>().Add(model);
+                this._stateChanged = true;
             }
         }
 
@@ -139,9 +146,26 @@
             }
 
             this._dbContext.Set<TEntity>().Remove(model);
+            this._stateChanged = true;
         }
 
         #endregion //IRepository<TEntity> Members
+
+        #region IDisposableRepository Members
+
+        /// <summary>
+        /// Saves all changes.
+        /// </summary>
+        public void SaveChanges()
+        {
+            if (this._stateChanged)
+            {
+                this._dbContext.SaveChanges();
+                this._stateChanged = false;
+            }
+        }
+
+        #endregion //IDisposableRepository Members
 
         #region IDisposable Pattern
 
@@ -160,6 +184,9 @@
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
+            // to ensure that the changes are not lost
+            this.SaveChanges();
+
             if (disposing)
             {
                 this._dbContext?.Dispose();

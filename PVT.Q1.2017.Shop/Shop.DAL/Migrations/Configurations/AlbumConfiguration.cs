@@ -16,7 +16,7 @@
             this.ToTable("tbAlbums");
             this.HasKey(t => t.Id);
             this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            this.Property(t => t.ReleaseDate).IsRequired();
+            this.Property(t => t.ReleaseDate).IsOptional();
         }
     }
 }

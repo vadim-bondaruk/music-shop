@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninject;
 using Shop.Common.Models;
+using Shop.DAL;
 using Shop.DAL.Context;
 using Shop.DAL.Repositories;
+using Shop.Infrastructure.Repositories;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
@@ -13,11 +16,15 @@ namespace PVT.Q1._2017.Shop.Tests
     [TestClass]
     public class DataBaseTest
     {
+        #region Fields
+
+        private IKernel _kernel;
+
+        #endregion //Fields
+
         public DataBaseTest()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            this._kernel = new StandardKernel(new DalNinjectModule());
         }
 
         private TestContext testContextInstance;
@@ -75,55 +82,60 @@ namespace PVT.Q1._2017.Shop.Tests
         }
 
         [TestMethod]
+        public void RepositoryFactoryTest()
+        {
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            Assert.IsNotNull(repositoryFactory);
+        }
+
+        [TestMethod]
         public void AddModelTest()
         {
             string trackName = "Hello";
-            using (var context = new ShopContext())
+
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateTrackRepository())
             {
-                var repository = new Repository<Track>(context);
-
                 repository.AddOrUpdate(new Track { Name = trackName });
-                context.SaveChanges();
+                repository.SaveChanges();
 
-                Assert.IsTrue(context.Tracks.Any(t => t.Name == trackName));
+                Assert.IsTrue(repository.GetAll(t => t.Name == trackName).Any());
             }
         }
 
         [TestMethod]
         public void GetAllModelWithExpressionTest()
         {
-            string track1Name = "Track 1";
-            string track2Name = "Track 2";
-            string track3Name = "Track 3";
+            string artist1Name = "Artist 1";
+            string artist2Name = "Artist 2";
+            string artist3Name = "Artist 3";
 
-            using (var context = new ShopContext())
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateArtistRepository())
             {
-                var repository = new Repository<Track>(context);
+                repository.AddOrUpdate(new Artist { Name = artist1Name });
+                repository.AddOrUpdate(new Artist { Name = artist2Name });
+                repository.AddOrUpdate(new Artist { Name = artist3Name });
+                repository.SaveChanges();
 
-                repository.AddOrUpdate(new Track { Name = track1Name });
-                repository.AddOrUpdate(new Track { Name = track2Name });
-                repository.AddOrUpdate(new Track { Name = track3Name });
-                context.SaveChanges();
-
-                Assert.IsTrue(repository.GetAll(t => t.Name.StartsWith("Track")).Count >= 3);
+                Assert.IsTrue(repository.GetAll(a => a.Name.StartsWith("Artist")).Count >= 3);
             }
         }
 
         [TestMethod]
         public void GetAllModelWithoutExpressionTest()
         {
-            string track1Name = "Track 1";
-            string track2Name = "Track 2";
-            string track3Name = "Track 3";
+            string album1Name = "Album 1";
+            string album2Name = "Album 2";
+            string album3Name = "Album 3";
 
-            using (var context = new ShopContext())
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateAlbumRepository())
             {
-                var repository = new Repository<Track>(context);
-
-                repository.AddOrUpdate(new Track { Name = track1Name });
-                repository.AddOrUpdate(new Track { Name = track2Name });
-                repository.AddOrUpdate(new Track { Name = track3Name });
-                context.SaveChanges();
+                repository.AddOrUpdate(new Album { Name = album1Name });
+                repository.AddOrUpdate(new Album { Name = album2Name });
+                repository.AddOrUpdate(new Album { Name = album3Name });
+                repository.SaveChanges();
 
                 Assert.IsTrue(repository.GetAll().Count >= 3, repository.GetAll().Count.ToString());
             }
@@ -133,12 +145,12 @@ namespace PVT.Q1._2017.Shop.Tests
         public void UpdateModelTest()
         {
             string trackName = "Hello";
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
 
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
                 repository.AddOrUpdate(new Track { Name = trackName });
-                context.SaveChanges();
+                repository.SaveChanges();
 
                 var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
                 Assert.IsNotNull(track);
@@ -147,9 +159,9 @@ namespace PVT.Q1._2017.Shop.Tests
                 track.Duration = duration;
 
                 repository.AddOrUpdate(track);
-                context.SaveChanges();
+                repository.SaveChanges();
 
-                Assert.IsTrue(context.Tracks.Any(t => t.Duration == duration));
+                Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
             }
         }
     }
