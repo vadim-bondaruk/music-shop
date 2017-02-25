@@ -46,7 +46,7 @@ namespace Shop.Common.Models
         /// <summary>
         ///     Gets or sets the release date.
         /// </summary>
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
         ///     Gets or sets all tracks from the album.

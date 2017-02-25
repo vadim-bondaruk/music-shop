@@ -1,41 +1,42 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Repository.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   The models repository.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Expressions;
-
-    using Shop.Infrastructure.Models;
-    using Shop.Infrastructure.Repositories;
+    using Infrastructure.Models;
+    using Infrastructure.Repositories;
 
     /// <summary>
-    ///     The models repository.
+    /// The models repository.
     /// </summary>
-    public class Repository<TEntity> : IRepository<TEntity>, IDisposable
-        where TEntity : BaseEntity, new()
+    public class Repository<TEntity> : IDisposableRepository<TEntity> where TEntity : BaseEntity, new()
     {
+        #region Fields
+
         /// <summary>
-        ///     The Db context.
+        /// The Db context.
         /// </summary>
         private readonly DbContext _dbContext;
 
         /// <summary>
-        ///     Initializes a new instance of the
-        ///     <see cref="Shop.DAL.Repositories.Repository`1" /> class.
+        /// Indicates whether the repository state was changed.
         /// </summary>
-        /// <param name="dbContext">The Db context.</param>
-        /// <exception cref="System.ArgumentNullException">
-        ///     When <paramref name="dbContext" /> is null.
+        private bool _stateChanged;
+
+        #endregion //Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.
+        /// </summary>
+        /// <param name="dbContext">
+        /// The Db context.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="dbContext"/> is null.
         /// </exception>
         public Repository(DbContext dbContext)
         {
@@ -47,10 +48,54 @@ namespace Shop.DAL.Repositories
             this._dbContext = dbContext;
         }
 
+        #endregion //Constructors
+
+        #region IRepository<TEntity> Members
+
         /// <summary>
-        ///     Adds or updates the specified <paramref name="model" /> .
+        /// Tries to find a model by the specified <paramref name="id"/>.
         /// </summary>
-        /// <param name="model">The model to add or to update.</param>
+        /// <param name="id">
+        /// The model key.
+        /// </param>
+        /// <returns>
+        /// A model with the specified <paramref name="id"/> or null in case if there are now models with such <paramref name="id"/>.
+        /// </returns>
+        public TEntity GetById(int id)
+        {
+            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
+            return currentTable.FirstOrDefault(x => x.Id == id);
+        }
+
+        /// <summary>
+        /// Returns all models from the repository.
+        /// </summary>
+        /// <returns>
+        /// All models from the repository.
+        /// </returns>
+        public ICollection<TEntity> GetAll()
+        {
+            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
+            return currentTable.ToList();
+        }
+
+        /// <summary>
+        /// Tries to find models from the repository using the specified <paramref name="filter"/>.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
+        public ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
+        {
+            IQueryable<TEntity> currentTable = this._dbContext.Set<TEntity>();
+            return currentTable.Where(filter).ToList();
+        }
+
+        /// <summary>
+        /// Adds or updates the specified <paramref name="model"/>.
+        /// </summary>
+        /// <param name="model">
+        /// The model to add or to update.
+        /// </param>
         public void AddOrUpdate(TEntity model)
         {
             if (model == null)
@@ -58,44 +103,41 @@ namespace Shop.DAL.Repositories
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var currentTable = this._dbContext.Set<TEntity>();
-
-            if (model.Id > 0)
+            // if the model exists in Db then we have to update it
+            var originalTrack = this.GetById(model.Id);
+            if (originalTrack != null)
             {
-                var originalTrack = currentTable.Find(model.Id);
-
-                // if the model exists in Db
-                if (originalTrack != null)
-                {
-                    var entry = this._dbContext.Entry(originalTrack);
-                    entry.CurrentValues.SetValues(model);
-                    entry.State = EntityState.Modified;
-                    return;
-                }
+                var entry = this._dbContext.Entry(originalTrack);
+                entry.CurrentValues.SetValues(model);
+                this._stateChanged = true;
             }
-
-            // if it is a new model
-            currentTable.Add(model);
+            else
+            {
+                // if it is a new model then we have to insert it
+                this._dbContext.Set<TEntity>().Add(model);
+                this._stateChanged = true;
+            }
         }
 
         /// <summary>
-        ///     Deletes a model with the specified <paramref name="id" /> .
+        /// Deletes a model with the specified <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The model key.</param>
         public void Delete(int id)
         {
-            var currentTable = this._dbContext.Set<TEntity>();
-            var model = currentTable.Find(id);
+            var model = this.GetById(id);
             if (model != null)
             {
-                currentTable.Remove(model);
+                Delete(model);
             }
         }
 
         /// <summary>
-        ///     Deletes the <paramref name="model" /> from the repository.
+        /// Deletes the <paramref name="model"/> from the repository.
         /// </summary>
-        /// <param name="model">The model to remove.</param>
+        /// <param name="model">
+        /// The model to remove.
+        /// </param>
         public void Delete(TEntity model)
         {
             if (model == null)
@@ -103,73 +145,54 @@ namespace Shop.DAL.Repositories
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var currentTable = this._dbContext.Set<TEntity>();
-            currentTable.Remove(model);
+            this._dbContext.Set<TEntity>().Remove(model);
+            this._stateChanged = true;
         }
 
+        #endregion //IRepository<TEntity> Members
+
+        #region IDisposableRepository Members
+
         /// <summary>
-        ///     Disposes resources.
+        /// Saves all changes.
+        /// </summary>
+        public void SaveChanges()
+        {
+            if (this._stateChanged)
+            {
+                this._dbContext.SaveChanges();
+                this._stateChanged = false;
+            }
+        }
+
+        #endregion //IDisposableRepository Members
+
+        #region IDisposable Pattern
+
+        /// <summary>
+        /// Disposes resources.
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         /// <summary>
-        ///     Returns all models from the repository.
-        /// </summary>
-        /// <returns>
-        ///     All models from the repository.
-        /// </returns>
-        public ICollection<TEntity> GetAll()
-        {
-            var currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.ToList();
-        }
-
-        /// <summary>
-        ///     Tries to find models from the repository using the specified
-        ///     <paramref name="filter" /> .
-        /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <returns>
-        ///     Entities which corespond to <paramref name="filter" /> .
-        /// </returns>
-        public ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
-        {
-            var currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.Where(filter).ToList();
-        }
-
-        /// <summary>
-        ///     Tries to find a model by the specified <paramref name="id" /> .
-        /// </summary>
-        /// <param name="id">The model key.</param>
-        /// <returns>
-        ///     A model with the specified <paramref name="id" /> or
-        ///     <see langword="null" /> in case if there are now models with such
-        ///     <paramref name="id" /> .
-        /// </returns>
-        public TEntity GetById(int id)
-        {
-            var currentTable = this._dbContext.Set<TEntity>();
-            return currentTable.Find(id);
-        }
-
-        /// <summary>
-        ///     Disposes resources in case if <paramref name="disposing" /> is
-        ///     <b>
-        ///         <see langword="true" />
-        ///     </b>
+        /// Disposes resources in case if <paramref name="disposing"/> is <b>true</b>
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
+            // to ensure that the changes are not lost
+            this.SaveChanges();
+
             if (disposing)
             {
                 this._dbContext?.Dispose();
             }
         }
+
+        #endregion //IDisposable Pattern
     }
 }

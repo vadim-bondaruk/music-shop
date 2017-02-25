@@ -1,64 +1,73 @@
-﻿namespace PVT.Q1._2017.Shop.Tests
+﻿using System;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninject;
+using Shop.BLL;
+using Shop.Common.Models;
+using Shop.DAL;
+using Shop.DAL.Context;
+using Shop.DAL.Repositories;
+using Shop.Infrastructure.Repositories;
+
+namespace PVT.Q1._2017.Shop.Tests
 {
-    #region
-
-    using System;
-    using System.Linq;
-
-    using global::Shop.Common.Models;
-    using global::Shop.DAL.Context;
-    using global::Shop.DAL.Repositories;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    #endregion
-
     /// <summary>
-    ///     Summary description for <see cref="DataBaseTest" />
+    /// Summary description for DataBaseTest
     /// </summary>
     [TestClass]
     public class DataBaseTest
     {
-        /// <summary>
-        /// </summary>
+        #region Fields
+
+        private IKernel _kernel;
+
+        #endregion //Fields
+
+        public DataBaseTest()
+        {
+            this._kernel = new StandardKernel(new DefaultServicesNinjectModule());
+        }
+
         private TestContext testContextInstance;
 
         /// <summary>
-        ///     Gets or sets the test context which provides information about and
-        ///     functionality for the current test run.
-        /// </summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
         public TestContext TestContext
         {
             get
             {
-                return this.testContextInstance;
+                return testContextInstance;
             }
-
             set
             {
-                this.testContextInstance = value;
+                testContextInstance = value;
             }
         }
 
-        /// <summary>
-        /// </summary>
-        [TestMethod]
-        public void AddModelTest()
-        {
-            var trackName = "Hello";
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
+        #region Additional test attributes
+        //
+        // You can use the following additional attributes as you write your tests:
+        //
+        // Use ClassInitialize to run code before running the first test in the class
+        // [ClassInitialize()]
+        // public static void MyClassInitialize(TestContext testContext) { }
+        //
+        // Use ClassCleanup to run code after all tests in a class have run
+        // [ClassCleanup()]
+        // public static void MyClassCleanup() { }
+        //
+        // Use TestInitialize to run code before running each test 
+        // [TestInitialize()]
+        // public void MyTestInitialize() { }
+        //
+        // Use TestCleanup to run code after each test has run
+        // [TestCleanup()]
+        // public void MyTestCleanup() { }
+        //
+        #endregion
 
-                repository.AddOrUpdate(new Track { Name = trackName });
-                context.SaveChanges();
-
-                Assert.IsTrue(context.Tracks.Any(t => t.Name == trackName));
-            }
-        }
-
-        /// <summary>
-        /// </summary>
         [TestMethod]
         public void CreateDataBaseTest()
         {
@@ -73,62 +82,76 @@
             }
         }
 
-        /// <summary>
-        /// </summary>
         [TestMethod]
-        public void GetAllModelWithExpressionTest()
+        public void RepositoryFactoryTest()
         {
-            var track1Name = "Track 1";
-            var track2Name = "Track 2";
-            var track3Name = "Track 3";
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            Assert.IsNotNull(repositoryFactory);
+        }
 
-            using (var context = new ShopContext())
+        [TestMethod]
+        public void AddModelTest()
+        {
+            string trackName = "Hello";
+
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Track>())
             {
-                var repository = new Repository<Track>(context);
+                repository.AddOrUpdate(new Track { Name = trackName });
+                repository.SaveChanges();
 
-                repository.AddOrUpdate(new Track { Name = track1Name });
-                repository.AddOrUpdate(new Track { Name = track2Name });
-                repository.AddOrUpdate(new Track { Name = track3Name });
-                context.SaveChanges();
-
-                Assert.IsTrue(repository.GetAll(t => t.Name.StartsWith("Track")).Count >= 3);
+                Assert.IsTrue(repository.GetAll(t => t.Name == trackName).Any());
             }
         }
 
-        /// <summary>
-        /// </summary>
+        [TestMethod]
+        public void GetAllModelWithExpressionTest()
+        {
+            string artist1Name = "Artist 1";
+            string artist2Name = "Artist 2";
+            string artist3Name = "Artist 3";
+
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Artist>())
+            {
+                repository.AddOrUpdate(new Artist { Name = artist1Name });
+                repository.AddOrUpdate(new Artist { Name = artist2Name });
+                repository.AddOrUpdate(new Artist { Name = artist3Name });
+                repository.SaveChanges();
+
+                Assert.IsTrue(repository.GetAll(a => a.Name.StartsWith("Artist")).Count >= 3);
+            }
+        }
+
         [TestMethod]
         public void GetAllModelWithoutExpressionTest()
         {
-            var track1Name = "Track 1";
-            var track2Name = "Track 2";
-            var track3Name = "Track 3";
+            string album1Name = "Album 1";
+            string album2Name = "Album 2";
+            string album3Name = "Album 3";
 
-            using (var context = new ShopContext())
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Album>())
             {
-                var repository = new Repository<Track>(context);
-
-                repository.AddOrUpdate(new Track { Name = track1Name });
-                repository.AddOrUpdate(new Track { Name = track2Name });
-                repository.AddOrUpdate(new Track { Name = track3Name });
-                context.SaveChanges();
+                repository.AddOrUpdate(new Album { Name = album1Name });
+                repository.AddOrUpdate(new Album { Name = album2Name });
+                repository.AddOrUpdate(new Album { Name = album3Name });
+                repository.SaveChanges();
 
                 Assert.IsTrue(repository.GetAll().Count >= 3, repository.GetAll().Count.ToString());
             }
         }
 
-        /// <summary>
-        /// </summary>
         [TestMethod]
         public void UpdateModelTest()
         {
-            var trackName = "Hello";
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
+            string trackName = "Hello";
 
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
                 repository.AddOrUpdate(new Track { Name = trackName });
-                context.SaveChanges();
+                repository.SaveChanges();
 
                 var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
                 Assert.IsNotNull(track);
@@ -137,9 +160,9 @@
                 track.Duration = duration;
 
                 repository.AddOrUpdate(track);
-                context.SaveChanges();
+                repository.SaveChanges();
 
-                Assert.IsTrue(context.Tracks.Any(t => t.Duration == duration));
+                Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
             }
         }
     }

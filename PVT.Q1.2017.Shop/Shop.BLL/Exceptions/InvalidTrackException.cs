@@ -18,6 +18,7 @@ namespace Shop.BLL.Exceptions
     #endregion
 
     /// <summary>
+    /// The invalid track exception.
     /// </summary>
     [Serializable]
     public class InvalidTrackException : Exception
