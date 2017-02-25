@@ -81,7 +81,7 @@
         /// <param name="model">
         /// The model to register.
         /// </param>
-        public void Register(TEntity model)
+        public virtual void Register(TEntity model)
         {
             // TODO: Logs on register model
             this._validator.Validate(model);
@@ -98,7 +98,7 @@
         /// <param name="model">
         /// The model to update.
         /// </param>
-        public void Update(TEntity model)
+        public virtual void Update(TEntity model)
         {
             // TODO: Logs on model update
             if (!this.IsRegistered(model))
@@ -121,7 +121,7 @@
         /// <returns>
         /// <b>true</b> if the specified <paramref name="model"/> was unregistered successfully; otherwise <b>false</b>.
         /// </returns>
-        public bool Unregister(TEntity model)
+        public virtual bool Unregister(TEntity model)
         {
             // TODO: Logs on model unregister
             if (!this.IsRegistered(model))
@@ -145,7 +145,7 @@
         /// <returns>
         /// <b>true</b> if the specified <paramref name="model"/> is valid; otherwise <b>false</b>.
         /// </returns>
-        public bool IsValid(TEntity model)
+        public virtual bool IsValid(TEntity model)
         {
             return this._validator.IsValid(model);
         }
@@ -159,7 +159,7 @@
         /// <returns>
         /// <b>true</b> if the specified <paramref name="model"/> is registered; otherwise <b>false</b>.
         /// </returns>
-        public bool IsRegistered(TEntity model)
+        public virtual bool IsRegistered(TEntity model)
         {
             if (!this.IsValid(model))
             {
