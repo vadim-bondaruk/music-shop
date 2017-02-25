@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Track.cs" company="PVT Q1 2017">
-//   All rights reserved
-// </copyright>
-// <summary>
-//   The track.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;

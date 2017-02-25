@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRepository.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   Common Repository interface.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Infrastructure.Repositories
+﻿namespace Shop.Infrastructure.Repositories
 {
     #region
 
