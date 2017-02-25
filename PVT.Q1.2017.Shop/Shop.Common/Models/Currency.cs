@@ -7,31 +7,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Shop.Infrastructure.Models;
+
 namespace Shop.Common.Models
 {
     /// <summary>
     /// The currency.
     /// </summary>
-    public enum Currency
+    public class Currency : BaseEntity
     {
-        /// <summary>
-        /// The USD.
-        /// </summary>
-        Usd = 840,
-
-        /// <summary>
-        /// The EUR.
-        /// </summary>
-        Eur = 978,
-
-        /// <summary>
-        /// The Rub.
-        /// </summary>
-        Rub = 810,
-
-        /// <summary>
-        /// The Byn.
-        /// </summary>
-        Byn = 933
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }
