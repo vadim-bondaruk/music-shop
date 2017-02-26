@@ -1,4 +1,4 @@
-﻿namespace Shop.Common.Enums
+﻿namespace Shop.Infrastructure.Enums
 {
     /// <summary>
     /// Determines possible user roles in this shop
