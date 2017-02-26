@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using global::Shop.Common.Models;
+    using global::Shop.DAL.Repositories;
     using global::Shop.Infrastructure.Repositories;
 
     /// <summary>
@@ -67,15 +68,15 @@
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="trackID">
-        /// Id удаляемой песни
+        /// <param name="cartId">
+        /// Id удаляемой строки из репозитория
         /// </param>
         /// <param name="returnUrl">
         /// Путь для возврата к покупкам
         /// </param>
-        public RedirectToRouteResult DeleteFromCart(int currentUserId, int trackID, string returnUrl)
+        public RedirectToRouteResult DeleteFromCart(int currentUserId, int cartId, string returnUrl)
         {
-            // удаление из репозитория
+            this._cartRepository.Delete(cartId);
             return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
         }
         #endregion 
