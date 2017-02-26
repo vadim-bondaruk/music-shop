@@ -80,6 +80,11 @@
         /// <param name="model"></param>
         public void AddOrUpdate(User model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             if (this._db != null)
             {
                 if (this._db.Users.Contains(model))
@@ -114,6 +119,11 @@
         /// <param name="model"></param>
         public void Delete(User model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             this._db.Users.Remove(model);
         }
     }
