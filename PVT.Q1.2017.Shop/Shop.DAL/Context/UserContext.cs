@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data.Entity;
+    using Data;
     using Shop.Common.Models;
 
     /// <summary>
@@ -14,6 +15,8 @@
         /// </summary>
         public UserContext() : base("UserConnection")
         {
+            // initializes 'Users' database
+            Database.SetInitializer<UserContext>(new UserInitializer());
         }
 
         /// <summary>

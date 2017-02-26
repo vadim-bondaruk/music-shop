@@ -9,8 +9,12 @@
     /// <summary>
     /// Adds data to the context for seeding. A storage for entities of users
     /// </summary>
-    class UserInitializer : DropCreateDatabaseIfModelChanges<UserContext>
+    public class UserInitializer : DropCreateDatabaseIfModelChanges<UserContext>
     {
+        /// <summary>
+        /// adds data 
+        /// </summary>
+        /// <param name="context"></param>
         protected override void Seed(UserContext context)
         {
             var _users = new List<User>
@@ -62,7 +66,6 @@
 
             _users.ForEach(s => context.Users.Add(s));
             context.SaveChanges();
-            
         }
     }
 }
