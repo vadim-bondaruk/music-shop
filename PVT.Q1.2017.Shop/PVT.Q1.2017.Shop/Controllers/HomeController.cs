@@ -21,7 +21,7 @@
     /// <summary>
     ///     Controller of Home page
     /// </summary>
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
         /// <summary>
         /// </summary>
@@ -43,12 +43,10 @@
 
         /// <summary>
         /// </summary>
+        /// <exception cref="System.Exception">EmptyCollection</exception>
         /// <returns>
         /// </returns>
-        /// <exception cref="Exception">
-        /// EmptyCollection
-        /// </exception>
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             var tracks = this._tracksRepository.GetAll();
             if (tracks.Count == 0)

@@ -2,7 +2,6 @@
 {
     #region
 
-    using System.Collections;
     using System.Web.Mvc;
 
     using global::Shop.Common.Models;
@@ -13,14 +12,14 @@
 
     /// <summary>
     /// </summary>
-    public class TrackController : Controller
+    public partial class TrackController : Controller
     {
         /// <summary>
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
-        public ActionResult AddNew()
+        public virtual ActionResult AddNew()
         {
             return this.View();
         }
@@ -29,7 +28,7 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public ActionResult AlbumList()
+        public virtual ActionResult AlbumList()
         {
             using (var context = new ShopContext())
             {
@@ -43,7 +42,7 @@
         /// <param name="artistId">The artist id.</param>
         /// <returns>
         /// </returns>
-        public ActionResult AlbumList(int artistId)
+        public virtual ActionResult AlbumList(int artistId)
         {
             using (var context = new ShopContext())
             {
@@ -57,7 +56,7 @@
         /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
-        public ActionResult AlbumTracks(int id)
+        public virtual ActionResult AlbumTracks(int id)
         {
             {
                 using (var context = new ShopContext())
@@ -72,7 +71,7 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public ActionResult ArtistList()
+        public virtual ActionResult ArtistList()
         {
             using (var context = new ShopContext())
             {
@@ -86,7 +85,7 @@
         /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
-        public ActionResult ArtistTracks(int id)
+        public virtual ActionResult ArtistTracks(int id)
         {
             {
                 using (var context = new ShopContext())
@@ -102,7 +101,7 @@
         /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
-        public ActionResult Details(int id)
+        public virtual ActionResult Details(int id)
         {
             using (var context = new ShopContext())
             {
@@ -118,7 +117,7 @@
         /// </exception>
         /// <returns>
         /// </returns>
-        public ActionResult TrackList()
+        public virtual ActionResult TrackList()
         {
             using (var context = new ShopContext())
             {
