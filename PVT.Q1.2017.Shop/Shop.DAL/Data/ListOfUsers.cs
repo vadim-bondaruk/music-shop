@@ -1,7 +1,7 @@
 ﻿namespace Shop.DAL.Data
 {
     using System.Collections.Generic;
-    using Shop.Common.Enums;
+    using Shop.Infrastructure.Enums;
     using Common.Models;
 
     /// <summary>

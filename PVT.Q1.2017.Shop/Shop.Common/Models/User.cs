@@ -2,7 +2,7 @@
 {
     using System;
     using Ship.Infrastructure.Models;
-    using Shop.Common.Enums;
+    using Shop.Infrastructure.Enums;
 
     /// <summary>
     /// Basic user model
