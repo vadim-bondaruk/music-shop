@@ -21,5 +21,10 @@
         /// Code of Currency
         /// </summary>
         public int Code { get; set; }
+
+        /// <summary>
+        /// Enabled of Currency
+        /// </summary>
+        public bool Enabled { get; set; }
     }
 }
