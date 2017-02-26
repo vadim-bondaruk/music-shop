@@ -1,0 +1,39 @@
+﻿@model PVT.Q1._2017.Shop.ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Авторизация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+<div class="login-container">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post, new { }))
+    {
+        @Html.AntiForgeryToken()
+        <table class="common-data-table table-border row-border">
+            <tbody>
+                <tr>
+                    <td>@Html.LabelFor(model => model.UserName)</td>
+                    <td>@Html.EditorFor(model => model.UserName, new { htmlAttributes = new { }, placeholder = "Email" })</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Password, new { })</td>
+                    <td>@Html.EditorFor(model => model.Password, new { htmlAttributes = new { type = "password" }, placeholder = "Password" })</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.RememberMe, new { })</td>
+                    <td colspan="2">@Html.EditorFor(model => model.RememberMe)</td>
+                </tr>
+                <tr>
+                    <td colspan="3">@Html.ValidationSummary()</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <button type="submit" class="btn btn-default">Вход</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>
