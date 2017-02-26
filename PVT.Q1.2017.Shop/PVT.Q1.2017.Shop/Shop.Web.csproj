@@ -94,6 +94,7 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1-unstable-001\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -159,6 +160,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="img\arrow.png" />
+    <Content Include="img\bg.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -193,6 +196,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Styles\AddToCartButton.css" />
     <Content Include="Styles\ListSplitters.css" />
+    <Content Include="Styles\AddNewTrack.css" />
     <Content Include="Styles\TrackDetails.css" />
     <Content Include="Styles\TrackList.css" />
     <Content Include="Web.config" />
@@ -228,6 +232,7 @@
     <Content Include="Views\Track\List.cshtml" />
     <Content Include="Views\Track\Details.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Track\AddNew.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

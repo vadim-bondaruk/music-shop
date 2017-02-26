@@ -1,0 +1,64 @@
+﻿@model Shop.Common.Models.Track
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddNew</title>
+</head>
+<body>
+    <div id="trackInfo">
+        <div id="text-block">
+            <h1>Track details</h1>
+
+            <ul class="detailsList">
+                <li>
+                    <input type="text" placeholder="Artist" />
+                </li>
+
+                <li>
+                    <input type="text" placeholder="Name"/>
+                </li>
+
+                <li>
+                    <input type="text" placeholder="Album" />
+                </li>
+
+                <li>
+                    <input type="text" placeholder="Genre" />
+                </li>
+
+                <li>
+                    <input type="date" placeholder="Release date" />
+                </li>
+                <li>
+                    <input type="time" placeholder="Duration" />
+                </li>
+                <li>
+                    <input type="text" placeholder="Price" />
+                </li>
+            </ul>
+
+@*            <img src="@Model.ImageUrl" alt="album cover" id="trackImage" />*@
+@*            <div class="button-wrapper">*@
+@*                <a href="#" class="a-btn">*@
+@*                    <span class="a-btn-slide-text">$1.35$</span>*@
+@*                    <img src="/img/cart.png" alt="cart" />*@
+@*                    <span class="a-btn-text">Add to cart</span>*@
+@*                    <span class="a-btn-icon-right">*@
+@*                        <span></span>*@
+@*                    </span>*@
+@*                </a>*@
+@*            </div>*@
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+@section AddNewTrack{
+    <link href="/Styles/AddNewTrack.css" rel="stylesheet" type="text/css" />
+}

@@ -1,16 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TrackController.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   Defines the TrackController type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace PVT.Q1._2017.Shop.Controllers
+﻿namespace PVT.Q1._2017.Shop.Controllers
 {
     #region
 
+    using System.Collections;
     using System.Web.Mvc;
 
     using global::Shop.Common.Models;
@@ -23,6 +15,16 @@ namespace PVT.Q1._2017.Shop.Controllers
     /// </summary>
     public class TrackController : Controller
     {
+        /// <summary>
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// </returns>
+        public ActionResult AddNew()
+        {
+            return this.View();
+        }
+
         /// <summary>
         /// </summary>
         /// <returns>
@@ -52,9 +54,7 @@ namespace PVT.Q1._2017.Shop.Controllers
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
+        /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
         public ActionResult AlbumTracks(int id)
@@ -83,9 +83,7 @@ namespace PVT.Q1._2017.Shop.Controllers
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
+        /// <param name="id">The id.</param>
         /// <returns>
         /// </returns>
         public ActionResult ArtistTracks(int id)
@@ -96,6 +94,20 @@ namespace PVT.Q1._2017.Shop.Controllers
                     var repository = new Repository<Track>(context);
                     return this.View(repository.GetAll(a => a.Album.Id.Equals(id)));
                 }
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// </returns>
+        public ActionResult Details(int id)
+        {
+            using (var context = new ShopContext())
+            {
+                var repository = new Repository<Track>(context);
+                return this.View(repository.GetAll(t => t.Id.Equals(id)));
             }
         }
 
@@ -112,20 +124,6 @@ namespace PVT.Q1._2017.Shop.Controllers
             {
                 var repository = new Repository<Track>(context);
                 return this.View(repository.GetAll());
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
-        /// </returns>
-        public ActionResult Details(int id)
-        {
-            using (var context = new ShopContext())
-            {
-                var repository = new Repository<Track>(context);
-                return this.View(repository.GetAll(t => t.Id.Equals(id)));
             }
         }
     }

@@ -7,10 +7,11 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    @RenderSection("TrackList", required: false)
-    @RenderSection("TrackDetails", required: false)
-    @RenderSection("AddToCartButton", required: false)
-    @RenderSection("ListSplitters", required: false)
+    @RenderSection("TrackList", false)
+    @RenderSection("TrackDetails", false)
+    @RenderSection("AddNewTrack", false)
+    @RenderSection("AddToCartButton", false)
+    @RenderSection("ListSplitters", false)
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">

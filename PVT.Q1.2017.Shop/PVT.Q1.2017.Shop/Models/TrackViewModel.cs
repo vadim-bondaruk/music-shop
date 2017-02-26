@@ -31,33 +31,33 @@
         }
 
         /// <summary>
-        /// Gets or sets the id.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the album.
+        ///     Gets or sets the album.
         /// </summary>
         public Album Album { get; set; }
 
         /// <summary>
-        /// Gets or sets the artist.
+        ///     Gets or sets the artist.
         /// </summary>
         public Artist Artist { get; set; }
 
         /// <summary>
-        /// Gets or sets the duration.
+        ///     Gets or sets the duration.
         /// </summary>
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
-        /// Gets or sets the genre.
+        ///     Gets or sets the genre.
         /// </summary>
         public Genre Genre { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the id.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
     }
 }
