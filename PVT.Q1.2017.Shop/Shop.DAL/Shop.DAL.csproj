@@ -58,7 +58,7 @@
     <Compile Include="Context\UserConfiguration.cs" />
     <Compile Include="Context\UserContext.cs" />
     <Compile Include="DalNinjectModule.cs" />
-    <Compile Include="Data\ListOfUsers.cs" />
+    <Compile Include="Data\UserInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
