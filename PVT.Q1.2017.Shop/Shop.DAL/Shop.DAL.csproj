@@ -71,6 +71,7 @@
       <DependentUpon>201702251256236_UpdatedAlbumReleaseDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\Configurations\CurrencyConfiguration.cs" />
     <Compile Include="Migrations\Configurations\GenreConfiguration.cs" />
     <Compile Include="Migrations\Configurations\VoteConfiguration.cs" />
     <Compile Include="Migrations\Configurations\FeedbackConfiguration.cs" />
