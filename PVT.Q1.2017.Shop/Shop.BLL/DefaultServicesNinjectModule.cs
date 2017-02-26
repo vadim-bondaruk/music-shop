@@ -1,9 +1,12 @@
 ﻿namespace Shop.BLL
 {
+    using Common.Models;
     using DAL;
+    using Infrastructure.Validators;
     using Ninject;
     using Ninject.Modules;
     using Services;
+    using Validators;
 
     /// <summary>
     /// Default cofiguration module.
@@ -21,6 +24,9 @@
             }
 
             Bind<ITrackService>().To<TrackService>();
+            Bind<IValidator<Artist>>().To<ArtistValidator>();
+            Bind<IValidator<Album>>().To<AlbumValidator>();
+            Bind<IValidator<Track>>().To<TrackValidator>();
         }
     }
 }

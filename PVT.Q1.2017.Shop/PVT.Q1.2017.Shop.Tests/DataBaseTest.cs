@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
@@ -25,7 +26,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
         public DataBaseTest()
         {
-            this._kernel = new StandardKernel(new DefaultServicesNinjectModule());
+            this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
         }
 
         private TestContext testContextInstance;
@@ -163,6 +164,50 @@ namespace PVT.Q1._2017.Shop.Tests
                 repository.SaveChanges();
 
                 Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
+            }
+        }
+
+        [TestMethod]
+        public void TracksWithArtistTest()
+        {
+            var artist = new Artist { Name = "Sia" };
+            var track1 = new Track { Name = "Unstoppable", Artist = artist };
+            var track2 = new Track { Name = "Alive", Artist = artist };
+
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Artist>())
+            {
+                repository.AddOrUpdate(artist);
+            }
+
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
+                repository.AddOrUpdate(track1);
+                repository.AddOrUpdate(track2);
+                repository.SaveChanges();
+
+                Assert.IsTrue(repository.GetAll(t => t.Artist != null).Any());
+            }
+        }
+
+        [TestMethod]
+        public void TracksWithArtistsTest()
+        {
+            List<string> artists = new List<string>();
+
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
+                var tracks = repository.GetAll();
+                foreach (var track in tracks)
+                {
+                    if (track.ArtistId != null)
+                    {
+                        artists.Add(track.Artist.Name);
+                    }
+                }
+
+                Assert.IsTrue(artists.Count > 0);
             }
         }
     }

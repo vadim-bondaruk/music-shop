@@ -53,10 +53,11 @@
             using (var repository = this.RepositoryFactory.CreateRepository<Track>())
             {
                 tracks = repository.GetAll(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                foreach (var track in tracks)
+                {
+                    track.NeedArtistInfo += (sender, artist) => TrackHelper.FillArtistInfo(this.RepositoryFactory, track);
+                }
             }
-
-            // fills information about artists
-            TrackHelper.FillArtistInfo(this.RepositoryFactory, tracks);
 
             return tracks;
         }
