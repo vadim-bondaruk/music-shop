@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201702252327541_New.Designer.cs">
       <DependentUpon>201702252327541_New.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702260805352_test.cs" />
+    <Compile Include="Migrations\201702260805352_test.Designer.cs">
+      <DependentUpon>201702260805352_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\GenreConfiguration.cs" />
     <Compile Include="Migrations\Configurations\VoteConfiguration.cs" />
@@ -96,6 +100,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702252327541_New.resx">
       <DependentUpon>201702252327541_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702260805352_test.resx">
+      <DependentUpon>201702260805352_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

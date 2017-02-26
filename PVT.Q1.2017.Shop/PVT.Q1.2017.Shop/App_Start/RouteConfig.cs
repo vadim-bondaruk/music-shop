@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RouteConfig.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   Global filters of route table
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace PVT.Q1._2017.Shop
+﻿namespace PVT.Q1._2017.Shop
 {
     #region
 
@@ -31,7 +22,7 @@ namespace PVT.Q1._2017.Shop
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+                new { controller = "Track", action = "AddNew", id = UrlParameter.Optional });
         }
     }
 }

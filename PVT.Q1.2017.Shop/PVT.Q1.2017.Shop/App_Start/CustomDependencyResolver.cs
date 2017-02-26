@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CustomDependencyResolver.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   Custom Dependency Resolver class
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace PVT.Q1._2017.Shop
+﻿namespace PVT.Q1._2017.Shop
 {
     #region
 

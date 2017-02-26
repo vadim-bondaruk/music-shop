@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   AssemblyInfo.cs
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-#region
+﻿#region
 
 using System.Reflection;
 using System.Runtime.InteropServices;
