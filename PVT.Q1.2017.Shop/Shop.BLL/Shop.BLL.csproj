@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -47,17 +47,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="Exceptions\InvalidTrackException.cs" />
+    <Compile Include="Exceptions\TrackNotFoundException.cs" />
+    <Compile Include="Helpers\TrackHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BllNinjectModule.cs" />
+    <Compile Include="DefaultServicesNinjectModule.cs" />
+    <Compile Include="Services\ITrackService.cs" />
+    <Compile Include="Services\TrackService.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Validators\AlbumValidator.cs" />
+    <Compile Include="Validators\ArtistValidator.cs" />
+    <Compile Include="Validators\TrackValidator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Validators\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>
       <Name>Shop.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Common\Shop.Common.csproj">
+      <Project>{3D15CC83-6093-4606-A948-D834033D3692}</Project>
+      <Name>Shop.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.DAL\Shop.DAL.csproj">
+      <Project>{C30727DA-8C05-4773-A9C9-B01C8E951FB4}</Project>
+      <Name>Shop.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

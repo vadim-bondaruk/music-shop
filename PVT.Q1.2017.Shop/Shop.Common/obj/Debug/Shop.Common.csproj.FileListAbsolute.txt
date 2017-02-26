@@ -1,0 +1,7 @@
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.Common\bin\Debug\Shop.Common.dll
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.Common\bin\Debug\Shop.Common.pdb
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.Common\bin\Debug\Shop.Infrastructure.dll
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.Common\bin\Debug\Shop.Infrastructure.pdb
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.Common\obj\Debug\Shop.Common.csprojResolveAssemblyReference.cache
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.Common\obj\Debug\Shop.Common.dll
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.Common\obj\Debug\Shop.Common.pdb

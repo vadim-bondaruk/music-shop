@@ -43,11 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Album.cs" />
+    <Compile Include="Models\AlbumPrice.cs" />
+    <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\CurrencyRate.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Mark.cs" />
+    <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\TrackPrice.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
+      <Project>{C0E3B0F8-3FD8-4D53-B3B1-B98BDF5DA9CF}</Project>
+      <Name>Shop.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
