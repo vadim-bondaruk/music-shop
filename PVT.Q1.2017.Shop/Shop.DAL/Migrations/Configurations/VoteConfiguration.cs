@@ -16,6 +16,8 @@
             this.ToTable("tbVotes");
             this.HasKey(t => t.Id);
             this.Property(t => t.Mark).IsRequired();
+
+            this.HasRequired(v => v.Track).WithMany(t => t.Votes);
         }
     }
 }

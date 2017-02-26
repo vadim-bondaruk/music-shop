@@ -19,11 +19,6 @@ namespace Shop.Common.Models
     public class Album : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the artist.
-        /// </summary>
-        public Artist Artist { get; set; }
-
-        /// <summary>
         /// Gets or sets the cover.
         /// </summary>
         public byte[] Cover { get; set; }
@@ -37,6 +32,16 @@ namespace Shop.Common.Models
         /// Gets or sets the release date.
         /// </summary>
         public DateTime? ReleaseDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the artist.
+        /// </summary>
+        public Artist Artist { get; set; }
+
+        /// <summary>
+        /// Gets or sets the artist id.
+        /// </summary>
+        public int? ArtistId { get; set; }
 
         /// <summary>
         /// Gets or sets all tracks from the album.

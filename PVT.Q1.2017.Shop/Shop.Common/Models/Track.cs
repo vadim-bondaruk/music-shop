@@ -24,10 +24,20 @@ namespace Shop.Common.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the album id.
+        /// </summary>
+        public int? AlbumId { get; set; }
+
+        /// <summary>
         /// Gets or sets the album.
         /// </summary>
         public Album Album { get; set; }
 
+        /// <summary>
+        /// Gets or sets the artist id.
+        /// </summary>
+        public int? ArtistId { get; set; }
+        
         /// <summary>
         /// Gets or sets the artist.
         /// </summary>
@@ -37,6 +47,11 @@ namespace Shop.Common.Models
         /// Gets or sets the track duration.
         /// </summary>
         public TimeSpan? Duration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the genre id.
+        /// </summary>
+        public int? GenreId { get; set; }
 
         /// <summary>
         /// Gets or sets the genre.

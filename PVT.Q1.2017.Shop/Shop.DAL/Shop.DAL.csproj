@@ -62,14 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201702251050405_Initial.cs" />
-    <Compile Include="Migrations\201702251050405_Initial.Designer.cs">
-      <DependentUpon>201702251050405_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702251256236_UpdatedAlbumReleaseDate.cs" />
-    <Compile Include="Migrations\201702251256236_UpdatedAlbumReleaseDate.Designer.cs">
-      <DependentUpon>201702251256236_UpdatedAlbumReleaseDate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\CurrencyConfiguration.cs" />
     <Compile Include="Migrations\Configurations\GenreConfiguration.cs" />
@@ -97,14 +89,6 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702251050405_Initial.resx">
-      <DependentUpon>201702251050405_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702251256236_UpdatedAlbumReleaseDate.resx">
-      <DependentUpon>201702251256236_UpdatedAlbumReleaseDate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

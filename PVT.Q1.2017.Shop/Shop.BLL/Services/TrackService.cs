@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Common.Models;
     using Exceptions;
+    using Helpers;
     using Infrastructure.Repositories;
     using Infrastructure.Validators;
     using Validators;
@@ -48,10 +49,16 @@
                 return new List<Track>();
             }
 
+            ICollection<Track> tracks;
             using (var repository = this.RepositoryFactory.CreateRepository<Track>())
             {
-                return repository.GetAll(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                tracks = repository.GetAll(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             }
+
+            // fills information about artists
+            TrackHelper.FillArtistInfo(this.RepositoryFactory, tracks);
+
+            return tracks;
         }
 
         /// <summary>
@@ -65,10 +72,36 @@
         /// </returns>
         public ICollection<Track> GetTracksByGenre(Genre genre)
         {
+            ICollection<Track> tracks;
             using (var repository = this.RepositoryFactory.CreateRepository<Track>())
             {
-                return repository.GetAll(t => t.Genre == genre);
+                tracks = repository.GetAll(t => t.Genre == genre);
             }
+
+            // fills information about artists
+            TrackHelper.FillArtistInfo(this.RepositoryFactory, tracks);
+
+            return tracks;
+        }
+
+        /// <summary>
+        /// Returns all registered tracks.
+        /// </summary>
+        /// <returns>
+        /// All registered tracks.
+        /// </returns>
+        public ICollection<Track> GetAllRegisteredTracks()
+        {
+            ICollection<Track> tracks;
+            using (var repository = this.RepositoryFactory.CreateRepository<Track>())
+            {
+                tracks = repository.GetAll();
+            }
+
+            // fills information about artists
+            TrackHelper.FillArtistInfo(this.RepositoryFactory, tracks);
+
+            return tracks;
         }
 
         #endregion //Public Methods
