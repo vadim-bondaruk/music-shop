@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TrackViewModel.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   Defines the TrackViewModel type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace PVT.Q1._2017.Shop.Views.ViewModels
+﻿namespace PVT.Q1._2017.Shop.Models
 {
     using System;
 

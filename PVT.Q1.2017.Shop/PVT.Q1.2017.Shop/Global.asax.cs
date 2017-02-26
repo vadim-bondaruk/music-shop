@@ -15,6 +15,7 @@
 
     using Ninject;
 
+    using PVT.Q1._2017.Shop.Models;
     using PVT.Q1._2017.Shop.Views.ViewModels;
 
     #endregion
