@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
     using System.Linq.Expressions;
-    using Ship.Infrastructure.Repositories;
-    using Shop.DAL.Data;
     using Common.Models;
-
+    using Context;
+    using Ship.Infrastructure.Repositories;
+    
     /// <summary>
     /// 
     /// </summary>
@@ -15,7 +17,7 @@
         /// <summary>
         /// Contains list of users
         /// </summary>
-        private ListOfUsers _db;
+        private UserContext _db;
 
         /// <summary>
         /// 
@@ -23,7 +25,7 @@
         public UserRepository()
         {
             // кандидат на использование DI?
-            this._db = new ListOfUsers();
+            this._db = new UserContext();
         }
 
         /// <summary>
@@ -33,7 +35,7 @@
         /// <returns></returns>
         public User GetById(int id)
         {
-            return this._db.Users.Find(p => p.Id == id);
+            return this._db.Users.Find(id);
         }
 
         /// <summary>
@@ -44,11 +46,11 @@
         {
             if (this._db != null)
             {
-                return this._db.Users;
+                return this._db.Users.ToList();
             }
             else
             {
-                throw new Exception("problems in repository");
+                throw new Exception("problems in DBContext");
             }
         }
 
@@ -59,16 +61,17 @@
         /// <returns></returns>
         public ICollection<User> GetAll(Expression<Func<User, bool>> filter)
         {
-            // временно не работает как надо
-            
-            if (this._db != null)
+            IQueryable<User> query = this._db.Set<User>();
+            if (this._db != null && filter != null)
             {
-                return this._db.Users;
+                query = query.Where(filter);
             }
             else
             {
-                throw new Exception("problems in repository");
+                throw new Exception("problems in DBContext");
             }
+
+            return query.ToList();
         }
 
         /// <summary>
@@ -77,14 +80,21 @@
         /// <param name="model"></param>
         public void AddOrUpdate(User model)
         {
-            int countOfUsers = this._db.Users.Count;
-            if (model.Id > countOfUsers)
+            if (this._db != null)
             {
-                this._db.Users.Add(model);
+                if (this._db.Users.Contains(model))
+                {
+                    this._db.Users.Attach(model);
+                    this._db.Entry(model).State = EntityState.Modified;
+                }
+                else
+                {
+                    this._db.Users.Add(model);
+                }
             }
             else
             {
-                this._db.Users.Insert(model.Id, model);
+                throw new Exception("problems in DBContext");
             }
         }
 
@@ -94,11 +104,8 @@
         /// <param name="id">id</param>
         public void Delete(int id)
         {
-            User user = this._db.Users.Find(p => p.Id == id);
-            if (user != null)
-            {
-                this._db.Users.Remove(user);
-            }
+            User userToDelete = this._db.Users.Find(id);
+            this.Delete(userToDelete);
         }
 
         /// <summary>
