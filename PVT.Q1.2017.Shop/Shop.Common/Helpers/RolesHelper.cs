@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="userRole"></param>
         /// <returns></returns>
-        public static string GetRole(UserRoles userRole)
+        public static string GetRoleName(UserRoles userRole)
         {
             return userRole.ToString();
         }

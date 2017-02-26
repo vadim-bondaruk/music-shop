@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PVT.Q1._2017.Shop.ViewModels
 {
-    public class UserView
+    public class UserViewModel
     {
     }
 }
