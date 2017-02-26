@@ -2,6 +2,7 @@
 {
     using System.Data.Entity.ModelConfiguration;
     using Common.Models;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The <see cref="Feedback"/> configuration.
@@ -13,11 +14,13 @@
         /// </summary>
         public FeedbackConfiguration()
         {
-            this.ToTable("tbFeedbacks");
             this.HasKey(t => t.Id);
+            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Comments).IsRequired().IsUnicode().IsVariableLength();
+            this.HasRequired(f => f.Track).WithMany(t => t.Feedbacks).HasForeignKey(t => t.TrackId).WillCascadeOnDelete(true);
+            this.HasRequired(f => f.User).WithMany(t => t.Feedbacks).HasForeignKey(t => t.UserId).WillCascadeOnDelete(true);
 
-            this.HasRequired(f => f.Track).WithMany(t => t.Feedbacks);
+            this.ToTable("tbFeedbacks");
         }
     }
 }

@@ -5,23 +5,20 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
-    /// The <see cref="Album"/> configuration.
+    /// The <see cref="PriceLevel"/> configuration.
     /// </summary>
-    public class AlbumConfiguration : EntityTypeConfiguration<Album>    
+    public class PriceLevelConfiguration : EntityTypeConfiguration<PriceLevel>    
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumConfiguration"/> class.
+        /// C'tor
         /// </summary>
-        public AlbumConfiguration()
+        public PriceLevelConfiguration()
         {
             HasKey(t => t.Id);
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            Property(t => t.ReleaseDate).IsOptional();
-
-            HasOptional(a => a.Artist).WithMany(a => a.Albums).HasForeignKey(a => a.ArtistId).WillCascadeOnDelete(false);
-
-            ToTable("tbAlbums");
+         
+            ToTable("tbPriceLevels");
         }
     }
 }

@@ -22,9 +22,19 @@ namespace Shop.Common.Models
         public string Comments { get; set; }
 
         /// <summary>
+        /// Track id
+        /// </summary>
+        public int TrackId { get; set; }
+
+        /// <summary>
         /// Gets or sets the track for which the <see cref="User"/> have written the <see cref="Comments"/>.
         /// </summary>
-        public Track Track { get; set; }
+        public virtual Track Track { get; set; }
+
+        /// <summary>
+        /// User id
+        /// </summary>
+        public int UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the user who wrote the <see cref="Comments"/>.

@@ -2,6 +2,7 @@
 {
     using System.Data.Entity.ModelConfiguration;
     using Common.Models;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The <see cref="Genre"/> configuration.
@@ -13,9 +14,10 @@
         /// </summary>
         public GenreConfiguration()
         {
-            this.ToTable("tbGenres");
             this.HasKey(t => t.Id);
+            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsVariableLength().IsUnicode();
+            this.ToTable("tbGenres");
         }
     }
 }

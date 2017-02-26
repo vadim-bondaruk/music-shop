@@ -25,6 +25,6 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the tracks.
         /// </summary>
-        public ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }

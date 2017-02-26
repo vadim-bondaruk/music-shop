@@ -31,7 +31,7 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the album.
         /// </summary>
-        public Album Album { get; set; }
+        public virtual Album Album { get; set; }
 
         /// <summary>
         /// Gets or sets the artist id.
@@ -41,7 +41,7 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the artist.
         /// </summary>
-        public Artist Artist { get; set; }
+        public virtual Artist Artist { get; set; }
 
         /// <summary>
         /// Gets or sets the track duration.
@@ -56,7 +56,7 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the genre.
         /// </summary>
-        public Genre Genre { get; set; }
+        public virtual Genre Genre { get; set; }
 
         /// <summary>
         /// Gets or sets the image.
@@ -76,11 +76,11 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets all user votes for the current track.
         /// </summary>
-        public ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
 
         /// <summary>
         /// Gets or sets all user feedbacks the current track.
         /// </summary>
-        public ICollection<Feedback> Feedbacks { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

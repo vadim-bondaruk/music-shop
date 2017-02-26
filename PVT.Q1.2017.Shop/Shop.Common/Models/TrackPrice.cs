@@ -17,18 +17,38 @@ namespace Shop.Common.Models
     public class TrackPrice : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the amount.
+        /// Currency id
         /// </summary>
-        public decimal Amount { get; set; }
+        public int CurrencyId { get; set; }
+
+        /// <summary>
+        /// Track id
+        /// </summary>
+        public int TrackId { get; set; }
+
+        /// <summary>
+        /// Get or set price level id
+        /// </summary>
+        public int PriceLevelId { get; set; }
+
+        /// <summary>
+        /// Price for track
+        /// </summary>
+        public double Price { get; set; }
 
         /// <summary>
         /// Gets or sets the currency.
         /// </summary>
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
         /// <summary>
         /// Gets or sets the track.
         /// </summary>
-        public Track Track { get; set; }
+        public virtual Track Track { get; set; }
+        
+        /// <summary>
+        /// Get or set <see cref="PriceLevel"/>
+        /// </summary>
+        public virtual PriceLevel PriceLevel { get; set; }
     }
 }

@@ -7,21 +7,21 @@
     /// <summary>
     /// The <see cref="Album"/> configuration.
     /// </summary>
-    public class AlbumConfiguration : EntityTypeConfiguration<Album>    
+    public class UserConfiguration : EntityTypeConfiguration<User>    
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AlbumConfiguration"/> class.
         /// </summary>
-        public AlbumConfiguration()
+        public UserConfiguration()
         {
             HasKey(t => t.Id);
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            Property(t => t.ReleaseDate).IsOptional();
+            Property(u => u.IdentityKey).HasMaxLength(128).IsRequired();
+            Property(u => u.Dicount).IsOptional();
+            HasRequired(u => u.UserCurrency).WithMany(c => c.Users).HasForeignKey(u => u.CurrencyId).WillCascadeOnDelete(false);
 
-            HasOptional(a => a.Artist).WithMany(a => a.Albums).HasForeignKey(a => a.ArtistId).WillCascadeOnDelete(false);
 
-            ToTable("tbAlbums");
+            ToTable("tbUsers");
         }
     }
 }
