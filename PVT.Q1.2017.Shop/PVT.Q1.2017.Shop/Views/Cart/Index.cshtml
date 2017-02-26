@@ -1,0 +1,33 @@
+﻿@model PVT.Q1._2017.Shop.ViewModels.CartView
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <table border="1" cellpadding="3">
+        <thead>
+            <tr>
+                <th><font color="blue">Исполнитель</font></th>
+                <th style="text-align:center;"><font color="blue">Альбом</font></th>
+                <th><font color="blue">Название песни</font></th>
+                <th><font color="blue">Продолжительность</font></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Tracks.Count; i++)
+            {
+                <tr><td>@Model.Tracks[i].Artist</td><td width="200">@Model.Tracks[i].Album</td><td>@Model.Tracks[i].Name</td>
+                <td>@Model.Tracks[i].Duration</td></tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

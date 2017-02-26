@@ -209,6 +209,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="T4MVC.tt.hooks.t4" />
+    <Content Include="Views\Cart\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -217,7 +218,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Cart\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
