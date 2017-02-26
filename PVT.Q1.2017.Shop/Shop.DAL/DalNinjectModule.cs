@@ -3,6 +3,7 @@ using Ninject.Modules;
 using Shop.Common.Models;
 using Shop.DAL.Repositories;
 using Shop.Infrastructure.Repositories;
+using Shop.DAL.Context;
 
 namespace Shop.DAL
 {
@@ -10,7 +11,7 @@ namespace Shop.DAL
     {
         public override void Load()
         {
-            Bind<IRepository<Cart>>().To<CartRepository>();
+            Bind<IRepository<Cart>>().To<CartRepository>().WithConstructorArgument("dbContext", new ShopContext());
         }
     }
 }
