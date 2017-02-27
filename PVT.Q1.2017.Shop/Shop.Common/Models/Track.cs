@@ -71,7 +71,7 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the track prices.
         /// </summary>
-        public ICollection<TrackPrice> TrackPrices { get; set; }
+        public virtual ICollection<TrackPrice> TrackPrices { get; set; }
 
         /// <summary>
         /// Gets or sets all user votes for the current track.
