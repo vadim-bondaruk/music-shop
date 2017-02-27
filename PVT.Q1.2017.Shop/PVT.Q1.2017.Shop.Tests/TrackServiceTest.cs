@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using Shop.BLL;
 using Shop.BLL.Services;
+using Shop.Common.Models;
+using Shop.Infrastructure.Services;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
@@ -64,22 +66,8 @@ namespace PVT.Q1._2017.Shop.Tests
         #endregion
 
         [TestMethod]
-        public void TracksWithArtistsTest()
+        public void RegisterTrackTest()
         {
-            List<string> artists = new List<string>();
-
-            ITrackService trackService = this._kernel.Get<ITrackService>();
-            var tracks = trackService.GetAllRegisteredTracks();
-
-            foreach (var track in tracks)
-            {
-                if (track.ArtistId != null)
-                {
-                    artists.Add(track.Artist.Name);
-                }
-            }
-
-            Assert.IsTrue(artists.Count > 0);
         }
     }
 }

@@ -193,21 +193,20 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void TracksWithArtistsTest()
         {
-            List<string> artists = new List<string>();
-
+            int count = 0;
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
             using (var repository = repositoryFactory.CreateRepository<Track>())
             {
                 var tracks = repository.GetAll();
                 foreach (var track in tracks)
                 {
-                    if (track.ArtistId != null)
+                    if (track.Artist != null)
                     {
-                        artists.Add(track.Artist.Name);
+                        count++;
                     }
                 }
 
-                Assert.IsTrue(artists.Count > 0);
+                Assert.IsTrue(count > 0);
             }
         }
     }

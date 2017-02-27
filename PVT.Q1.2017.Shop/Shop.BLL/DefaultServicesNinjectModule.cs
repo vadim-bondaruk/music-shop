@@ -2,6 +2,7 @@
 {
     using Common.Models;
     using DAL;
+    using Infrastructure.Services;
     using Infrastructure.Validators;
     using Ninject;
     using Ninject.Modules;
@@ -23,10 +24,16 @@
                 this.Kernel.Load(new DefaultRepositoriesNinjectModule());
             }
 
-            Bind<ITrackService>().To<TrackService>();
-            Bind<IValidator<Artist>>().To<ArtistValidator>();
-            Bind<IValidator<Album>>().To<AlbumValidator>();
+            Bind<IValidator<Artist>>().To<NamedEntityValidator<Artist>>();
+            Bind<IValidator<Album>>().To<NamedEntityValidator<Album>>();
             Bind<IValidator<Track>>().To<TrackValidator>();
+
+            Bind<IService<Track>>().To<Service<Track>>();
+            Bind<IService<Album>>().To<Service<Album>>();
+            Bind<IService<Artist>>().To<Service<Artist>>();
+            Bind<IService<Feedback>>().To<Service<Feedback>>();
+            Bind<IService<Vote>>().To<Service<Vote>>();
+            Bind<IService<Genre>>().To<Service<Genre>>();
         }
     }
 }
