@@ -13,7 +13,7 @@ namespace Shop.Security.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201702261335220_init"; }
+            get { return "201702262303044_init"; }
         }
         
         string IMigrationMetadata.Source
