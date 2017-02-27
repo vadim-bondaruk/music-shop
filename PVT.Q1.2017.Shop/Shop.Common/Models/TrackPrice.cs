@@ -9,23 +9,11 @@
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
-
     /// <summary>
     /// The track price.
     /// </summary>
-    public class TrackPrice : BaseEntity
+    public class TrackPrice : BasePriceEntity
     {
-        /// <summary>
-        /// Gets or sets the amount.
-        /// </summary>
-        public decimal Amount { get; set; }
-
-        /// <summary>
-        /// Gets or sets the currency.
-        /// </summary>
-        public Currency Currency { get; set; }
-
         /// <summary>
         /// Gets or sets the track.
         /// </summary>

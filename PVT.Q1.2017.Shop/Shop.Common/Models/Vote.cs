@@ -24,11 +24,11 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the track.
         /// </summary>
-        public Track Track { get; set; }
+        public virtual Track Track { get; set; }
 
         /// <summary>
         /// Gets or sets the user.
         /// </summary>
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }
