@@ -77,6 +77,12 @@ namespace PVT.Q1._2017.Shop.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult FileUpload()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.FileUpload);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public TrackController Actions { get { return MVC.Track; } }
@@ -99,6 +105,7 @@ namespace PVT.Q1._2017.Shop.Controllers
             public readonly string ArtistList = "ArtistList";
             public readonly string ArtistTracks = "ArtistTracks";
             public readonly string Details = "Details";
+            public readonly string FileUpload = "FileUpload";
             public readonly string TrackList = "TrackList";
         }
 
@@ -111,6 +118,7 @@ namespace PVT.Q1._2017.Shop.Controllers
             public const string ArtistList = "ArtistList";
             public const string ArtistTracks = "ArtistTracks";
             public const string Details = "Details";
+            public const string FileUpload = "FileUpload";
             public const string TrackList = "TrackList";
         }
 
@@ -147,6 +155,14 @@ namespace PVT.Q1._2017.Shop.Controllers
         {
             public readonly string id = "id";
         }
+        static readonly ActionParamsClass_FileUpload s_params_FileUpload = new ActionParamsClass_FileUpload();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_FileUpload FileUploadParams { get { return s_params_FileUpload; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_FileUpload
+        {
+            public readonly string file = "file";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -160,10 +176,12 @@ namespace PVT.Q1._2017.Shop.Controllers
                 public readonly string AddNew = "AddNew";
                 public readonly string Details = "Details";
                 public readonly string List = "List";
+                public readonly string SelectFileView = "SelectFileView";
             }
             public readonly string AddNew = "~/Views/Track/AddNew.cshtml";
             public readonly string Details = "~/Views/Track/Details.cshtml";
             public readonly string List = "~/Views/Track/List.cshtml";
+            public readonly string SelectFileView = "~/Views/Track/SelectFileView.cshtml";
         }
     }
 
@@ -250,6 +268,18 @@ namespace PVT.Q1._2017.Shop.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             DetailsOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void FileUploadOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Web.HttpPostedFileBase file);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult FileUpload(System.Web.HttpPostedFileBase file)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.FileUpload);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "file", file);
+            FileUploadOverride(callInfo, file);
             return callInfo;
         }
 

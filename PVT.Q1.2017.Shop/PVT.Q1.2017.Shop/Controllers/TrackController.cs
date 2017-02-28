@@ -119,7 +119,7 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public ActionResult FileUpload(HttpPostedFileBase file)
+        public virtual ActionResult FileUpload(HttpPostedFileBase file)
         {
             return this.View("SelectFileView");
         }

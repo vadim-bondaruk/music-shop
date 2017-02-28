@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <MvcSettings>
   <!--The namespace used by some of T4MVC's generated code-->
   <T4MVCNamespace>T4MVC</T4MVCNamespace>

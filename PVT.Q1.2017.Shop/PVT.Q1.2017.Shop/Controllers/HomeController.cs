@@ -2,21 +2,10 @@
 {
     #region
 
-    using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Repositories;
     using global::Shop.Infrastructure.Services;
-
-    using AutoMapper;
-
-    using global::Shop.BLL;
-    using global::Shop.Common.Models;
-    using global::Shop.Infrastructure.Repositories;
-
-    using Ninject;
-
     using PVT.Q1._2017.Shop.Models;
 
     #endregion
@@ -24,7 +13,7 @@
     /// <summary>
     /// Controller of Home page
     /// </summary>
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
         #region Fields
 
@@ -64,7 +53,7 @@
         /// <summary>
         /// </summary>
         /// <returns>View of index page</returns>
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
