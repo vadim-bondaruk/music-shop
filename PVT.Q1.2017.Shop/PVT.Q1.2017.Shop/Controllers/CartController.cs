@@ -1,9 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers.Cart
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using global::Shop.Common.Models;
-    using global::Shop.DAL.Repositories;
     using global::Shop.Infrastructure.Repositories;
     using ViewModels;
 
@@ -17,6 +17,11 @@
         /// Репозиторий для хранения корзины
         /// </summary>
         private IRepository<Cart> _cartRepository;
+
+        /// <summary>
+        /// Репозиторий для хранения пользователей 
+        /// </summary>
+        private IRepository<User> _userRepository;
         #endregion
         /// <summary>
         /// Конструктор для контроллера корзины
@@ -24,9 +29,10 @@
         /// <param name="repo">
         /// Репозиторий для хранения корзины
         /// </param>
-        public CartController(IRepository<Cart> repo)
+        public CartController(IRepository<Cart> cartRepo, IRepository<User> userRepo)
         {
-            this._cartRepository = repo;
+            this._cartRepository = cartRepo;
+            this._userRepository = userRepo;
         }
 
         #region Actions
@@ -43,8 +49,8 @@
         public ActionResult Index(int currentUserId, string returnUrl)
         {
             var cardView = new CartView { Tracks = new List<Track>() };
-            var card = this._cartRepository.GetAll(c => c.User.Id.Equals(currentUserId));
-            foreach (var c in card)
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
+            foreach (var c in cart)
             {
                 foreach (var t in c.Tracks)
                 {
@@ -61,15 +67,26 @@
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="trackID">
-        /// Id добавляемой песни
+        /// <param name="track">
+        /// Добавляемая песня
         /// </param>
         /// <param name="returnUrl">
         /// Путь для возврата к покупкам
         /// </param>
-        public RedirectToRouteResult AddTrackToCart(int currentUserId, int trackID, string returnUrl)
+        public RedirectToRouteResult AddTrackToCart(int currentUserId, Track track, string returnUrl)
         {
-            // добавление в репозиторий
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
+            if (cart == null)
+            {
+                return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
+            }
+
+            foreach (var c in cart)
+            {
+                c.Tracks.Add(track);
+                this._cartRepository.AddOrUpdate(c);
+            }
+
             return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
         }
 
@@ -79,15 +96,33 @@
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="cartId">
-        /// Id удаляемой строки из репозитория
+        /// <param name="track">
+        /// Удаляемая песня
         /// </param>
         /// <param name="returnUrl">
         /// Путь для возврата к покупкам
         /// </param>
-        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, int cartId, string returnUrl)
+        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track, string returnUrl)
         {
-            this._cartRepository.Delete(cartId);
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).Where(t => t.Tracks.Contains(track));
+            if (cart == null)
+            {
+                return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
+            }
+
+            foreach (var c in cart)
+            {
+                if (c.Tracks.Count == 1)
+                {
+                    this._cartRepository.Delete(c);
+                }
+                else
+                {
+                    c.Tracks.Remove(track);
+                    this._cartRepository.AddOrUpdate(c);
+                }
+            }
+
             return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
         }
         #endregion 
