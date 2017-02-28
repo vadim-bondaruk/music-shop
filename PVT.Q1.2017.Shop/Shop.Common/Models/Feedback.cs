@@ -1,33 +1,41 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Feedback.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="Feedback.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the Feedback type.
+//   The feedback.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
+    #region
+
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
-    /// The feedback.
+    ///     The feedback.
     /// </summary>
     public class Feedback : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the <see cref="User"/> comments.
+        ///     Gets or sets the <see cref="Shop.Common.Models.Feedback.User" />
+        ///     comments.
         /// </summary>
         public string Comments { get; set; }
 
         /// <summary>
-        /// Gets or sets the track for which the <see cref="User"/> have written the <see cref="Comments"/>.
+        ///     Gets or sets the track for which the
+        ///     <see cref="Shop.Common.Models.Feedback.User" /> have written the
+        ///     <see cref="Shop.Common.Models.Feedback.Comments" /> .
         /// </summary>
         public virtual Track Track { get; set; }
 
         /// <summary>
-        /// Gets or sets the user who wrote the <see cref="Comments"/>.
+        ///     Gets or sets the user who wrote the
+        ///     <see cref="Shop.Common.Models.Feedback.Comments" /> .
         /// </summary>
         public virtual User User { get; set; }
     }

@@ -1,13 +1,4 @@
-﻿// // --------------------------------------------------------------------------------------------------------------------
-// // <copyright file="Genre.cs" company="PVT Q1 2017">
-// //   All rights reserved
-// // </copyright>
-// // <summary>
-// //   Defines the Genre type.
-// // </summary>
-// // --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
     using System.Collections.Generic;
     using Infrastructure.Models;

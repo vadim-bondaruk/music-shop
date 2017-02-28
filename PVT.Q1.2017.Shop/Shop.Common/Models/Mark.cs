@@ -1,41 +1,41 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Mark.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="Mark.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the Mark type.
+//   The mark.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.Common.Models
 {
     /// <summary>
-    /// The mark.
+    ///     The mark.
     /// </summary>
     public enum Mark
     {
         /// <summary>
-        /// The one star.
+        ///     The one star.
         /// </summary>
         OneStar = 1,
 
         /// <summary>
-        /// The two stars.
+        ///     The two stars.
         /// </summary>
         TwoStars = 2,
 
         /// <summary>
-        /// The three stars.
+        ///     The three stars.
         /// </summary>
         ThreeStars = 3,
 
         /// <summary>
-        /// The four stars.
+        ///     The four stars.
         /// </summary>
         FourStars = 4,
 
         /// <summary>
-        /// The five stars.
+        ///     The five stars.
         /// </summary>
         FiveStars = 5
     }
