@@ -2,6 +2,7 @@
 {
     using System.Data.Entity.ModelConfiguration;
     using Common.Models;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The <see cref="Album"/> configuration.
@@ -13,10 +14,14 @@
         /// </summary>
         public AlbumConfiguration()
         {
-            this.ToTable("tbAlbums");
-            this.HasKey(t => t.Id);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            this.Property(t => t.ReleaseDate).IsOptional();
+            HasKey(t => t.Id);
+            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
+            Property(t => t.ReleaseDate).IsOptional();
+
+            HasOptional(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
+
+            ToTable("tbAlbums");
         }
     }
 }

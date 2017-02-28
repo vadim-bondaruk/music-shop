@@ -15,8 +15,13 @@ namespace Shop.Common.Models
     public class AlbumPrice : BasePriceEntity
     {
         /// <summary>
-        /// Gets or sets the album.
+        /// Track id
         /// </summary>
-        public virtual Album Album { get; set; }
+        public int AlbumId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Album"/>.
+        /// </summary>
+        public Album Album { get; set; }
     }
 }

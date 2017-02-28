@@ -26,7 +26,7 @@
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackViewModel>());
+            // Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackViewModel>());
         }
     }
 }

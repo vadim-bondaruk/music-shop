@@ -2,6 +2,7 @@
 {
     using System.Data.Entity.ModelConfiguration;
     using Common.Models;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The <see cref="Vote"/> configuration.
@@ -13,11 +14,13 @@
         /// </summary>
         public VoteConfiguration()
         {
-            this.ToTable("tbVotes");
             this.HasKey(t => t.Id);
+            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Mark).IsRequired();
+            this.HasRequired(v => v.Track).WithMany(t => t.Votes).HasForeignKey(v => v.TrackId).WillCascadeOnDelete(false);
+            this.HasRequired(v => v.User).WithMany(t => t.Votes).HasForeignKey(v => v.UserId).WillCascadeOnDelete(false);
 
-            this.HasRequired(v => v.Track).WithMany(t => t.Votes);
+            this.ToTable("tbVotes");
         }
     }
 }

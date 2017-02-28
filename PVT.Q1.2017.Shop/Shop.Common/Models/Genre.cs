@@ -10,6 +10,6 @@
         /// <summary>
         /// Gets or sets the tracks.
         /// </summary>
-        public virtual ICollection<Track> Tracks { get; set; }
+        public ICollection<Track> Tracks { get; set; }
     }
 }

@@ -1,7 +1,11 @@
-﻿@model ICollection<Shop.Common.Models.Track>
+﻿@model PVT.Q1._2017.Shop.ViewModels.MainViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Start page";
 }
 
-<h2>Index</h2>
+@if (Model.User.IsAuthenticated)
+{
+    <br/>
+    <span>Hello @Model.User.Name</span>
+}
 

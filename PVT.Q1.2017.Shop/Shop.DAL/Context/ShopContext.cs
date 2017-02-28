@@ -1,10 +1,12 @@
 ﻿namespace Shop.DAL.Context
 {
     using System.Data.Entity;
-
     using Common.Models;
     using Migrations;
-    using Migrations.Configurations;
+    using System.Reflection;
+    using System;
+    using System.Linq;
+    using System.Data.Entity.ModelConfiguration;
 
     /// <summary>
     /// Music shop Db
@@ -92,12 +94,15 @@
         /// </param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new TrackConfiguration())
-                        .Add(new ArtistConfiguration())
-                        .Add(new AlbumConfiguration())
-                        .Add(new FeedbackConfiguration())
-                        .Add(new VoteConfiguration())
-                        .Add(new GenreConfiguration());
+            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+               .Where(type => !string.IsNullOrEmpty(type.Namespace))
+               .Where(type => type.BaseType != null && type.BaseType.IsGenericType
+                   && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            foreach (var configurationInstance in typesToRegister.Select(Activator.CreateInstance))
+            {
+                modelBuilder.Configurations.Add((dynamic)configurationInstance);
+            }
+
             base.OnModelCreating(modelBuilder);
         }
 

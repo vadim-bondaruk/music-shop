@@ -15,8 +15,13 @@ namespace Shop.Common.Models
     public class TrackPrice : BasePriceEntity
     {
         /// <summary>
+        /// Track id
+        /// </summary>
+        public int TrackId { get; set; }
+
+        /// <summary>
         /// Gets or sets the track.
         /// </summary>
-        public Track Track { get; set; }
+        public virtual Track Track { get; set; }
     }
 }
