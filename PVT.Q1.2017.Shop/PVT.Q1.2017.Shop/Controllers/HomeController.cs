@@ -3,7 +3,6 @@
     using System.Web.Mvc;
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Repositories;
-    using global::Shop.Infrastructure.Services;
 
     /// <summary>
     /// Controller of Home page
@@ -17,11 +16,6 @@
         /// </summary>
         private readonly IRepositoryFactory _repositoryFactory;
 
-        /// <summary>
-        /// The tracks service.
-        /// </summary>
-        private readonly IService<Track> _trackService;
-
         #endregion //Fields
 
         #region Constructors
@@ -29,15 +23,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
-        /// <param name="trackService">
-        /// The track service.
-        /// </param>
         /// <param name="repositoryFactory">
         /// The repository factory.
         /// </param>
-        public HomeController(IService<Track> trackService, IRepositoryFactory repositoryFactory)
+        public HomeController(IRepositoryFactory repositoryFactory)
         {
-            this._trackService = trackService;
             this._repositoryFactory = repositoryFactory;
         }
 

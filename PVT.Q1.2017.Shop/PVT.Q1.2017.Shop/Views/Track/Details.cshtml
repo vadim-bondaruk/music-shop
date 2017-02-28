@@ -14,15 +14,15 @@
 
         <ul class="detailsList">
             <li>
-                <span class="titles">Artist:</span> <a href="https://www.google.by/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=" +@Model.Artist>@(Model.Artist)</a>
+                <span class="titles">Artist:</span> <a href="https://www.google.by/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=@Model.Artist.Name">@(Model.Artist.Name)</a>
             </li>
 
             <li>
-                <span class="titles">Name:</span> <a href="#">@Model.</a>
+                <span class="titles">Name:</span> <a href="#">@Model.Name</a>
             </li>
 
             <li>
-                <span class="titles">Album:</span> <a href="#">Unknown album</a>
+                <span class="titles">Album:</span> <a href="#">@Model.Album.Name</a>
             </li>
 
             <li>
@@ -30,17 +30,17 @@
             </li>
 
             <li>
-                <span class="titles">Release date:</span> @Model.ReleaseDate
+                <span class="titles">Release date:</span> @Model.Album.ReleaseDate
             </li>
             <li>
-                <span class="titles">Duration:</span> 04:15
+                <span class="titles">Duration:</span> @Model.Duration
             </li>
             <li>
-                <span class="titles">Price:</span> 1.35 $
+                <span class="titles">Price:</span> @Model.TrackPrices.FirstOrDefault().Amount $
             </li>
         </ul>
 
-        <img src="@Model.ImageUrl" alt="album cover" id="trackImage"/>
+        @*<img src="@Model.ImageUrl" alt="album cover" id="trackImage"/>
         <div class="button-wrapper">
             <a href="#" class="a-btn">
                 <span class="a-btn-slide-text">$1.35$</span>
@@ -50,7 +50,7 @@
                     <span></span>
                 </span>
             </a>
-        </div>
+        </div>*@
     </div>
 
 </div>

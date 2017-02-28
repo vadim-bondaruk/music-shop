@@ -9,8 +9,7 @@
     using AutoMapper;
 
     using global::Shop.Common.Models;
-
-    using PVT.Q1._2017.Shop.Models;
+    using ViewModels;
 
     #endregion
 

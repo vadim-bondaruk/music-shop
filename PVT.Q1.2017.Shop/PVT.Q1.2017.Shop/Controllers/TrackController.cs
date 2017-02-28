@@ -5,24 +5,40 @@
     using System.Web.Mvc;
 
     using global::Shop.Common.Models;
-    using global::Shop.DAL.Context;
-    using global::Shop.DAL.Repositories;
+    using global::Shop.Infrastructure.Repositories;
 
     #endregion
 
     /// <summary>
+    /// The track controller
     /// </summary>
-    public partial class TrackController : Controller
+    public class TrackController : Controller
     {
+        #region Fields
+
         /// <summary>
+        /// The repository factory.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult AddNew()
+        private readonly IRepositoryFactory _repositoryFactory;
+
+        #endregion //Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackController"/> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        public TrackController(IRepositoryFactory repositoryFactory)
         {
-            return this.View();
+            this._repositoryFactory = repositoryFactory;
         }
+
+        #endregion //Constructors
+
+        #region Actions
 
         /// <summary>
         /// </summary>
@@ -30,9 +46,8 @@
         /// </returns>
         public virtual ActionResult AlbumList()
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Album>())
             {
-                var repository = new Repository<Album>(context);
                 return this.View(repository.GetAll());
             }
         }
@@ -44,9 +59,8 @@
         /// </returns>
         public virtual ActionResult AlbumList(int artistId)
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Album>())
             {
-                var repository = new Repository<Album>(context);
                 return this.View(repository.GetAll(a => a.Artist.Id.Equals(artistId)));
             }
         }
@@ -58,12 +72,9 @@
         /// </returns>
         public virtual ActionResult AlbumTracks(int id)
         {
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                using (var context = new ShopContext())
-                {
-                    var repository = new Repository<Track>(context);
-                    return this.View(repository.GetAll(a => a.Album.Id.Equals(id)));
-                }
+                return this.View(repository.GetAll(t => t.Album.Id.Equals(id)));
             }
         }
 
@@ -73,9 +84,8 @@
         /// </returns>
         public virtual ActionResult ArtistList()
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Artist>())
             {
-                var repository = new Repository<Artist>(context);
                 return this.View(repository.GetAll());
             }
         }
@@ -87,12 +97,9 @@
         /// </returns>
         public virtual ActionResult ArtistTracks(int id)
         {
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                using (var context = new ShopContext())
-                {
-                    var repository = new Repository<Track>(context);
-                    return this.View(repository.GetAll(a => a.Album.Id.Equals(id)));
-                }
+                return this.View(repository.GetAll(t => t.Artist.Id.Equals(id)));
             }
         }
 
@@ -103,27 +110,26 @@
         /// </returns>
         public virtual ActionResult Details(int id)
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                var repository = new Repository<Track>(context);
-                return this.View(repository.GetAll(t => t.Id.Equals(id)));
+                return this.View(repository.GetById(id));
             }
         }
 
         /// <summary>
+        /// Diplays tracks list.
         /// </summary>
-        /// <exception cref="System.NotImplementedException">
-        ///     NotImplementedException
-        /// </exception>
         /// <returns>
+        /// The view that renders tracks list.
         /// </returns>
         public virtual ActionResult TrackList()
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                var repository = new Repository<Track>(context);
                 return this.View(repository.GetAll());
             }
         }
+
+        #endregion //Actions
     }
 }
