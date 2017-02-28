@@ -4,14 +4,50 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width"/>
+    <script>
+        $(document).ready(function() {
+            alert("hello");
+        });
+    </script>
+
+
+    @*<script>
+        alert("script ok");
+    </script>*@
+
+    @*<script>
+        $('.original-input').on("change",
+                 function () {
+                     realVal = $(this).val();
+                     lastIndex = realVal.lastIndexOf("\\") + 1;
+                     if (lastIndex !== -1) {
+                         realVal = realVal.substr(lastIndex);
+                         $(this).prev('.mask').find('.fake-input').val(realVal);
+                     }
+                 });
+    </script>*@
+
+    @*<script>
+        $(document).ready(function() {
+            $('.original-input').on("change",
+                function() {
+                    realVal = $(this).val();
+                    lastIndex = realVal.lastIndexOf("\\") + 1;
+                    if (lastIndex !== -1) {
+                        realVal = realVal.substr(lastIndex);
+                        $(this).prev('.mask').find('.fake-input').val(realVal);
+                    }
+                });
+        });
+    </script>*@
+
     <title>AddNew</title>
 </head>
 <body>
-<div id="trackInfo">
-    <div id="text-block">
 
-        <ul class="detailsList">
+<form name="form1" method="post" enctype="multipart/form-data" action="Track/FileUpload">
+    <div id="trackData">
+        <ul class="inputList" width="500px">
             <li>
                 <input type="text" placeholder="Artist"/>
             </li>
@@ -37,25 +73,21 @@
             <li>
                 <input type="text" placeholder="Price"/>
             </li>
+            <li class="cover-file">
+                <div class="mask">
+                    <input class="fake-input" id="file-path" type="text" placeholder="Cover"/>
+                    <input id="browsefile-button" type="button" value="Browse..."
+                           onclick="document.form1.filediag.click()"/>
+                </div>
+                <input class="original-input" type="file" name="filediag" style="display: none"/>
+
+            </li>
         </ul>
 
-        @*            <img src="@Model.ImageUrl" alt="album cover" id="trackImage" />*@
-        @*            <div class="button-wrapper">*@
-        @*                <a href="#" class="a-btn">*@
-        @*                    <span class="a-btn-slide-text">$1.35$</span>*@
-        @*                    <img src="/img/cart.png" alt="cart" />*@
-        @*                    <span class="a-btn-text">Add to cart</span>*@
-        @*                    <span class="a-btn-icon-right">*@
-        @*                        <span></span>*@
-        @*                    </span>*@
-        @*                </a>*@
-        @*            </div>*@
+        <button type="submit" class="add-button">Add</button>
     </div>
-
-</div>
-
+</form>
 </body>
-
 </html>
 
 @section AddNewTrack{

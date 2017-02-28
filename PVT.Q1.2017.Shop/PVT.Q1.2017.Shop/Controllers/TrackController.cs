@@ -2,6 +2,7 @@
 {
     #region
 
+    using System.Web;
     using System.Web.Mvc;
 
     using global::Shop.Common.Models;
@@ -108,6 +109,19 @@
                 var repository = new Repository<Track>(context);
                 return this.View(repository.GetAll(t => t.Id.Equals(id)));
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="file">
+        /// The file.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        public ActionResult FileUpload(HttpPostedFileBase file)
+        {
+            return this.View("SelectFileView");
         }
 
         /// <summary>
