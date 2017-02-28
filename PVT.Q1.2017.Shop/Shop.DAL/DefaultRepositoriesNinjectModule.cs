@@ -28,11 +28,11 @@
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
-            Bind<IDisposableRepository<Track>>().To<Repository<Track>>();
+            Bind<IDisposableRepository<Track>>().To<TrackRepository>();
             Bind<IDisposableRepository<Artist>>().To<Repository<Artist>>();
-            Bind<IDisposableRepository<Album>>().To<Repository<Album>>();
-            Bind<IDisposableRepository<Feedback>>().To<Repository<Feedback>>();
-            Bind<IDisposableRepository<Vote>>().To<Repository<Vote>>();
+            Bind<IDisposableRepository<Album>>().To<AlbumRepositry>();
+            Bind<IDisposableRepository<Feedback>>().To<FeedbackRepository>();
+            Bind<IDisposableRepository<Vote>>().To<VoteRepository>();
             Bind<IDisposableRepository<Genre>>().To<Repository<Genre>>();
 
             Bind<IRepositoryFactory>().ToFactory();

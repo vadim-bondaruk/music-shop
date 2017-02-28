@@ -67,9 +67,10 @@
         /// <returns>
         /// A model with the specified <paramref name="id"/> or null in case if there are now models with such <paramref name="id"/>.
         /// </returns>
-        public TEntity GetById(int id)
+        public virtual TEntity GetById(int id)
         {
-            return this._currentDbSet.FirstOrDefault(x => x.Id == id);
+            IQueryable<TEntity> query = this._currentDbSet.Where(x => x.Id == id);
+            return this.LoadAdditionalInfo(query).FirstOrDefault();
         }
 
         /// <summary>
@@ -78,9 +79,10 @@
         /// <returns>
         /// All models from the repository.
         /// </returns>
-        public ICollection<TEntity> GetAll()
+        public virtual ICollection<TEntity> GetAll()
         {
-            return this._currentDbSet.ToList();
+            IQueryable<TEntity> query = this._currentDbSet;
+            return this.LoadAdditionalInfo(query).ToList();
         }
 
         /// <summary>
@@ -88,9 +90,10 @@
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
-        public ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
+        public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
         {
-            return this._currentDbSet.Where(filter).ToList();
+            IQueryable<TEntity> query = this._currentDbSet.Where(filter);
+            return this.LoadAdditionalInfo(query).ToList();
         }
 
         /// <summary>
@@ -99,7 +102,7 @@
         /// <param name="model">
         /// The model to add or to update.
         /// </param>
-        public void AddOrUpdate(TEntity model)
+        public virtual void AddOrUpdate(TEntity model)
         {
             if (model == null)
             {
@@ -126,7 +129,7 @@
         /// Deletes a model with the specified <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The model key.</param>
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             var model = this.GetById(id);
             if (model != null)
@@ -142,7 +145,7 @@
         /// <param name="model">
         /// The model to remove.
         /// </param>
-        public void Delete(TEntity model)
+        public virtual void Delete(TEntity model)
         {
             if (model == null)
             {
@@ -197,5 +200,20 @@
         }
 
         #endregion //IDisposable Pattern
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Loads additional references.
+        /// </summary>
+        /// <param name="queryResult">
+        /// The query result.
+        /// </param>
+        protected virtual IQueryable<TEntity> LoadAdditionalInfo(IQueryable<TEntity> queryResult)
+        {
+            return queryResult;
+        }
+
+        #endregion //Protected Methods
     }
 }
