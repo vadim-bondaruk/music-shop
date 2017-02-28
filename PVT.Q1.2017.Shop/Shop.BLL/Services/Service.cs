@@ -74,7 +74,7 @@
         #endregion //Properties
 
         #region IService Members
-
+        
         /// <summary>
         /// Registers the specified <paramref name="model"/> in the system.
         /// </summary>
@@ -83,7 +83,6 @@
         /// </param>
         public virtual void Register(TEntity model)
         {
-            // TODO: Logs on register model
             this._validator.Validate(model);
 
             using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
@@ -100,7 +99,6 @@
         /// </param>
         public virtual void Update(TEntity model)
         {
-            // TODO: Logs on model update
             if (!this.IsRegistered(model))
             {
                 this.OnUpdateEntityNotFoundException();
@@ -123,7 +121,6 @@
         /// </returns>
         public virtual bool Unregister(TEntity model)
         {
-            // TODO: Logs on model unregister
             if (!this.IsRegistered(model))
             {
                 return false;

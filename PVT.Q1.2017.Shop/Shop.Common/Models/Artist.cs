@@ -1,56 +1,53 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Artist.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
+// <copyright file="Artist.cs" company="PVT Q1 2017">
+//   All rights reserved
 // </copyright>
 // <summary>
-//   The artist.
+//   Defines the Artist type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.Common.Models
 {
-    #region
-
     using System;
     using System.Collections.Generic;
 
-    using Shop.Infrastructure.Models;
-
-    #endregion
-
     /// <summary>
-    ///     The artist.
+    /// The artist.
     /// </summary>
-    public class Artist : BaseEntity
+    public class Artist : BaseNamedEntity
     {
-        /// <summary>
-        ///     Gets or sets the albums.
-        /// </summary>
-        public ICollection<Album> Albums { get; set; }
+        #region Properties
 
         /// <summary>
-        ///     Gets or sets the biography.
+        /// Gets or sets the biography.
         /// </summary>
         public string Biography { get; set; }
 
         /// <summary>
-        ///     Gets or sets the birthday.
+        /// Gets or sets the birthday.
         /// </summary>
         public DateTime? Birthday { get; set; }
 
         /// <summary>
-        ///     Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the photo.
+        /// Gets or sets the photo.
         /// </summary>
         public byte[] Photo { get; set; }
 
+        #endregion //Properties
+
+        #region Navigation Properties
+
         /// <summary>
-        ///     Gets or sets all tracks of the current artist.
+        /// Gets or sets all tracks of the current artist.
         /// </summary>
-        public ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the albums.
+        /// </summary>
+        public ICollection<Album> Albums { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

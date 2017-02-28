@@ -31,12 +31,12 @@ namespace Shop.Common.Models
         ///     <see cref="Shop.Common.Models.Feedback.User" /> have written the
         ///     <see cref="Shop.Common.Models.Feedback.Comments" /> .
         /// </summary>
-        public Track Track { get; set; }
+        public virtual Track Track { get; set; }
 
         /// <summary>
         ///     Gets or sets the user who wrote the
         ///     <see cref="Shop.Common.Models.Feedback.Comments" /> .
         /// </summary>
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

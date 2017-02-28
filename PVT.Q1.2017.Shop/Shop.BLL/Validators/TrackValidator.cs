@@ -8,7 +8,7 @@
     /// <summary>
     /// The track validator.
     /// </summary>
-    public class TrackValidator : IValidator<Track>
+    public class TrackValidator : NamedEntityValidator<Track>
     {
         #region Fields
 
@@ -59,20 +59,6 @@
         #region Public Methods
 
         /// <summary>
-        /// Determines whether the track name is valid.
-        /// </summary>
-        /// <param name="trackName">
-        /// The track name.
-        /// </param>
-        /// <returns>
-        /// <b>true</b> if track name is valid; otherwise <b>false</b>.
-        /// </returns>
-        public static bool IsTrackNameValid(string trackName)
-        {
-            return !string.IsNullOrWhiteSpace(trackName);
-        }
-
-        /// <summary>
         /// Validates the specified <paramref name="track"/>.
         /// </summary>
         /// <param name="track">
@@ -81,19 +67,19 @@
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="track"/> or artist or album is null.
         /// </exception>
-        /// <exception cref="InvalidTrackException">
+        /// <exception cref="InvalidEntityException">
         /// When the <paramref name="track"/> is invalid.
         /// </exception>
-        public void Validate(Track track)
+        public override void Validate(Track track)
         {
             if (track == null)
             {
                 throw new ArgumentNullException(nameof(track));
             }
 
-            if (!IsTrackNameValid(track.Name))
+            if (!TrackValidator.IsNameValid(track.Name))
             {
-                throw new InvalidTrackException("Invalid track name specified.");
+                throw new InvalidEntityException("Invalid track name specified.");
             }
 
             this._artistValidator.Validate(track.Artist);
@@ -109,31 +95,21 @@
         /// <returns>
         /// <b>true</b> if track is valid; otherwise <b>false</b>.
         /// </returns>
-        public bool IsValid(Track track)
+        public override bool IsValid(Track track)
         {
-            if (track == null)
+            if (!base.IsValid(track))
             {
                 return false;
             }
 
-            if (!IsTrackNameValid(track.Name))
+            if (!this._artistValidator.IsValid(track.Artist))
             {
                 return false;
             }
 
-            ArtistValidator artistValidator = new ArtistValidator();
-            if (!artistValidator.IsValid(track.Artist))
+            if (!this._albumValidator.IsValid(track.Album))
             {
                 return false;
-            }
-
-            if (track.Album != null)
-            {
-                AlbumValidator albumValidator = new AlbumValidator();
-                if (!albumValidator.IsValid(track.Album))
-                {
-                    return false;
-                }
             }
 
             return true;

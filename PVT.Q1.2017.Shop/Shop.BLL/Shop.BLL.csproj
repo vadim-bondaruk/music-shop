@@ -48,16 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
-    <Compile Include="Exceptions\InvalidTrackException.cs" />
-    <Compile Include="Exceptions\TrackNotFoundException.cs" />
-    <Compile Include="Helpers\TrackHelper.cs" />
+    <Compile Include="Exceptions\InvalidEntityException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefaultServicesNinjectModule.cs" />
-    <Compile Include="Services\ITrackService.cs" />
-    <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\Service.cs" />
-    <Compile Include="Validators\AlbumValidator.cs" />
-    <Compile Include="Validators\ArtistValidator.cs" />
+    <Compile Include="Validators\NamedEntityValidator.cs" />
     <Compile Include="Validators\TrackValidator.cs" />
   </ItemGroup>
   <ItemGroup />

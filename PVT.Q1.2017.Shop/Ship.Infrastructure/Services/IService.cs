@@ -9,18 +9,14 @@
 
 namespace Shop.Infrastructure.Services
 {
-    #region
-
-    using Shop.Infrastructure.Models;
-
-    #endregion
+    using System.Collections.Generic;
+    using Models;
 
     /// <summary>
     ///     Base service contract (dummy)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface IService<TEntity>
-        where TEntity : BaseEntity, new()
+    public interface IService<TEntity> where TEntity : BaseEntity
     {
         /// <summary>
         /// Registers the specified <paramref name="model"/> in the system.

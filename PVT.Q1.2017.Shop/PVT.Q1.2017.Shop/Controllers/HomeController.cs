@@ -5,6 +5,9 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using global::Shop.Common.Models;
+    using global::Shop.Infrastructure.Repositories;
+    using global::Shop.Infrastructure.Services;
 
     using AutoMapper;
 
@@ -19,42 +22,56 @@
     #endregion
 
     /// <summary>
-    ///     Controller of Home page
+    /// Controller of Home page
     /// </summary>
-    public partial class HomeController : Controller
+    public class HomeController : Controller
     {
-        /// <summary>
-        /// </summary>
-        private readonly IDisposableRepository<Track> _tracksRepository;
+        #region Fields
 
         /// <summary>
-        ///     <para>
-        ///         Initializes a new instance of the <see cref="HomeController" />
-        ///     </para>
-        ///     <para>class.</para>
+        /// The repository factory.
         /// </summary>
-        public HomeController()
+        private readonly IRepositoryFactory _repositoryFactory;
+
+        /// <summary>
+        /// The tracks service.
+        /// </summary>
+        private readonly IService<Track> _trackService;
+
+        #endregion //Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
+        /// </summary>
+        /// <param name="trackService">
+        /// The track service.
+        /// </param>
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        public HomeController(IService<Track> trackService, IRepositoryFactory repositoryFactory)
         {
-            var kernel = new StandardKernel(new DefaultServicesNinjectModule());
-            var repositoryFactory = kernel.Get<IRepositoryFactory>();
-            this._tracksRepository = repositoryFactory.CreateRepository<Track>();
-            Mapper.Map<IEnumerable<Track>, List<TrackViewModel>>(this._tracksRepository.GetAll(c => !c.IsDeleted));
+            this._trackService = trackService;
+            this._repositoryFactory = repositoryFactory;
         }
 
+        #endregion //Constructors
+
+        #region Actions
+
         /// <summary>
         /// </summary>
-        /// <exception cref="System.Exception">EmptyCollection</exception>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult Index()
+        /// <returns>View of index page</returns>
+        public ActionResult Index()
         {
-            var tracks = this._tracksRepository.GetAll();
-            if (tracks.Count == 0)
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                throw new Exception("EmptyCollection!");
+                return this.View(repository.GetAll());
             }
-
-            return this.View("Index");
         }
+
+        #endregion //Actions
     }
 }

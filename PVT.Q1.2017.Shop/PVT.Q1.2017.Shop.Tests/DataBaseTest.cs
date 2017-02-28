@@ -1,16 +1,14 @@
-﻿namespace PVT.Q1._2017.Shop.Tests
-{
-    using System;
-    using System.Linq;
-
-    using global::Shop.BLL;
-    using global::Shop.Common.Models;
-    using global::Shop.DAL.Context;
-    using global::Shop.Infrastructure.Repositories;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    using Ninject;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninject;
+using Shop.BLL;
+using Shop.Common.Models;
+using Shop.DAL;
+using Shop.DAL.Context;
+using Shop.DAL.Repositories;
+using Shop.Infrastructure.Repositories;
 
     /// <summary>
     ///     Summary description for <see cref="DataBaseTest" />
@@ -31,7 +29,7 @@
         /// </summary>
         public DataBaseTest()
         {
-            this._kernel = new StandardKernel(new DefaultServicesNinjectModule());
+            this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
         }
 
         /// <summary>
@@ -161,18 +159,47 @@
             }
         }
 
-        // Use ClassInitialize to run code before running the first test in the class
-        // You can use the following additional attributes as you write your tests:
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
+        [TestMethod]
+        public void TracksWithArtistTest()
+        {
+            var artist = new Artist { Name = "Sia" };
+            var track1 = new Track { Name = "Unstoppable", Artist = artist };
+            var track2 = new Track { Name = "Alive", Artist = artist };
+
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Artist>())
+            {
+                repository.AddOrUpdate(artist);
+            }
+
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
+                repository.AddOrUpdate(track1);
+                repository.AddOrUpdate(track2);
+                repository.SaveChanges();
+
+                Assert.IsTrue(repository.GetAll(t => t.Artist != null).Any());
+            }
+        }
+
+        [TestMethod]
+        public void TracksWithArtistsTest()
+        {
+            int count = 0;
+            var repositoryFactory = _kernel.Get<IRepositoryFactory>();
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
+                var tracks = repository.GetAll();
+                foreach (var track in tracks)
+                {
+                    if (track.Artist != null)
+                    {
+                        count++;
+                    }
+                }
+
+                Assert.IsTrue(count > 0);
+            }
+        }
     }
 }

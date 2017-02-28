@@ -1,77 +1,73 @@
-﻿namespace Shop.Common.Models
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Track.cs" company="PVT Q1 2017">
+//   All rights reserved
+// </copyright>
+// <summary>
+//   The track.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
-    using Infrastructure.Models;
 
     /// <summary>
-    ///     The track.
+    /// The track.
     /// </summary>
-    public class Track : BaseEntity
+    public class Track : BaseNamedEntity
     {
-        /// <summary>
-        ///     Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
+        #region Properties
 
         /// <summary>
-        ///     Gets or sets the album id.
-        /// </summary>
-        public int? AlbumId { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the album.
-        /// </summary>
-        public Album Album { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the artist id.
-        /// </summary>
-        public int? ArtistId { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the artist.
-        /// </summary>
-        public Artist Artist { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the track duration.
-        /// </summary>
-        public TimeSpan? Duration { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the genre id.
-        /// </summary>
-        public int? GenreId { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the genre.
-        /// </summary>
-        public Genre Genre { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the image.
+        /// Gets or sets the image.
         /// </summary>
         public byte[] Image { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track file.
+        /// Gets or sets the track file.
         /// </summary>
         public byte[] TrackFile { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track prices.
+        /// Gets or sets the track duration.
         /// </summary>
-        public ICollection<TrackPrice> TrackPrices { get; set; }
+        public TimeSpan? Duration { get; set; }
+
+        #endregion //Properties
+
+        #region Navigation Properties
 
         /// <summary>
-        ///     Gets or sets all user votes for the current track.
+        /// Gets or sets the album.
         /// </summary>
-        public ICollection<Vote> Votes { get; set; }
+        public virtual Album Album { get; set; }
 
         /// <summary>
-        ///     Gets or sets all user feedbacks the current track.
+        /// Gets or sets the artist.
         /// </summary>
-        public ICollection<Feedback> Feedbacks { get; set; }
+        public virtual Artist Artist { get; set; }
+
+        /// <summary>
+        /// Gets or sets the genre.
+        /// </summary>
+        public virtual Genre Genre { get; set; }
+
+        /// <summary>
+        /// Gets or sets the track prices.
+        /// </summary>
+        public virtual ICollection<TrackPrice> TrackPrices { get; set; }
+
+        /// <summary>
+        /// Gets or sets all user votes for the current track.
+        /// </summary>
+        public virtual ICollection<Vote> Votes { get; set; }
+
+        /// <summary>
+        /// Gets or sets all user feedbacks the current track.
+        /// </summary>
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
+
+        #endregion //Navigation Properties
     }
 }
