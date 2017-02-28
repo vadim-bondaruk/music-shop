@@ -1,11 +1,14 @@
 ﻿namespace Shop.BLL.Services
-{
+{    
     using System;
     using System.Linq;
+    using DTO;
+    using Exceptions;
+    using Ninject;
     using Ship.Infrastructure.Repositories;
     using Ship.Infrastructure.Services;
-    using Shop.Common.Models;
-    
+    using Shop.Common.Models;   
+
     /// <summary>
     /// 
     /// </summary>
@@ -15,14 +18,38 @@
         /// 
         /// </summary>
         private IRepository<User> _userRepository;
-
+       
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userRepository"></param>
-        public UserService(IRepository<User> userRepository)
+        public UserService()
         {
-            this._userRepository = userRepository;
+            var kernel = new StandardKernel(new BllNinjectModule());
+            this._userRepository = kernel.Get<IRepository<User>>();
+        }
+
+        /// <summary>
+        /// Addition new user to userrepository
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public bool RegisterUser(UserDTO user)
+        {
+            if (!this.IsLoginUnique(user.Login))
+            {
+                throw new UserValidationException("User with the same login already exists", "Login");
+            }
+
+            if (!this.IsEmailUnique(user.Email))
+            {
+                throw new UserValidationException("User with the same email already exists", "Email");
+            }
+
+            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>());
+            var userDB = AutoMapper.Mapper.Map<User>(user);
+            this._userRepository.AddOrUpdate(userDB);
+            return true;
         }
 
         /// <summary>

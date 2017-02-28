@@ -1,13 +1,11 @@
-﻿namespace Shop.Common.Models
+﻿namespace Shop.BLL.DTO
 {
     using System;
-    using Ship.Infrastructure.Models;
-    using Shop.Infrastructure.Enums;
 
     /// <summary>
-    /// Basic user model
+    /// User data transfer object
     /// </summary>
-    public class User : BaseEntity
+    public class UserDTO
     {
         /// <summary>
         /// Users first name
@@ -25,11 +23,6 @@
         public string Login { get; set; }
 
         /// <summary>
-        /// Users password
-        /// </summary>
-        public string Password { get; set; }
-
-        /// <summary>
         /// Users e-mail
         /// </summary>
         public string Email { get; set; }
@@ -43,11 +36,6 @@
         /// Users birth date
         /// </summary>
         public DateTime? BirthDate { get; set; }
-
-        /// <summary>
-        /// Users role in this shop
-        /// </summary>
-        public UserRoles UserRole { get; set; }
 
         /// <summary>
         /// Users country
