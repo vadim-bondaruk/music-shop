@@ -24,7 +24,7 @@
                 FirstName = "John",
                 LastName = "Gates",
                 Login = "kasper",
-                Sex = 'M',
+                Sex = "M",
                 UserRole = UserRoles.User,
                 Email = "KasperKasper@gmail.com",
                 Password = "СлаваКПСС!11"
@@ -35,7 +35,7 @@
                 FirstName = "Alice",
                 LastName = "McNeal",
                 Login = "alisochka",
-                Sex = 'W',
+                Sex = "W",
                 UserRole = UserRoles.User,
                 Email = "alice1@gmail.com",
                 Password = "100VK500"
@@ -46,7 +46,7 @@
                 FirstName = "Artur",
                 LastName = "Li",
                 Login = "arturio",
-                Sex = 'M',
+                Sex = "M",
                 UserRole = UserRoles.Admin,
                 Email = "artII@mail.ru",
                 Password = "nobodyKnowMyP-d1"
@@ -57,7 +57,7 @@
                 FirstName = "Abziz",
                 LastName = "Anand",
                 Login = "OilMagnat",
-                Sex = 'M',
+                Sex = "W",
                 UserRole = UserRoles.VIPUser,
                 Email = "blablabla@gmail.com",
                 Password = "12345"

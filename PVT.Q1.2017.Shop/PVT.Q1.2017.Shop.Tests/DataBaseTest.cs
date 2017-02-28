@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop.DAL.Context;
+using System.Linq;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
@@ -62,14 +63,14 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void CreateDataBaseTest()
         {
-            using (var context = new ShopContext())
+            using (var context = new UserContext())
             {
                 if (context.Database.Exists())
                 {
                     context.Database.Delete();
                 }
-
                 context.Database.Create();
+
             }
         }
     }

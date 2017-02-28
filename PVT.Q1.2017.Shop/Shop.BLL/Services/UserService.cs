@@ -54,7 +54,7 @@
         {
             if (string.IsNullOrEmpty(email))
             {
-                throw new ArgumentException("login");
+                throw new ArgumentException("Email");
             }                
 
             if (this._userRepository.GetAll(u => u.Email == email).Any())

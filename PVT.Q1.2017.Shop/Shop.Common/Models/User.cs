@@ -37,12 +37,12 @@
         /// <summary>
         /// 
         /// </summary>
-        public char Sex { get; set; }
+        public string Sex { get; set; }
 
         /// <summary>
         /// Users birth date
         /// </summary>
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         /// <summary>
         /// Users role in this shop
