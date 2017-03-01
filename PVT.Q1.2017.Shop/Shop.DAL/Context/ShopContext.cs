@@ -42,7 +42,7 @@
 
             this.Configuration.AutoDetectChangesEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
-            this.Configuration.LazyLoadingEnabled = true;
+            this.Configuration.LazyLoadingEnabled = false;
         }
 
         #endregion //Constructors
