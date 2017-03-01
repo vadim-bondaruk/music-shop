@@ -26,13 +26,23 @@ namespace Shop.Common.Models
         public double CrossCourse { get; set; }
 
         /// <summary>
-        ///     Gets or sets the currency.
+        /// Currency id
         /// </summary>
-        public Currency Currency { get; set; }
+        public int CurrencyId { get; set; }
+
+        /// <summary>
+        /// Target currency id
+        /// </summary>
+        public int TargetCurrencyId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the currency.
+        /// </summary>
+        public virtual Currency Currency { get; set; }
 
         /// <summary>
         ///     Gets or sets the target currency.
         /// </summary>
-        public Currency TargetCurrency { get; set; }
+        public virtual Currency TargetCurrency { get; set; }
     }
 }

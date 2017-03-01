@@ -1,87 +1,43 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TrackRepository.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   Defines the TrackRepository type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System.Data.Entity;
+using System.Linq;
+using Shop.Common.Models;
 
 namespace Shop.DAL.Repositories
 {
-    #region
-
-    using System;
-
-    using Shop.Infrastructure.Models;
-
-    #endregion
-
     /// <summary>
+    /// The track repository.
     /// </summary>
-    public class TrackRepository
+    public class TrackRepository : Repository<Track>
     {
-        /// <summary>
-        /// </summary>
-        /// <exception cref="System.NotImplementedException" />
-        /// <returns>
-        /// </returns>
-        public object GetAlbumList()
-        {
-            throw new NotImplementedException();
-        }
+        #region Constructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TrackRepository"/> class.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <exception cref="System.NotImplementedException" />
-        /// <returns>
-        /// </returns>
-        public object GetAlbumList(int id)
+        /// <param name="dbContext">
+        /// The Db context.
+        /// </param>
+        public TrackRepository(DbContext dbContext) : base(dbContext)
         {
-            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// </summary>
-        /// <exception cref="System.NotImplementedException" />
-        /// <returns>
-        /// </returns>
-        public object GetArtistList()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion //Constructors
+
+        #region Protected Methods
 
         /// <summary>
+        /// Loads additional references.
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="queryResult">
+        /// The query result.
+        /// </param>
         /// <returns>
         /// </returns>
-        public ITrack GetTrack(int id)
+        protected override IQueryable<Track> LoadAdditionalInfo(IQueryable<Track> queryResult)
         {
-            return null;
+            return base.LoadAdditionalInfo(queryResult).Include(t => t.Artist).Include(t => t.Album).Include(t => t.Genre);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <exception cref="System.NotImplementedException" />
-        /// <returns>
-        /// </returns>
-        public object GetTrackList()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="albumId">The album id.</param>
-        /// <param name="artistId">The artist id.</param>
-        /// <exception cref="System.NotImplementedException" />
-        /// <returns>
-        /// </returns>
-        public object GetTrackList(int? albumId, int? artistId)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion //Protected Methods
     }
 }

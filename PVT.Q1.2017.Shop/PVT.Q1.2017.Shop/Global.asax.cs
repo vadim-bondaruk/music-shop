@@ -9,8 +9,7 @@
     using AutoMapper;
 
     using global::Shop.Common.Models;
-
-    using PVT.Q1._2017.Shop.Models;
+    using ViewModels;
 
     #endregion
 
@@ -27,7 +26,7 @@
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackViewModel>());
+            // Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackViewModel>());
         }
     }
 }

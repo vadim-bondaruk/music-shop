@@ -37,7 +37,7 @@
         /// <summary>
         /// Gets or sets the albums.
         /// </summary>
-        public ICollection<Album> Albums { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
 
         #endregion //Navigation Properties
     }

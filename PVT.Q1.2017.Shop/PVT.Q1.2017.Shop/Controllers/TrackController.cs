@@ -2,41 +2,43 @@
 {
     #region
 
-    using System.Web;
     using System.Web.Mvc;
 
     using global::Shop.Common.Models;
-    using global::Shop.DAL.Context;
-    using global::Shop.DAL.Repositories;
-
-    using PVT.Q1._2017.Shop.Models;
+    using global::Shop.Infrastructure.Repositories;
 
     #endregion
 
     /// <summary>
+    /// The track controller
     /// </summary>
-    public partial class TrackController : Controller
+    public class TrackController : Controller
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult AddNew()
-        {
-            return this.View(new TrackViewModel());
-        }
+        #region Fields
 
         /// <summary>
+        /// The repository factory.
         /// </summary>
-        /// <returns>
-        /// </returns>
-        [HttpPost]
-        public ActionResult AddNew(TrackViewModel trackViewModel)
+        private readonly IRepositoryFactory _repositoryFactory;
+
+        #endregion //Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackController"/> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        public TrackController(IRepositoryFactory repositoryFactory)
         {
-            var name = trackViewModel.TrackName;
-            return null;
+            this._repositoryFactory = repositoryFactory;
         }
+
+        #endregion //Constructors
+
+        #region Actions
 
         /// <summary>
         /// </summary>
@@ -44,9 +46,8 @@
         /// </returns>
         public virtual ActionResult AlbumList()
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Album>())
             {
-                var repository = new Repository<Album>(context);
                 return this.View(repository.GetAll());
             }
         }
@@ -58,9 +59,8 @@
         /// </returns>
         public virtual ActionResult AlbumList(int artistId)
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Album>())
             {
-                var repository = new Repository<Album>(context);
                 return this.View(repository.GetAll(a => a.Artist.Id.Equals(artistId)));
             }
         }
@@ -72,12 +72,9 @@
         /// </returns>
         public virtual ActionResult AlbumTracks(int id)
         {
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                using (var context = new ShopContext())
-                {
-                    var repository = new Repository<Track>(context);
-                    return this.View(repository.GetAll(a => a.Album.Id.Equals(id)));
-                }
+                return this.View(repository.GetAll(t => t.Album.Id.Equals(id)));
             }
         }
 
@@ -87,9 +84,8 @@
         /// </returns>
         public virtual ActionResult ArtistList()
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Artist>())
             {
-                var repository = new Repository<Artist>(context);
                 return this.View(repository.GetAll());
             }
         }
@@ -101,12 +97,9 @@
         /// </returns>
         public virtual ActionResult ArtistTracks(int id)
         {
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                using (var context = new ShopContext())
-                {
-                    var repository = new Repository<Track>(context);
-                    return this.View(repository.GetAll(a => a.Album.Id.Equals(id)));
-                }
+                return this.View(repository.GetAll(t => t.Artist.Id.Equals(id)));
             }
         }
 
@@ -117,38 +110,26 @@
         /// </returns>
         public virtual ActionResult Details(int id)
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                var repository = new Repository<Track>(context);
-                return this.View(repository.GetAll(t => t.Id.Equals(id)));
+                return this.View(repository.GetById(id));
             }
         }
 
         /// <summary>
+        /// Diplays tracks list.
         /// </summary>
-        /// <param name="file">The file.</param>
         /// <returns>
-        /// </returns>
-        [HttpPost]
-        public virtual ActionResult FileUpload(HttpPostedFileBase file)
-        {
-            return this.View("SelectFileView");
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <exception cref="System.NotImplementedException">
-        ///     NotImplementedException
-        /// </exception>
-        /// <returns>
+        /// The view that renders tracks list.
         /// </returns>
         public virtual ActionResult TrackList()
         {
-            using (var context = new ShopContext())
+            using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
-                var repository = new Repository<Track>(context);
                 return this.View(repository.GetAll());
             }
         }
+
+        #endregion //Actions
     }
 }

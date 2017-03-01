@@ -1,21 +1,15 @@
 ﻿namespace Shop.Common.Models
 {
     using System.Collections.Generic;
-    using Infrastructure.Models;
 
     /// <summary>
     /// The genre.
     /// </summary>
-    public class Genre : BaseEntity
+    public class Genre : BaseNamedEntity
     {
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
         /// <summary>
         /// Gets or sets the tracks.
         /// </summary>
-        public virtual ICollection<Track> Tracks { get; set; }
+        public ICollection<Track> Tracks { get; set; }
     }
 }

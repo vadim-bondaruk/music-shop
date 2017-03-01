@@ -54,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,15 +63,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201702252327541_New.cs" />
-    <Compile Include="Migrations\201702252327541_New.Designer.cs">
-      <DependentUpon>201702252327541_New.cs</DependentUpon>
+    <Compile Include="Migrations\201702282157423_initial.cs" />
+    <Compile Include="Migrations\201702282157423_initial.Designer.cs">
+      <DependentUpon>201702282157423_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702260805352_test.cs" />
-    <Compile Include="Migrations\201702260805352_test.Designer.cs">
-      <DependentUpon>201702260805352_test.cs</DependentUpon>
+    <Compile Include="Migrations\201703011516456_Updated.cs" />
+    <Compile Include="Migrations\201703011516456_Updated.Designer.cs">
+      <DependentUpon>201703011516456_Updated.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\UserConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\CurrencyRateConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\CurrencyConfiguration.cs" />
     <Compile Include="Migrations\Configurations\GenreConfiguration.cs" />
     <Compile Include="Migrations\Configurations\VoteConfiguration.cs" />
     <Compile Include="Migrations\Configurations\FeedbackConfiguration.cs" />
@@ -80,7 +87,14 @@
     <Compile Include="Context\ShopContext.cs" />
     <Compile Include="DefaultRepositoriesNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AlbumPriceRepository.cs" />
+    <Compile Include="Repositories\AlbumRepositry.cs" />
+    <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\TrackPriceRepository.cs" />
+    <Compile Include="Repositories\TrackRepository.cs" />
+    <Compile Include="Repositories\CurrencyRateRepository.cs" />
+    <Compile Include="Repositories\VoteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -98,11 +112,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702252327541_New.resx">
-      <DependentUpon>201702252327541_New.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702282157423_initial.resx">
+      <DependentUpon>201702282157423_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702260805352_test.resx">
-      <DependentUpon>201702260805352_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703011516456_Updated.resx">
+      <DependentUpon>201703011516456_Updated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

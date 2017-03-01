@@ -1,10 +1,12 @@
 ﻿namespace Shop.DAL.Context
 {
+    using System;
     using System.Data.Entity;
-
+    using System.Data.Entity.ModelConfiguration;
+    using System.Linq;
+    using System.Reflection;
     using Common.Models;
     using Migrations;
-    using Migrations.Configurations;
 
     /// <summary>
     /// Music shop Db
@@ -29,6 +31,7 @@
         public ShopContext(string connectionStringOrName) : base(connectionStringOrName)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShopContext, Configuration>());
+            this.Configuration.LazyLoadingEnabled = false;
         }
 
         #endregion //Constructors
@@ -92,12 +95,15 @@
         /// </param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new TrackConfiguration())
-                        .Add(new ArtistConfiguration())
-                        .Add(new AlbumConfiguration())
-                        .Add(new FeedbackConfiguration())
-                        .Add(new VoteConfiguration())
-                        .Add(new GenreConfiguration());
+            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+               .Where(type => !string.IsNullOrEmpty(type.Namespace))
+               .Where(type => type.BaseType != null && type.BaseType.IsGenericType
+                   && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            foreach (var configurationInstance in typesToRegister.Select(Activator.CreateInstance))
+            {
+                modelBuilder.Configurations.Add((dynamic)configurationInstance);
+            }
+
             base.OnModelCreating(modelBuilder);
         }
 
