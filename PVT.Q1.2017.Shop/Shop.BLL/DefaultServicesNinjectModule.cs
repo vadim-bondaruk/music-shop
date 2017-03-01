@@ -19,8 +19,6 @@
             {
                 this.Kernel.Load(new DefaultRepositoriesNinjectModule());
             }
-
-            Bind<ITrackService>().To<TrackService>();
         }
     }
 }
