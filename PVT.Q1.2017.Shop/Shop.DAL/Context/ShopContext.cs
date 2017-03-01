@@ -31,6 +31,7 @@
         public ShopContext(string connectionStringOrName) : base(connectionStringOrName)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShopContext, Configuration>());
+            this.Configuration.LazyLoadingEnabled = false;
         }
 
         #endregion //Constructors
