@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using Ship.Infrastructure.Services;    
     using global::Shop.BLL.DTO;
     using global::Shop.BLL.Services;
     using global::Shop.Common.Models;
