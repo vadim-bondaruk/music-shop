@@ -34,6 +34,11 @@
             Bind<IService<Feedback>>().To<Service<Feedback>>();
             Bind<IService<Vote>>().To<Service<Vote>>();
             Bind<IService<Genre>>().To<Service<Genre>>();
+            Bind<IService<TrackPrice>>().To<Service<TrackPrice>>();
+            Bind<IService<AlbumPrice>>().To<Service<AlbumPrice>>();
+            Bind<IService<Currency>>().To<Service<Currency>>();
+            Bind<IService<CurrencyRate>>().To<Service<CurrencyRate>>();
+            Bind<IService<PriceLevel>>().To<Service<PriceLevel>>();
         }
     }
 }
