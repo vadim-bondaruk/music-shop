@@ -62,11 +62,17 @@
         /// <summary>
         /// Gets all entity by some filter
         /// </summary>
-        /// <param name="filter">Filter</param>
+        /// <param name="filter">Filter expression</param>
         /// <returns></returns>
         public ICollection<UserPaymentMethod> GetAll(Expression<Func<UserPaymentMethod, bool>> filter)
         {
-            throw new NotImplementedException();
+            IQueryable<UserPaymentMethod> query = this._dbContext.Set<UserPaymentMethod>();
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            return query.ToList();
         }
 
         /// <summary>
@@ -95,7 +101,13 @@
         /// <param name="id">target model id</param>
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var dbSet = this._dbContext.Set<UserPaymentMethod>();
+            UserPaymentMethod entityToDelete = dbSet.Find(id);
+            if (this._dbContext.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                dbSet.Attach(entityToDelete);
+            }
+            dbSet.Remove(entityToDelete);
         }
 
         /// <summary>
@@ -104,7 +116,10 @@
         /// <param name="model">target model</param>
         public void Delete(UserPaymentMethod model)
         {
-            throw new NotImplementedException();
+            if (model != null)
+            {
+                Delete(model.Id);
+            }
         }
     }
 }
