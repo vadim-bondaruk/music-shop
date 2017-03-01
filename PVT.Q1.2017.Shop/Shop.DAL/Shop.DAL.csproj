@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201702262239190_PriceLevel.Designer.cs">
       <DependentUpon>201702262239190_PriceLevel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702282313044_CurrencyEdited.cs" />
+    <Compile Include="Migrations\201702282313044_CurrencyEdited.Designer.cs">
+      <DependentUpon>201702282313044_CurrencyEdited.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -87,7 +91,7 @@
     <Compile Include="Context\ShopContext.cs" />
     <Compile Include="DefaultRepositoriesNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Extensions\QueryableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -111,7 +115,11 @@
     <EmbeddedResource Include="Migrations\201702262239190_PriceLevel.resx">
       <DependentUpon>201702262239190_PriceLevel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702282313044_CurrencyEdited.resx">
+      <DependentUpon>201702282313044_CurrencyEdited.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

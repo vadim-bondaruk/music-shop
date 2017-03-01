@@ -1,6 +1,9 @@
 namespace Shop.DAL.Migrations
 {
     using System.Data.Entity.Migrations;
+    using System.Linq;
+    using Common.Models;
+    using System;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Shop.DAL.Context.ShopContext>
     {
@@ -9,8 +12,40 @@ namespace Shop.DAL.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Shop.DAL.Context.ShopContext context)
+        protected override void Seed(Context.ShopContext context)
         {
+            if (!context.Set<Currency>().Any(c => c.ShortName == "EUR"))
+            {
+                context.AddOrUpdate(new[] { new Currency {
+                    ShortName = "EUR",
+                    Code = 978,
+                    FullName = "EURO"
+                }});
+            }
+
+            if (!context.Set<Currency>().Any(c => c.ShortName == "USD"))
+            {
+                context.AddOrUpdate(new[] { new Currency {
+                    ShortName = "USD",
+                    Code = 840,
+                    FullName = "US Dollar"
+                }});
+            }
+
+            context.SaveChanges();
+
+            if (!context.Set<CurrencyRate>().Any())
+            {
+                context.AddOrUpdate(new[] { new CurrencyRate {
+                    CurrencyId = 1,
+                    TargetCurrencyId = 2,
+                    Date = DateTime.Now,
+                    CrossCourse = 1.06M
+                }});
+            }
+
+            context.SaveChanges();
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

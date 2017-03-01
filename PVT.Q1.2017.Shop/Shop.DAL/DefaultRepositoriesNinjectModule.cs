@@ -1,12 +1,11 @@
 ﻿namespace Shop.DAL
 {
     using System.Data.Entity;
-    using Common.Models;
     using Context;
-    using Infrastructure.Repositories;
     using Ninject.Extensions.Factory;
     using Ninject.Modules;
-    using Repositories;
+    using Infrastructure.Repositories;
+    using Infrastructure.Core;
 
     /// <summary>
     /// The default repositories bindings configuration
@@ -28,14 +27,8 @@
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
-            Bind<IDisposableRepository<Track>>().To<Repository<Track>>();
-            Bind<IDisposableRepository<Artist>>().To<Repository<Artist>>();
-            Bind<IDisposableRepository<Album>>().To<Repository<Album>>();
-            Bind<IDisposableRepository<Feedback>>().To<Repository<Feedback>>();
-            Bind<IDisposableRepository<Vote>>().To<Repository<Vote>>();
-            Bind<IDisposableRepository<Genre>>().To<Repository<Genre>>();
-
-            Bind<IRepositoryFactory>().ToFactory();
+            Bind<IRepository>().To<ShopContext>();
+            Bind<IFactory>().ToFactory();
         }
     }
 }
