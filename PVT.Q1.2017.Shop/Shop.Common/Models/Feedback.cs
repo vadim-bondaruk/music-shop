@@ -39,6 +39,6 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the user who wrote the <see cref="Comments"/>.
         /// </summary>
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

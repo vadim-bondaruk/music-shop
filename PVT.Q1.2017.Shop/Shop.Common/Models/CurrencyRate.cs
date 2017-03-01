@@ -9,6 +9,7 @@
 
 namespace Shop.Common.Models
 {
+    using System;
     using Infrastructure.Models;
 
     /// <summary>
@@ -19,7 +20,12 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets the cross course.
         /// </summary>
-        public double CrossCourse { get; set; }
+        public decimal CrossCourse { get; set; }
+
+        /// <summary>
+        /// Date of currency rate
+        /// </summary>
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Currency id

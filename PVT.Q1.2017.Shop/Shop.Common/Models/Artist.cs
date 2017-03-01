@@ -41,7 +41,7 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets all tracks of the current artist.
         /// </summary>
-        public ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
 
         /// <summary>
         /// Gets or sets the albums.
