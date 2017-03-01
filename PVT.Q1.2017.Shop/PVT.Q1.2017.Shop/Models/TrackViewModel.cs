@@ -58,6 +58,11 @@
         /// <summary>
         ///     Gets or sets the name.
         /// </summary>
-        public string Name { get; set; }
+        public string TrackName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the release date.
+        /// </summary>
+        public string ReleaseDate { get; set; }
     }
 }

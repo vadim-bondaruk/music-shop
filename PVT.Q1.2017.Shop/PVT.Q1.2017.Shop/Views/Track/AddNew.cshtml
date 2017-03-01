@@ -1,59 +1,15 @@
-﻿@model Shop.Common.Models.Track
+﻿@model PVT.Q1._2017.Shop.Models.TrackViewModel
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <script>
-        $(document).ready(function() {
-            alert("hello");
-        });
-    </script>
-
-
-    @*<script>
-        alert("script ok");
-    </script>*@
-
-    @*<script>
-        $('.original-input').on("change",
-                 function () {
-                     realVal = $(this).val();
-                     lastIndex = realVal.lastIndexOf("\\") + 1;
-                     if (lastIndex !== -1) {
-                         realVal = realVal.substr(lastIndex);
-                         $(this).prev('.mask').find('.fake-input').val(realVal);
-                     }
-                 });
-    </script>*@
-
-    @*<script>
-        $(document).ready(function() {
-            $('.original-input').on("change",
-                function() {
-                    realVal = $(this).val();
-                    lastIndex = realVal.lastIndexOf("\\") + 1;
-                    if (lastIndex !== -1) {
-                        realVal = realVal.substr(lastIndex);
-                        $(this).prev('.mask').find('.fake-input').val(realVal);
-                    }
-                });
-        });
-    </script>*@
-
-    <title>AddNew</title>
-</head>
-<body>
-
-<form name="form1" method="post" enctype="multipart/form-data" action="Track/FileUpload">
+@using (Html.BeginForm("AddNew", "Track", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     <div id="trackData">
-        <ul class="inputList" width="500px">
+        <ul>
             <li>
                 <input type="text" placeholder="Artist"/>
             </li>
 
             <li>
-                <input type="text" placeholder="Name"/>
+                <input type="text" placeholder="Name" value="@Model.TrackName"/>
             </li>
 
             <li>
@@ -86,10 +42,8 @@
 
         <button type="submit" class="add-button">Add</button>
     </div>
-</form>
-</body>
-</html>
+}
+
 
 @section AddNewTrack{
-    <link href="/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>
-}
+    <link href="/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}

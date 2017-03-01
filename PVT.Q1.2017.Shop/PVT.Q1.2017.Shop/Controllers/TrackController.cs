@@ -9,6 +9,8 @@
     using global::Shop.DAL.Context;
     using global::Shop.DAL.Repositories;
 
+    using PVT.Q1._2017.Shop.Models;
+
     #endregion
 
     /// <summary>
@@ -22,7 +24,18 @@
         /// </returns>
         public virtual ActionResult AddNew()
         {
-            return this.View();
+            return this.View(new TrackViewModel());
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        public ActionResult AddNew(TrackViewModel trackViewModel)
+        {
+            var name = trackViewModel.TrackName;
+            return null;
         }
 
         /// <summary>
@@ -113,9 +126,7 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="file">
-        /// The file.
-        /// </param>
+        /// <param name="file">The file.</param>
         /// <returns>
         /// </returns>
         [HttpPost]

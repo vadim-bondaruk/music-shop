@@ -9,7 +9,7 @@ body {
     color: #404040;
 }
 
-input, button {
+input, button, label {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 15px;
     font-weight: 300;
@@ -33,18 +33,17 @@ input[type=text], input[type=date], input[type=time] {
 
 input[type=text]:focus, input[type=date]:focus, input[type=time]:focus {
     color: white;
-    background: #000000;
     background: rgba(0, 0, 0, 0.1);
     outline: 0;
 }
 
-.add-button {
+/*.add-button {
     position: relative;
     z-index: 2;
     width: 80px;
-    height: 48px;
+    height: 31px;
     padding: 0 0 48px;
-    margin-left: 65%;
+    margin-left: 25%;
     text-indent: 120%;
     white-space: nowrap;
     overflow: hidden;
@@ -54,6 +53,18 @@ input[type=text]:focus, input[type=date]:focus, input[type=time]:focus {
     cursor: pointer;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.1);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.1);
+}*/
+
+.add-button {
+   margin-left: 45%;  
+    width: 10%;
+    height: 40px;
+    outline: 0;
+    background: #404040;
+    color: #bbb;
+    border-color: #282828;
+    border-radius: 5px;
+    border-width: 0.5px;
 }
 
 li {
@@ -71,21 +82,13 @@ li {
     color: #bbb;
     border-color: #282828;
     border-radius: 5px;
-    border-width: 0.1px;
-    border-style: solid;
-    text-shadow: 1px 1px 1px black;
+    border-width: 0.5px;
 }
 
 #browsefile-button:hover {
-    background: rgba(0, 0, 0, 0.16);
-}
-
-#browsefile-button:focus {
-     outline: 0;
-}
-
-#browsefile-button:active {
-    border-style: inset;
+   background: rgba(0, 0, 0, 0.16);
+    /*border-color: #0591ba*/
+    
 }
 
 input::-webkit-inner-spin-button,
