@@ -69,6 +69,7 @@
     <Compile Include="DataBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserTests\UserRepositoryTest.cs">
+    <Compile Include="UserBLTests.cs" />
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
   </ItemGroup>

@@ -1,18 +1,21 @@
 ﻿namespace Shop.BLL.Services
-{    
+{
     using System;
     using System.Linq;
+    using Common.Utils;
     using DTO;
     using Exceptions;
+    using Infrastructure;
     using Ninject;
     using Ship.Infrastructure.Repositories;
     using Ship.Infrastructure.Services;
-    using Shop.Common.Models;   
+    using Shop.Common.Models;
+    using Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
     /// </summary>
-    public class UserService : IService<User>
+    public class UserService : IUserService
     {
         /// <summary>
         /// 
@@ -23,19 +26,23 @@
         /// 
         /// </summary>
         /// <param name="userRepository"></param>
-        public UserService()
+        public UserService(IRepository<User> userRepository)
         {
-            var kernel = new StandardKernel(new BllNinjectModule());
-            this._userRepository = kernel.Get<IRepository<User>>();
+            this._userRepository = userRepository;            
         }
 
         /// <summary>
-        /// Addition new user to userrepository
+        /// Addition new user to userRepository
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         public bool RegisterUser(UserDTO user)
         {
+            if (user == null)
+            {
+                throw new ArgumentException("user");
+            }
+
             if (!this.IsLoginUnique(user.Login))
             {
                 throw new UserValidationException("User with the same login already exists", "Login");
@@ -46,7 +53,8 @@
                 throw new UserValidationException("User with the same email already exists", "Email");
             }
 
-            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>());
+            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>()
+                            .ForMember("UserRole", opt => opt.MapFrom((userDTO) => UserRoles.User)));
             var userDB = AutoMapper.Mapper.Map<User>(user);
             this._userRepository.AddOrUpdate(userDB);
             return true;
@@ -62,9 +70,9 @@
             if (string.IsNullOrEmpty(login))
             {
                 throw new ArgumentException("login");
-            }                
+            }
 
-            if (this._userRepository.GetAll(u => u.Login == login).Any())
+            if (this._userRepository.GetAll().Where(u => u.Login == login).IsAny<User>())
             {
                 return false;
             }
@@ -84,7 +92,7 @@
                 throw new ArgumentException("Email");
             }                
 
-            if (this._userRepository.GetAll(u => u.Email == email).Any())
+            if (this._userRepository.GetAll().Where(u => u.Email == email).IsAny<User>())
             {
                 return false;
             }
