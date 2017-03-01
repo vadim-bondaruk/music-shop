@@ -37,6 +37,8 @@
             Bind<IDisposableRepository<TrackPrice>>().To<TrackPriceRepository>();
             Bind<IDisposableRepository<AlbumPrice>>().To<AlbumPriceRepository>();
             Bind<IDisposableRepository<CurrencyRate>>().To<CurrencyRateRepository>();
+            Bind<IDisposableRepository<Currency>>().To<Repository<Currency>>();
+            Bind<IDisposableRepository<PriceLevel>>().To<Repository<PriceLevel>>();
 
             Bind<IRepositoryFactory>().ToFactory();
         }
