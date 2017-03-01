@@ -24,50 +24,14 @@ namespace PVT.Q1._2017.Shop.Tests
 
         #endregion //Fields
 
+        #region Constructors
+
         public DataBaseTest()
         {
             this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
+        #endregion //Constructors
 
         [TestMethod]
         public void CreateDataBaseTest()
@@ -153,16 +117,25 @@ namespace PVT.Q1._2017.Shop.Tests
             {
                 repository.AddOrUpdate(new Track { Name = trackName });
                 repository.SaveChanges();
+            }
 
+            var duration = new TimeSpan(0, 2, 46);
+
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
                 var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
                 Assert.IsNotNull(track);
 
-                var duration = new TimeSpan(0, 2, 46);
                 track.Duration = duration;
 
                 repository.AddOrUpdate(track);
                 repository.SaveChanges();
 
+                Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
+            }
+
+            using (var repository = repositoryFactory.CreateRepository<Track>())
+            {
                 Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
             }
         }
