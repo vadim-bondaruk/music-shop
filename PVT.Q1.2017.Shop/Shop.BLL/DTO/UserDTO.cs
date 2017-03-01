@@ -23,6 +23,11 @@
         public string Login { get; set; }
 
         /// <summary>
+        /// Users password
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
         /// Users e-mail
         /// </summary>
         public string Email { get; set; }
