@@ -5,7 +5,9 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Ninject;
     using global::Shop.BLL.DTO;
+    using global::Shop.BLL.Infrastructure;
     using global::Shop.BLL.Services;
     using global::Shop.Common.Models;
     using ViewModels;
@@ -18,14 +20,16 @@
         /// <summary>
         /// 
         /// </summary>
-        private UserService _userService;
+        private IUserService _userService;
 
         /// <summary>
         /// 
         /// </summary>
-        public UserController()
+        public UserController(IUserService userService)
         {
-            this._userService = new UserService(null);           
+            ///var kernel = new StandardKernel(new WebNinjectModule());
+            ///this._userService = kernel.Get<IUserService>();   
+            this._userService = userService;
         }
 
         /// <summary>
