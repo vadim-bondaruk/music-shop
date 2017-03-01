@@ -18,7 +18,7 @@
         /// <returns>
         /// An entity with the specified <paramref name="id"/> or null in case if there are now enity with such <paramref name="id"/>
         /// </returns>
-        TEntity GetById(int id);
+        TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
         /// Returns all entities from the repository.
@@ -26,14 +26,14 @@
         /// <returns>
         /// All entities from the repository.
         /// </returns>
-        ICollection<TEntity> GetAll();
+        ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
         /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <returns>Entities which corespond to </returns>
-        ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter);
+        ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.

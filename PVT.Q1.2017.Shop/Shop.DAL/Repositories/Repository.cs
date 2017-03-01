@@ -69,13 +69,14 @@
         /// <param name="id">
         /// The model key.
         /// </param>
+        /// <param name="includes"></param>
         /// <returns>
         /// A model with the specified <paramref name="id"/> or null in case if there are now models with such <paramref name="id"/>.
         /// </returns>
-        public virtual TEntity GetById(int id)
+        public virtual TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this._currentDbSet.Where(x => x.Id == id);
-            return this.LoadAdditionalInfo(query).FirstOrDefault();
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(x => x.Id == id), includes);
+            return query.FirstOrDefault();
         }
 
         /// <summary>
@@ -84,21 +85,22 @@
         /// <returns>
         /// All models from the repository.
         /// </returns>
-        public virtual ICollection<TEntity> GetAll()
+        public virtual ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this._currentDbSet;
-            return this.LoadAdditionalInfo(query).ToList();
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet, includes);
+            return query.ToList();
         }
 
         /// <summary>
         /// Tries to find models from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
+        /// <param name="includes"></param>
         /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
-        public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
+        public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
             IQueryable<TEntity> query = this._currentDbSet.Where(filter);
-            return this.LoadAdditionalInfo(query).ToList();
+            return query.ToList();
         }
 
         /// <summary>
@@ -225,8 +227,17 @@
         /// <param name="queryResult">
         /// The query result.
         /// </param>
-        protected virtual IQueryable<TEntity> LoadAdditionalInfo(IQueryable<TEntity> queryResult)
+        /// <param name="includes"></param>
+        protected IQueryable<TEntity> LoadIncludes(IQueryable<TEntity> queryResult, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    queryResult = queryResult.Include(include);
+                }
+            }
+
             return queryResult;
         }
 
