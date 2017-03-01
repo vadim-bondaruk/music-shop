@@ -69,7 +69,7 @@
         /// <param name="id">
         /// The model key.
         /// </param>
-        /// <param name="includes"></param>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>
         /// A model with the specified <paramref name="id"/> or null in case if there are now models with such <paramref name="id"/>.
         /// </returns>
@@ -82,6 +82,7 @@
         /// <summary>
         /// Returns all models from the repository.
         /// </summary>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>
         /// All models from the repository.
         /// </returns>
@@ -95,7 +96,7 @@
         /// Tries to find models from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
-        /// <param name="includes"></param>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
         public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
@@ -161,11 +162,7 @@
 
             Delete(model.Id);
         }
-
-        #endregion //IRepository<TEntity> Members
-
-        #region IDisposableRepository Members
-
+        
         /// <summary>
         /// Saves all changes.
         /// </summary>
@@ -178,7 +175,7 @@
             }
         }
 
-        #endregion //IDisposableRepository Members
+        #endregion //IRepository<TEntity> Members
 
         #region IDisposable Pattern
 

@@ -15,6 +15,7 @@
         /// Tries to find an entity by the specified <paramref name="id"/>
         /// </summary>
         /// <param name="id">The key.</param>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>
         /// An entity with the specified <paramref name="id"/> or null in case if there are now enity with such <paramref name="id"/>
         /// </returns>
@@ -23,6 +24,7 @@
         /// <summary>
         /// Returns all entities from the repository.
         /// </summary>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>
         /// All entities from the repository.
         /// </returns>
@@ -32,6 +34,7 @@
         /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>Entities which corespond to </returns>
         ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
