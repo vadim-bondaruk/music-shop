@@ -15,8 +15,6 @@
     {
         #region Fields
 
-        private bool _disposed;
-
         /// <summary>
         /// The Db context.
         /// </summary>
@@ -31,6 +29,11 @@
         /// Indicates whether the repository state was changed.
         /// </summary>
         private bool _stateChanged;
+
+        /// <summary>
+        /// Indicates whether the inner resources are already disposed.
+        /// </summary>
+        private bool _disposed;
 
         #endregion //Fields
 
