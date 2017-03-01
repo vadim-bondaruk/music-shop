@@ -28,17 +28,17 @@
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
-            Bind<IDisposableRepository<Track>>().To<TrackRepository>();
-            Bind<IDisposableRepository<Artist>>().To<Repository<Artist>>();
-            Bind<IDisposableRepository<Album>>().To<AlbumRepositry>();
-            Bind<IDisposableRepository<Feedback>>().To<FeedbackRepository>();
-            Bind<IDisposableRepository<Vote>>().To<VoteRepository>();
-            Bind<IDisposableRepository<Genre>>().To<Repository<Genre>>();
-            Bind<IDisposableRepository<TrackPrice>>().To<TrackPriceRepository>();
-            Bind<IDisposableRepository<AlbumPrice>>().To<AlbumPriceRepository>();
-            Bind<IDisposableRepository<CurrencyRate>>().To<CurrencyRateRepository>();
-            Bind<IDisposableRepository<Currency>>().To<Repository<Currency>>();
-            Bind<IDisposableRepository<PriceLevel>>().To<Repository<PriceLevel>>();
+            Bind<IRepository<Track>>().To<TrackRepository>();
+            Bind<IRepository<Artist>>().To<Repository<Artist>>();
+            Bind<IRepository<Album>>().To<AlbumRepositry>();
+            Bind<IRepository<Feedback>>().To<FeedbackRepository>();
+            Bind<IRepository<Vote>>().To<VoteRepository>();
+            Bind<IRepository<Genre>>().To<Repository<Genre>>();
+            Bind<IRepository<TrackPrice>>().To<TrackPriceRepository>();
+            Bind<IRepository<AlbumPrice>>().To<AlbumPriceRepository>();
+            Bind<IRepository<CurrencyRate>>().To<CurrencyRateRepository>();
+            Bind<IRepository<Currency>>().To<Repository<Currency>>();
+            Bind<IRepository<PriceLevel>>().To<Repository<PriceLevel>>();
 
             Bind<IRepositoryFactory>().ToFactory();
         }

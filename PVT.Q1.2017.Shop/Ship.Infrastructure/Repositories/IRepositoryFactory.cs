@@ -16,6 +16,6 @@
         /// <returns>
         /// Returns the repository for the specified model.
         /// </returns>
-        IDisposableRepository<TEntity> CreateRepository<TEntity>() where TEntity : BaseEntity, new();
+        IRepository<TEntity> CreateRepository<TEntity>() where TEntity : BaseEntity, new();
     }
 }

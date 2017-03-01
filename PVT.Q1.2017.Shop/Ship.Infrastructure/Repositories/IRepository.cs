@@ -9,7 +9,7 @@
     /// Common Repository interface.
     /// </summary>
     /// <typeparam name="TEntity">A model.</typeparam>
-    public interface IRepository<TEntity> where TEntity : BaseEntity, new()
+    public interface IRepository<TEntity> : IDisposable where TEntity : BaseEntity, new()
     {
         /// <summary>
         /// Tries to find an entity by the specified <paramref name="id"/>
@@ -52,5 +52,10 @@
         /// </summary>
         /// <param name="model">The model to delete.</param>
         void Delete(TEntity model);
+
+        /// <summary>
+        /// Saves all changes.
+        /// </summary>
+        void SaveChanges();
     }
 }

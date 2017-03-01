@@ -11,7 +11,7 @@
     /// <summary>
     /// The models repository.
     /// </summary>
-    public class Repository<TEntity> : IDisposableRepository<TEntity> where TEntity : BaseEntity, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
     {
         #region Fields
 
