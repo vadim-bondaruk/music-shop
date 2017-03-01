@@ -48,17 +48,22 @@
         [HttpGet]
         public ActionResult Index(int currentUserId, string returnUrl)
         {
-            var cardView = new CartView { Tracks = new List<Track>() };
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
-            foreach (var c in cart)
+            var currentUser = this._userRepository.GetById(currentUserId);
+            var cardView = new CartView { Tracks = new List<Track>() };
+            if (cart != null && currentUser != null)
             {
-                foreach (var t in c.Tracks)
+                foreach (var c in cart)
                 {
-                    cardView.Tracks.Add(t);
+                    foreach (var t in c.Tracks)
+                    {
+                        cardView.Tracks.Add(t);
+                    }
                 }
+
+                cardView.SetTotalPrice(Currency.Usd);
             }
 
-            cardView.SetTotalPrice(Currency.Usd);
             return this.View(cardView);
         }
 
@@ -74,18 +79,29 @@
         /// <param name="returnUrl">
         /// Путь для возврата к покупкам
         /// </param>
+        [HttpPost]
         public RedirectToRouteResult AddTrackToCart(int currentUserId, Track track, string returnUrl)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
-            if (cart == null)
+            if (track == null)
             {
                 return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
             }
 
-            foreach (var c in cart)
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
+            var currentUser = this._userRepository.GetById(currentUserId);
+            if (cart == null && currentUser != null)
             {
-                c.Tracks.Add(track);
-                this._cartRepository.AddOrUpdate(c);
+                var model = new Cart { User = currentUser, Tracks = new List<Track> { track } };
+                this._cartRepository.AddOrUpdate(model);
+            }
+
+            if (cart != null)
+            {
+                foreach (var model in cart)
+                {
+                    model.Tracks.Add(track);
+                    this._cartRepository.AddOrUpdate(model);
+                }
             }
 
             return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
@@ -103,10 +119,11 @@
         /// <param name="returnUrl">
         /// Путь для возврата к покупкам
         /// </param>
+        [HttpPost]
         public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track, string returnUrl)
         {
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).Where(t => t.Tracks.Contains(track));
-            if (cart == null)
+            if (cart == null || track == null)
             {
                 return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
             }
