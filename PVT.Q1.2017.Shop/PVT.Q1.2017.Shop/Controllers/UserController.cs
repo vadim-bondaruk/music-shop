@@ -26,7 +26,7 @@
         /// </summary>
         public UserController()
         {
-            this._userService = new UserService();           
+            this._userService = new UserService(null);           
         }
 
         /// <summary>
