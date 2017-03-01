@@ -1,6 +1,5 @@
 ﻿namespace Shop.DAL
 {
-    using System.Data.Entity;
     using Common.Models;
     using Context;
     using Infrastructure.Repositories;
@@ -18,7 +17,7 @@
         /// </summary>
         public override void Load()
         {
-            Bind<DbContext>().To<ShopContext>();
+            Bind<ShopContext>().ToSelf();
 
             this.ConfigureRepositoryFactory();
         }
