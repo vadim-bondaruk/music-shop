@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201702282157423_initial.Designer.cs">
       <DependentUpon>201702282157423_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703011516456_Updated.cs" />
+    <Compile Include="Migrations\201703011516456_Updated.Designer.cs">
+      <DependentUpon>201703011516456_Updated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -110,6 +114,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702282157423_initial.resx">
       <DependentUpon>201702282157423_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703011516456_Updated.resx">
+      <DependentUpon>201703011516456_Updated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
