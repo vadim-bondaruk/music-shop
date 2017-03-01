@@ -5,16 +5,17 @@
     using Common.Utils;
     using DTO;
     using Exceptions;
-    using Infrastructure.Enums;
+    using Infrastructure;
     using Ninject;
     using Ship.Infrastructure.Repositories;
     using Ship.Infrastructure.Services;
     using Shop.Common.Models;
+    using Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
     /// </summary>
-    public class UserService : IService<User>
+    public class UserService : IUserService
     {
         /// <summary>
         /// 
@@ -71,7 +72,7 @@
                 throw new ArgumentException("login");
             }
 
-            if (this._userRepository.GetAll(u => u.Login == login).IsAny<User>())
+            if (this._userRepository.GetAll().Where(u => u.Login == login).IsAny<User>())
             {
                 return false;
             }
@@ -91,7 +92,7 @@
                 throw new ArgumentException("Email");
             }                
 
-            if (this._userRepository.GetAll(u => u.Email == email).IsAny<User>())
+            if (this._userRepository.GetAll().Where(u => u.Email == email).IsAny<User>())
             {
                 return false;
             }
