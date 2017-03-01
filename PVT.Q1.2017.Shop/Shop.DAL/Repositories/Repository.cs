@@ -15,6 +15,8 @@
     {
         #region Fields
 
+        private bool _disposed;
+
         /// <summary>
         /// The Db context.
         /// </summary>
@@ -190,12 +192,23 @@
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            // to ensure that the changes are not lost
-            this.SaveChanges();
-
-            if (disposing)
+            if (!_disposed)
             {
-                this._dbContext?.Dispose();
+                try
+                {
+                    // to ensure that the changes are not lost
+                    this.SaveChanges();
+                }
+                catch
+                {
+                    // no error in Dispose method!!!
+                }
+
+                if (disposing)
+                {
+                    this._dbContext?.Dispose();
+                    this._disposed = true;
+                }
             }
         }
 
