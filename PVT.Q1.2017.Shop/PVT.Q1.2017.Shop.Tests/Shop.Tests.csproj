@@ -68,7 +68,7 @@
   <ItemGroup>
     <Compile Include="DataBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserTests\UnitTest1.cs">
+    <Compile Include="UserTests\UserRepositoryTest.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
   </ItemGroup>

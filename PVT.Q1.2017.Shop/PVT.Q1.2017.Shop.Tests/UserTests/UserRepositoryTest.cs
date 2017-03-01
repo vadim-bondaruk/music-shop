@@ -12,9 +12,9 @@
     /// TestClass
     /// </summary>
     [TestClass]
-    public class UnitTest1
+    public class UserRepositoryTest
     {
-        #region Initial test data - in _users variable
+        #region Initial test data - in 'users' variable
         /// <summary>
         /// Initial test data
         /// </summary>
@@ -71,7 +71,7 @@
         #endregion
 
         /// <summary>
-        /// MOQ object
+        /// Common Mock object
         /// </summary>
         private Mock<IRepository<User>> mock = new Mock<IRepository<User>>();
 
@@ -81,7 +81,7 @@
         [TestMethod]
         public void GetById_Real_Input()
         {
-            var expected = users.Find(t => t.Id == 2);
+            var expected = this.users.Find(t => t.Id == 2);
             this.mock.Setup(i => i.GetById(2)).Returns(expected);
 
             var actual = this.mock.Object.GetById(2);
@@ -91,7 +91,7 @@
         }
 
         /// <summary>
-        /// 
+        /// GetAllUsers() method Test
         /// </summary>
         [TestMethod]
         public void GetAllUsers_Test()
@@ -126,5 +126,22 @@
             // Assert that the Delete method was called once
             this.mock.Verify(x => x.Delete(2), Times.Once);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [TestMethod]
+        public void AddOrUpdate_Test_Update_model()
+        {
+            this.mock.Setup(x => x.AddOrUpdate(It.IsAny<User>()))
+                .Callback(new Action<User>(x =>
+                {
+                var i = this.users.FindIndex(q => q.Id.Equals(x.Id));
+                users[i] = x;
+            }));
+
+            this.mock.Verify();
+        }
+
     }
 }

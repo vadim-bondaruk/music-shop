@@ -24,7 +24,6 @@
         /// </summary>
         public UserRepository()
         {
-            // кандидат на использование DI?
             this._db = new UserContext();
         }
 
