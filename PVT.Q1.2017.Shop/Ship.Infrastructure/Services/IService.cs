@@ -1,13 +1,12 @@
 ﻿namespace Shop.Infrastructure.Services
 {
-    using System.Collections.Generic;
     using Models;
 
     /// <summary>
     /// Base service contract (dummy)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface IService<TEntity> where TEntity : BaseEntity
+    public interface IService<in TEntity> where TEntity : BaseEntity, new()
     {
         /// <summary>
         /// Registers the specified <paramref name="model"/> in the system.
