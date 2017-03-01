@@ -230,12 +230,9 @@
         /// <param name="includes"></param>
         protected IQueryable<TEntity> LoadIncludes(IQueryable<TEntity> queryResult, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            if (includes != null)
+            foreach (var include in includes)
             {
-                foreach (var include in includes)
-                {
-                    queryResult = queryResult.Include(include);
-                }
+                queryResult = queryResult.Include(include);
             }
 
             return queryResult;
