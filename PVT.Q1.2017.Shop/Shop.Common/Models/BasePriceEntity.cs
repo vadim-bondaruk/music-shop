@@ -5,22 +5,28 @@
     /// <summary>
     /// The base price entity.
     /// </summary>
-    public class BasePriceEntity : BaseEntity
+    public abstract class BasePriceEntity : BaseEntity
     {
-        /// <summary>
-        /// Get or set price level id
-        /// </summary>
-        public int PriceLevelId { get; set; }
-        
-        /// <summary>
-        /// Get or set <see cref="PriceLevel"/>
-        /// </summary>
-        public virtual PriceLevel PriceLevel { get; set; }
+        #region Properties
 
         /// <summary>
         /// Price for track
         /// </summary>
         public double Price { get; set; }
+
+        #endregion //Properties
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Get or set price level id
+        /// </summary>
+        public int PriceLevelId { get; set; }
+
+        /// <summary>
+        /// Get or set <see cref="PriceLevel"/>
+        /// </summary>
+        public virtual PriceLevel PriceLevel { get; set; }
 
         /// <summary>
         /// Currency id
@@ -31,5 +37,7 @@
         /// Gets or sets the currency.
         /// </summary>
         public Currency Currency { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

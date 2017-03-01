@@ -21,21 +21,6 @@ namespace Shop.Common.Models
     public class Vote : BaseEntity
     {
         /// <summary>
-        /// Mark id
-        /// </summary>
-        public int MarkId { get; set; }
-
-        /// <summary>
-        /// Track id
-        /// </summary>
-        public int TrackId { get; set; }
-
-        /// <summary>
-        /// User id
-        /// </summary>
-        public int UserId { get; set; }
-
-        /// <summary>
         ///     Gets or sets the mark.
         /// </summary>
         public Mark Mark { get; set; }

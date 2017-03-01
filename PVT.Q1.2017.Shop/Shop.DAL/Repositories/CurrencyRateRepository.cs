@@ -5,19 +5,19 @@
     using Common.Models;
 
     /// <summary>
-    /// The album repository
+    /// The currency rate repository.
     /// </summary>
-    public class AlbumRepositry : Repository<Album>
+    public class CurrencyRateRepository : Repository<CurrencyRate>
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumRepositry"/> class.
+        /// Initializes a new instance of the <see cref="CurrencyRateRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The db context.
         /// </param>
-        public AlbumRepositry(DbContext dbContext) : base(dbContext)
+        public CurrencyRateRepository(DbContext dbContext) : base(dbContext)
         {
         }
 
@@ -33,9 +33,9 @@
         /// </param>
         /// <returns>
         /// </returns>
-        protected override IQueryable<Album> LoadAdditionalInfo(IQueryable<Album> queryResult)
+        protected override IQueryable<CurrencyRate> LoadAdditionalInfo(IQueryable<CurrencyRate> queryResult)
         {
-            return base.LoadAdditionalInfo(queryResult).Include(a => a.Artist);
+            return base.LoadAdditionalInfo(queryResult).Include(r => r.Currency).Include(r => r.TargetCurrency);
         }
 
         #endregion //Protected Methods

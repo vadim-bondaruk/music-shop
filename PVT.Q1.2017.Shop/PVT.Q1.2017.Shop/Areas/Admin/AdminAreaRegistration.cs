@@ -1,21 +1,18 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Administration
+﻿namespace PVT.Q1._2017.Shop.Areas.Admin
 {
     using System.Web.Mvc;
 
     /// <summary>
     /// The administration area.
     /// </summary>
-    public class AdministrationAreaRegistration : AreaRegistration 
+    public class AdminAreaRegistration : AreaRegistration 
     {
         /// <summary>
         /// Gets the area name.
         /// </summary>
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
-            {
-                return "Administration";
-            }
+            get { return "Administration"; }
         }
 
         /// <summary>
@@ -27,8 +24,8 @@
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Administration_default",
-                "Administration/{controller}/{action}/{id}",
+                "Admin_default",
+                "Admin/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional });
         }
     }

@@ -1,12 +1,12 @@
 ﻿namespace Shop.DAL.Context
 {
+    using System;
     using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration;
+    using System.Linq;
+    using System.Reflection;
     using Common.Models;
     using Migrations;
-    using System.Reflection;
-    using System;
-    using System.Linq;
-    using System.Data.Entity.ModelConfiguration;
 
     /// <summary>
     /// Music shop Db

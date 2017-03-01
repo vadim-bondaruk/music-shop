@@ -34,6 +34,9 @@
             Bind<IDisposableRepository<Feedback>>().To<FeedbackRepository>();
             Bind<IDisposableRepository<Vote>>().To<VoteRepository>();
             Bind<IDisposableRepository<Genre>>().To<Repository<Genre>>();
+            Bind<IDisposableRepository<TrackPrice>>().To<TrackPriceRepository>();
+            Bind<IDisposableRepository<AlbumPrice>>().To<AlbumPriceRepository>();
+            Bind<IDisposableRepository<CurrencyRate>>().To<CurrencyRateRepository>();
 
             Bind<IRepositoryFactory>().ToFactory();
         }
