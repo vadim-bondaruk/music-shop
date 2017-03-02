@@ -1,0 +1,69 @@
+﻿@model Shop.Common.Models.Track
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Details</title>
+</head>
+<body>
+<div id="trackInfo">
+    <div id="text-block">
+        <h1>Track details</h1>
+
+        <ul class="detailsList">
+            <li>
+                <span class="titles">Artist:</span> <a href="https://www.google.by/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=@Model.Artist.Name">@(Model.Artist.Name)</a>
+            </li>
+
+            <li>
+                <span class="titles">Name:</span> <a href="#">@Model.Name</a>
+            </li>
+
+            <li>
+                <span class="titles">Album:</span> <a href="#">@Model.Album.Name</a>
+            </li>
+
+            <li>
+                <span class="titles">Genre:</span> <a>@Model.Genre</a>
+            </li>
+
+            <li>
+                <span class="titles">Release date:</span> @Model.Album.ReleaseDate
+            </li>
+            <li>
+                <span class="titles">Duration:</span> @Model.Duration
+            </li>
+            <li>
+                <span class="titles">Price:</span> @Model.TrackPrices.FirstOrDefault().Amount $
+            </li>
+        </ul>
+
+        @*<img src="@Model.ImageUrl" alt="album cover" id="trackImage"/>
+        <div class="button-wrapper">
+            <a href="#" class="a-btn">
+                <span class="a-btn-slide-text">$1.35$</span>
+                <img src="/img/cart.png" alt="cart"/>
+                <span class="a-btn-text">Add to cart</span>
+                <span class="a-btn-icon-right">
+                    <span></span>
+                </span>
+            </a>
+        </div>*@
+    </div>
+
+</div>
+
+</body>
+
+</html>
+
+@section TrackDetails{
+    <link href="/Styles/TrackDetails.css" rel="stylesheet" type="text/css"/>
+}
+@section AddToCartButton{
+    <link href="/Styles/AddToCartButton.css" rel="stylesheet" type="text/css"/>
+}@section ListSplitters{
+     <link href="/Styles/ListSplitters.css" rel="stylesheet" type="text/css"/>
+ }

@@ -47,17 +47,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="Exceptions\InvalidEntityException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BllNinjectModule.cs" />
+    <Compile Include="DefaultServicesNinjectModule.cs" />
+    <Compile Include="Services\Infrastruture\ITrackService.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\TrackService.cs" />
+    <Compile Include="Validators\NamedEntityValidator.cs" />
+    <Compile Include="Validators\TrackValidator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Validators\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>
       <Name>Shop.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Common\Shop.Common.csproj">
+      <Project>{3D15CC83-6093-4606-A948-D834033D3692}</Project>
+      <Name>Shop.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.DAL\Shop.DAL.csproj">
+      <Project>{C30727DA-8C05-4773-A9C9-B01C8E951FB4}</Project>
+      <Name>Shop.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,20 +1,23 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
     using System.Web.Mvc;
+    using Infrastructure;
+    using Infrastructure.Extensions;
+    using ViewModels;
 
     /// <summary>
-    /// qq
+    /// Controller of Home page
     /// </summary>
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         /// <summary>
-        /// GET: Home
+        /// Default start page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View of index page</returns>
         public ActionResult Index()
         {
             ////dummy code
-            return this.Content("Hello");
+            return this.View(new MainViewModel(User.Identity.IdentityToUserDataModel()));
         }
     }
 }

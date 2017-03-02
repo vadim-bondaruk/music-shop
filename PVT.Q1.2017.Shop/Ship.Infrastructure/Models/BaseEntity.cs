@@ -1,7 +1,7 @@
 ﻿namespace Shop.Infrastructure.Models
 {
     /// <summary>
-    /// Base class for entities 
+    /// Base class for entities
     /// </summary>
     public abstract class BaseEntity
     {
@@ -13,6 +13,6 @@
         /// <summary>
         /// Soft deleted flag
         /// </summary>
-        public bool IsDeleted { get; set; }        
+        public bool IsDeleted { get; set; }
     }
 }
