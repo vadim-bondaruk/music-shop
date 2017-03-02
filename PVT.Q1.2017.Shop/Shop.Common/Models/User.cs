@@ -9,7 +9,6 @@
 
 namespace Shop.Common.Models
 {
-    using System;
     using System.Collections.Generic;
     using Infrastructure.Models;
 
@@ -18,15 +17,7 @@ namespace Shop.Common.Models
     /// </summary>
     public class User : BaseEntity
     {
-        /// <summary>
-        /// User currency id
-        /// </summary>
-        public int CurrencyId { get; set; }
-        
-        /// <summary>
-        /// ID for relation with <see cref="PriceLevel"/> 
-        /// </summary>
-        public int PriceLevelId { get; set; }
+        #region Properties
 
         /// <summary>
         /// Identity key
@@ -37,6 +28,29 @@ namespace Shop.Common.Models
         /// Additional discount
         /// </summary>
         public double? Dicount { get; set; }
+
+        #endregion //Navigation Properties
+
+        #region Foreign Keys
+
+        /// <summary>
+        /// User currency id
+        /// </summary>
+        public int CurrencyId { get; set; }
+        
+        /// <summary>
+        /// ID for relation with <see cref="PriceLevel"/> 
+        /// </summary>
+        public int PriceLevelId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// User currency
+        /// </summary>
+        public virtual Currency UserCurrency { get; set; }
 
         /// <summary>
         /// Get or set price level for user
@@ -53,9 +67,6 @@ namespace Shop.Common.Models
         /// </summary>
         public virtual ICollection<Vote> Votes { get; set; }
 
-        /// <summary>
-        /// User currency
-        /// </summary>
-        public virtual Currency UserCurrency { get; set; }
+        #endregion //Navigation Properties
     }
 }

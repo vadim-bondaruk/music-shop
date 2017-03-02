@@ -17,6 +17,8 @@ namespace Shop.Common.Models
     /// </summary>
     public class Currency : BaseEntity
     {
+        #region Properties
+
         /// <summary>
         /// Short name of currency
         /// </summary>
@@ -31,6 +33,10 @@ namespace Shop.Common.Models
         /// ISO 4217 code of currency 
         /// </summary>
         public int Code { get; set; }
+
+        #endregion //Properties
+
+        #region Navigation Properties
 
         /// <summary>
         /// Currency rates
@@ -56,5 +62,7 @@ namespace Shop.Common.Models
         /// Get all track prices
         /// </summary>
         public virtual ICollection<TrackPrice> TrackPrices { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

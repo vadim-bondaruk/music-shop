@@ -16,7 +16,7 @@
 
         #endregion //Properties
 
-        #region Navigation Properties
+        #region Foreign Keys
 
         /// <summary>
         /// Get or set price level id
@@ -24,19 +24,23 @@
         public int PriceLevelId { get; set; }
 
         /// <summary>
+        /// Currency id
+        /// </summary>
+        public int CurrencyId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
+
+        /// <summary>
         /// Get or set <see cref="PriceLevel"/>
         /// </summary>
         public virtual PriceLevel PriceLevel { get; set; }
 
         /// <summary>
-        /// Currency id
+        /// The currency.
         /// </summary>
-        public int CurrencyId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the currency.
-        /// </summary>
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
         #endregion //Navigation Properties
     }
