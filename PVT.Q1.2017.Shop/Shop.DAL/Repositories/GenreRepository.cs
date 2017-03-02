@@ -5,19 +5,19 @@
     using Infrastruture;
 
     /// <summary>
-    /// The track price repository.
+    /// The genre repository
     /// </summary>
-    public class TrackPriceRepository : Repository<TrackPrice>, ITrackPriceRepository
+    public class GenreRepository : Repository<Genre>, IGenreRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackPriceRepository"/> class.
+        /// Initializes a new instance of the <see cref="GenreRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The db context.
         /// </param>
-        public TrackPriceRepository(DbContext dbContext) : base(dbContext)
+        public GenreRepository(DbContext dbContext) : base(dbContext)
         {
         }
 

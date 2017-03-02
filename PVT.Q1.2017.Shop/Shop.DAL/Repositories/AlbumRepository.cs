@@ -5,19 +5,19 @@
     using Infrastruture;
 
     /// <summary>
-    /// The track price repository.
+    /// The album repository
     /// </summary>
-    public class TrackPriceRepository : Repository<TrackPrice>, ITrackPriceRepository
+    public class AlbumRepository : Repository<Album>, IAlbumRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackPriceRepository"/> class.
+        /// Initializes a new instance of the <see cref="AlbumRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The db context.
         /// </param>
-        public TrackPriceRepository(DbContext dbContext) : base(dbContext)
+        public AlbumRepository(DbContext dbContext) : base(dbContext)
         {
         }
 

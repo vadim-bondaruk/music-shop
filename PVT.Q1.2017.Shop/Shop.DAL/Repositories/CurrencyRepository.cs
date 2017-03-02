@@ -5,19 +5,19 @@
     using Infrastruture;
 
     /// <summary>
-    /// The track price repository.
+    /// The currency repository
     /// </summary>
-    public class TrackPriceRepository : Repository<TrackPrice>, ITrackPriceRepository
+    public class CurrencyRepository : Repository<Currency>, ICurrencyRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackPriceRepository"/> class.
+        /// Initializes a new instance of the <see cref="CurrencyRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The db context.
         /// </param>
-        public TrackPriceRepository(DbContext dbContext) : base(dbContext)
+        public CurrencyRepository(DbContext dbContext) : base(dbContext)
         {
         }
 

@@ -1,13 +1,13 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using Shop.Common.Models;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
+    using System.Data.Entity;
+    using Common.Models;
+    using Infrastruture;
+
     /// <summary>
     /// The track repository.
     /// </summary>
-    public class TrackRepository : Repository<Track>
+    public class TrackRepository : Repository<Track>, ITrackRepository
     {
         #region Constructors
 
@@ -22,22 +22,5 @@ namespace Shop.DAL.Repositories
         }
 
         #endregion //Constructors
-
-        #region Protected Methods
-
-        /// <summary>
-        /// Loads additional references.
-        /// </summary>
-        /// <param name="queryResult">
-        /// The query result.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        protected override IQueryable<Track> LoadAdditionalInfo(IQueryable<Track> queryResult)
-        {
-            return base.LoadAdditionalInfo(queryResult).Include(t => t.Artist).Include(t => t.Album).Include(t => t.Genre);
-        }
-
-        #endregion //Protected Methods
     }
 }

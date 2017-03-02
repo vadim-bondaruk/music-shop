@@ -8,14 +8,15 @@
     public interface IRepositoryFactory
     {
         /// <summary>
-        /// Returns the repository for the specified model.
+        /// Returns the instance of the specified repository for the specified model type.
         /// </summary>
         /// <typeparam name="TEntity">
-        /// A model.
+        /// A model type.
         /// </typeparam>
+        /// <typeparam name="TRepository">A model repository type.</typeparam>
         /// <returns>
-        /// Returns the repository for the specified model.
+        /// A repository for the specified model.
         /// </returns>
-        IRepository<TEntity> CreateRepository<TEntity>() where TEntity : BaseEntity, new();
+        TRepository CreateRepository<TRepository>();
     }
 }

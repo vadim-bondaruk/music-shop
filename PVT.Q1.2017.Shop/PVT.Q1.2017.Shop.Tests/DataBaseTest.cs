@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ninject;
-using Shop.BLL;
-using Shop.Common.Models;
-using Shop.DAL;
-using Shop.DAL.Context;
-using Shop.DAL.Repositories;
-using Shop.Infrastructure.Repositories;
-
-namespace PVT.Q1._2017.Shop.Tests
+﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System;
+    using System.Linq;
+    using global::Shop.Common.Models;
+    using global::Shop.DAL;
+    using global::Shop.DAL.Context;
+    using global::Shop.DAL.Repositories.Infrastruture;
+    using global::Shop.Infrastructure.Repositories;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Ninject;
+
     /// <summary>
     /// Summary description for DataBaseTest
     /// </summary>
@@ -32,6 +30,8 @@ namespace PVT.Q1._2017.Shop.Tests
         }
 
         #endregion //Constructors
+
+        #region Test
 
         [TestMethod]
         public void CreateDataBaseTest()
@@ -60,7 +60,7 @@ namespace PVT.Q1._2017.Shop.Tests
             string trackName = "Hello";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<Track>())
+            using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
                 repository.AddOrUpdate(new Track { Name = trackName });
                 repository.SaveChanges();
@@ -77,7 +77,7 @@ namespace PVT.Q1._2017.Shop.Tests
             string artist3Name = "Artist 3";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<Artist>())
+            using (var repository = repositoryFactory.CreateRepository<IArtistRepository>())
             {
                 repository.AddOrUpdate(new Artist { Name = artist1Name });
                 repository.AddOrUpdate(new Artist { Name = artist2Name });
@@ -96,7 +96,7 @@ namespace PVT.Q1._2017.Shop.Tests
             string album3Name = "Album 3";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<Album>())
+            using (var repository = repositoryFactory.CreateRepository<IAlbumRepository>())
             {
                 repository.AddOrUpdate(new Album { Name = album1Name });
                 repository.AddOrUpdate(new Album { Name = album2Name });
@@ -113,7 +113,7 @@ namespace PVT.Q1._2017.Shop.Tests
             string trackName = "Hello";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<Track>())
+            using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
                 repository.AddOrUpdate(new Track { Name = trackName });
                 repository.SaveChanges();
@@ -121,7 +121,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
             var duration = new TimeSpan(0, 2, 46);
 
-            using (var repository = repositoryFactory.CreateRepository<Track>())
+            using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
                 var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
                 Assert.IsNotNull(track);
@@ -134,26 +134,26 @@ namespace PVT.Q1._2017.Shop.Tests
                 Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
             }
 
-            using (var repository = repositoryFactory.CreateRepository<Track>())
+            using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
                 Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
             }
         }
 
         [TestMethod]
-        public void TracksWithArtistTest()
+        public void ArtistTracksTest()
         {
             var artist = new Artist { Name = "Sia" };
             var track1 = new Track { Name = "Unstoppable", Artist = artist };
             var track2 = new Track { Name = "Alive", Artist = artist };
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<Artist>())
+            using (var repository = repositoryFactory.CreateRepository<IArtistRepository>())
             {
                 repository.AddOrUpdate(artist);
             }
 
-            using (var repository = repositoryFactory.CreateRepository<Track>())
+            using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
                 repository.AddOrUpdate(track1);
                 repository.AddOrUpdate(track2);
@@ -168,9 +168,9 @@ namespace PVT.Q1._2017.Shop.Tests
         {
             int count = 0;
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<Track>())
+            using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
-                var tracks = repository.GetAll();
+                var tracks = repository.GetAll(t => t.Artist);
                 foreach (var track in tracks)
                 {
                     if (track.Artist != null)
@@ -182,5 +182,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 Assert.IsTrue(count > 0);
             }
         }
+
+        #endregion //Tests
     }
 }

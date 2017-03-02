@@ -1,11 +1,12 @@
 ﻿namespace Shop.DAL
 {
-    using Common.Models;
+    using System.Data.Entity;
     using Context;
     using Infrastructure.Repositories;
     using Ninject.Extensions.Factory;
     using Ninject.Modules;
     using Repositories;
+    using Repositories.Infrastruture;
 
     /// <summary>
     /// The default repositories bindings configuration
@@ -17,7 +18,7 @@
         /// </summary>
         public override void Load()
         {
-            Bind<ShopContext>().ToSelf();
+            Bind<DbContext>().To<ShopContext>();
 
             this.ConfigureRepositoryFactory();
         }
@@ -27,17 +28,17 @@
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
-            Bind<IRepository<Track>>().To<TrackRepository>();
-            Bind<IRepository<Artist>>().To<Repository<Artist>>();
-            Bind<IRepository<Album>>().To<AlbumRepositry>();
-            Bind<IRepository<Feedback>>().To<FeedbackRepository>();
-            Bind<IRepository<Vote>>().To<VoteRepository>();
-            Bind<IRepository<Genre>>().To<Repository<Genre>>();
-            Bind<IRepository<TrackPrice>>().To<TrackPriceRepository>();
-            Bind<IRepository<AlbumPrice>>().To<AlbumPriceRepository>();
-            Bind<IRepository<CurrencyRate>>().To<CurrencyRateRepository>();
-            Bind<IRepository<Currency>>().To<Repository<Currency>>();
-            Bind<IRepository<PriceLevel>>().To<Repository<PriceLevel>>();
+            Bind<ITrackRepository>().To<TrackRepository>();
+            Bind<IArtistRepository>().To<ArtistRepository>();
+            Bind<IAlbumRepository>().To<AlbumRepository>();
+            Bind<IFeedbackRepository>().To<FeedbackRepository>();
+            Bind<IVoteRepository>().To<VoteRepository>();
+            Bind<IGenreRepository>().To<GenreRepository>();
+            Bind<ITrackPriceRepository>().To<TrackPriceRepository>();
+            Bind<IAlbumPriceRepository>().To<AlbumPriceRepository>();
+            Bind<ICurrencyRateRepository>().To<CurrencyRateRepository>();
+            Bind<ICurrencyRepository>().To<CurrencyRepository>();
+            Bind<IPriceLevelRepository>().To<PriceLevelRepository>();
 
             Bind<IRepositoryFactory>().ToFactory();
         }
