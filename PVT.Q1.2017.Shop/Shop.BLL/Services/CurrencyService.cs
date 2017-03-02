@@ -56,9 +56,9 @@
         /// <returns><see cref="IEnumerable{CurrencyRate}"/></returns>
         public async Task<IEnumerable<CurrencyRate>> GetActualRatesAsync(DateTime date)
         {
-            using (var repository = this._factory.Create<IRepository>())
+            using (var repository = this._factory.Create<IRepository<CurrencyRate>>())
             {
-                var rates = (await repository.TakeAllAsync<CurrencyRate>(rate => rate.Currency, rate => rate.TargetCurrency));
+                var rates = (await repository.TakeAllAsync(rate => rate.Currency, rate => rate.TargetCurrency));
                 return rates.Where(c => c.Date <= date)
                     .GroupBy(rate => new { rate.Currency, rate.TargetCurrency })
                         .Select(grouping => grouping.OrderByDescending(rate => rate.Date).FirstOrDefault());
@@ -74,14 +74,14 @@
         /// <returns></returns>
         public async Task<decimal> GetRateByDateAsync(int from, int to, DateTime date)
         {
-            using (var repository = this._factory.Create<IRepository>())
+            using (var repository = this._factory.Create<IRepository<CurrencyRate>>())
             {
                 if (from == to)
                 {
                     return 1;
                 }
 
-                var val = (await repository.TakeAllAsync<CurrencyRate>())
+                var val = (await repository.TakeAllAsync())
                     .Where(c => c.CurrencyId == from && c.TargetCurrencyId == to && c.Date <= date).OrderByDescending(rate => rate.Date).FirstOrDefault();
 
                 return val != null ? val.CrossCourse : 1;
