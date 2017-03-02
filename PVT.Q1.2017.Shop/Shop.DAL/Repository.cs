@@ -94,7 +94,7 @@ namespace Shop.DAL
         {
             return await _dbContext.Set<T>().IncludeMultiple(includes).ToListAsync();
         }
-        public async Task<IEnumerable<T>> Paging<T1>(Expression<Func<T, bool>> match, Expression<Func<T, T1>> orderBy, int? startIndex, int? pageSize, params Expression<Func<T, object>>[] includes) where T : class, new()
+        public async Task<IEnumerable<T>> Paging<T1>(Expression<Func<T, bool>> match, Expression<Func<T, T1>> orderBy, int? startIndex, int? pageSize, params Expression<Func<T, object>>[] includes)
         {
             if (startIndex.HasValue && pageSize.HasValue)
             {
