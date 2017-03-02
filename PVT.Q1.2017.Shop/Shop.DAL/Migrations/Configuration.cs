@@ -16,7 +16,7 @@ namespace Shop.DAL.Migrations
         {
             if (!context.Set<Currency>().Any(c => c.ShortName == "EUR"))
             {
-                context.AddOrUpdate(new[] { new Currency {
+                context.Set<Currency>().AddOrUpdate(new[] { new Currency {
                     ShortName = "EUR",
                     Code = 978,
                     FullName = "EURO"
@@ -25,7 +25,7 @@ namespace Shop.DAL.Migrations
 
             if (!context.Set<Currency>().Any(c => c.ShortName == "USD"))
             {
-                context.AddOrUpdate(new[] { new Currency {
+                context.Set<Currency>().AddOrUpdate(new[] { new Currency {
                     ShortName = "USD",
                     Code = 840,
                     FullName = "US Dollar"
@@ -36,7 +36,7 @@ namespace Shop.DAL.Migrations
 
             if (!context.Set<CurrencyRate>().Any())
             {
-                context.AddOrUpdate(new[] { new CurrencyRate {
+                context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
                     CurrencyId = 1,
                     TargetCurrencyId = 2,
                     Date = DateTime.Now,
