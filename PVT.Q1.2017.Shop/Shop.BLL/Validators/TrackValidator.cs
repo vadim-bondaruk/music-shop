@@ -3,59 +3,12 @@
     using System;
     using Common.Models;
     using Exceptions;
-    using Infrastructure.Validators;
 
     /// <summary>
     /// The track validator.
     /// </summary>
     public class TrackValidator : NamedEntityValidator<Track>
     {
-        #region Fields
-
-        /// <summary>
-        /// The artist validator.
-        /// </summary>
-        private readonly IValidator<Artist> _artistValidator;
-
-        /// <summary>
-        /// The album validator.
-        /// </summary>
-        private readonly IValidator<Album> _albumValidator;
-
-        #endregion //Fields
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrackValidator"/> class.
-        /// </summary>
-        /// <param name="artistValidator">
-        /// The artist validator.
-        /// </param>
-        /// <param name="albumValidator">
-        /// The album validator.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// When <paramref name="artistValidator"/> or <paramref name="albumValidator"/> is null.
-        /// </exception>
-        public TrackValidator(IValidator<Artist> artistValidator, IValidator<Album> albumValidator)
-        {
-            if (artistValidator == null)
-            {
-                throw new ArgumentNullException(nameof(artistValidator));
-            }
-
-            if (albumValidator == null)
-            {
-                throw new ArgumentNullException(nameof(albumValidator));
-            }
-
-            this._artistValidator = artistValidator;
-            this._albumValidator = albumValidator;
-        }
-
-        #endregion //Constructors
-
         #region Public Methods
 
         /// <summary>
@@ -82,8 +35,15 @@
                 throw new InvalidEntityException("Invalid track name specified.");
             }
 
-            this._artistValidator.Validate(track.Artist);
-            this._albumValidator.Validate(track.Album);
+            if (!track.ArtistId.HasValue)
+            {
+                throw new InvalidEntityException("Invalid track artist specified.");
+            }
+
+            if (!track.AlbumId.HasValue)
+            {
+                throw new InvalidEntityException("Invalid track album specified.");
+            }
         }
 
         /// <summary>
@@ -102,12 +62,12 @@
                 return false;
             }
 
-            if (!this._artistValidator.IsValid(track.Artist))
+            if (!track.ArtistId.HasValue)
             {
                 return false;
             }
 
-            if (!this._albumValidator.IsValid(track.Album))
+            if (!track.AlbumId.HasValue)
             {
                 return false;
             }

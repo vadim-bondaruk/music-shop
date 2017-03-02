@@ -20,10 +20,30 @@ namespace Shop.Common.Models
     /// </summary>
     public class Vote : BaseEntity
     {
+        #region Properties
+
         /// <summary>
         ///     Gets or sets the mark.
         /// </summary>
         public Mark Mark { get; set; }
+
+        #endregion //Properties
+
+        #region Foreign Keys
+
+        /// <summary>
+        ///     Gets or sets the track id.
+        /// </summary>
+        public int TrackId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the user id.
+        /// </summary>
+        public int UserId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
 
         /// <summary>
         ///     Gets or sets the track.
@@ -34,5 +54,7 @@ namespace Shop.Common.Models
         ///     Gets or sets the user.
         /// </summary>
         public virtual User User { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

@@ -1,12 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
-    using System.Linq;
     using global::Shop.BLL;
     using global::Shop.BLL.Exceptions;
-    using global::Shop.BLL.Services.Infrastruture;
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Repositories.Infrastruture;
-    using global::Shop.Infrastructure.Repositories;
+    using global::Shop.Infrastructure;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Ninject;
 
@@ -36,30 +35,30 @@
         [TestMethod]
         public void RegisterValidTrackTest()
         {
-            var artist = new Artist { Name = "Some Artist" };
+            var repositoryFactory = this._kernel.Get<IFactory>();
 
-            var repositoryFactory = this._kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<IArtistRepository>())
+            int artistId = this.AddNewArtist(repositoryFactory);
+            Assert.IsTrue(artistId > 0);
+
+            int albumId = this.AddNewAlbum(repositoryFactory, artistId);
+            Assert.IsTrue(albumId > 0);
+
+            var track = new Track
             {
-                repository.AddOrUpdate(artist);
-                repository.SaveChanges();
-
-                Assert.IsTrue(repository.GetAll(a => a.Name == artist.Name).Any());
-            }
-
-            var album = new Album { Name = "Some Single", Artist = artist};
-            using (var repository = repositoryFactory.CreateRepository<IAlbumRepository>())
-            {
-                repository.AddOrUpdate(album);
-                repository.SaveChanges();
-
-                Assert.IsTrue(repository.GetAll(a => a.Name == album.Name).Any());
-            }
-
-            var track = new Track { Name = "Some Track", Album = album, Artist = artist };
-
+                Name = "Super Track",
+                AlbumId = albumId,
+                ArtistId = artistId
+            };
             var trackService = this._kernel.Get<ITrackService>();
             trackService.Register(track);
+            Assert.IsTrue(track.Id > 0);
+
+            int trackId = track.Id;
+            using (var repository = repositoryFactory.Create<ITrackRepository>())
+            {
+                track = repository.GetById(trackId, t => t.Artist, t => t.Album);
+                Assert.IsTrue(track.Id > 0 && track.Artist.Id == artistId && track.Album.Id == albumId);
+            }
         }
 
         [TestMethod]
@@ -71,5 +70,31 @@
         }
 
         #endregion //Tests
+
+        #region Private Methods
+
+        private int AddNewArtist(IFactory repositoryFactory)
+        {
+            var artist = new Artist { Name = "Super-puper Artist" };
+            using (var repository = repositoryFactory.Create<IArtistRepository>())
+            {
+                repository.AddOrUpdate(artist);
+                repository.SaveChanges();
+            }
+            return artist.Id;
+        }
+
+        private int AddNewAlbum(IFactory repositoryFactory, int artistId)
+        {
+            var album = new Album { Name = "Super-puper Album", ArtistId = artistId };
+            using (var repository = repositoryFactory.Create<IAlbumRepository>())
+            {
+                repository.AddOrUpdate(album);
+                repository.SaveChanges();
+            }
+            return album.Id;
+        }
+
+        #endregion //Private Methods
     }
 }

@@ -61,6 +61,26 @@
 
         #endregion //Constructors
 
+        #region Properties
+
+        /// <summary>
+        /// Gets the db context.
+        /// </summary>
+        protected DbContext DbContext
+        {
+            get { return this._dbContext; }
+        }
+
+        /// <summary>
+        /// Gets the current db set.
+        /// </summary>
+        protected IDbSet<TEntity> CurrentDbSet
+        {
+            get { return this._currentDbSet; }
+        }
+
+        #endregion //Properties
+
         #region IRepository<TEntity> Members
 
         /// <summary>
@@ -118,17 +138,15 @@
             }
 
             // if the model exists in Db then we have to update it
-            var originalTrack = this.GetById(model.Id);
-            if (originalTrack != null)
+            var originalModel = this.GetById(model.Id);
+            if (originalModel != null)
             {
-                var entry = this._dbContext.Entry(originalTrack);
-                entry.CurrentValues.SetValues(model);
+                this.Update(originalModel, model);
                 this._stateChanged = true;
             }
             else
             {
-                // if it is a new model then we have to insert it
-                this._currentDbSet.Add(model);
+                this.Add(model);
                 this._stateChanged = true;
             }
         }
@@ -217,6 +235,33 @@
         #endregion //IDisposable Pattern
 
         #region Protected Methods
+
+        /// <summary>
+        /// Updates the specified <paramref name="modelFromDb"/> by values from <paramref name="model"/>.
+        /// </summary>
+        /// <param name="modelFromDb">
+        /// The model from db.
+        /// </param>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        protected virtual void Update(TEntity modelFromDb, TEntity model)
+        {
+            var entry = this._dbContext.Entry(modelFromDb);
+            entry.CurrentValues.SetValues(model);
+        }
+
+        /// <summary>
+        /// Adds the specified <paramref name="model"/> into Db.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        protected virtual void Add(TEntity model)
+        {
+            // if it is a new model then we have to insert it
+            this._currentDbSet.Add(model);
+        }
 
         /// <summary>
         /// Loads additional references.

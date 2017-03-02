@@ -1,8 +1,8 @@
-﻿namespace Shop.BLL.Services.Infrastruture
+﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
     using Common.Models;
-    using Infrastructure.Services;
+    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The track service

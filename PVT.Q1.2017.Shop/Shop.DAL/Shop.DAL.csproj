@@ -75,6 +75,10 @@
     <Compile Include="Migrations\201703011610217_OneMoreMigration.Designer.cs">
       <DependentUpon>201703011610217_OneMoreMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703022047186_AddedForignKeys.cs" />
+    <Compile Include="Migrations\201703022047186_AddedForignKeys.Designer.cs">
+      <DependentUpon>201703022047186_AddedForignKeys.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -139,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703011610217_OneMoreMigration.resx">
       <DependentUpon>201703011610217_OneMoreMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703022047186_AddedForignKeys.resx">
+      <DependentUpon>201703022047186_AddedForignKeys.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

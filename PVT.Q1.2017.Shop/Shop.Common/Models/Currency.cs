@@ -1,5 +1,6 @@
 ﻿namespace Shop.Common.Models
 {
+    using System.Collections.Generic;
     using Shop.Infrastructure.Models;
 
     /// <summary>
@@ -7,6 +8,8 @@
     /// </summary>
     public class Currency : BaseEntity
     {
+        #region Properties
+
         /// <summary>
         /// ShortName of Currency
         /// </summary>
@@ -22,9 +25,35 @@
         /// </summary>
         public int Code { get; set; }
 
+        #endregion //Properties
+
+        #region Navigation Properties
+
         /// <summary>
-        /// Enabled of Currency
+        /// Currency rates
         /// </summary>
-        public bool Enabled { get; set; }
+        public virtual ICollection<CurrencyRate> CurrencyRates { get; set; }
+
+        /// <summary>
+        /// Target currency rates
+        /// </summary>
+        public virtual ICollection<CurrencyRate> TargetCurrencyRates { get; set; }
+
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        public virtual ICollection<User> Users { get; set; }
+
+        /// <summary>
+        /// Get all album prices
+        /// </summary>
+        public virtual ICollection<AlbumPrice> AlbumPrices { get; set; }
+
+        /// <summary>
+        /// Get all track prices
+        /// </summary>
+        public virtual ICollection<TrackPrice> TrackPrices { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

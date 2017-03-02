@@ -64,9 +64,19 @@
         public DbSet<AlbumPrice> AlbumPrices { get; set; }
 
         /// <summary>
+        /// Gets or sets the price levels.
+        /// </summary>
+        public DbSet<PriceLevel> PriceLevels { get; set; }
+
+        /// <summary>
         /// Gets or sets the currency rates.
         /// </summary>
         public DbSet<CurrencyRate> CurrencyRates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the currencies.
+        /// </summary>
+        public DbSet<Currency> Currencies { get; set; }
 
         /// <summary>
         /// Gets or sets the feedbacks.
