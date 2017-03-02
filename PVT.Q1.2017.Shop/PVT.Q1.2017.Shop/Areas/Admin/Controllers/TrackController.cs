@@ -1,7 +1,8 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Administration.Controllers
+﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
     using System.Web.Mvc;
     using global::Shop.Common.Models;
+    using global::Shop.DAL.Repositories.Infrastruture;
     using global::Shop.Infrastructure.Repositories;
     using global::Shop.Infrastructure.Services;
 
@@ -50,7 +51,7 @@
         /// </returns>
         public ActionResult Index()
         {
-            using (var repository = this._repositoryFactory.CreateRepository<Track>())
+            using (var repository = this._repositoryFactory.CreateRepository<ITrackRepository>())
             {
                 return this.View(repository.GetAll());
             }
@@ -75,7 +76,7 @@
         [HttpPost]
         public ActionResult NewTrack(Track newTrack)
         {
-            if (ModelState.IsValid && this._trackService.IsValid(newTrack))
+            if (this.ModelState.IsValid && this._trackService.IsValid(newTrack))
             {
                 this._trackService.Register(newTrack);
                 return this.RedirectToAction("Index");
