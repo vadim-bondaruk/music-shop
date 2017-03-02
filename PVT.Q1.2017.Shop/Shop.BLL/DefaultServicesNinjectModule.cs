@@ -2,11 +2,11 @@
 {
     using Common.Models;
     using DAL;
-    using Infrastructure.Services;
     using Infrastructure.Validators;
     using Ninject;
     using Ninject.Modules;
     using Services;
+    using Services.Infrastruture;
     using Validators;
 
     /// <summary>
@@ -28,8 +28,8 @@
             Bind<IValidator<Album>>().To<NamedEntityValidator<Album>>();
             Bind<IValidator<Track>>().To<TrackValidator>();
 
-            Bind<IService<Track>>().To<Service<Track>>();
-            Bind<IService<Album>>().To<Service<Album>>();
+            Bind<ITrackService>().To<TrackService>();
+            /*Bind<IService<Album>>().To<Service<Album>>();
             Bind<IService<Artist>>().To<Service<Artist>>();
             Bind<IService<Feedback>>().To<Service<Feedback>>();
             Bind<IService<Vote>>().To<Service<Vote>>();
@@ -38,7 +38,7 @@
             Bind<IService<AlbumPrice>>().To<Service<AlbumPrice>>();
             Bind<IService<Currency>>().To<Service<Currency>>();
             Bind<IService<CurrencyRate>>().To<Service<CurrencyRate>>();
-            Bind<IService<PriceLevel>>().To<Service<PriceLevel>>();
+            Bind<IService<PriceLevel>>().To<Service<PriceLevel>>();*/
         }
     }
 }

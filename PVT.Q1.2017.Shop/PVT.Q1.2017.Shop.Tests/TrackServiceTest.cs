@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ninject;
-using Shop.BLL;
-using Shop.BLL.Exceptions;
-using Shop.BLL.Services;
-using Shop.Common.Models;
-using Shop.DAL;
-using Shop.Infrastructure.Repositories;
-using Shop.Infrastructure.Services;
-
-namespace PVT.Q1._2017.Shop.Tests
+﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System.Linq;
+    using global::Shop.BLL;
+    using global::Shop.BLL.Exceptions;
+    using global::Shop.BLL.Services.Infrastruture;
+    using global::Shop.Common.Models;
+    using global::Shop.DAL.Repositories.Infrastruture;
+    using global::Shop.Infrastructure.Repositories;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Ninject;
+
     /// <summary>
     /// Summary description for TrackServiceTest
     /// </summary>
@@ -33,13 +31,15 @@ namespace PVT.Q1._2017.Shop.Tests
 
         #endregion //Constructors
 
+        #region Tests
+
         [TestMethod]
         public void RegisterValidTrackTest()
         {
-            var artist = new Artist { Name = "Adele" };
+            var artist = new Artist { Name = "Some Artist" };
 
             var repositoryFactory = this._kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateRepository<Artist>())
+            using (var repository = repositoryFactory.CreateRepository<IArtistRepository>())
             {
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();
@@ -47,8 +47,8 @@ namespace PVT.Q1._2017.Shop.Tests
                 Assert.IsTrue(repository.GetAll(a => a.Name == artist.Name).Any());
             }
 
-            var album = new Album { Name = "Some Single" };
-            using (var repository = repositoryFactory.CreateRepository<Album>())
+            var album = new Album { Name = "Some Single", Artist = artist};
+            using (var repository = repositoryFactory.CreateRepository<IAlbumRepository>())
             {
                 repository.AddOrUpdate(album);
                 repository.SaveChanges();
@@ -56,18 +56,9 @@ namespace PVT.Q1._2017.Shop.Tests
                 Assert.IsTrue(repository.GetAll(a => a.Name == album.Name).Any());
             }
 
-            var currency = new Currency { Code = 840, ShortName = "$", FullName = "USD" };
-            using (var repository = repositoryFactory.CreateRepository<Currency>())
-            {
-                repository.AddOrUpdate(currency);
-                repository.SaveChanges();
+            var track = new Track { Name = "Some Track", Album = album, Artist = artist };
 
-                Assert.IsTrue(repository.GetAll(c => c.Code == currency.Code).Any());
-            }
-
-            var track = new Track { Name = "Hello", Album = album, Artist = artist };
-
-            var trackService = this._kernel.Get<IService<Track>>();
+            var trackService = this._kernel.Get<ITrackService>();
             trackService.Register(track);
         }
 
@@ -75,8 +66,10 @@ namespace PVT.Q1._2017.Shop.Tests
         [ExpectedException(typeof(InvalidEntityException))]
         public void RegisterInvalidTrackTest()
         {
-            var trackService = this._kernel.Get<IService<Track>>();
+            var trackService = this._kernel.Get<ITrackService>();
             trackService.Register(new Track());
         }
+
+        #endregion //Tests
     }
 }

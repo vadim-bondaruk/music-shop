@@ -10,7 +10,8 @@
     /// <summary>
     /// The model service.
     /// </summary>
-    public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity, new()
+    public abstract class Service<TRepository, TEntity> : IService<TEntity> where TEntity : BaseEntity, new()
+                                                                   where TRepository : IRepository<TEntity>
     {
         #region Fields
 
@@ -29,7 +30,7 @@
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Service{TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="Service{TRepository, TEntity}"/> class.
         /// </summary>
         /// <param name="repositoryFactory">
         /// The repository factory.
@@ -40,7 +41,7 @@
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="repositoryFactory"/> is null or <paramref name="validator"/> is null.
         /// </exception>
-        public Service(IRepositoryFactory repositoryFactory, IValidator<TEntity> validator)
+        protected Service(IRepositoryFactory repositoryFactory, IValidator<TEntity> validator)
         {
             if (repositoryFactory == null)
             {
@@ -85,7 +86,7 @@
         {
             this._validator.Validate(model);
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
             {
                 repository.AddOrUpdate(model);
             }
@@ -104,7 +105,7 @@
                 this.OnUpdateEntityNotFoundException();
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
             {
                 repository.AddOrUpdate(model);
             }
@@ -126,7 +127,7 @@
                 return false;
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
             {
                 repository.Delete(model);
                 return true;
@@ -163,7 +164,7 @@
                 return false;
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
             {
                 return repository.GetById(model.Id) != null;
             }
