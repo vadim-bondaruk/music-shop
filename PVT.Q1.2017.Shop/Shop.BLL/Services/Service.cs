@@ -2,23 +2,24 @@
 {
     using System;
     using Exceptions;
-    using Infrastructure.Models;
-    using Infrastructure.Repositories;
-    using Infrastructure.Services;
-    using Infrastructure.Validators;
+    using Shop.Infrastructure;
+    using Shop.Infrastructure.Models;
+    using Shop.Infrastructure.Repositories;
+    using Shop.Infrastructure.Services;
+    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The model service.
     /// </summary>
     public abstract class Service<TRepository, TEntity> : IService<TEntity> where TEntity : BaseEntity, new()
-                                                                   where TRepository : IRepository<TEntity>
+                                                                            where TRepository : IRepository<TEntity>
     {
         #region Fields
 
         /// <summary>
         /// The models repository.
         /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IFactory _repositoryFactory;
 
         /// <summary>
         /// The models validator.
@@ -41,7 +42,7 @@
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="repositoryFactory"/> is null or <paramref name="validator"/> is null.
         /// </exception>
-        protected Service(IRepositoryFactory repositoryFactory, IValidator<TEntity> validator)
+        protected Service(IFactory repositoryFactory, IValidator<TEntity> validator)
         {
             if (repositoryFactory == null)
             {
@@ -59,7 +60,7 @@
         /// <summary>
         /// Gets the repository factory.
         /// </summary>
-        protected IRepositoryFactory RepositoryFactory
+        protected IFactory RepositoryFactory
         {
             get { return this._repositoryFactory; }
         }
@@ -86,7 +87,7 @@
         {
             this._validator.Validate(model);
 
-            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
+            using (var repository = this._repositoryFactory.Create<TRepository>())
             {
                 repository.AddOrUpdate(model);
             }
@@ -105,7 +106,7 @@
                 this.OnUpdateEntityNotFoundException();
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
+            using (var repository = this._repositoryFactory.Create<TRepository>())
             {
                 repository.AddOrUpdate(model);
             }
@@ -127,7 +128,7 @@
                 return false;
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
+            using (var repository = this._repositoryFactory.Create<TRepository>())
             {
                 repository.Delete(model);
                 return true;
@@ -164,7 +165,7 @@
                 return false;
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TRepository>())
+            using (var repository = this._repositoryFactory.Create<TRepository>())
             {
                 return repository.GetById(model.Id) != null;
             }

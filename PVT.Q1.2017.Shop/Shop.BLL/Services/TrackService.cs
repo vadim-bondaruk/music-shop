@@ -5,9 +5,9 @@
     using System.Linq;
     using Common.Models;
     using DAL.Repositories.Infrastruture;
-    using Infrastructure.Repositories;
-    using Infrastructure.Validators;
-    using Infrastruture;
+    using Infrastructure;
+    using Shop.Infrastructure;
+    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The track service
@@ -23,7 +23,7 @@
         /// The repository factory.
         /// </param>
         /// <param name="validator">The track validator.</param>
-        public TrackService(IRepositoryFactory repositoryFactory, IValidator<Track> validator) : base(repositoryFactory, validator)
+        public TrackService(IFactory repositoryFactory, IValidator<Track> validator) : base(repositoryFactory, validator)
         {
         }
 
@@ -39,7 +39,7 @@
         /// </returns>
         public ICollection<Track> GetTracksList()
         {
-            using (var repository = this.RepositoryFactory.CreateRepository<ITrackRepository>())
+            using (var repository = this.RepositoryFactory.Create<ITrackRepository>())
             {
                 return repository.GetAll(t => t.Album, t => t.Artist, t => t.Genre);
             }
@@ -76,7 +76,7 @@
         /// </returns>
         public Track GetTrackInfo(int id)
         {
-            using (var repository = this.RepositoryFactory.CreateRepository<ITrackRepository>())
+            using (var repository = this.RepositoryFactory.Create<ITrackRepository>())
             {
                 return repository.GetById(id, t => t.Album, t => t.Artist, t => t.Genre);
             }
@@ -111,7 +111,7 @@
         /// <returns>All track prices for the specified  <paramref name="priceLevel"/>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel)
         {
-            using (var repository = this.RepositoryFactory.CreateRepository<ITrackPriceRepository>())
+            using (var repository = this.RepositoryFactory.Create<ITrackPriceRepository>())
             {
                 return repository.GetAll(p => p.TrackId == track.Id && p.PriceLevelId == priceLevel.Id);
             }
@@ -128,7 +128,7 @@
         /// </returns>
         public ICollection<Vote> GetTrackVotes(Track track)
         {
-            using (var repository = this.RepositoryFactory.CreateRepository<IVoteRepository>())
+            using (var repository = this.RepositoryFactory.Create<IVoteRepository>())
             {
                 return repository.GetAll(v => v.Track.Id == track.Id, v => v.Track, v => v.User);
             }
@@ -145,7 +145,7 @@
         /// </returns>
         public ICollection<Feedback> GetTrackFeedbacks(Track track)
         {
-            using (var repository = this.RepositoryFactory.CreateRepository<IFeedbackRepository>())
+            using (var repository = this.RepositoryFactory.Create<IFeedbackRepository>())
             {
                 return repository.GetAll(f => f.Track.Id == track.Id, f => f.Track, f => f.User);
             }

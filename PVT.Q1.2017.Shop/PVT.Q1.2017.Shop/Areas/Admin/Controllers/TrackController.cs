@@ -3,7 +3,7 @@
     using System.Web.Mvc;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Repositories.Infrastruture;
-    using global::Shop.Infrastructure.Repositories;
+    using global::Shop.Infrastructure;
     using global::Shop.Infrastructure.Services;
 
     /// <summary>
@@ -22,7 +22,7 @@
         /// <summary>
         /// The repository factory.
         /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IFactory _repositoryFactory;
 
         #endregion //Fields
 
@@ -35,7 +35,7 @@
         /// The track service.
         /// </param>
         /// <param name="repositoryFactory">The repository factory.</param>
-        public TrackController(IService<Track> trackService, IRepositoryFactory repositoryFactory)
+        public TrackController(IService<Track> trackService, IFactory repositoryFactory)
         {
             this._trackService = trackService;
             this._repositoryFactory = repositoryFactory;
@@ -51,7 +51,7 @@
         /// </returns>
         public ActionResult Index()
         {
-            using (var repository = this._repositoryFactory.CreateRepository<ITrackRepository>())
+            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
             {
                 return this.View(repository.GetAll());
             }

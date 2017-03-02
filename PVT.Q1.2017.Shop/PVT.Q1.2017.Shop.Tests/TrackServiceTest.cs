@@ -2,10 +2,10 @@
 {
     using global::Shop.BLL;
     using global::Shop.BLL.Exceptions;
-    using global::Shop.BLL.Services.Infrastruture;
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Repositories.Infrastruture;
-    using global::Shop.Infrastructure.Repositories;
+    using global::Shop.Infrastructure;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Ninject;
 
@@ -35,7 +35,7 @@
         [TestMethod]
         public void RegisterValidTrackTest()
         {
-            var repositoryFactory = this._kernel.Get<IRepositoryFactory>();
+            var repositoryFactory = this._kernel.Get<IFactory>();
 
             int artistId = this.AddNewArtist(repositoryFactory);
             Assert.IsTrue(artistId > 0);
@@ -54,7 +54,7 @@
             Assert.IsTrue(track.Id > 0);
 
             int trackId = track.Id;
-            using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
+            using (var repository = repositoryFactory.Create<ITrackRepository>())
             {
                 track = repository.GetById(trackId, t => t.Artist, t => t.Album);
                 Assert.IsTrue(track.Id > 0 && track.Artist.Id == artistId && track.Album.Id == albumId);
@@ -73,10 +73,10 @@
 
         #region Private Methods
 
-        private int AddNewArtist(IRepositoryFactory repositoryFactory)
+        private int AddNewArtist(IFactory repositoryFactory)
         {
             var artist = new Artist { Name = "Super-puper Artist" };
-            using (var repository = repositoryFactory.CreateRepository<IArtistRepository>())
+            using (var repository = repositoryFactory.Create<IArtistRepository>())
             {
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();
@@ -84,10 +84,10 @@
             return artist.Id;
         }
 
-        private int AddNewAlbum(IRepositoryFactory repositoryFactory, int artistId)
+        private int AddNewAlbum(IFactory repositoryFactory, int artistId)
         {
             var album = new Album { Name = "Super-puper Album", ArtistId = artistId };
-            using (var repository = repositoryFactory.CreateRepository<IAlbumRepository>())
+            using (var repository = repositoryFactory.Create<IAlbumRepository>())
             {
                 repository.AddOrUpdate(album);
                 repository.SaveChanges();

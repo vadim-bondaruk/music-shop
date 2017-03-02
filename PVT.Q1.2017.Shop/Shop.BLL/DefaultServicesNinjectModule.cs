@@ -6,7 +6,7 @@
     using Ninject;
     using Ninject.Modules;
     using Services;
-    using Services.Infrastruture;
+    using Services.Infrastructure;
     using Validators;
 
     /// <summary>

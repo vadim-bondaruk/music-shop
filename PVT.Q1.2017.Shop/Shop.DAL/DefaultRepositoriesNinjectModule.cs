@@ -2,7 +2,7 @@
 {
     using System.Data.Entity;
     using Context;
-    using Infrastructure.Repositories;
+    using Infrastructure;
     using Ninject.Extensions.Factory;
     using Ninject.Modules;
     using Repositories;
@@ -40,7 +40,7 @@
             Bind<ICurrencyRepository>().To<CurrencyRepository>();
             Bind<IPriceLevelRepository>().To<PriceLevelRepository>();
 
-            Bind<IRepositoryFactory>().ToFactory();
+            Bind<IFactory>().ToFactory();
         }
     }
 }
