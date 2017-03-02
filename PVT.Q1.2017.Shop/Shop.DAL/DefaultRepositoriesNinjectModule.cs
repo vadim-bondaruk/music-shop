@@ -19,7 +19,7 @@
         public override void Load()
         {
             Bind<DbContext>().To<ShopContext>();
-            Bind(typeof(IRepository<>), typeof(Repository<>));
+            Bind(typeof(IRepository<>)).To(typeof(Repository<>));
             Bind<IFactory>().ToFactory();
         }
     }

@@ -16,9 +16,9 @@ namespace Shop.DAL
     public class Repository<T> : BaseDisposable, IRepository<T> where T : BaseEntity, new()
     {
         private DbContext _dbContext;
-        public Repository(DbContext context)
+        public Repository(IFactory factory)
         {
-            _dbContext = context;
+            _dbContext = factory.Create<DbContext>();
         }
 
         #region IRepository implementation
@@ -44,7 +44,7 @@ namespace Shop.DAL
             var array = items as T[] ?? items.ToArray();
             _dbContext.Set<T>().AddOrUpdate(array);
         }
-        void AddEntity(T entity)
+        public void AddEntity(T entity)
         {
             _dbContext.Set<T>().Add(entity);
         }
@@ -94,7 +94,7 @@ namespace Shop.DAL
         {
             return await _dbContext.Set<T>().IncludeMultiple(includes).ToListAsync();
         }
-        public async Task<IEnumerable<T>> Paging<T, T1>(Expression<Func<T, bool>> match, Expression<Func<T, T1>> orderBy, int? startIndex, int? pageSize, params Expression<Func<T, object>>[] includes) where T : class, new()
+        public async Task<IEnumerable<T>> Paging<T1>(Expression<Func<T, bool>> match, Expression<Func<T, T1>> orderBy, int? startIndex, int? pageSize, params Expression<Func<T, object>>[] includes) where T : class, new()
         {
             if (startIndex.HasValue && pageSize.HasValue)
             {
@@ -145,26 +145,6 @@ namespace Shop.DAL
         public object Create(Type target)
         {
             return _dbContext.Set(target).Create();
-        }
-
-        void IRepository<T>.AddEntity(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ICollection<T1>> WhereAsync<T1>(Expression<Func<T1, bool>> match, params Expression<Func<T1, object>>[] includes)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<T1> GetFirstAsync<T1>(Expression<Func<T1, bool>> match, params Expression<Func<T1, object>>[] includes)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<T>> Paging<T1>(Expression<Func<T, bool>> match, Expression<Func<T, T1>> orderBy, int? startIndex, int? pageSize, params Expression<Func<T, object>>[] includes)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
