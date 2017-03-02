@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\BaseDisposable.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\IFactory.cs" />
     <Compile Include="Models\BaseEntity.cs" />
