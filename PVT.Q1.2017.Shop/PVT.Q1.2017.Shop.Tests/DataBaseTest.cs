@@ -110,7 +110,7 @@
         [TestMethod]
         public void UpdateModelTest()
         {
-            string trackName = "Hello";
+            string trackName = "Super-puper track with duration";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
             using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
@@ -144,8 +144,6 @@
         public void ArtistTracksTest()
         {
             var artist = new Artist { Name = "Sia" };
-            var track1 = new Track { Name = "Unstoppable", Artist = artist };
-            var track2 = new Track { Name = "Alive", Artist = artist };
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
             using (var repository = repositoryFactory.CreateRepository<IArtistRepository>())
@@ -153,33 +151,25 @@
                 repository.AddOrUpdate(artist);
             }
 
+            var track1 = new Track { Name = "Unstoppable", ArtistId = artist.Id };
+            var track2 = new Track { Name = "Alive", ArtistId = artist.Id };
             using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
                 repository.AddOrUpdate(track1);
                 repository.AddOrUpdate(track2);
                 repository.SaveChanges();
 
-                Assert.IsTrue(repository.GetAll(t => t.Artist != null).Any());
+                Assert.IsTrue(repository.GetAll(t => t.ArtistId != null).Any());
             }
         }
 
         [TestMethod]
         public void TracksWithArtistsTest()
         {
-            int count = 0;
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
             using (var repository = repositoryFactory.CreateRepository<ITrackRepository>())
             {
-                var tracks = repository.GetAll(t => t.Artist);
-                foreach (var track in tracks)
-                {
-                    if (track.Artist != null)
-                    {
-                        count++;
-                    }
-                }
-
-                Assert.IsTrue(count > 0);
+                Assert.IsTrue(repository.GetAll(t => t.ArtistId != null).Any());
             }
         }
 
