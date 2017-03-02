@@ -137,7 +137,7 @@
         /// <param name="match"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        Task<ICollection<T>> WhereAsync<T>(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
+        Task<ICollection<T>> WhereAsync(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
 
         /// <summary>
         /// Find
@@ -171,7 +171,7 @@
         /// <param name="match"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        Task<T> GetFirstAsync<T>(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
+        Task<T> GetFirstAsync(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
 
         /// <summary>
         /// Paging
