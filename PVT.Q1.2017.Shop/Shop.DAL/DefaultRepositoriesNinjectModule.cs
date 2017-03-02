@@ -6,6 +6,7 @@
     using Ninject.Modules;
     using Infrastructure.Repositories;
     using Infrastructure.Core;
+    using Infrastructure.Models;
 
     /// <summary>
     /// The default repositories bindings configuration
@@ -18,16 +19,7 @@
         public override void Load()
         {
             Bind<DbContext>().To<ShopContext>();
-
-            this.ConfigureRepositoryFactory();
-        }
-
-        /// <summary>
-        /// Configures the repository factory.
-        /// </summary>
-        protected virtual void ConfigureRepositoryFactory()
-        {
-            Bind<IRepository>().To<ShopContext>();
+            Bind(typeof(IRepository<>), typeof(Repository<>));
             Bind<IFactory>().ToFactory();
         }
     }
