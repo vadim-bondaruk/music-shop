@@ -1,8 +1,8 @@
-﻿using Shop.Common.Models;
-using Shop.Infrastructure.Repositories;
-
-namespace Shop.DAL.Repositories.Infrastruture
+﻿namespace Shop.DAL.Repositories.Infrastruture
 {
+    using Common.Models;
+    using Infrastructure.Repositories;
+
     /// <summary>
     /// The track repository.
     /// </summary>
