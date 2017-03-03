@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System.Linq;
     using global::Shop.BLL;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
@@ -49,29 +50,71 @@
                 AlbumId = albumId,
                 ArtistId = artistId
             };
-            var trackService = this._kernel.Get<ITrackService>();
+            var trackService = this.GetTrackService();
+
+            Assert.IsFalse(trackService.IsRegistered(track));
+
             trackService.Register(track);
             Assert.IsTrue(track.Id > 0);
 
             int trackId = track.Id;
-            using (var repository = repositoryFactory.Create<ITrackRepository>())
-            {
-                track = repository.GetById(trackId, t => t.Artist, t => t.Album);
-                Assert.IsTrue(track.Id > 0 && track.Artist.Id == artistId && track.Album.Id == albumId);
-            }
+            track = trackService.GetTrackInfo(trackId);
+            Assert.IsTrue(track.Id > 0 && track.Artist.Id == artistId && track.Album.Id == albumId);
+
+            Assert.IsTrue(trackService.IsRegistered(track));
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidEntityException))]
         public void RegisterInvalidTrackTest()
         {
-            var trackService = this._kernel.Get<ITrackService>();
+            var trackService = this.GetTrackService();
             trackService.Register(new Track());
+        }
+
+        [TestMethod]
+        public void TracksListTest()
+        {
+            var trackService = this.GetTrackService();
+            Assert.IsTrue(trackService.GetTracksList().Any());
+        }
+
+        [TestMethod]
+        public void TrackInfoTest()
+        {
+            var trackService = this.GetTrackService();
+
+            var track = trackService.GetTracksList().FirstOrDefault(t => t.ArtistId.HasValue && t.AlbumId.HasValue);
+            Assert.IsNotNull(track);
+
+            track = trackService.GetTrackInfo(track.Id);
+            Assert.IsNotNull(track);
+            Assert.IsTrue(track.Artist != null && track.Album != null);
+        }
+
+        [TestMethod]
+        public void TrackPricesTest()
+        {
+            var trackService = this.GetTrackService();
+
+            var track = trackService.GetTracksList().FirstOrDefault(t => t.ArtistId.HasValue && t.AlbumId.HasValue);
+            Assert.IsNotNull(track);
+
+            
+
+            track = trackService.GetTrackInfo(track.Id);
+            Assert.IsNotNull(track);
+            Assert.IsTrue(track.Artist != null && track.Album != null);
         }
 
         #endregion //Tests
 
         #region Private Methods
+
+        private ITrackService GetTrackService()
+        {
+            return this._kernel.Get<ITrackService>();
+        }
 
         private int AddNewArtist(IFactory repositoryFactory)
         {

@@ -3,10 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using Common.Models;
     using DAL.Repositories.Infrastruture;
+    using Helpers;
     using Infrastructure;
     using Shop.Infrastructure;
+    using Shop.Infrastructure.Models;
     using Shop.Infrastructure.Validators;
 
     /// <summary>
@@ -14,22 +17,35 @@
     /// </summary>
     public class TrackService : Service<ITrackRepository, Track>, ITrackService
     {
+        #region Fields
+
+        /// <summary>
+        /// Default includes
+        /// </summary>
+        private readonly Expression<Func<Track, BaseEntity>>[] _defaultIncludes;
+
+        #endregion //Fields
+
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackService"/> class.
         /// </summary>
-        /// <param name="repositoryFactory">
-        /// The repository factory.
+        /// <param name="factory">
+        /// The factory.
         /// </param>
         /// <param name="validator">The track validator.</param>
-        public TrackService(IFactory repositoryFactory, IValidator<Track> validator) : base(repositoryFactory, validator)
+        public TrackService(IFactory factory, IValidator<Track> validator) : base(factory, validator)
         {
+            this._defaultIncludes = new Expression<Func<Track, BaseEntity>>[]
+            {
+                t => t.Album, t => t.Artist, t => t.Genre
+            };
         }
 
         #endregion //Constructors
 
-        #region Public Methods
+        #region ITrackService Members
 
         /// <summary>
         /// Returns all registered tracks.
@@ -39,9 +55,9 @@
         /// </returns>
         public ICollection<Track> GetTracksList()
         {
-            using (var repository = this.RepositoryFactory.Create<ITrackRepository>())
+            using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetAll(t => t.Album, t => t.Artist, t => t.Genre);
+                return repository.GetAll(this._defaultIncludes);
             }
         }
 
@@ -53,7 +69,10 @@
         /// </returns>
         public ICollection<Track> GetTracksWithoutPrice()
         {
-            throw new NotImplementedException();
+            using (var repository = this.Factory.Create<ITrackRepository>())
+            {
+                return repository.GetAll(t => !t.TrackPrices.Any(), this._defaultIncludes);
+            }
         }
 
         /// <summary>
@@ -64,7 +83,10 @@
         /// </returns>
         public ICollection<Track> GetTracksWithPrice()
         {
-            throw new NotImplementedException();
+            using (var repository = this.Factory.Create<ITrackRepository>())
+            {
+                return repository.GetAll(t => t.TrackPrices.Any(), this._defaultIncludes);
+            }
         }
 
         /// <summary>
@@ -76,31 +98,10 @@
         /// </returns>
         public Track GetTrackInfo(int id)
         {
-            using (var repository = this.RepositoryFactory.Create<ITrackRepository>())
+            using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetById(id, t => t.Album, t => t.Artist, t => t.Genre);
+                return repository.GetById(id, this._defaultIncludes);
             }
-        }
-
-        /// <summary>
-        /// Returns the track price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
-        /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level.
-        /// </param>
-        /// <param name="currency">
-        /// The currency.
-        /// </param>
-        /// <returns>
-        /// The track price in the specified currency for the specified  <paramref name="priceLevel"/> or <b>null</b>.
-        /// </returns>
-        public TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
-        {
-            var trackPrices = this.GetTrackPrices(track, priceLevel);
-            return trackPrices.FirstOrDefault(p => p.CurrencyId == currency.Id);
         }
 
         /// <summary>
@@ -111,9 +112,33 @@
         /// <returns>All track prices for the specified  <paramref name="priceLevel"/>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel)
         {
-            using (var repository = this.RepositoryFactory.Create<ITrackPriceRepository>())
+            ServiceHelper.CheckTrack(track);
+            ServiceHelper.CheckPriceLevel(priceLevel);
+
+            using (var repository = this.Factory.Create<ITrackPriceRepository>())
             {
-                return repository.GetAll(p => p.TrackId == track.Id && p.PriceLevelId == priceLevel.Id);
+                return repository.GetAll(
+                                         p => p.TrackId == track.Id &&
+                                              p.PriceLevelId == priceLevel.Id,
+                                         p => p.Currency);
+            }
+        }
+
+        /// <summary>
+        /// Returns all <paramref name="track"/> prices.
+        /// </summary>
+        /// <param name="track">The track.</param>
+        /// <returns>All <paramref name="track"/> prices>.</returns>
+        public ICollection<TrackPrice> GetTrackPrices(Track track)
+        {
+            ServiceHelper.CheckTrack(track);
+
+            using (var repository = this.Factory.Create<ITrackPriceRepository>())
+            {
+                return repository.GetAll(
+                                         p => p.TrackId == track.Id,
+                                         p => p.Currency,
+                                         p => p.PriceLevel);
             }
         }
 
@@ -128,9 +153,11 @@
         /// </returns>
         public ICollection<Vote> GetTrackVotes(Track track)
         {
-            using (var repository = this.RepositoryFactory.Create<IVoteRepository>())
+            ServiceHelper.CheckTrack(track);
+
+            using (var repository = this.Factory.Create<IVoteRepository>())
             {
-                return repository.GetAll(v => v.Track.Id == track.Id, v => v.Track, v => v.User);
+                return repository.GetAll(v => v.TrackId == track.Id, v => v.Track, v => v.User);
             }
         }
 
@@ -145,12 +172,14 @@
         /// </returns>
         public ICollection<Feedback> GetTrackFeedbacks(Track track)
         {
-            using (var repository = this.RepositoryFactory.Create<IFeedbackRepository>())
+            ServiceHelper.CheckTrack(track);
+
+            using (var repository = this.Factory.Create<IFeedbackRepository>())
             {
-                return repository.GetAll(f => f.Track.Id == track.Id, f => f.Track, f => f.User);
+                return repository.GetAll(f => f.TrackId == track.Id, f => f.Track, f => f.User);
             }
         }
 
-        #endregion //Public Methods
+        #endregion //ITrackService Members
     }
 }
