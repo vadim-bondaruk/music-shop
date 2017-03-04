@@ -46,8 +46,8 @@
         /// </param>
         public void AddVote(Track track, Mark mark, User user)
         {
-            ServiceHelper.CheckTrack(track);
-            ServiceHelper.CheckUser(user);
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckUserForNull(user);
 
             var vote = new Vote
             {
@@ -79,8 +79,8 @@
         /// </returns>
         public Vote GetTrackVote(Track track, User user)
         {
-            ServiceHelper.CheckTrack(track);
-            ServiceHelper.CheckUser(user);
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckUserForNull(user);
 
             using (var repository = this.Factory.Create<IVoteRepository>())
             {

@@ -6,7 +6,7 @@
     /// <summary>
     /// The service helper.
     /// </summary>
-    internal static class ServiceHelper
+    internal static class ValidatorHelper
     {
         /// <summary>
         /// Checks the <paramref name="track"/>.
@@ -17,7 +17,7 @@
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="track"/> is <b>null</b>.
         /// </exception>
-        public static void CheckTrack(Track track)
+        public static void CheckTrackForNull(Track track)
         {
             if (track == null)
             {
@@ -34,7 +34,7 @@
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="user"/> is <b>null</b>.
         /// </exception>
-        public static void CheckUser(User user)
+        public static void CheckUserForNull(User user)
         {
             if (user == null)
             {
@@ -51,7 +51,7 @@
         /// <exception cref="ArgumentNullException">
         /// When the price level is <b>null</b>.
         /// </exception>
-        public static void CheckPriceLevel(PriceLevel priceLevel)
+        public static void CheckPriceLevelForNull(PriceLevel priceLevel)
         {
             if (priceLevel == null)
             {
@@ -68,7 +68,7 @@
         /// <exception cref="ArgumentNullException">
         /// When the <paramref name="currency"/> is <b>null</b>.
         /// </exception>
-        public static void CheckCurrency(Currency currency)
+        public static void CheckCurrencyForNull(Currency currency)
         {
             if (currency == null)
             {

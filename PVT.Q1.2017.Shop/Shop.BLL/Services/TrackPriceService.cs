@@ -49,9 +49,9 @@
         /// </returns>
         public TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
         {
-            ServiceHelper.CheckTrack(track);
-            ServiceHelper.CheckPriceLevel(priceLevel);
-            ServiceHelper.CheckCurrency(currency);
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckPriceLevelForNull(priceLevel);
+            ValidatorHelper.CheckCurrencyForNull(currency);
 
             using (var repository = this.Factory.Create<ITrackPriceRepository>())
             {
@@ -81,9 +81,9 @@
         /// </param>
         public void AddTrackPrice(Track track, decimal price, Currency currency, PriceLevel priceLevel)
         {
-            ServiceHelper.CheckTrack(track);
-            ServiceHelper.CheckCurrency(currency);
-            ServiceHelper.CheckPriceLevel(priceLevel);
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckCurrencyForNull(currency);
+            ValidatorHelper.CheckPriceLevelForNull(priceLevel);
 
             var trackPrice = new TrackPrice
             {

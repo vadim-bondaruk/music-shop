@@ -112,8 +112,8 @@
         /// <returns>All track prices for the specified  <paramref name="priceLevel"/>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel)
         {
-            ServiceHelper.CheckTrack(track);
-            ServiceHelper.CheckPriceLevel(priceLevel);
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckPriceLevelForNull(priceLevel);
 
             using (var repository = this.Factory.Create<ITrackPriceRepository>())
             {
@@ -131,7 +131,7 @@
         /// <returns>All <paramref name="track"/> prices>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track)
         {
-            ServiceHelper.CheckTrack(track);
+            ValidatorHelper.CheckTrackForNull(track);
 
             using (var repository = this.Factory.Create<ITrackPriceRepository>())
             {
@@ -153,7 +153,7 @@
         /// </returns>
         public ICollection<Vote> GetTrackVotes(Track track)
         {
-            ServiceHelper.CheckTrack(track);
+            ValidatorHelper.CheckTrackForNull(track);
 
             using (var repository = this.Factory.Create<IVoteRepository>())
             {
@@ -172,7 +172,7 @@
         /// </returns>
         public ICollection<Feedback> GetTrackFeedbacks(Track track)
         {
-            ServiceHelper.CheckTrack(track);
+            ValidatorHelper.CheckTrackForNull(track);
 
             using (var repository = this.Factory.Create<IFeedbackRepository>())
             {

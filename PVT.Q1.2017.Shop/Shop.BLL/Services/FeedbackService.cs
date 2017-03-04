@@ -46,8 +46,8 @@
         /// </param>
         public void AddFeedback(Track track, string comments, User user)
         {
-            ServiceHelper.CheckTrack(track);
-            ServiceHelper.CheckUser(user);
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckUserForNull(user);
 
             var feedback = new Feedback
             {
@@ -79,8 +79,8 @@
         /// </returns>
         public Feedback GetTrackFeedback(Track track, User user)
         {
-            ServiceHelper.CheckTrack(track);
-            ServiceHelper.CheckUser(user);
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckUserForNull(user);
 
             using (var repository = this.Factory.Create<IFeedbackRepository>())
             {
