@@ -43,12 +43,7 @@
                 Name = name
             };
 
-            this.Validator.Validate(priceLevel);
-
-            using (var repository = this.CreateRepository())
-            {
-                repository.AddOrUpdate(priceLevel);
-            }
+            this.Register(priceLevel);
         }
 
         /// <summary>

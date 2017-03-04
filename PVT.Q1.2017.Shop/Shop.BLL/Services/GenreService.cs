@@ -43,12 +43,7 @@ namespace Shop.BLL.Services
                 Name = name
             };
 
-            this.Validator.Validate(genre);
-
-            using (var repository = this.CreateRepository())
-            {
-                repository.AddOrUpdate(genre);
-            }
+            this.Register(genre);
         }
 
         /// <summary>

@@ -53,7 +53,7 @@
             ValidatorHelper.CheckPriceLevelForNull(priceLevel);
             ValidatorHelper.CheckCurrencyForNull(currency);
 
-            using (var repository = this.Factory.Create<ITrackPriceRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetAll(
                                          p => p.TrackId == track.Id &&
@@ -93,12 +93,7 @@
                 TrackId = track.Id
             };
 
-            this.Validator.Validate(trackPrice);
-
-            using (var repository = this.Factory.Create<ITrackPriceRepository>())
-            {
-                repository.AddOrUpdate(trackPrice);
-            }
+            this.Register(trackPrice);
         }
 
         /// <summary>
@@ -110,7 +105,7 @@
         /// </returns>
         public TrackPrice GetTrackPriceInfo(int id)
         {
-            using (var repository = this.Factory.Create<ITrackPriceRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetById(id, p => p.Track, p => p.Currency, p => p.PriceLevel);
             }
