@@ -22,7 +22,7 @@
         /// <summary>
         /// Default includes
         /// </summary>
-        private static readonly Expression<Func<Track, BaseEntity>>[] _defaultIncludes;
+        private static readonly Expression<Func<Track, BaseEntity>>[] DefaultIncludes;
 
         #endregion //Fields
 
@@ -33,7 +33,7 @@
         /// </summary>
         static TrackService()
         {
-            _defaultIncludes = new Expression<Func<Track, BaseEntity>>[]
+            DefaultIncludes = new Expression<Func<Track, BaseEntity>>[]
             {
                 t => t.Album, t => t.Artist, t => t.Genre
             };
@@ -57,9 +57,9 @@
         /// <summary>
         /// Default track includes.
         /// </summary>
-        protected internal static Expression<Func<Track, BaseEntity>>[] DefaultIncludes
+        protected internal static Expression<Func<Track, BaseEntity>>[] TrackDefaultIncludes
         {
-            get { return _defaultIncludes; }
+            get { return DefaultIncludes; }
         }
 
         #endregion //Properties
@@ -76,7 +76,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(_defaultIncludes);
+                return repository.GetAll(DefaultIncludes);
             }
         }
 
@@ -90,7 +90,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(t => !t.TrackPrices.Any(), _defaultIncludes);
+                return repository.GetAll(t => !t.TrackPrices.Any(), DefaultIncludes);
             }
         }
 
@@ -104,7 +104,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(t => t.TrackPrices.Any(), _defaultIncludes);
+                return repository.GetAll(t => t.TrackPrices.Any(), DefaultIncludes);
             }
         }
 
@@ -119,7 +119,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetById(id, _defaultIncludes);
+                return repository.GetById(id, DefaultIncludes);
             }
         }
 

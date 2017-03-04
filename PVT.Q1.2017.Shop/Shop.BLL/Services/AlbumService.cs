@@ -83,7 +83,7 @@
 
             using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id, TrackService.DefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id, TrackService.TrackDefaultIncludes);
             }
         }
 
@@ -99,7 +99,7 @@
 
             using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id && !t.TrackPrices.Any(), TrackService.DefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id && !t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
             }
         }
 
@@ -116,7 +116,7 @@
 
             using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id && t.TrackPrices.Any(), TrackService.DefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id && t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
             }
         }
 
