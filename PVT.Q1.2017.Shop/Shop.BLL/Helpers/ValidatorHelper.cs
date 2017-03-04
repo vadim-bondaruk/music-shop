@@ -126,5 +126,22 @@
                 throw new ArgumentNullException(nameof(album));
             }
         }
+
+        /// <summary>
+        /// Checks the <paramref name="artist"/>.
+        /// </summary>
+        /// <param name="artist">
+        /// The artist.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When the <paramref name="artist"/> is <b>null</b>.
+        /// </exception>
+        public static void CheckArtistForNull(Artist artist)
+        {
+            if (artist == null)
+            {
+                throw new ArgumentNullException(nameof(artist));
+            }
+        }
     }
 }

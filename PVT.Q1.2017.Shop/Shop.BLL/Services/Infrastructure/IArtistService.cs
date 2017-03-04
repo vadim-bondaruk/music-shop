@@ -19,6 +19,14 @@
         Artist GetArtistInfo(int id);
 
         /// <summary>
+        /// Returns all registered artists.
+        /// </summary>
+        /// <returns>
+        /// All registered artists.
+        /// </returns>
+        ICollection<Artist> GetAlbumsList();
+
+        /// <summary>
         /// Returns all registered albums for the specified <paramref name="artist"/>.
         /// </summary>
         /// <param name="artist">The artist.</param>

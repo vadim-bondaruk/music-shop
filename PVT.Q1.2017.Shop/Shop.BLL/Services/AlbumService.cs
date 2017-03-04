@@ -83,7 +83,7 @@
 
             using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetAll(t => t.Album.Id == album.Id, TrackService.DefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id, TrackService.DefaultIncludes);
             }
         }
 
@@ -95,9 +95,11 @@
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured(Album album)
         {
+            ValidatorHelper.CheckAlbumForNull(album);
+
             using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetAll(t => t.Album.Id == album.Id && !t.TrackPrices.Any(), TrackService.DefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id && !t.TrackPrices.Any(), TrackService.DefaultIncludes);
             }
         }
 
@@ -110,9 +112,11 @@
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured(Album album)
         {
+            ValidatorHelper.CheckAlbumForNull(album);
+
             using (var repository = this.Factory.Create<ITrackRepository>())
             {
-                return repository.GetAll(t => t.Album.Id == album.Id && t.TrackPrices.Any(), TrackService.DefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id && t.TrackPrices.Any(), TrackService.DefaultIncludes);
             }
         }
 
