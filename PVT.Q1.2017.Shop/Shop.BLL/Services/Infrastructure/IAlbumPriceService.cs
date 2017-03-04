@@ -40,12 +40,12 @@
         void AddAlbumPrice(Album album, decimal price, Currency currency, PriceLevel priceLevel);
 
         /// <summary>
-        /// Returns the track price with the specified <paramref name="id"/>
+        /// Returns the album price with the specified <paramref name="id"/>.
         /// </summary>
-        /// <param name="id">The track price id.</param>
+        /// <param name="id">The album price id.</param>
         /// <returns>
-        /// The track price with the specified <paramref name="id"/> or <b>null</b> if track price doesn't exist.
+        /// The album price with the specified <paramref name="id"/> or <b>null</b> if album price doesn't exist.
         /// </returns>
-        TrackPrice GetTrackPriceInfo(int id);
+        AlbumPrice GetAlbumPriceInfo(int id);
     }
 }
