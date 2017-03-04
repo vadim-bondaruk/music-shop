@@ -1,23 +1,24 @@
 ﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using Common.Models;
-    using Infrastruture;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Repositories.Infrastruture;
 
     /// <summary>
-    /// The track repository.
+    ///     The track repository.
     /// </summary>
     public class TrackRepository : Repository<Track>, ITrackRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackRepository"/> class.
+        ///     Initializes a new instance of the <see cref="TrackRepository" />
+        ///     class.
         /// </summary>
-        /// <param name="dbContext">
-        /// The Db context.
-        /// </param>
-        public TrackRepository(DbContext dbContext) : base(dbContext)
+        /// <param name="dbContext">The Db context.</param>
+        public TrackRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
@@ -26,11 +27,9 @@
         #region Protected Methods
 
         /// <summary>
-        /// Adds the specified <paramref name="track"/> into Db.
+        ///     Adds the specified <paramref name="track" /> into Db.
         /// </summary>
-        /// <param name="track">
-        /// The track to add.
-        /// </param>
+        /// <param name="track">The track to add.</param>
         protected override void Add(Track track)
         {
             EntityState artistEntryState;
