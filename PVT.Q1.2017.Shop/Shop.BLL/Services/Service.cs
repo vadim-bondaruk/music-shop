@@ -165,9 +165,21 @@
                 return false;
             }
 
+            return this.IsRegistered(model.Id);
+        }
+
+        /// <summary>
+        /// Determines whether model with the specified <paramref name="id"/> is registered.
+        /// </summary>
+        /// <param name="id">A model id.</param>
+        /// <returns>
+        /// <b>true</b> if model with the specified <paramref name="id"/> is registered; otherwise <b>false</b>.
+        /// </returns>
+        public bool IsRegistered(int id)
+        {
             using (var repository = this._factory.Create<TRepository>())
             {
-                return repository.GetById(model.Id) != null;
+                return repository.GetById(id) != null;
             }
         }
 
