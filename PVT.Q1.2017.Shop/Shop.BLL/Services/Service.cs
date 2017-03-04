@@ -87,7 +87,7 @@
         {
             this._validator.Validate(model);
 
-            using (var repository = this._factory.Create<TRepository>())
+            using (var repository = this.CreateRepository())
             {
                 repository.AddOrUpdate(model);
             }
@@ -106,7 +106,7 @@
                 this.OnUpdateEntityNotFoundException();
             }
 
-            using (var repository = this._factory.Create<TRepository>())
+            using (var repository = this.CreateRepository())
             {
                 repository.AddOrUpdate(model);
             }
@@ -128,7 +128,7 @@
                 return false;
             }
 
-            using (var repository = this._factory.Create<TRepository>())
+            using (var repository = this.CreateRepository())
             {
                 repository.Delete(model);
                 return true;
@@ -177,7 +177,7 @@
         /// </returns>
         public bool IsRegistered(int id)
         {
-            using (var repository = this._factory.Create<TRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetById(id) != null;
             }
@@ -196,6 +196,17 @@
         protected virtual void OnUpdateEntityNotFoundException()
         {
             throw new EntityNotFoundException("The model doesn't exist. Nothing to update.");
+        }
+
+        /// <summary>
+        /// Creates the repository for the model with the specified type.
+        /// </summary>
+        /// <returns>
+        /// The repository for the model with the specified type.
+        /// </returns>
+        protected virtual TRepository CreateRepository()
+        {
+            return this._factory.Create<TRepository>();
         }
 
         #endregion //Protected Methods
