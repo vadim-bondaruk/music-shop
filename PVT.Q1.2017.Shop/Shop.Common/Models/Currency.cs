@@ -10,19 +10,13 @@
 namespace Shop.Common.Models
 {
     using System.Collections.Generic;
-    using Infrastructure.Models;
     
     /// <summary>
     /// The currency model.
     /// </summary>
-    public class Currency : BaseEntity
+    public class Currency : BaseNamedEntity
     {
         #region Properties
-
-        /// <summary>
-        /// Short name of currency
-        /// </summary>
-        public string ShortName { get; set; }
 
         /// <summary>
         /// Full name of currency
@@ -33,6 +27,11 @@ namespace Shop.Common.Models
         /// ISO 4217 code of currency 
         /// </summary>
         public int Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets the graphic currency symbol.
+        /// </summary>
+        public string Symbol { get; set; }
 
         #endregion //Properties
 
