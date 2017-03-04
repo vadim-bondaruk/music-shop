@@ -1,13 +1,13 @@
 ﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using System.Linq;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
-    /// The album price repository.
+    /// The album price repository
     /// </summary>
-    public class AlbumPriceRepository : Repository<AlbumPrice>
+    public class AlbumPriceRepository : Repository<AlbumPrice>, IAlbumPriceRepository
     {
         #region Constructors
 
@@ -15,7 +15,7 @@
         /// Initializes a new instance of the <see cref="AlbumPriceRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
-        /// The Db context.
+        /// The db context.
         /// </param>
         public AlbumPriceRepository(DbContext dbContext) : base(dbContext)
         {
@@ -26,16 +26,29 @@
         #region Protected Methods
 
         /// <summary>
-        /// Loads additional references.
+        /// Adds the specified <paramref name="albumPrice"/> into Db.
         /// </summary>
-        /// <param name="queryResult">
-        /// The query result.
+        /// <param name="albumPrice">
+        /// The album price to add.
         /// </param>
-        /// <returns>
-        /// </returns>
-        protected override IQueryable<AlbumPrice> LoadAdditionalInfo(IQueryable<AlbumPrice> queryResult)
+        protected override void Add(AlbumPrice albumPrice)
         {
-            return base.LoadAdditionalInfo(queryResult).Include(p => p.Album).Include(p => p.Currency).Include(p => p.PriceLevel);
+            EntityState albumEntryState;
+            EntityState currencyEntryState;
+            EntityState priceLevelEntryState;
+
+            // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
+            // The AlbumPriceRepository should be SOLID, should only add information about album price! Not about album, currency or price level!
+            this.DetachNavigationProperty(albumPrice.Album, out albumEntryState);
+            this.DetachNavigationProperty(albumPrice.Currency, out currencyEntryState);
+            this.DetachNavigationProperty(albumPrice.PriceLevel, out priceLevelEntryState);
+
+            albumPrice.Album = null;
+            albumPrice.Currency = null;
+            albumPrice.PriceLevel = null;
+
+            // adding the album price into Db
+            base.Add(albumPrice);
         }
 
         #endregion //Protected Methods

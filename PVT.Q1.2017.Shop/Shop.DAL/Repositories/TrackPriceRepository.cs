@@ -1,14 +1,13 @@
-﻿using System.Data.Entity;
-using System.Linq;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
+    using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The track price repository.
     /// </summary>
-    public class TrackPriceRepository : Repository<TrackPrice>
+    public class TrackPriceRepository : Repository<TrackPrice>, ITrackPriceRepository
     {
         #region Constructors
 
@@ -27,16 +26,29 @@ namespace Shop.DAL.Repositories
         #region Protected Methods
 
         /// <summary>
-        /// Loads additional references.
+        /// Adds the specified <paramref name="trackPrice"/> into Db.
         /// </summary>
-        /// <param name="queryResult">
-        /// The query result.
+        /// <param name="trackPrice">
+        /// The track price to add.
         /// </param>
-        /// <returns>
-        /// </returns>
-        protected override IQueryable<TrackPrice> LoadAdditionalInfo(IQueryable<TrackPrice> queryResult)
+        protected override void Add(TrackPrice trackPrice)
         {
-            return base.LoadAdditionalInfo(queryResult).Include(p => p.Track).Include(p => p.Currency).Include(p => p.PriceLevel);
+            EntityState trackEntryState;
+            EntityState currencyEntryState;
+            EntityState priceLevelEntryState;
+
+            // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
+            // The TrackPriceRepository should be SOLID, should only add information about track! Not about track, currency or price level!
+            this.DetachNavigationProperty(trackPrice.Track, out trackEntryState);
+            this.DetachNavigationProperty(trackPrice.Currency, out currencyEntryState);
+            this.DetachNavigationProperty(trackPrice.PriceLevel, out priceLevelEntryState);
+
+            trackPrice.Track = null;
+            trackPrice.Currency = null;
+            trackPrice.PriceLevel = null;
+
+            // adding the track price into Db
+            base.Add(trackPrice);
         }
 
         #endregion //Protected Methods

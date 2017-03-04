@@ -2,22 +2,24 @@
 {
     using System;
     using Exceptions;
-    using Infrastructure.Models;
-    using Infrastructure.Repositories;
-    using Infrastructure.Services;
-    using Infrastructure.Validators;
+    using Shop.Infrastructure;
+    using Shop.Infrastructure.Models;
+    using Shop.Infrastructure.Repositories;
+    using Shop.Infrastructure.Services;
+    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The model service.
     /// </summary>
-    public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity, new()
+    public abstract class Service<TRepository, TEntity> : IService<TEntity> where TEntity : BaseEntity, new()
+                                                                            where TRepository : IRepository<TEntity>
     {
         #region Fields
 
         /// <summary>
-        /// The models repository.
+        /// The factory.
         /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IFactory _factory;
 
         /// <summary>
         /// The models validator.
@@ -29,25 +31,25 @@
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Service{TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="Service{TRepository, TEntity}"/> class.
         /// </summary>
-        /// <param name="repositoryFactory">
+        /// <param name="factory">
         /// The repository factory.
         /// </param>
         /// <param name="validator">
         /// The model validator.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// When <paramref name="repositoryFactory"/> is null or <paramref name="validator"/> is null.
+        /// When <paramref name="factory"/> is null or <paramref name="validator"/> is null.
         /// </exception>
-        public Service(IRepositoryFactory repositoryFactory, IValidator<TEntity> validator)
+        protected Service(IFactory factory, IValidator<TEntity> validator)
         {
-            if (repositoryFactory == null)
+            if (factory == null)
             {
-                throw new ArgumentNullException(nameof(repositoryFactory));
+                throw new ArgumentNullException(nameof(factory));
             }
 
-            this._repositoryFactory = repositoryFactory;
+            this._factory = factory;
             this._validator = validator;
         }
 
@@ -56,11 +58,11 @@
         #region Properties
 
         /// <summary>
-        /// Gets the repository factory.
+        /// Gets the factory.
         /// </summary>
-        protected IRepositoryFactory RepositoryFactory
+        protected IFactory Factory
         {
-            get { return this._repositoryFactory; }
+            get { return this._factory; }
         }
 
         /// <summary>
@@ -85,7 +87,7 @@
         {
             this._validator.Validate(model);
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            using (var repository = this.CreateRepository())
             {
                 repository.AddOrUpdate(model);
             }
@@ -104,7 +106,7 @@
                 this.OnUpdateEntityNotFoundException();
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            using (var repository = this.CreateRepository())
             {
                 repository.AddOrUpdate(model);
             }
@@ -126,7 +128,7 @@
                 return false;
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            using (var repository = this.CreateRepository())
             {
                 repository.Delete(model);
                 return true;
@@ -163,9 +165,21 @@
                 return false;
             }
 
-            using (var repository = this._repositoryFactory.CreateRepository<TEntity>())
+            return this.IsRegistered(model.Id);
+        }
+
+        /// <summary>
+        /// Determines whether model with the specified <paramref name="id"/> is registered.
+        /// </summary>
+        /// <param name="id">A model id.</param>
+        /// <returns>
+        /// <b>true</b> if model with the specified <paramref name="id"/> is registered; otherwise <b>false</b>.
+        /// </returns>
+        public bool IsRegistered(int id)
+        {
+            using (var repository = this.CreateRepository())
             {
-                return repository.GetById(model.Id) != null;
+                return repository.GetById(id) != null;
             }
         }
 
@@ -182,6 +196,17 @@
         protected virtual void OnUpdateEntityNotFoundException()
         {
             throw new EntityNotFoundException("The model doesn't exist. Nothing to update.");
+        }
+
+        /// <summary>
+        /// Creates the repository for the model with the specified type.
+        /// </summary>
+        /// <returns>
+        /// The repository for the model with the specified type.
+        /// </returns>
+        protected virtual TRepository CreateRepository()
+        {
+            return this._factory.Create<TRepository>();
         }
 
         #endregion //Protected Methods

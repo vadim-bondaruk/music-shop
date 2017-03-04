@@ -27,6 +27,25 @@
 
         #endregion //Properties
 
+        #region Foreign Keys
+
+        /// <summary>
+        /// Gets or sets the album id.
+        /// </summary>
+        public int? AlbumId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the artist id.
+        /// </summary>
+        public int? ArtistId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the genre id.
+        /// </summary>
+        public int? GenreId { get; set; }
+
+        #endregion //Foreign Keys
+        
         #region Navigation Properties
 
         /// <summary>

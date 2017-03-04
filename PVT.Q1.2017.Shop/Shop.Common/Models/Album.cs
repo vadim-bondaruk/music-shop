@@ -22,6 +22,18 @@
 
         #endregion //Prperties
 
+        #region Foreign Keys
+
+        /// <summary>
+        /// Gets or sets the artist.
+        /// </summary>
+        public int? ArtistId
+        {
+            get; set;
+        }
+
+        #endregion //Foreign Keys
+
         #region Navigation Properties
 
         /// <summary>

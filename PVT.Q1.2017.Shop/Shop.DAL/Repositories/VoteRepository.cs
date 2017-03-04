@@ -1,13 +1,12 @@
 ﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using System.Linq;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
-    /// The vote repository.
     /// </summary>
-    public class VoteRepository : Repository<Vote>
+    public class VoteRepository : Repository<Vote>, IVoteRepository
     {
         #region Constructors
 
@@ -26,16 +25,26 @@
         #region Protected Methods
 
         /// <summary>
-        /// Loads additional references.
+        /// Adds the specified <paramref name="vote"/> into Db.
         /// </summary>
-        /// <param name="queryResult">
-        /// The query result.
+        /// <param name="vote">
+        /// The vote to add.
         /// </param>
-        /// <returns>
-        /// </returns>
-        protected override IQueryable<Vote> LoadAdditionalInfo(IQueryable<Vote> queryResult)
+        protected override void Add(Vote vote)
         {
-            return base.LoadAdditionalInfo(queryResult).Include(v => v.Track).Include(v => v.User);
+            EntityState trackEntryState;
+            EntityState userEntryState;
+
+            // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
+            // The VoteRepository should be SOLID, should only add information about vote! Not about track or user!
+            this.DetachNavigationProperty(vote.Track, out trackEntryState);
+            this.DetachNavigationProperty(vote.User, out userEntryState);
+
+            vote.Track = null;
+            vote.User = null;
+
+            // adding the vote into Db.
+            base.Add(vote);
         }
 
         #endregion //Protected Methods

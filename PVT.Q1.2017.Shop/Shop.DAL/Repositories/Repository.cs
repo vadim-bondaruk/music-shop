@@ -11,7 +11,7 @@
     /// <summary>
     /// The models repository.
     /// </summary>
-    public class Repository<TEntity> : IDisposableRepository<TEntity> where TEntity : BaseEntity, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
     {
         #region Fields
 
@@ -29,6 +29,11 @@
         /// Indicates whether the repository state was changed.
         /// </summary>
         private bool _stateChanged;
+
+        /// <summary>
+        /// Indicates whether the inner resources are already disposed.
+        /// </summary>
+        private bool _disposed;
 
         #endregion //Fields
 
@@ -56,6 +61,26 @@
 
         #endregion //Constructors
 
+        #region Properties
+
+        /// <summary>
+        /// Gets the db context.
+        /// </summary>
+        protected DbContext DbContext
+        {
+            get { return this._dbContext; }
+        }
+
+        /// <summary>
+        /// Gets the current db set.
+        /// </summary>
+        protected IDbSet<TEntity> CurrentDbSet
+        {
+            get { return this._currentDbSet; }
+        }
+
+        #endregion //Properties
+
         #region IRepository<TEntity> Members
 
         /// <summary>
@@ -64,36 +89,39 @@
         /// <param name="id">
         /// The model key.
         /// </param>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>
         /// A model with the specified <paramref name="id"/> or null in case if there are now models with such <paramref name="id"/>.
         /// </returns>
-        public virtual TEntity GetById(int id)
+        public virtual TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this._currentDbSet.Where(x => x.Id == id);
-            return this.LoadAdditionalInfo(query).FirstOrDefault();
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(x => x.Id == id), includes);
+            return query.FirstOrDefault();
         }
 
         /// <summary>
         /// Returns all models from the repository.
         /// </summary>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>
         /// All models from the repository.
         /// </returns>
-        public virtual ICollection<TEntity> GetAll()
+        public virtual ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this._currentDbSet;
-            return this.LoadAdditionalInfo(query).ToList();
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet, includes);
+            return query.ToList();
         }
 
         /// <summary>
         /// Tries to find models from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
         /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
-        public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
+        public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
             IQueryable<TEntity> query = this._currentDbSet.Where(filter);
-            return this.LoadAdditionalInfo(query).ToList();
+            return query.ToList();
         }
 
         /// <summary>
@@ -110,17 +138,15 @@
             }
 
             // if the model exists in Db then we have to update it
-            var originalTrack = this.GetById(model.Id);
-            if (originalTrack != null)
+            var originalModel = this.GetById(model.Id);
+            if (originalModel != null)
             {
-                var entry = this._dbContext.Entry(originalTrack);
-                entry.CurrentValues.SetValues(model);
+                this.Update(originalModel, model);
                 this._stateChanged = true;
             }
             else
             {
-                // if it is a new model then we have to insert it
-                this._currentDbSet.Add(model);
+                this.Add(model);
                 this._stateChanged = true;
             }
         }
@@ -154,11 +180,7 @@
 
             Delete(model.Id);
         }
-
-        #endregion //IRepository<TEntity> Members
-
-        #region IDisposableRepository Members
-
+        
         /// <summary>
         /// Saves all changes.
         /// </summary>
@@ -171,7 +193,7 @@
             }
         }
 
-        #endregion //IDisposableRepository Members
+        #endregion //IRepository<TEntity> Members
 
         #region IDisposable Pattern
 
@@ -190,12 +212,23 @@
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            // to ensure that the changes are not lost
-            this.SaveChanges();
-
-            if (disposing)
+            if (!_disposed)
             {
-                this._dbContext?.Dispose();
+                try
+                {
+                    // to ensure that the changes are not lost
+                    this.SaveChanges();
+                }
+                catch
+                {
+                    // no error in Dispose method!!!
+                }
+
+                if (disposing)
+                {
+                    this._dbContext?.Dispose();
+                    this._disposed = true;
+                }
             }
         }
 
@@ -204,14 +237,73 @@
         #region Protected Methods
 
         /// <summary>
+        /// Updates the specified <paramref name="modelFromDb"/> by values from <paramref name="model"/>.
+        /// </summary>
+        /// <param name="modelFromDb">
+        /// The model from db.
+        /// </param>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        protected virtual void Update(TEntity modelFromDb, TEntity model)
+        {
+            var entry = this._dbContext.Entry(modelFromDb);
+            entry.CurrentValues.SetValues(model);
+        }
+
+        /// <summary>
+        /// Adds the specified <paramref name="model"/> into Db.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        protected virtual void Add(TEntity model)
+        {
+            // if it is a new model then we have to insert it
+            this._currentDbSet.Add(model);
+        }
+
+        /// <summary>
         /// Loads additional references.
         /// </summary>
         /// <param name="queryResult">
         /// The query result.
         /// </param>
-        protected virtual IQueryable<TEntity> LoadAdditionalInfo(IQueryable<TEntity> queryResult)
+        /// <param name="includes"></param>
+        protected IQueryable<TEntity> LoadIncludes(IQueryable<TEntity> queryResult, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
+            foreach (var include in includes)
+            {
+                queryResult = queryResult.Include(include);
+            }
+
             return queryResult;
+        }
+
+        /// <summary>
+        /// Detaches the navigation property associated with the specified <paramref name="entity"/>.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        /// <param name="previousEntityState">
+        /// The state of the <paramref name="entity"/> before detach.
+        /// </param>
+        /// <typeparam name="T">
+        /// The entity type derived from <see cref="BaseEntity"/>.
+        /// </typeparam>
+        protected void DetachNavigationProperty<T>(T entity, out EntityState previousEntityState) where T : BaseEntity
+        {
+            if (entity != null)
+            {
+                var entry = this._dbContext.Entry(entity);
+                previousEntityState = entry.State;
+                entry.State = EntityState.Detached;
+            }
+            else
+            {
+                previousEntityState = EntityState.Detached;
+            }
         }
 
         #endregion //Protected Methods

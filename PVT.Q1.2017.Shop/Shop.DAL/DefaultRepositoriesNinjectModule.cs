@@ -1,12 +1,12 @@
 ﻿namespace Shop.DAL
 {
     using System.Data.Entity;
-    using Common.Models;
     using Context;
-    using Infrastructure.Repositories;
+    using Infrastructure;
     using Ninject.Extensions.Factory;
     using Ninject.Modules;
     using Repositories;
+    using Repositories.Infrastruture;
 
     /// <summary>
     /// The default repositories bindings configuration
@@ -28,17 +28,20 @@
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
-            Bind<IDisposableRepository<Track>>().To<TrackRepository>();
-            Bind<IDisposableRepository<Artist>>().To<Repository<Artist>>();
-            Bind<IDisposableRepository<Album>>().To<AlbumRepositry>();
-            Bind<IDisposableRepository<Feedback>>().To<FeedbackRepository>();
-            Bind<IDisposableRepository<Vote>>().To<VoteRepository>();
-            Bind<IDisposableRepository<Genre>>().To<Repository<Genre>>();
-            Bind<IDisposableRepository<TrackPrice>>().To<TrackPriceRepository>();
-            Bind<IDisposableRepository<AlbumPrice>>().To<AlbumPriceRepository>();
-            Bind<IDisposableRepository<CurrencyRate>>().To<CurrencyRateRepository>();
+            Bind<ITrackRepository>().To<TrackRepository>();
+            Bind<IArtistRepository>().To<ArtistRepository>();
+            Bind<IAlbumRepository>().To<AlbumRepository>();
+            Bind<IFeedbackRepository>().To<FeedbackRepository>();
+            Bind<IVoteRepository>().To<VoteRepository>();
+            Bind<IGenreRepository>().To<GenreRepository>();
+            Bind<ITrackPriceRepository>().To<TrackPriceRepository>();
+            Bind<IAlbumPriceRepository>().To<AlbumPriceRepository>();
+            Bind<ICurrencyRateRepository>().To<CurrencyRateRepository>();
+            Bind<ICurrencyRepository>().To<CurrencyRepository>();
+            Bind<IPriceLevelRepository>().To<PriceLevelRepository>();
+            Bind<IUserRepository>().To<UserRepository>();
 
-            Bind<IRepositoryFactory>().ToFactory();
+            Bind<IFactory>().ToFactory();
         }
     }
 }

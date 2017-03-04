@@ -1,13 +1,13 @@
 ﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using System.Linq;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The currency rate repository.
     /// </summary>
-    public class CurrencyRateRepository : Repository<CurrencyRate>
+    public class CurrencyRateRepository : Repository<CurrencyRate>, ICurrencyRateRepository
     {
         #region Constructors
 
@@ -26,16 +26,26 @@
         #region Protected Methods
 
         /// <summary>
-        /// Loads additional references.
+        /// Adds the specified <paramref name="currencyRate"/> into Db.
         /// </summary>
-        /// <param name="queryResult">
-        /// The query result.
+        /// <param name="currencyRate">
+        /// The currency rate to add.
         /// </param>
-        /// <returns>
-        /// </returns>
-        protected override IQueryable<CurrencyRate> LoadAdditionalInfo(IQueryable<CurrencyRate> queryResult)
+        protected override void Add(CurrencyRate currencyRate)
         {
-            return base.LoadAdditionalInfo(queryResult).Include(r => r.Currency).Include(r => r.TargetCurrency);
+            EntityState currencyEntryState;
+            EntityState targetCurrencyEntryState;
+
+            // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
+            // The CurrencyRateRepository should be SOLID, should only add information about currency rate! Not about currencies!
+            this.DetachNavigationProperty(currencyRate.Currency, out currencyEntryState);
+            this.DetachNavigationProperty(currencyRate.TargetCurrency, out targetCurrencyEntryState);
+
+            currencyRate.Currency = null;
+            currencyRate.TargetCurrency = null;
+
+            // adding the currency rate into Db.
+            base.Add(currencyRate);
         }
 
         #endregion //Protected Methods

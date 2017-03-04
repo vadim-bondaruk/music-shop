@@ -10,17 +10,13 @@
 namespace Shop.Common.Models
 {
     using System.Collections.Generic;
-    using Infrastructure.Models;
     
     /// <summary>
     /// The currency model.
     /// </summary>
-    public class Currency : BaseEntity
+    public class Currency : BaseNamedEntity
     {
-        /// <summary>
-        /// Short name of currency
-        /// </summary>
-        public string ShortName { get; set; }
+        #region Properties
 
         /// <summary>
         /// Full name of currency
@@ -31,6 +27,15 @@ namespace Shop.Common.Models
         /// ISO 4217 code of currency 
         /// </summary>
         public int Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets the graphic currency symbol.
+        /// </summary>
+        public string Symbol { get; set; }
+
+        #endregion //Properties
+
+        #region Navigation Properties
 
         /// <summary>
         /// Currency rates
@@ -56,5 +61,7 @@ namespace Shop.Common.Models
         /// Get all track prices
         /// </summary>
         public virtual ICollection<TrackPrice> TrackPrices { get; set; }
+
+        #endregion //Navigation Properties
     }
 }
