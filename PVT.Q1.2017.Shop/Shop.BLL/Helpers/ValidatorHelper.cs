@@ -4,7 +4,7 @@
     using Common.Models;
 
     /// <summary>
-    /// The service helper.
+    /// The validator helper.
     /// </summary>
     internal static class ValidatorHelper
     {
@@ -73,6 +73,57 @@
             if (currency == null)
             {
                 throw new ArgumentNullException(nameof(currency));
+            }
+        }
+
+        /// <summary>
+        /// Checks the <paramref name="feedback"/>.
+        /// </summary>
+        /// <param name="feedback">
+        /// The feedback.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When the <paramref name="feedback"/> is <b>null</b>.
+        /// </exception>
+        public static void CheckFeedbackForNull(Feedback feedback)
+        {
+            if (feedback == null)
+            {
+                throw new ArgumentNullException(nameof(feedback));
+            }
+        }
+
+        /// <summary>
+        /// Checks the <paramref name="vote"/>.
+        /// </summary>
+        /// <param name="vote">
+        /// The vote.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When the <paramref name="vote"/> is <b>null</b>.
+        /// </exception>
+        public static void CheckVoteForNull(Vote vote)
+        {
+            if (vote == null)
+            {
+                throw new ArgumentNullException(nameof(vote));
+            }
+        }
+
+        /// <summary>
+        /// Checks the <paramref name="album"/>.
+        /// </summary>
+        /// <param name="album">
+        /// The album.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// When the <paramref name="album"/> is <b>null</b>.
+        /// </exception>
+        public static void CheckAlbumForNull(Album album)
+        {
+            if (album == null)
+            {
+                throw new ArgumentNullException(nameof(album));
             }
         }
     }
