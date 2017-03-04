@@ -59,6 +59,7 @@
     <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumService.cs" />
     <Compile Include="Services\Infrastructure\IArtistService.cs" />
+    <Compile Include="Services\Infrastructure\ICurrencyService.cs" />
     <Compile Include="Services\Infrastructure\IFeedbackService.cs" />
     <Compile Include="Services\Infrastructure\IGenreService.cs" />
     <Compile Include="Services\Infrastructure\IPriceLevelService.cs" />
