@@ -44,7 +44,7 @@
         /// <returns>
         /// All tracks for the specified <paramref name="album"/> without price configured.
         /// </returns>
-        ICollection<Track> GetTracksWithoutPrice(Album album);
+        ICollection<Track> GetTracksWithoutPriceConfigured(Album album);
 
         /// <summary>
         /// Returns all tracks for the specified <paramref name="album"/> with price specified.
@@ -53,7 +53,7 @@
         /// <returns>
         /// All tracks for the specified <paramref name="album"/> without price specified.
         /// </returns>
-        ICollection<Track> GetTracksWithPrice(Album album);
+        ICollection<Track> GetTracksWithPriceConfigured(Album album);
 
         /// <summary>
         /// Returns all registered tracks.
@@ -69,7 +69,7 @@
         /// <returns>
         /// All tracks without price configured.
         /// </returns>
-        ICollection<Album> GetAlbumsWithoutPrice();
+        ICollection<Album> GetAlbumsWithoutPriceConfigured();
 
         /// <summary>
         /// Returns all tracks with price specified.
@@ -77,7 +77,7 @@
         /// <returns>
         /// All tracks without price specified.
         /// </returns>
-        ICollection<Album> GetAlbumsWithPrice();
+        ICollection<Album> GetAlbumsWithPriceConfigured();
         
         /// <summary>
         /// Returns all <paramref name="album"/> prices for the specified  <paramref name="priceLevel"/>.

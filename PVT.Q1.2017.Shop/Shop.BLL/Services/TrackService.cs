@@ -67,7 +67,7 @@
         /// <returns>
         /// All tracks without price configured.
         /// </returns>
-        public ICollection<Track> GetTracksWithoutPrice()
+        public ICollection<Track> GetTracksWithoutPriceConfigured()
         {
             using (var repository = this.Factory.Create<ITrackRepository>())
             {
@@ -81,7 +81,7 @@
         /// <returns>
         /// All tracks without price specified.
         /// </returns>
-        public ICollection<Track> GetTracksWithPrice()
+        public ICollection<Track> GetTracksWithPriceConfigured()
         {
             using (var repository = this.Factory.Create<ITrackRepository>())
             {

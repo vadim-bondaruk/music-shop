@@ -43,7 +43,7 @@
         /// <returns>
         /// All tracks for the specified <paramref name="artist"/> without price configured.
         /// </returns>
-        ICollection<Track> GetTracksWithoutPrice(Artist artist);
+        ICollection<Track> GetTracksWithoutPriceConfigured(Artist artist);
 
         /// <summary>
         /// Returns all tracks for the specified <paramref name="artist"/> with price specified.
@@ -52,7 +52,7 @@
         /// <returns>
         /// All tracks for the specified <paramref name="artist"/> with price specified.
         /// </returns>
-        ICollection<Track> GetTracksWithPrice(Artist artist);
+        ICollection<Track> GetTracksWithPriceConfigured(Artist artist);
 
         /// <summary>
         /// Returns all albums for the specified <paramref name="artist"/> without price configured.
@@ -61,7 +61,7 @@
         /// <returns>
         /// All albums for the specified <paramref name="artist"/> without price configured.
         /// </returns>
-        ICollection<Album> GetAlbumsWithoutPrice(Artist artist);
+        ICollection<Album> GetAlbumsWithoutPriceConfigured(Artist artist);
 
         /// <summary>
         /// Returns all albums for the specified <paramref name="artist"/> with price specified.
@@ -70,6 +70,6 @@
         /// <returns>
         /// All albums for the specified <paramref name="artist"/> with price specified.
         /// </returns>
-        ICollection<Album> GetAlbumsWithPrice(Artist artist);
+        ICollection<Album> GetAlbumsWithPriceConfigured(Artist artist);
     }
 }

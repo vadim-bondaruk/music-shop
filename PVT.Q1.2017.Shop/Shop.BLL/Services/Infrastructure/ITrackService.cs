@@ -23,7 +23,7 @@
         /// <returns>
         /// All tracks without price configured.
         /// </returns>
-        ICollection<Track> GetTracksWithoutPrice();
+        ICollection<Track> GetTracksWithoutPriceConfigured();
 
         /// <summary>
         /// Returns all tracks with price specified.
@@ -31,7 +31,7 @@
         /// <returns>
         /// All tracks with price specified.
         /// </returns>
-        ICollection<Track> GetTracksWithPrice();
+        ICollection<Track> GetTracksWithPriceConfigured();
 
         /// <summary>
         /// Returns the track with the specified <paramref name="id"/>
