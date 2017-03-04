@@ -4,7 +4,7 @@
     using Shop.Infrastructure.Services;
 
     /// <summary>
-    /// The price level service
+    /// The genre service.
     /// </summary>
     public interface IGenreService : IService<Genre>
     {
@@ -15,5 +15,16 @@
         /// The genre name.
         /// </param>
         void AddGenre(string name);
+
+        /// <summary>
+        /// Returns the genre with the specified <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">
+        /// The genre id.
+        /// </param>
+        /// <returns>
+        /// The genre with the specified <paramref name="id"/> or <b>null</b> if genre doesn't exist.
+        /// </returns>
+        Genre GetGenreInfo(int id);
     }
 }

@@ -45,9 +45,26 @@
 
             this.Validator.Validate(priceLevel);
 
-            using (var repository = this.Factory.Create<IPriceLevelRepository>())
+            using (var repository = this.CreateRepository())
             {
                 repository.AddOrUpdate(priceLevel);
+            }
+        }
+
+        /// <summary>
+        /// Returns the price level with the specified <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">
+        /// The price level id.
+        /// </param>
+        /// <returns>
+        /// The price level with the specified <paramref name="id"/> or <b>null</b> if price level doesn't exist.
+        /// </returns>
+        public PriceLevel GetPriceLevelInfo(int id)
+        {
+            using (var repository = this.CreateRepository())
+            {
+                return repository.GetById(id);
             }
         }
 
