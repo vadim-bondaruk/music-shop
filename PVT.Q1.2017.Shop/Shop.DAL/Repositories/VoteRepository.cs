@@ -8,6 +8,8 @@
     /// </summary>
     public class VoteRepository : Repository<Vote>, IVoteRepository
     {
+        #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="VoteRepository"/> class.
         /// </summary>
@@ -17,5 +19,35 @@
         public VoteRepository(DbContext dbContext) : base(dbContext)
         {
         }
+
+        #endregion //Constructors
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Adds the specified <paramref name="vote"/> into Db.
+        /// </summary>
+        /// <param name="vote">
+        /// The vote to add.
+        /// </param>
+        protected override void Add(Vote vote)
+        {
+            EntityState trackEntryState;
+            EntityState userEntryState;
+
+            // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
+            // The VoteRepository should be SOLID, should only add information about vote! Not about track or user!
+            this.DetachNavigationProperty(vote.Track, out trackEntryState);
+            this.DetachNavigationProperty(vote.User, out userEntryState);
+
+            // adding the vote into Db.
+            base.Add(vote);
+
+            // restoring navigation properties states
+            this.RestoreNavigationPropertyState(vote.Track, trackEntryState);
+            this.RestoreNavigationPropertyState(vote.User, userEntryState);
+        }
+
+        #endregion //Protected Methods
     }
 }
