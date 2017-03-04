@@ -1,5 +1,6 @@
 ﻿namespace Shop.BLL.Services
 {
+    using System;
     using System.Linq;
     using Common.Models;
     using DAL.Repositories.Infrastruture;
@@ -56,12 +57,17 @@
                 UserId = user.Id
             };
 
-            this.Validator.Validate(feedback);
-
-            using (var repository = this.Factory.Create<IFeedbackRepository>())
+            if (this.IsValid(feedback))
             {
-                repository.AddOrUpdate(feedback);
+                // if a feedback by the user already exits for the track than removing old one to register new one 
+                var currentFeedback = this.GetTrackFeedback(track, user);
+                if (currentFeedback != null)
+                {
+                    this.Unregister(currentFeedback);
+                }
             }
+
+            this.Register(feedback);
         }
 
         /// <summary>
@@ -82,9 +88,36 @@
             ValidatorHelper.CheckTrackForNull(track);
             ValidatorHelper.CheckUserForNull(user);
 
-            using (var repository = this.Factory.Create<IFeedbackRepository>())
+            using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(f => f.TrackId == track.Id && f.UserId == user.Id).FirstOrDefault();
+                return repository.GetAll(
+                                         f => f.TrackId == track.Id && f.UserId == user.Id,
+                                         f => f.Track,
+                                         f => f.User).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool FeedbackExists(Track track, User user)
+        {
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckUserForNull(user);
+
+            using (var repository = this.CreateRepository())
+            {
+                return repository.GetAll(f => f.TrackId == track.Id && f.UserId == user.Id).Any();
             }
         }
 
@@ -97,7 +130,7 @@
         /// </returns>
         public Feedback GetFeedbackInfo(int id)
         {
-            using (var repository = this.Factory.Create<IFeedbackRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetById(id, v => v.Track, v => v.User);
             }

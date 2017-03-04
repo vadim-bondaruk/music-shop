@@ -38,6 +38,21 @@
         Feedback GetTrackFeedback(Track track, User user);
 
         /// <summary>
+        /// Determines whether the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        bool FeedbackExists(Track track, User user);
+
+        /// <summary>
         /// Returns the feedback with the specified <paramref name="id"/>
         /// </summary>
         /// <param name="id">The feedback id.</param>

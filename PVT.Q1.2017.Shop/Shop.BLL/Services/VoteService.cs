@@ -56,12 +56,17 @@
                 UserId = user.Id
             };
 
-            this.Validator.Validate(vote);
-
-            using (var repository = this.Factory.Create<IVoteRepository>())
+            if (this.IsValid(vote))
             {
-                repository.AddOrUpdate(vote);
+                // if a vote by the user already exits for the track than removing old one to register new one
+                var currentVote = this.GetTrackVote(track, user);
+                if (currentVote != null)
+                {
+                    this.Unregister(currentVote);
+                }
             }
+
+            this.Register(vote);
         }
 
         /// <summary>
@@ -82,9 +87,36 @@
             ValidatorHelper.CheckTrackForNull(track);
             ValidatorHelper.CheckUserForNull(user);
 
-            using (var repository = this.Factory.Create<IVoteRepository>())
+            using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(v => v.TrackId == track.Id && v.UserId == user.Id).FirstOrDefault();
+                return repository.GetAll(
+                                         v => v.TrackId == track.Id && v.UserId == user.Id,
+                                         v => v.Track,
+                                         v => v.User).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified <paramref name="user"/> have made a vote for the <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the specified <paramref name="user"/> have made a vote for the <paramref name="track"/>;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool VoteExists(Track track, User user)
+        {
+            ValidatorHelper.CheckTrackForNull(track);
+            ValidatorHelper.CheckUserForNull(user);
+
+            using (var repository = this.CreateRepository())
+            {
+                return repository.GetAll(f => f.TrackId == track.Id && f.UserId == user.Id).Any();
             }
         }
 
@@ -97,7 +129,7 @@
         /// </returns>
         public Vote GetVoteInfo(int id)
         {
-            using (var repository = this.Factory.Create<IVoteRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetById(id, v => v.Track, v => v.User);
             }
