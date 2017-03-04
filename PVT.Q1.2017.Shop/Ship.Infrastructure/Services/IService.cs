@@ -54,5 +54,14 @@
         /// <b>true</b> if the specified <paramref name="model"/> is registered; otherwise <b>false</b>.
         /// </returns>
         bool IsRegistered(TEntity model);
+
+        /// <summary>
+        /// Determines whether model with the specified <paramref name="id"/> is registered.
+        /// </summary>
+        /// <param name="id">A model id.</param>
+        /// <returns>
+        /// <b>true</b> if model with the specified <paramref name="id"/> is registered; otherwise <b>false</b>.
+        /// </returns>
+        bool IsRegistered(int id);
     }
 }

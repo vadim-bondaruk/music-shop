@@ -1,29 +1,37 @@
-﻿namespace Shop.Common.Models
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Currency.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
+// </copyright>
+// <summary>
+//   The currency.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.Common.Models
 {
     using System.Collections.Generic;
-    using Shop.Infrastructure.Models;
-
+    
     /// <summary>
-    /// Model for Currency
+    /// The currency model.
     /// </summary>
-    public class Currency : BaseEntity
+    public class Currency : BaseNamedEntity
     {
         #region Properties
 
         /// <summary>
-        /// ShortName of Currency
-        /// </summary>
-        public string ShortName { get; set; }
-
-        /// <summary>
-        /// FullName of Currency
+        /// Full name of currency
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// Code of Currency
+        /// ISO 4217 code of currency 
         /// </summary>
         public int Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets the graphic currency symbol.
+        /// </summary>
+        public string Symbol { get; set; }
 
         #endregion //Properties
 

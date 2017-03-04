@@ -23,57 +23,39 @@
         /// <returns>
         /// All tracks without price configured.
         /// </returns>
-        ICollection<Track> GetTracksWithoutPrice();
+        ICollection<Track> GetTracksWithoutPriceConfigured();
 
         /// <summary>
         /// Returns all tracks with price specified.
         /// </summary>
         /// <returns>
-        /// All tracks without price specified.
+        /// All tracks with price specified.
         /// </returns>
-        ICollection<Track> GetTracksWithPrice();
+        ICollection<Track> GetTracksWithPriceConfigured();
 
         /// <summary>
-        /// Returns the track with the specified <paramref name="id"/>.
+        /// Returns the track with the specified <paramref name="id"/>
         /// </summary>
-        /// <param name="id">
-        /// The track id.
-        /// </param>
+        /// <param name="id">The track id.</param>
         /// <returns>
         /// The track with the specified <paramref name="id"/> or <b>null</b> if track doesn't exist.
         /// </returns>
         Track GetTrackInfo(int id);
 
         /// <summary>
-        /// Returns the track price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
+        /// Returns all track prices for the specified  <paramref name="priceLevel"/>.
         /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level.
-        /// </param>
-        /// <param name="currency">
-        /// The currency.
-        /// </param>
-        /// <returns>
-        /// The track price in the specified currency for the specified  <paramref name="priceLevel"/> or <b>null</b>.
-        /// </returns>
-        TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency);
+        /// <param name="track">The track</param>
+        /// <param name="priceLevel">The price level.</param>
+        /// <returns>All track prices for the specified  <paramref name="priceLevel"/>.</returns>
+        ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel);
 
         /// <summary>
-        /// Returns all available track price for the specified  <paramref name="priceLevel"/>.
+        /// Returns all <paramref name="track"/> prices.
         /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level.
-        /// </param>
-        /// <returns>
-        /// The track prices for the specified  <paramref name="priceLevel"/>.
-        /// </returns>
-        ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel);
+        /// <param name="track">The track.</param>
+        /// <returns>All <paramref name="track"/> prices>.</returns>
+        ICollection<TrackPrice> GetTrackPrices(Track track);
 
         /// <summary>
         /// Returns all track votes.

@@ -24,21 +24,50 @@
                 this.Kernel.Load(new DefaultRepositoriesNinjectModule());
             }
 
+            this.BindValidators();
+            this.BindServices();
+        }
+
+        /// <summary>
+        /// Binds validators.
+        /// </summary>
+        protected virtual void BindValidators()
+        {
             Bind<IValidator<Artist>>().To<NamedEntityValidator<Artist>>();
-            Bind<IValidator<Album>>().To<NamedEntityValidator<Album>>();
+            Bind<IValidator<Album>>().To<AlbumValidator>();
             Bind<IValidator<Track>>().To<TrackValidator>();
 
+            Bind<IValidator<Genre>>().To<NamedEntityValidator<Genre>>();
+            Bind<IValidator<Feedback>>().To<FeedbackValidator>();
+            Bind<IValidator<Vote>>().To<VoteValidator>();
+
+            Bind<IValidator<PriceLevel>>().To<NamedEntityValidator<PriceLevel>>();
+            Bind<IValidator<TrackPrice>>().To<TrackPriceValidator>();
+            Bind<IValidator<AlbumPrice>>().To<AlbumPriceValidator>();
+            Bind<IValidator<Currency>>().To<CurrencyValidator>();
+        }
+
+        /// <summary>
+        /// Binds services.
+        /// </summary>
+        protected virtual void BindServices()
+        {
             Bind<ITrackService>().To<TrackService>();
-            /*Bind<IService<Album>>().To<Service<Album>>();
-            Bind<IService<Artist>>().To<Service<Artist>>();
-            Bind<IService<Feedback>>().To<Service<Feedback>>();
-            Bind<IService<Vote>>().To<Service<Vote>>();
-            Bind<IService<Genre>>().To<Service<Genre>>();
-            Bind<IService<TrackPrice>>().To<Service<TrackPrice>>();
-            Bind<IService<AlbumPrice>>().To<Service<AlbumPrice>>();
-            Bind<IService<Currency>>().To<Service<Currency>>();
-            Bind<IService<CurrencyRate>>().To<Service<CurrencyRate>>();
-            Bind<IService<PriceLevel>>().To<Service<PriceLevel>>();*/
+            Bind<IArtistService>().To<ArtistService>();
+            Bind<IAlbumService>().To<AlbumService>();
+
+            Bind<IGenreService>().To<GenreService>();
+            Bind<IVoteService>().To<VoteService>();
+            Bind<IFeedbackService>().To<FeedbackService>();
+
+            Bind<IPriceLevelService>().To<PriceLevelService>();
+            Bind<ITrackPriceService>().To<TrackPriceService>();
+            Bind<IAlbumPriceService>().To<AlbumPriceService>();
+
+            Bind<IUserService>().To<UserService>();
+
+            Bind<ICurrencyService>().To<CurrencyService>();
+            /*Bind<ICurrencyRateService>().To<CurrencyRateService>();*/
         }
     }
 }

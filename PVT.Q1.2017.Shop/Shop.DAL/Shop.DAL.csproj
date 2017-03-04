@@ -79,6 +79,14 @@
     <Compile Include="Migrations\201703022047186_AddedForignKeys.Designer.cs">
       <DependentUpon>201703022047186_AddedForignKeys.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703041939123_UpdatedCurrency.cs" />
+    <Compile Include="Migrations\201703041939123_UpdatedCurrency.Designer.cs">
+      <DependentUpon>201703041939123_UpdatedCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703042132223_CurrencyRestictions.cs" />
+    <Compile Include="Migrations\201703042132223_CurrencyRestictions.Designer.cs">
+      <DependentUpon>201703042132223_CurrencyRestictions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -109,8 +117,10 @@
     <Compile Include="Repositories\Infrastruture\IFeedbackRepository.cs" />
     <Compile Include="Repositories\Infrastruture\IGenreRepository.cs" />
     <Compile Include="Repositories\Infrastruture\IPriceLevelRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IUserRepository.cs" />
     <Compile Include="Repositories\PriceLevelRepository.cs" />
     <Compile Include="Repositories\TrackPriceRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VoteRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\Infrastruture\ITrackPriceRepository.cs" />
@@ -146,6 +156,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703022047186_AddedForignKeys.resx">
       <DependentUpon>201703022047186_AddedForignKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703041939123_UpdatedCurrency.resx">
+      <DependentUpon>201703041939123_UpdatedCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703042132223_CurrencyRestictions.resx">
+      <DependentUpon>201703042132223_CurrencyRestictions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

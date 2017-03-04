@@ -13,7 +13,7 @@ namespace Shop.Common.Models
     using Infrastructure.Models;
 
     /// <summary>
-    ///     The temporary user model.
+    ///     The temporary user model (have to be extended by UserMenagement team).
     /// </summary>
     public class User : BaseEntity
     {
