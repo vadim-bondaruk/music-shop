@@ -55,6 +55,7 @@
     <Compile Include="DefaultServicesNinjectModule.cs" />
     <Compile Include="Services\AlbumService.cs" />
     <Compile Include="Services\ArtistService.cs" />
+    <Compile Include="Services\CurrencyService.cs" />
     <Compile Include="Services\FeedbackService.cs" />
     <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumService.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\VoteService.cs" />
     <Compile Include="Validators\AlbumValidator.cs" />
+    <Compile Include="Validators\CurrencyValidator.cs" />
     <Compile Include="Validators\PriceValidator.cs" />
     <Compile Include="Validators\AlbumPriceValidator.cs" />
     <Compile Include="Validators\TrackPriceValidator.cs" />
