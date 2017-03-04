@@ -65,12 +65,15 @@
     <Compile Include="Services\Infrastructure\IAlbumPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
+    <Compile Include="Services\Infrastructure\IUserService.cs" />
     <Compile Include="Services\Infrastructure\IVoteService.cs" />
     <Compile Include="Services\PriceLevelService.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\VoteService.cs" />
+    <Compile Include="Validators\AlbumValidator.cs" />
     <Compile Include="Validators\PriceValidator.cs" />
     <Compile Include="Validators\AlbumPriceValidator.cs" />
     <Compile Include="Validators\TrackPriceValidator.cs" />
