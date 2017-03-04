@@ -12,7 +12,7 @@
     /// <summary>
     /// Controller of Home page
     /// </summary>
-    public class HomeController : BaseController
+    public partial class HomeController : BaseController
     {
         /// <summary>
         /// Default start page

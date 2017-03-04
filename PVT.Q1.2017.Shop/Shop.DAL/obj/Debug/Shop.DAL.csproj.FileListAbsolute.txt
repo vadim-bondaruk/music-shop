@@ -16,8 +16,10 @@ F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\EntityFramewor
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Ninject.xml
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Ninject.Extensions.Factory.xml
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.csprojResolveAssemblyReference.cache
-F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.Migrations.New.resources
-F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.Migrations.test.resources
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.Migrations.initial.resources
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.Migrations.Updated.resources
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.csproj.GenerateResource.Cache
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.dll
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.pdb
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Newtonsoft.Json.dll
+F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Newtonsoft.Json.xml

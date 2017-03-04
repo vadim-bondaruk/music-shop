@@ -9,7 +9,7 @@
     /// The track controller
     /// </summary>
     [Authorize]
-    public class TrackController : Controller
+    public partial class TrackController : Controller
     {
         #region Fields
 
@@ -48,7 +48,7 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             using (var repository = this._repositoryFactory.CreateRepository<Track>())
             {
@@ -60,7 +60,7 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public ActionResult NewTrack()
+        public virtual ActionResult NewTrack()
         {
             return this.View();
         }
@@ -73,7 +73,7 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public ActionResult NewTrack(Track newTrack)
+        public virtual ActionResult NewTrack(Track newTrack)
         {
             if (ModelState.IsValid && this._trackService.IsValid(newTrack))
             {

@@ -12,7 +12,7 @@
     /// <summary>
     /// The track controller
     /// </summary>
-    public class TrackController : Controller
+    public partial class TrackController : Controller
     {
         #region Fields
 

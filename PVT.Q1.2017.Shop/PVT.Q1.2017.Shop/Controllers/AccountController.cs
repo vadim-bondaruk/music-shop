@@ -10,7 +10,7 @@
     /// <summary>
     /// Account controller
     /// </summary>
-    public class AccountController : BaseController
+    public partial class AccountController : BaseController
     {
         /// <summary>
         /// Security service
@@ -30,7 +30,7 @@
         /// Login method
         /// </summary>
         /// <returns></returns>
-        public ActionResult Login()
+        public virtual ActionResult Login()
         {
             return this.View();
         }
@@ -42,7 +42,7 @@
         /// <returns></returns>
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel login)
+        public virtual async Task<ActionResult> Login(LoginViewModel login)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@
         /// Logout method
         /// </summary>
         /// <returns></returns>
-        public ActionResult Logout()
+        public virtual ActionResult Logout()
         {
             Session.Clear();
             this._securityService.LogOff();
