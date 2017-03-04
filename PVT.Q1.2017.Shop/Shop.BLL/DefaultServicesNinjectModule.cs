@@ -36,9 +36,15 @@
             Bind<IValidator<Artist>>().To<NamedEntityValidator<Artist>>();
             Bind<IValidator<Album>>().To<NamedEntityValidator<Album>>();
             Bind<IValidator<Track>>().To<TrackValidator>();
+
+            Bind<IValidator<Genre>>().To<NamedEntityValidator<Genre>>();
             Bind<IValidator<Feedback>>().To<FeedbackValidator>();
             Bind<IValidator<Vote>>().To<VoteValidator>();
+
             Bind<IValidator<PriceLevel>>().To<NamedEntityValidator<PriceLevel>>();
+
+            Bind<IValidator<TrackPrice>>().To<TrackPriceValidator>();
+            Bind<IValidator<AlbumPrice>>().To<AlbumPriceValidator>();
         }
 
         /// <summary>
@@ -47,17 +53,21 @@
         protected virtual void BindServices()
         {
             Bind<ITrackService>().To<TrackService>();
+            Bind<IArtistService>().To<ArtistService>();
+            Bind<IAlbumService>().To<AlbumService>();
 
+            Bind<ITrackPriceService>().To<TrackPriceService>();
+            Bind<IAlbumPriceService>().To<AlbumPriceService>();
+
+            Bind<IGenreService>().To<GenreService>();
             Bind<IVoteService>().To<VoteService>();
             Bind<IFeedbackService>().To<FeedbackService>();
             Bind<IPriceLevelService>().To<PriceLevelService>();
-            /*Bind<IAlbumService>().To<AlbumService>();
-            Bind<IArtistService>().To<ArtistService>();
-            /*Bind<IService<Genre>>().To<Service<Genre>>();
-            Bind<IService<TrackPrice>>().To<Service<TrackPrice>>();
-            Bind<IService<AlbumPrice>>().To<Service<AlbumPrice>>();
-            Bind<IService<Currency>>().To<Service<Currency>>();
-            Bind<IService<CurrencyRate>>().To<Service<CurrencyRate>>();*/
+
+            /*Bind<IUserService>().To<UserService>();
+
+            Bind<ICurrencyService>().To<CurrencyService>();
+            Bind<ICurrencyRateService>().To<CurrencyRateService>();*/
         }
     }
 }
