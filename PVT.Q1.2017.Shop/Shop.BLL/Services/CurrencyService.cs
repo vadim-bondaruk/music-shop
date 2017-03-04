@@ -18,7 +18,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public CurrencyService(IFactory repositoryFactory, IValidator<Track> validator) : base(repositoryFactory, validator)
+        public CurrencyService(IFactory repositoryFactory, IValidator<Currency> validator) : base(repositoryFactory, validator)
         {
 
         }

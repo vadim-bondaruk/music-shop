@@ -46,7 +46,7 @@
         [HttpGet]
         public ActionResult Index()
         {
-            var currencyis = _currencyRepository.GetAll(x=> x.CurrencyRates);
+            //var currencyis = _currencyRepository.GetAll(x=> x.CurrencyRates);
 
             var curViewMOdel = currencyis.Select(x => new CurrencyViewModel()
             {
@@ -70,20 +70,21 @@
         /// <param name="currencyId"></param>
         /// <returns></returns>
         public ActionResult Edit(int id)
-        //{
-        //    var currencyRate = DbContext.CurrencyRates
-        //        .Where(x => x.CurrencyId == id)
-        //        .FirstOrDefault();
+        {
+            //    var currencyRate = DbContext.CurrencyRates
+            //        .Where(x => x.CurrencyId == id)
+            //        .FirstOrDefault();
 
-        //    if(currencyRate == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
+            //    if(currencyRate == null)
+            //    {
+            //        return HttpNotFound();
+            //    }
 
-        //    ViewBag.CurrencyId = new SelectList(DbContext.Currencies, "Id", "Name", currencyRate.CurrencyId);
-        //    ViewBag.CurrencyRateId = new SelectList(DbContext.CurrencyRates, "Id", "Name", currencyRate.Id);
+            //    ViewBag.CurrencyId = new SelectList(DbContext.Currencies, "Id", "Name", currencyRate.CurrencyId);
+            //    ViewBag.CurrencyRateId = new SelectList(DbContext.CurrencyRates, "Id", "Name", currencyRate.Id);
 
-        //    return this.View(currencyRate);
+            //    return this.View(currencyRate);
+            return View();
         }
 
         /// <summary>

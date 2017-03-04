@@ -11,10 +11,11 @@ namespace PVT.Q1._2017.Shop.ViewModels
         public string ShortName { get; set; }
         public List<CrossCurrencyViewModel> CrossCurce { get; set; }
 
-        public class CrossCurrencyViewModel {
+        public class CrossCurrencyViewModel
+        {
             public string FullName { get; set; }
             public string ShortName { get; set; }
-            public decimal 
+            public decimal CrossCourse { get; set; }
         }
     }
 }
