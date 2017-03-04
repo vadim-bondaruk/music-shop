@@ -22,11 +22,22 @@
         /// <summary>
         /// Default includes
         /// </summary>
-        private readonly Expression<Func<Track, BaseEntity>>[] _defaultIncludes;
+        private static readonly Expression<Func<Track, BaseEntity>>[] _defaultIncludes;
 
         #endregion //Fields
 
         #region Constructors
+
+        /// <summary>
+        /// Initializes static members of the <see cref="TrackService"/> class.
+        /// </summary>
+        static TrackService()
+        {
+            _defaultIncludes = new Expression<Func<Track, BaseEntity>>[]
+            {
+                t => t.Album, t => t.Artist, t => t.Genre
+            };
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackService"/> class.
@@ -37,13 +48,21 @@
         /// <param name="validator">The track validator.</param>
         public TrackService(IFactory factory, IValidator<Track> validator) : base(factory, validator)
         {
-            this._defaultIncludes = new Expression<Func<Track, BaseEntity>>[]
-            {
-                t => t.Album, t => t.Artist, t => t.Genre
-            };
         }
 
         #endregion //Constructors
+
+        #region Properties
+
+        /// <summary>
+        /// Default track includes.
+        /// </summary>
+        protected internal static Expression<Func<Track, BaseEntity>>[] DefaultIncludes
+        {
+            get { return _defaultIncludes; }
+        }
+
+        #endregion //Properties
 
         #region ITrackService Members
 
@@ -57,7 +76,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(this._defaultIncludes);
+                return repository.GetAll(_defaultIncludes);
             }
         }
 
@@ -71,7 +90,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(t => !t.TrackPrices.Any(), this._defaultIncludes);
+                return repository.GetAll(t => !t.TrackPrices.Any(), _defaultIncludes);
             }
         }
 
@@ -85,7 +104,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetAll(t => t.TrackPrices.Any(), this._defaultIncludes);
+                return repository.GetAll(t => t.TrackPrices.Any(), _defaultIncludes);
             }
         }
 
@@ -100,7 +119,7 @@
         {
             using (var repository = this.CreateRepository())
             {
-                return repository.GetById(id, this._defaultIncludes);
+                return repository.GetById(id, _defaultIncludes);
             }
         }
 
