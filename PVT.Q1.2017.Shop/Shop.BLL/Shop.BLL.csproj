@@ -51,6 +51,7 @@
     <Compile Include="Exceptions\InvalidEntityException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefaultServicesNinjectModule.cs" />
+    <Compile Include="Services\CurrencyService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\TrackService.cs" />
