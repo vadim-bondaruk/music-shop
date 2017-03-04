@@ -6,26 +6,26 @@
     /// <summary>
     /// The track price validator.
     /// </summary>
-    public class TrackPriceValidator : IValidator<TrackPrice>
+    public class AlbumPriceValidator : IValidator<AlbumPrice>
     {
         /// <summary>
         /// </summary>
-        /// <param name="trackPrice">
-        /// The track price.
+        /// <param name="albumPrice">
+        /// The album price.
         /// </param>
-        public void Validate(TrackPrice trackPrice)
+        public void Validate(AlbumPrice albumPrice)
         {
             throw new System.NotImplementedException();
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="trackPrice">
-        /// The track price.
+        /// <param name="albumPrice">
+        /// The album price.
         /// </param>
         /// <returns>
         /// </returns>
-        public bool IsValid(TrackPrice trackPrice)
+        public bool IsValid(AlbumPrice albumPrice)
         {
             throw new System.NotImplementedException();
         }
