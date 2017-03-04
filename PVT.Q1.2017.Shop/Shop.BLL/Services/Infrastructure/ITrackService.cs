@@ -29,7 +29,7 @@
         /// Returns all tracks with price specified.
         /// </summary>
         /// <returns>
-        /// All tracks without price specified.
+        /// All tracks with price specified.
         /// </returns>
         ICollection<Track> GetTracksWithPrice();
 
