@@ -55,7 +55,7 @@
         /// </returns>
         public ICollection<Track> GetTracksList()
         {
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetAll(this._defaultIncludes);
             }
@@ -69,7 +69,7 @@
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured()
         {
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetAll(t => !t.TrackPrices.Any(), this._defaultIncludes);
             }
@@ -83,7 +83,7 @@
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured()
         {
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetAll(t => t.TrackPrices.Any(), this._defaultIncludes);
             }
@@ -98,7 +98,7 @@
         /// </returns>
         public Track GetTrackInfo(int id)
         {
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.CreateRepository())
             {
                 return repository.GetById(id, this._defaultIncludes);
             }
