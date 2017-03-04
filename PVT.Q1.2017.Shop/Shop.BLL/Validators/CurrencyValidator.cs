@@ -1,6 +1,7 @@
 ﻿namespace Shop.BLL.Validators
 {
     using System;
+    using System.Text.RegularExpressions;
     using Common.Models;
     using Exceptions;
     using Infrastructure.Validators;
@@ -24,7 +25,8 @@
         /// </returns>
         public static bool IsCurrencyNameValid(string currencyName)
         {
-            return !string.IsNullOrWhiteSpace(currencyName) && currencyName.Length == 3;
+            return !string.IsNullOrWhiteSpace(currencyName) &&
+                   Regex.IsMatch(currencyName, @"^\w{3}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
         /// <summary>
