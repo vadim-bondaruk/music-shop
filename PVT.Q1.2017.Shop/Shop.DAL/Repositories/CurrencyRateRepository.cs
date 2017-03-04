@@ -41,12 +41,11 @@
             this.DetachNavigationProperty(currencyRate.Currency, out currencyEntryState);
             this.DetachNavigationProperty(currencyRate.TargetCurrency, out targetCurrencyEntryState);
 
+            currencyRate.Currency = null;
+            currencyRate.TargetCurrency = null;
+
             // adding the currency rate into Db.
             base.Add(currencyRate);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(currencyRate.Currency, currencyEntryState);
-            this.RestoreNavigationPropertyState(currencyRate.TargetCurrency, targetCurrencyEntryState);
         }
 
         #endregion //Protected Methods

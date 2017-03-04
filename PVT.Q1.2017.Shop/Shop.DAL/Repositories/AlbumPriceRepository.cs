@@ -43,13 +43,12 @@
             this.DetachNavigationProperty(albumPrice.Currency, out currencyEntryState);
             this.DetachNavigationProperty(albumPrice.PriceLevel, out priceLevelEntryState);
 
+            albumPrice.Album = null;
+            albumPrice.Currency = null;
+            albumPrice.PriceLevel = null;
+
             // adding the album price into Db
             base.Add(albumPrice);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(albumPrice.Album, albumEntryState);
-            this.RestoreNavigationPropertyState(albumPrice.Currency, currencyEntryState);
-            this.RestoreNavigationPropertyState(albumPrice.PriceLevel, priceLevelEntryState);
         }
 
         #endregion //Protected Methods

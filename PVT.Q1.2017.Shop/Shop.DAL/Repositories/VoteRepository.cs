@@ -40,12 +40,11 @@
             this.DetachNavigationProperty(vote.Track, out trackEntryState);
             this.DetachNavigationProperty(vote.User, out userEntryState);
 
+            vote.Track = null;
+            vote.User = null;
+
             // adding the vote into Db.
             base.Add(vote);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(vote.Track, trackEntryState);
-            this.RestoreNavigationPropertyState(vote.User, userEntryState);
         }
 
         #endregion //Protected Methods

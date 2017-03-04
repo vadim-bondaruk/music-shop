@@ -41,12 +41,11 @@ namespace Shop.DAL.Repositories
             this.DetachNavigationProperty(feedback.Track, out trackEntryState);
             this.DetachNavigationProperty(feedback.User, out userEntryState);
 
+            feedback.Track = null;
+            feedback.User = null;
+
             // adding the feedback into Db.
             base.Add(feedback);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(feedback.Track, trackEntryState);
-            this.RestoreNavigationPropertyState(feedback.User, userEntryState);
         }
 
         #endregion //Protected Methods

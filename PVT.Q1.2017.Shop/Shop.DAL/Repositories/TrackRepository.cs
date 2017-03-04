@@ -43,13 +43,12 @@
             this.DetachNavigationProperty(track.Album, out albumEntryState);
             this.DetachNavigationProperty(track.Genre, out genreEntryState);
 
+            track.Artist = null;
+            track.Album = null;
+            track.Genre = null;
+
             // adding the track into Db
             base.Add(track);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(track.Artist, artistEntryState);
-            this.RestoreNavigationPropertyState(track.Album, albumEntryState);
-            this.RestoreNavigationPropertyState(track.Genre, genreEntryState);
         }
 
         #endregion //Protected Methods

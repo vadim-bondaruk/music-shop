@@ -39,11 +39,10 @@
             // The AlbumRepository should be SOLID, should only add information about album! Not about artist!
             this.DetachNavigationProperty(album.Artist, out artistEntryState);
 
+            album.Artist = null;
+
             // adding the album into Db.
             base.Add(album);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(album.Artist, artistEntryState);
         }
 
         #endregion //Protected Methods

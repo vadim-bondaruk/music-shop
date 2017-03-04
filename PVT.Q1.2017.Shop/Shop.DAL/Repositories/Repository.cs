@@ -297,33 +297,12 @@
             if (entity != null)
             {
                 var entry = this._dbContext.Entry(entity);
-                var entryState = entry.State;
+                previousEntityState = entry.State;
                 entry.State = EntityState.Detached;
-                previousEntityState = entryState;
             }
             else
             {
                 previousEntityState = EntityState.Detached;
-            }
-        }
-
-        /// <summary>
-        /// Restores the previous entity state before detach.
-        /// </summary>
-        /// <param name="entity">
-        /// The entity.
-        /// </param>
-        /// <param name="previousEntityState">
-        /// The previous entity state.
-        /// </param>
-        /// <typeparam name="T">
-        /// The entity type derived from <see cref="BaseEntity"/>.
-        /// </typeparam>
-        protected void RestoreNavigationPropertyState<T>(T entity, EntityState previousEntityState) where T : BaseEntity
-        {
-            if (entity != null)
-            {
-                this._dbContext.Entry(entity).State = previousEntityState;
             }
         }
 

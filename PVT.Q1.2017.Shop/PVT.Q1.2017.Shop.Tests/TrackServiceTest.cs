@@ -1,6 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
-    using System.Collections.Generic;
     using System.Linq;
     using global::Shop.BLL;
     using global::Shop.BLL.Exceptions;
@@ -8,7 +7,6 @@
     using global::Shop.Common.Models;
     using global::Shop.DAL.Repositories.Infrastruture;
     using global::Shop.Infrastructure;
-    using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Ninject;
 
@@ -114,6 +112,8 @@
         [TestMethod]
         public void TracksListTest()
         {
+            RegisterValidTrackTest();
+
             var trackService = this.GetTrackService();
             Assert.IsTrue(trackService.GetTracksList().Any());
         }
@@ -121,6 +121,8 @@
         [TestMethod]
         public void TrackInfoTest()
         {
+            RegisterValidTrackTest();
+
             var trackService = this.GetTrackService();
 
             var track = trackService.GetTracksList().FirstOrDefault(t => t.ArtistId.HasValue && t.AlbumId.HasValue);
@@ -134,16 +136,9 @@
         [TestMethod]
         public void TrackPricesTest()
         {
+            this.RegisterValidTrackTest();
             var trackService = this.GetTrackService();
-
-            var track = trackService.GetTracksList().FirstOrDefault(t => t.ArtistId.HasValue && t.AlbumId.HasValue);
-            Assert.IsNotNull(track);
-
-            
-
-            track = trackService.GetTrackInfo(track.Id);
-            Assert.IsNotNull(track);
-            Assert.IsTrue(track.Artist != null && track.Album != null);
+            Assert.IsTrue(trackService.GetTracksWithoutPriceConfigured().Any());
         }
 
         #endregion //Tests

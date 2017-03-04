@@ -43,13 +43,12 @@
             this.DetachNavigationProperty(trackPrice.Currency, out currencyEntryState);
             this.DetachNavigationProperty(trackPrice.PriceLevel, out priceLevelEntryState);
 
+            trackPrice.Track = null;
+            trackPrice.Currency = null;
+            trackPrice.PriceLevel = null;
+
             // adding the track price into Db
             base.Add(trackPrice);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(trackPrice.Track, trackEntryState);
-            this.RestoreNavigationPropertyState(trackPrice.Currency, currencyEntryState);
-            this.RestoreNavigationPropertyState(trackPrice.PriceLevel, priceLevelEntryState);
         }
 
         #endregion //Protected Methods

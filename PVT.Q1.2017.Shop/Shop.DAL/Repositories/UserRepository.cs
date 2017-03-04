@@ -41,16 +41,13 @@
             this.DetachNavigationProperty(user.PriceLevel, out priveLevelEntryState);
             this.DetachNavigationProperty(user.UserCurrency, out currencyEntryState);
 
+            user.PriceLevel = null;
+            user.UserCurrency = null;
+
             // detach more navigation properties here...
 
             // adding the user into Db
             base.Add(user);
-
-            // restoring navigation properties states
-            this.RestoreNavigationPropertyState(user.PriceLevel, priveLevelEntryState);
-            this.RestoreNavigationPropertyState(user.UserCurrency, currencyEntryState);
-
-            // restore more navigation properties here...
         }
 
         #endregion //Protected Methods
