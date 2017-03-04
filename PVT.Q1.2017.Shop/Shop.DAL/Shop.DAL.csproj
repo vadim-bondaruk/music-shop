@@ -109,8 +109,10 @@
     <Compile Include="Repositories\Infrastruture\IFeedbackRepository.cs" />
     <Compile Include="Repositories\Infrastruture\IGenreRepository.cs" />
     <Compile Include="Repositories\Infrastruture\IPriceLevelRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IUserRepository.cs" />
     <Compile Include="Repositories\PriceLevelRepository.cs" />
     <Compile Include="Repositories\TrackPriceRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VoteRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\Infrastruture\ITrackPriceRepository.cs" />

@@ -39,6 +39,7 @@
             Bind<ICurrencyRateRepository>().To<CurrencyRateRepository>();
             Bind<ICurrencyRepository>().To<CurrencyRepository>();
             Bind<IPriceLevelRepository>().To<PriceLevelRepository>();
+            Bind<IUserRepository>().To<UserRepository>();
 
             Bind<IFactory>().ToFactory();
         }

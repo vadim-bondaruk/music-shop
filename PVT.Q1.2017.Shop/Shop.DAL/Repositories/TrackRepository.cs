@@ -2,7 +2,6 @@
 {
     using System.Data.Entity;
     using Common.Models;
-    using Infrastructure.Models;
     using Infrastruture;
 
     /// <summary>
