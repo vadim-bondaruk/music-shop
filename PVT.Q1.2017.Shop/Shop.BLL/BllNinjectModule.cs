@@ -1,9 +1,10 @@
 ﻿namespace Shop.BLL
 {
     using Common.Models;
+    using DAL.Context;
     using DAL.Repositories;
     using Ninject.Modules;
-    using Ship.Infrastructure.Repositories;
+    using Shop.Infrastructure.Repositories;
 
     /// <summary>
     /// 

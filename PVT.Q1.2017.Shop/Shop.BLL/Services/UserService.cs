@@ -7,10 +7,10 @@
     using Exceptions;
     using Infrastructure;
     using Ninject;
-    using Ship.Infrastructure.Repositories;
     using Ship.Infrastructure.Services;
     using Shop.Common.Models;
     using Shop.Infrastructure.Enums;
+    using Shop.Infrastructure.Repositories;
 
     /// <summary>
     /// 
