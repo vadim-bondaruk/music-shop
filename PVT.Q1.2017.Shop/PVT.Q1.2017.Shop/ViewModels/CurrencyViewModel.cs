@@ -7,40 +7,22 @@
     /// </summary>
     public class CurrencyViewModel
     {
+        #region Properties
+
         /// <summary>
-        /// 
+        /// Full name of currency
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// 
+        /// ISO 4217 code of currency 
         /// </summary>
-        public string ShortName { get; set; }
+        public int Code { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the graphic currency symbol.
         /// </summary>
-        public List<CrossCurrencyViewModel> CrossCurce { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public class CrossCurrencyViewModel
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            public string FullName { get; set; }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public string ShortName { get; set; }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public decimal CrossCourse { get; set; }
-        }
+        public string Symbol { get; set; }
+        #endregion //Properties
     }
 }

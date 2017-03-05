@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Repositories;
+    using Shop.ViewModels;
 
     /// <summary>
     /// 
@@ -22,18 +23,6 @@
         private readonly IRepository<CurrencyRate> _currencyRateRepository;
         #endregion
 
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="repo"></param>
-        public CurrencyController(IRepository<Currency> currencyRepo, IRepository<CurrencyRate> currencyRateRepo)
-        {
-            this._currencyRepository = currencyRepo;
-            this._currencyRateRepository = currencyRateRepo;
-        }
-        #endregion
-
         /// <summary>
         /// 
         /// </summary>
@@ -49,18 +38,8 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id)
-        {
-            return this.View();
-        }
-
-        /// <summary>
-        /// Перегруженная версия
-        /// </summary>
-        /// <param name="currency"></param>
-        /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(CurrencyRate currencyRate)
+        public ActionResult Edit(int id)
         {
             return this.View();
         }
@@ -69,7 +48,17 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currencyViewModel"></param>
+        /// <returns></returns>
+        public ActionResult Add(CurrencyViewModel currencyViewModel)
         {
             return this.View();
         }
