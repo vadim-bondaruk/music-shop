@@ -10,6 +10,11 @@
         #region Properties
 
         /// <summary>
+        /// Id of currency
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Full name of currency
         /// </summary>
         public string FullName { get; set; }
