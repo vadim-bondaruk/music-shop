@@ -26,7 +26,7 @@
 
             Property(p => p.Login).IsRequired().HasMaxLength(15).IsUnicode();
 
-            Property(p => p.Password).IsRequired().HasMaxLength(50).IsUnicode();
+            Property(p => p.Password).IsRequired().HasMaxLength(50);
 
             Property(p => p.PhoneNumber).IsOptional().HasMaxLength(15);
 
