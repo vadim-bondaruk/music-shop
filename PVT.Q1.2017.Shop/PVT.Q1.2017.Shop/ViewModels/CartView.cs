@@ -28,6 +28,11 @@ namespace PVT.Q1._2017.Shop.ViewModels
         public decimal TotalPrice { get; set; }
 
         /// <summary>
+        /// Get currency short name
+        /// </summary>
+        public string CurrencyShortName { get; set; }
+
+        /// <summary>
         /// Set TotalPrice for cart
         /// </summary>
         /// <param name="userCurrency">
@@ -43,7 +48,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
                     return false;
                 }
 
-                ////this.TotalPrice += anyTrack.TrackPrices.First(p => p.Currency == userCurrency).Amount;
+                this.TotalPrice += anyTrack.TrackPrices.First(p => p.Currency.Code == userCurrency.Code).Price;
             }
 
             return true;
