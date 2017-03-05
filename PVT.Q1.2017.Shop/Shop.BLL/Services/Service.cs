@@ -136,6 +136,29 @@
         }
 
         /// <summary>
+        /// Unregisters the specified <paramref name="id"/> from the system.
+        /// </summary>
+        /// <param name="id">
+        /// The model to unregister.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the specified <paramref name="id"/> was unregistered successfully; otherwise <b>false</b>.
+        /// </returns>
+        public bool Unregister(int id)
+        {
+            if (!this.IsRegistered(id))
+            {
+                return false;
+            }
+
+            using (var repository = this.CreateRepository())
+            {
+                repository.Delete(id);
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Determines whether the specified <paramref name="model"/> is valid.
         /// </summary>
         /// <param name="model">

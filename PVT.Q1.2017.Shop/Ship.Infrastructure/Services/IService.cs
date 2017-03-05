@@ -36,6 +36,17 @@
         bool Unregister(TEntity model);
 
         /// <summary>
+        /// Unregisters the specified <paramref name="id"/> from the system.
+        /// </summary>
+        /// <param name="id">
+        /// A model to unregister.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the specified <paramref name="id"/> was unregistered successfully; otherwise <b>false</b>.
+        /// </returns>
+        bool Unregister(int id);
+
+        /// <summary>
         /// Determines whether the specified <paramref name="model"/> is valid.
         /// </summary>
         /// <param name="model">
