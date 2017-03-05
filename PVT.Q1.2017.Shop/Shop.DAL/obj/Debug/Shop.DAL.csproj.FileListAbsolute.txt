@@ -10,6 +10,7 @@ F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Shop.DAL.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Shop.DAL.pdb
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\EntityFramework.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\EntityFramework.SqlServer.dll
+F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Ninject.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Ninject.Extensions.Factory.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Shop.Common.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Shop.Infrastructure.dll
@@ -17,6 +18,7 @@ F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Shop.Infrastructure
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Shop.Common.pdb
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\EntityFramework.xml
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\EntityFramework.SqlServer.xml
+F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\bin\Debug\Ninject.xml
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.csprojResolveAssemblyReference.cache
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.Migrations.initial.resources
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.DAL\obj\Debug\Shop.DAL.Migrations.Updated.resources

@@ -1,4 +1,5 @@
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\obj\Debug\Shop.BLL.csprojResolveAssemblyReference.cache
+F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\obj\Debug\Shop.BLL.csprojResolveAssemblyReference.cache
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\bin\Debug\Shop.BLL.dll.config
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\bin\Debug\Shop.BLL.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\bin\Debug\Shop.BLL.pdb
@@ -13,6 +14,5 @@ F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\bin\Debug\Shop.Common.pdb
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\bin\Debug\Shop.DAL.pdb
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\bin\Debug\Ninject.xml
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\bin\Debug\EntityFramework.xml
-F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\obj\Debug\Shop.BLL.csprojResolveAssemblyReference.cache
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\obj\Debug\Shop.BLL.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.BLL\obj\Debug\Shop.BLL.pdb

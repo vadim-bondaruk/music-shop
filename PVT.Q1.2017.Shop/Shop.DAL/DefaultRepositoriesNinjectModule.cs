@@ -1,12 +1,18 @@
 ﻿namespace Shop.DAL
 {
+    #region using
+
     using System.Data.Entity;
-    using Context;
-    using Infrastructure;
+
     using Ninject.Extensions.Factory;
     using Ninject.Modules;
-    using Repositories;
-    using Repositories.Infrastruture;
+
+    using Shop.DAL.Context;
+    using Shop.DAL.Repositories;
+    using Shop.DAL.Repositories.Infrastruture;
+    using Shop.Infrastructure;
+
+    #endregion
 
     /// <summary>
     /// The default repositories bindings configuration
@@ -18,7 +24,7 @@
         /// </summary>
         public override void Load()
         {
-            Bind<DbContext>().To<ShopContext>();
+            this.Bind<DbContext>().To<ShopContext>();
 
             this.ConfigureRepositoryFactory();
         }
@@ -28,21 +34,21 @@
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
-            Bind<ITrackRepository>().To<TrackRepository>();
-            Bind<IArtistRepository>().To<ArtistRepository>();
-            Bind<IAlbumRepository>().To<AlbumRepository>();
-            Bind<IFeedbackRepository>().To<FeedbackRepository>();
-            Bind<IVoteRepository>().To<VoteRepository>();
-            Bind<IGenreRepository>().To<GenreRepository>();
-            Bind<ITrackPriceRepository>().To<TrackPriceRepository>();
-            Bind<IAlbumPriceRepository>().To<AlbumPriceRepository>();
-            Bind<ICurrencyRateRepository>().To<CurrencyRateRepository>();
-            Bind<ICurrencyRepository>().To<CurrencyRepository>();
-            Bind<IPriceLevelRepository>().To<PriceLevelRepository>();
-            Bind<IUserRepository>().To<UserRepository>();
-           // Bind<IControllerFactory>().To<ControllerFactory>();
+            this.Bind<ITrackRepository>().To<TrackRepository>();
+            this.Bind<IArtistRepository>().To<ArtistRepository>();
+            this.Bind<IAlbumRepository>().To<AlbumRepository>();
+            this.Bind<IFeedbackRepository>().To<FeedbackRepository>();
+            this.Bind<IVoteRepository>().To<VoteRepository>();
+            this.Bind<IGenreRepository>().To<GenreRepository>();
+            this.Bind<ITrackPriceRepository>().To<TrackPriceRepository>();
+            this.Bind<IAlbumPriceRepository>().To<AlbumPriceRepository>();
+            this.Bind<ICurrencyRateRepository>().To<CurrencyRateRepository>();
+            this.Bind<ICurrencyRepository>().To<CurrencyRepository>();
+            this.Bind<IPriceLevelRepository>().To<PriceLevelRepository>();
+            this.Bind<IUserRepository>().To<UserRepository>();
 
-            Bind<IFactory>().ToFactory();
+            // Bind<IControllerFactory>().To<ControllerFactory>();
+            this.Bind<IFactory>().ToFactory();
         }
     }
 }

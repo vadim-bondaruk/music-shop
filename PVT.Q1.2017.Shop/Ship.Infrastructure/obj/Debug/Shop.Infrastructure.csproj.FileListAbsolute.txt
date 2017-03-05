@@ -4,6 +4,5 @@ F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Ship.Infrastructure\obj\Debug\Sho
 F:\Cloud\Sources\C#\MusicShop\PVT.Q1.2017.Shop\Ship.Infrastructure\obj\Debug\Shop.Infrastructure.pdb
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Ship.Infrastructure\bin\Debug\Shop.Infrastructure.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Ship.Infrastructure\bin\Debug\Shop.Infrastructure.pdb
-F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Ship.Infrastructure\obj\Debug\Shop.Infrastructure.csprojResolveAssemblyReference.cache
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Ship.Infrastructure\obj\Debug\Shop.Infrastructure.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Ship.Infrastructure\obj\Debug\Shop.Infrastructure.pdb
