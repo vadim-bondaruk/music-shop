@@ -27,8 +27,6 @@
         /// </summary>
         public UserController(IUserService userService)
         {
-            ///var kernel = new StandardKernel(new WebNinjectModule());
-            ///this._userService = kernel.Get<IUserService>();   
             this._userService = userService;
         }
 

@@ -70,6 +70,7 @@ namespace PVT.Q1._2017.Shop.Tests
                     context.Database.Delete();
                 }
                 context.Database.Create();
+                context.Database.Initialize(true);
 
             }
         }        
