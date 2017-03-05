@@ -44,8 +44,8 @@
             var album = this.AddNewAlbum(repositoryFactory, artist.Id);
             Assert.IsTrue(album != null && album.Id > 0);
 
-            int artistId = artist.Id;
-            int albumId = album.Id;
+            var artistId = artist.Id;
+            var albumId = album.Id;
             var track = new Track
             {
                 Name = "Super Track",
@@ -59,7 +59,7 @@
             trackService.Register(track);
             Assert.IsTrue(track.Id > 0);
 
-            int trackId = track.Id;
+            var trackId = track.Id;
             track = trackService.GetTrackInfo(trackId);
             Assert.IsTrue(track.Id > 0 && track.Artist.Id == artistId && track.Album.Id == albumId);
 
@@ -77,8 +77,8 @@
             var album = this.AddNewAlbum(factory, artist.Id);
             Assert.IsTrue(album != null && album.Id > 0);
 
-            int artistId = artist.Id;
-            int albumId = album.Id;
+            var artistId = artist.Id;
+            var albumId = album.Id;
             var track = new Track
             {
                 Name = "Super Track",
@@ -94,7 +94,7 @@
             trackService.Register(track);
             Assert.IsTrue(track.Id > 0);
 
-            int trackId = track.Id;
+            var trackId = track.Id;
             track = trackService.GetTrackInfo(trackId);
             Assert.IsTrue(track.Id > 0 && track.Artist.Id == artistId && track.Album.Id == albumId);
 
@@ -155,9 +155,10 @@
             var artist = new Artist { Name = "Super-puper Artist" };
             using (var repository = factory.Create<IArtistRepository>())
             {
-                repository.AddOrUpdate(artist);
+                // repository.AddOrUpdate(artist);
                 repository.SaveChanges();
             }
+
             return artist;
         }
 
@@ -166,9 +167,10 @@
             var album = new Album { Name = "Super-puper Album", ArtistId = artistId };
             using (var repository = factory.Create<IAlbumRepository>())
             {
-                repository.AddOrUpdate(album);
+                // repository.AddOrUpdate(album);
                 repository.SaveChanges();
             }
+
             return album;
         }
 

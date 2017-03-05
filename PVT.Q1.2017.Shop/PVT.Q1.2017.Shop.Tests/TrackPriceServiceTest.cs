@@ -22,10 +22,10 @@
             this._trackPriceService = kernel.Get<ITrackPriceService>();
             this._factory = kernel.Get<IFactory>();
 
-            TrackServiceTest trackServiceTest = new TrackServiceTest();
+            var trackServiceTest = new TrackServiceTest();
             trackServiceTest.RegisterValidTrackTest();
 
-            CurrencyTest currencyTest = new CurrencyTest();
+            var currencyTest = new CurrencyTest();
             currencyTest.AddValidCurrenciesTest();
         }
 
@@ -37,6 +37,7 @@
             {
                 track = repository.GetAll(t => t.ArtistId.HasValue && t.AlbumId.HasValue).FirstOrDefault();
             }
+
             Assert.IsNotNull(track);
 
             // this._trackPriceService.AddTrackPrice(track);

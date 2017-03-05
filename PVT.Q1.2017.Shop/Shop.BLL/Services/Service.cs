@@ -89,7 +89,7 @@
 
             using (var repository = this.CreateRepository())
             {
-                repository.AddOrUpdate(model);
+                //repository.AddOrUpdate(model);
             }
         }
 
@@ -108,7 +108,7 @@
 
             using (var repository = this.CreateRepository())
             {
-                repository.AddOrUpdate(model);
+                //repository.AddOrUpdate(model);
             }
         }
 

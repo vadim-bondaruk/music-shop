@@ -1,36 +1,61 @@
 ﻿namespace Shop.DAL.Repositories
 {
+    #region using
+
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
-    using Common.Models;
-    using Infrastruture;
+    using System.Linq.Expressions;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Repositories.Infrastruture;
+
+    #endregion
 
     /// <summary>
     /// The user repository (have to be extended)
     /// </summary>
     public class UserRepository : Repository<User>, IUserRepository
     {
-        #region Constructors
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserRepository"/> class.
+        /// Initializes a new instance of the <see cref="UserRepository" />
+        /// class.
         /// </summary>
-        /// <param name="dbContext">
-        /// The db context.
-        /// </param>
-        public UserRepository(DbContext dbContext) : base(dbContext)
+        /// <param name="dbContext">The db context.</param>
+        public UserRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
-        #endregion //Constructors
-
-        #region Protected Methods
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public new ICollection<User> GetAll()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
-        /// Adds the specified <paramref name="user"/> into Db.
         /// </summary>
-        /// <param name="user">
-        /// The user to add.
+        /// <param name="filter">
+        /// The filter.
         /// </param>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public new ICollection<User> GetAll(Expression<Func<User, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Adds the specified <paramref name="user" /> into Db.
+        /// </summary>
+        /// <param name="user">The user to add.</param>
         protected override void Add(User user)
         {
             EntityState priveLevelEntryState;
@@ -49,7 +74,5 @@
             // adding the user into Db
             base.Add(user);
         }
-
-        #endregion //Protected Methods
     }
 }

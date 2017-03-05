@@ -1,6 +1,10 @@
 ﻿namespace Shop.DAL.Repositories
 {
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Linq.Expressions;
+
     using Common.Models;
     using Infrastruture;
 
@@ -18,6 +22,20 @@
         /// </param>
         public VoteRepository(DbContext dbContext) : base(dbContext)
         {
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public new ICollection<Vote> GetAll(Expression<Func<Vote, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion //Constructors
@@ -48,5 +66,7 @@
         }
 
         #endregion //Protected Methods
+
+
     }
 }

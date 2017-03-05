@@ -6,11 +6,6 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    using AutoMapper;
-
-    using global::Shop.Common.Models;
-    using ViewModels;
-
     #endregion
 
     /// <summary>

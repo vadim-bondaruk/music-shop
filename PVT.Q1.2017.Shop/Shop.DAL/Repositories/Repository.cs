@@ -124,6 +124,16 @@
             return query.ToList();
         }
 
+        public ICollection<TEntity> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.
         /// </summary>

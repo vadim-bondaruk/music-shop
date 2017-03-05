@@ -1,9 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
+
+    using RouteParameter = System.Web.Http.RouteParameter;
 
     /// <summary>
     /// Web api config

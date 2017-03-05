@@ -1,36 +1,64 @@
 ﻿namespace Shop.DAL.Repositories
 {
+    #region using
+
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
-    using Common.Models;
-    using Infrastruture;
+    using System.Linq.Expressions;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Repositories.Infrastruture;
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
     /// The album price repository
     /// </summary>
     public class AlbumPriceRepository : Repository<AlbumPrice>, IAlbumPriceRepository
     {
-        #region Constructors
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumPriceRepository"/> class.
+        /// Initializes a new instance of the
+        /// <see cref="AlbumPriceRepository" /> class.
         /// </summary>
-        /// <param name="dbContext">
-        /// The db context.
-        /// </param>
-        public AlbumPriceRepository(DbContext dbContext) : base(dbContext)
+        /// <param name="dbContext">The db context.</param>
+        public AlbumPriceRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
-        #endregion //Constructors
-
-        #region Protected Methods
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public new ICollection<AlbumPrice> GetAll()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
-        /// Adds the specified <paramref name="albumPrice"/> into Db.
         /// </summary>
-        /// <param name="albumPrice">
-        /// The album price to add.
+        /// <param name="filter">
+        /// The filter.
         /// </param>
+        /// <param name="includes">
+        /// The includes.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public new ICollection<AlbumPrice> GetAll(
+            Expression<Func<AlbumPrice, bool>> filter)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Adds the specified <paramref name="albumPrice" /> into Db.
+        /// </summary>
+        /// <param name="albumPrice">The album price to add.</param>
         protected override void Add(AlbumPrice albumPrice)
         {
             EntityState albumEntryState;
@@ -50,7 +78,5 @@
             // adding the album price into Db
             base.Add(albumPrice);
         }
-
-        #endregion //Protected Methods
     }
 }

@@ -1,26 +1,55 @@
 ﻿namespace Shop.DAL.Repositories
 {
+    #region using
+
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
-    using Common.Models;
-    using Infrastruture;
+    using System.Linq.Expressions;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Repositories.Infrastruture;
+
+    #endregion
 
     /// <summary>
     /// The artist repsitory.
     /// </summary>
     public class ArtistRepository : Repository<Artist>, IArtistRepository
     {
-        #region Constructors
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArtistRepository"/> class.
+        /// Initializes a new instance of the <see cref="ArtistRepository" />
+        /// class.
         /// </summary>
-        /// <param name="dbContext">
-        /// The db context.
-        /// </param>
-        public ArtistRepository(DbContext dbContext) : base(dbContext)
+        /// <param name="dbContext">The db context.</param>
+        public ArtistRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
-        #endregion //Constructors
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public new ICollection<Artist> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public new ICollection<Artist> GetAll(Expression<Func<Artist, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

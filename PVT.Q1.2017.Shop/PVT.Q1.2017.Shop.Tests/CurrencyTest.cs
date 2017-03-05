@@ -25,8 +25,8 @@
         [TestMethod]
         public void AddValidCurrenciesTest()
         {
-            int currencyCode = 840;
-            string currencyName = "USD";
+            var currencyCode = 840;
+            var currencyName = "USD";
 
             if (!this._currencyService.CurrencyExists(currencyCode))
             {

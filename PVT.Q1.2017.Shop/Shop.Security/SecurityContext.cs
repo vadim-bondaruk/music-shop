@@ -1,13 +1,15 @@
 ﻿namespace PVT.Q1._2017.Shop.Security
 {
+    using System;
     using System.Data.Entity;
     using Identity;
+
     using Microsoft.AspNet.Identity.EntityFramework;
 
     /// <summary>
     /// Context for user data
     /// </summary>
-    public class SecurityContext : IdentityDbContext<AppUser>
+    public class SecurityContext : IdentityDbContext<AppUser>, IDisposable
     {
         /// <summary>
         /// C'tor

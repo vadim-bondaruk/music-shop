@@ -3,9 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
     using Helpers;
     using Infrastructure;
+
+    using Shop.DAL.Repositories.Infrastruture;
     using Shop.Infrastructure;
     using Shop.Infrastructure.Validators;
 
