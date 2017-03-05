@@ -52,3 +52,5 @@ F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop\bin\Microsoft.Owin.Se
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop\obj\Debug\Shop.Web.csprojResolveAssemblyReference.cache
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop\obj\Debug\PVT.Q1.2017.Shop.dll
 F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop\obj\Debug\PVT.Q1.2017.Shop.pdb
+F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop\bin\Castle.Core.dll
+F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop\bin\Castle.Core.xml
