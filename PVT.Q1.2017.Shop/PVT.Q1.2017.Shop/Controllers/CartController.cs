@@ -61,7 +61,14 @@
                     }
                 }
 
-                ////cardView.SetTotalPrice(Currency.Usd);
+                /// <summary>
+                /// Временные данные: пользователь выбрал отображение в долларах
+                /// </summary>
+                var userCurrency = new Currency();
+                userCurrency.Code = 840;
+                userCurrency.Name = "USD";
+                cardView.CurrencyShortName = userCurrency.Name;
+                cardView.SetTotalPrice(userCurrency);
             }
 
             return this.View(cardView);
