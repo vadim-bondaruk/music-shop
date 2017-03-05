@@ -1,8 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
     using System.Web.Mvc;
-    using global::Shop.Common.Models;
-    using global::Shop.Infrastructure.Repositories;
     using Shop.ViewModels;
 
     /// <summary>
@@ -12,15 +10,7 @@
     public class CurrencyController : Controller
     {
         #region Fields
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly IRepository<Currency> _currencyRepository;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly IRepository<CurrencyRate> _currencyRateRepository;
         #endregion
 
         /// <summary>
