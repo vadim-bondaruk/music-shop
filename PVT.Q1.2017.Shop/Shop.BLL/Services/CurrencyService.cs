@@ -1,6 +1,7 @@
 ﻿namespace Shop.BLL.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
     using DAL.Repositories.Infrastruture;
@@ -51,6 +52,11 @@
                 throw new InvalidOperationException($"The currency with the numeric code '{ currency.Code }' already exists");
             }
 
+            if (this.CurrencyExists(currency.Name))
+            {
+                throw new InvalidOperationException($"The currency with the name '{ currency.Name }' already exists");
+            }
+
             currency.Name = currency.Name.ToUpper();
             base.Register(currency);
         }
@@ -80,6 +86,87 @@
                 FullName = fullName
             };
             this.Register(currency);
+        }
+
+        /// <summary>
+        /// Returns the currency with the specified <paramref name="code"/>.
+        /// </summary>
+        /// <param name="code">
+        /// The currency numeric code (see ISO 421).
+        /// </param>
+        /// <returns>
+        /// The currency with the specified <paramref name="code"/> or <b>null</b> if currency doesn't exist.
+        /// </returns>
+        public Currency GetCurrencyByCode(int code)
+        {
+            if (!CurrencyValidator.IsCurrencyCodeValid(code))
+            {
+                return null;
+            }
+
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Code == code).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Returns the currency with the specified <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">
+        /// The currency name (see ISO 421).
+        /// </param>
+        /// <returns>
+        /// The currency with the specified <paramref name="name"/> or <b>null</b> if currency doesn't exist.
+        /// </returns>
+        public Currency GetCurrencyByName(string name)
+        {
+            if (!CurrencyValidator.IsCurrencyNameValid(name))
+            {
+                return null;
+            }
+
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Name.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Returns all registered currencies.
+        /// </summary>
+        /// <returns>
+        /// All registered currencies.
+        /// </returns>
+        public ICollection<Currency> GetCurrenciesList()
+        {
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether a currency with the specified <paramref name="name"/> exists.
+        /// </summary>
+        /// <param name="name">
+        /// The currency name (see ISO 421).
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if a currency with the specified <paramref name="name"/> exists;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool CurrencyExists(string name)
+        {
+            if (!CurrencyValidator.IsCurrencyNameValid(name))
+            {
+                return false;
+            }
+
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Name.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
+            }
         }
 
         /// <summary>
@@ -127,9 +214,30 @@
                 return false;
             }
 
+            if (!CurrencyValidator.IsCurrencyNameValid(currency.Name))
+            {
+                return false;
+            }
+
             using (var repositry = this.CreateRepository())
             {
-                return repositry.GetAll(c => c.Id == currency.Id || c.Code == currency.Code).Any();
+                return repositry.GetAll(c => c.Id == currency.Id ||
+                                             c.Name.Equals(currency.Name.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
+            }
+        }
+
+        /// <summary>
+        /// Returns the currency with the specified <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">The currency id.</param>
+        /// <returns>
+        /// The currency with the specified <paramref name="id"/> or <b>null</b> if currency doesn't exist.
+        /// </returns>
+        public Currency GetCurrencyInfo(int id)
+        {
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetById(id);
             }
         }
 

@@ -44,6 +44,7 @@
             Bind<IValidator<PriceLevel>>().To<NamedEntityValidator<PriceLevel>>();
             Bind<IValidator<TrackPrice>>().To<TrackPriceValidator>();
             Bind<IValidator<AlbumPrice>>().To<AlbumPriceValidator>();
+            Bind<IValidator<Currency>>().To<CurrencyValidator>();
         }
 
         /// <summary>
@@ -65,8 +66,8 @@
 
             Bind<IUserService>().To<UserService>();
 
-            /*Bind<ICurrencyService>().To<CurrencyService>();
-            Bind<ICurrencyRateService>().To<CurrencyRateService>();*/
+            Bind<ICurrencyService>().To<CurrencyService>();
+            /*Bind<ICurrencyRateService>().To<CurrencyRateService>();*/
         }
     }
 }

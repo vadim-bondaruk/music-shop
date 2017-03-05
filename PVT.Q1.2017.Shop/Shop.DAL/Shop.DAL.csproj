@@ -87,6 +87,10 @@
     <Compile Include="Migrations\201703041939123_UpdatedCurrency.Designer.cs">
       <DependentUpon>201703041939123_UpdatedCurrency.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703042132223_CurrencyRestictions.cs" />
+    <Compile Include="Migrations\201703042132223_CurrencyRestictions.Designer.cs">
+      <DependentUpon>201703042132223_CurrencyRestictions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703041939123_UpdatedCurrency.resx">
       <DependentUpon>201703041939123_UpdatedCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703042132223_CurrencyRestictions.resx">
+      <DependentUpon>201703042132223_CurrencyRestictions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
