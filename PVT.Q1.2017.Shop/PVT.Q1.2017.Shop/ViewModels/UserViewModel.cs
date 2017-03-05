@@ -45,6 +45,8 @@
 
         [DataType(DataType.EmailAddress)]
 
+        [Required(ErrorMessage = "Поле должно быть заполнено обязательно")]
+
         /// <summary>
         /// Users e-mail
         /// </summary>
