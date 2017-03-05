@@ -9,26 +9,52 @@
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
+    #region
+
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
-    /// The user vote.
+    ///     The user vote.
     /// </summary>
     public class Vote : BaseEntity
     {
+        #region Properties
+
         /// <summary>
-        /// Gets or sets the mark.
+        ///     Gets or sets the mark.
         /// </summary>
         public Mark Mark { get; set; }
 
-        /// <summary>
-        /// Gets or sets the track.
-        /// </summary>
-        public Track Track { get; set; }
+        #endregion //Properties
+
+        #region Foreign Keys
 
         /// <summary>
-        /// Gets or sets the user.
+        ///     Gets or sets the track id.
         /// </summary>
-        public User User { get; set; }
+        public int TrackId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the user id.
+        /// </summary>
+        public int UserId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
+
+        /// <summary>
+        ///     Gets or sets the track.
+        /// </summary>
+        public virtual Track Track { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the user.
+        /// </summary>
+        public virtual User User { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

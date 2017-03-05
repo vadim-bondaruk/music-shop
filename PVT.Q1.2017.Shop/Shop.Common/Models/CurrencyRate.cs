@@ -9,26 +9,52 @@
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
+    #region
+
+    using Shop.Infrastructure.Models;
+
+    #endregion
 
     /// <summary>
-    /// The currency rate.
+    ///     The currency rate.
     /// </summary>
     public class CurrencyRate : BaseEntity
     {
+        #region Properties
+
         /// <summary>
-        /// Gets or sets the cross course.
+        ///     Gets or sets the cross course.
         /// </summary>
-        public double CrossCourse { get; set; }
+        public decimal CrossCourse { get; set; }
+
+        #endregion //Properties
+
+        #region Foreign Keys
+
+        /// <summary>
+        /// Currency id
+        /// </summary>
+        public int CurrencyId { get; set; }
+
+        /// <summary>
+        /// Target currency id
+        /// </summary>
+        public int TargetCurrencyId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
 
         /// <summary>
         /// Gets or sets the currency.
         /// </summary>
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
         /// <summary>
-        /// Gets or sets the target currency.
+        ///     Gets or sets the target currency.
         /// </summary>
-        public Currency TargetCurrency { get; set; }
+        public virtual Currency TargetCurrency { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

@@ -9,25 +9,18 @@
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
-
     /// <summary>
     /// The album price.
     /// </summary>
-    public class AlbumPrice : BaseEntity
+    public class AlbumPrice : BasePriceEntity
     {
         /// <summary>
-        /// Gets or sets the album cost amount.
+        /// Track id
         /// </summary>
-        public decimal Amount { get; set; }
+        public int AlbumId { get; set; }
 
         /// <summary>
-        /// Gets or sets the currency.
-        /// </summary>
-        public Currency Currency { get; set; }
-
-        /// <summary>
-        /// Gets or sets the album.
+        /// Gets or sets the <see cref="Album"/>.
         /// </summary>
         public Album Album { get; set; }
     }

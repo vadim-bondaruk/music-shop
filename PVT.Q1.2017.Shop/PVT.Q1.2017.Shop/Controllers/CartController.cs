@@ -61,7 +61,7 @@
                     }
                 }
 
-                cardView.SetTotalPrice(Currency.Usd);
+                ////cardView.SetTotalPrice(Currency.Usd);
             }
 
             return this.View(cardView);

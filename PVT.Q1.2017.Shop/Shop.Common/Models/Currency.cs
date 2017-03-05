@@ -9,29 +9,59 @@
 
 namespace Shop.Common.Models
 {
+    using System.Collections.Generic;
+
     /// <summary>
-    /// The currency.
+    /// The currency model.
     /// </summary>
-    public enum Currency
+    public class Currency : BaseNamedEntity
     {
-        /// <summary>
-        /// The USD.
-        /// </summary>
-        Usd = 840,
+        #region Properties
 
         /// <summary>
-        /// The EUR.
+        /// Full name of currency
         /// </summary>
-        Eur = 978,
+        public string FullName { get; set; }
 
         /// <summary>
-        /// The Rub.
+        /// ISO 4217 code of currency 
         /// </summary>
-        Rub = 810,
+        public int Code { get; set; }
 
         /// <summary>
-        /// The Byn.
+        /// Gets or sets the graphic currency symbol.
         /// </summary>
-        Byn = 933
+        public string Symbol { get; set; }
+
+        #endregion //Properties
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Currency rates
+        /// </summary>
+        public virtual ICollection<CurrencyRate> CurrencyRates { get; set; }
+
+        /// <summary>
+        /// Target currency rates
+        /// </summary>
+        public virtual ICollection<CurrencyRate> TargetCurrencyRates { get; set; }
+
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        public virtual ICollection<User> Users { get; set; }
+
+        /// <summary>
+        /// Get all album prices
+        /// </summary>
+        public virtual ICollection<AlbumPrice> AlbumPrices { get; set; }
+
+        /// <summary>
+        /// Get all track prices
+        /// </summary>
+        public virtual ICollection<TrackPrice> TrackPrices { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

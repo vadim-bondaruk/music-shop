@@ -43,7 +43,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
                     return false;
                 }
 
-                this.TotalPrice += anyTrack.TrackPrices.First(p => p.Currency == userCurrency).Amount;
+                ////this.TotalPrice += anyTrack.TrackPrices.First(p => p.Currency == userCurrency).Amount;
             }
 
             return true;

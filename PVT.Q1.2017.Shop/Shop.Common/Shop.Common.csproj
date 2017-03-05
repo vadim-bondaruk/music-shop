@@ -47,11 +47,14 @@
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\BaseNamedEntity.cs" />
+    <Compile Include="Models\BasePriceEntity.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Mark.cs" />
+    <Compile Include="Models\PriceLevel.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\TrackPrice.cs" />
     <Compile Include="Models\User.cs" />

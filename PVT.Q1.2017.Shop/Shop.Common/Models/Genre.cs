@@ -9,16 +9,20 @@
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The genre.
     /// </summary>
-    public class Genre : BaseEntity
+    public class Genre : BaseNamedEntity
     {
+        #region Navigation Properties
+
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the tracks.
         /// </summary>
-        public string Name { get; set; }
+        public ICollection<Track> Tracks { get; set; }
+
+        #endregion //Navigation Properties
     }
 }
