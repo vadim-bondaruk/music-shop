@@ -17,7 +17,7 @@
         /// <summary>
         /// Contains list of users
         /// </summary>
-        private UserContext _db;
+        public UserContext _db;
 
         /// <summary>
         /// 
@@ -86,7 +86,8 @@
 
             if (this._db != null)
             {
-                if (this._db.Users.Contains(model))
+               
+                if (this._db.Users.Any(u=>u.Login==model.Login||u.Email==model.Email))
                 {
                     this._db.Users.Attach(model);
                     this._db.Entry(model).State = EntityState.Modified;
@@ -100,6 +101,8 @@
             {
                 throw new Exception("problems in DBContext");
             }
+
+            _db.SaveChanges();
         }
 
         /// <summary>

@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Common.Utils;
+    using DAL.Repositories;
     using DTO;
     using Exceptions;
     using Infrastructure;
@@ -10,7 +11,7 @@
     using Ship.Infrastructure.Repositories;
     using Ship.Infrastructure.Services;
     using Shop.Common.Models;
-    using Shop.Infrastructure.Enums;
+    using Shop.Infrastructure.Enums;   
 
     /// <summary>
     /// 
@@ -27,8 +28,8 @@
         /// </summary>
         /// <param name="userRepository"></param>
         public UserService(IRepository<User> userRepository)
-        {
-            this._userRepository = userRepository;            
+        {            
+            this._userRepository = userRepository;
         }
 
         /// <summary>
