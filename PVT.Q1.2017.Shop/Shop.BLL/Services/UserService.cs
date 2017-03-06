@@ -5,10 +5,10 @@
     using DTO;
     using Exceptions;
     using Infrastructure;
-    using Ship.Infrastructure.Repositories;
     using Shop.BLL.Validators;
     using Shop.Common.Models;
     using Shop.Infrastructure.Enums;
+    using Shop.Infrastructure.Repositories;
     using Utils;    
 
     /// <summary>

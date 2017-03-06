@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
-using Ship.Infrastructure.Repositories;
+using Shop.Infrastructure.Repositories;
 using Shop.Common.Models;
 using Shop.BLL.DTO;
 using Shop.BLL.Exceptions;

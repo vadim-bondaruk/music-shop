@@ -2,9 +2,9 @@
 {
     using System;
     using System.Linq;
-    using Ship.Infrastructure.Repositories;
     using Shop.Common.Models;
     using Shop.Common.Utils;
+    using Shop.Infrastructure.Repositories;
 
     /// <summary>
     /// 
