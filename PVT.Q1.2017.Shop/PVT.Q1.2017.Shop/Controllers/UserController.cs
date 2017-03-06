@@ -73,18 +73,9 @@
                 {
                 try
                 {
-                    result = this._userService.RegisterUser(new UserDTO()
-                    {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Login = user.Login,
-                        Password = user.Password,
-                        Email = user.Email,
-                        BirthDate = user.BirthDate,
-                        Country = user.Country,
-                        PhoneNumber = user.PhoneNumber,
-                        Sex = user.Sex
-                    });
+                    AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, UserDTO>());
+                    var u = AutoMapper.Mapper.Map<UserDTO>(user);
+                    result = this._userService.RegisterUser(AutoMapper.Mapper.Map<UserDTO>(user));
                 }
                 catch (UserValidationException ex)
                 {
