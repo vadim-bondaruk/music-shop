@@ -18,22 +18,18 @@ namespace PVT.Q1._2017.Shop.Tests
         private readonly DbContext _dbContext;
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void GetById_1()
         {
+            var id = 1;
+            var expected = new UserPaymentMethod() { Alias = "SSS"};
             //Mock<IRepository<UserPaymentMethod>> mock = new Mock<IRepository<UserPaymentMethod>>();
             //mock.Setup(r => r.GetAll()).Returns(new List<UserPaymentMethod>() {new UserPaymentMethod()});
-            Mock<DbContext> mock = new Mock<DbContext>();
-            mock.Setup(r => r.Set<UserPaymentMethod>());
-            UserPaymentMethodRepository paymentMethodRepository = new UserPaymentMethodRepository(mock.Object);
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>();
+            mock.Setup(r => r.GetById(id,"")).Returns(expected).Verifiable();
 
-            //UserPaymentMethod payment = new UserPaymentMethod();
-
-
-            var getById = paymentMethodRepository.GetById(1);
-            Assert.IsNotNull(getById);
-
-
+            UserPaymentMethod payment = mock.Object.GetById(id);
+            Assert.AreEqual(expected, payment);
+            mock.Verify();
         }
 
 
