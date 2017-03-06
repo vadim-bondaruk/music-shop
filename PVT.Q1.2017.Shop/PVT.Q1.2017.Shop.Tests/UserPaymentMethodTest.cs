@@ -41,36 +41,25 @@ namespace PVT.Q1._2017.Shop.Tests
             Assert.IsNotNull(res);
         }
 
-
         [TestMethod]
         public void GetAll()
         {
-
-            //var mock = new Mock<IRepository<UserPaymentMethod>>();
-            //var res = mock.Setup(a => a.GetAll()).Returns(() => _dbContext.Set<UserPaymentMethod>().ToList());
-
-            //Assert.IsNotNull(res);
-
             var data = new List<UserPaymentMethod>()
             {
                 new UserPaymentMethod {Alias = "AAA", Id = 1},
                 new UserPaymentMethod {Alias = "BBB", Id = 2},
                 new UserPaymentMethod {Alias = "CCC", Id = 3},
+            };
 
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>();
+            mock.Setup(r => r.GetAll()).Returns(data).Verifiable();
 
-            }.AsQueryable();
-
-            var mock = new Mock<DbSet<UserPaymentMethod>>();
-
-            mock.As<IQueryable<UserPaymentMethod>>().Setup(m => m.Provider).Returns(data.Provider);
-            mock.As<IQueryable<UserPaymentMethod>>().Setup(m => m.Expression).Returns(data.Expression);
-            mock.As<IQueryable<UserPaymentMethod>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mock.As<IQueryable<UserPaymentMethod>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
-
-            var mockContext = new Mock<UserPaymentMethodRepository>();
-            //mockContext.Setup(m => m.GetAll()).Returns(mock.Object);
-            //var service = new UserPaymentMethodRepository();
+            ICollection<UserPaymentMethod> paymentMethod = mock.Object.GetAll();
+            Assert.AreEqual(data, paymentMethod);
+            mock.Verify();
         }
+
+
 
         [TestMethod]
         public void AddOrUpdate()
