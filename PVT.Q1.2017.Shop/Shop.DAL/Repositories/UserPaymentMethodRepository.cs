@@ -41,7 +41,7 @@
         /// <returns>
         /// An entity with the specified <paramref name="id"/> or null in case if there are now enity with such <paramref name="id"/>
         /// </returns>
-        public UserPaymentMethod GetById(int id)
+        public UserPaymentMethod GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
             var result = this._dbContext.Set<UserPaymentMethod>();
             return result.Find(id);
