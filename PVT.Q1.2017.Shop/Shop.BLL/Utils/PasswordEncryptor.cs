@@ -20,6 +20,7 @@
             {
                 sb.Append(b.ToString("X2"));
             }
+
             return sb.ToString();
         }
 
