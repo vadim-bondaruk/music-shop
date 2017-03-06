@@ -22,8 +22,8 @@
             {
                 throw new ArgumentException("login");
             }
-
-            if (repository.GetAll().Where(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)).IsAny<User>())
+          
+            if (repository.GetAll().Where(u => u.Login != null && u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)).IsAny<User>())
             {
                 return false;
             }
@@ -43,7 +43,7 @@
                 throw new ArgumentException("Email");
             }
 
-            if (repository.GetAll().Where(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)).IsAny<User>())
+            if (repository.GetAll().Where(u => u.Email != null && u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)).IsAny<User>())
             {
                 return false;
             }

@@ -1,6 +1,7 @@
 ﻿namespace Shop.BLL.Services
 {
     using System;
+    using System.Data.Entity.Validation;
     using DTO;
     using Exceptions;
     using Infrastructure;
@@ -8,7 +9,7 @@
     using Shop.BLL.Validators;
     using Shop.Common.Models;
     using Shop.Infrastructure.Enums;
-    using Utils;
+    using Utils;    
 
     /// <summary>
     /// 
@@ -36,6 +37,8 @@
         /// <returns></returns>
         public bool RegisterUser(UserDTO user)
         {
+            var registered = false;
+
             if (user == null)
             {
                 throw new ArgumentException("user");
@@ -55,8 +58,19 @@
                             .ForMember("UserRole", opt => opt.MapFrom(userDTO => UserRoles.User))
                             .ForMember("Password", opt => opt.MapFrom(userDTO => PasswordEncryptor.GetHashString(userDTO.Password))));
             var userDB = AutoMapper.Mapper.Map<User>(user);
-            this._userRepository.AddOrUpdate(userDB);
-            return true;
+
+            try
+            {
+                this._userRepository.AddOrUpdate(userDB);
+                registered = true;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // write data to log
+                throw;
+            }
+           
+            return registered;
         }     
     }
 }

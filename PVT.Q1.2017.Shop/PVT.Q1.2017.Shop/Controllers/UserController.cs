@@ -7,10 +7,11 @@
     using System.Web.Mvc;
     using Ninject;
     using global::Shop.BLL.DTO;
-    using global::Shop.BLL.Infrastructure;
-    using global::Shop.BLL.Services;
-    using global::Shop.Common.Models;
-    using ViewModels;
+    using global::Shop.BLL.Exceptions;
+    using global::Shop.BLL.Infrastructure;    
+    using global::Shop.BLL.Services;    
+    using global::Shop.Common.Models;    
+    using ViewModels;    
 
     /// <summary>
     /// 
@@ -65,22 +66,22 @@
         /// <returns></returns>
         [HttpPost]
         public ActionResult Create(UserViewModel user)
-        {            
+        {
+                bool result = false;   
                 /// TODO: Add insert logic here
                 if (ModelState.IsValid)
                 {
-                    bool result = this._userService.RegisterUser(new UserDTO()
-                    {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Login = user.Login,
-                        Password = user.Password,
-                        Email = user.Email,
-                        BirthDate = user.BirthDate,
-                        Country = user.Country,
-                        PhoneNumber = user.PhoneNumber,
-                        Sex = user.Sex
-                    });
+                try
+                {
+                    AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, UserDTO>());
+                    var u = AutoMapper.Mapper.Map<UserDTO>(user);
+                    result = this._userService.RegisterUser(AutoMapper.Mapper.Map<UserDTO>(user));
+                }
+                catch (UserValidationException ex)
+                {
+                    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                }
+
                     if (result)
                     {
                         return this.RedirectToAction("Success");
