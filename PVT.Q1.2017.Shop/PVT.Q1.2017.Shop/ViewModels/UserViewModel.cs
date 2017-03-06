@@ -26,6 +26,8 @@
 
         [Required(ErrorMessage = "Поле должно быть заполнено обязательно")]
 
+        [RegularExpression("^[a-zA-Z0-9_.-]*$", ErrorMessage = "Только буквы латинского алфавита, цифры и знак подчеркивания")]
+
         /// <summary>
         /// Users login (nickname)
         /// </summary>
