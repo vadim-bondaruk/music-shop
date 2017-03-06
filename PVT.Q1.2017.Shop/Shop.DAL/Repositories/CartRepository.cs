@@ -14,12 +14,6 @@
     /// </summary>
     public class CartRepository : Repository<Cart>
     {
-        #region Fields
-
-        private DbContext _dbContext;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -30,7 +24,6 @@
         /// </param>
         public CartRepository(DbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
         }
 
         #endregion //Constructors
@@ -45,7 +38,7 @@
         protected void AddTrack(int cartId, int trackId)
         {
             var cart = this.GetById(cartId);
-            var track = new TrackRepository(this._dbContext).GetById(trackId);
+            var track = new TrackRepository(this.DbContext).GetById(trackId);
             if (track == null)
             {
                 throw new Exception("Incorrect Track Id");
@@ -75,7 +68,7 @@
         protected void RemoveTrack(int cartId, int trackId)
         {
             var cart = this.GetById(cartId);
-            var track = new TrackRepository(this._dbContext).GetById(trackId);
+            var track = new TrackRepository(this.DbContext).GetById(trackId);
             if (track == null)
             {
                 throw new Exception("Incorrect Track Id");
