@@ -17,9 +17,9 @@
             this.HasKey(t => t.Id);
             this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            this.HasOptional(t => t.Album).WithMany(a => a.Tracks).HasForeignKey(t => t.AlbumId).WillCascadeOnDelete(false);
-            this.HasOptional(t => t.Artist).WithMany(a => a.Tracks).HasForeignKey(t => t.ArtistId).WillCascadeOnDelete(false);
-            this.HasOptional(t => t.Genre).WithMany(a => a.Tracks).HasForeignKey(t => t.GenreId).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.Album).WithMany(a => a.Tracks).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(false);
             this.ToTable("tbTracks");
         }
     }

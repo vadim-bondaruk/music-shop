@@ -47,19 +47,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\AlbumPriceService.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
-    <Compile Include="Exceptions\InvalidTrackException.cs" />
-    <Compile Include="Exceptions\TrackNotFoundException.cs" />
+    <Compile Include="Exceptions\InvalidEntityException.cs" />
+    <Compile Include="Helpers\ValidatorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefaultServicesNinjectModule.cs" />
+    <Compile Include="Services\AlbumService.cs" />
+    <Compile Include="Services\ArtistService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\FeedbackService.cs" />
+    <Compile Include="Services\GenreService.cs" />
+    <Compile Include="Services\Infrastructure\IAlbumService.cs" />
+    <Compile Include="Services\Infrastructure\IArtistService.cs" />
+    <Compile Include="Services\Infrastructure\ICurrencyService.cs" />
+    <Compile Include="Services\Infrastructure\IFeedbackService.cs" />
+    <Compile Include="Services\Infrastructure\IGenreService.cs" />
+    <Compile Include="Services\Infrastructure\IPriceLevelService.cs" />
+    <Compile Include="Services\Infrastructure\IAlbumPriceService.cs" />
+    <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
+    <Compile Include="Services\Infrastructure\ITrackService.cs" />
+    <Compile Include="Services\Infrastructure\IUserService.cs" />
+    <Compile Include="Services\Infrastructure\IVoteService.cs" />
+    <Compile Include="Services\PriceLevelService.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\TrackPriceService.cs" />
+    <Compile Include="Services\TrackService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\VoteService.cs" />
     <Compile Include="Validators\AlbumValidator.cs" />
-    <Compile Include="Validators\ArtistValidator.cs" />
+    <Compile Include="Validators\CurrencyValidator.cs" />
+    <Compile Include="Validators\PriceValidator.cs" />
+    <Compile Include="Validators\AlbumPriceValidator.cs" />
+    <Compile Include="Validators\TrackPriceValidator.cs" />
+    <Compile Include="Validators\VoteValidator.cs" />
+    <Compile Include="Validators\FeedbackValidator.cs" />
+    <Compile Include="Validators\NamedEntityValidator.cs" />
     <Compile Include="Validators\TrackValidator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>

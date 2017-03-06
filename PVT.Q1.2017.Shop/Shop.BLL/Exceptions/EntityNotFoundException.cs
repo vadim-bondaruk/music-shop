@@ -7,6 +7,7 @@
     /// <summary>
     /// The entity not exception.
     /// </summary>
+    [Serializable]
     public class EntityNotFoundException : Exception
     {
         #region Constructors

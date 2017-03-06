@@ -63,18 +63,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201702262206586_init.cs" />
-    <Compile Include="Migrations\201702262206586_init.Designer.cs">
-      <DependentUpon>201702262206586_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702262239190_PriceLevel.cs" />
-    <Compile Include="Migrations\201702262239190_PriceLevel.Designer.cs">
-      <DependentUpon>201702262239190_PriceLevel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702282313044_CurrencyEdited.cs" />
-    <Compile Include="Migrations\201702282313044_CurrencyEdited.Designer.cs">
-      <DependentUpon>201702282313044_CurrencyEdited.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -91,8 +79,31 @@
     <Compile Include="Context\ShopContext.cs" />
     <Compile Include="DefaultRepositoriesNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Extensions\QueryableExtensions.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="Repositories\AlbumRepository.cs" />
+    <Compile Include="Repositories\CurrencyRateRepository.cs" />
+    <Compile Include="Repositories\AlbumPriceRepository.cs" />
+    <Compile Include="Repositories\CurrencyRepository.cs" />
+    <Compile Include="Repositories\FeedbackRepository.cs" />
+    <Compile Include="Repositories\ArtistRepository.cs" />
+    <Compile Include="Repositories\GenreRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IAlbumPriceRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IAlbumRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IArtistRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\ICurrencyRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IFeedbackRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IGenreRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IPriceLevelRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IUserRepository.cs" />
+    <Compile Include="Repositories\PriceLevelRepository.cs" />
+    <Compile Include="Repositories\TrackPriceRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\VoteRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\Infrastruture\ITrackPriceRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\ITrackRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\ICurrencyRateRepository.cs" />
+    <Compile Include="Repositories\Infrastruture\IVoteRepository.cs" />
+    <Compile Include="Repositories\TrackRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -108,17 +119,6 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702262206586_init.resx">
-      <DependentUpon>201702262206586_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702262239190_PriceLevel.resx">
-      <DependentUpon>201702262239190_PriceLevel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702282313044_CurrencyEdited.resx">
-      <DependentUpon>201702282313044_CurrencyEdited.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

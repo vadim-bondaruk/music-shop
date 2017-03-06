@@ -3,194 +3,62 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using Core;
+    using Models;
 
     /// <summary>
     /// Common Repository interface.
     /// </summary>
     /// <typeparam name="TEntity">A model.</typeparam>
-    public interface IRepository<T> : IUnitOfWork, IDisposable where T : class, new()
+    public interface IRepository<TEntity> : IDisposable where TEntity : BaseEntity, new()
     {
         /// <summary>
-        /// Set deleted
+        /// Tries to find an entity by the specified <paramref name="id"/>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="itemForUpdate"></param>
-        void SetDeleted(T itemForUpdate);
+        /// <param name="id">The key.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>
+        /// An entity with the specified <paramref name="id"/> or null in case if there are now enity with such <paramref name="id"/>
+        /// </returns>
+        TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
-        /// Set added
+        /// Returns all entities from the repository.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="itemForUpdate"></param>
-        void SetAdded(T itemForUpdate);
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>
+        /// All entities from the repository.
+        /// </returns>
+        ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
-        /// Set modified
+        /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="itemForUpdate"></param>
-        void SetModified(T itemForUpdate);
+        /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>Entities which corespond to </returns>
+        ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
-        /// Create new entity
+        /// Adds or updates the specified <paramref name="model"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        T Create();
+        /// <param name="model">A model to add or update.</param>
+        void AddOrUpdate(TEntity model);
 
         /// <summary>
-        /// Create new entity
+        /// Deletes a model with the specified <paramref name="id"/>.
         /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        object Create(Type target);
+        /// <param name="id">The model key.</param>
+        void Delete(int id);
 
         /// <summary>
-        /// Get first or new
+        /// Deletes the <paramref name="model"/> from the repository.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="isNew"></param>
-        /// <returns></returns>
-        T GetFirstOrNew(out bool isNew);
+        /// <param name="model">The model to delete.</param>
+        void Delete(TEntity model);
 
         /// <summary>
-        /// Get first or new
+        /// Saves all changes.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="isNew"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        T GetFirstOrNew(Expression<Func<T, bool>> match, out bool isNew, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Get first or default
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        T GetFirstOrDefault(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Get first
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        T GetFirst(params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Get first
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        T GetFirst(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Add or update
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="items"></param>
-        void AddOrUpdate(IEnumerable<T> items);
-
-        /// <summary>
-        /// Add entity
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
-        void AddEntity(T entity);
-
-        /// <summary>
-        /// Take all
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        IEnumerable<T> TakeAll(params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Take all async
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        Task<IEnumerable<T>> TakeAllAsync(params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Where
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        IEnumerable<T> Where(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Where async
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        Task<ICollection<T>> WhereAsync(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Find
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        T Find(object[] parameters);
-
-        /// <summary>
-        /// Get first or default async
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Get first async
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        Task<T> GetFirstAsync(params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Get frist async
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        Task<T> GetFirstAsync(Expression<Func<T, bool>> match, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Paging
-        /// </summary>
-        /// <typeparam name="T1"></typeparam>
-        /// <param name="match"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="startIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        Task<IEnumerable<T>> Paging<T1>(Expression<Func<T, bool>> match, Expression<Func<T, T1>> orderBy, int? startIndex, int? pageSize, params Expression<Func<T, object>>[] includes);
-
-        /// <summary>
-        /// Does entity exist
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        bool IsEntityExist(T entity);
+        void SaveChanges();
     }
 }

@@ -3,89 +3,244 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Common.Models;
-    using Infrastructure.Core;
-    using Infrastructure.Repositories;
+    using DAL.Repositories.Infrastruture;
+    using Infrastructure;
+    using Shop.Infrastructure;
+    using Shop.Infrastructure.Validators;
+    using Validators;
 
     /// <summary>
-    /// Currency service interface
+    /// The currency service.
     /// </summary>
-    public interface ICurrencyService
+    public class CurrencyService : Service<ICurrencyRepository, Currency>, ICurrencyService
     {
-        /// <summary>
-        /// Get rate of currency by date
-        /// </summary>
-        /// <param name="from">Currency</param>
-        /// <param name="to">Target currency</param>
-        /// <param name="date">Date</param>
-        /// <returns></returns>
-        Task<decimal> GetRateByDateAsync(int from, int to, DateTime date);
+        #region Constructors
 
         /// <summary>
-        /// Get rates by date
+        /// Initializes a new instance of the <see cref="CurrencyService"/> class.
         /// </summary>
-        /// <param name="date">Date</param>
-        /// <returns><see cref="IEnumerable{CurrencyRate}"/></returns>
-        Task<IEnumerable<CurrencyRate>> GetActualRatesAsync(DateTime date);
-    }
-
-    /// <summary>
-    /// Currency service
-    /// </summary>
-    public class CurrencyService : ICurrencyService
-    {
-        /// <summary>
-        /// Factory
-        /// </summary>
-        private readonly IFactory _factory;
-
-        /// <summary>
-        /// C'tor
-        /// </summary>
-        /// <param name="factory"></param>
-        public CurrencyService(IFactory factory)
+        /// <param name="factory">
+        /// The factory.
+        /// </param>
+        /// <param name="validator">
+        /// The validator.
+        /// </param>
+        public CurrencyService(IFactory factory, IValidator<Currency> validator) : base(factory, validator)
         {
-            this._factory = factory;
+        }
+
+        #endregion //Constructors
+
+        #region Public Methods
+
+        /// <summary>
+        /// Registers the specified <paramref name="currency"/> in the system.
+        /// </summary>
+        /// <param name="currency">
+        /// The currency.
+        /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// When the <paramref name="currency"/> with such numeric code already exists.
+        /// </exception>
+        public override void Register(Currency currency)
+        {
+            Validator.Validate(currency);
+
+            if (this.CurrencyExists(currency.Code))
+            {
+                throw new InvalidOperationException($"The currency with the numeric code '{ currency.Code }' already exists");
+            }
+
+            if (this.CurrencyExists(currency.Name))
+            {
+                throw new InvalidOperationException($"The currency with the name '{ currency.Name }' already exists");
+            }
+
+            currency.Name = currency.Name.ToUpper();
+            base.Register(currency);
+        }
+
+        #endregion //Public Methods
+
+        #region ICurrencyService Members
+
+        /// <summary>
+        /// Adds the currency into Db.
+        /// </summary>
+        /// <param name="name">
+        /// The currency name (see ISO 421).
+        /// </param>
+        /// <param name="code">
+        /// The currency code number (see ISO 421).
+        /// </param>
+        /// <param name="fullName">
+        /// The full name.
+        /// </param>
+        public void AddCurrency(string name, int code, string fullName = null)
+        {
+            var currency = new Currency
+            {
+                Name = name,
+                Code = code,
+                FullName = fullName
+            };
+            this.Register(currency);
         }
 
         /// <summary>
-        /// Get rates by date
+        /// Returns the currency with the specified <paramref name="code"/>.
         /// </summary>
-        /// <param name="date">Date</param>
-        /// <returns><see cref="IEnumerable{CurrencyRate}"/></returns>
-        public async Task<IEnumerable<CurrencyRate>> GetActualRatesAsync(DateTime date)
+        /// <param name="code">
+        /// The currency numeric code (see ISO 421).
+        /// </param>
+        /// <returns>
+        /// The currency with the specified <paramref name="code"/> or <b>null</b> if currency doesn't exist.
+        /// </returns>
+        public Currency GetCurrencyByCode(int code)
         {
-            using (var repository = this._factory.Create<IRepository<CurrencyRate>>())
+            if (!CurrencyValidator.IsCurrencyCodeValid(code))
             {
-                var rates = (await repository.TakeAllAsync(rate => rate.Currency, rate => rate.TargetCurrency));
-                return rates.Where(c => c.Date <= date)
-                    .GroupBy(rate => new { rate.Currency, rate.TargetCurrency })
-                        .Select(grouping => grouping.OrderByDescending(rate => rate.Date).FirstOrDefault());
+                return null;
+            }
+
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Code == code).FirstOrDefault();
             }
         }
 
         /// <summary>
-        /// Get rate of currency by date
+        /// Returns the currency with the specified <paramref name="name"/>.
         /// </summary>
-        /// <param name="from">Currency</param>
-        /// <param name="to">Target currency</param>
-        /// <param name="date">Date</param>
-        /// <returns></returns>
-        public async Task<decimal> GetRateByDateAsync(int from, int to, DateTime date)
+        /// <param name="name">
+        /// The currency name (see ISO 421).
+        /// </param>
+        /// <returns>
+        /// The currency with the specified <paramref name="name"/> or <b>null</b> if currency doesn't exist.
+        /// </returns>
+        public Currency GetCurrencyByName(string name)
         {
-            using (var repository = this._factory.Create<IRepository<CurrencyRate>>())
+            if (!CurrencyValidator.IsCurrencyNameValid(name))
             {
-                if (from == to)
-                {
-                    return 1;
-                }
+                return null;
+            }
 
-                var val = (await repository.TakeAllAsync())
-                    .Where(c => c.CurrencyId == from && c.TargetCurrencyId == to && c.Date <= date).OrderByDescending(rate => rate.Date).FirstOrDefault();
-
-                return val != null ? val.CrossCourse : 1;
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Name.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             }
         }
+
+        /// <summary>
+        /// Returns all registered currencies.
+        /// </summary>
+        /// <returns>
+        /// All registered currencies.
+        /// </returns>
+        public ICollection<Currency> GetCurrenciesList()
+        {
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether a currency with the specified <paramref name="name"/> exists.
+        /// </summary>
+        /// <param name="name">
+        /// The currency name (see ISO 421).
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if a currency with the specified <paramref name="name"/> exists;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool CurrencyExists(string name)
+        {
+            if (!CurrencyValidator.IsCurrencyNameValid(name))
+            {
+                return false;
+            }
+
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Name.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether a currency with the specified numeric <paramref name="code"/> exists.
+        /// </summary>
+        /// <param name="code">
+        /// The currency numeric code (see ISO 421).
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if a currency with the specified <paramref name="code"/> exists;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool CurrencyExists(int code)
+        {
+            if (!CurrencyValidator.IsCurrencyCodeValid(code))
+            {
+                return false;
+            }
+
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Code == code).Any();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified <paramref name="currency"/> already exists.
+        /// </summary>
+        /// <param name="currency">
+        /// The currency.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the specified <paramref name="currency"/> already exists;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool CurrencyExists(Currency currency)
+        {
+            if (currency == null)
+            {
+                return false;
+            }
+
+            if (!CurrencyValidator.IsCurrencyCodeValid(currency.Code))
+            {
+                return false;
+            }
+
+            if (!CurrencyValidator.IsCurrencyNameValid(currency.Name))
+            {
+                return false;
+            }
+
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetAll(c => c.Id == currency.Id ||
+                                             c.Name.Equals(currency.Name.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
+            }
+        }
+
+        /// <summary>
+        /// Returns the currency with the specified <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">The currency id.</param>
+        /// <returns>
+        /// The currency with the specified <paramref name="id"/> or <b>null</b> if currency doesn't exist.
+        /// </returns>
+        public Currency GetCurrencyInfo(int id)
+        {
+            using (var repositry = this.CreateRepository())
+            {
+                return repositry.GetById(id);
+            }
+        }
+
+        #endregion //ICurrencyService Members
     }
 }

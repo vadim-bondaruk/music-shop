@@ -39,7 +39,6 @@ namespace Shop.DAL.Migrations
                 context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
                     CurrencyId = 1,
                     TargetCurrencyId = 2,
-                    Date = DateTime.Now,
                     CrossCourse = 1.06M
                 }});
             }

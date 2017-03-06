@@ -14,8 +14,6 @@ namespace PVT.Q1._2017.Shop.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using Security.Identity;
-    using global::Shop.BLL.Services;
 
     /// <summary>
     /// Base implementation that adds injection support
@@ -56,8 +54,6 @@ namespace PVT.Q1._2017.Shop.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-                kernel.Bind<IWebSecurity>().To<WebSecurity>();
-                kernel.Bind<ICurrencyService>().To<CurrencyService>();
                 RegisterServices(kernel);
                 return kernel;
             }

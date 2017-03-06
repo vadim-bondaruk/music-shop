@@ -11,17 +11,13 @@ namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
-    using Infrastructure.Models;
 
     /// <summary>
     /// The artist.
     /// </summary>
-    public class Artist : BaseEntity
+    public class Artist : BaseNamedEntity
     {
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
+        #region Properties
 
         /// <summary>
         /// Gets or sets the biography.
@@ -38,6 +34,10 @@ namespace Shop.Common.Models
         /// </summary>
         public byte[] Photo { get; set; }
 
+        #endregion //Properties
+
+        #region Navigation Properties
+
         /// <summary>
         /// Gets or sets all tracks of the current artist.
         /// </summary>
@@ -47,5 +47,7 @@ namespace Shop.Common.Models
         /// Gets or sets the albums.
         /// </summary>
         public virtual ICollection<Album> Albums { get; set; }
+
+        #endregion //Navigation Properties
     }
 }
