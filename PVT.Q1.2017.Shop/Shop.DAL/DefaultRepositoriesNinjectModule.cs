@@ -3,11 +3,13 @@
     #region using
 
     using System.Data.Entity;
-
-    using Ninject.Extensions.Factory;
+    using Ninject;
     using Ninject.Modules;
 
-    using Shop.DAL.Context;
+    using Context;
+
+    using Ninject.Extensions.Factory;
+
     using Shop.DAL.Repositories;
     using Shop.DAL.Repositories.Infrastruture;
     using Shop.Infrastructure;
@@ -24,7 +26,7 @@
         /// </summary>
         public override void Load()
         {
-            this.Bind<DbContext>().To<ShopContext>();
+            Bind<DbContext>().To<ShopContext>();
 
             this.ConfigureRepositoryFactory();
         }
