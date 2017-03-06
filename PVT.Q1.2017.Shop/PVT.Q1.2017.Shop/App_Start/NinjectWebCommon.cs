@@ -1,8 +1,3 @@
-using System.Web.Mvc;
-using Ninject.Modules;
-using Shop.BLL;
-using Shop.DAL;
-
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(PVT.Q1._2017.Shop.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(PVT.Q1._2017.Shop.App_Start.NinjectWebCommon), "Stop")]
 
@@ -10,21 +5,18 @@ namespace PVT.Q1._2017.Shop.App_Start
 {
     using System;
     using System.Web;
+
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
+    using Ninject.Modules;
     using Ninject.Web.Common;
-    using Security.Identity;
+    using System.Web.Mvc;
+    using global::Shop.BLL;
 
-    /// <summary>
-    /// Base implementation that adds injection support
-    /// </summary>
     public static class NinjectWebCommon 
     {
-        /// <summary>
-        /// A basic Bootstrapper that can be used to setup web applications
-        /// </summary>
-        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
+        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
@@ -33,7 +25,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            Bootstrapper.Initialize(CreateKernel);
+            bootstrapper.Initialize(CreateKernel);
         }
         
         /// <summary>
@@ -41,7 +33,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// </summary>
         public static void Stop()
         {
-            Bootstrapper.ShutDown();
+            bootstrapper.ShutDown();
         }
         
         /// <summary>
@@ -55,7 +47,7 @@ namespace PVT.Q1._2017.Shop.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-                kernel.Bind<IWebSecurity>().To<WebSecurity>();
+
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -71,7 +63,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
-        {     
+        {
             kernel.Load(GetModules());
             DependencyResolver.SetResolver(new CustomDependencyResolver(kernel));
         }
