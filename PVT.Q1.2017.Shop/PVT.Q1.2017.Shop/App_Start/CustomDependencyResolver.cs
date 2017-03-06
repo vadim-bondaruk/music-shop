@@ -1,12 +1,23 @@
-﻿namespace PVT.Q1._2017.Shop
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CustomDependencyResolver.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Custom Dependency Resolver class
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace PVT.Q1._2017.Shop
 {
     #region
 
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using System.Web.Http.Dependencies;
 
     using Ninject;
+
+    using IDependencyResolver = System.Web.Mvc.IDependencyResolver;
 
     #endregion
 
@@ -21,23 +32,49 @@
         private readonly IKernel _kernel;
 
         /// <summary>
-        ///     Initializes a new instance
+        /// Initializes a new instance of the <see cref="CustomDependencyResolver"/> class. 
+        /// Initializes a new instance
         /// </summary>
-        /// <param name="kernel">Kernel</param>
+        /// <param name="kernel">
+        /// Kernel
+        /// </param>
         public CustomDependencyResolver(IKernel kernel)
         {
             this._kernel = kernel;
         }
 
         /// <summary>
-        ///     Resolves singly registered services that support arbitrary object
+        /// The begin scope.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IDependencyScope"/>.
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public IDependencyScope BeginScope()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The dispose.
+        /// </summary>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Resolves singly registered services that support arbitrary object
         ///     creation
         /// </summary>
         /// <param name="serviceType">
-        ///     The type of the requested service or object
+        /// The type of the requested service or object
         /// </param>
         /// <returns>
-        ///     The requested service or object
+        /// The requested service or object
         /// </returns>
         public object GetService(Type serviceType)
         {
@@ -45,11 +82,13 @@
         }
 
         /// <summary>
-        ///     Resolves multiply registered services
+        /// Resolves multiply registered services
         /// </summary>
-        /// <param name="serviceType">The type of the requested services</param>
+        /// <param name="serviceType">
+        /// The type of the requested services
+        /// </param>
         /// <returns>
-        ///     The requested services
+        /// The requested services
         /// </returns>
         public IEnumerable<object> GetServices(Type serviceType)
         {
