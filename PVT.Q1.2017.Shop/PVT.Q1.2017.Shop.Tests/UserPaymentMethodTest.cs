@@ -22,10 +22,8 @@ namespace PVT.Q1._2017.Shop.Tests
         {
             var id = 1;
             var expected = new UserPaymentMethod() { Alias = "SSS"};
-            //Mock<IRepository<UserPaymentMethod>> mock = new Mock<IRepository<UserPaymentMethod>>();
-            //mock.Setup(r => r.GetAll()).Returns(new List<UserPaymentMethod>() {new UserPaymentMethod()});
             Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>();
-            mock.Setup(r => r.GetById(id,"")).Returns(expected).Verifiable();
+            mock.Setup(r => r.GetById(id)).Returns(expected).Verifiable();
 
             UserPaymentMethod payment = mock.Object.GetById(id);
             Assert.AreEqual(expected, payment);
@@ -71,10 +69,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
             var mockContext = new Mock<UserPaymentMethodRepository>();
             //mockContext.Setup(m => m.GetAll()).Returns(mock.Object);
-
             //var service = new UserPaymentMethodRepository();
-
-
         }
 
         [TestMethod]
