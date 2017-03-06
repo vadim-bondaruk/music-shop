@@ -28,7 +28,7 @@
 
             Property(p => p.Password).IsRequired().HasMaxLength(50);
 
-            Property(p => p.PhoneNumber).IsOptional().HasMaxLength(15);
+            Property(p => p.PhoneNumber).IsOptional().HasMaxLength(30);
 
             Property(p => p.Sex).IsRequired();
 
