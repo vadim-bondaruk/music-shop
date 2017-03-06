@@ -26,8 +26,11 @@
         /// <summary>
         /// Конструктор для контроллера корзины
         /// </summary>
-        /// <param name="repo">
+        /// <param name="cartRepo">
         /// Репозиторий для хранения корзины
+        /// </param>
+        /// <param name="userRepo">
+        /// Репозиторий для хранения пользователей
         /// </param>
         public CartController(IRepository<Cart> cartRepo, IRepository<User> userRepo)
         {
@@ -42,16 +45,13 @@
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="returnUrl">
-        /// Путь для возврата к покупкам
-        /// </param>
         [HttpGet]
-        public ActionResult Index(int currentUserId, string returnUrl)
+        public ViewResult Index(int currentUserId)
         {
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
             var currentUser = this._userRepository.GetById(currentUserId);
             var cardView = new CartView { Tracks = new List<Track>() };
-            if (cart != null && currentUser != null)
+            if (cart != null)
             {
                 foreach (var c in cart)
                 {
@@ -83,15 +83,12 @@
         /// <param name="track">
         /// Добавляемая песня
         /// </param>
-        /// <param name="returnUrl">
-        /// Путь для возврата к покупкам
-        /// </param>
         [HttpPost]
-        public RedirectToRouteResult AddTrackToCart(int currentUserId, Track track, string returnUrl)
+        public RedirectToRouteResult AddTrackToCart(int currentUserId, Track track)
         {
             if (track == null)
             {
-                return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
+                return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
 
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
@@ -111,7 +108,7 @@
                 }
             }
 
-            return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
         }
 
         /// <summary>
@@ -123,16 +120,13 @@
         /// <param name="track">
         /// Удаляемая песня
         /// </param>
-        /// <param name="returnUrl">
-        /// Путь для возврата к покупкам
-        /// </param>
         [HttpPost]
-        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track, string returnUrl)
+        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track)
         {
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).Where(t => t.Tracks.Contains(track));
             if (cart == null || track == null)
             {
-                return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
+                return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
 
             foreach (var c in cart)
@@ -148,7 +142,7 @@
                 }
             }
 
-            return this.RedirectToRoute(new { controller = "CartController", action = "Index", currentUserId = currentUserId, returnUrl = returnUrl });
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
         }
         #endregion 
     }
