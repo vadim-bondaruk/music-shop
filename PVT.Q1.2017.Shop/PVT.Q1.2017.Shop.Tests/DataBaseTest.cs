@@ -149,6 +149,7 @@
             using (var repository = repositoryFactory.Create<IArtistRepository>())
             {
                 repository.AddOrUpdate(artist);
+                repository.SaveChanges();
             }
 
             var track1 = new Track { Name = "Unstoppable", ArtistId = artist.Id };
