@@ -18,11 +18,12 @@ namespace PVT.Q1._2017.Shop.Tests
         private readonly DbContext _dbContext;
 
         [TestMethod]
-        public void GetById_1()
+        public void GetById_Verify()
         {
+            Mock<DbContext> dbContext = new Mock<DbContext>();
             var id = 1;
             var expected = new UserPaymentMethod() { Alias = "SSS"};
-            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>();
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(dbContext.Object);
             mock.Setup(r => r.GetById(id)).Returns(expected).Verifiable();
 
             UserPaymentMethod payment = mock.Object.GetById(id);
