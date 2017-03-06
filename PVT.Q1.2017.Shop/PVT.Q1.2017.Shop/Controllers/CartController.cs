@@ -48,17 +48,14 @@
         [HttpGet]
         public ViewResult Index(int currentUserId)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
             var currentUser = this._userRepository.GetById(currentUserId);
             var cartView = new CartView { Tracks = new List<Track>() };
             if (cart != null)
             {
-                foreach (var c in cart)
+                foreach (var t in cart.Tracks)
                 {
-                    foreach (var t in c.Tracks)
-                    {
-                        cartView.Tracks.Add(t);
-                    }
+                    cartView.Tracks.Add(t);
                 }
     
                 /// <summary>
@@ -91,7 +88,7 @@
                 return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
 
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
             var currentUser = this._userRepository.GetById(currentUserId);
             if (cart == null && currentUser != null)
             {
@@ -101,11 +98,8 @@
 
             if (cart != null)
             {
-                foreach (var model in cart)
-                {
-                    model.Tracks.Add(track);
-                    this._cartRepository.AddOrUpdate(model);
-                }
+                cart.Tracks.Add(track);
+                this._cartRepository.AddOrUpdate(cart);
             }
 
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
@@ -123,23 +117,20 @@
         [HttpPost]
         public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).Where(t => t.Tracks.Contains(track));
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault(t => t.Tracks.Contains(track));
             if (cart == null || track == null)
             {
                 return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
 
-            foreach (var c in cart)
+            if (cart.Tracks.Count == 1)
             {
-                if (c.Tracks.Count == 1)
-                {
-                    this._cartRepository.Delete(c);
-                }
-                else
-                {
-                    c.Tracks.Remove(track);
-                    this._cartRepository.AddOrUpdate(c);
-                }
+                this._cartRepository.Delete(cart);
+            }
+            else
+            {
+                cart.Tracks.Remove(track);
+                this._cartRepository.AddOrUpdate(cart);
             }
 
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
