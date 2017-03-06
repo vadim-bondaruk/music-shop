@@ -149,6 +149,7 @@
                 this.Add(model);
                 this._stateChanged = true;
             }
+            this.SaveChanges();
         }
 
         /// <summary>
