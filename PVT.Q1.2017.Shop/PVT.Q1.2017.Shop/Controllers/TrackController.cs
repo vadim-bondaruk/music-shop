@@ -1,9 +1,19 @@
-﻿namespace PVT.Q1._2017.Shop.Controllers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TrackController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The track controller
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace PVT.Q1._2017.Shop.Controllers
 {
     #region
 
     using System.Web.Mvc;
 
+    using global::Shop.Common.Models;
     using global::Shop.DAL.Repositories.Infrastruture;
     using global::Shop.Infrastructure;
 
@@ -12,18 +22,12 @@
     /// <summary>
     /// The track controller
     /// </summary>
-    public partial class TrackController : Controller
+    public class TrackController : Controller
     {
-        #region Fields
-
         /// <summary>
         /// The repository factory.
         /// </summary>
         private readonly IFactory _repositoryFactory;
-
-        #endregion //Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackController"/> class.
@@ -36,13 +40,10 @@
             this._repositoryFactory = repositoryFactory;
         }
 
-        #endregion //Constructors
-
-        #region Actions
-
         /// <summary>
         /// </summary>
         /// <returns>
+        /// The <see cref="ActionResult"/>.
         /// </returns>
         public virtual ActionResult AlbumList()
         {
@@ -54,8 +55,11 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="artistId">The artist id.</param>
+        /// <param name="artistId">
+        /// The artist id.
+        /// </param>
         /// <returns>
+        /// The <see cref="ActionResult"/>.
         /// </returns>
         public virtual ActionResult AlbumList(int artistId)
         {
@@ -67,8 +71,11 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
+        /// The <see cref="ActionResult"/>.
         /// </returns>
         public virtual ActionResult AlbumTracks(int id)
         {
@@ -81,6 +88,7 @@
         /// <summary>
         /// </summary>
         /// <returns>
+        /// The <see cref="ActionResult"/>.
         /// </returns>
         public virtual ActionResult ArtistList()
         {
@@ -92,8 +100,11 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
+        /// The <see cref="ActionResult"/>.
         /// </returns>
         public virtual ActionResult ArtistTracks(int id)
         {
@@ -105,8 +116,11 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
+        /// The <see cref="ActionResult"/>.
         /// </returns>
         public virtual ActionResult Details(int id)
         {
@@ -130,6 +144,25 @@
             }
         }
 
-        #endregion //Actions
+        /// <summary>
+        /// The track list.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public virtual ActionResult AddNew()
+        {
+            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
+            {
+                return this.View();
+            }
+        }
+
+        [HttpPost]
+        public virtual ActionResult AddNew(Track modelTrack)
+        {
+            var s = modelTrack.Artist;
+            return null;
+        }
     }
 }
