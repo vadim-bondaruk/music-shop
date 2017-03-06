@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
-    using Ship.Infrastructure.Repositories;
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Enums;
+    using global::Shop.Infrastructure.Repositories;
 
     /// <summary>
     /// TestClass

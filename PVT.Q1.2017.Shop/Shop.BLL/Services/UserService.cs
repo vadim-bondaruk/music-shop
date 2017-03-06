@@ -1,17 +1,14 @@
 ﻿namespace Shop.BLL.Services
 {
     using System;
-    using System.Linq;
-    using Common.Utils;
-    using DAL.Repositories;
     using DTO;
     using Exceptions;
     using Infrastructure;
-    using Ninject;
-    using Ship.Infrastructure.Services;
+    using Shop.BLL.Validators;
     using Shop.Common.Models;
-    using Shop.Infrastructure.Enums;   
+    using Shop.Infrastructure.Enums;
     using Shop.Infrastructure.Repositories;
+    using Utils;
 
     /// <summary>
     /// 
@@ -44,61 +41,22 @@
                 throw new ArgumentException("user");
             }
 
-            if (!this.IsLoginUnique(user.Login))
+            if (!UserDataValidator.IsLoginUnique(user.Login, this._userRepository))
             {
                 throw new UserValidationException("User with the same login already exists", "Login");
             }
 
-            if (!this.IsEmailUnique(user.Email))
+            if (!UserDataValidator.IsEmailUnique(user.Email, this._userRepository))
             {
                 throw new UserValidationException("User with the same email already exists", "Email");
             }
 
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>()
-                            .ForMember("UserRole", opt => opt.MapFrom((userDTO) => UserRoles.User)));
+                            .ForMember("UserRole", opt => opt.MapFrom(userDTO => UserRoles.User))
+                            .ForMember("Password", opt => opt.MapFrom(userDTO => PasswordEncryptor.GetHashString(userDTO.Password))));
             var userDB = AutoMapper.Mapper.Map<User>(user);
             this._userRepository.AddOrUpdate(userDB);
             return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        private bool IsLoginUnique(string login)
-        {
-            if (string.IsNullOrEmpty(login))
-            {
-                throw new ArgumentException("login");
-            }
-
-            if (this._userRepository.GetAll().Where(u => u.Login == login).IsAny<User>())
-            {
-                return false;
-            }
-                
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        private bool IsEmailUnique(string email)
-        {
-            if (string.IsNullOrEmpty(email))
-            {
-                throw new ArgumentException("Email");
-            }                
-
-            if (this._userRepository.GetAll().Where(u => u.Email == email).IsAny<User>())
-            {
-                return false;
-            }
-                
-            return true;
-        }
+        }     
     }
 }
