@@ -39,7 +39,7 @@
 
         [DataType(DataType.Password)]
 
-        [StringLength(20, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 7)]
+        [StringLength(50, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 7)]
 
         /// <summary>
         /// Users password
