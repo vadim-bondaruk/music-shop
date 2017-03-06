@@ -50,28 +50,28 @@
         {
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId);
             var currentUser = this._userRepository.GetById(currentUserId);
-            var cardView = new CartView { Tracks = new List<Track>() };
+            var cartView = new CartView { Tracks = new List<Track>() };
             if (cart != null)
             {
                 foreach (var c in cart)
                 {
                     foreach (var t in c.Tracks)
                     {
-                        cardView.Tracks.Add(t);
+                        cartView.Tracks.Add(t);
                     }
                 }
-
+    
                 /// <summary>
                 /// Временные данные: пользователь выбрал отображение в долларах
                 /// </summary>
                 var userCurrency = new Currency();
                 userCurrency.Code = 840;
                 userCurrency.Name = "USD";
-                cardView.CurrencyShortName = userCurrency.Name;
-                cardView.SetTotalPrice(userCurrency);
+                cartView.CurrencyShortName = userCurrency.Name;
+                cartView.SetTotalPrice(userCurrency);
             }
 
-            return this.View(cardView);
+            return this.View(cartView);
         }
 
         /// <summary>
