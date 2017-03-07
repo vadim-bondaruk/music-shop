@@ -14,7 +14,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The album price repository.
         /// </returns>
-        IAlbumPriceRepository CreateAlbumPriceRepository();
+        IAlbumPriceRepository GetAlbumPriceRepository();
 
         /// <summary>
         /// Returns the album repository.
@@ -22,7 +22,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The album repository.
         /// </returns>
-        IAlbumRepository CreateAlbumRepository();
+        IAlbumRepository GetAlbumRepository();
 
         /// <summary>
         /// Returns the artist repository.
@@ -30,7 +30,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The artist repository.
         /// </returns>
-        IArtistRepository CreatetArtistRepository();
+        IArtistRepository GetArtistRepository();
 
         /// <summary>
         /// Returns the currency repository.
@@ -38,7 +38,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The currency repository.
         /// </returns>
-        ICurrencyRepository CreateCurrencyRepository();
+        ICurrencyRepository GetCurrencyRepository();
 
         /// <summary>
         /// Returns the currency rate repository.
@@ -46,7 +46,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The track repository.
         /// </returns>
-        ICurrencyRateRepository CreateCurrencyRateRepository();
+        ICurrencyRateRepository GetCurrencyRateRepository();
 
         /// <summary>
         /// Returns the feedback repository.
@@ -54,7 +54,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The feedback repository.
         /// </returns>
-        IFeedbackRepository CreateFeedbackRepository();
+        IFeedbackRepository GetFeedbackRepository();
 
         /// <summary>
         /// Returns the genre repository.
@@ -62,7 +62,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The track repository.
         /// </returns>
-        IGenreRepository CreateGenreRepository();
+        IGenreRepository GetGenreRepository();
 
         /// <summary>
         /// Returns the price level repository.
@@ -70,7 +70,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The price level repository.
         /// </returns>
-        IPriceLevelRepository CreatePriceLevelRepository();
+        IPriceLevelRepository GetPriceLevelRepository();
 
         /// <summary>
         /// Returns the track price repository.
@@ -78,7 +78,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The track price repository.
         /// </returns>
-        ITrackPriceRepository CreateTrackPriceRepository();
+        ITrackPriceRepository GetTrackPriceRepository();
 
         /// <summary>
         /// Returns the track repository.
@@ -86,7 +86,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The track repository.
         /// </returns>
-        ITrackRepository CreateTrackRepository();
+        ITrackRepository GetTrackRepository();
 
         /// <summary>
         /// Returns the user repository.
@@ -94,7 +94,7 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The user repository.
         /// </returns>
-        IUserRepository CreateUserRepository();
+        IUserRepository GetUserRepository();
 
         /// <summary>
         /// Returns the vote repository.
@@ -102,6 +102,6 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// The track repository.
         /// </returns>
-        IVoteRepository CreateVoteRepository();
+        IVoteRepository GetVoteRepository();
     }
 }

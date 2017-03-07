@@ -36,7 +36,7 @@
         /// </returns>
         public ICollection<Track> GetTracksList()
         {
-            using (var repository = this.Factory.CreateTrackRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
                 return repository.GetAll(t => t.Artist, t => t.Genre);
             }
@@ -50,7 +50,7 @@
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured()
         {
-            using (var repository = this.Factory.CreateTrackRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
                 return repository.GetAll(t => !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
@@ -64,7 +64,7 @@
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured()
         {
-            using (var repository = this.Factory.CreateTrackRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
                 return repository.GetAll(t => t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
@@ -79,7 +79,7 @@
         /// </returns>
         public Track GetTrackInfo(int id)
         {
-            using (var repository = this.Factory.CreateTrackRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
                 return repository.GetById(id, t => t.Artist, t => t.Genre);
             }
@@ -93,7 +93,7 @@
         /// <returns>All track prices for the specified  <paramref name="priceLevel"/>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel)
         {
-            using (var repository = this.Factory.CreateTrackPriceRepository())
+            using (var repository = this.Factory.GetTrackPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.TrackId == track.Id &&
@@ -109,7 +109,7 @@
         /// <returns>All <paramref name="track"/> prices>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track)
         {
-            using (var repository = this.Factory.CreateTrackPriceRepository())
+            using (var repository = this.Factory.GetTrackPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.TrackId == track.Id,
@@ -129,7 +129,7 @@
         /// </returns>
         public ICollection<Vote> GetTrackVotes(Track track)
         {
-            using (var repository = this.Factory.CreateVoteRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(v => v.TrackId == track.Id, v => v.Track, v => v.User);
             }
@@ -146,7 +146,7 @@
         /// </returns>
         public ICollection<Feedback> GetTrackFeedbacks(Track track)
         {
-            using (var repository = this.Factory.CreateFeedbackRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(f => f.TrackId == track.Id, f => f.Track, f => f.User);
             }
@@ -163,7 +163,7 @@
         /// </returns>
         public ICollection<Album> GetAllAlbumsWithTrack(Track track)
         {
-            using (var repository = this.Factory.CreateAlbumRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.Tracks.Any(t => t.Id == track.Id));
             }

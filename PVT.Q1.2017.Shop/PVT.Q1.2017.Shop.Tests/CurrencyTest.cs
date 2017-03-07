@@ -29,7 +29,7 @@
 
             if (!this._currencyService.CurrencyExists(currencyCode))
             {
-                using (var repository = this._factory.CreateCurrencyRepository())
+                using (var repository = this._factory.GetCurrencyRepository())
                 {
                     repository.AddOrUpdate(new Currency { ShortName = currencyName, Code = currencyCode });
                     repository.SaveChanges();
@@ -44,7 +44,7 @@
 
             if (!this._currencyService.CurrencyExists(currencyCode))
             {
-                using (var repository = this._factory.CreateCurrencyRepository())
+                using (var repository = this._factory.GetCurrencyRepository())
                 {
                     repository.AddOrUpdate(new Currency { ShortName = currencyName, Code = currencyCode });
                     repository.SaveChanges();
@@ -59,7 +59,7 @@
 
             if (!this._currencyService.CurrencyExists(currencyCode))
             {
-                using (var repository = this._factory.CreateCurrencyRepository())
+                using (var repository = this._factory.GetCurrencyRepository())
                 {
                     repository.AddOrUpdate(new Currency { ShortName = currencyName, Code = currencyCode });
                     repository.SaveChanges();
@@ -74,7 +74,7 @@
 
             if (!this._currencyService.CurrencyExists(currencyCode))
             {
-                using (var repository = this._factory.CreateCurrencyRepository())
+                using (var repository = this._factory.GetCurrencyRepository())
                 {
                     repository.AddOrUpdate(new Currency { ShortName = currencyName, Code = currencyCode });
                     repository.SaveChanges();

@@ -41,7 +41,7 @@
         /// </returns>
         public AlbumPrice GeAlbumPrice(Album album, PriceLevel priceLevel, Currency currency)
         {
-            using (var repository = this.Factory.CreateAlbumPriceRepository())
+            using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.AlbumId == album.Id &&
@@ -62,7 +62,7 @@
         /// </returns>
         public AlbumPrice GetAlbumPriceInfo(int id)
         {
-            using (var repository = this.Factory.CreateAlbumPriceRepository())
+            using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetById(id, p => p.Album, p => p.Currency, p => p.PriceLevel);
             }

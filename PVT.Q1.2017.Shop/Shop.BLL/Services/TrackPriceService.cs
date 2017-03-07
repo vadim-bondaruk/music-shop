@@ -43,7 +43,7 @@
         /// </returns>
         public TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
         {
-            using (var repository = this.Factory.CreateTrackPriceRepository())
+            using (var repository = this.Factory.GetTrackPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.TrackId == track.Id &&
@@ -64,7 +64,7 @@
         /// </returns>
         public TrackPrice GetTrackPriceInfo(int id)
         {
-            using (var repository = this.Factory.CreateTrackPriceRepository())
+            using (var repository = this.Factory.GetTrackPriceRepository())
             {
                 return repository.GetById(id, p => p.Track, p => p.Currency, p => p.PriceLevel);
             }

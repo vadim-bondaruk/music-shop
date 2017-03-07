@@ -36,7 +36,7 @@
         /// </returns>
         public Album GetAlbumInfo(int id)
         {
-            using (var repository = this.Factory.CreateAlbumRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetById(id, a => a.Artist);
             }
@@ -51,7 +51,7 @@
         /// </returns>
         public ICollection<Track> GetTracksList(Album album)
         {
-            using (var repository = this.Factory.CreateTrackRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
                 return repository.GetAll(t => t.AlbumId == album.Id, t => t.Artist, t => t.Genre);
             }
@@ -65,7 +65,7 @@
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured(Album album)
         {
-            using (var repository = this.Factory.CreateTrackRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
                 return repository.GetAll(t => t.AlbumId == album.Id && !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
@@ -80,7 +80,7 @@
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured(Album album)
         {
-            using (var repository = this.Factory.CreateTrackRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
                 return repository.GetAll(t => t.AlbumId == album.Id && t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
@@ -94,7 +94,7 @@
         /// </returns>
         public ICollection<Album> GetAlbumsList()
         {
-            using (var repository = this.Factory.CreateAlbumRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.Artist);
             }
@@ -108,7 +108,7 @@
         /// </returns>
         public ICollection<Album> GetAlbumsWithoutPriceConfigured()
         {
-            using (var repository = this.Factory.CreateAlbumRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => !a.AlbumPrices.Any(), a => a.Artist);
             }
@@ -122,7 +122,7 @@
         /// </returns>
         public ICollection<Album> GetAlbumsWithPriceConfigured()
         {
-            using (var repository = this.Factory.CreateAlbumRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.AlbumPrices.Any(), a => a.Artist);
             }
@@ -138,7 +138,7 @@
         /// </returns>
         public ICollection<AlbumPrice> GetAlbumPrices(Album album, PriceLevel priceLevel)
         {
-            using (var repository = this.Factory.CreateAlbumPriceRepository())
+            using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.AlbumId == album.Id &&
@@ -154,7 +154,7 @@
         /// <returns>All <paramref name="album"/> prices>.</returns>
         public ICollection<AlbumPrice> GetAlbumPrices(Album album)
         {
-            using (var repository = this.Factory.CreateAlbumPriceRepository())
+            using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.AlbumId == album.Id,

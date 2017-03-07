@@ -39,7 +39,7 @@
         /// </returns>
         public Currency GetCurrencyByCode(int code)
         {
-            using (var repositry = this.Factory.CreateCurrencyRepository())
+            using (var repositry = this.Factory.GetCurrencyRepository())
             {
                 return repositry.GetAll(c => c.Code == code).FirstOrDefault();
             }
@@ -56,7 +56,7 @@
         /// </returns>
         public Currency GetCurrencyByName(string name)
         {
-            using (var repositry = this.Factory.CreateCurrencyRepository())
+            using (var repositry = this.Factory.GetCurrencyRepository())
             {
                 return repositry.GetAll(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             }
@@ -70,7 +70,7 @@
         /// </returns>
         public ICollection<Currency> GetCurrenciesList()
         {
-            using (var repositry = this.Factory.CreateCurrencyRepository())
+            using (var repositry = this.Factory.GetCurrencyRepository())
             {
                 return repositry.GetAll();
             }
@@ -88,7 +88,7 @@
         /// </returns>
         public bool CurrencyExists(string name)
         {
-            using (var repositry = this.Factory.CreateCurrencyRepository())
+            using (var repositry = this.Factory.GetCurrencyRepository())
             {
                 return repositry.GetAll(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
             }
@@ -106,7 +106,7 @@
         /// </returns>
         public bool CurrencyExists(int code)
         {
-            using (var repositry = this.Factory.CreateCurrencyRepository())
+            using (var repositry = this.Factory.GetCurrencyRepository())
             {
                 return repositry.GetAll(c => c.Code == code).Any();
             }
@@ -129,7 +129,7 @@
                 return false;
             }
 
-            using (var repositry = this.Factory.CreateCurrencyRepository())
+            using (var repositry = this.Factory.GetCurrencyRepository())
             {
                 return repositry.GetAll(c => c.Id == currency.Id ||
                                              c.ShortName.Equals(currency.ShortName.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
@@ -145,7 +145,7 @@
         /// </returns>
         public Currency GetCurrencyInfo(int id)
         {
-            using (var repositry = this.Factory.CreateCurrencyRepository())
+            using (var repositry = this.Factory.GetCurrencyRepository())
             {
                 return repositry.GetById(id);
             }

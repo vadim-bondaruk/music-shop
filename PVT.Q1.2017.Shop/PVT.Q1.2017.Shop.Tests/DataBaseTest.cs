@@ -59,7 +59,7 @@
             string trackName = "Hello";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(new Track { Name = trackName });
                 repository.SaveChanges();
@@ -76,7 +76,7 @@
             string artist3Name = "Artist 3";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreatetArtistRepository())
+            using (var repository = repositoryFactory.GetArtistRepository())
             {
                 repository.AddOrUpdate(new Artist { Name = artist1Name });
                 repository.AddOrUpdate(new Artist { Name = artist2Name });
@@ -95,7 +95,7 @@
             string album3Name = "Album 3";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateAlbumRepository())
+            using (var repository = repositoryFactory.GetAlbumRepository())
             {
                 repository.AddOrUpdate(new Album { Name = album1Name });
                 repository.AddOrUpdate(new Album { Name = album2Name });
@@ -112,7 +112,7 @@
             string trackName = "Super-puper track with duration";
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(new Track { Name = trackName });
                 repository.SaveChanges();
@@ -120,7 +120,7 @@
 
             var duration = new TimeSpan(0, 2, 46);
 
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 var track = repository.GetAll(t => t.Name == trackName).FirstOrDefault();
                 Assert.IsNotNull(track);
@@ -133,7 +133,7 @@
                 Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
             }
 
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 Assert.IsTrue(repository.GetAll(t => t.Duration == duration).Any());
             }
@@ -145,7 +145,7 @@
             var artist = new Artist { Name = "Sia" };
 
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreatetArtistRepository())
+            using (var repository = repositoryFactory.GetArtistRepository())
             {
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();
@@ -153,7 +153,7 @@
 
             var track1 = new Track { Name = "Unstoppable", ArtistId = artist.Id };
             var track2 = new Track { Name = "Alive", ArtistId = artist.Id };
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track1);
                 repository.AddOrUpdate(track2);
@@ -167,7 +167,7 @@
         public void TracksWithArtistsTest()
         {
             var repositoryFactory = _kernel.Get<IRepositoryFactory>();
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 Assert.IsTrue(repository.GetAll(t => t.ArtistId != null).Any());
             }
@@ -193,7 +193,7 @@
                 ArtistId = artistId
             };
 
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track);
                 repository.SaveChanges();
@@ -202,7 +202,7 @@
             Assert.IsTrue(track.Id > 0);
 
             int trackId = track.Id;
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 track = repository.GetById(trackId);
                 Assert.IsNotNull(track);
@@ -231,7 +231,7 @@
                 Artist = artist
             };
 
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track);
                 repository.SaveChanges();
@@ -240,7 +240,7 @@
             Assert.IsTrue(track.Id > 0);
 
             int trackId = track.Id;
-            using (var repository = repositoryFactory.CreateTrackRepository())
+            using (var repository = repositoryFactory.GetTrackRepository())
             {
                 track = repository.GetById(trackId);
                 Assert.IsNotNull(track);
@@ -255,7 +255,7 @@
         private Artist AddNewArtist(IRepositoryFactory factory)
         {
             var artist = new Artist { Name = "Super-puper Artist" };
-            using (var repository = factory.CreatetArtistRepository())
+            using (var repository = factory.GetArtistRepository())
             {
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();
@@ -266,7 +266,7 @@
         private Album AddNewAlbum(IRepositoryFactory factory, int artistId)
         {
             var album = new Album { Name = "Super-puper Album", ArtistId = artistId };
-            using (var repository = factory.CreateAlbumRepository())
+            using (var repository = factory.GetAlbumRepository())
             {
                 repository.AddOrUpdate(album);
                 repository.SaveChanges();

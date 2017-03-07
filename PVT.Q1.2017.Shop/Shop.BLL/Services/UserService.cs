@@ -35,7 +35,7 @@
         /// </returns>
         public User GetUserInfo(int id)
         {
-            using (var repository = this.Factory.CreateUserRepository())
+            using (var repository = this.Factory.GetUserRepository())
             {
                 return repository.GetById(id, u => u.PriceLevel, u => u.UserCurrency);
             }
@@ -52,7 +52,7 @@
         /// </returns>
         public ICollection<Feedback> GetUserFeedbacksList(User user)
         {
-            using (var repository = this.Factory.CreateFeedbackRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(f => f.UserId == user.Id, f => f.Track, f => f.User);
             }
@@ -69,7 +69,7 @@
         /// </returns>
         public ICollection<Vote> GetUserVotesList(User user)
         {
-            using (var repository = this.Factory.CreateVoteRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(v => v.UserId == user.Id, v => v.Track, v => v.User);
             }

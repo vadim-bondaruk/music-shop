@@ -41,7 +41,7 @@
         /// </returns>
         public Vote GetTrackVote(Track track, User user)
         {
-            using (var repository = this.Factory.CreateVoteRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(
                                          v => v.TrackId == track.Id && v.UserId == user.Id,
@@ -65,7 +65,7 @@
         /// </returns>
         public bool VoteExists(Track track, User user)
         {
-            using (var repository = this.Factory.CreateVoteRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(f => f.TrackId == track.Id && f.UserId == user.Id).Any();
             }
@@ -80,7 +80,7 @@
         /// </returns>
         public Vote GetVoteInfo(int id)
         {
-            using (var repository = this.Factory.CreateVoteRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetById(id, v => v.Track, v => v.User);
             }

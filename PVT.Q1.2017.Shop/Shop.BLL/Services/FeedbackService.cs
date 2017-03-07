@@ -41,7 +41,7 @@
         /// </returns>
         public Feedback GetTrackFeedback(Track track, User user)
         {
-            using (var repository = this.Factory.CreateFeedbackRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(
                                          f => f.TrackId == track.Id && f.UserId == user.Id,
@@ -65,7 +65,7 @@
         /// </returns>
         public bool FeedbackExists(Track track, User user)
         {
-            using (var repository = this.Factory.CreateFeedbackRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(f => f.TrackId == track.Id && f.UserId == user.Id).Any();
             }
@@ -80,7 +80,7 @@
         /// </returns>
         public Feedback GetFeedbackInfo(int id)
         {
-            using (var repository = this.Factory.CreateFeedbackRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetById(id, v => v.Track, v => v.User);
             }
