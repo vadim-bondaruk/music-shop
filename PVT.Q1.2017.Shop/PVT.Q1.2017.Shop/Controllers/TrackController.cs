@@ -11,11 +11,15 @@ namespace PVT.Q1._2017.Shop.Controllers
 {
     #region
 
+    using System;
+    using System.Text.RegularExpressions;
     using System.Web.Mvc;
 
     using global::Shop.Common.Models;
     using global::Shop.DAL.Repositories.Infrastruture;
     using global::Shop.Infrastructure;
+
+    using PVT.Q1._2017.Shop.ViewModels;
 
     #endregion
 
@@ -152,10 +156,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public virtual ActionResult AddNew()
         {
-            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
-            {
-                return this.View();
-            }
+            return this.View(new TrackViewModel());
         }
 
         /// <summary>
@@ -166,10 +167,9 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult AddNew(Track modelTrack)
+        public virtual ActionResult AddNew(TrackViewModel modelTrack)
         {
-            var s = modelTrack.Artist;
-            return null;
+         throw new NotImplementedException();
         }
     }
 }

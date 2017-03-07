@@ -1,28 +1,33 @@
 ﻿namespace PVT.Q1._2017.Shop.ViewModels
 {
-    using System;
+    #region using
 
     using global::Shop.Common.Models;
     using global::Shop.DAL.Context;
     using global::Shop.DAL.Repositories;
 
+    #endregion
+
     /// <summary>
+    /// 
     /// </summary>
     public class TrackViewModel
     {
         /// <summary>
+        /// 
         /// </summary>
         private readonly TrackViewModel _track;
 
         /// <summary>
+        /// 
         /// </summary>
         private Repository<Track> _repo;
 
         /// <summary>
-        ///     <para>
-        ///         Initializes a new instance of the <see cref="TrackViewModel" />
-        ///     </para>
-        ///     <para>class.</para>
+        /// <para>
+        /// Initializes a new instance of the <see cref="TrackViewModel" />
+        /// </para>
+        /// <para>class.</para>
         /// </summary>
         /// <param name="track">The track.</param>
         public TrackViewModel()
@@ -31,38 +36,18 @@
         }
 
         /// <summary>
-        ///     Gets or sets the album.
+        /// Gets or sets the album.
         /// </summary>
         public Album Album { get; set; }
 
         /// <summary>
-        ///     Gets or sets the artist.
+        /// Gets or sets the artist.
         /// </summary>
         public Artist Artist { get; set; }
 
         /// <summary>
-        ///     Gets or sets the duration.
+        /// Gets or sets the track.
         /// </summary>
-        public TimeSpan? Duration { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the genre.
-        /// </summary>
-        public Genre Genre { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the id.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the name.
-        /// </summary>
-        public string TrackName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the release date.
-        /// </summary>
-        public string ReleaseDate { get; set; }
+        public Track Track { get; set; }
     }
 }

@@ -5,29 +5,29 @@
     <div id="trackData">
         <ul>
             <li>
-                <input type="text" placeholder="Artist"/>
+                @Html.EditorFor(m => m.Artist.Name, new { htmlAttributes = new { placeholder = "Artist" }})
             </li>
 
             <li>
-                <input type="text" placeholder="Name" value=""/>
+                @Html.EditorFor(m => m.Track.Name, new { htmlAttributes = new { placeholder = "Name" } })
             </li>
 
             <li>
-                <input type="text" placeholder="Album"/>
+                @Html.EditorFor(m => m.Album.Name, new { htmlAttributes = new { placeholder = "Album" } })
             </li>
 
             <li>
-                <input type="text" placeholder="Genre"/>
+                @Html.EditorFor(m => m.Track.Genre.Name, new { htmlAttributes = new { placeholder = "Genre" } })
             </li>
 
             <li>
-                <input type="date" placeholder="Release date"/>
+                @Html.EditorFor(m => m.Track.ReleaseDate, new { htmlAttributes = new { placeholder = "Release Date" } })
             </li>
             <li>
-                <input type="time" placeholder="Duration"/>
+                @Html.EditorFor(m => m.Track.Duration, new { htmlAttributes = new { placeholder = "Duration" } })
             </li>
             <li>
-                <input type="text" placeholder="Price"/>
+                @Html.EditorFor(m => m.Artist.Name, new { htmlAttributes = new { placeholder = "Price" } })
             </li>
             <li class="cover-file">
                 <div class="mask">
