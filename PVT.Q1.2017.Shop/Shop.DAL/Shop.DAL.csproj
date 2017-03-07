@@ -63,30 +63,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201702282157423_initial.cs" />
-    <Compile Include="Migrations\201702282157423_initial.Designer.cs">
-      <DependentUpon>201702282157423_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703011516456_Updated.cs" />
-    <Compile Include="Migrations\201703011516456_Updated.Designer.cs">
-      <DependentUpon>201703011516456_Updated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703011610217_OneMoreMigration.cs" />
-    <Compile Include="Migrations\201703011610217_OneMoreMigration.Designer.cs">
-      <DependentUpon>201703011610217_OneMoreMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703022047186_AddedForignKeys.cs" />
-    <Compile Include="Migrations\201703022047186_AddedForignKeys.Designer.cs">
-      <DependentUpon>201703022047186_AddedForignKeys.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703041939123_UpdatedCurrency.cs" />
-    <Compile Include="Migrations\201703041939123_UpdatedCurrency.Designer.cs">
-      <DependentUpon>201703041939123_UpdatedCurrency.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703042132223_CurrencyRestictions.cs" />
-    <Compile Include="Migrations\201703042132223_CurrencyRestictions.Designer.cs">
-      <DependentUpon>201703042132223_CurrencyRestictions.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -143,26 +119,6 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702282157423_initial.resx">
-      <DependentUpon>201702282157423_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703011516456_Updated.resx">
-      <DependentUpon>201703011516456_Updated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703011610217_OneMoreMigration.resx">
-      <DependentUpon>201703011610217_OneMoreMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703022047186_AddedForignKeys.resx">
-      <DependentUpon>201703022047186_AddedForignKeys.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703041939123_UpdatedCurrency.resx">
-      <DependentUpon>201703041939123_UpdatedCurrency.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703042132223_CurrencyRestictions.resx">
-      <DependentUpon>201703042132223_CurrencyRestictions.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
