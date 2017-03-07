@@ -93,6 +93,11 @@
         /// </summary>
         public DbSet<Genre> Genres { get; set; }
 
+        /// <summary>
+        /// Gets or sets the carts.
+        /// </summary>
+        public DbSet<Cart> Carts { get; set; }
+
         #endregion //Properties
 
         #region Protected Methods

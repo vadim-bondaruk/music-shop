@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shop.Common.Models;
-using Shop.DAL.Repositories;
 using Shop.Infrastructure.Repositories;
 
 namespace PVT.Q1._2017.Shop.Tests

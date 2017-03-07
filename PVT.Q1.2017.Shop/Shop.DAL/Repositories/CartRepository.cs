@@ -1,18 +1,16 @@
-﻿namespace Shop.DAL.Repositories
+﻿using Shop.DAL.Repositories.Infrastruture;
+
+namespace Shop.DAL.Repositories
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Linq;
-    using System.Linq.Expressions;
     using Common.Models;
-    using Infrastructure.Repositories;
 
 
     /// <summary>
     /// Repository of User's Shop Cart
     /// </summary>
-    public class CartRepository : Repository<Cart>
+    public class CartRepository : Repository<Cart>, ICartRepository
     {
         #region Constructors
 
@@ -37,14 +35,12 @@
         /// <param name="trackId">Added Track ID</param> 
         protected void AddTrack(int cartId, int trackId)
         {
-            var cart = this.GetById(cartId);
-            var track = new TrackRepository(this.DbContext).GetById(trackId);
+            var cart = GetById(cartId);
+            var track = new TrackRepository(DbContext).GetById(trackId);
             if (track == null)
-            {
                 throw new Exception("Incorrect Track Id");
-            }
             cart.Tracks.Add(track);
-            this.AddOrUpdate(cart);
+            AddOrUpdate(cart);
         }
 
         /// <summary> 
@@ -55,9 +51,7 @@
         protected void AddTrack(int cartId, int[] trackIds)
         {
             foreach (var trackId in trackIds)
-            {
-                this.AddTrack(cartId, trackId);
-            }
+                AddTrack(cartId, trackId);
         }
 
         /// <summary> 
@@ -67,14 +61,12 @@
         /// <param name="trackId">Removed Track ID</param> 
         protected void RemoveTrack(int cartId, int trackId)
         {
-            var cart = this.GetById(cartId);
-            var track = new TrackRepository(this.DbContext).GetById(trackId);
+            var cart = GetById(cartId);
+            var track = new TrackRepository(DbContext).GetById(trackId);
             if (track == null)
-            {
                 throw new Exception("Incorrect Track Id");
-            }
             cart.Tracks.Remove(track);
-            this.AddOrUpdate(cart);
+            AddOrUpdate(cart);
         }
 
         /// <summary> 
@@ -85,9 +77,7 @@
         protected void RemoveTrack(int cartId, int[] trackIds)
         {
             foreach (var trackId in trackIds)
-            {
-                this.RemoveTrack(cartId, trackId);
-            }
+                RemoveTrack(cartId, trackId);
         }
 
         #endregion //Protected Methods
