@@ -1,8 +1,9 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
+﻿using Shop.DAL.Infrastruture;
+
+namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
     using System.Web.Mvc;
     using global::Shop.Common.Models;
-    using global::Shop.DAL.Repositories.Infrastruture;
     using global::Shop.Infrastructure;
     using global::Shop.Infrastructure.Services;
 

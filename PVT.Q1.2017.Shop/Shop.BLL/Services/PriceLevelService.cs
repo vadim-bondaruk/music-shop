@@ -1,10 +1,9 @@
-﻿namespace Shop.BLL.Services
+﻿using Shop.DAL.Infrastruture;
+
+namespace Shop.BLL.Services
 {
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
     using Infrastructure;
-    using Shop.Infrastructure;
-    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The price level service.

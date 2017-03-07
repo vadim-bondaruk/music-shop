@@ -1,12 +1,11 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The price level service
     /// </summary>
-    public interface IPriceLevelService : IService<PriceLevel>
+    public interface IPriceLevelService
     {
         /// <summary>
         /// Adds the price level with the specified <paramref name="name"/>

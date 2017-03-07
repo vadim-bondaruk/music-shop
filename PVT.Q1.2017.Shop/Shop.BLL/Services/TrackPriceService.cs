@@ -1,19 +1,18 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System.Linq;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
-    using Helpers;
     using Infrastructure;
-    using Shop.Infrastructure;
-    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The track price service.
     /// </summary>
-    public class TrackPriceService : Service<ITrackPriceRepository, TrackPrice>, ITrackPriceService
+    public class TrackPriceService : BaseService, ITrackPriceService
     {
         #region Constructors
+
+        public TrackPriceService(IRepositoryFactory factory) : base(factory)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackPriceService"/> class.
@@ -24,9 +23,7 @@
         /// <param name="validator">
         /// The validator.
         /// </param>
-        public TrackPriceService(IFactory factory, IValidator<TrackPrice> validator) : base(factory, validator)
-        {
-        }
+        
 
         #endregion //Constructors
 
@@ -49,9 +46,7 @@
         /// </returns>
         public TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckPriceLevelForNull(priceLevel);
-            ValidatorHelper.CheckCurrencyForNull(currency);
+            var _trackRepo = _factory.GetAlbumPriceRepository();
 
             using (var repository = this.CreateRepository())
             {

@@ -1,11 +1,12 @@
-﻿namespace PVT.Q1._2017.Shop.Tests
+﻿using Shop.DAL.Infrastruture;
+
+namespace PVT.Q1._2017.Shop.Tests
 {
     using System.Linq;
     using global::Shop.BLL;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.DAL.Repositories.Infrastruture;
     using global::Shop.Infrastructure;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Ninject;

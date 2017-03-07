@@ -1,10 +1,10 @@
-﻿namespace PVT.Q1._2017.Shop.Controllers
+﻿using Shop.DAL.Infrastruture;
+
+namespace PVT.Q1._2017.Shop.Controllers
 {
     #region
 
     using System.Web.Mvc;
-
-    using global::Shop.DAL.Repositories.Infrastruture;
     using global::Shop.Infrastructure;
 
     #endregion

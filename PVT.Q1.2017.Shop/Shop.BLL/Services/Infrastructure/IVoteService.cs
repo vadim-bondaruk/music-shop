@@ -1,12 +1,11 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The vote service.
     /// </summary>
-    public interface IVoteService : IService<Vote>
+    public interface IVoteService
     {
         /// <summary>
         /// Adds the <paramref name="user"/> mark for the <paramref name="track"/>.

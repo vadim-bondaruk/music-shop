@@ -1,16 +1,13 @@
-﻿namespace Shop.BLL.Services
+﻿using Shop.DAL.Infrastruture;
+
+namespace Shop.BLL.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
-    using Helpers;
     using Infrastructure;
-    using Shop.Infrastructure;
     using Shop.Infrastructure.Models;
-    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The track service
