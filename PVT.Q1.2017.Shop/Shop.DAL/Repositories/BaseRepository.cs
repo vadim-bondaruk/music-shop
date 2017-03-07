@@ -1,7 +1,4 @@
-﻿using System.Data.Common;
-using System.Data.SqlClient;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -43,7 +40,7 @@ namespace Shop.DAL.Repositories
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseBaseRepository{TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The Db context.
