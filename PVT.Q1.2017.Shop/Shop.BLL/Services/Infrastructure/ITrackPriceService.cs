@@ -24,22 +24,6 @@
         TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency);
 
         /// <summary>
-        /// Adds the <paramref name="track"/> price.
-        /// </summary>
-        /// <param name="track">
-        /// The track.</param>
-        /// <param name="price">
-        /// The <paramref name="track"/> price.
-        /// </param>
-        /// <param name="currency">
-        /// The currency.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level.
-        /// </param>
-        void AddTrackPrice(Track track, decimal price, Currency currency, PriceLevel priceLevel);
-
-        /// <summary>
         /// Returns the track price with the specified <paramref name="id"/>
         /// </summary>
         /// <param name="id">The track price id.</param>

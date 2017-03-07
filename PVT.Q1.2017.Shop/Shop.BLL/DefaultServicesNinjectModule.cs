@@ -33,11 +33,9 @@
             Bind<IArtistService>().To<ArtistService>();
             Bind<IAlbumService>().To<AlbumService>();
 
-            Bind<IGenreService>().To<GenreService>();
             Bind<IVoteService>().To<VoteService>();
             Bind<IFeedbackService>().To<FeedbackService>();
 
-            Bind<IPriceLevelService>().To<PriceLevelService>();
             Bind<ITrackPriceService>().To<TrackPriceService>();
             Bind<IAlbumPriceService>().To<AlbumPriceService>();
 

@@ -8,20 +8,6 @@
     public interface IVoteService
     {
         /// <summary>
-        /// Adds the <paramref name="user"/> mark for the <paramref name="track"/>.
-        /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <param name="mark">
-        /// The mark.
-        /// </param>
-        /// <param name="user">
-        /// The user.
-        /// </param>
-        void AddVote(Track track, Mark mark, User user);
-
-        /// <summary>
         /// Returns the vote which have made the specified <paramref name="user"/> for the <paramref name="track"/>.
         /// </summary>
         /// <param name="track">
