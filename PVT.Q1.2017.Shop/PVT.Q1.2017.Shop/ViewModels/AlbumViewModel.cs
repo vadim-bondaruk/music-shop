@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.Shop.Views.ViewModels
+﻿namespace PVT.Q1._2017.Shop.ViewModels
 {
     /// <summary>
     /// </summary>

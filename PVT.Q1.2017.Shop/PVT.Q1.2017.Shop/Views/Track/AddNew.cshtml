@@ -1,4 +1,4 @@
-﻿@model PVT.Q1._2017.Shop.Models.TrackViewModel
+﻿@model PVT.Q1._2017.Shop.ViewModels.TrackViewModel
 
 @using (Html.BeginForm("AddNew", "Track", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -9,7 +9,7 @@
             </li>
 
             <li>
-                <input type="text" placeholder="Name" value=""/>
+                <input type="text" placeholder="Name" value=@Model.Artist/>
             </li>
 
             <li>

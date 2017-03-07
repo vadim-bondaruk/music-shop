@@ -87,3 +87,4 @@ F:\Dropbox\Git\PVT.Q1.2017.Shop\Shop.Security\obj\Debug\Shop.Security.csproj.Gen
 F:\Dropbox\Git\PVT.Q1.2017.Shop\Shop.Security\obj\Debug\Shop.Security.dll
 F:\Dropbox\Git\PVT.Q1.2017.Shop\Shop.Security\obj\Debug\Shop.Security.pdb
 F:\Dropbox\Git\PVT.Q1.2017.Shop\Shop.Security\obj\Debug\Shop.Security.csprojResolveAssemblyReference.cache
+F:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\Shop.Security\obj\Debug\Shop.Security.csprojResolveAssemblyReference.cache

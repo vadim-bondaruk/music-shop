@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.Shop.Models
+﻿namespace PVT.Q1._2017.Shop.ViewModels
 {
     using System;
 
