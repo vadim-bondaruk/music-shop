@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The currency service.
     /// </summary>
-    public interface ICurrencyService : IService<Currency>
+    public interface ICurrencyService
     {
         /// <summary>
         /// Adds the currency into Db.

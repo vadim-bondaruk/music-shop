@@ -1,11 +1,10 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// </summary>
-    public interface ITrackPriceService : IService<TrackPrice>
+    public interface ITrackPriceService
     {
         /// <summary>
         /// Returns the track price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.

@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The album service.
     /// </summary>
-    public interface IAlbumService : IService<Album>
+    public interface IAlbumService
     {
         /// <summary>
         /// Adds a new album with the specified <paramref name="name"/>.

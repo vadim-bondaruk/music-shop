@@ -1,12 +1,11 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The genre service.
     /// </summary>
-    public interface IGenreService : IService<Genre>
+    public interface IGenreService
     {
         /// <summary>
         /// Adds the genre with the specified <paramref name="name"/>

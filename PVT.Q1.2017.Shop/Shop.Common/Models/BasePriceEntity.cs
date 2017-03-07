@@ -2,6 +2,8 @@
 {
     using Infrastructure.Models;
 
+    // remove!!! using BaseEntity
+
     /// <summary>
     /// The base price entity.
     /// </summary>

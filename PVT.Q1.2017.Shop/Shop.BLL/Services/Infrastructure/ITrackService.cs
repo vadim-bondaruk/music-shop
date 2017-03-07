@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The track service
     /// </summary>
-    public interface ITrackService : IService<Track>
+    public interface ITrackService
     {
         /// <summary>
         /// Returns all registered tracks.

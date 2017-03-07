@@ -1,19 +1,18 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System.Linq;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
-    using Helpers;
     using Infrastructure;
-    using Shop.Infrastructure;
-    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The album price service.
     /// </summary>
-    public class AlbumPriceService : Service<IAlbumPriceRepository, AlbumPrice>, IAlbumPriceService
+    public class AlbumPriceService : BaseService, IAlbumPriceService
     {
         #region Constructors
+
+        public AlbumPriceService(IRepositoryFactory factory) : base(factory)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AlbumPriceService"/> class.
@@ -24,9 +23,7 @@
         /// <param name="validator">
         /// The validator.
         /// </param>
-        public AlbumPriceService(IFactory factory, IValidator<AlbumPrice> validator) : base(factory, validator)
-        {
-        }
+
 
         #endregion //Constructors
 
@@ -47,11 +44,7 @@
         /// </returns>
         public AlbumPrice GeAlbumPrice(Album album, PriceLevel priceLevel, Currency currency)
         {
-            ValidatorHelper.CheckAlbumForNull(album);
-            ValidatorHelper.CheckPriceLevelForNull(priceLevel);
-            ValidatorHelper.CheckCurrencyForNull(currency);
-
-            using (var repository = this.CreateRepository())
+            using (var repository = _factory.CreateNeededRepository)
             {
                 return repository.GetAll(
                                          p => p.AlbumId == album.Id &&

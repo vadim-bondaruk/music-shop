@@ -1,12 +1,9 @@
-﻿namespace Shop.BLL.Services
+﻿using Shop.DAL.Infrastruture;
+
+namespace Shop.BLL.Services
 {
-    using System.Linq;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
-    using Helpers;
     using Infrastructure;
-    using Shop.Infrastructure;
-    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The vote service.

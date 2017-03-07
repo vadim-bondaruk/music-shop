@@ -1,14 +1,11 @@
-﻿namespace Shop.BLL.Services
+﻿using Shop.DAL.Infrastruture;
+
+namespace Shop.BLL.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
     using Infrastructure;
-    using Shop.Infrastructure;
-    using Shop.Infrastructure.Validators;
-    using Validators;
 
     /// <summary>
     /// The currency service.

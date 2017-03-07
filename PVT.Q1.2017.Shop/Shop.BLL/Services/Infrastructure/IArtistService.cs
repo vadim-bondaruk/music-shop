@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The artist service.
     /// </summary>
-    public interface IArtistService : IService<Artist>
+    public interface IArtistService
     {
         /// <summary>
         /// Returns the artist with the specified <paramref name="id"/>.

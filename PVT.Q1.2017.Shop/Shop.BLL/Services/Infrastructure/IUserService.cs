@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// The user service (have to be extended by UserMenagement team).
     /// </summary>
-    public interface IUserService : IService<User>
+    public interface IUserService
     {
         /// <summary>
         /// Returns the user with the specified <paramref name="id"/>.
