@@ -62,6 +62,11 @@ namespace Shop.Common.Models
         /// </summary>
         public virtual ICollection<TrackPrice> TrackPrices { get; set; }
 
+        /// <summary>
+        /// Fill header
+        /// </summary>
+        public string ShortName { get; set; }
+
         #endregion //Navigation Properties
     }
 }

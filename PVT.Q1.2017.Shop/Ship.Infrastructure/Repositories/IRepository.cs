@@ -1,23 +1,18 @@
 ﻿namespace Shop.Infrastructure.Repositories
 {
-    #region
-
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-
-    using Shop.Infrastructure.Models;
-
-    #endregion
+    using Models;
 
     /// <summary>
-    ///     Common Repository interface.
+    /// Common Repository interface.
     /// </summary>
     /// <typeparam name="TEntity">A model.</typeparam>
     public interface IRepository<TEntity> : IDisposable where TEntity : BaseEntity, new()
     {
         /// <summary>
-        ///     Adds or updates the specified <paramref name="model" /> .
+        /// Tries to find an entity by the specified <paramref name="id"/>
         /// </summary>
         /// <param name="id">The key.</param>
         /// <param name="includes">The additional include if needed.</param>
@@ -27,7 +22,7 @@
         TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
-        ///     Deletes a model with the specified <paramref name="id" /> .
+        /// Returns all entities from the repository.
         /// </summary>
         /// <param name="includes">The additional include if needed.</param>
         /// <returns>
@@ -36,7 +31,7 @@
         ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
-        ///     Deletes the <paramref name="model" /> from the repository.
+        /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="includes">The additional include if needed.</param>
@@ -44,25 +39,19 @@
         ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
-        ///     Returns all entities from the repository.
+        /// Adds or updates the specified <paramref name="model"/>.
         /// </summary>
-        /// <returns>
-        ///     All entities from the repository.
-        /// </returns>
-        ICollection<TEntity> GetAll();
+        /// <param name="model">A model to add or update.</param>
+        void AddOrUpdate(TEntity model);
 
         /// <summary>
-        ///     Tries to find entities from the repository using the specified
-        ///     <paramref name="filter" /> .
+        /// Deletes a model with the specified <paramref name="id"/>.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <returns>
-        ///     Entities which corespond to
-        /// </returns>
-        ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter);
+        /// <param name="id">The model key.</param>
+        void Delete(int id);
 
         /// <summary>
-        ///     Tries to find an entity by the specified <paramref name="id" />
+        /// Deletes the <paramref name="model"/> from the repository.
         /// </summary>
         /// <param name="model">The model to delete.</param>
         void Delete(TEntity model);

@@ -224,16 +224,6 @@
         {
             if (!_disposed)
             {
-                try
-                {
-                    // to ensure that the changes are not lost
-                    this.SaveChanges();
-                }
-                catch
-                {
-                    // no error in Dispose method!!!
-                }
-
                 if (disposing)
                 {
                     this._dbContext?.Dispose();

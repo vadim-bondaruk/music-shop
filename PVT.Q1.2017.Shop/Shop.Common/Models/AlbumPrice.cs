@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AlbumPrice.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
+// <copyright file="AlbumPrice.cs" company="PVT Q1 2017">
+//   All rights reserved
 // </copyright>
 // <summary>
 //   The album price.
@@ -10,7 +10,7 @@
 namespace Shop.Common.Models
 {
     /// <summary>
-    ///     The album price.
+    /// The album price.
     /// </summary>
     public class AlbumPrice : BasePriceEntity
     {
