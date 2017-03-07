@@ -11,13 +11,30 @@ namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
+    using Infrastructure.Models;
 
     /// <summary>
     /// The track.
     /// </summary>
-    public class Track : BaseNamedEntity
+    public class Track : BaseEntity
     {
         #region Properties
+        
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the album release date.
+        /// </summary>
+        public DateTime? ReleaseDate
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the image.

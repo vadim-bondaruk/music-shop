@@ -10,13 +10,19 @@
 namespace Shop.Common.Models
 {
     using System.Collections.Generic;
-    
+    using Infrastructure.Models;
+
     /// <summary>
     /// The currency model.
     /// </summary>
-    public class Currency : BaseNamedEntity
+    public class Currency : BaseEntity
     {
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// Full name of currency
