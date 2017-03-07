@@ -19,22 +19,16 @@ namespace Shop.Common.Models
     public class Track : BaseEntity
     {
         #region Properties
-        
+
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        public string Name
-        {
-            get; set;
-        }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the album release date.
+        /// Gets or sets the track release date.
         /// </summary>
-        public DateTime? ReleaseDate
-        {
-            get; set;
-        }
+        public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
         /// Gets or sets the image.
@@ -75,11 +69,6 @@ namespace Shop.Common.Models
         #region Navigation Properties
 
         /// <summary>
-        /// Gets or sets the album.
-        /// </summary>
-        public virtual Album Album { get; set; }
-
-        /// <summary>
         /// Gets or sets the artist.
         /// </summary>
         public virtual Artist Artist { get; set; }
@@ -88,6 +77,11 @@ namespace Shop.Common.Models
         /// Gets or sets the genre.
         /// </summary>
         public virtual Genre Genre { get; set; }
+
+        /// <summary>
+        /// Gets or sets the albums which contain the current track.
+        /// </summary>
+        public virtual ICollection<Album> Albums { get; set; }
 
         /// <summary>
         /// Gets or sets the track prices.

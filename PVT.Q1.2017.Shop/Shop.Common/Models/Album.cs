@@ -41,6 +41,11 @@
             get; set;
         }
 
+        /// <summary>
+        /// The track which the current album contains
+        /// </summary>
+        public int? TrackId { get; set; }
+
         #endregion //Foreign Keys
 
         #region Navigation Properties

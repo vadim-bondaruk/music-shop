@@ -67,6 +67,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201703072112058_ManyToManyRelation.cs" />
+    <Compile Include="Migrations\201703072112058_ManyToManyRelation.Designer.cs">
+      <DependentUpon>201703072112058_ManyToManyRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703072114341_gdfgdf.cs" />
+    <Compile Include="Migrations\201703072114341_gdfgdf.Designer.cs">
+      <DependentUpon>201703072114341_gdfgdf.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -125,7 +133,14 @@
       <Name>Shop.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703072112058_ManyToManyRelation.resx">
+      <DependentUpon>201703072112058_ManyToManyRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703072114341_gdfgdf.resx">
+      <DependentUpon>201703072114341_gdfgdf.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -54,7 +54,7 @@
         /// </returns>
         public virtual ActionResult AlbumList()
         {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
+            using (var repository = this._repositoryFactory.CreateAlbumRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -67,7 +67,7 @@
         /// </returns>
         public virtual ActionResult AlbumList(int artistId)
         {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
+            using (var repository = this._repositoryFactory.CreateAlbumRepository())
             {
                 return this.View(repository.GetAll(a => a.ArtistId.Equals(artistId)));
             }
@@ -80,7 +80,7 @@
         /// </returns>
         public virtual ActionResult AlbumTracks(int id)
         {
-            using (var repository = this._repositoryFactory.GetTrackRepository())
+            using (var repository = this._repositoryFactory.CreateTrackRepository())
             {
                 return this.View(repository.GetAll(t => t.AlbumId.Equals(id)));
             }
@@ -92,7 +92,7 @@
         /// </returns>
         public virtual ActionResult ArtistList()
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
+            using (var repository = this._repositoryFactory.CreatetArtistRepository())
             {
                 return this.View(repository.GetAll());
             }

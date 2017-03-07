@@ -50,7 +50,7 @@
         /// </returns>
         public ActionResult Index()
         {
-            using (var repository = this._repositoryFactory.GetTrackRepository())
+            using (var repository = this._repositoryFactory.CreateTrackRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -77,7 +77,7 @@
         {
             if (this.ModelState.IsValid)
             {
-                using (var repository = this._repositoryFactory.GetTrackRepository())
+                using (var repository = this._repositoryFactory.CreateTrackRepository())
                 {
                     repository.AddOrUpdate(newTrack);
                 }

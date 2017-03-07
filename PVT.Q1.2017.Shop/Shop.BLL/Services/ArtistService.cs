@@ -36,7 +36,7 @@
         /// </returns>
         public Artist GetArtistInfo(int id)
         {
-            using (var repository = this.Factory.GetArtistRepository())
+            using (var repository = this.Factory.CreatetArtistRepository())
             {
                 return repository.GetById(id);
             }
@@ -50,7 +50,7 @@
         /// </returns>
         public ICollection<Artist> GetAlbumsList()
         {
-            using (var repository = this.Factory.GetArtistRepository())
+            using (var repository = this.Factory.CreatetArtistRepository())
             {
                 return repository.GetAll();
             }
@@ -65,7 +65,7 @@
         /// </returns>
         public ICollection<Album> GetAlbumsList(Artist artist)
         {
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = this.Factory.CreateAlbumRepository())
             {
                 return repository.GetAll(a => a.ArtistId == artist.Id, a => a.Artist);
             }
@@ -80,9 +80,9 @@
         /// </returns>
         public ICollection<Track> GetTracksList(Artist artist)
         {
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = this.Factory.CreateTrackRepository())
             {
-                return repository.GetAll(t => t.ArtistId == artist.Id, TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.ArtistId == artist.Id, t => t.Genre);
             }
         }
 
@@ -95,9 +95,9 @@
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured(Artist artist)
         {
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = this.Factory.CreateTrackRepository())
             {
-                return repository.GetAll(t => t.ArtistId == artist.Id && !t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.ArtistId == artist.Id && !t.TrackPrices.Any(), t => t.Genre);
             }
         }
 
@@ -110,9 +110,9 @@
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured(Artist artist)
         {
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = this.Factory.CreateTrackRepository())
             {
-                return repository.GetAll(t => t.ArtistId == artist.Id && t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.ArtistId == artist.Id && t.TrackPrices.Any(), t => t.Genre);
             }
         }
 
@@ -125,7 +125,7 @@
         /// </returns>
         public ICollection<Album> GetAlbumsWithoutPriceConfigured(Artist artist)
         {
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = this.Factory.CreateAlbumRepository())
             {
                 return repository.GetAll(a => a.ArtistId == artist.Id && !a.AlbumPrices.Any(), a => a.Artist);
             }
@@ -140,7 +140,7 @@
         /// </returns>
         public ICollection<Album> GetAlbumsWithPriceConfigured(Artist artist)
         {
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = this.Factory.CreateAlbumRepository())
             {
                 return repository.GetAll(a => a.ArtistId == artist.Id && a.AlbumPrices.Any(), a => a.Artist);
             }
