@@ -2,11 +2,12 @@
 {
     using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The track repository.
     /// </summary>
-    public class TrackRepository : Repository<Track>
+    public class TrackRepository : Repository<Track>, ITrackRepository
     {
         #region Constructors
 

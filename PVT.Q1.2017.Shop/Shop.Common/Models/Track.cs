@@ -54,7 +54,7 @@ namespace Shop.Common.Models
         public int? GenreId { get; set; }
 
         #endregion //Foreign Keys
-
+        
         #region Navigation Properties
 
         /// <summary>

@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Feedback.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="Feedback.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the Feedback type.
+//   The feedback.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 

@@ -1,16 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Currency.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="Currency.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
-//   Defines the Currency type.
+//   The currency.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.Common.Models
 {
     using System.Collections.Generic;
-
+    
     /// <summary>
     /// The currency model.
     /// </summary>
@@ -61,6 +61,11 @@ namespace Shop.Common.Models
         /// Get all track prices
         /// </summary>
         public virtual ICollection<TrackPrice> TrackPrices { get; set; }
+
+        /// <summary>
+        /// Fill header
+        /// </summary>
+        public string ShortName { get; set; }
 
         #endregion //Navigation Properties
     }

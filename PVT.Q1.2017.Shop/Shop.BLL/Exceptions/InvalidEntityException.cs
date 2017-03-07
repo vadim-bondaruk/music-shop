@@ -5,31 +5,32 @@
     using System.Security.Permissions;
 
     /// <summary>
+    /// The invalid entity exception.
     /// </summary>
     [Serializable]
-    public class InvalidTrackException : Exception
+    public class InvalidEntityException : Exception
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="InvalidEntityException"/> class.
         /// </summary>
-        public InvalidTrackException()
+        public InvalidEntityException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="InvalidEntityException"/> class.
         /// </summary>
         /// <param name="message">
         /// The message.
         /// </param>
-        public InvalidTrackException(string message) : base(message)
+        public InvalidEntityException(string message) : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="InvalidEntityException"/> class.
         /// </summary>
         /// <param name="message">
         /// The message.
@@ -37,12 +38,12 @@
         /// <param name="inner">
         /// The inner exception.
         /// </param>
-        public InvalidTrackException(string message, Exception inner) : base(message, inner)
+        public InvalidEntityException(string message, Exception inner) : base(message, inner)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidTrackException"/> class.
+        /// Initializes a new instance of the <see cref="InvalidEntityException"/> class.
         /// </summary>
         /// <param name="info">
         /// The info.
@@ -51,7 +52,7 @@
         /// The context.
         /// </param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected InvalidTrackException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected InvalidEntityException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 
