@@ -61,13 +61,5 @@
         /// Saves all changes.
         /// </summary>
         void SaveChanges();
-
-        /// <summary>
-        /// Saves all changes using the specified <paramref name="transaction"/>.
-        /// </summary>
-        /// <param name="transaction">
-        /// The transaction.
-        /// </param>
-        void SaveChanges(DbTransaction transaction);
     }
 }

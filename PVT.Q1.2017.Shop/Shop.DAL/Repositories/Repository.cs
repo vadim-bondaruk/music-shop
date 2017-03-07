@@ -196,15 +196,6 @@ namespace Shop.DAL.Repositories
             }
         }
 
-        /// <summary>
-        /// Saves all changes.
-        /// </summary>
-        public void SaveChanges(DbTransaction transaction)
-        {
-            this._dbContext.Database.UseTransaction(transaction);
-            this.SaveChanges();
-        }
-
         #endregion //IRepository<TEntity> Members
 
         #region IDisposable Pattern
