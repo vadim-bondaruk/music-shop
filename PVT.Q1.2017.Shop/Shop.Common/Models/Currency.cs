@@ -20,9 +20,9 @@ namespace Shop.Common.Models
         #region Properties
 
         /// <summary>
-        /// Gets or sets the name.
+        /// ISO 4217 litteral code of currency
         /// </summary>
-        public string Name { get; set; }
+        public string ShortName { get; set; }
 
         /// <summary>
         /// Full name of currency
@@ -30,7 +30,7 @@ namespace Shop.Common.Models
         public string FullName { get; set; }
 
         /// <summary>
-        /// ISO 4217 code of currency 
+        /// ISO 4217 numeric code of currency
         /// </summary>
         public int Code { get; set; }
 
@@ -67,11 +67,6 @@ namespace Shop.Common.Models
         /// Get all track prices
         /// </summary>
         public virtual ICollection<TrackPrice> TrackPrices { get; set; }
-
-        /// <summary>
-        /// Fill header
-        /// </summary>
-        public string ShortName { get; set; }
 
         #endregion //Navigation Properties
     }
