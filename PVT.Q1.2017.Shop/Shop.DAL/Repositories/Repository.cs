@@ -1,4 +1,7 @@
-﻿namespace Shop.DAL.Repositories
+﻿using System.Data.Common;
+using System.Data.SqlClient;
+
+namespace Shop.DAL.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -191,6 +194,15 @@
                 this._dbContext.SaveChanges();
                 this._stateChanged = false;
             }
+        }
+
+        /// <summary>
+        /// Saves all changes.
+        /// </summary>
+        public void SaveChanges(DbTransaction transaction)
+        {
+            this._dbContext.Database.UseTransaction(transaction);
+            this.SaveChanges();
         }
 
         #endregion //IRepository<TEntity> Members

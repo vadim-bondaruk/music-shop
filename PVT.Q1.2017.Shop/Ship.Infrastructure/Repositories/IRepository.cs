@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Common;
     using System.Linq.Expressions;
     using Models;
 
@@ -60,5 +61,13 @@
         /// Saves all changes.
         /// </summary>
         void SaveChanges();
+
+        /// <summary>
+        /// Saves all changes using the specified <paramref name="transaction"/>.
+        /// </summary>
+        /// <param name="transaction">
+        /// The transaction.
+        /// </param>
+        void SaveChanges(DbTransaction transaction);
     }
 }
