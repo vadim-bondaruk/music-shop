@@ -1,11 +1,9 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
+﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
     using System.Web.Mvc;
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Infrastructure;
-    using global::Shop.Infrastructure.Services;
+    using global::Shop.DAL.Infrastruture;
 
     /// <summary>
     /// The track controller
@@ -18,12 +16,12 @@ namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
         /// <summary>
         /// The tracks service.
         /// </summary>
-        private readonly IService<Track> _trackService;
+        private readonly ITrackService _trackService;
 
         /// <summary>
         /// The repository factory.
         /// </summary>
-        private readonly IFactory _repositoryFactory;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         #endregion //Fields
 
@@ -36,7 +34,7 @@ namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
         /// The track service.
         /// </param>
         /// <param name="repositoryFactory">The repository factory.</param>
-        public TrackController(IService<Track> trackService, IFactory repositoryFactory)
+        public TrackController(ITrackService trackService, IRepositoryFactory repositoryFactory)
         {
             this._trackService = trackService;
             this._repositoryFactory = repositoryFactory;
@@ -52,7 +50,7 @@ namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
         /// </returns>
         public ActionResult Index()
         {
-            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
+            using (var repository = this._repositoryFactory.GetTrackRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -77,9 +75,13 @@ namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult NewTrack(Track newTrack)
         {
-            if (this.ModelState.IsValid && this._trackService.IsValid(newTrack))
+            if (this.ModelState.IsValid)
             {
-                this._trackService.Register(newTrack);
+                using (var repository = this._repositoryFactory.GetTrackRepository())
+                {
+                    repository.AddOrUpdate(newTrack);
+                }
+
                 return this.RedirectToAction("Index");
             }
 
