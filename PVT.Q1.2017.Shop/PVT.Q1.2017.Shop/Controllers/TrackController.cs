@@ -158,6 +158,13 @@ namespace PVT.Q1._2017.Shop.Controllers
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="modelTrack">
+        /// The model track.
+        /// </param>
+        /// <returns>
+        /// </returns>
         [HttpPost]
         public virtual ActionResult AddNew(Track modelTrack)
         {

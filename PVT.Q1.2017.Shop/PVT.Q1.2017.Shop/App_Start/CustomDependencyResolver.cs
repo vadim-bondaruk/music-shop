@@ -44,12 +44,11 @@ namespace PVT.Q1._2017.Shop
         }
 
         /// <summary>
-        /// The begin scope.
         /// </summary>
         /// <returns>
-        /// The <see cref="IDependencyScope"/>.
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// *****
         /// </exception>
         public IDependencyScope BeginScope()
         {
@@ -57,9 +56,9 @@ namespace PVT.Q1._2017.Shop
         }
 
         /// <summary>
-        /// The dispose.
         /// </summary>
         /// <exception cref="NotImplementedException">
+        /// *****
         /// </exception>
         public void Dispose()
         {
