@@ -1,24 +1,25 @@
 ﻿namespace Shop.DAL.Migrations.Configurations
 {
-    using System.Data.Entity.ModelConfiguration;
-    using Common.Models;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.ModelConfiguration;
+
+    using Shop.Common.Models;
 
     /// <summary>
-    /// The <see cref="PriceLevel"/> configuration.
+    ///     The <see cref="PriceLevel" /> configuration.
     /// </summary>
-    public class PriceLevelConfiguration : EntityTypeConfiguration<PriceLevel>    
+    public class PriceLevelConfiguration : EntityTypeConfiguration<PriceLevel>
     {
         /// <summary>
-        /// C'tor
+        ///     C'tor
         /// </summary>
         public PriceLevelConfiguration()
         {
-            HasKey(t => t.Id);
-            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-         
-            ToTable("tbPriceLevels");
+            this.HasKey(t => t.Id);
+            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
+
+            this.ToTable("tbPriceLevels");
         }
     }
 }

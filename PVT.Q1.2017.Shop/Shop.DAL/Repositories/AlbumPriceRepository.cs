@@ -9,18 +9,17 @@
 
     using Shop.Common.Models;
     using Shop.DAL.Repositories.Infrastruture;
-    using Shop.Infrastructure.Models;
 
     #endregion
 
     /// <summary>
-    /// The album price repository
+    ///     The album price repository
     /// </summary>
     public class AlbumPriceRepository : Repository<AlbumPrice>, IAlbumPriceRepository
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// <see cref="AlbumPriceRepository" /> class.
+        ///     Initializes a new instance of the
+        ///     <see cref="AlbumPriceRepository" /> class.
         /// </summary>
         /// <param name="dbContext">The db context.</param>
         public AlbumPriceRepository(DbContext dbContext)
@@ -33,6 +32,7 @@
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<AlbumPrice> GetAll()
         {
@@ -42,21 +42,20 @@
         /// <summary>
         /// </summary>
         /// <param name="filter">
-        /// The filter.
+        ///     The filter.
         /// </param>
         /// <param name="includes">
-        /// The includes.
+        ///     The includes.
         /// </param>
         /// <returns>
         /// </returns>
-        public new ICollection<AlbumPrice> GetAll(
-            Expression<Func<AlbumPrice, bool>> filter)
+        public new ICollection<AlbumPrice> GetAll(Expression<Func<AlbumPrice, bool>> filter)
         {
             return null;
         }
 
         /// <summary>
-        /// Adds the specified <paramref name="albumPrice" /> into Db.
+        ///     Adds the specified <paramref name="albumPrice" /> into Db.
         /// </summary>
         /// <param name="albumPrice">The album price to add.</param>
         protected override void Add(AlbumPrice albumPrice)

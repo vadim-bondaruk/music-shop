@@ -1,8 +1,9 @@
 ﻿namespace Shop.DAL.Migrations.Configurations
 {
-    using System.Data.Entity.ModelConfiguration;
-    using Common.Models;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.ModelConfiguration;
+
+    using Common.Models;
 
     /// <summary>
     /// The <see cref="Artist"/> configuration.

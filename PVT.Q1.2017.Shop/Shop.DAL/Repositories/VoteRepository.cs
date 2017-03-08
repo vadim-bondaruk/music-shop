@@ -32,6 +32,7 @@
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<Vote> GetAll(Expression<Func<Vote, bool>> filter)
         {
@@ -66,7 +67,5 @@
         }
 
         #endregion //Protected Methods
-
-
     }
 }

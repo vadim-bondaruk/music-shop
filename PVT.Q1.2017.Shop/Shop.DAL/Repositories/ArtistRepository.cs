@@ -32,6 +32,7 @@
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<Artist> GetAll()
         {
@@ -46,6 +47,7 @@
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<Artist> GetAll(Expression<Func<Artist, bool>> filter)
         {

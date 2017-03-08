@@ -32,6 +32,7 @@
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<PriceLevel> GetAll()
         {
@@ -46,6 +47,7 @@
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<PriceLevel> GetAll(Expression<Func<PriceLevel, bool>> filter)
         {

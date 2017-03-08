@@ -1,16 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CustomDependencyResolver.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   Custom Dependency Resolver class
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace PVT.Q1._2017.Shop
+﻿namespace PVT.Q1._2017.Shop
 {
-    #region
-
     using System;
     using System.Collections.Generic;
     using System.Web.Http.Dependencies;
@@ -18,8 +7,6 @@ namespace PVT.Q1._2017.Shop
     using Ninject;
 
     using IDependencyResolver = System.Web.Mvc.IDependencyResolver;
-
-    #endregion
 
     /// <summary>
     ///     Custom Dependency Resolver class
@@ -32,11 +19,11 @@ namespace PVT.Q1._2017.Shop
         private readonly IKernel _kernel;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CustomDependencyResolver"/> class. 
-        /// Initializes a new instance
+        ///     Initializes a new instance of the <see cref="CustomDependencyResolver" /> class.
+        ///     Initializes a new instance
         /// </summary>
         /// <param name="kernel">
-        /// Kernel
+        ///     Kernel
         /// </param>
         public CustomDependencyResolver(IKernel kernel)
         {
@@ -48,7 +35,7 @@ namespace PVT.Q1._2017.Shop
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
-        /// *****
+        ///     *****
         /// </exception>
         public IDependencyScope BeginScope()
         {
@@ -58,7 +45,7 @@ namespace PVT.Q1._2017.Shop
         /// <summary>
         /// </summary>
         /// <exception cref="NotImplementedException">
-        /// *****
+        ///     *****
         /// </exception>
         public void Dispose()
         {
@@ -66,14 +53,14 @@ namespace PVT.Q1._2017.Shop
         }
 
         /// <summary>
-        /// Resolves singly registered services that support arbitrary object
+        ///     Resolves singly registered services that support arbitrary object
         ///     creation
         /// </summary>
         /// <param name="serviceType">
-        /// The type of the requested service or object
+        ///     The type of the requested service or object
         /// </param>
         /// <returns>
-        /// The requested service or object
+        ///     The requested service or object
         /// </returns>
         public object GetService(Type serviceType)
         {
@@ -81,13 +68,13 @@ namespace PVT.Q1._2017.Shop
         }
 
         /// <summary>
-        /// Resolves multiply registered services
+        ///     Resolves multiply registered services
         /// </summary>
         /// <param name="serviceType">
-        /// The type of the requested services
+        ///     The type of the requested services
         /// </param>
         /// <returns>
-        /// The requested services
+        ///     The requested services
         /// </returns>
         public IEnumerable<object> GetServices(Type serviceType)
         {

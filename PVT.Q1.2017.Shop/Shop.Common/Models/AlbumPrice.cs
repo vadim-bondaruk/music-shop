@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AlbumPrice.cs" company="PVT Q1 2017">
-//   All rights reserved
+// <copyright file="AlbumPrice.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
 // </copyright>
 // <summary>
 //   The album price.

@@ -1,16 +1,17 @@
 ﻿namespace Shop.DAL.Migrations.Configurations
 {
-    using System.Data.Entity.ModelConfiguration;
-    using Common.Models;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.ModelConfiguration;
+
+    using Shop.Common.Models;
 
     /// <summary>
-    /// The <see cref="Vote"/> configuration.
+    ///     The <see cref="Vote" /> configuration.
     /// </summary>
-    public class VoteConfiguration : EntityTypeConfiguration<Vote>    
+    public class VoteConfiguration : EntityTypeConfiguration<Vote>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="VoteConfiguration"/> class.
+        ///     Initializes a new instance of the <see cref="VoteConfiguration" /> class.
         /// </summary>
         public VoteConfiguration()
         {

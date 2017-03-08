@@ -1,16 +1,17 @@
 ﻿namespace Shop.DAL.Migrations.Configurations
 {
-    using System.Data.Entity.ModelConfiguration;
-    using Common.Models;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.ModelConfiguration;
+
+    using Shop.Common.Models;
 
     /// <summary>
-    /// The <see cref="Genre"/> configuration.
+    ///     The <see cref="Genre" /> configuration.
     /// </summary>
-    public class GenreConfiguration : EntityTypeConfiguration<Genre>    
+    public class GenreConfiguration : EntityTypeConfiguration<Genre>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenreConfiguration"/> class.
+        ///     Initializes a new instance of the <see cref="GenreConfiguration" /> class.
         /// </summary>
         public GenreConfiguration()
         {

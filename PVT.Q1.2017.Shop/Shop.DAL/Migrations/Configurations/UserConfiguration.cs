@@ -1,27 +1,30 @@
 ﻿namespace Shop.DAL.Migrations.Configurations
 {
-    using System.Data.Entity.ModelConfiguration;
-    using Common.Models;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.ModelConfiguration;
+
+    using Shop.Common.Models;
 
     /// <summary>
-    /// The <see cref="Album"/> configuration.
+    ///     The <see cref="Album" /> configuration.
     /// </summary>
-    public class UserConfiguration : EntityTypeConfiguration<User>    
+    public class UserConfiguration : EntityTypeConfiguration<User>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumConfiguration"/> class.
+        ///     Initializes a new instance of the <see cref="AlbumConfiguration" /> class.
         /// </summary>
         public UserConfiguration()
         {
-            HasKey(t => t.Id);
-            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(u => u.IdentityKey).HasMaxLength(128).IsRequired();
-            Property(u => u.Dicount).IsOptional();
-            HasRequired(u => u.UserCurrency).WithMany(c => c.Users).HasForeignKey(u => u.CurrencyId).WillCascadeOnDelete(false);
+            this.HasKey(t => t.Id);
+            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            this.Property(u => u.IdentityKey).HasMaxLength(128).IsRequired();
+            this.Property(u => u.Dicount).IsOptional();
+            this.HasRequired(u => u.UserCurrency)
+                .WithMany(c => c.Users)
+                .HasForeignKey(u => u.CurrencyId)
+                .WillCascadeOnDelete(false);
 
-
-            ToTable("tbUsers");
+            this.ToTable("tbUsers");
         }
     }
 }

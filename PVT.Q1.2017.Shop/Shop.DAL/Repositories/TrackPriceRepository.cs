@@ -13,13 +13,13 @@
     #endregion
 
     /// <summary>
-    /// The track price repository.
+    ///     The track price repository.
     /// </summary>
     public class TrackPriceRepository : Repository<TrackPrice>, ITrackPriceRepository
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// <see cref="TrackPriceRepository" /> class.
+        ///     Initializes a new instance of the
+        ///     <see cref="TrackPriceRepository" /> class.
         /// </summary>
         /// <param name="dbContext">The db context.</param>
         public TrackPriceRepository(DbContext dbContext)
@@ -32,6 +32,7 @@
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<TrackPrice> GetAll()
         {
@@ -41,11 +42,12 @@
         /// <summary>
         /// </summary>
         /// <param name="filter">
-        /// The filter.
+        ///     The filter.
         /// </param>
         /// <returns>
         /// </returns>
         /// <exception cref="NotImplementedException">
+        /// ***
         /// </exception>
         public new ICollection<TrackPrice> GetAll(Expression<Func<TrackPrice, bool>> filter)
         {
@@ -53,7 +55,7 @@
         }
 
         /// <summary>
-        /// Adds the specified <paramref name="trackPrice" /> into Db.
+        ///     Adds the specified <paramref name="trackPrice" /> into Db.
         /// </summary>
         /// <param name="trackPrice">The track price to add.</param>
         protected override void Add(TrackPrice trackPrice)
