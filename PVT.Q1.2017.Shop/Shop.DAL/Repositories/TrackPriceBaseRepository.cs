@@ -1,24 +1,34 @@
-﻿using Shop.DAL.Infrastruture;
+﻿//  --------------------------------------------------------------------------------------------------------------------
+//  <copyright file="Track.cs" company="PVT.Q1.2017">
+//    PVT.Q1.2017
+//  </copyright>
+//  <summary>
+//    The track.
+//  </summary>
+//  --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using Common.Models;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Infrastruture;
 
     /// <summary>
-    /// The track price repository.
+    ///     The track price repository.
     /// </summary>
     public class TrackPriceBaseRepository : BaseRepository<TrackPrice>, ITrackPriceRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackPriceBaseRepository"/> class.
+        ///     Initializes a new instance of the <see cref="TrackPriceBaseRepository" /> class.
         /// </summary>
         /// <param name="dbContext">
-        /// The db context.
+        ///     The db context.
         /// </param>
-        public TrackPriceBaseRepository(DbContext dbContext) : base(dbContext)
+        public TrackPriceBaseRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
@@ -27,10 +37,10 @@ namespace Shop.DAL.Repositories
         #region Protected Methods
 
         /// <summary>
-        /// Adds the specified <paramref name="trackPrice"/> into Db.
+        ///     Adds the specified <paramref name="trackPrice" /> into Db.
         /// </summary>
         /// <param name="trackPrice">
-        /// The track price to add.
+        ///     The track price to add.
         /// </param>
         protected override void Add(TrackPrice trackPrice)
         {

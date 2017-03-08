@@ -1,24 +1,34 @@
-﻿using Shop.DAL.Infrastruture;
+﻿//  --------------------------------------------------------------------------------------------------------------------
+//  <copyright file="Track.cs" company="PVT.Q1.2017">
+//    PVT.Q1.2017
+//  </copyright>
+//  <summary>
+//    The track.
+//  </summary>
+//  --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using Common.Models;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Infrastruture;
 
     /// <summary>
-    /// The album repository
+    ///     The album repository
     /// </summary>
     public class AlbumBaseRepository : BaseRepository<Album>, IAlbumRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumBaseRepository"/> class.
+        ///     Initializes a new instance of the <see cref="AlbumBaseRepository" /> class.
         /// </summary>
         /// <param name="dbContext">
-        /// The db context.
+        ///     The db context.
         /// </param>
-        public AlbumBaseRepository(DbContext dbContext) : base(dbContext)
+        public AlbumBaseRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
@@ -27,10 +37,10 @@ namespace Shop.DAL.Repositories
         #region Protected Methods
 
         /// <summary>
-        /// Adds the specified <paramref name="album"/> into Db.
+        ///     Adds the specified <paramref name="album" /> into Db.
         /// </summary>
         /// <param name="album">
-        /// The album to add.
+        ///     The album to add.
         /// </param>
         protected override void Add(Album album)
         {

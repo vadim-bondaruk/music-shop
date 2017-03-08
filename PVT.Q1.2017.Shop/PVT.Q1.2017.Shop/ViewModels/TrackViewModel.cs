@@ -21,7 +21,7 @@
         /// <summary>
         /// 
         /// </summary>
-        private Repository<Track> _repo;
+        private BaseRepository<Track> _repo;
 
         /// <summary>
         /// <para>
@@ -32,7 +32,7 @@
         /// <param name="track">The track.</param>
         public TrackViewModel()
         {
-            this._repo = new Repository<Track>(new ShopContext());
+            this._repo = new TrackBaseRepository(new ShopContext());
         }
 
         /// <summary>

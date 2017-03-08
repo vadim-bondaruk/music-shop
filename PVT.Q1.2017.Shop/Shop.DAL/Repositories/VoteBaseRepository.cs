@@ -1,9 +1,18 @@
-﻿using Shop.DAL.Infrastruture;
+﻿//  --------------------------------------------------------------------------------------------------------------------
+//  <copyright file="Track.cs" company="PVT.Q1.2017">
+//    PVT.Q1.2017
+//  </copyright>
+//  <summary>
+//    The track.
+//  </summary>
+//  --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using Common.Models;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Infrastruture;
 
     /// <summary>
     /// </summary>
@@ -12,12 +21,13 @@ namespace Shop.DAL.Repositories
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VoteBaseRepository"/> class.
+        ///     Initializes a new instance of the <see cref="VoteBaseRepository" /> class.
         /// </summary>
         /// <param name="dbContext">
-        /// The db context.
+        ///     The db context.
         /// </param>
-        public VoteBaseRepository(DbContext dbContext) : base(dbContext)
+        public VoteBaseRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
@@ -26,10 +36,10 @@ namespace Shop.DAL.Repositories
         #region Protected Methods
 
         /// <summary>
-        /// Adds the specified <paramref name="vote"/> into Db.
+        ///     Adds the specified <paramref name="vote" /> into Db.
         /// </summary>
         /// <param name="vote">
-        /// The vote to add.
+        ///     The vote to add.
         /// </param>
         protected override void Add(Vote vote)
         {

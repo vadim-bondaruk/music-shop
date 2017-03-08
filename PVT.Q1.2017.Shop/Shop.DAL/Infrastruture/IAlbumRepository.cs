@@ -1,10 +1,10 @@
-﻿using Shop.Common.Models;
-using Shop.Infrastructure.Repositories;
-
-namespace Shop.DAL.Infrastruture
+﻿namespace Shop.DAL.Infrastruture
 {
+    using Shop.Common.Models;
+    using Shop.Infrastructure.Repositories;
+
     /// <summary>
-    /// The album repository
+    ///     The album repository
     /// </summary>
     public interface IAlbumRepository : IRepository<Album>
     {

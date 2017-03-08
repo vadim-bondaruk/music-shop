@@ -1,24 +1,34 @@
-using Shop.DAL.Infrastruture;
+//  --------------------------------------------------------------------------------------------------------------------
+//  <copyright file="Track.cs" company="PVT.Q1.2017">
+//    PVT.Q1.2017
+//  </copyright>
+//  <summary>
+//    The track.
+//  </summary>
+//  --------------------------------------------------------------------------------------------------------------------
 
 namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-    using Common.Models;
+
+    using Shop.Common.Models;
+    using Shop.DAL.Infrastruture;
 
     /// <summary>
-    /// The feedback repository.
+    ///     The feedback repository.
     /// </summary>
     public class FeedbackBaseRepository : BaseRepository<Feedback>, IFeedbackRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeedbackBaseRepository"/> class.
+        ///     Initializes a new instance of the <see cref="FeedbackBaseRepository" /> class.
         /// </summary>
         /// <param name="dbContext">
-        /// The db context.
+        ///     The db context.
         /// </param>
-        public FeedbackBaseRepository(DbContext dbContext) : base(dbContext)
+        public FeedbackBaseRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
@@ -27,10 +37,10 @@ namespace Shop.DAL.Repositories
         #region Protected Methods
 
         /// <summary>
-        /// Adds the specified <paramref name="feedback"/> into Db.
+        ///     Adds the specified <paramref name="feedback" /> into Db.
         /// </summary>
         /// <param name="feedback">
-        /// The feedback.
+        ///     The feedback.
         /// </param>
         protected override void Add(Feedback feedback)
         {
