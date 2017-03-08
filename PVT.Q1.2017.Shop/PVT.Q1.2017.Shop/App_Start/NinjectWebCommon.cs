@@ -5,11 +5,14 @@ namespace PVT.Q1._2017.Shop.App_Start
 {
     using System;
     using System.Web;
-
+    using System.Web.Mvc;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
+    using Ninject.Modules;
     using Ninject.Web.Common;
+    
+    using global::Shop.BLL;
 
     /// <summary>
     /// 
@@ -67,6 +70,21 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            kernel.Load(GetModules());
+            DependencyResolver.SetResolver(new CustomDependencyResolver(kernel));
+        }
+
+        /// <summary>
+        /// Retrieves All ninject Modules
+        /// </summary>
+        /// <returns>Returns Ninject Modules from BLL, DAL and Web</returns>
+        private static INinjectModule[] GetModules()
+        {
+            return new INinjectModule[]
+            {
+                new DefaultServicesNinjectModule(),
+                new WebNinjectModule()
+            };
+        }
     }
 }
