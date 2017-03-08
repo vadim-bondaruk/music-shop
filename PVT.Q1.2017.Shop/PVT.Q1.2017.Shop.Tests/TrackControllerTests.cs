@@ -1,13 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
-    #region using
-
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.DAL;
-    using global::Shop.DAL.Repositories.Infrastruture;
-
+    using global::Shop.DAL.Infrastruture;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-
     using Ninject;
+    using PVT.Q1._2017.Shop.Controllers;
 
     #endregion
 
@@ -17,6 +15,23 @@
     [TestClass]
     public class TrackControllerTests
     {
+        #region Fields
+
+        private readonly IRepositoryFactory _factory;
+        private readonly ITrackService _trackService;
+
+        #endregion //Fields
+
+        #region Constructors
+
+        public TrackControllerTests()
+        {
+            IKernel kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            this._factory = kernel.Get<IRepositoryFactory>();
+        }
+
+        #endregion //Constructors
+
         /// <summary>
         /// 
         /// </summary>

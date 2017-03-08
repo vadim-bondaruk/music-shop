@@ -1,11 +1,10 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Common.Models;
-    using Shop.Infrastructure.Services;
 
     /// <summary>
     /// </summary>
-    public interface IAlbumPriceService : IService<AlbumPrice>
+    public interface IAlbumPriceService
     {
         /// <summary>
         /// Returns the album price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
@@ -21,23 +20,6 @@
         /// The album price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/> or <b>null</b>.
         /// </returns>
         AlbumPrice GeAlbumPrice(Album album, PriceLevel priceLevel, Currency currency);
-
-        /// <summary>
-        /// Adds the <paramref name="album"/> price.
-        /// </summary>
-        /// <param name="album">
-        /// The album.
-        /// </param>
-        /// <param name="price">
-        ///     The <paramref name="album"/> price.
-        /// </param>
-        /// <param name="currency">
-        ///     The currency.
-        /// </param>
-        /// <param name="priceLevel">
-        ///     The price level.
-        /// </param>
-        void AddAlbumPrice(Album album, decimal price, Currency currency, PriceLevel priceLevel);
 
         /// <summary>
         /// Returns the album price with the specified <paramref name="id"/>.
