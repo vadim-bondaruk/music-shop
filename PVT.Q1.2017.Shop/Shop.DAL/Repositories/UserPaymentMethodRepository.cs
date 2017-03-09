@@ -58,7 +58,7 @@
         /// </summary>
         /// <param name="filter">Filter expression</param>
         /// <returns></returns>
-        public new ICollection<UserPaymentMethod> GetAll(Expression<Func<UserPaymentMethod, bool>> filter)
+        public new virtual ICollection<UserPaymentMethod> GetAll(Expression<Func<UserPaymentMethod, bool>> filter)
         {
             IQueryable<UserPaymentMethod> query = this.CurrentDbSet;
             if (filter != null)
