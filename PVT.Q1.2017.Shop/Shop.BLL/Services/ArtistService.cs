@@ -1,15 +1,15 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.BLL.Services
+﻿namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Common.Models;
+    using DAL.Infrastruture;
     using Infrastructure;
 
     /// <summary>
     /// The artist service
     /// </summary>
-    public class ArtistService : Service<IArtistRepository, Artist>, IArtistService
+    public class ArtistService : BaseService, IArtistService
     {
         #region Constructors
 
@@ -17,12 +17,9 @@ namespace Shop.BLL.Services
         /// Initializes a new instance of the <see cref="ArtistService"/> class.
         /// </summary>
         /// <param name="factory">
-        /// The factory.
+        /// The repository factory.
         /// </param>
-        /// <param name="validator">
-        /// The validator.
-        /// </param>
-        public ArtistService(IFactory factory, IValidator<Artist> validator) : base(factory, validator)
+        public ArtistService(IRepositoryFactory factory) : base(factory)
         {
         }
 
@@ -39,7 +36,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public Artist GetArtistInfo(int id)
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetArtistRepository())
             {
                 return repository.GetById(id);
             }
@@ -53,7 +50,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Artist> GetAlbumsList()
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetArtistRepository())
             {
                 return repository.GetAll();
             }
@@ -68,9 +65,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Album> GetAlbumsList(Artist artist)
         {
-            ValidatorHelper.CheckArtistForNull(artist);
-
-            using (var repository = this.Factory.Create<IAlbumRepository>())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.ArtistId == artist.Id, a => a.Artist);
             }
@@ -85,11 +80,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksList(Artist artist)
         {
-            ValidatorHelper.CheckArtistForNull(artist);
-
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.ArtistId == artist.Id, TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.ArtistId == artist.Id, t => t.Genre);
             }
         }
 
@@ -102,11 +95,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured(Artist artist)
         {
-            ValidatorHelper.CheckArtistForNull(artist);
-
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.ArtistId == artist.Id && !t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.ArtistId == artist.Id && !t.TrackPrices.Any(), t => t.Genre);
             }
         }
 
@@ -119,11 +110,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured(Artist artist)
         {
-            ValidatorHelper.CheckArtistForNull(artist);
-
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.ArtistId == artist.Id && t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.ArtistId == artist.Id && t.TrackPrices.Any(), t => t.Genre);
             }
         }
 
@@ -136,9 +125,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Album> GetAlbumsWithoutPriceConfigured(Artist artist)
         {
-            ValidatorHelper.CheckArtistForNull(artist);
-
-            using (var repository = this.Factory.Create<IAlbumRepository>())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.ArtistId == artist.Id && !a.AlbumPrices.Any(), a => a.Artist);
             }
@@ -153,9 +140,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Album> GetAlbumsWithPriceConfigured(Artist artist)
         {
-            ValidatorHelper.CheckArtistForNull(artist);
-
-            using (var repository = this.Factory.Create<IAlbumRepository>())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.ArtistId == artist.Id && a.AlbumPrices.Any(), a => a.Artist);
             }

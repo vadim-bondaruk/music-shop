@@ -1,65 +1,30 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.BLL.Services
+﻿namespace Shop.BLL.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
+    using System.Linq;
     using Common.Models;
+    using DAL.Infrastruture;
     using Infrastructure;
-    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The track service
     /// </summary>
-    public class TrackService : Service<ITrackRepository, Track>, ITrackService
+    public class TrackService : BaseService, ITrackService
     {
-        #region Fields
-
-        /// <summary>
-        /// Default includes
-        /// </summary>
-        private static readonly Expression<Func<Track, BaseEntity>>[] DefaultIncludes;
-
-        #endregion //Fields
-
         #region Constructors
-
-        /// <summary>
-        /// Initializes static members of the <see cref="TrackService"/> class.
-        /// </summary>
-        static TrackService()
-        {
-            DefaultIncludes = new Expression<Func<Track, BaseEntity>>[]
-            {
-                t => t.Album, t => t.Artist, t => t.Genre
-            };
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackService"/> class.
         /// </summary>
         /// <param name="factory">
-        /// The factory.
+        /// The  repositories factory.
         /// </param>
-        /// <param name="validator">The track validator.</param>
-        public TrackService(IFactory factory, IValidator<Track> validator) : base(factory, validator)
+        public TrackService(IRepositoryFactory factory) : base(factory)
         {
         }
 
         #endregion //Constructors
-
-        #region Properties
-
-        /// <summary>
-        /// Default track includes.
-        /// </summary>
-        protected internal static Expression<Func<Track, BaseEntity>>[] TrackDefaultIncludes
-        {
-            get { return DefaultIncludes; }
-        }
-
-        #endregion //Properties
 
         #region ITrackService Members
 
@@ -71,9 +36,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksList()
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(DefaultIncludes);
+                return repository.GetAll(t => t.Artist, t => t.Genre);
             }
         }
 
@@ -85,9 +50,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured()
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => !t.TrackPrices.Any(), DefaultIncludes);
+                return repository.GetAll(t => !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
         }
 
@@ -99,9 +64,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured()
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.TrackPrices.Any(), DefaultIncludes);
+                return repository.GetAll(t => t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
         }
 
@@ -114,9 +79,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public Track GetTrackInfo(int id)
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetById(id, DefaultIncludes);
+                return repository.GetById(id, t => t.Artist, t => t.Genre);
             }
         }
 
@@ -128,10 +93,7 @@ namespace Shop.BLL.Services
         /// <returns>All track prices for the specified  <paramref name="priceLevel"/>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckPriceLevelForNull(priceLevel);
-
-            using (var repository = this.Factory.Create<ITrackPriceRepository>())
+            using (var repository = this.Factory.GetTrackPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.TrackId == track.Id &&
@@ -147,9 +109,7 @@ namespace Shop.BLL.Services
         /// <returns>All <paramref name="track"/> prices>.</returns>
         public ICollection<TrackPrice> GetTrackPrices(Track track)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-
-            using (var repository = this.Factory.Create<ITrackPriceRepository>())
+            using (var repository = this.Factory.GetTrackPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.TrackId == track.Id,
@@ -169,9 +129,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Vote> GetTrackVotes(Track track)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-
-            using (var repository = this.Factory.Create<IVoteRepository>())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(v => v.TrackId == track.Id, v => v.Track, v => v.User);
             }
@@ -188,11 +146,26 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Feedback> GetTrackFeedbacks(Track track)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-
-            using (var repository = this.Factory.Create<IFeedbackRepository>())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(f => f.TrackId == track.Id, f => f.Track, f => f.User);
+            }
+        }
+
+        /// <summary>
+        /// Returns all albums whitch contain the specified <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <returns>
+        /// All albums whitch contain the specified <paramref name="track"/>.
+        /// </returns>
+        public ICollection<Album> GetAllAlbumsWithTrack(Track track)
+        {
+            using (var repository = this.Factory.GetAlbumRepository())
+            {
+                return repository.GetAll(a => a.Tracks.Any(t => t.Id == track.Id));
             }
         }
 

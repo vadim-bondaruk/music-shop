@@ -40,7 +40,7 @@
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseBaseRepository{TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The Db context.

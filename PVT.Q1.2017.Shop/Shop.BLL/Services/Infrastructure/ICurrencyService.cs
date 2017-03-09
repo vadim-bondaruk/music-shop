@@ -9,20 +9,6 @@
     public interface ICurrencyService
     {
         /// <summary>
-        /// Adds the currency into Db.
-        /// </summary>
-        /// <param name="name">
-        /// The currency name (see ISO 421).
-        /// </param>
-        /// <param name="code">
-        /// The currency code number (see ISO 421).
-        /// </param>
-        /// <param name="fullName">
-        /// The full name.
-        /// </param>
-        void AddCurrency(string name, int code, string fullName = null);
-
-        /// <summary>
         /// Returns the currency with the specified <paramref name="id"/>
         /// </summary>
         /// <param name="id">The currency id.</param>

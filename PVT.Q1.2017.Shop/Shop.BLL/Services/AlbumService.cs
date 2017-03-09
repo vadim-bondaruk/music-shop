@@ -1,15 +1,15 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.BLL.Services
+﻿namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Common.Models;
+    using DAL.Infrastruture;
     using Infrastructure;
 
     /// <summary>
     /// The album service.
     /// </summary>
-    public class AlbumService : Service<IAlbumRepository, Album>, IAlbumService
+    public class AlbumService : BaseService, IAlbumService
     {
         #region Constructors
 
@@ -17,40 +17,15 @@ namespace Shop.BLL.Services
         /// Initializes a new instance of the <see cref="AlbumService"/> class.
         /// </summary>
         /// <param name="factory">
-        /// The factory.
+        /// The repository factory.
         /// </param>
-        /// <param name="validator">
-        /// The validator.
-        /// </param>
-        public AlbumService(IFactory factory, IValidator<Album> validator) : base(factory, validator)
+        public AlbumService(IRepositoryFactory factory) : base(factory)
         {
         }
 
         #endregion //Constructors
 
         #region IAlbumService Members
-
-        /// <summary>
-        /// Adds a new album with the specified <paramref name="name"/>.
-        /// </summary>
-        /// <param name="artist">
-        /// The artist.
-        /// </param>
-        /// <param name="name">
-        /// The album name.
-        /// </param>
-        public void AddAlbum(Artist artist, string name)
-        {
-            ValidatorHelper.CheckArtistForNull(artist);
-
-            var album = new Album
-            {
-                Name = name,
-                ArtistId = artist.Id
-            };
-
-            this.Register(album);
-        }
 
         /// <summary>
         /// Returns the album with the specified <paramref name="id"/>.
@@ -61,7 +36,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public Album GetAlbumInfo(int id)
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetById(id, a => a.Artist);
             }
@@ -76,11 +51,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksList(Album album)
         {
-            ValidatorHelper.CheckAlbumForNull(album);
-
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id, TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id, t => t.Artist, t => t.Genre);
             }
         }
 
@@ -92,11 +65,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured(Album album)
         {
-            ValidatorHelper.CheckAlbumForNull(album);
-
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id && !t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id && !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
         }
 
@@ -109,11 +80,9 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured(Album album)
         {
-            ValidatorHelper.CheckAlbumForNull(album);
-
-            using (var repository = this.Factory.Create<ITrackRepository>())
+            using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id && t.TrackPrices.Any(), TrackService.TrackDefaultIncludes);
+                return repository.GetAll(t => t.AlbumId == album.Id && t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
         }
 
@@ -125,7 +94,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Album> GetAlbumsList()
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.Artist);
             }
@@ -139,7 +108,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Album> GetAlbumsWithoutPriceConfigured()
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => !a.AlbumPrices.Any(), a => a.Artist);
             }
@@ -153,7 +122,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<Album> GetAlbumsWithPriceConfigured()
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetAlbumRepository())
             {
                 return repository.GetAll(a => a.AlbumPrices.Any(), a => a.Artist);
             }
@@ -169,10 +138,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public ICollection<AlbumPrice> GetAlbumPrices(Album album, PriceLevel priceLevel)
         {
-            ValidatorHelper.CheckAlbumForNull(album);
-            ValidatorHelper.CheckPriceLevelForNull(priceLevel);
-
-            using (var repository = this.Factory.Create<IAlbumPriceRepository>())
+            using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.AlbumId == album.Id &&
@@ -188,9 +154,7 @@ namespace Shop.BLL.Services
         /// <returns>All <paramref name="album"/> prices>.</returns>
         public ICollection<AlbumPrice> GetAlbumPrices(Album album)
         {
-            ValidatorHelper.CheckAlbumForNull(album);
-
-            using (var repository = this.Factory.Create<IAlbumPriceRepository>())
+            using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetAll(
                                          p => p.AlbumId == album.Id,

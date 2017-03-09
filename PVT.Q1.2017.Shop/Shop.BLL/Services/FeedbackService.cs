@@ -1,14 +1,14 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.BLL.Services
+﻿namespace Shop.BLL.Services
 {
+    using System.Linq;
     using Common.Models;
+    using DAL.Infrastruture;
     using Infrastructure;
 
     /// <summary>
     /// The feedback service
     /// </summary>
-    public class FeedbackService : Service<IFeedbackRepository, Feedback>, IFeedbackService
+    public class FeedbackService : BaseService, IFeedbackService
     {
         #region Constructors
 
@@ -18,53 +18,13 @@ namespace Shop.BLL.Services
         /// <param name="repositoryFactory">
         /// The repository factory.
         /// </param>
-        /// <param name="validator">
-        /// The validator.
-        /// </param>
-        public FeedbackService(IFactory repositoryFactory, IValidator<Feedback> validator) : base(repositoryFactory, validator)
+        public FeedbackService(IRepositoryFactory repositoryFactory) : base(repositoryFactory)
         {
         }
 
         #endregion //Constructors
 
         #region IFeedbackService Members
-
-        /// <summary>
-        /// Adds the <paramref name="user"/> comments for the <paramref name="track"/>.
-        /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <param name="comments">
-        /// The comments.
-        /// </param>
-        /// <param name="user">
-        /// The user.
-        /// </param>
-        public void AddFeedback(Track track, string comments, User user)
-        {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckUserForNull(user);
-
-            var feedback = new Feedback
-            {
-                Comments = comments,
-                TrackId = track.Id,
-                UserId = user.Id
-            };
-
-            if (this.IsValid(feedback))
-            {
-                // if a feedback by the user already exits for the track than removing old one to register new one 
-                var currentFeedback = this.GetTrackFeedback(track, user);
-                if (currentFeedback != null)
-                {
-                    this.Unregister(currentFeedback);
-                }
-            }
-
-            this.Register(feedback);
-        }
 
         /// <summary>
         /// Returns the feedback which have made the specified <paramref name="user"/> for the <paramref name="track"/>.
@@ -81,10 +41,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public Feedback GetTrackFeedback(Track track, User user)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckUserForNull(user);
-
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(
                                          f => f.TrackId == track.Id && f.UserId == user.Id,
@@ -108,10 +65,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public bool FeedbackExists(Track track, User user)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckUserForNull(user);
-
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(f => f.TrackId == track.Id && f.UserId == user.Id).Any();
             }
@@ -126,7 +80,7 @@ namespace Shop.BLL.Services
         /// </returns>
         public Feedback GetFeedbackInfo(int id)
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetById(id, v => v.Track, v => v.User);
             }

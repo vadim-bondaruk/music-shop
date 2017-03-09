@@ -9,17 +9,6 @@
     public interface IAlbumService
     {
         /// <summary>
-        /// Adds a new album with the specified <paramref name="name"/>.
-        /// </summary>
-        /// <param name="artist">
-        /// The artist.
-        /// </param>
-        /// <param name="name">
-        /// The album name.
-        /// </param>
-        void AddAlbum(Artist artist, string name);
-
-        /// <summary>
         /// Returns the album with the specified <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The album id.</param>

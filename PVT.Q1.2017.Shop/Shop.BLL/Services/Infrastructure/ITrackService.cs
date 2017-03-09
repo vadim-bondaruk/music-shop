@@ -77,5 +77,16 @@
         /// All track feedbacks.
         /// </returns>
         ICollection<Feedback> GetTrackFeedbacks(Track track);
+
+        /// <summary>
+        /// Returns all albums whitch contain the specified <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <returns>
+        /// All albums whitch contain the specified <paramref name="track"/>.
+        /// </returns>
+        ICollection<Album> GetAllAlbumsWithTrack(Track track);
     }
 }

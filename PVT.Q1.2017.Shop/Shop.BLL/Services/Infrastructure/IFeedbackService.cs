@@ -8,20 +8,6 @@
     public interface IFeedbackService
     {
         /// <summary>
-        /// Adds the <paramref name="user"/> comments for the <paramref name="track"/>.
-        /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <param name="comments">
-        /// The comments.
-        /// </param>
-        /// <param name="user">
-        /// The user.
-        /// </param>
-        void AddFeedback(Track track, string comments, User user);
-
-        /// <summary>
         /// Returns the feedback which have made the specified <paramref name="user"/> for the <paramref name="track"/>.
         /// </summary>
         /// <param name="track">
