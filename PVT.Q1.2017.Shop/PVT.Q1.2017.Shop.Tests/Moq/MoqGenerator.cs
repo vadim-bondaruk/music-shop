@@ -113,6 +113,7 @@
                                 }
                         });
 
+
             albumRepo.Setup(m => m.GetById(1)).Returns(new Album { Name = "SomeAlbum", Id = 22, IsDeleted = false });
             return albumRepo.Object;
         }
@@ -145,6 +146,44 @@
                                 {
                                     Id = 22,
                                     Name = "SomeTrack1",
+                                    Artist = new Artist { Id = 12, Name = "SomeArtist1" },
+                                    Albums =
+                                        new List<Album> { new Album { Id = 18, Name = "SomeAlbum1" } }
+                                },
+                            new Track
+                                {
+                                    Id = 23,
+                                    Name = "SomeTrack2",
+                                    Artist = new Artist { Id = 12, Name = "SomeArtist1" },
+                                    Albums =
+                                        new List<Album> { new Album { Id = 18, Name = "SomeAlbum1" } }
+                                },
+                            new Track
+                                {
+                                    Id = 24,
+                                    Name = "SomeTrack3",
+                                    Artist = new Artist { Id = 14, Name = "SomeArtist2" },
+                                    Albums =
+                                        new List<Album> { new Album { Id = 18, Name = "SomeAlbum1" } }
+                                },
+                            new Track
+                                {
+                                    Id = 25,
+                                    Name = "SomeTrack4",
+                                    Artist = new Artist { Id = 15, Name = "SomeArtist3" },
+                                    Albums =
+                                        new List<Album> { new Album { Id = 19, Name = "SomeAlbum2" } }
+                                }
+                        });
+
+            trackRepo.Setup(t => t.GetAll(It.IsAny<Expression<Func<Track, bool>>>()))
+                 .Returns(
+                     new List<Track>
+                         {
+                            new Track
+                                {
+                                    Id = 22,
+                                    Name = "SomeTrack1",
                                     Artist = new Artist { Id = 22, Name = "SomeArtist1" },
                                     Albums =
                                         new List<Album> { new Album { Id = 22, Name = "SomeAlbum1" } }
@@ -173,7 +212,7 @@
                                     Albums =
                                         new List<Album> { new Album { Id = 23, Name = "SomeAlbum2" } }
                                 }
-                        });
+                         });
             return trackRepo.Object;
         }
     }
