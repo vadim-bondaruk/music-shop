@@ -1,14 +1,16 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
+    using System.Collections.Generic;
     using System.Data;
     using System.Web.Mvc;
+    using AutoMapper;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using Shop.ViewModels;
 
     /// <summary>
     /// The currency controller
     /// </summary>
-    [Authorize]
     public class CurrencyController : Controller
     {
         #region Fields
@@ -35,7 +37,8 @@
         /// <returns></returns>
         public ViewResult Index()
         {
-            var currency = this._currencyService.GetCurrenciesList();
+            Mapper.Initialize(x => x.CreateMap<Currency, CurrencyViewModel>());
+            var currency = Mapper.Map<IEnumerable<Currency>, List<CurrencyViewModel>>(this._currencyService.GetCurrenciesList());
             return this.View(currency);
         }
 
@@ -46,7 +49,8 @@
         /// <returns></returns>
         public ViewResult Details(int currencyId)
         {
-            Currency currency = this._currencyService.GetCurrencyInfo(currencyId);
+            Mapper.Initialize(x => x.CreateMap<Currency, CurrencyViewModel>());
+            var currency = Mapper.Map<Currency, CurrencyViewModel>(this._currencyService.GetCurrencyInfo(currencyId));
             return this.View(currency);
         }
 
@@ -55,7 +59,6 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
         public ActionResult Edit(int currencyId = 0)
         {
             /*
@@ -65,7 +68,8 @@
             }
             */
 
-            var currency = this._currencyService.GetCurrencyInfo(currencyId);
+            Mapper.Initialize(x => x.CreateMap<Currency, CurrencyViewModel>());
+            var currency = Mapper.Map<Currency, CurrencyViewModel>(this._currencyService.GetCurrencyInfo(currencyId));
 
             if (currency == null)
             {
@@ -80,11 +84,13 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPut]
-        public ActionResult Edit(Currency currency)
+        [HttpPost]
+        public ActionResult Edit(CurrencyViewModel model)
         {
             if (ModelState.IsValid)
             {
+                Mapper.Initialize(x => x.CreateMap<CurrencyViewModel, Currency>());
+                Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
                 this._currencyService.Update(currency);
             }
 
@@ -103,7 +109,16 @@
                 return this.HttpNotFound();
             }
 
-            this._currencyService.Unregister(id);
+            var currency = this._currencyService.Unregister(id);
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Create()
+        {
             return this.View();
         }
 
@@ -113,12 +128,14 @@
         /// <param name="currencyViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Create(Currency currency)
+        public ActionResult Create(CurrencyViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    Mapper.Initialize(x => x.CreateMap<Currency, CurrencyViewModel>());
+                    Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
                     this._currencyService.Register(currency);
                     return this.RedirectToAction("Index");
                 }
@@ -128,7 +145,7 @@
                 ModelState.AddModelError("Name", "Unable to save changes. Try again, and if the problem persists see your system administrator");
             }
 
-            return this.View(currency);
+            return this.View(model);
         }
     }
 }

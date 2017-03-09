@@ -28,6 +28,12 @@
         /// Gets or sets the graphic currency symbol.
         /// </summary>
         public string Symbol { get; set; }
+
+        /// <summary>
+        /// Name of currance
+        /// </summary>
+        public string Name { get; set; }
+
         #endregion //Properties
     }
 }

@@ -192,6 +192,9 @@
     <Content Include="Areas\Admin\Views\Currency2\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Currency2\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Currency2\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Currency\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Currency\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Currency\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -272,7 +275,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Currency\" />
     <Folder Include="Areas\Admin\Views\Track\" />
     <Folder Include="Views\Album\" />
     <Folder Include="Views\Artist\" />
