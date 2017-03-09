@@ -3,9 +3,8 @@
     #region
 
     using System.Web.Mvc;
-
-    using global::Shop.DAL.Repositories.Infrastruture;
-    using global::Shop.Infrastructure;
+    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.DAL.Infrastruture;
 
     #endregion
 
@@ -19,7 +18,12 @@
         /// <summary>
         /// The repository factory.
         /// </summary>
-        private readonly IFactory _repositoryFactory;
+        private readonly IRepositoryFactory _repositoryFactory;
+
+        /// <summary>
+        /// The track service.
+        /// </summary>
+        private readonly ITrackService _trackService;
 
         #endregion //Fields
 
@@ -29,11 +33,15 @@
         /// Initializes a new instance of the <see cref="TrackController"/> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        /// The repository factory.
+        ///     The repository factory.
         /// </param>
-        public TrackController(IFactory repositoryFactory)
+        /// <param name="trackService">
+        ///     The track service.
+        /// </param>
+        public TrackController(IRepositoryFactory repositoryFactory, ITrackService trackService)
         {
             this._repositoryFactory = repositoryFactory;
+            this._trackService = trackService;
         }
 
         #endregion //Constructors
@@ -46,7 +54,7 @@
         /// </returns>
         public virtual ActionResult AlbumList()
         {
-            using (var repository = this._repositoryFactory.Create<IAlbumRepository>())
+            using (var repository = this._repositoryFactory.GetAlbumRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -59,7 +67,7 @@
         /// </returns>
         public virtual ActionResult AlbumList(int artistId)
         {
-            using (var repository = this._repositoryFactory.Create<IAlbumRepository>())
+            using (var repository = this._repositoryFactory.GetAlbumRepository())
             {
                 return this.View(repository.GetAll(a => a.ArtistId.Equals(artistId)));
             }
@@ -72,7 +80,7 @@
         /// </returns>
         public virtual ActionResult AlbumTracks(int id)
         {
-            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
+            using (var repository = this._repositoryFactory.GetTrackRepository())
             {
                 return this.View(repository.GetAll(t => t.AlbumId.Equals(id)));
             }
@@ -84,7 +92,7 @@
         /// </returns>
         public virtual ActionResult ArtistList()
         {
-            using (var repository = this._repositoryFactory.Create<IArtistRepository>())
+            using (var repository = this._repositoryFactory.GetArtistRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -97,10 +105,7 @@
         /// </returns>
         public virtual ActionResult ArtistTracks(int id)
         {
-            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
-            {
-                return this.View(repository.GetAll(t => t.ArtistId.Equals(id)));
-            }
+            return this.View(this._trackService.GetTracksWithPriceConfigured());
         }
 
         /// <summary>
@@ -110,10 +115,7 @@
         /// </returns>
         public virtual ActionResult Details(int id)
         {
-            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
-            {
-                return this.View(repository.GetById(id));
-            }
+            return this.View(this._trackService.GetTrackInfo(id));
         }
 
         /// <summary>
@@ -124,10 +126,7 @@
         /// </returns>
         public virtual ActionResult TrackList()
         {
-            using (var repository = this._repositoryFactory.Create<ITrackRepository>())
-            {
-                return this.View(repository.GetAll());
-            }
+            return this.View(this._trackService.GetTracksWithPriceConfigured());
         }
 
         #endregion //Actions

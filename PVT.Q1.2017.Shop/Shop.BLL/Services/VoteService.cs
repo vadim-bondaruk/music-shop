@@ -2,16 +2,13 @@
 {
     using System.Linq;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
-    using Helpers;
+    using DAL.Infrastruture;
     using Infrastructure;
-    using Shop.Infrastructure;
-    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The vote service.
     /// </summary>
-    public class VoteService : Service<IVoteRepository, Vote>, IVoteService
+    public class VoteService : BaseService, IVoteService
     {
         #region Constructors
 
@@ -21,53 +18,13 @@
         /// <param name="repositoryFactory">
         /// The repository factory.
         /// </param>
-        /// <param name="validator">
-        /// The validator.
-        /// </param>
-        public VoteService(IFactory repositoryFactory, IValidator<Vote> validator) : base(repositoryFactory, validator)
+        public VoteService(IRepositoryFactory repositoryFactory) : base(repositoryFactory)
         {
         }
 
         #endregion //Constructors
 
         #region IVoteService Members
-
-        /// <summary>
-        /// Adds the <paramref name="user"/> mark for the <paramref name="track"/>.
-        /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <param name="mark">
-        /// The mark.
-        /// </param>
-        /// <param name="user">
-        /// The user.
-        /// </param>
-        public void AddVote(Track track, Mark mark, User user)
-        {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckUserForNull(user);
-
-            var vote = new Vote
-            {
-                Mark = mark,
-                TrackId = track.Id,
-                UserId = user.Id
-            };
-
-            if (this.IsValid(vote))
-            {
-                // if a vote by the user already exits for the track than removing old one to register new one
-                var currentVote = this.GetTrackVote(track, user);
-                if (currentVote != null)
-                {
-                    this.Unregister(currentVote);
-                }
-            }
-
-            this.Register(vote);
-        }
 
         /// <summary>
         /// Returns the vote which have made the specified <paramref name="user"/> for the <paramref name="track"/>.
@@ -84,10 +41,7 @@
         /// </returns>
         public Vote GetTrackVote(Track track, User user)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckUserForNull(user);
-
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(
                                          v => v.TrackId == track.Id && v.UserId == user.Id,
@@ -111,10 +65,7 @@
         /// </returns>
         public bool VoteExists(Track track, User user)
         {
-            ValidatorHelper.CheckTrackForNull(track);
-            ValidatorHelper.CheckUserForNull(user);
-
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(f => f.TrackId == track.Id && f.UserId == user.Id).Any();
             }
@@ -129,7 +80,7 @@
         /// </returns>
         public Vote GetVoteInfo(int id)
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetById(id, v => v.Track, v => v.User);
             }
