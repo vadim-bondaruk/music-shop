@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 namespace PVT.Q1._2017.Shop.Tests
 {
     [TestClass]
-    public class CartControllerTest
+    public class CartControllerTests
     {
         [TestMethod]
         public void ActionIndexTest()
