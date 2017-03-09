@@ -17,7 +17,7 @@ namespace PVT.Q1._2017.Shop.Tests
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Create and set CartView model
-            var myCartView = new CartView() { Tracks = new List<Track>() };
+            var myCartView = new CartViewModel() { Tracks = new List<Track>() };
             myCartView.SetTotalPrice(userCurrency);
             Assert.IsTrue(myCartView.TotalPrice == 0);
         }
@@ -47,7 +47,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 TrackPrices = pricesTrack
             };
             //// Create and set CartView model
-            var myCartView = new CartView() { Tracks = new List<Track>() };
+            var myCartView = new CartViewModel() { Tracks = new List<Track>() };
             myCartView.Tracks.Add(track1);
             myCartView.Tracks.Add(track2);
             myCartView.SetTotalPrice(userCurrency);

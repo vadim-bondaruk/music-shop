@@ -50,14 +50,14 @@
         {
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
             var currentUser = this._userRepository.GetById(currentUserId);
-            var cartView = new CartView { Tracks = new List<Track>() };
+            var cartView = new CartViewModel { Tracks = new List<Track>() };
             if (cart != null)
             {
                 foreach (var t in cart.Tracks)
                 {
                     cartView.Tracks.Add(t);
                 }
-    
+
                 /// <summary>
                 /// Временные данные: пользователь выбрал отображение в долларах
                 /// </summary>

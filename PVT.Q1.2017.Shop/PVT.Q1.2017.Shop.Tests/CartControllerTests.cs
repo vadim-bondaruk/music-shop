@@ -36,7 +36,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqUserRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(user);
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
-            CartView cartView = (CartView)cartController.Index(1).Model;
+            CartViewModel cartView = (CartViewModel)cartController.Index(1).Model;
 
             Assert.IsTrue(cartView.Tracks[0].Id == 1);
             Assert.IsTrue(string.Compare(cartView.Tracks[0].Name, "Wide Awake", StringComparison.OrdinalIgnoreCase) == 0);

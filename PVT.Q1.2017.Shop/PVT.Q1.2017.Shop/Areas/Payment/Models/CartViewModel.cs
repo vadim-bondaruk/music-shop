@@ -15,7 +15,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
     /// <summary>
     /// CartView model
     /// </summary>
-    public class CartView
+    public class CartViewModel
     {
         /// <summary>
         /// Gets or sets a Collection of tracks for View
