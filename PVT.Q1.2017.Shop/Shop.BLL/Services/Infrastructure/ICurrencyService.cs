@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Models;
+    using PVT.Q1._2017.Shop.Areas.Admin.Models;
 
     /// <summary>
     /// The currency service.
@@ -45,7 +46,7 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        ICollection<Currency> GetCurrenciesList();
+        ICollection<CurrencyViewModel> GetCurrenciesList();
 
         /// <summary>
         /// Determines whether a currency with the specified <paramref name="name"/> exists.

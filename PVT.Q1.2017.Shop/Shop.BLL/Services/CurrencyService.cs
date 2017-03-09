@@ -6,6 +6,7 @@
     using Common.Models;
     using DAL.Infrastruture;
     using Infrastructure;
+    using PVT.Q1._2017.Shop.Areas.Admin.Models;
 
     /// <summary>
     /// The currency service.
@@ -68,11 +69,12 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        public ICollection<Currency> GetCurrenciesList()
+        public ICollection<CurrencyViewModel> GetCurrenciesList()
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll();
+                return repositry.GetAll()
+                    .Select(x => new CurrencyViewModel { Id = x.Id, IsDeleted = x.IsDeleted, FullName = x.FullName, ShortName = x.ShortName, Code = x.Code, Symbol = x.Symbol }).ToList();
             }
         }
 

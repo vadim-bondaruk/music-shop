@@ -184,7 +184,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Models\CurrencyViewModel.cs" />
+    <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
@@ -227,7 +227,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Currency\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Management\Views\Shared\" />
