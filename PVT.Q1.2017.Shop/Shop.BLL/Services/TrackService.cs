@@ -38,7 +38,7 @@
         {
             using (var repository = this.Factory.GetTrackRepository())
             {
-                return repository.GetAll(t => t.Artist, t => t.Genre);
+                return null; //   return repository.GetAll(t => t.Artist, t => t.Genre);
             }
         }
 

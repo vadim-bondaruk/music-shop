@@ -1,30 +1,47 @@
-﻿namespace PVT.Q1._2017.Shop.Tests
+﻿//  --------------------------------------------------------------------------------------------------------------------
+//  <copyright file="Track.cs" company="PVT.Q1.2017">
+//    PVT.Q1.2017
+//  </copyright>
+//  <summary>
+//    The track.
+//  </summary>
+//  --------------------------------------------------------------------------------------------------------------------
+
+namespace PVT.Q1._2017.Shop.Tests
 {
     using System.Linq;
+
     using global::Shop.BLL;
     using global::Shop.BLL.Services.Infrastructure;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using Ninject;
 
     /// <summary>
-    /// Summary description for TrackServiceTest
+    ///     Summary description for TrackServiceTest
     /// </summary>
     [TestClass]
     public class TrackServiceTest
     {
         #region Fields
 
-        private IKernel _kernel;
+        /// <summary>
+        /// </summary>
+        private readonly IKernel _kernel;
 
         #endregion //Fields
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackServiceTest"/> class.
+        /// </summary>
         public TrackServiceTest()
         {
             this._kernel = new StandardKernel(new DefaultServicesNinjectModule());
 
-            DataBaseTest dbTest = new DataBaseTest();
+            var dbTest = new DataBaseTest();
             dbTest.RegisterValidTrackTest();
         }
 
@@ -32,6 +49,8 @@
 
         #region Tests
 
+        /// <summary>
+        /// </summary>
         [TestMethod]
         public void TracksListTest()
         {
@@ -39,6 +58,8 @@
             Assert.IsTrue(trackService.GetTracksList().Any());
         }
 
+        /// <summary>
+        /// </summary>
         [TestMethod]
         public void TrackInfoTest()
         {
@@ -52,6 +73,8 @@
             Assert.IsTrue(track.Artist != null);
         }
 
+        /// <summary>
+        /// </summary>
         [TestMethod]
         public void TrackPricesTest()
         {
@@ -63,6 +86,10 @@
 
         #region Private Methods
 
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         private ITrackService GetTrackService()
         {
             return this._kernel.Get<ITrackService>();

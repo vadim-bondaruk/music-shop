@@ -72,7 +72,7 @@
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll();
+                return null; //repositry.GetAll();
             }
         }
 

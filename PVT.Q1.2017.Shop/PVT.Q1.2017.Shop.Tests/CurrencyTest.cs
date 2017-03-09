@@ -1,19 +1,41 @@
-﻿namespace PVT.Q1._2017.Shop.Tests
+﻿//  --------------------------------------------------------------------------------------------------------------------
+//  <copyright file="Track.cs" company="PVT.Q1.2017">
+//    PVT.Q1.2017
+//  </copyright>
+//  <summary>
+//    The track.
+//  </summary>
+//  --------------------------------------------------------------------------------------------------------------------
+
+namespace PVT.Q1._2017.Shop.Tests
 {
     using System.Linq;
+
     using global::Shop.BLL;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using Ninject;
 
+    /// <summary>
+    /// </summary>
     [TestClass]
     public class CurrencyTest
     {
+        /// <summary>
+        /// </summary>
         private readonly ICurrencyService _currencyService;
+
+        /// <summary>
+        /// </summary>
         private readonly IRepositoryFactory _factory;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="CurrencyTest" /> class.
+        /// </summary>
         public CurrencyTest()
         {
             IKernel kernel = new StandardKernel(new DefaultServicesNinjectModule());
@@ -21,6 +43,8 @@
             this._factory = kernel.Get<IRepositoryFactory>();
         }
 
+        /// <summary>
+        /// </summary>
         [TestMethod]
         public void AddValidCurrenciesTest()
         {
@@ -34,7 +58,7 @@
                     repository.AddOrUpdate(new Currency { ShortName = currencyName, Code = currencyCode });
                     repository.SaveChanges();
                 }
-                    
+
                 Assert.IsTrue(this._currencyService.CurrencyExists(currencyCode));
                 Assert.IsTrue(this._currencyService.CurrencyExists(currencyName));
             }
@@ -85,6 +109,8 @@
             }
         }
 
+        /// <summary>
+        /// </summary>
         [TestMethod]
         public void GetCurrenciesListTest()
         {
@@ -92,6 +118,8 @@
             Assert.IsTrue(this._currencyService.GetCurrenciesList().Any());
         }
 
+        /// <summary>
+        /// </summary>
         [TestMethod]
         public void GetCurrencyByCodeTest()
         {
@@ -99,6 +127,8 @@
             Assert.IsNotNull(this._currencyService.GetCurrencyByCode(840));
         }
 
+        /// <summary>
+        /// </summary>
         [TestMethod]
         public void GetCurrencyByNameTest()
         {
