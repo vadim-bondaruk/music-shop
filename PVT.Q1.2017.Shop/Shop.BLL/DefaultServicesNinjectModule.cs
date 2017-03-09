@@ -42,6 +42,8 @@
             Bind<IUserService>().To<UserService>();
 
             Bind<ICurrencyService>().To<CurrencyService>();
+
+            Bind<ICurrencyRateService>().To<CurrencyRateService>();
         }
     }
 }
