@@ -5,8 +5,10 @@ using Moq;
 using System.Collections.Generic;
 using PVT.Q1._2017.Shop.Controllers.Cart;
 using PVT.Q1._2017.Shop.ViewModels;
+using Shop.DAL.Infrastruture;
 using System;
 using System.Linq.Expressions;
+using System.Web.Mvc;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
@@ -14,7 +16,7 @@ namespace PVT.Q1._2017.Shop.Tests
     public class CartControllerTests
     {
         [TestMethod]
-        public void ActionIndexTest()
+        public void CartController_ActionIndexTest()
         {
             IList<Track> tracks = new List<Track>()
             {
@@ -26,15 +28,12 @@ namespace PVT.Q1._2017.Shop.Tests
             User user = new User { Id = 1 };
             Cart cart = new Cart { Id = 1, User = user, Tracks = tracks };
             ICollection<Cart> carts = new List<Cart>() { cart };
-            ICollection<User> users = new List<User>() { user };
 
-            Mock<IRepository<Cart>> moqCartRepository = new Mock<IRepository<Cart>>();
-            moqCartRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(cart);
+            Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
             moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
 
-            Mock<IRepository<User>> moqUserRepository = new Mock<IRepository<User>>();
+            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
             moqUserRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(user);
-            moqUserRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<User, bool>>>())).Returns(users);
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
             CartView cartView = (CartView)cartController.Index(1).Model;
@@ -45,6 +44,102 @@ namespace PVT.Q1._2017.Shop.Tests
             Assert.IsTrue(string.Compare(cartView.Tracks[1].Name, "Be mine", StringComparison.OrdinalIgnoreCase) == 0);
             Assert.IsTrue(cartView.Tracks[2].Id == 3);
             Assert.IsTrue(string.Compare(cartView.Tracks[2].Name, "Escape From Love", StringComparison.OrdinalIgnoreCase) == 0);
+        }
+
+        [TestMethod]
+        public void CartController_AddTrackToCart_WhenTrackIsNotNull()
+        {
+            IList<Track> tracks = new List<Track>()
+            {
+                new Track { Id=1, Name = "Wide Awake" },
+                new Track { Id=2, Name = "Be mine" },
+                new Track { Id=3, Name = "Escape From Love" }
+            };
+
+            User user = new User { Id = 1 };
+            Cart cart = new Cart { Id = 1, User = user, Tracks = tracks };
+            ICollection<Cart> carts = new List<Cart>() { cart };
+
+            Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
+            moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
+            moqCartRepository.Setup(m => m.AddOrUpdate(It.IsAny<Cart>()));
+
+            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+            moqUserRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(user);
+
+            var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
+            RedirectToRouteResult result = cartController.AddTrackToCart(1, new Track { Name = "Hallelujah" });
+
+            Assert.IsFalse(result.Permanent);
+            Assert.AreEqual("Cart", result.RouteValues["controller"]);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
+        }
+
+        [TestMethod]
+        public void CartController_AddTrackToCart_WhenTrackIsNull()
+        {
+            Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
+            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+
+            var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
+            RedirectToRouteResult result = cartController.AddTrackToCart(1, null);
+
+            Assert.IsFalse(result.Permanent);
+            Assert.AreEqual("Cart", result.RouteValues["controller"]);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
+        }
+
+        [TestMethod]
+        public void CartController_DeleteTrackFromCart_WhenTrackIsNotNull()
+        {
+            IList<Track> tracks = new List<Track>()
+            {
+                new Track { Id=1, Name = "Wide Awake" },
+                new Track { Id=2, Name = "Be mine" },
+                new Track { Id=3, Name = "Escape From Love" }
+            };
+
+            User user = new User { Id = 1 };
+            Cart cart = new Cart { Id = 1, User = user, Tracks = tracks };
+            ICollection<Cart> carts = new List<Cart>() { cart };
+
+            Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
+            moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
+            moqCartRepository.Setup(m => m.AddOrUpdate(It.IsAny<Cart>()));
+            moqCartRepository.Setup(m => m.Delete(It.IsAny<Cart>()));
+
+            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+            moqUserRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(user);
+
+            var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
+            RedirectToRouteResult result = cartController.DeleteTrackFromCart(1, new Track { Name = "Hallelujah" });
+
+            Assert.IsFalse(result.Permanent);
+            Assert.AreEqual("Cart", result.RouteValues["controller"]);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
+        }
+
+        [TestMethod]
+        public void CartController_DeleteTrackFromCart_WhenTrackIsNull()
+        {
+
+            Cart cart = new Cart { Id = 1, User = new User { Id = 1 }, Tracks = new List<Track>() };
+            ICollection<Cart> carts = new List<Cart>() { cart };
+            Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
+            moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
+
+            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+
+            var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
+            RedirectToRouteResult result = cartController.DeleteTrackFromCart(1, null);
+
+            Assert.IsFalse(result.Permanent);
+            Assert.AreEqual("Cart", result.RouteValues["controller"]);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
         }
     }
 }

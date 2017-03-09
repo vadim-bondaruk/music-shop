@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using global::Shop.Common.Models;
-    using global::Shop.Infrastructure.Repositories;
+    using global::Shop.DAL.Infrastruture;
     using ViewModels;
 
     /// <summary>
@@ -16,12 +16,12 @@
         /// <summary>
         /// Репозиторий для хранения корзины
         /// </summary>
-        private IRepository<Cart> _cartRepository;
+        private ICartRepository _cartRepository;
 
         /// <summary>
         /// Репозиторий для хранения пользователей 
         /// </summary>
-        private IRepository<User> _userRepository;
+        private IUserRepository _userRepository;
         #endregion
         /// <summary>
         /// Конструктор для контроллера корзины
@@ -32,7 +32,7 @@
         /// <param name="userRepo">
         /// Репозиторий для хранения пользователей
         /// </param>
-        public CartController(IRepository<Cart> cartRepo, IRepository<User> userRepo)
+        public CartController(ICartRepository cartRepo, IUserRepository userRepo)
         {
             this._cartRepository = cartRepo;
             this._userRepository = userRepo;
