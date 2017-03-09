@@ -1,21 +1,16 @@
 ﻿namespace Shop.BLL.Services
 {
+<<<<<<< HEAD
     using System;
-    using System.Linq;
-    using Common.Utils;
-    using DAL.Repositories;
+    using System.Data.Entity.Validation;
     using DTO;
     using Exceptions;
     using Infrastructure;
-    using Ninject;
-    using Ship.Infrastructure.Services;
+    using Shop.BLL.Validators;
     using Shop.Common.Models;
-<<<<<<< HEAD
     using Shop.Infrastructure.Enums;
     using Shop.Infrastructure.Repositories;
-=======
-    using Shop.Infrastructure.Enums;   
->>>>>>> 3e2cf867956d1aa223130425c31da0e95de1cfbf
+    using Utils;    
 
     /// <summary>
     /// 
@@ -43,66 +38,120 @@
         /// <returns></returns>
         public bool RegisterUser(UserDTO user)
         {
+            var registered = false;
+
             if (user == null)
             {
                 throw new ArgumentException("user");
             }
 
-            if (!this.IsLoginUnique(user.Login))
+            if (!UserDataValidator.IsLoginUnique(user.Login, this._userRepository))
             {
                 throw new UserValidationException("User with the same login already exists", "Login");
             }
 
-            if (!this.IsEmailUnique(user.Email))
+            if (!UserDataValidator.IsEmailUnique(user.Email, this._userRepository))
             {
                 throw new UserValidationException("User with the same email already exists", "Email");
             }
 
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>()
-                            .ForMember("UserRole", opt => opt.MapFrom((userDTO) => UserRoles.User)));
+                            .ForMember("UserRole", opt => opt.MapFrom(userDTO => UserRoles.User))
+                            .ForMember("Password", opt => opt.MapFrom(userDTO => PasswordEncryptor.GetHashString(userDTO.Password))));
             var userDB = AutoMapper.Mapper.Map<User>(user);
-            this._userRepository.AddOrUpdate(userDB);
-            return true;
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        private bool IsLoginUnique(string login)
-        {
-            if (string.IsNullOrEmpty(login))
+            try
             {
-                throw new ArgumentException("login");
+                this._userRepository.AddOrUpdate(userDB);
+                registered = true;
             }
-
-            if (this._userRepository.GetAll().Where(u => u.Login == login).IsAny<User>())
+            catch (DbEntityValidationException ex)
             {
-                return false;
+                // write data to log
+                throw;
             }
-                
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        private bool IsEmailUnique(string email)
-        {
-            if (string.IsNullOrEmpty(email))
-            {
-                throw new ArgumentException("Email");
-            }                
-
-            if (this._userRepository.GetAll().Where(u => u.Email == email).IsAny<User>())
-            {
-                return false;
-            }
-                
-            return true;
-        }
+           
+            return registered;
+        }     
     }
 }
+=======
+    using System.Collections.Generic;
+    using Common.Models;
+    using DAL.Infrastruture;
+    using Infrastructure;
+
+    /// <summary>
+    /// The user service (have to be extended by UserMenagement team).
+    /// </summary>
+    public class UserService : BaseService, IUserService
+    {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserService"/> class.
+        /// </summary>
+        /// <param name="factory">
+        /// The factory.
+        /// </param>
+        public UserService(IRepositoryFactory factory) : base(factory)
+        {
+        }
+
+        #endregion //Constructors
+
+        #region IUserService Members
+
+        /// <summary>
+        /// Returns the user with the specified <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The user id.</param>
+        /// <returns>
+        /// The user with the specified <paramref name="id"/> or <b>null</b> if user doesn't exist.
+        /// </returns>
+        public User GetUserInfo(int id)
+        {
+            using (var repository = this.Factory.GetUserRepository())
+            {
+                return repository.GetById(id, u => u.PriceLevel, u => u.UserCurrency);
+            }
+        }
+
+        /// <summary>
+        /// Returns all feedbacks that the specified <paramref name="user"/> have ever made.
+        /// </summary>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <returns>
+        /// All feedbacks that the specified <paramref name="user"/> have ever made.
+        /// </returns>
+        public ICollection<Feedback> GetUserFeedbacksList(User user)
+        {
+            using (var repository = this.Factory.GetFeedbackRepository())
+            {
+                return repository.GetAll(f => f.UserId == user.Id, f => f.Track, f => f.User);
+            }
+        }
+
+        /// <summary>
+        /// Returns all votes that the specified <paramref name="user"/> have ever made.
+        /// </summary>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <returns>
+        /// All votes that the specified <paramref name="user"/> have ever made.
+        /// </returns>
+        public ICollection<Vote> GetUserVotesList(User user)
+        {
+            using (var repository = this.Factory.GetVoteRepository())
+            {
+                return repository.GetAll(v => v.UserId == user.Id, v => v.Track, v => v.User);
+            }
+        }
+
+        #endregion //IUserService Members
+    }
+}
+>>>>>>> develop

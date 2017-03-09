@@ -1,16 +1,16 @@
 ﻿namespace PVT.Q1._2017.Shop
 {
     using Ninject.Modules;
-    using global::Shop.BLL.Infrastructure;
-    using global::Shop.BLL.Services;
 
     /// <summary>
+    /// Defines bindings for application
+    /// </summary>
     /// 
     /// </summary>
     public class WebNinjectModule : NinjectModule
     {
         /// <summary>
-        /// 
+        /// Loads the module into the kernel.
         /// </summary>
         public override void Load()
         {

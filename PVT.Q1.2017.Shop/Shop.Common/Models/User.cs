@@ -1,62 +1,72 @@
-﻿namespace Shop.Common.Models
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="User.cs" company="PVT.Q1.2017">
+//   PVT.Q1.2017
+// </copyright>
+// <summary>
+//   The temporary user model.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Shop.Common.Models
 {
-    using System;
-    using Ship.Infrastructure.Models;
-    using Shop.Infrastructure.Enums;
+    using System.Collections.Generic;
+    using Infrastructure.Models;
 
     /// <summary>
-    /// Basic user model
+    ///     The temporary user model (have to be extended by UserMenagement team).
     /// </summary>
     public class User : BaseEntity
     {
-        /// <summary>
-        /// Users first name
-        /// </summary>
-        public string FirstName { get; set; }
+        #region Properties
 
         /// <summary>
-        /// Users last name
+        /// Identity key
         /// </summary>
-        public string LastName { get; set; }
+        public string IdentityKey { get; set; }
 
         /// <summary>
-        /// Users login (nickname)
+        /// Additional discount
         /// </summary>
-        public string Login { get; set; }
+        public double? Dicount { get; set; }
+
+        #endregion //Navigation Properties
+
+        #region Foreign Keys
 
         /// <summary>
-        /// Users password
+        /// User currency id
         /// </summary>
-        public string Password { get; set; }
+        public int CurrencyId { get; set; }
+        
+        /// <summary>
+        /// ID for relation with <see cref="PriceLevel"/> 
+        /// </summary>
+        public int PriceLevelId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
 
         /// <summary>
-        /// Users e-mail
+        /// User currency
         /// </summary>
-        public string Email { get; set; }
+        public virtual Currency UserCurrency { get; set; }
 
         /// <summary>
-        /// 
+        /// Get or set price level for user
         /// </summary>
-        public string Sex { get; set; }
+        public virtual PriceLevel PriceLevel { get; set; }
 
         /// <summary>
-        /// Users birth date
+        /// All feedbacks
         /// </summary>
-        public DateTime? BirthDate { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
 
         /// <summary>
-        /// Users role in this shop
+        /// All votes
         /// </summary>
-        public UserRoles UserRole { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
 
-        /// <summary>
-        /// Users country
-        /// </summary>
-        public string Country { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string PhoneNumber { get; set; }
+        #endregion //Navigation Properties
     }
 }
