@@ -82,10 +82,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         {
             return new INinjectModule[]
             {
-                new DefaultServicesNinjectModule(),
-                new BllNinjectModule(),
-                new DalNinjectModule(),
-                new WebNinjectModule()
+                new DefaultServicesNinjectModule()
             };
         }
     }

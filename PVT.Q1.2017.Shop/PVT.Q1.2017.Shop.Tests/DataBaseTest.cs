@@ -8,7 +8,6 @@
     using global::Shop.DAL.Infrastruture;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Ninject;
-using System.Linq;
 
     /// <summary>
     /// Summary description for DataBaseTest

@@ -1,9 +1,15 @@
 ﻿namespace Shop.BLL.Services
 {
+    using System;
     using System.Collections.Generic;
     using Common.Models;
     using DAL.Infrastruture;
-    using Infrastructure;
+    using DTO;
+    using Exceptions;
+    using Infrastructure;          
+    using Shop.Infrastructure.Enums;
+    using Utils;
+    using Validators;
 
     /// <summary>
     /// The user service (have to be extended by UserMenagement team).
@@ -74,6 +80,49 @@
                 return repository.GetAll(v => v.UserId == user.Id, v => v.Track, v => v.User);
             }
         }
+
+         /// <summary>
+        /// Addition new user to userRepository
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public bool RegisterUser(UserDTO user)
+        {
+            var registered = false;
+
+            if (user == null)
+            {
+                throw new ArgumentException("user");
+            }
+
+            if (!UserDataValidator.IsLoginUnique(user.Login, this.Factory.GetUserRepository()))
+            {
+                throw new UserValidationException("User with the same login already exists", "Login");
+            }
+
+            if (!UserDataValidator.IsEmailUnique(user.Email, this.Factory.GetUserRepository()))
+            {
+                throw new UserValidationException("User with the same email already exists", "Email");
+            }
+
+            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>()
+                            .ForMember("UserRole", opt => opt.MapFrom(userDTO => UserRoles.User))
+                            .ForMember("Password", opt => opt.MapFrom(userDTO => PasswordEncryptor.GetHashString(userDTO.Password))));
+            var userDB = AutoMapper.Mapper.Map<User>(user);
+
+            try
+            {
+                this.Factory.GetUserRepository().AddOrUpdate(userDB);
+                registered = true;
+            }
+            catch (Exception ex)
+            {
+                registered = false;
+                throw;
+            }
+           
+            return registered;
+        }     
 
         #endregion //IUserService Members
     }

@@ -83,7 +83,6 @@
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
-    <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\VoteService.cs" />
   </ItemGroup>
   <ItemGroup>

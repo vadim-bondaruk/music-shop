@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Models;
+    using DTO;
 
     /// <summary>
     /// The user service (have to be extended by UserMenagement team).
@@ -38,5 +39,12 @@
         /// All votes that the specified <paramref name="user"/> have ever made.
         /// </returns>
         ICollection<Vote> GetUserVotesList(User user);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        bool RegisterUser(UserDTO user);
     }
 }
