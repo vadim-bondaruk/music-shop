@@ -63,8 +63,8 @@
                 /// </summary>
                 var userCurrency = new Currency();
                 userCurrency.Code = 840;
-                userCurrency.Name = "USD";
-                cartView.CurrencyShortName = userCurrency.Name;
+                userCurrency.ShortName = "USD";
+                cartView.CurrencyShortName = userCurrency.ShortName;
                 cartView.SetTotalPrice(userCurrency);
             }
 

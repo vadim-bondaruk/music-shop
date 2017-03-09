@@ -15,7 +15,7 @@ namespace PVT.Q1._2017.Shop.Tests
             //// Set Currency
             var userCurrency = new Currency();
             userCurrency.Code = 840;
-            userCurrency.Name = "USD";
+            userCurrency.ShortName = "USD";
             //// Create and set CartView model
             var myCartView = new CartView() { Tracks = new List<Track>() };
             myCartView.SetTotalPrice(userCurrency);
@@ -28,7 +28,7 @@ namespace PVT.Q1._2017.Shop.Tests
             //// Set Currency
             var userCurrency = new Currency();
             userCurrency.Code = 840;
-            userCurrency.Name = "USD";
+            userCurrency.ShortName = "USD";
             //// Set TrackPrices
             var priceTrack = new TrackPrice();
             priceTrack.Currency = userCurrency;

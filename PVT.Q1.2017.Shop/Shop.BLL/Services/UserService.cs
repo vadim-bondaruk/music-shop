@@ -2,16 +2,13 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using DAL.Repositories.Infrastruture;
-    using Helpers;
+    using DAL.Infrastruture;
     using Infrastructure;
-    using Shop.Infrastructure;
-    using Shop.Infrastructure.Validators;
 
     /// <summary>
     /// The user service (have to be extended by UserMenagement team).
     /// </summary>
-    public class UserService : Service<IUserRepository, User>, IUserService
+    public class UserService : BaseService, IUserService
     {
         #region Constructors
 
@@ -21,10 +18,7 @@
         /// <param name="factory">
         /// The factory.
         /// </param>
-        /// <param name="validator">
-        /// The validator.
-        /// </param>
-        public UserService(IFactory factory, IValidator<User> validator) : base(factory, validator)
+        public UserService(IRepositoryFactory factory) : base(factory)
         {
         }
 
@@ -41,7 +35,7 @@
         /// </returns>
         public User GetUserInfo(int id)
         {
-            using (var repository = this.CreateRepository())
+            using (var repository = this.Factory.GetUserRepository())
             {
                 return repository.GetById(id, u => u.PriceLevel, u => u.UserCurrency);
             }
@@ -58,9 +52,7 @@
         /// </returns>
         public ICollection<Feedback> GetUserFeedbacksList(User user)
         {
-            ValidatorHelper.CheckUserForNull(user);
-
-            using (var repository = this.Factory.Create<IFeedbackRepository>())
+            using (var repository = this.Factory.GetFeedbackRepository())
             {
                 return repository.GetAll(f => f.UserId == user.Id, f => f.Track, f => f.User);
             }
@@ -77,9 +69,7 @@
         /// </returns>
         public ICollection<Vote> GetUserVotesList(User user)
         {
-            ValidatorHelper.CheckUserForNull(user);
-
-            using (var repository = this.Factory.Create<IVoteRepository>())
+            using (var repository = this.Factory.GetVoteRepository())
             {
                 return repository.GetAll(v => v.UserId == user.Id, v => v.Track, v => v.User);
             }

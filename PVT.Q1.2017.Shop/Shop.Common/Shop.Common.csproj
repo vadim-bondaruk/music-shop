@@ -46,8 +46,6 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\Artist.cs" />
-    <Compile Include="Models\BaseNamedEntity.cs" />
-    <Compile Include="Models\BasePriceEntity.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />

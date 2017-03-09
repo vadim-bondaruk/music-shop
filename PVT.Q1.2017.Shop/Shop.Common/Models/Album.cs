@@ -2,13 +2,22 @@
 {
     using System;
     using System.Collections.Generic;
+    using Infrastructure.Models;
 
     /// <summary>
     /// The album.
     /// </summary>
-    public class Album : BaseNamedEntity
+    public class Album : BaseEntity
     {
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the cover.
@@ -16,7 +25,7 @@
         public byte[] Cover { get; set; }
 
         /// <summary>
-        /// Gets or sets the release date.
+        /// Gets or sets the album release date.
         /// </summary>
         public DateTime? ReleaseDate { get; set; }
 
@@ -31,6 +40,11 @@
         {
             get; set;
         }
+
+        /// <summary>
+        /// The track which the current album contains
+        /// </summary>
+        public int? TrackId { get; set; }
 
         #endregion //Foreign Keys
 

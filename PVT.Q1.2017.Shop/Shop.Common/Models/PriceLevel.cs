@@ -1,12 +1,25 @@
 ﻿namespace Shop.Common.Models
 {
     using System.Collections.Generic;
+    using Infrastructure.Models;
 
     /// <summary>
     /// Price level
     /// </summary>
-    public class PriceLevel : BaseNamedEntity
+    public class PriceLevel : BaseEntity
     {
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name
+        {
+            get; set;
+        }
+
+        #endregion //Properties
+
         #region Navigation Properties
 
         /// <summary>

@@ -31,7 +31,6 @@
         public ShopContext(string connectionStringOrName) : base(connectionStringOrName)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShopContext, Configuration>());
-            this.Configuration.LazyLoadingEnabled = false;
         }
 
         #endregion //Constructors
@@ -92,11 +91,6 @@
         /// Gets or sets the genres.
         /// </summary>
         public DbSet<Genre> Genres { get; set; }
-
-        /// <summary>
-        /// Gets or sets the carts.
-        /// </summary>
-        public DbSet<Cart> Carts { get; set; }
 
         #endregion //Properties
 

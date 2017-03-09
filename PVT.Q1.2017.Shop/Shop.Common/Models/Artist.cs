@@ -11,13 +11,19 @@ namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
+    using Infrastructure.Models;
 
     /// <summary>
     /// The artist.
     /// </summary>
-    public class Artist : BaseNamedEntity
+    public class Artist : BaseEntity
     {
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the biography.
