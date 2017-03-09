@@ -52,10 +52,12 @@
     <Compile Include="DefaultServicesNinjectModule.cs" />
     <Compile Include="Services\AlbumService.cs" />
     <Compile Include="Services\ArtistService.cs" />
+    <Compile Include="Services\CurrencyRateService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
     <Compile Include="Services\FeedbackService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumService.cs" />
     <Compile Include="Services\Infrastructure\IArtistService.cs" />
+    <Compile Include="Services\Infrastructure\ICurrencyRateService.cs" />
     <Compile Include="Services\Infrastructure\ICurrencyService.cs" />
     <Compile Include="Services\Infrastructure\IFeedbackService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumPriceService.cs" />
