@@ -1,10 +1,13 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System.Collections.Generic;
     using System.Linq;
-    using global::Shop.BLL;
+    using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
+    using global::Shop.DAL.Infrastruture;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Ninject;
+    using Moq;
 
     /// <summary>
     /// Summary description for TrackServiceTest
@@ -14,7 +17,8 @@
     {
         #region Fields
 
-        private IKernel _kernel;
+        private readonly ITrackService _trackService;
+        private readonly IRepositoryFactory _factory;
 
         #endregion //Fields
 
@@ -22,10 +26,8 @@
 
         public TrackServiceTest()
         {
-            this._kernel = new StandardKernel(new DefaultServicesNinjectModule());
-
-            DataBaseTest dbTest = new DataBaseTest();
-            dbTest.RegisterValidTrackTest();
+            this._factory = new RepositoryMoqFactory();
+            this._trackService = new TrackService(this._factory);
         }
 
         #endregion //Constructors
@@ -33,41 +35,120 @@
         #region Tests
 
         [TestMethod]
-        public void TracksListTest()
+        public void AddTrackTest()
         {
-            var trackService = this.GetTrackService();
-            Assert.IsTrue(trackService.GetTracksList().Any());
+            using (var repository = this._factory.GetTrackRepository())
+            {
+                repository.AddOrUpdate(new Track { Name = "Some track" });
+                repository.SaveChanges();
+
+                Assert.IsTrue(repository.GetAll().Any());
+            }
         }
 
         [TestMethod]
-        public void TrackInfoTest()
+        public void GetTracksListTest()
         {
-            var trackService = this.GetTrackService();
-
-            var track = trackService.GetTracksList().FirstOrDefault(t => t.ArtistId.HasValue && t.AlbumId.HasValue);
-            Assert.IsNotNull(track);
-
-            track = trackService.GetTrackInfo(track.Id);
-            Assert.IsNotNull(track);
-            Assert.IsTrue(track.Artist != null);
+            AddTrackTest();
+            Assert.IsTrue(this._trackService.GetTracksList().Any());
         }
 
         [TestMethod]
-        public void TrackPricesTest()
+        public void GetTrackInfoTest()
         {
-            var trackService = this.GetTrackService();
-            Assert.IsTrue(trackService.GetTracksWithoutPriceConfigured().Any());
+            AddTrackTest();
+            Assert.IsNotNull(this._trackService.GetTrackInfo(1));
+        }
+
+        [TestMethod]
+        public void GetTracksWithPriceConfiguredTest()
+        {
+            AddTrackTest();
+
+            var track = this._trackService.GetTracksList().FirstOrDefault();
+            Assert.IsNotNull(track);
+
+            track.TrackPrices = new List<TrackPrice> { new TrackPrice { Price = 1.99m } };
+
+            Assert.IsTrue(_trackService.GetTracksWithPriceConfigured().Any());
+        }
+
+        [TestMethod]
+        public void GetTracksWithoutPriceConfiguredTest()
+        {
+            AddTrackTest();
+            Assert.IsTrue(_trackService.GetTracksWithoutPriceConfigured().Any());
+        }
+
+        [TestMethod]
+        public void GetTrackPricesTest()
+        {
+            AddTrackTest();
+
+            var track = this._trackService.GetTracksList().FirstOrDefault();
+            Assert.IsNotNull(track);
+
+            using (var repository = this._factory.GetTrackPriceRepository())
+            {
+                repository.AddOrUpdate(new TrackPrice { Track = track, TrackId = track.Id, Price = 4.99m });
+                repository.SaveChanges();
+            }
+            Assert.IsTrue(_trackService.GetTrackPrices(new Track()).Any());
+        }
+
+        [TestMethod]
+        public void GetTrackVotesTest()
+        {
+            AddTrackTest();
+
+            var track = this._trackService.GetTracksList().FirstOrDefault();
+            Assert.IsNotNull(track);
+
+            using (var repository = this._factory.GetVoteRepository())
+            {
+                repository.AddOrUpdate(new Vote { Track = track, TrackId = track.Id, Mark = Mark.FiveStars });
+                repository.SaveChanges();
+            }
+            Assert.IsTrue(_trackService.GetTrackVotes(new Track()).Any());
+        }
+
+        [TestMethod]
+        public void GetTrackFeedbacksTest()
+        {
+            AddTrackTest();
+
+            var track = this._trackService.GetTracksList().FirstOrDefault();
+            Assert.IsNotNull(track);
+
+            using (var repository = this._factory.GetFeedbackRepository())
+            {
+                repository.AddOrUpdate(new Feedback { Track = track, TrackId = track.Id, Comments = "Some comments" });
+                repository.SaveChanges();
+            }
+            Assert.IsTrue(_trackService.GetTrackFeedbacks(new Track()).Any());
+        }
+
+        [TestMethod]
+        public void GetAllAlbumsWithTrackTest()
+        {
+            AddTrackTest();
+
+            var track = this._trackService.GetTracksList().FirstOrDefault();
+            Assert.IsNotNull(track);
+
+            using (var repository = this._factory.GetAlbumRepository())
+            {
+                repository.AddOrUpdate(new Album
+                {
+                    Tracks = new List<Track> { track },
+                    TrackId = track.Id,
+                    Name = "Some album"
+                });
+                repository.SaveChanges();
+            }
+            Assert.IsTrue(_trackService.GetAllAlbumsWithTrack(new Track()).Any());
         }
 
         #endregion //Tests
-
-        #region Private Methods
-
-        private ITrackService GetTrackService()
-        {
-            return this._kernel.Get<ITrackService>();
-        }
-
-        #endregion //Private Methods
     }
 }

@@ -18,9 +18,9 @@
         /// </summary>
         public override void Load()
         {
-            Bind<DbContext>().To<ShopContext>();
-
-            this.ConfigureRepositoryFactory();
+            Bind<DbContext>().To<ShopContext>().InRequestScope();
+            
+            ConfigureRepositoryFactory();
         }
 
         /// <summary>

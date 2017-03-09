@@ -41,7 +41,7 @@
         /// <returns>
         /// The track price in the specified currency for the specified  <paramref name="priceLevel"/> or <b>null</b>.
         /// </returns>
-        public TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
+        public TrackPrice GetTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
         {
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
