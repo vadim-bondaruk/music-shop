@@ -16,6 +16,8 @@
     /// </summary>
     public class UserPaymentMethodRepository : Repository<UserPaymentMethod>, IUserPaymentMethodRepository //IRepository<UserPaymentMethod>
     {
+        #region Constructors
+
         /// <summary>
         /// Default ctor on dbContext
         /// </summary>
@@ -23,6 +25,8 @@
         public UserPaymentMethodRepository(DbContext dbContext) : base(dbContext)
         {            
         }
+
+        #endregion //Constructors
 
         /// <summary>
         /// Tries to find an entity by the specified <paramref name="id"/>
@@ -43,7 +47,7 @@
         /// <returns>
         /// All entities from the repository.
         /// </returns>
-        public new ICollection<UserPaymentMethod> GetAll()
+        public virtual ICollection<UserPaymentMethod> GetAll()
         {
             var result = this.CurrentDbSet;
             return result.ToList();

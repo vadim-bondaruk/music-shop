@@ -33,26 +33,18 @@ namespace PVT.Q1._2017.Shop.Tests
 
 
         [TestMethod]
-        public void GetById()
-        {
-            var mockSet = new Mock<DbSet<UserPaymentMethodRepository>>();
-            var mock = new Mock<IRepository<UserPaymentMethod>>();
-            var res = mock.Setup(a => a.GetById(1)).Returns(() => _dbContext.Set<UserPaymentMethod>().Find(1));
-
-            Assert.IsNotNull(res);
-        }
-
-        [TestMethod]
         public void GetAll()
         {
+            Mock<DbContext> dbContext = new Mock<DbContext>();
+
             var data = new List<UserPaymentMethod>()
             {
-                new UserPaymentMethod {Alias = "AAA", Id = 1},
-                new UserPaymentMethod {Alias = "BBB", Id = 2},
-                new UserPaymentMethod {Alias = "CCC", Id = 3},
+                new UserPaymentMethod {Alias = "AAA"},
+                new UserPaymentMethod {Alias = "BBB"},
+                new UserPaymentMethod {Alias = "CCC"},
             };
 
-            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>();
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(dbContext.Object);
             mock.Setup(r => r.GetAll()).Returns(data).Verifiable();
 
             ICollection<UserPaymentMethod> paymentMethod = mock.Object.GetAll();

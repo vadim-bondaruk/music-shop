@@ -56,9 +56,9 @@
   <ItemGroup>
     <Compile Include="Context\ShopContext.cs" />
     <Compile Include="DalNinjectModule.cs" />
+    <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserPaymentMethodRepository.cs" />
   </ItemGroup>
