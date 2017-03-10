@@ -9,6 +9,7 @@
 
 namespace Shop.Common.Models
 {
+    using Infrastructure.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,18 +19,19 @@ namespace Shop.Common.Models
     /// <summary>
     /// Define settings for user payment methods
     /// </summary>
-    public class UserPaymentMethod : BasePayment
+    public class UserPaymentMethod : BaseEntity
     {
+
+        /// <summary>
+        /// Gets or sets Name for type of payment method
+        /// </summary>
+        public string Name { get; set; }
+
         /// <summary>
         /// Gets or sets User for payment method settings
         /// </summary>
         public User User { get; set; }
-
-        /// <summary>
-        /// Gets or sets payment method
-        /// </summary>
-        public PaymentMethod PaymentMethod { get; set; }
-
+                
         /// <summary>
         /// Gets or sets alias for this user payment method settings
         /// </summary>
@@ -39,5 +41,10 @@ namespace Shop.Common.Models
         /// Gets or sets default currency 
         /// </summary>
         public Currency Currency { get; set; }
+
+        /// <summary>
+        /// Description for payment method
+        /// </summary>
+        public string Description { get; set; }
     }
 }
