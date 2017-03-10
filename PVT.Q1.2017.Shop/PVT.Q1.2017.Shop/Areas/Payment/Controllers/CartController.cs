@@ -115,22 +115,24 @@
         /// Удаляемая песня
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track)
+        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, int trackId = 0)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault(t => t.Tracks.Contains(track));
-            if (cart == null || track == null)
+            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
+            if (cart == null || trackId == 0)
             {
                 return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
 
-            if (cart.Tracks.Count == 1)
+            var deletedTrack = cart.Tracks.FirstOrDefault(t => t.Id == trackId);
+            if (deletedTrack != null)
+            {
+                cart.Tracks.Remove(deletedTrack);
+                this._cartRepository.AddOrUpdate(cart);
+            }
+
+            if (cart.Tracks.Count == 0)
             {
                 this._cartRepository.Delete(cart);
-            }
-            else
-            {
-                cart.Tracks.Remove(track);
-                this._cartRepository.AddOrUpdate(cart);
             }
 
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
