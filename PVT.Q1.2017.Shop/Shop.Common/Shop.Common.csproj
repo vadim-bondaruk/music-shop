@@ -47,6 +47,7 @@
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\BasePayment.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
