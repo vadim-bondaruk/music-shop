@@ -35,8 +35,6 @@
         [TestMethod]
         public void UserPaymentMethodRepository_GetAll()
         {
-            Mock<DbContext> dbContext = new Mock<DbContext>();
-
             var data = new List<UserPaymentMethod>()
             {
                 new UserPaymentMethod {Alias = "AAA"},
@@ -44,7 +42,7 @@
                 new UserPaymentMethod {Alias = "CCC"}
             };
 
-            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(dbContext.Object);
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(_dbContext);
             mock.Setup(r => r.GetAll()).Returns(data).Verifiable();
 
             ICollection<UserPaymentMethod> paymentMethod = mock.Object.GetAll();
@@ -56,14 +54,13 @@
         [TestMethod]
         public void UserPaymentMethodRepository_GetAll_Expression()
         {
-            Mock<DbContext> dbContet = new Mock<DbContext>();
             var data2 = new List<UserPaymentMethod>()
             {
                 new UserPaymentMethod {Alias = "BBB", Id = 2},
                 new UserPaymentMethod {Alias = "CCC", Id = 3}
             };
 
-            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(dbContet.Object);
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(_dbContext);
             mock.Setup(r => r.GetAll(x => x.Id > 1)).Returns(data2);
             var paymentMethod = mock.Object.GetAll(x => x.Id > 1);
             Assert.AreEqual(paymentMethod, data2);
