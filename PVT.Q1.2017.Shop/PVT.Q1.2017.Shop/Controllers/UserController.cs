@@ -1,17 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
-    using Ninject;
     using global::Shop.BLL.DTO;
-    using global::Shop.BLL.Exceptions;
-    using global::Shop.BLL.Infrastructure;    
-    using global::Shop.BLL.Services;    
-    using global::Shop.Common.Models;    
-    using ViewModels;    
+    using global::Shop.BLL.Exceptions;    
+    using global::Shop.BLL.Services.Infrastructure;
+    using ViewModels;
 
     /// <summary>
     /// 

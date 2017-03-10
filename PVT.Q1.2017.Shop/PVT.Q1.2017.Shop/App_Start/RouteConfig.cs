@@ -1,9 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
 
@@ -13,13 +9,12 @@
     public class RouteConfig
     {
         /// <summary>
-        /// 
+        /// Set default routes
         /// </summary>
-        /// <param name="routes"></param>
+        /// <param name="routes">Collection of routes</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
             routes.MapRoute(
                 name: "CreateUser",
                 url: "{controller}/{action}/{id}",

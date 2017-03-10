@@ -10,7 +10,6 @@ namespace PVT.Q1._2017.Shop.App_Start
 {
     using System;
     using System.Web;
-
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -55,7 +54,6 @@ namespace PVT.Q1._2017.Shop.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -73,7 +71,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load(GetModules());
-            DependencyResolver.SetResolver(new CustomDependecyResolver(kernel));
+            DependencyResolver.SetResolver(new CustomDependencyResolver(kernel));
         }
 
         /// <summary>
@@ -84,9 +82,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         {
             return new INinjectModule[]
             {
-                new BllNinjectModule(),
-                new DalNinjectModule(),
-                new WebNinjectModule()
+                new DefaultServicesNinjectModule()
             };
         }
     }

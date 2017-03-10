@@ -41,6 +41,8 @@
 
         [StringLength(50, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 7)]
 
+        [RegularExpression(@"^(?=.*\w)(?=.*\d)(?=.*[!-*]).[^\s]*$", ErrorMessage = "Пароль должен содержать символы латинского алфавита, цифры с спецсимволы")]
+
         /// <summary>
         /// Users password
         /// </summary>

@@ -10,6 +10,7 @@ using Shop.Infrastructure.Repositories;
 using Shop.Common.Models;
 using Shop.BLL.DTO;
 using Shop.BLL.Exceptions;
+using Shop.DAL.Infrastruture;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
@@ -20,8 +21,8 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void RegisterUser_UserDTOInput_ReturnTrue()
         {
-            Mock<IRepository<User>> repo = new Mock<IRepository<User>>();
-            repo.Setup(r => r.GetAll()).Returns(new List<User>() { new User()});
+            Mock<IRepositoryFactory> repo = new Mock<IRepositoryFactory>();
+            repo.Setup(r => r.GetUserRepository().GetAll()).Returns(new List<User>() { new User()});
             UserService service = new UserService(repo.Object);
             UserDTO user_dto = new UserDTO
             {
@@ -46,8 +47,8 @@ namespace PVT.Q1._2017.Shop.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void RegisterUser_NullInput()
         {
-            Mock<IRepository<User>> repo = new Mock<IRepository<User>>();
-            repo.Setup(r => r.GetAll()).Returns(new List<User>() { new User() });
+            Mock<IRepositoryFactory> repo = new Mock<IRepositoryFactory>();
+            repo.Setup(r => r.GetUserRepository().GetAll()).Returns(new List<User>() { new User() });
             UserService service = new UserService(repo.Object);
            
             var registered = service.RegisterUser(null);
@@ -59,8 +60,8 @@ namespace PVT.Q1._2017.Shop.Tests
         [ExpectedException(typeof(UserValidationException))]
         public void RegisterUser_UserDTOInput_LoginExist()
         {
-            Mock<IRepository<User>> repo = new Mock<IRepository<User>>();
-            repo.Setup(r => r.GetAll()).Returns(new List<User>() { new User() {Login= "OilMagnat" } });
+            Mock<IRepositoryFactory> repo = new Mock<IRepositoryFactory>();
+            repo.Setup(r => r.GetUserRepository().GetAll()).Returns(new List<User>() { new User() {Login= "OilMagnat" } });
             UserService service = new UserService(repo.Object);
             UserDTO user_dto = new UserDTO
             {
@@ -84,8 +85,8 @@ namespace PVT.Q1._2017.Shop.Tests
         [ExpectedException(typeof(UserValidationException))]
         public void RegisterUser_UserDTOInput_EmailExist()
         {
-            Mock<IRepository<User>> repo = new Mock<IRepository<User>>();
-            repo.Setup(r => r.GetAll()).Returns(new List<User>() { new User() { Email = "blablabla@gmail.com" } });
+            Mock<IRepositoryFactory> repo = new Mock<IRepositoryFactory>();
+            repo.Setup(r => r.GetUserRepository().GetAll()).Returns(new List<User>() { new User() { Email = "blablabla@gmail.com" } });
             UserService service = new UserService(repo.Object);
             UserDTO user_dto = new UserDTO
             {

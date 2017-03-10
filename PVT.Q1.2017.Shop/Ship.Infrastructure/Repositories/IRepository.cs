@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Ship.Infrastructure.Models;
+    using Models;
 
     /// <summary>
     /// Common Repository interface.
