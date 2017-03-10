@@ -10,11 +10,14 @@
 namespace Shop.Common.Models
 {
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The currency model.
     /// </summary>
+    [Validator(typeof(CurrencyValidator))]
     public class Currency : BaseEntity
     {
         #region Properties
