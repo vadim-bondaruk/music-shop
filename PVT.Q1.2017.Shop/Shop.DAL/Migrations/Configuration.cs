@@ -4,6 +4,8 @@ namespace Shop.DAL.Migrations
     using System.Linq;
     using Common.Models;
     using System;
+    using System.Collections.Generic;
+    using Infrastructure.Enums;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Shop.DAL.Context.ShopContext>
     {
