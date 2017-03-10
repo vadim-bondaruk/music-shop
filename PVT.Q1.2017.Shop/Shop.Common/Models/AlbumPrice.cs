@@ -16,19 +16,51 @@ namespace Shop.Common.Models
     /// </summary>
     public class AlbumPrice : BaseEntity
     {
-        /// <summary>
-        /// Gets or sets the album cost amount.
-        /// </summary>
-        public decimal Amount { get; set; }
+        #region Properties
 
         /// <summary>
-        /// Gets or sets the currency.
+        /// Price for track
         /// </summary>
-        public Currency Currency { get; set; }
+        public decimal Price { get; set; }
+
+        #endregion //Properties
+
+        #region Foreign Keys
 
         /// <summary>
-        /// Gets or sets the album.
+        /// Album id
         /// </summary>
-        public Album Album { get; set; }
+        public int AlbumId { get; set; }
+
+        /// <summary>
+        /// Get or set price level id
+        /// </summary>
+        public int PriceLevelId { get; set; }
+
+        /// <summary>
+        /// Currency id
+        /// </summary>
+        public int CurrencyId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets or sets the <see cref="Album"/>.
+        /// </summary>
+        public virtual Album Album { get; set; }
+
+        /// <summary>
+        /// Get or set <see cref="PriceLevel"/>
+        /// </summary>
+        public virtual PriceLevel PriceLevel { get; set; }
+
+        /// <summary>
+        /// The currency.
+        /// </summary>
+        public virtual Currency Currency { get; set; }
+
+        #endregion //Navigation Properties
     }
 }

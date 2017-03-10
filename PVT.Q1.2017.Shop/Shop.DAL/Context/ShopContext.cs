@@ -1,7 +1,12 @@
 ﻿namespace Shop.DAL.Context
 {
+    using System;
     using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration;
+    using System.Linq;
+    using System.Reflection;
     using Common.Models;
+    using Migrations;
 
     /// <summary>
     /// Music shop Db
@@ -13,8 +18,19 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ShopContext"/> class.
         /// </summary>
-        public ShopContext() : base("ShopConnection")
+        public ShopContext() : this("ShopConnection")
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShopContext"/> class.
+        /// </summary>
+        /// <param name="connectionStringOrName">
+        /// The connection string or Db name.
+        /// </param>
+        public ShopContext(string connectionStringOrName) : base(connectionStringOrName)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShopContext, Configuration>());
         }
 
         #endregion //Constructors
@@ -47,9 +63,19 @@
         public DbSet<AlbumPrice> AlbumPrices { get; set; }
 
         /// <summary>
+        /// Gets or sets the price levels.
+        /// </summary>
+        public DbSet<PriceLevel> PriceLevels { get; set; }
+
+        /// <summary>
         /// Gets or sets the currency rates.
         /// </summary>
         public DbSet<CurrencyRate> CurrencyRates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the currencies.
+        /// </summary>
+        public DbSet<Currency> Currencies { get; set; }
 
         /// <summary>
         /// Gets or sets the feedbacks.
@@ -66,11 +92,30 @@
         /// </summary>
         public DbSet<Genre> Genres { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Carts
-        /// </summary>
-        public DbSet<Cart> Carts { get; set; }
-        
         #endregion //Properties
+
+        #region Protected Methods
+
+        /// <summary>
+        /// The Db configuration.
+        /// </summary>
+        /// <param name="modelBuilder">
+        /// The model builder.
+        /// </param>
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+               .Where(type => !string.IsNullOrEmpty(type.Namespace))
+               .Where(type => type.BaseType != null && type.BaseType.IsGenericType
+                   && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            foreach (var configurationInstance in typesToRegister.Select(Activator.CreateInstance))
+            {
+                modelBuilder.Configurations.Add((dynamic)configurationInstance);
+            }
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        #endregion //Protected Methods
     }
 }

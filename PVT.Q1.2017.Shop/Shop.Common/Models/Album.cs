@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Album.cs" company="PVT Q1 2017">
-//   All rights reserved
-// </copyright>
-// <summary>
-//   Defines the Album type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,10 +9,15 @@ namespace Shop.Common.Models
     /// </summary>
     public class Album : BaseEntity
     {
+        #region Properties
+
         /// <summary>
-        /// Gets or sets the artist.
+        /// Gets or sets the name.
         /// </summary>
-        public Artist Artist { get; set; }
+        public string Name
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the cover.
@@ -29,23 +25,46 @@ namespace Shop.Common.Models
         public byte[] Cover { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the album release date.
         /// </summary>
-        public string Name { get; set; }
+        public DateTime? ReleaseDate { get; set; }
+
+        #endregion //Prperties
+
+        #region Foreign Keys
 
         /// <summary>
-        /// Gets or sets the release date.
+        /// Gets or sets the artist.
         /// </summary>
-        public DateTime ReleaseDate { get; set; }
+        public int? ArtistId
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// The track which the current album contains
+        /// </summary>
+        public int? TrackId { get; set; }
+
+        #endregion //Foreign Keys
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets or sets the artist.
+        /// </summary>
+        public virtual Artist Artist { get; set; }
 
         /// <summary>
         /// Gets or sets all tracks from the album.
         /// </summary>
-        public ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
 
         /// <summary>
         /// Gets or sets the album prices.
         /// </summary>
-        public ICollection<AlbumPrice> AlbumPrices { get; set; }
+        public virtual ICollection<AlbumPrice> AlbumPrices { get; set; }
+
+        #endregion //Navigation Properties
     }
 }
