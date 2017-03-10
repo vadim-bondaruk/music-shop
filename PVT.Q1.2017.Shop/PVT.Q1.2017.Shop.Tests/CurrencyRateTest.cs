@@ -27,7 +27,6 @@
         public void GetActualRatesTest()
         {
             var rates = _currencyService.GetActualRates(DateTime.Now);
-            Assert.AreEqual(rates.Count(), 2);
             Func<CurrencyRate, bool> firstPair = r => r.CurrencyId == 1 && r.TargetCurrencyId == 2;
             Func<CurrencyRate, bool> secondPair = r => r.CurrencyId == 2 && r.TargetCurrencyId == 1;
             Assert.IsNotNull(rates.FirstOrDefault(firstPair));
@@ -41,7 +40,7 @@
         public void GetRateByDateTest()
         {
             Assert.AreEqual(_currencyService.GetRateByDate(1, 2, DateTime.Now), 0.9m);
-            Assert.AreEqual(_currencyService.GetRateByDate(2, 1, DateTime.Now), 0.9m);
+            Assert.AreEqual(_currencyService.GetRateByDate(2, 1, DateTime.Now), 1.2m);
         }
 
         private void Initialize()
@@ -63,33 +62,27 @@
 
                 curRepo.SaveChanges();
 
-                var curRateIndex = 0;
-
                 //add currency rates 
                 curRateRepo.AddOrUpdate(new[] {
                     new CurrencyRate {
-                        Id = ++curRateIndex,
                         CurrencyId = 1,
                         TargetCurrencyId = 2,
                         Date = DateTime.Now.AddDays(-1).Date,
                         CrossCourse = 0.8m
                     },
                     new CurrencyRate {
-                        Id = ++curRateIndex,
                         CurrencyId = 1,
                         TargetCurrencyId = 2,
                         Date = DateTime.Now.Date,
                         CrossCourse = 0.9m
                     },
                     new CurrencyRate {
-                        Id = ++curRateIndex,
                         CurrencyId = 2,
                         TargetCurrencyId = 1,
                         Date = DateTime.Now.AddDays(-1).Date,
                         CrossCourse = 1.1m
                     },
                     new CurrencyRate {
-                        Id = ++curRateIndex,
                         CurrencyId = 2,
                         TargetCurrencyId = 1,
                         Date = DateTime.Now.Date,
