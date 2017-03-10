@@ -1,17 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Shop.Common.Models;
-using Shop.DAL.Repositories;
-using Shop.Infrastructure.Repositories;
-
-
-namespace PVT.Q1._2017.Shop.Tests
+﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
+    using global::Shop.Common.Models;
+    using global::Shop.DAL.Repositories;
+
     [TestClass]
     public class UserPaymentMethodRepositoryTest
     {
@@ -23,7 +18,7 @@ namespace PVT.Q1._2017.Shop.Tests
         }
 
         [TestMethod]
-        public void GetById_Verify()
+        public void UserPaymentMethodRepository_GetById_Verify()
         {
             
             var id = 1;
@@ -38,7 +33,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
 
         [TestMethod]
-        public void GetAll()
+        public void UserPaymentMethodRepository_GetAll()
         {
             Mock<DbContext> dbContext = new Mock<DbContext>();
 
@@ -59,7 +54,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
 
         [TestMethod]
-        public void GetAll_Expression()
+        public void UserPaymentMethodRepository_GetAll_Expression()
         {
             Mock<DbContext> dbContet = new Mock<DbContext>();
             var data2 = new List<UserPaymentMethod>()
