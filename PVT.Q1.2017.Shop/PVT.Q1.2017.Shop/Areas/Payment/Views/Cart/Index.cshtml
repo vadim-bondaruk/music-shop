@@ -1,0 +1,46 @@
+﻿@model PVT.Q1._2017.Shop.ViewModels.CartViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Корзина</title>
+</head>
+<body>
+    <form action="/Home/Index" method="post">
+        <table border="1" cellpadding="3">
+            <thead>
+                <tr>
+                    <th><font color="blue">Исполнитель</font></th>
+                    <th style="text-align:center;"><font color="blue">Альбом</font></th>
+                    <th><font color="blue">Название песни</font></th>
+                    <th><font color="blue">Продолжительность</font></th>
+                    <th><font color="blue">Цена</font></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var anyTrack in Model.Tracks)
+                {
+                    <tr>
+                        <td>@anyTrack.Artist</td>
+                        <td width="200">@anyTrack.Album</td>
+                        <td>@anyTrack.Name</td>
+                        <td>@anyTrack.Duration</td>
+                        <td>@anyTrack.TrackPrices.First(p => p.Currency.Name == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
+        <br />
+        <br />
+        <input type="submit" value="Оплатить" />
+    </form>
+</body>
+</html>
