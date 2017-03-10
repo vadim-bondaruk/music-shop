@@ -108,10 +108,7 @@
     <Compile Include="CartControllerTests.cs" />
     <Compile Include="CartRepositoryTests.cs" />
     <Compile Include="CartViewModelTests.cs" />
-    <Compile Include="CurrencyTest.cs" />
-    <Compile Include="DataBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrackControllerTests.cs" />
     <Compile Include="TrackPriceServiceTest.cs" />
     <Compile Include="TrackServiceTest.cs" />
   </ItemGroup>
