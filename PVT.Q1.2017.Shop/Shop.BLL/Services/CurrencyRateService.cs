@@ -38,7 +38,7 @@
             {
                 var rates = repository.GetAll(rate => rate.Currency, rate => rate.TargetCurrency);
                 return rates.Where(c => c.Date <= dateValue)
-                    .GroupBy(rate => new { rate.Currency, rate.TargetCurrency })
+                    .GroupBy(rate => new { rate.CurrencyId, rate.TargetCurrencyId })
                         .Select(grouping => grouping.OrderByDescending(rate => rate.Date).FirstOrDefault());
             }
         }
