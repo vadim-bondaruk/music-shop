@@ -6,7 +6,8 @@
     using Common.Models;
     using DAL.Infrastruture;
     using Infrastructure;
-    using PVT.Q1._2017.Shop.Areas.Admin.Models;
+
+    using Shop.Common.ViewModels.Admin;
 
     /// <summary>
     /// The currency service.

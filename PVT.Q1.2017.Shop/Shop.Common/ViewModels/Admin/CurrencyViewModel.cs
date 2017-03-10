@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Models
+﻿namespace Shop.Common.ViewModels.Admin
 {
     /// <summary>
     /// </summary>
