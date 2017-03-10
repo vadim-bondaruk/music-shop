@@ -15,15 +15,20 @@ namespace PVT.Q1._2017.Shop.Tests
     [TestClass]
     public class UserPaymentMethodRepositoryTest
     {
-        private readonly DbContext _dbContext;
+        private static readonly DbContext _dbContext;
+
+        static UserPaymentMethodRepositoryTest()
+        {
+           _dbContext = new Mock<DbContext>().Object;
+        }
 
         [TestMethod]
         public void GetById_Verify()
         {
-            Mock<DbContext> dbContext = new Mock<DbContext>();
+            
             var id = 1;
             var expected = new UserPaymentMethod() { Alias = "SSS"};
-            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(dbContext.Object);
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(_dbContext);
             mock.Setup(r => r.GetById(id)).Returns(expected).Verifiable();
 
             UserPaymentMethod payment = mock.Object.GetById(id);
