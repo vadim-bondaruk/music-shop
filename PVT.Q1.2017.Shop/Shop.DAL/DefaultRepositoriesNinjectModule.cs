@@ -41,6 +41,7 @@
             Bind<ICurrencyRepository>().To<CurrencyBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCurrencyRepository());
             Bind<IPriceLevelRepository>().To<PriceLevelBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPriceLevelRepository());
             Bind<IUserRepository>().To<UserBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserRepository());
+            Bind<ICartRepository>().To<CartBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCartRepository());
 
             Bind<IRepositoryFactory>().ToFactory();
         }

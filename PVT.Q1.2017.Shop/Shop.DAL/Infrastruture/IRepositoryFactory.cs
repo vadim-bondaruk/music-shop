@@ -103,5 +103,13 @@ namespace Shop.DAL.Infrastruture
         /// The track repository.
         /// </returns>
         IVoteRepository GetVoteRepository();
+
+        /// <summary>
+        /// Returns the cart repository.
+        /// </summary>
+        /// <returns>
+        /// The cart repository.
+        /// </returns>
+        ICartRepository GetCartRepository();
     }
 }
