@@ -38,26 +38,18 @@ namespace PVT.Q1._2017.Shop.Tests
 
 
         [TestMethod]
-        public void GetById()
-        {
-            var mockSet = new Mock<DbSet<UserPaymentMethodRepository>>();
-            var mock = new Mock<IRepository<UserPaymentMethod>>();
-            var res = mock.Setup(a => a.GetById(1)).Returns(() => _dbContext.Set<UserPaymentMethod>().Find(1));
-
-            Assert.IsNotNull(res);
-        }
-
-        [TestMethod]
         public void GetAll()
         {
+            Mock<DbContext> dbContext = new Mock<DbContext>();
+
             var data = new List<UserPaymentMethod>()
             {
-                new UserPaymentMethod {Alias = "AAA", Id = 1},
-                new UserPaymentMethod {Alias = "BBB", Id = 2},
-                new UserPaymentMethod {Alias = "CCC", Id = 3},
+                new UserPaymentMethod {Alias = "AAA"},
+                new UserPaymentMethod {Alias = "BBB"},
+                new UserPaymentMethod {Alias = "CCC"}
             };
 
-            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>();
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(dbContext.Object);
             mock.Setup(r => r.GetAll()).Returns(data).Verifiable();
 
             ICollection<UserPaymentMethod> paymentMethod = mock.Object.GetAll();
@@ -66,53 +58,21 @@ namespace PVT.Q1._2017.Shop.Tests
         }
 
 
-
-        [TestMethod]
-        public void AddOrUpdate()
-        {
-            var model = new UserPaymentMethod();
-            var mock = new Mock<IRepository<UserPaymentMethod>>();
-            var res = mock.Setup(a => a.AddOrUpdate(model));
-
-            Assert.IsNotNull(res);
-
-        }
-
-
-        [TestMethod]
-        public void Delete_model()
-        {
-            var model = new UserPaymentMethod();
-
-            var mock = new Mock<IRepository<UserPaymentMethod>>();
-            var res = mock.Setup(a => a.Delete(model));
-
-            Assert.IsNotNull(res);
-
-        }
-
-        [TestMethod]
-        public void Delete_id()
-        {
-            var model = new UserPaymentMethod();
-
-            var mock = new Mock<IRepository<UserPaymentMethod>>();
-            var res = mock.Setup(a => a.Delete(model.Id));
-
-            Assert.IsNotNull(res);
-
-        }
-
         [TestMethod]
         public void GetAll_Expression()
         {
-            var model = new UserPaymentMethod();
+            Mock<DbContext> dbContet = new Mock<DbContext>();
+            var data2 = new List<UserPaymentMethod>()
+            {
+                new UserPaymentMethod {Alias = "BBB", Id = 2},
+                new UserPaymentMethod {Alias = "CCC", Id = 3}
+            };
 
-            var mock = new Mock<IRepository<UserPaymentMethod>>();
-            var res = mock.Setup(a => a.GetAll(b => b.Id < 0)).Returns(() => _dbContext.Set<UserPaymentMethod>().ToList());
-
-            Assert.IsNotNull(res);
-
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(dbContet.Object);
+            mock.Setup(r => r.GetAll(x => x.Id > 1)).Returns(data2);
+            var paymentMethod = mock.Object.GetAll(x => x.Id > 1);
+            Assert.AreEqual(paymentMethod, data2);
+            mock.Verify();
         }
     }
 }
