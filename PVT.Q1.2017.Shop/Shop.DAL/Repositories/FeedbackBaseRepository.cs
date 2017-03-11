@@ -1,51 +1,44 @@
-//  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="Track.cs" company="PVT.Q1.2017">
-//    PVT.Q1.2017
-//  </copyright>
-//  <summary>
-//    The track.
-//  </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-
 namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-
-    using Shop.Common.Models;
-    using Shop.DAL.Infrastruture;
+    using Common.Models;
+    using Infrastruture;
 
     /// <summary>
-    ///     The feedback repository.
+    /// The feedback repository.
     /// </summary>
     public class FeedbackBaseRepository : BaseRepository<Feedback>, IFeedbackRepository
     {
-        #region Constructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="FeedbackBaseRepository" /> class.
+        /// Initializes a new instance of the <see cref="FeedbackBaseRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
-        ///     The db context.
+        /// The db context.
         /// </param>
-        public FeedbackBaseRepository(DbContext dbContext)
-            : base(dbContext)
+        public FeedbackBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
 
-        #endregion //Constructors
-
-        #region Protected Methods
-
         /// <summary>
-        ///     Adds the specified <paramref name="feedback" /> into Db.
+        /// Adds the specified <paramref name="feedback"/> into Db.
         /// </summary>
         /// <param name="feedback">
-        ///     The feedback.
+        /// The feedback.
         /// </param>
         protected override void Add(Feedback feedback)
         {
             EntityState trackEntryState;
             EntityState userEntryState;
+
+            if (feedback.TrackId == 0 && feedback.Track != null)
+            {
+                feedback.TrackId = feedback.Track.Id;
+            }
+
+            if (feedback.UserId == 0 && feedback.User != null)
+            {
+                feedback.UserId = feedback.User.Id;
+            }
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The FeedbackBaseRepository should be SOLID, should only add information about feedbacks! Not about tracks or users!
@@ -58,7 +51,5 @@ namespace Shop.DAL.Repositories
             // adding the feedback into Db.
             base.Add(feedback);
         }
-
-        #endregion //Protected Methods
     }
 }

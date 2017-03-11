@@ -2,16 +2,15 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
-
-    using Shop.Common.Models;
+    using Common.Models;
 
     /// <summary>
-    ///     The <see cref="Feedback" /> configuration.
+    /// The <see cref="Feedback"/> configuration.
     /// </summary>
-    public class FeedbackConfiguration : EntityTypeConfiguration<Feedback>
+    public class FeedbackConfiguration : EntityTypeConfiguration<Feedback>    
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="FeedbackConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="FeedbackConfiguration"/> class.
         /// </summary>
         public FeedbackConfiguration()
         {

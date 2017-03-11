@@ -1,50 +1,38 @@
-﻿//  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="Track.cs" company="PVT.Q1.2017">
-//    PVT.Q1.2017
-//  </copyright>
-//  <summary>
-//    The track.
-//  </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-
-    using Shop.Common.Models;
-    using Shop.DAL.Infrastruture;
+    using Common.Models;
+    using Infrastruture;
 
     /// <summary>
-    ///     The album repository
+    /// The album repository
     /// </summary>
     public class AlbumBaseRepository : BaseRepository<Album>, IAlbumRepository
     {
-        #region Constructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AlbumBaseRepository" /> class.
+        /// Initializes a new instance of the <see cref="AlbumBaseRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
-        ///     The db context.
+        /// The db context.
         /// </param>
-        public AlbumBaseRepository(DbContext dbContext)
-            : base(dbContext)
+        public AlbumBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
 
-        #endregion //Constructors
-
-        #region Protected Methods
-
         /// <summary>
-        ///     Adds the specified <paramref name="album" /> into Db.
+        /// Adds the specified <paramref name="album"/> into Db.
         /// </summary>
         /// <param name="album">
-        ///     The album to add.
+        /// The album to add.
         /// </param>
         protected override void Add(Album album)
         {
             EntityState artistEntryState;
+
+            if (album.ArtistId == null && album.Artist != null)
+            {
+                album.ArtistId = album.Artist.Id;
+            }
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The AlbumBaseRepository should be SOLID, should only add information about album! Not about artist!
@@ -55,7 +43,5 @@ namespace Shop.DAL.Repositories
             // adding the album into Db.
             base.Add(album);
         }
-
-        #endregion //Protected Methods
     }
 }

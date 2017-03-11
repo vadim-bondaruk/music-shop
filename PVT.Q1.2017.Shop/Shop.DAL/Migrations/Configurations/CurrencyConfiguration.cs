@@ -1,13 +1,4 @@
-﻿//  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="Track.cs" company="PVT.Q1.2017">
-//    PVT.Q1.2017
-//  </copyright>
-//  <summary>
-//    The track.
-//  </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.DAL.Migrations.Configurations
+﻿namespace Shop.DAL.Migrations.Configurations
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Infrastructure.Annotations;
@@ -27,6 +18,7 @@ namespace Shop.DAL.Migrations.Configurations
         {
             this.HasKey(c => c.Id);
             this.Property(c => c.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
             this.Property(c => c.ShortName)
                 .IsRequired()
                 .HasMaxLength(3)
@@ -38,6 +30,7 @@ namespace Shop.DAL.Migrations.Configurations
                 .HasColumnAnnotation(
                     "Index",
                     new IndexAnnotation(new[] { new IndexAttribute("UniqueCurrencyCode_Index") { IsUnique = true } }));
+
             this.Property(c => c.FullName).IsOptional().IsUnicode().HasMaxLength(150);
             this.Property(c => c.Symbol).IsOptional().IsUnicode().HasMaxLength(10);
             this.Property(c => c.IsDeleted);

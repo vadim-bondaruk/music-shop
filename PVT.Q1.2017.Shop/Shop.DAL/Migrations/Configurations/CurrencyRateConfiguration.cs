@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
+    using Common.Models;
 
     using Common.Models;
 

@@ -1,50 +1,64 @@
-﻿//  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="Track.cs" company="PVT.Q1.2017">
-//    PVT.Q1.2017
-//  </copyright>
-//  <summary>
-//    The track.
-//  </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
+    using System;
     using System.Data.Entity;
-
-    using Shop.Common.Models;
-    using Shop.DAL.Infrastruture;
+    using System.Linq;
+    using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// </summary>
     public class VoteBaseRepository : BaseRepository<Vote>, IVoteRepository
     {
-        #region Constructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="VoteBaseRepository" /> class.
+        /// Initializes a new instance of the <see cref="VoteBaseRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
-        ///     The db context.
+        /// The db context.
         /// </param>
-        public VoteBaseRepository(DbContext dbContext)
-            : base(dbContext)
+        public VoteBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
 
-        #endregion //Constructors
+        /// <summary>
+        /// Returns average track rating for the specified <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <returns>
+        /// The average track rating for the specified <paramref name="track"/>.
+        /// </returns>
+        public double GetAverageTrackRating(Track track)
+        {
+            if (track == null)
+            {
+                throw new ArgumentNullException(nameof(track));
+            }
 
-        #region Protected Methods
+            return CurrentDbSet.Where(v => v.TrackId == track.Id).Average(v => (int)v.Mark);
+        }
 
         /// <summary>
-        ///     Adds the specified <paramref name="vote" /> into Db.
+        /// Adds the specified <paramref name="vote"/> into Db.
         /// </summary>
         /// <param name="vote">
-        ///     The vote to add.
+        /// The vote to add.
         /// </param>
         protected override void Add(Vote vote)
         {
             EntityState trackEntryState;
             EntityState userEntryState;
+
+            if (vote.TrackId == 0 && vote.Track != null)
+            {
+                vote.TrackId = vote.Track.Id;
+            }
+
+            if (vote.UserId == 0 && vote.User != null)
+            {
+                vote.UserId = vote.User.Id;
+            }
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The VoteBaseRepository should be SOLID, should only add information about vote! Not about track or user!
@@ -57,7 +71,5 @@ namespace Shop.DAL.Repositories
             // adding the vote into Db.
             base.Add(vote);
         }
-
-        #endregion //Protected Methods
     }
 }

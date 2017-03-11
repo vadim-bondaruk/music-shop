@@ -13,8 +13,6 @@
     /// </summary>
     public class ShopContext : DbContext
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ShopContext"/> class.
         /// </summary>
@@ -32,11 +30,7 @@
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShopContext, Configuration>());
         }
-
-        #endregion //Constructors
-
-        #region Properties
-
+        
         /// <summary>
         /// Gets or sets the tracks.
         /// </summary>
@@ -92,10 +86,6 @@
         /// </summary>
         public DbSet<Genre> Genres { get; set; }
 
-        #endregion //Properties
-
-        #region Protected Methods
-
         /// <summary>
         /// The Db configuration.
         /// </summary>
@@ -105,9 +95,11 @@
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-               .Where(type => !string.IsNullOrEmpty(type.Namespace))
-               .Where(type => type.BaseType != null && type.BaseType.IsGenericType
-                   && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+                                          .Where(type => !string.IsNullOrEmpty(type.Namespace))
+                                          .Where(type => type.BaseType != null &&
+                                                         type.BaseType.IsGenericType &&
+                                                         type.BaseType.GetGenericTypeDefinition() ==
+                                                         typeof(EntityTypeConfiguration<>));
             foreach (var configurationInstance in typesToRegister.Select(Activator.CreateInstance))
             {
                 modelBuilder.Configurations.Add((dynamic)configurationInstance);
@@ -115,7 +107,5 @@
 
             base.OnModelCreating(modelBuilder);
         }
-
-        #endregion //Protected Methods
     }
 }

@@ -24,8 +24,6 @@ namespace Shop.DAL.Repositories
     public class BaseRepository<TEntity> : IRepository<TEntity>
     where TEntity : BaseEntity, new()
     {
-        #region Fields
-
         /// <summary>
         ///     The Db context.
         /// </summary>
@@ -46,10 +44,6 @@ namespace Shop.DAL.Repositories
         /// </summary>
         private bool _disposed;
 
-        #endregion //Fields
-
-        #region Constructors
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="BaseRepository{TEntity}" /> class.
         /// </summary>
@@ -69,10 +63,6 @@ namespace Shop.DAL.Repositories
             this._dbContext = dbContext;
             this._currentDbSet = this._dbContext.Set<TEntity>();
         }
-
-        #endregion //Constructors
-
-        #region Properties
 
         /// <summary>
         ///     Gets the db context.
@@ -95,10 +85,6 @@ namespace Shop.DAL.Repositories
                 return this._currentDbSet;
             }
         }
-
-        #endregion //Properties
-
-        #region IRepository<TEntity> Members
 
         /// <summary>
         ///     Tries to find a model by the specified <paramref name="id" />.
@@ -213,10 +199,6 @@ namespace Shop.DAL.Repositories
             }
         }
 
-        #endregion //IRepository<TEntity> Members
-
-        #region IDisposable Pattern
-
         /// <summary>
         ///     Disposes resources.
         /// </summary>
@@ -241,10 +223,6 @@ namespace Shop.DAL.Repositories
                 }
             }
         }
-
-        #endregion //IDisposable Pattern
-
-        #region Protected Methods
 
         /// <summary>
         ///     Updates the specified <paramref name="modelFromDb" /> by values from <paramref name="model" />.
@@ -317,7 +295,5 @@ namespace Shop.DAL.Repositories
                 previousEntityState = EntityState.Detached;
             }
         }
-
-        #endregion //Protected Methods
     }
 }

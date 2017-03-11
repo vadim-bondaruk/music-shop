@@ -1,25 +1,19 @@
 ﻿namespace Shop.Common.Models
 {
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The track price.
     /// </summary>
+    [Validator(typeof(TrackPriceValidator))]
     public class TrackPrice : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Price for track
         /// </summary>
-        public decimal Price
-        {
-            get; set;
-        }
-
-        #endregion //Properties
-
-        #region Foreign Keys
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Track id
@@ -36,10 +30,6 @@
         /// </summary>
         public int CurrencyId { get; set; }
 
-        #endregion //Foreign Keys
-
-        #region Navigation Properties
-
         /// <summary>
         /// Gets or sets the track.
         /// </summary>
@@ -54,7 +44,5 @@
         /// The currency.
         /// </summary>
         public virtual Currency Currency { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,7 +49,9 @@
   <ItemGroup>
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
+    <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
@@ -57,6 +63,18 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\AlbumPriceValidator.cs" />
+    <Compile Include="Validators\AlbumValidator.cs" />
+    <Compile Include="Validators\ArtistValidator.cs" />
+    <Compile Include="Validators\CurrencyRateValidator.cs" />
+    <Compile Include="Validators\CurrencyValidator.cs" />
+    <Compile Include="Validators\FeedbackValidator.cs" />
+    <Compile Include="Validators\GenreValidator.cs" />
+    <Compile Include="Validators\PriceLevelValidator.cs" />
+    <Compile Include="Validators\TrackPriceValidator.cs" />
+    <Compile Include="Validators\TrackValidator.cs" />
+    <Compile Include="Validators\UserValidator.cs" />
+    <Compile Include="Validators\VoteValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

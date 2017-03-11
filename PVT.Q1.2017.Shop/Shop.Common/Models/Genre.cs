@@ -1,32 +1,24 @@
 ﻿namespace Shop.Common.Models
 {
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
-    /// The genre.
+    /// The track genre.
     /// </summary>
+    [Validator(typeof(GenreValidator))]
     public class Genre : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        public string Name
-        {
-            get; set;
-        }
-
-        #endregion //Properties
-
-        #region Navigation Properties
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the tracks.
         /// </summary>
         public ICollection<Track> Tracks { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

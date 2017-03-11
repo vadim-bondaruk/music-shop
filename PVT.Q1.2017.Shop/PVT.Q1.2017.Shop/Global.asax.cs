@@ -6,6 +6,12 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
+    using AutoMapper;
+    using FluentValidation.Mvc;
+
+    using global::Shop.Common.Models;
+    using ViewModels;
+
     #endregion
 
     /// <summary>
@@ -20,8 +26,7 @@
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            // Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackViewModel>());
+            FluentValidationModelValidatorProvider.Configure();
         }
     }
 }

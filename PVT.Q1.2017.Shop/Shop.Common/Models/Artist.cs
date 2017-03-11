@@ -1,60 +1,45 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Artist.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   Defines the Artist type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
-
-    using Shop.Infrastructure.Models;
+    using FluentValidation.Attributes;
+    using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
-    ///     The artist.
+    /// The artist.
     /// </summary>
+    [Validator(typeof(ArtistValidator))]
     public class Artist : BaseEntity
     {
-        #region Properties
-
         /// <summary>
-        ///     Gets or sets the name.
+        /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        ///     Gets or sets the biography.
+        /// Gets or sets the biography.
         /// </summary>
         public string Biography { get; set; }
 
         /// <summary>
-        ///     Gets or sets the birthday.
+        /// Gets or sets the birthday.
         /// </summary>
         public DateTime? Birthday { get; set; }
 
         /// <summary>
-        ///     Gets or sets the photo.
+        /// Gets or sets the photo.
         /// </summary>
         public byte[] Photo { get; set; }
 
-        #endregion //Properties
-
-        #region Navigation Properties
-
         /// <summary>
-        ///     Gets or sets all tracks of the current artist.
+        /// Gets or sets all tracks of the current artist.
         /// </summary>
         public virtual ICollection<Track> Tracks { get; set; }
 
         /// <summary>
-        ///     Gets or sets the albums.
+        /// Gets or sets the albums.
         /// </summary>
         public virtual ICollection<Album> Albums { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

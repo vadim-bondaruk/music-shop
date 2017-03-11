@@ -15,12 +15,12 @@
         /// </summary>
         public AlbumConfiguration()
         {
-            this.HasKey(t => t.Id);
-            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            Property(t => t.ReleaseDate).IsOptional();
+            this.HasKey(a => a.Id);
+            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            this.Property(a => a.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
+            this.Property(a => a.ReleaseDate).IsOptional();
 
-            HasOptional(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
+            this.HasOptional(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
 
             this.ToTable("tbAlbums");
         }

@@ -1,35 +1,25 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CurrencyRate.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   The currency rate.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
-    #region
-
-    using Shop.Infrastructure.Models;
-
-    #endregion
+    using System;
+    using FluentValidation.Attributes;
+    using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     ///     The currency rate.
     /// </summary>
+    [Validator(typeof(CurrencyRateValidator))]
     public class CurrencyRate : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         ///     Gets or sets the cross course.
         /// </summary>
         public decimal CrossCourse { get; set; }
 
-        #endregion //Properties
-
-        #region Foreign Keys
+        /// <summary>
+        /// Date of currency rate
+        /// </summary>
+        public DateTime? Date { get; set; }
 
         /// <summary>
         /// Currency id
@@ -41,10 +31,6 @@ namespace Shop.Common.Models
         /// </summary>
         public int TargetCurrencyId { get; set; }
 
-        #endregion //Foreign Keys
-
-        #region Navigation Properties
-
         /// <summary>
         /// Gets or sets the currency.
         /// </summary>
@@ -54,7 +40,5 @@ namespace Shop.Common.Models
         ///     Gets or sets the target currency.
         /// </summary>
         public virtual Currency TargetCurrency { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

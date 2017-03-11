@@ -1,52 +1,50 @@
-﻿//  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="Track.cs" company="PVT.Q1.2017">
-//    PVT.Q1.2017
-//  </copyright>
-//  <summary>
-//    The track.
-//  </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
-
-    using Shop.Common.Models;
-    using Shop.DAL.Infrastruture;
+    using Common.Models;
+    using Infrastruture;
 
     /// <summary>
-    ///     The album price repository
+    /// The album price repository
     /// </summary>
     public class AlbumPriceBaseRepository : BaseRepository<AlbumPrice>, IAlbumPriceRepository
     {
-        #region Constructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AlbumPriceBaseRepository" /> class.
+        /// Initializes a new instance of the <see cref="AlbumPriceBaseRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
-        ///     The db context.
+        /// The db context.
         /// </param>
-        public AlbumPriceBaseRepository(DbContext dbContext)
-            : base(dbContext)
+        public AlbumPriceBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
 
-        #endregion //Constructors
-
-        #region Protected Methods
-
         /// <summary>
-        ///     Adds the specified <paramref name="albumPrice" /> into Db.
+        /// Adds the specified <paramref name="albumPrice"/> into Db.
         /// </summary>
         /// <param name="albumPrice">
-        ///     The album price to add.
+        /// The album price to add.
         /// </param>
         protected override void Add(AlbumPrice albumPrice)
         {
             EntityState albumEntryState;
             EntityState currencyEntryState;
             EntityState priceLevelEntryState;
+
+            if (albumPrice.AlbumId == 0 && albumPrice.Album != null)
+            {
+                albumPrice.AlbumId = albumPrice.Album.Id;
+            }
+
+            if (albumPrice.CurrencyId == 0 && albumPrice.Currency != null)
+            {
+                albumPrice.CurrencyId = albumPrice.Currency.Id;
+            }
+
+            if (albumPrice.PriceLevelId == 0 && albumPrice.PriceLevel != null)
+            {
+                albumPrice.PriceLevelId = albumPrice.PriceLevel.Id;
+            }
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The AlbumPriceBaseRepository should be SOLID, should only add information about album price! Not about album, currency or price level!
@@ -61,7 +59,5 @@ namespace Shop.DAL.Repositories
             // adding the album price into Db
             base.Add(albumPrice);
         }
-
-        #endregion //Protected Methods
     }
 }
