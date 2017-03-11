@@ -189,7 +189,6 @@
             var track = new Track
             {
                 Name = "Super Track",
-                AlbumId = albumId,
                 ArtistId = artistId
             };
 
@@ -202,6 +201,17 @@
             Assert.IsTrue(track.Id > 0);
 
             int trackId = track.Id;
+
+            using (var repository = repositoryFactory.GetAlbumTrackRelationRepository())
+            {
+                repository.AddOrUpdate(new AlbumTrackRelation
+                {
+                    AlbumId = albumId,
+                    TrackId = trackId
+                });
+                repository.SaveChanges();
+            }
+
             using (var repository = repositoryFactory.GetTrackRepository())
             {
                 track = repository.GetById(trackId);
@@ -226,7 +236,6 @@
             var track = new Track
             {
                 Name = "Super Track",
-                AlbumId = albumId,
                 ArtistId = artistId,
                 Artist = artist
             };
@@ -240,6 +249,17 @@
             Assert.IsTrue(track.Id > 0);
 
             int trackId = track.Id;
+
+            using (var repository = repositoryFactory.GetAlbumTrackRelationRepository())
+            {
+                repository.AddOrUpdate(new AlbumTrackRelation
+                {
+                    AlbumId = albumId,
+                    TrackId = trackId
+                });
+                repository.SaveChanges();
+            }
+
             using (var repository = repositoryFactory.GetTrackRepository())
             {
                 track = repository.GetById(trackId);

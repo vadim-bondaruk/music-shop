@@ -11,23 +11,14 @@
     [TestClass]
     public class CurrencyServiceTest
     {
-        #region Fields
-
         private readonly ICurrencyService _currencyService;
         private readonly IRepositoryFactory _factory;
-
-        #endregion //Fields
-
-        #region Constructors
 
         public CurrencyServiceTest()
         {
             this._factory = new RepositoryMoqFactory();
             this._currencyService = new CurrencyService(this._factory);
         }
-            #endregion //Constructors
-
-        #region Tests
 
         [TestMethod]
         public void AddCurrenciesTest()
@@ -72,7 +63,5 @@
             this.AddCurrenciesTest();
             Assert.IsNotNull(this._currencyService.GetCurrencyInfo(1));
         }
-
-        #endregion //Tests
     }
 }

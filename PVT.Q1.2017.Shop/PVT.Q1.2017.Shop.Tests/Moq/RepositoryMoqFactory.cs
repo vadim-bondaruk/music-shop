@@ -11,8 +11,6 @@
 
     public class RepositoryMoqFactory : IRepositoryFactory
     {
-        #region Fields
-
         private readonly List<Track> _tracks = new List<Track>();
         private readonly List<Artist> _artists = new List<Artist>();
         private readonly List<Album> _albums = new List<Album>();
@@ -24,11 +22,8 @@
         private readonly List<PriceLevel> _priceLevels = new List<PriceLevel>();
         private readonly List<TrackPrice> _trackPrices = new List<TrackPrice>();
         private readonly List<User> _users = new List<User>();
-        private readonly List<Vote> votes = new List<Vote>();
-
-        #endregion //Fields
-
-        #region IRepositoryFactory Members
+        private readonly List<Vote> _votes = new List<Vote>();
+        private readonly List<AlbumTrackRelation> _albumTrackRelations = new List<AlbumTrackRelation>();
 
         public IAlbumRepository GetAlbumRepository()
         {
@@ -585,51 +580,99 @@
         {
             var mock = new Mock<IVoteRepository>();
 
-            mock.Setup(m => m.GetAll()).Returns(votes);
+            mock.Setup(m => m.GetAll()).Returns(this._votes);
 
             mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()))
-                .Returns(votes);
+                .Returns(this._votes);
 
             mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Vote, bool>>>()))
-                .Returns(votes);
+                .Returns(this._votes);
 
             mock.Setup(
                        m =>
                            m.GetAll(It.IsAny<Expression<Func<Vote, bool>>>(),
                                     It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()))
-                .Returns(votes);
+                .Returns(this._votes);
 
-            mock.Setup(m => m.GetById(It.IsInRange(1, votes.Count, Range.Inclusive)))
-                .Returns(votes.FirstOrDefault(a => a.Id > 0));
+            mock.Setup(m => m.GetById(It.IsInRange(1, this._votes.Count, Range.Inclusive)))
+                .Returns(this._votes.FirstOrDefault(a => a.Id > 0));
 
-            mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, votes.Count))))
+            mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, this._votes.Count))))
                 .Returns(() => null);
 
-            mock.Setup(m => m.GetById(It.IsInRange(1, votes.Count, Range.Inclusive),
+            mock.Setup(m => m.GetById(It.IsInRange(1, this._votes.Count, Range.Inclusive),
                                       It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()))
-                .Returns(votes.FirstOrDefault(a => a.Id > 0));
+                .Returns(this._votes.FirstOrDefault(a => a.Id > 0));
 
-            mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, votes.Count)),
+            mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, this._votes.Count)),
                                       It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()))
                 .Returns(() => null);
 
-            mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Vote>())).Callback(() => votes.Add(new Vote
+            mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Vote>())).Callback(() => this._votes.Add(new Vote
             {
-                Id = votes.Count + 1,
-                Mark = (Mark)(votes.Count % 5 + 1)
+                Id = this._votes.Count + 1,
+                Mark = (Mark)(this._votes.Count % 5 + 1)
             }));
 
             mock.Setup(m => m.Delete(It.IsNotNull<Vote>())).Callback(() =>
             {
-                if (votes.Any())
+                if (this._votes.Any())
                 {
-                    votes.RemoveAt(votes.Count - 1);
+                    this._votes.RemoveAt(this._votes.Count - 1);
                 }
             });
 
             return mock.Object;
         }
 
-        #endregion //IRepositoryFactory Members
+        public IAlbumTrackRelationRepository GetAlbumTrackRelationRepository()
+        {
+            var mock = new Mock<IAlbumTrackRelationRepository>();
+
+            mock.Setup(m => m.GetAll()).Returns(_albumTrackRelations);
+
+            mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
+                .Returns(_albumTrackRelations);
+
+            mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>()))
+                .Returns(_albumTrackRelations);
+
+            mock.Setup(
+                       m =>
+                           m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>(),
+                                    It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
+                .Returns(_albumTrackRelations);
+
+            mock.Setup(m => m.GetById(It.IsInRange(1, _albumTrackRelations.Count, Range.Inclusive)))
+                .Returns(_albumTrackRelations.FirstOrDefault(a => a.Id > 0));
+
+            mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albumTrackRelations.Count))))
+                .Returns(() => null);
+
+            mock.Setup(m => m.GetById(It.IsInRange(1, _albumTrackRelations.Count, Range.Inclusive),
+                                      It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
+                .Returns(_albumTrackRelations.FirstOrDefault(a => a.Id > 0));
+
+            mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albumTrackRelations.Count)),
+                                      It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
+                .Returns(() => null);
+
+            mock.Setup(m => m.AddOrUpdate(It.IsNotNull<AlbumTrackRelation>())).Callback(() => _albumTrackRelations.Add(new AlbumTrackRelation
+            {
+                Id = _albumTrackRelations.Count + 1,
+                TrackId = this._albumTrackRelations.Count + 1,
+                AlbumId = 2
+            }));
+
+            mock.Setup(m => m.Delete(It.IsNotNull<AlbumTrackRelation>())).Callback(() =>
+            {
+                if (_albumTrackRelations.Any())
+                {
+                    _albumTrackRelations.RemoveAt(this._albumTrackRelations.Count - 1);
+                }
+            });
+
+            return mock.Object;
+        }
     }
 }

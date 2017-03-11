@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
+    <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
@@ -66,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">

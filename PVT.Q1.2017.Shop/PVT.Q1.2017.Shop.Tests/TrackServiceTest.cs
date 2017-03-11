@@ -15,24 +15,14 @@
     [TestClass]
     public class TrackServiceTest
     {
-        #region Fields
-
         private readonly ITrackService _trackService;
         private readonly IRepositoryFactory _factory;
-
-        #endregion //Fields
-
-        #region Constructors
 
         public TrackServiceTest()
         {
             this._factory = new RepositoryMoqFactory();
             this._trackService = new TrackService(this._factory);
         }
-
-        #endregion //Constructors
-
-        #region Tests
 
         [TestMethod]
         public void AddTrackTest()
@@ -129,7 +119,7 @@
         }
 
         [TestMethod]
-        public void GetAllAlbumsWithTrackTest()
+        public void GetAlbumsList()
         {
             AddTrackTest();
 
@@ -140,15 +130,22 @@
             {
                 repository.AddOrUpdate(new Album
                 {
-                    Tracks = new List<Track> { track },
-                    TrackId = track.Id,
+                    ArtistId = track.ArtistId,
                     Name = "Some album"
                 });
                 repository.SaveChanges();
             }
-            Assert.IsTrue(_trackService.GetAllAlbumsWithTrack(new Track()).Any());
-        }
 
-        #endregion //Tests
+            using (var repository = this._factory.GetAlbumTrackRelationRepository())
+            {
+                repository.AddOrUpdate(new AlbumTrackRelation
+                {
+                    TrackId = 1,
+                    AlbumId = 2
+                });
+            }
+
+                Assert.IsTrue(_trackService.GetAlbumsList(new Track()).Any());
+        }
     }
 }
