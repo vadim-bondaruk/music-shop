@@ -8,19 +8,10 @@
     /// </summary>
     public class PriceLevel : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        public string Name
-        {
-            get; set;
-        }
-
-        #endregion //Properties
-
-        #region Navigation Properties
+        public string Name { get; set; }
 
         /// <summary>
         /// Users 
@@ -36,7 +27,5 @@
         /// All album prices related to this price level
         /// </summary>
         public virtual ICollection<AlbumPrice> AlbumPriceLevels { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

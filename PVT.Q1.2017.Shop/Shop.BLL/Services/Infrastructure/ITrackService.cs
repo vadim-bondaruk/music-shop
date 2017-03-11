@@ -87,6 +87,6 @@
         /// <returns>
         /// All albums whitch contain the specified <paramref name="track"/>.
         /// </returns>
-        ICollection<Album> GetAllAlbumsWithTrack(Track track);
+        ICollection<Album> GetAlbumsList(Track track);
     }
 }

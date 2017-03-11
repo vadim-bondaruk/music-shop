@@ -9,8 +9,6 @@
     /// </summary>
     public class TrackBaseRepository : BaseRepository<Track>, ITrackRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackBaseRepository"/> class.
         /// </summary>
@@ -20,10 +18,6 @@
         public TrackBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
-
-        #region Protected Methods
 
         /// <summary>
         /// Adds the specified <paramref name="track"/> into Db.
@@ -36,6 +30,16 @@
             EntityState artistEntryState;
             EntityState genreEntryState;
 
+            if (track.ArtistId == null && track.Artist != null)
+            {
+                track.ArtistId = track.Artist.Id;
+            }
+
+            if (track.GenreId == null && track.Genre != null)
+            {
+                track.GenreId = track.Genre.Id;
+            }
+
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The TrackBaseRepository should be SOLID, should only add information about track! Not about artist, album or genre!
             this.DetachNavigationProperty(track.Artist, out artistEntryState);
@@ -47,7 +51,5 @@
             // adding the track into Db
             base.Add(track);
         }
-
-        #endregion //Protected Methods
     }
 }

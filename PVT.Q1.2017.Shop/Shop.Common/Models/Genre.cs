@@ -8,25 +8,14 @@
     /// </summary>
     public class Genre : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        public string Name
-        {
-            get; set;
-        }
-
-        #endregion //Properties
-
-        #region Navigation Properties
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the tracks.
         /// </summary>
         public ICollection<Track> Tracks { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

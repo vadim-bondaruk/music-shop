@@ -1,17 +1,14 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The currency repository
     /// </summary>
     public class CurrencyBaseRepository : BaseRepository<Currency>, ICurrencyRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CurrencyBaseRepository"/> class.
         /// </summary>
@@ -21,7 +18,5 @@ namespace Shop.DAL.Repositories
         public CurrencyBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
     }
 }

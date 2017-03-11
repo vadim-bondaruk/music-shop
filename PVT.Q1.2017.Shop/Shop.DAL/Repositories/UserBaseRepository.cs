@@ -1,17 +1,14 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The user repository (have to be extended)
     /// </summary>
     public class UserBaseRepository : BaseRepository<User>, IUserRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserBaseRepository"/> class.
         /// </summary>
@@ -21,10 +18,6 @@ namespace Shop.DAL.Repositories
         public UserBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
-
-        #region Protected Methods
 
         /// <summary>
         /// Adds the specified <paramref name="user"/> into Db.
@@ -36,6 +29,16 @@ namespace Shop.DAL.Repositories
         {
             EntityState priveLevelEntryState;
             EntityState currencyEntryState;
+
+            if (user.PriceLevelId == 0 && user.PriceLevel != null)
+            {
+                user.PriceLevelId = user.PriceLevel.Id;
+            }
+
+            if (user.CurrencyId == 0 && user.UserCurrency != null)
+            {
+                user.CurrencyId = user.UserCurrency.Id;
+            }
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The UserBaseRepository should be SOLID, should only add information about user! Not about price level or user currency!
@@ -50,7 +53,5 @@ namespace Shop.DAL.Repositories
             // adding the user into Db
             base.Add(user);
         }
-
-        #endregion //Protected Methods
     }
 }
