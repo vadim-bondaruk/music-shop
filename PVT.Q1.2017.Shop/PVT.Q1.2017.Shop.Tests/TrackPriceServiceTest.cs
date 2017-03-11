@@ -27,7 +27,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
         public TrackPriceServiceTest()
         {
-            this._factory = new RepositoryMoqFactory();
+            this._factory = new RepositoryFactoryMoq();
             this._trackPriceService = new TrackPriceService(this._factory);
         }
 

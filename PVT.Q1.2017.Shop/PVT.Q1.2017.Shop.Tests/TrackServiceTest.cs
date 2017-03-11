@@ -20,7 +20,7 @@
 
         public TrackServiceTest()
         {
-            this._factory = new RepositoryMoqFactory();
+            this._factory = new RepositoryFactoryMoq();
             this._trackService = new TrackService(this._factory);
         }
 

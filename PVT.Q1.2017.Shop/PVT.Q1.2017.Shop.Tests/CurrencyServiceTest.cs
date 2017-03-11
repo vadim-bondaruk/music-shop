@@ -16,7 +16,7 @@
 
         public CurrencyServiceTest()
         {
-            this._factory = new RepositoryMoqFactory();
+            this._factory = new RepositoryFactoryMoq();
             this._currencyService = new CurrencyService(this._factory);
         }
 
