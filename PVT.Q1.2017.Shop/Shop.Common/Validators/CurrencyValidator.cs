@@ -13,8 +13,8 @@
         /// </summary>
         public CurrencyValidator()
         {
-            this.RuleFor(c => c.ShortName).Length(3).Matches("^[A-Z]{3}$");
-            this.RuleFor(c => c.Code).GreaterThan(0).LessThanOrEqualTo(999);
+            RuleFor(c => c.ShortName).NotNull().NotEmpty().Length(3).Matches("^[A-Z]{3}$");
+            RuleFor(c => c.Code).GreaterThan(0).LessThanOrEqualTo(999);
         }
     }
 }

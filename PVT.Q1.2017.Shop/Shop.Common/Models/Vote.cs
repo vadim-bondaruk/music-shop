@@ -3,11 +3,14 @@
 //   PVT.Q1.2017
 namespace Shop.Common.Models
 {
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     ///     The user vote.
     /// </summary>
+    [Validator(typeof(VoteValidator))]
     public class Vote : BaseEntity
     {
         /// <summary>

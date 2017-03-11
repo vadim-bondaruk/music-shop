@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The artist.
     /// </summary>
+    [Validator(typeof(ArtistValidator))]
     public class Artist : BaseEntity
     {
         /// <summary>

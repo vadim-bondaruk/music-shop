@@ -1,16 +1,25 @@
 ﻿namespace Shop.Common.Models
 {
+    using System;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
-    
+    using Validators;
+
     /// <summary>
     ///     The currency rate.
     /// </summary>
+    [Validator(typeof(CurrencyRateValidator))]
     public class CurrencyRate : BaseEntity
     {
         /// <summary>
         ///     Gets or sets the cross course.
         /// </summary>
         public decimal CrossCourse { get; set; }
+
+        /// <summary>
+        /// Date of currency rate
+        /// </summary>
+        public DateTime? Date { get; set; }
 
         /// <summary>
         /// Currency id
