@@ -21,30 +21,23 @@
             _mock.Setup(m => m.GetAll()).Returns(_trackPrices);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<TrackPrice, BaseEntity>>[]>()))
-                .Returns(_trackPrices);
+                 .Returns(_trackPrices);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<TrackPrice, bool>>>()))
-                .Returns(_trackPrices);
+                 .Returns(_trackPrices);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<TrackPrice, bool>>>(),
-                                    It.Is<Expression<Func<TrackPrice, BaseEntity>>[]>(x => x != null)))
-                .Returns(_trackPrices);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<TrackPrice, bool>>>(),
+                                     It.Is<Expression<Func<TrackPrice, BaseEntity>>[]>(x => x != null)))
+                 .Returns(_trackPrices);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _trackPrices.Count, Range.Inclusive)))
-                .Returns(_trackPrices.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _trackPrices.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _trackPrices.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _trackPrices.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<TrackPrice, BaseEntity>>[]>()))
-                .Returns(_trackPrices.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _trackPrices.Count)),
-                                      It.IsAny<Expression<Func<TrackPrice, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<TrackPrice, BaseEntity>>[]>()))
+                 .Returns(() => _trackPrices.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<TrackPrice>())).Callback(() => _trackPrices.Add(new TrackPrice
             {

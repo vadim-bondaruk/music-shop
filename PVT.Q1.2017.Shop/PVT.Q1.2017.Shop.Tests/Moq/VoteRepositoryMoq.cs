@@ -32,19 +32,12 @@
                                      It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()))
                  .Returns(_votes);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _votes.Count, Range.Inclusive)))
-                 .Returns(_votes.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _votes.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _votes.Count))))
-                 .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _votes.Count, Range.Inclusive),
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()))
-                 .Returns(_votes.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _votes.Count)),
-                                       It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()))
-                 .Returns(() => null);
+                 .Returns(() => _votes.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Vote>())).Callback(() => _votes.Add(new Vote
             {

@@ -21,37 +21,31 @@
             _mock.Setup(m => m.GetAll()).Returns(_albumTrackRelations);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
-                .Returns(_albumTrackRelations);
+                 .Returns(_albumTrackRelations);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>()))
-                .Returns(_albumTrackRelations);
+                 .Returns(_albumTrackRelations);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>(),
-                                    It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
-                .Returns(_albumTrackRelations);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>(),
+                                     It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
+                 .Returns(_albumTrackRelations);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _albumTrackRelations.Count, Range.Inclusive)))
-                .Returns(_albumTrackRelations.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _albumTrackRelations.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albumTrackRelations.Count))))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
+                 .Returns(() => _albumTrackRelations.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _albumTrackRelations.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
-                .Returns(_albumTrackRelations.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albumTrackRelations.Count)),
-                                      It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<AlbumTrackRelation>())).Callback(() => _albumTrackRelations.Add(new AlbumTrackRelation
-            {
-                Id = _albumTrackRelations.Count + 1,
-                TrackId = _albumTrackRelations.Count + 1,
-                AlbumId = 2
-            }));
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<AlbumTrackRelation>()))
+                 .Callback(() => _albumTrackRelations.Add(new AlbumTrackRelation
+                 {
+                     Id = _albumTrackRelations.Count + 1,
+                     TrackId = _albumTrackRelations.Count + 1,
+                     AlbumId = 2
+                 }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<AlbumTrackRelation>())).Callback(() =>
             {

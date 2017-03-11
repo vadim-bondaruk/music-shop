@@ -21,36 +21,29 @@
             _mock.Setup(m => m.GetAll()).Returns(_currencies);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                .Returns(_currencies);
+                 .Returns(_currencies);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>()))
-                .Returns(_currencies);
+                 .Returns(_currencies);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>(),
-                                    It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                .Returns(_currencies);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>(),
+                                     It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
+                 .Returns(_currencies);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _currencies.Count, Range.Inclusive)))
-                .Returns(_currencies.FirstOrDefault(a => a.Id >= 1));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _currencies.FirstOrDefault(a => a.Id >= 1));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _currencies.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _currencies.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                .Returns(_currencies.FirstOrDefault(a => a.Id >= 1));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _currencies.Count)),
-                                      It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
+                 .Returns(() => _currencies.FirstOrDefault(a => a.Id >= 1));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Currency>())).Callback(() => _currencies.Add(new Currency
             {
                 Id = _currencies.Count + 1,
                 Code = _currencies.Count + 100,
-                ShortName = $"CR{ _currencies.Count + 1 }"
+                ShortName = $"CR{_currencies.Count + 1}"
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<Currency>())).Callback(() =>

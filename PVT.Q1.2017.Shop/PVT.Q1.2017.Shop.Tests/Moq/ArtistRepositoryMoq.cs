@@ -21,35 +21,28 @@
             _mock.Setup(m => m.GetAll()).Returns(_artists);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Artist, BaseEntity>>[]>()))
-                .Returns(_artists);
+                 .Returns(_artists);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Artist, bool>>>()))
-                .Returns(_artists);
+                 .Returns(_artists);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<Artist, bool>>>(),
-                                    It.IsAny<Expression<Func<Artist, BaseEntity>>[]>()))
-                .Returns(_artists);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Artist, bool>>>(),
+                                     It.IsAny<Expression<Func<Artist, BaseEntity>>[]>()))
+                 .Returns(_artists);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _artists.Count, Range.Inclusive)))
-                .Returns(_artists.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _artists.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _artists.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _artists.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<Artist, BaseEntity>>[]>()))
-                .Returns(_artists.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _artists.Count)),
-                                      It.IsAny<Expression<Func<Artist, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<Artist, BaseEntity>>[]>()))
+                 .Returns(() => _artists.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Artist>())).Callback(() => _artists.Add(new Artist
             {
                 Id = _artists.Count + 1,
-                Name = $"Artist{ _artists.Count + 1 }"
+                Name = $"Artist{_artists.Count + 1}"
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<Artist>())).Callback(() =>

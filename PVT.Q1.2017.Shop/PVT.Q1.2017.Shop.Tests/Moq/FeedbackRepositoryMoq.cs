@@ -21,35 +21,28 @@
             _mock.Setup(m => m.GetAll()).Returns(_feedbacks);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()))
-                .Returns(_feedbacks);
+                 .Returns(_feedbacks);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Feedback, bool>>>()))
-                .Returns(_feedbacks);
+                 .Returns(_feedbacks);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<Feedback, bool>>>(),
-                                    It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()))
-                .Returns(_feedbacks);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Feedback, bool>>>(),
+                                     It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()))
+                 .Returns(_feedbacks);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _feedbacks.Count, Range.Inclusive)))
-                .Returns(_feedbacks.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _feedbacks.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _feedbacks.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _feedbacks.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()))
-                .Returns(_feedbacks.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _feedbacks.Count)),
-                                      It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()))
+                 .Returns(() => _feedbacks.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Feedback>())).Callback(() => _feedbacks.Add(new Feedback
             {
                 Id = _feedbacks.Count + 1,
-                Comments = $"Comment{ _feedbacks.Count + 1}"
+                Comments = $"Comment{_feedbacks.Count + 1}"
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<Feedback>())).Callback(() =>

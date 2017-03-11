@@ -21,35 +21,28 @@
             _mock.Setup(m => m.GetAll()).Returns(_priceLevels);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
-                .Returns(_priceLevels);
+                 .Returns(_priceLevels);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<PriceLevel, bool>>>()))
-                .Returns(_priceLevels);
+                 .Returns(_priceLevels);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<PriceLevel, bool>>>(),
-                                    It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
-                .Returns(_priceLevels);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<PriceLevel, bool>>>(),
+                                     It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
+                 .Returns(_priceLevels);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _priceLevels.Count, Range.Inclusive)))
-                .Returns(_priceLevels.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _priceLevels.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _priceLevels.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _priceLevels.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
-                .Returns(_priceLevels.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _priceLevels.Count)),
-                                      It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
+                 .Returns(() => _priceLevels.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PriceLevel>())).Callback(() => _priceLevels.Add(new PriceLevel
             {
                 Id = _priceLevels.Count + 1,
-                Name = $"PriceLevel{ _priceLevels.Count + 1}"
+                Name = $"PriceLevel{_priceLevels.Count + 1}"
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<PriceLevel>())).Callback(() =>

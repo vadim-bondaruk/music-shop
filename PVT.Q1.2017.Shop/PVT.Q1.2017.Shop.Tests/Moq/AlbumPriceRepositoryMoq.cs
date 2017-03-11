@@ -21,30 +21,22 @@
             _mock.Setup(m => m.GetAll()).Returns(_albumPrices);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
-                .Returns(_albumPrices);
+                 .Returns(_albumPrices);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<AlbumPrice, bool>>>()))
-                .Returns(_albumPrices);
+                 .Returns(_albumPrices);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<AlbumPrice, bool>>>(),
-                                    It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
-                .Returns(_albumPrices);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<AlbumPrice, bool>>>(),
+                                     It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
+                 .Returns(_albumPrices);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _albumPrices.Count, Range.Inclusive)))
-                .Returns(_albumPrices.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _albumPrices.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albumPrices.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _albumPrices.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
-                .Returns(_albumPrices.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albumPrices.Count)),
-                                      It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
+                 .Returns(() => _albumPrices.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<AlbumPrice>())).Callback(() => _albumPrices.Add(new AlbumPrice
             {

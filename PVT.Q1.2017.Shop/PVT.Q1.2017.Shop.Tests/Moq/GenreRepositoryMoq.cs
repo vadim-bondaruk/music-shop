@@ -21,35 +21,28 @@
             _mock.Setup(m => m.GetAll()).Returns(_genres);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
-                .Returns(_genres);
+                 .Returns(_genres);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Genre, bool>>>()))
-                .Returns(_genres);
+                 .Returns(_genres);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<Genre, bool>>>(),
-                                    It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
-                .Returns(_genres);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Genre, bool>>>(),
+                                     It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
+                 .Returns(_genres);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _genres.Count, Range.Inclusive)))
-                .Returns(_genres.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _genres.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _genres.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _genres.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
-                .Returns(_genres.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _genres.Count)),
-                                      It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
+                 .Returns(() => _genres.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Genre>())).Callback(() => _genres.Add(new Genre
             {
                 Id = _genres.Count + 1,
-                Name = $"Genre{ _genres.Count + 1}"
+                Name = $"Genre{_genres.Count + 1}"
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<Genre>())).Callback(() =>

@@ -4,69 +4,83 @@
 
     public class RepositoryFactoryMoq : IRepositoryFactory
     {
+        private readonly AlbumRepositoryMoq _albumRepositoryMoq = new AlbumRepositoryMoq();
+        private readonly ArtistRepositoryMoq _artistRepositoryMoq = new ArtistRepositoryMoq();
+        private readonly TrackRepositoryMoq _trackRepositoryMoq = new TrackRepositoryMoq();
+        private readonly CurrencyRepositoryMoq _currencyRepositoryMoq = new CurrencyRepositoryMoq();
+        private readonly AlbumPriceRepositoryMoq _albumPriceRepositoryMoq = new AlbumPriceRepositoryMoq();
+        private readonly CurrencyRateRepositorMoq _currencyRateRepositorMoq = new CurrencyRateRepositorMoq();
+        private readonly FeedbackRepositoryMoq _feedbackRepositoryMoq = new FeedbackRepositoryMoq();
+        private readonly GenreRepositoryMoq _genreRepositoryMoq = new GenreRepositoryMoq();
+        private readonly PriceLevelRepositoryMoq _priceLevelRepositoryMoq = new PriceLevelRepositoryMoq();
+        private readonly TrackPriceRepositoryMoq _trackPriceRepositoryMoq = new TrackPriceRepositoryMoq();
+        private readonly UserRepositoryMoq _userRepositoryMoq = new UserRepositoryMoq();
+        private readonly VoteRepositoryMoq _voteRepositoryMoq = new VoteRepositoryMoq();
+        private readonly AlbumTrackRelationRepositoryMoq _albumTrackRelationRepositoryMoq = new AlbumTrackRelationRepositoryMoq();
+
         public IAlbumRepository GetAlbumRepository()
         {
-            return new AlbumRepositoryMoq().Repository;
+            return _albumRepositoryMoq.Repository;
         }
 
         public IArtistRepository GetArtistRepository()
         {
-            return new ArtistRepositoryMoq().Repository;
+            return _artistRepositoryMoq.Repository;
         }
 
         public ITrackRepository GetTrackRepository()
         {
-            return new TrackRepositoryMoq().Repository;
+            return _trackRepositoryMoq.Repository;
         }
 
         public ICurrencyRepository GetCurrencyRepository()
         {
-            return new CurrencyRepositoryMoq().Repository;
+            return _currencyRepositoryMoq.Repository;
         }
 
         public IAlbumPriceRepository GetAlbumPriceRepository()
         {
-            return new AlbumPriceRepositoryMoq().Repository;
+            return _albumPriceRepositoryMoq.Repository;
         }
 
         public ICurrencyRateRepository GetCurrencyRateRepository()
         {
-            return new CurrencyRateRepositorMoq().Repository;
+            return _currencyRateRepositorMoq.Repository;
         }
 
         public IFeedbackRepository GetFeedbackRepository()
         {
-            return new FeedbackRepositoryMoq().Repository;
+            return _feedbackRepositoryMoq.Repository;
         }
 
         public IGenreRepository GetGenreRepository()
         {
-            return new GenreRepositoryMoq().Repository;
+            return _genreRepositoryMoq.Repository;
         }
 
         public IPriceLevelRepository GetPriceLevelRepository()
         {
-            return new PriceLevelRepositoryMoq().Repository;
+            return _priceLevelRepositoryMoq.Repository;
         }
 
         public ITrackPriceRepository GetTrackPriceRepository()
         {
-            return new TrackPriceRepositoryMoq().Repository;
+            return _trackPriceRepositoryMoq.Repository;
         }
 
         public IUserRepository GetUserRepository()
         {
-            return new UserRepositoryMoq().Repository;
+            return _userRepositoryMoq.Repository;
         }
 
         public IVoteRepository GetVoteRepository()
         {
-            return new VoteRepositoryMoq().Repository;
+            return _voteRepositoryMoq.Repository;
         }
 
         public IAlbumTrackRelationRepository GetAlbumTrackRelationRepository()
         {
-            return new AlbumTrackRelationRepositoryMoq().Repository;
+            return _albumTrackRelationRepositoryMoq.Repository;
         }
     }
 }

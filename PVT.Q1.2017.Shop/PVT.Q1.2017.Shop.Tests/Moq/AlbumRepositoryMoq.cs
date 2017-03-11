@@ -32,19 +32,12 @@
                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
                  .Returns(_albums);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _albums.Count, Range.Inclusive)))
-                 .Returns(_albums.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _albums.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albums.Count))))
-                 .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _albums.Count, Range.Inclusive),
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
-                 .Returns(_albums.Where(a => a.Artist != null).FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _albums.Count)),
-                                       It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
-                 .Returns(() => null);
+                 .Returns(() => _albums.Where(a => a.Artist != null).FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Album>())).Callback(() => _albums.Add(new Album
             {

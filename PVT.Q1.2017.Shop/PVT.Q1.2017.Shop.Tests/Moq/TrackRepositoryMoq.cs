@@ -21,35 +21,28 @@
             _mock.Setup(m => m.GetAll()).Returns(_tracks);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
-                .Returns(_tracks);
+                 .Returns(_tracks);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Track, bool>>>()))
-                .Returns(_tracks);
+                 .Returns(_tracks);
 
             _mock.Setup(
-                       m =>
-                           m.GetAll(It.IsAny<Expression<Func<Track, bool>>>(),
-                                    It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
-                .Returns(_tracks);
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Track, bool>>>(),
+                                     It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
+                 .Returns(_tracks);
 
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _tracks.Count, Range.Inclusive)))
-                .Returns(_tracks.FirstOrDefault(a => a.Id > 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _tracks.FirstOrDefault(t => t.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _tracks.Count))))
-                .Returns(() => null);
-
-            _mock.Setup(m => m.GetById(It.IsInRange(1, _tracks.Count, Range.Inclusive),
-                                      It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
-                .Returns(_tracks.FirstOrDefault(a => a.Id > 0));
-
-            _mock.Setup(m => m.GetById(It.IsNotIn(Enumerable.Range(1, _tracks.Count)),
-                                      It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
-                .Returns(() => null);
+            _mock.Setup(m => m.GetById(It.IsAny<int>(),
+                                       It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
+                 .Returns(() => _tracks.FirstOrDefault(t => t.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Track>())).Callback(() => _tracks.Add(new Track
             {
                 Id = _tracks.Count + 1,
-                Name = $"Track{ _tracks.Count + 1 }"
+                Name = $"Track{_tracks.Count + 1}"
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<Track>())).Callback(() =>
