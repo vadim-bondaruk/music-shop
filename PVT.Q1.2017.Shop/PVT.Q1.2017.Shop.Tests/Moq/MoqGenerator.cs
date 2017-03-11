@@ -196,23 +196,8 @@
                                     Albums =
                                         new List<Album> { new Album { Id = 22, Name = "SomeAlbum1" } }
                                 },
-                            new Track
-                                {
-                                    Id = 24,
-                                    Name = "SomeTrack3",
-                                    Artist = new Artist { Id = 23, Name = "SomeArtist2" },
-                                    Albums =
-                                        new List<Album> { new Album { Id = 22, Name = "SomeAlbum1" } }
-                                },
-                            new Track
-                                {
-                                    Id = 25,
-                                    Name = "SomeTrack4",
-                                    Artist = new Artist { Id = 24, Name = "SomeArtist3" },
-                                    Albums =
-                                        new List<Album> { new Album { Id = 23, Name = "SomeAlbum2" } }
-                                }
                          });
+
             return trackRepo.Object;
         }
     }

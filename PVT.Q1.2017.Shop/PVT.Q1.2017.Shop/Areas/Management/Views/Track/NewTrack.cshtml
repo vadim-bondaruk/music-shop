@@ -1,15 +1,15 @@
-﻿@model PVT.Q1._2017.Shop.ViewModels.TrackViewModel
+﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.TrackViewModel
 
-@using (Html.BeginForm("AddNew", "Track", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewTrack", "Track", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div id="trackData">
         <ul>
             <li>
-                @Html.EditorFor(m => m.Artist.Name, new { htmlAttributes = new { placeholder = "Artist" }})
+                @Html.EditorFor(m => m.Artist.Name, new { htmlAttributes = new { placeholder = "Artist" } })
             </li>
 
             <li>
-                @Html.EditorFor(m => m.Track.Name, new { htmlAttributes = new { placeholder = "Name" } })
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Name" } })
             </li>
 
             <li>
@@ -46,4 +46,4 @@
 
 
 @section AddNewTrack{
-    <link href="/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}
+    <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}

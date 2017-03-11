@@ -1,21 +1,19 @@
-﻿//  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="Track.cs" company="PVT.Q1.2017">
-//    PVT.Q1.2017
-//  </copyright>
-//  <summary>
-//    The track.
-//  </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-
-namespace PVT.Q1._2017.Shop.Controllers
+﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
     #region
 
     using System.Web.Mvc;
 
+    using AutoMapper;
+
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
+    using global::Shop.DAL;
     using global::Shop.DAL.Infrastruture;
 
+    using Ninject;
+
+    using PVT.Q1._2017.Shop.Areas.Management.Models;
     using PVT.Q1._2017.Shop.ViewModels;
 
     #endregion
@@ -25,21 +23,25 @@ namespace PVT.Q1._2017.Shop.Controllers
     /// </summary>
     public class TrackController : Controller
     {
-        #region Fields
-
         /// <summary>
-        ///     The repository factory.
         /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IKernel _kernel;
 
         /// <summary>
         ///     The track service.
         /// </summary>
-        private readonly ITrackService _trackService;
+        private readonly ITrackService trackService;
 
-        #endregion //Fields
-
-        #region Constructors
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TrackController" /> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        ///     The repository factory.
+        /// </param>
+        public TrackController(IRepositoryFactory repositoryFactory)
+        {
+            this.RepositoryFactory = repositoryFactory;
+        }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TrackController" /> class.
@@ -52,13 +54,49 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </param>
         public TrackController(IRepositoryFactory repositoryFactory, ITrackService trackService)
         {
-            this._repositoryFactory = repositoryFactory;
-            this._trackService = trackService;
+            this.RepositoryFactory = repositoryFactory;
+            this.trackService = trackService;
         }
 
-        #endregion //Constructors
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TrackController" /> class.
+        /// </summary>
+        public TrackController()
+        {
+            this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            this.RepositoryFactory = this._kernel.Get<IRepositoryFactory>();
+            Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackViewModel>());
+        }
 
-        #region Actions
+        /// <summary>
+        ///     Gets or sets the repository factory.
+        /// </summary>
+        public IRepositoryFactory RepositoryFactory { get; set; }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public ActionResult NewTrack()
+        {
+            return this.View(new TrackViewModel());
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="model">
+        ///     The model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        public ActionResult NewTrack(TrackViewModel model)
+        {
+            var trackRepo = this.RepositoryFactory.GetTrackRepository();
+            var track = Mapper.Map<Track>(model);
+             trackRepo.AddOrUpdate(track);
+            return null;
+        }
 
         /// <summary>
         /// </summary>
@@ -66,7 +104,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public virtual ActionResult AlbumsList()
         {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
+            using (var repository = this.RepositoryFactory.GetAlbumRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -79,7 +117,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public virtual ActionResult AlbumsList(int artistId)
         {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
+            using (var repository = this.RepositoryFactory.GetAlbumRepository())
             {
                 return this.View(repository.GetAll(a => a.ArtistId.Equals(artistId)));
             }
@@ -87,14 +125,31 @@ namespace PVT.Q1._2017.Shop.Controllers
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="trackId">
+        ///     The track id.
+        /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult TrackList(int albumId)
+        public virtual ActionResult AlbumsListByTrackId(int trackId)
         {
-            using (var repository = this._repositoryFactory.GetTrackRepository())
+            using (var repository = this.RepositoryFactory.GetAlbumRepository())
             {
-                return this.View(repository.GetAll(t => t.AlbumId.Equals(albumId)));
+                return this.View(repository.GetAll(a => a.TrackId.Equals(trackId)));
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="artistId">
+        ///     The artist id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult ArtistList(int artistId)
+        {
+            using (var repository = this.RepositoryFactory.GetArtistRepository())
+            {
+                return this.View(repository.GetAll(m => m.Id.Equals(artistId)));
             }
         }
 
@@ -104,7 +159,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public virtual ActionResult ArtistList()
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
+            using (var repository = this.RepositoryFactory.GetArtistRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -117,7 +172,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public virtual ActionResult ArtistTracks(int id)
         {
-            return this.View(this._trackService.GetTracksWithPriceConfigured());
+            return this.View(this.trackService.GetTracksWithPriceConfigured());
         }
 
         /// <summary>
@@ -127,7 +182,7 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public virtual ActionResult TrackDetails(int trackId)
         {
-            return this.View(this._trackService.GetTrackInfo(trackId));
+            return this.View(this.trackService.GetTrackInfo(trackId));
         }
 
         /// <summary>
@@ -138,32 +193,48 @@ namespace PVT.Q1._2017.Shop.Controllers
         /// </returns>
         public virtual ActionResult TrackList()
         {
-            return this.View(this._trackService.GetTracksWithPriceConfigured());
+            return this.View(this.trackService.GetTracksWithPriceConfigured());
         }
 
         /// <summary>
         /// </summary>
-        /// <returns>
-        /// </returns>
-        public ActionResult AddNew()
-        {
-            return this.View(new TrackViewModel());
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="model">
-        /// The model.
+        /// <param name="trackId">
+        ///     The track id.
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost]
-        public ActionResult AddNew(TrackViewModel model)
+        public virtual ActionResult TrackList(int trackId)
         {
-            var testStr = model.Artist.Name;
-            return null;
+            return this.View(this.trackService.GetTracksWithPriceConfigured());
         }
 
-        #endregion //Actions
+        /// <summary>
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="albumId"></param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult TrackListByAlbumId(int albumId)
+        {
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            {
+                return this.View(repository.GetAll(t => t.AlbumId.Equals(albumId)));
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="artistId">
+        ///     The artist id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult TrackListByAtistId(int artistId)
+        {
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            {
+                return this.View(repository.GetAll(t => t.Artist.Id.Equals(artistId)));
+            }
+        }
     }
 }

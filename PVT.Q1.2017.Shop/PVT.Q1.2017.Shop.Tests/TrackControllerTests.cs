@@ -39,7 +39,7 @@
         [TestMethod]
         public void TestAddNew()
         {
-            var aresult = this.controller.AddNew();
+            var aresult = this.controller.NewTrack();
             Assert.IsNotNull(aresult);
         }
 

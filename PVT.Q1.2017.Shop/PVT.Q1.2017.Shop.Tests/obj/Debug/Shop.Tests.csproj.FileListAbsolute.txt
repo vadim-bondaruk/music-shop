@@ -108,3 +108,5 @@ D:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop.Tests\obj\Debug\PVT.Q
 D:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop.Tests\obj\Debug\PVT.Q1.2017.Shop.Tests.pdb
 D:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop.Tests\bin\Debug\Moq.dll
 D:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop.Tests\bin\Debug\Moq.xml
+D:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop.Tests\bin\Debug\System.Web.Helpers.dll
+D:\Dropbox\Git\MusicShop\PVT.Q1.2017.Shop\PVT.Q1.2017.Shop.Tests\bin\Debug\System.Web.Helpers.xml
