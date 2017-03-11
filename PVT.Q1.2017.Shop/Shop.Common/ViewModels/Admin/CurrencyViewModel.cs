@@ -1,5 +1,7 @@
 ﻿namespace Shop.Common.ViewModels.Admin
 {
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// </summary>
     public class CurrencyViewModel
@@ -17,6 +19,7 @@
         /// <summary>
         /// Gets or sets the shortname
         /// </summary>
+        [Required]
         public string ShortName { get; set; }
 
         /// <summary>
@@ -27,6 +30,7 @@
         /// <summary>
         /// Gets or sets the code
         /// </summary>
+        [Required]
         public int Code { get; set; }
 
         /// <summary>

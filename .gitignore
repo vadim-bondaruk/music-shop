@@ -19,3 +19,8 @@ PVT.Q1.2017.Shop/Shop.Security/obj
 *.Cache
 
 PVT\.Q1\.2017\.Shop/obj/
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop.mdf.ldf
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop.mdf.mdf
+PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703112047581_init.Designer.cs
+PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703112047581_init.cs
+PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703112047581_init.resx

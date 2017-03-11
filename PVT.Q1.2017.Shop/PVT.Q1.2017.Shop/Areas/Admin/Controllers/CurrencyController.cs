@@ -65,7 +65,9 @@
         public ActionResult Edit(int id)
         {
             var currency = this._curencyService.GetCurrencyInfo(id);
-            return this.View(currency);
+            Mapper.Initialize(cfg => cfg.CreateMap<Currency, CurrencyViewModel>());
+            CurrencyViewModel model = Mapper.Map<Currency, CurrencyViewModel>(currency);
+            return this.View(model);
         }
 
         /// <summary>
@@ -79,6 +81,7 @@
                 Mapper.Initialize(cfg => cfg.CreateMap<CurrencyViewModel, Currency>());
                 Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
                 this._currencyRepository.AddOrUpdate(currency);
+                this._currencyRepository.SaveChanges();
             }
 
             return this.RedirectToAction("Index");
@@ -92,6 +95,7 @@
         public ActionResult Delete(int id)
         {
             this._currencyRepository.Delete(id);
+            this._currencyRepository.SaveChanges();
             return this.RedirectToAction("Index");
         }
 
@@ -120,6 +124,7 @@
                     Mapper.Initialize(cfg => cfg.CreateMap<CurrencyViewModel, Currency>());
                     Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
                     this._currencyRepository.AddOrUpdate(currency);
+                    this._currencyRepository.SaveChanges();
                    
                     return this.RedirectToAction("Index");
                 }
