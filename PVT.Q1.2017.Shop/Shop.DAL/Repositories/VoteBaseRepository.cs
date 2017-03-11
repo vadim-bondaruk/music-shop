@@ -1,5 +1,6 @@
 ﻿namespace Shop.DAL.Repositories
 {
+    using System;
     using System.Data.Entity;
     using System.Linq;
     using Common.Models;
@@ -30,6 +31,11 @@
         /// </returns>
         public double GetAverageTrackRating(Track track)
         {
+            if (track == null)
+            {
+                throw new ArgumentNullException(nameof(track));
+            }
+
             return CurrentDbSet.Where(v => v.TrackId == track.Id).Average(v => (int)v.Mark);
         }
 
