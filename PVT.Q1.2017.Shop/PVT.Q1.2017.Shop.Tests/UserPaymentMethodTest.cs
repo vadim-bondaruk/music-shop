@@ -54,17 +54,36 @@
         [TestMethod]
         public void UserPaymentMethodRepository_GetAll_Expression()
         {
-            var data2 = new List<UserPaymentMethod>()
+            var data = new List<UserPaymentMethod>()
             {
-                new UserPaymentMethod {Alias = "BBB", Id = 2},
-                new UserPaymentMethod {Alias = "CCC", Id = 3}
+                new UserPaymentMethod {Alias = "AAA"},
+                new UserPaymentMethod {Alias = "BBB"},
+                new UserPaymentMethod {Alias = "CCC"}
             };
 
             Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(_dbContext);
-            mock.Setup(r => r.GetAll(x => x.Id > 1)).Returns(data2);
-            var paymentMethod = mock.Object.GetAll(x => x.Id > 1);
-            Assert.AreEqual(paymentMethod, data2);
+            mock.Setup(r => r.GetAll()).Returns(data).Verifiable();
+
+            ICollection<UserPaymentMethod> paymentMethod = mock.Object.GetAll();
+            Assert.AreEqual(data, paymentMethod);
             mock.Verify();
         }
+
+
+        //[TestMethod]
+        //public void UserPaymentMethodRepository_GetAll_Expression()
+        //{
+        //    var data2 = new List<UserPaymentMethod>()
+        //    {
+        //        new UserPaymentMethod {Alias = "BBB", Id = 2},
+        //        new UserPaymentMethod {Alias = "CCC", Id = 3}
+        //    };
+
+        //    Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(_dbContext);
+        //    mock.Setup(r => r.GetAll(x => x.Id > 1)).Returns(data2);
+        //    var paymentMethod = mock.Object.GetAll(x => x.Id > 1);
+        //    Assert.AreEqual(paymentMethod, data2);
+        //    mock.Verify();
+        //}
     }
 }

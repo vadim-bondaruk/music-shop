@@ -16,8 +16,6 @@
     /// </summary>
     public class UserPaymentMethodRepository : BaseRepository<UserPaymentMethod>, IUserPaymentMethodRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Default ctor on dbContext
         /// </summary>
@@ -26,15 +24,13 @@
         {            
         }
 
-        #endregion //Constructors
-
         /// <summary>
         /// Returns all entities from the repository.
         /// </summary>
         /// <returns>
         /// All entities from the repository.
         /// </returns>
-        public virtual ICollection<UserPaymentMethod> GetAll()
+        protected ICollection<UserPaymentMethod> GetAll()
         {
             var result = this.CurrentDbSet;
             return result.ToList();
@@ -45,7 +41,7 @@
         /// </summary>
         /// <param name="filter">Filter expression</param>
         /// <returns></returns>
-        public ICollection<UserPaymentMethod> GetAll(Expression<Func<UserPaymentMethod, bool>> filter)
+        protected ICollection<UserPaymentMethod> GetAll(Expression<Func<UserPaymentMethod, bool>> filter)
         {
             IQueryable<UserPaymentMethod> query = this.CurrentDbSet;
             if (filter != null)
