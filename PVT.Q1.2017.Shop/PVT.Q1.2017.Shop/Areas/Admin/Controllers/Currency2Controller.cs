@@ -32,12 +32,12 @@
         {
             if (CurrenciesList == null)
             {
-                CurrenciesList = new List<CurrencyViewModel>();
+                CurrenciesList = new List<IndexCurrencyViewModel>();
             }
 
             if (CurrenciesList.Count == 0)
             {
-                CurrenciesList.Add(new CurrencyViewModel()
+                CurrenciesList.Add(new IndexCurrencyViewModel()
                 {
                     Id = 1,
                     FullName = "Euro",
@@ -45,7 +45,7 @@
                     Symbol = "e"
                 });
 
-                CurrenciesList.Add(new CurrencyViewModel()
+                CurrenciesList.Add(new IndexCurrencyViewModel()
                 {
                     Id = 2,
                     FullName = "USD",
@@ -53,7 +53,7 @@
                     Symbol = "$"
                 });
 
-                CurrenciesList.Add(new CurrencyViewModel()
+                CurrenciesList.Add(new IndexCurrencyViewModel()
                 {
                     Id = 3,
                     FullName = "RUR",
@@ -69,7 +69,7 @@
         /// <summary>
         /// CurrenciesList
         /// </summary>
-        public static List<CurrencyViewModel> CurrenciesList { get; set; }
+        public static List<IndexCurrencyViewModel> CurrenciesList { get; set; }
 
         /// <summary>
         /// List of all currencies
@@ -101,7 +101,7 @@
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(CurrencyViewModel currency)
+        public ActionResult Edit(IndexCurrencyViewModel currency)
         {
             if (ModelState.IsValid)
             {
@@ -140,7 +140,7 @@
         [HttpGet]
         public ActionResult Create()
         {
-            return this.View(new CurrencyViewModel());
+            return this.View(new IndexCurrencyViewModel());
         }
 
         /// <summary>
@@ -149,7 +149,7 @@
         /// <param name="currencyViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Create(CurrencyViewModel currency)
+        public ActionResult Create(IndexCurrencyViewModel currency)
         {
             try
             {

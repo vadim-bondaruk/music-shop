@@ -7,8 +7,6 @@
     using DAL.Infrastruture;
     using Infrastructure;
 
-    using Shop.Common.ViewModels.Admin;
-
     /// <summary>
     /// The currency service.
     /// </summary>
@@ -64,12 +62,11 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        public ICollection<CurrencyViewModel> GetCurrenciesList()
+        public ICollection<Currency> GetCurrenciesList()
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll()
-                    .Select(x => new CurrencyViewModel { Id = x.Id, IsDeleted = x.IsDeleted, FullName = x.FullName, ShortName = x.ShortName, Code = x.Code, Symbol = x.Symbol }).ToList();
+                return repositry.GetAll();
             }
         }
 

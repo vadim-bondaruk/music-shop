@@ -63,7 +63,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\Admin\CurrencyViewModel.cs" />
+    <Compile Include="ViewModels\Admin\CreateCurrencyViewModel.cs" />
+    <Compile Include="ViewModels\Admin\EditCurrencyViewModel.cs" />
+    <Compile Include="ViewModels\Admin\IndexCurrencyViewModel.cs" />
     <Compile Include="Validators\CurrencyValidator.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using Common.Models;
 
-    using Shop.Common.ViewModels.Admin;
-
     /// <summary>
     /// The currency service.
     /// </summary>
@@ -47,7 +45,7 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        ICollection<CurrencyViewModel> GetCurrenciesList();
+        ICollection<Currency> GetCurrenciesList();
 
         /// <summary>
         /// Determines whether a currency with the specified <paramref name="name"/> exists.

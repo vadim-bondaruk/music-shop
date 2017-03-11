@@ -2,10 +2,10 @@
 {
     /// <summary>
     /// </summary>
-    public class CurrencyViewModel
+    public class CreateCurrencyViewModel
     {
         /// <summary>
-        /// Gets or sets the identifier
+        /// Identifier
         /// </summary>
         public int Id { get; set; }
 

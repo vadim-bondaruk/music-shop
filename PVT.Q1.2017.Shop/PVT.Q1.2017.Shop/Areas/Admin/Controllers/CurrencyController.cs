@@ -1,11 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
     using System;
-    using System.Data;
+    using System.Collections.Generic;
     using System.Web.Mvc;
-
     using AutoMapper;
-
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels.Admin;
@@ -16,8 +14,6 @@
     /// </summary>
     public class CurrencyController : Controller
     {
-        #region Fields
-
         /// <summary>
         /// The repository currency
         /// </summary>
@@ -27,10 +23,6 @@
         /// The service currency
         /// </summary>
         private readonly ICurrencyService _curencyService;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CurrencyController"/> class.
@@ -43,28 +35,14 @@
             this._curencyService = currencyService;
         }
 
-        #endregion
-
-        #region Action
-
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
         {
-            var currencies = this._curencyService.GetCurrenciesList();
-            return this.View(currencies);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            var currency = this._curencyService.GetCurrencyInfo(id);
+            Mapper.Initialize(x => x.CreateMap<Currency, IndexCurrencyViewModel>());
+            var currency = Mapper.Map<ICollection<Currency>, List<IndexCurrencyViewModel>>(this._curencyService.GetCurrenciesList());
             return this.View(currency);
         }
 
@@ -72,16 +50,30 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Edit(CurrencyViewModel model)
+        public ActionResult Edit(int id)
+        {
+            Mapper.Initialize(x => x.CreateMap<Currency, EditCurrencyViewModel>());
+            var currency = Mapper.Map<Currency, EditCurrencyViewModel>(this._currencyRepository.GetById(id));
+            return this.View(currency);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Edit(EditCurrencyViewModel model)
         {
             if (this.ModelState.IsValid)
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<CurrencyViewModel, Currency>());
-                Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
+                Mapper.Initialize(x => x.CreateMap<EditCurrencyViewModel, Currency>());
+                Currency currency = Mapper.Map<EditCurrencyViewModel, Currency>(model);
                 this._currencyRepository.AddOrUpdate(currency);
+                this._currencyRepository.SaveChanges();
+                return this.RedirectToAction("Index");
             }
 
-            return this.RedirectToAction("Index");
+            return this.View(model);
         }
 
         /// <summary>
@@ -99,10 +91,9 @@
         /// 
         /// </summary>
         /// <returns></returns>
-       [HttpGet]
         public ActionResult Create()
         {
-            return this.View(new CurrencyViewModel());
+            return this.View();
         }
 
         /// <summary>
@@ -111,15 +102,16 @@
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Create(CurrencyViewModel model)
+        public ActionResult Create(CreateCurrencyViewModel model)
         {
             try
             {
                 if (this.ModelState.IsValid)
                 {
-                    Mapper.Initialize(cfg => cfg.CreateMap<CurrencyViewModel, Currency>());
-                    Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
+                    Mapper.Initialize(cfg => cfg.CreateMap<CreateCurrencyViewModel, Currency>());
+                    var currency = Mapper.Map<CreateCurrencyViewModel, Currency>(model);
                     this._currencyRepository.AddOrUpdate(currency);
+                    this._currencyRepository.SaveChanges();
                    
                     return this.RedirectToAction("Index");
                 }
@@ -131,7 +123,5 @@
 
             return this.RedirectToAction("Index");
         }
-
-        #endregion
     }
 }
