@@ -9,19 +9,18 @@
 
 namespace Shop.Common.Models
 {
-    using Infrastructure.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Infrastructure.Models;
 
     /// <summary>
     /// Define settings for user payment methods
     /// </summary>
     public class UserPaymentMethod : BaseEntity
     {
-
         /// <summary>
         /// Gets or sets Name for type of payment method
         /// </summary>
