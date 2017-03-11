@@ -1,11 +1,15 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Mocks;
     using Moq;
 
     [TestClass]
@@ -16,8 +20,8 @@
 
         public CurrencyServiceTest()
         {
-            this._factory = new RepositoryFactoryMoq();
-            this._currencyService = new CurrencyService(this._factory);
+            _factory = new RepositoryFactoryMoq();
+            _currencyService = new CurrencyService(_factory);
         }
 
         [TestMethod]
@@ -26,7 +30,7 @@
             int currencyCode = 840;
             string currencyName = "USD";
 
-            using (var repository = this._factory.GetCurrencyRepository())
+            using (var repository = _factory.GetCurrencyRepository())
             {
                 repository.AddOrUpdate(new Currency { ShortName = currencyName, Code = currencyCode });
                 repository.SaveChanges();
@@ -38,30 +42,67 @@
         [TestMethod]
         public void GetCurrenciesListTest()
         {
-            Assert.IsFalse(this._currencyService.GetCurrenciesList().Any());
-            this.AddCurrenciesTest();
-            Assert.IsTrue(this._currencyService.GetCurrenciesList().Any());
+            using (var repository = _factory.GetCurrencyRepository())
+            {
+                repository.AddOrUpdate(new Currency { ShortName = "EUR", Code = 978 });
+                repository.SaveChanges();
+            }
+
+            Assert.IsTrue(_currencyService.GetCurrenciesList().Any());
+
+            Mock.Get(_factory.GetCurrencyRepository()).Verify(m => m.GetAll(), Times.Once);
         }
 
         [TestMethod]
         public void GetCurrencyByCodeTest()
         {
-            this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.GetCurrencyByCode(840));
+            AddCurrenciesTest();
+            Assert.IsNotNull(_currencyService.GetCurrencyByCode(840));
+
+            Mock.Get(_factory.GetCurrencyRepository())
+                .Verify(
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>(),
+                                     It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()), Times.Once);
         }
 
         [TestMethod]
         public void GetCurrencyByNameTest()
         {
-            this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.GetCurrencyByName("byn"));
+            AddCurrenciesTest();
+            Assert.IsNotNull(_currencyService.GetCurrencyByName("byn"));
+
+            Mock.Get(_factory.GetCurrencyRepository())
+                .Verify(
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>(),
+                                     It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void CurrencyExistsTest()
+        {
+            AddCurrenciesTest();
+            Assert.IsTrue(_currencyService.CurrencyExists(new Currency()));
+
+            Mock.Get(_factory.GetCurrencyRepository())
+                .Verify(
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>(),
+                                     It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()), Times.AtLeastOnce);
         }
 
         [TestMethod]
         public void GetCurrencyInfoTest()
         {
-            this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.GetCurrencyInfo(1));
+            AddCurrenciesTest();
+            Assert.IsNotNull(_currencyService.GetCurrencyInfo(1));
+
+            Mock.Get(_factory.GetCurrencyRepository())
+                .Verify(
+                        m =>
+                            m.GetById(It.IsAny<int>(),
+                                      It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()), Times.Once);
         }
     }
 }
