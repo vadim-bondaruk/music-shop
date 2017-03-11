@@ -1,5 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System;
+    using System.Linq.Expressions;
     using System.Collections.Generic;
     using System.Data.Entity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -54,16 +56,36 @@
         [TestMethod]
         public void UserPaymentMethodRepository_GetAll_Expression()
         {
-            var data2 = new List<UserPaymentMethod>()
+            var data = new List<UserPaymentMethod>()
             {
-                new UserPaymentMethod {Alias = "BBB", Id = 2},
-                new UserPaymentMethod {Alias = "CCC", Id = 3}
+                new UserPaymentMethod {Alias = "AAA"},
+                new UserPaymentMethod {Alias = "BBB"},
+                new UserPaymentMethod {Alias = "CCC"}
             };
 
             Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(_dbContext);
-            mock.Setup(r => r.GetAll(x => x.Id > 1)).Returns(data2);
-            var paymentMethod = mock.Object.GetAll(x => x.Id > 1);
-            Assert.AreEqual(paymentMethod, data2);
+            mock.Setup(r => r.GetAll(It.IsAny<Expression<Func<UserPaymentMethod, bool>>>())).Returns(data);
+
+            ICollection<UserPaymentMethod> paymentMethod = mock.Object.GetAll(It.IsAny<Expression<Func<UserPaymentMethod, bool>>>());
+            Assert.AreEqual(data, paymentMethod);
+            mock.Verify();
+        }
+
+        [TestMethod]
+        public void UserPaymentMethodRepository_AddOrUpdate()
+        {
+            var data = new List<UserPaymentMethod>()
+            {
+                new UserPaymentMethod {Alias = "AAA"},
+                new UserPaymentMethod {Alias = "BBB"},
+                new UserPaymentMethod {Alias = "CCC"}
+            };
+
+            Mock<UserPaymentMethodRepository> mock = new Mock<UserPaymentMethodRepository>(_dbContext);
+            mock.Setup(r => r.GetAll(It.IsAny<Expression<Func<UserPaymentMethod, bool>>>())).Returns(data);
+
+            ICollection<UserPaymentMethod> paymentMethod = mock.Object.GetAll(It.IsAny<Expression<Func<UserPaymentMethod, bool>>>());
+            Assert.AreEqual(data, paymentMethod);
             mock.Verify();
         }
     }
