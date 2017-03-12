@@ -68,6 +68,8 @@
                 .To<AlbumTrackRelationBaseRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumTrackRelationRepository()); 
 
+            Bind<IUserPaymentMethodRepository>().To<UserPaymentMethodRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
+
             Bind<IRepositoryFactory>().ToFactory();
         }
     }

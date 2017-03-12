@@ -59,11 +59,13 @@
     <Compile Include="Services\Infrastructure\IAlbumPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
+    <Compile Include="Services\Infrastructure\IUserPaymentMethodService.cs" />
     <Compile Include="Services\Infrastructure\IUserService.cs" />
     <Compile Include="Services\Infrastructure\IVoteService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
+    <Compile Include="Services\UserPaymentMethodService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\VoteService.cs" />
   </ItemGroup>
