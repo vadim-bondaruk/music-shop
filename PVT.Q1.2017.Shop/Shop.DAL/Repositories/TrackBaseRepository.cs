@@ -1,4 +1,6 @@
-﻿namespace Shop.DAL.Repositories
+﻿using Shop.DAL.Infrastruture;
+
+namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
