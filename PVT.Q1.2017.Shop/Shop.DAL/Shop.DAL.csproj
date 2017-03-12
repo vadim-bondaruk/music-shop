@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="DefaultRepositoriesNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AlbumBaseRepository.cs" />
+    <Compile Include="Repositories\CartBaseRepository.cs" />
     <Compile Include="Repositories\CurrencyRateBaseRepository.cs" />
     <Compile Include="Repositories\AlbumPriceBaseRepository.cs" />
     <Compile Include="Repositories\CurrencyBaseRepository.cs" />
@@ -99,9 +101,11 @@
     <Compile Include="Infrastruture\IPriceLevelRepository.cs" />
     <Compile Include="Infrastruture\IRepositoryFactory.cs" />
     <Compile Include="Infrastruture\IUserRepository.cs" />
+    <Compile Include="Infrastruture\ICartRepository.cs" />
     <Compile Include="Repositories\PriceLevelBaseRepository.cs" />
     <Compile Include="Repositories\TrackPriceBaseRepository.cs" />
     <Compile Include="Repositories\UserBaseRepository.cs" />
+    <Compile Include="Repositories\UserPaymentMethodRepository.cs" />
     <Compile Include="Repositories\VoteBaseRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Infrastruture\ITrackPriceRepository.cs" />

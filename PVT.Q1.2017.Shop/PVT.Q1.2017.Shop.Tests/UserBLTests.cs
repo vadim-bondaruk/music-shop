@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shop.BLL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,10 @@ using Shop.Infrastructure.Repositories;
 using Shop.Common.Models;
 using Shop.BLL.DTO;
 using Shop.BLL.Exceptions;
+using Shop.BLL.Services;
+using Shop.BLL.Services.Infrastructure;
 using Shop.DAL.Infrastruture;
+
 
 namespace PVT.Q1._2017.Shop.Tests
 {
@@ -23,7 +25,7 @@ namespace PVT.Q1._2017.Shop.Tests
         {
             Mock<IRepositoryFactory> repo = new Mock<IRepositoryFactory>();
             repo.Setup(r => r.GetUserRepository().GetAll()).Returns(new List<User>() { new User()});
-            UserService service = new UserService(repo.Object);
+            IUserService service = new UserService(repo.Object);
             UserDTO user_dto = new UserDTO
             {
                 FirstName = "Abziz",
