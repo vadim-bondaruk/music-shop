@@ -30,3 +30,6 @@ PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703120053560_init.cs
 PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703120053560_init.resx
 PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop.mdf
 PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop_log.ldf
+PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703122151050_init.Designer.cs
+PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703122151050_init.cs
+PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703122151050_init.resx

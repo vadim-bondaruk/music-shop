@@ -55,7 +55,8 @@
         [HttpGet]
         public ViewResult Edit(int id)
         {
-            var currency = this._curencyService.GetCurrencyInfo(id);
+            // var currency = this._curencyService.GetCurrencyInfo(id);
+            var currency = this._currencyRepository.GetById(id);
             Mapper.Initialize(cfg => cfg.CreateMap<Currency, CurrencyViewModel>());
             CurrencyViewModel model = Mapper.Map<Currency, CurrencyViewModel>(currency);
             return this.View(model);
