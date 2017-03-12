@@ -184,7 +184,9 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\CustomDependencyResolver.cs" />
@@ -229,6 +231,7 @@
     <Content Include="Views\Track\Details.cshtml" />
     <Content Include="Views\Track\List.cshtml" />
     <Content Include="Views\Track\AlbumList.cshtml" />
+    <Content Include="Views\User\Success.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

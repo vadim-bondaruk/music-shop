@@ -145,5 +145,15 @@
                 return this.View();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Success()
+        {
+            return this.View();
+        }
     }
 }
