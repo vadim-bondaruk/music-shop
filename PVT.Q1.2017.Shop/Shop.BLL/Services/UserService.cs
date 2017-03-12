@@ -108,12 +108,11 @@
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>()
                             .ForMember("UserRole", opt => opt.MapFrom(userDTO => UserRoles.User))
                             .ForMember("Password", opt => opt.MapFrom(userDTO => PasswordEncryptor.GetHashString(userDTO.Password)))
-                            .ForMember("IdentityKey", opt => opt.MapFrom(userDTO => new string('-', 30))));
+                            .ForMember("IdentityKey", opt => opt.MapFrom(userDTO => new string('-', 30)))
+                            .ForMember("PriceLevelId", opt => opt.MapFrom(userDTO => 1))
+                            .ForMember("CurrencyId", opt => opt.MapFrom(userDTO => 1)));                            
 
-            var userDB = AutoMapper.Mapper.Map<User>(user);
-
-            userDB.PriceLevelId = this.Factory.GetPriceLevelRepository().GetById(1).Id;
-            userDB.CurrencyId = this.Factory.GetCurrencyRepository().GetById(1).Id;
+            var userDB = AutoMapper.Mapper.Map<User>(user);         
 
             try
             {
