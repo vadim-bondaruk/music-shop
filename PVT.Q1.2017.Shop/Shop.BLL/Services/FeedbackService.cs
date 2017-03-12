@@ -10,8 +10,6 @@
     /// </summary>
     public class FeedbackService : BaseService, IFeedbackService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FeedbackService"/> class.
         /// </summary>
@@ -21,10 +19,6 @@
         public FeedbackService(IRepositoryFactory repositoryFactory) : base(repositoryFactory)
         {
         }
-
-        #endregion //Constructors
-
-        #region IFeedbackService Members
 
         /// <summary>
         /// Returns the feedback which have made the specified <paramref name="user"/> for the <paramref name="track"/>.
@@ -85,7 +79,5 @@
                 return repository.GetById(id, v => v.Track, v => v.User);
             }
         }
-
-        #endregion //IFeedbackService Members
     }
 }

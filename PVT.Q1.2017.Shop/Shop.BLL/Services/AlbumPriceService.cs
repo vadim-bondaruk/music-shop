@@ -10,8 +10,6 @@
     /// </summary>
     public class AlbumPriceService : BaseService, IAlbumPriceService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AlbumPriceService"/> class.
         /// </summary>
@@ -21,10 +19,6 @@
         public AlbumPriceService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region IAlbumPriceService Members
 
         /// <summary>
         /// Returns the album price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
@@ -67,7 +61,5 @@
                 return repository.GetById(id, p => p.Album, p => p.Currency, p => p.PriceLevel);
             }
         }
-
-        #endregion //IAlbumPriceService Members
     }
 }

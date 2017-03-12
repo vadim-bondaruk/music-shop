@@ -1,16 +1,13 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// </summary>
     public class VoteBaseRepository : BaseRepository<Vote>, IVoteRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="VoteBaseRepository"/> class.
         /// </summary>
@@ -20,10 +17,6 @@ namespace Shop.DAL.Repositories
         public VoteBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
-
-        #region Protected Methods
 
         /// <summary>
         /// Adds the specified <paramref name="vote"/> into Db.
@@ -36,6 +29,16 @@ namespace Shop.DAL.Repositories
             EntityState trackEntryState;
             EntityState userEntryState;
 
+            if (vote.TrackId == 0 && vote.Track != null)
+            {
+                vote.TrackId = vote.Track.Id;
+            }
+
+            if (vote.UserId == 0 && vote.User != null)
+            {
+                vote.UserId = vote.User.Id;
+            }
+
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The VoteBaseRepository should be SOLID, should only add information about vote! Not about track or user!
             this.DetachNavigationProperty(vote.Track, out trackEntryState);
@@ -47,7 +50,5 @@ namespace Shop.DAL.Repositories
             // adding the vote into Db.
             base.Add(vote);
         }
-
-        #endregion //Protected Methods
     }
 }

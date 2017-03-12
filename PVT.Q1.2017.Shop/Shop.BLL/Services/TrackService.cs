@@ -1,6 +1,5 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
@@ -12,8 +11,6 @@
     /// </summary>
     public class TrackService : BaseService, ITrackService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackService"/> class.
         /// </summary>
@@ -23,10 +20,6 @@
         public TrackService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region ITrackService Members
 
         /// <summary>
         /// Returns all registered tracks.
@@ -161,14 +154,12 @@
         /// <returns>
         /// All albums whitch contain the specified <paramref name="track"/>.
         /// </returns>
-        public ICollection<Album> GetAllAlbumsWithTrack(Track track)
+        public ICollection<Album> GetAlbumsList(Track track)
         {
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                return repository.GetAll(a => a.Tracks.Any(t => t.Id == track.Id));
+                return repository.GetAll(r => r.TrackId == track.Id, r => r.Album).Select(r => r.Album).ToList();
             }
         }
-
-        #endregion //ITrackService Members
     }
 }

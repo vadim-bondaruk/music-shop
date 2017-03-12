@@ -1,17 +1,14 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The genre repository
     /// </summary>
     public class GenreBaseRepository : BaseRepository<Genre>, IGenreRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GenreBaseRepository"/> class.
         /// </summary>
@@ -21,7 +18,5 @@ namespace Shop.DAL.Repositories
         public GenreBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
     }
 }

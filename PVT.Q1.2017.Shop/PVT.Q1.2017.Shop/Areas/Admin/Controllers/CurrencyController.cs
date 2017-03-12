@@ -1,11 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
     using System;
-    using System.Data;
+    using System.Collections.Generic;
     using System.Web.Mvc;
-
     using AutoMapper;
-
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels.Admin;
@@ -16,8 +14,6 @@
     /// </summary>
     public class CurrencyController : Controller
     {
-        #region Fields
-
         /// <summary>
         /// The repository currency
         /// </summary>
@@ -27,10 +23,6 @@
         /// The service currency
         /// </summary>
         private readonly ICurrencyService _curencyService;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CurrencyController"/> class.
@@ -43,10 +35,6 @@
             this._curencyService = currencyService;
         }
 
-        #endregion
-
-        #region Action
-
         /// <summary>
         /// 
         /// </summary>
@@ -54,7 +42,9 @@
         public ActionResult Index()
         {
             var currencies = this._curencyService.GetCurrenciesList();
-            return this.View(currencies);
+            Mapper.Initialize(cfg => cfg.CreateMap<Currency, CurrencyViewModel>());
+            var model = Mapper.Map<ICollection<Currency>, IEnumerable<CurrencyViewModel>>(currencies);
+            return this.View(model);
         }
 
         /// <summary>
@@ -82,9 +72,10 @@
                 Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
                 this._currencyRepository.AddOrUpdate(currency);
                 this._currencyRepository.SaveChanges();
+                return this.RedirectToAction("Index");
             }
 
-            return this.RedirectToAction("Index");
+            return this.View(model);
         }
 
         /// <summary>
@@ -103,10 +94,9 @@
         /// 
         /// </summary>
         /// <returns></returns>
-       [HttpGet]
         public ActionResult Create()
         {
-            return this.View(new CurrencyViewModel());
+            return this.View();
         }
 
         /// <summary>
@@ -136,7 +126,5 @@
 
             return this.RedirectToAction("Index");
         }
-
-        #endregion
     }
 }
