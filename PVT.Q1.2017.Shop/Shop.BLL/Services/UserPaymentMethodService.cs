@@ -21,6 +21,11 @@
         {
         }
 
+        /// <summary>
+        /// Gets all user payment methods by user
+        /// </summary>
+        /// <param name="user">user</param>
+        /// <returns></returns>
         public ICollection<UserPaymentMethod> UserPaymentMethodsByUser(User user)
         {
             if (user != null)
@@ -30,6 +35,7 @@
                     return repository.GetAll(a => a.User.Equals(user));
                 }
             }
+
             return null;
         }
     }
