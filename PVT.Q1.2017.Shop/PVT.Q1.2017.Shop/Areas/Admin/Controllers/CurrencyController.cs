@@ -39,7 +39,7 @@
         /// Index GetCurrenciesList
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ViewResult Index()
         {
             var currencies = this._curencyService.GetCurrenciesList();
             Mapper.Initialize(cfg => cfg.CreateMap<Currency, CurrencyViewModel>());
@@ -53,7 +53,7 @@
         /// <param name="id">currency id for edit</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ViewResult Edit(int id)
         {
             var currency = this._curencyService.GetCurrencyInfo(id);
             Mapper.Initialize(cfg => cfg.CreateMap<Currency, CurrencyViewModel>());
