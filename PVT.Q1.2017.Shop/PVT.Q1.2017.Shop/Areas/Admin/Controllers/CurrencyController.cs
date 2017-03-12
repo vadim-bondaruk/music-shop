@@ -36,7 +36,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Index GetCurrenciesList
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
@@ -48,8 +48,9 @@
         }
 
         /// <summary>
-        /// 
+        /// Edit Currency
         /// </summary>
+        /// <param name="id">currency id for edit</param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult Edit(int id)
@@ -61,8 +62,9 @@
         }
 
         /// <summary>
-        /// 
+        /// Edit Currency
         /// </summary>
+        /// <param name="model">CurrencyViewModel for edit</param>
         /// <returns></returns>
         public ActionResult Edit(CurrencyViewModel model)
         {
@@ -79,8 +81,9 @@
         }
 
         /// <summary>
-        /// 
+        /// Delete Currency
         /// </summary>
+        /// <param name="id">currency id for delete</param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult Delete(int id)
@@ -91,7 +94,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Create Currency
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
@@ -100,9 +103,9 @@
         }
 
         /// <summary>
-        /// 
+        /// Create Currency by CurrencyViewModel
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">CurrencyViewModel for create</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Create(CurrencyViewModel model)

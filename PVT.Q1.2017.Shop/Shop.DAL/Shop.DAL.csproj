@@ -67,11 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
-    <Compile Include="Migrations\201703120053560_init.cs" />
-    <Compile Include="Migrations\201703120053560_init.Designer.cs">
-      <DependentUpon>201703120053560_init.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />   
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -133,12 +129,7 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703120053560_init.resx">
-      <DependentUpon>201703120053560_init.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+  </ItemGroup>  
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

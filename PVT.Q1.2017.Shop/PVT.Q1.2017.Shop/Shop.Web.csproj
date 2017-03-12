@@ -173,9 +173,6 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Currency2\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Currency2\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Currency2\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Index.cshtml" />
@@ -207,7 +204,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\Currency2Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
