@@ -42,6 +42,8 @@
             Bind<IPriceLevelRepository>().To<PriceLevelBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPriceLevelRepository());
             Bind<IUserRepository>().To<UserBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserRepository());
 
+            Bind<IUserPaymentMethodRepository>().To<UserPaymentMethodRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
+
             Bind<IRepositoryFactory>().ToFactory();
         }
     }
