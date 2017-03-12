@@ -20,7 +20,7 @@
             IKernel kernel = new StandardKernel(new DefaultServicesNinjectModule());
             this._factory = kernel.Get<IRepositoryFactory>();
             this._currencyService = kernel.Get<ICurrencyRateService>();
-            Initialize();
+            //Initialize();
         }
 
         [TestMethod]
@@ -52,17 +52,19 @@
                 curRepo.AddOrUpdate(new[] {
                     new Currency {
                         Id = 1,
-                        ShortName = "USD"
+                        ShortName = "USD",
+                        Code = 1
                     },
                      new Currency {
                         Id = 2,
-                        ShortName = "EUR"
+                        ShortName = "EUR",
+                        Code = 2
                     }
                 });
 
                 curRepo.SaveChanges();
 
-                //add currency rates 
+                ////add currency rates 
                 curRateRepo.AddOrUpdate(new[] {
                     new CurrencyRate {
                         CurrencyId = 1,
