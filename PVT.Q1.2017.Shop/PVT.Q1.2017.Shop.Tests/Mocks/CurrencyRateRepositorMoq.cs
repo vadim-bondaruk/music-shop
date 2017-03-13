@@ -40,15 +40,16 @@
                  .Returns(() => _currencyRates.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<CurrencyRate>()))
-                 .Callback(() => _currencyRates.Add(new CurrencyRate
+                 .Callback(() => _currencyRates.AddRange(new[] { new CurrencyRate
                  {
                      Id = _currencyRates.Count + 1,
-                     CrossCourse = _currencyRates.Count + 1.99m,
+                     CrossCourse = 0.8m,
+                     Date = DateTime.Now.AddDays(-1).Date,
                      Currency = new Currency
                      {
                          Id = 1,
                          ShortName = "USD",
-                         Code = 840
+                         Code = 840,
                      },
                      TargetCurrency = new Currency
                      {
@@ -56,7 +57,25 @@
                          ShortName = "EUR",
                          Code = 978
                      }
-                 }));
+                 },
+                 new CurrencyRate
+                 {
+                     Id = _currencyRates.Count + 1,
+                     CrossCourse = 0.9m,
+                     Date = DateTime.Now,
+                     Currency = new Currency
+                     {
+                         Id = 1,
+                         ShortName = "USD",
+                         Code = 840,
+                     },
+                     TargetCurrency = new Currency
+                     {
+                         Id = 2,
+                         ShortName = "EUR",
+                         Code = 978
+                     }
+                 }}));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<CurrencyRate>())).Callback(() =>
             {
