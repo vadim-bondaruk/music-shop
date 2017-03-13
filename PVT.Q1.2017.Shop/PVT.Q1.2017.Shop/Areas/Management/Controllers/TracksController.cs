@@ -1,21 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
-    #region
-
     using System.Web.Mvc;
-
     using AutoMapper;
-
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.DAL;
     using global::Shop.DAL.Infrastruture;
-
-    using Ninject;
-
-    using PVT.Q1._2017.Shop.Areas.Management.Models;
-
-    #endregion
+    using Models;
 
     /// <summary>
     ///     The track controller
