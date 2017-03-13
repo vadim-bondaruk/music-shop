@@ -151,6 +151,7 @@
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\TrackManage.cshtml" />
+    <Content Include="Areas\Management\Views\Shared\_Layout.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -214,7 +215,6 @@
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Track\" />
-    <Folder Include="Areas\Management\Views\Shared\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Views\Album\" />
     <Folder Include="Views\Artist\" />

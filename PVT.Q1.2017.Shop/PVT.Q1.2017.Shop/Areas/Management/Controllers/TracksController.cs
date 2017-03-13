@@ -1,8 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     using AutoMapper;
+
+    using FluentValidation;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -13,7 +16,7 @@
     /// <summary>
     ///     The track controller
     /// </summary>
-    public class TracksController : Controller
+    public class TracksController : Controller, AbstractValidator<Track>
     {
         /// <summary>
         ///     The track service.
@@ -94,9 +97,12 @@
         /// </returns>
         public virtual ActionResult New()
         {
+            var model = new TrackManagmentViewModel();
+            AbstractValidator<Track> validator = new Validator();
+            
             return this.View(
                 "TrackManage",
-                new TrackManagmentViewModel());
+               model);
         }
 
         /// <summary>
