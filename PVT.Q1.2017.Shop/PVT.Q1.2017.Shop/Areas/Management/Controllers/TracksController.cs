@@ -23,49 +23,9 @@
     public class TracksController : Controller
     {
         /// <summary>
-        /// </summary>
-        private readonly IKernel _kernel;
-
-        /// <summary>
         ///     The track service.
         /// </summary>
         private readonly ITrackService trackService;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        public TracksController(IRepositoryFactory repositoryFactory)
-        {
-            this.RepositoryFactory = repositoryFactory;
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        /// <param name="trackService">
-        ///     The track service.
-        /// </param>
-        public TracksController(IRepositoryFactory repositoryFactory, ITrackService trackService)
-        {
-            this.RepositoryFactory = repositoryFactory;
-            this.trackService = trackService;
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
-        /// </summary>
-        public TracksController()
-        {
-            this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
-            this.RepositoryFactory = this._kernel.Get<IRepositoryFactory>();
-            Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackManagmentViewModel>());
-        }
 
         /// <summary>
         ///     Gets or sets the repository factory.
@@ -75,7 +35,7 @@
         /// <summary>
         /// </summary>
         /// <param name="trackId">
-        /// The track id.
+        ///     The track id.
         /// </param>
         /// <param name="model"></param>
         /// <returns>
@@ -115,7 +75,13 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("TrackManage", new TrackManagmentViewModel());
+            return this.View(
+                "TrackManage",
+                new TrackManagmentViewModel
+                    {
+                        Artist = new Artist { Name = "SomeArtist" },
+                        Track = new Track { Name = "SomeTrack" }
+                    });
         }
 
         /// <summary>
@@ -123,8 +89,7 @@
         /// <param name="model">
         ///     The model.
         /// </param>
-        /// <returns>
-        /// </returns>
+        /// <returns />
         [HttpPost]
         public virtual ActionResult New(TrackManagmentViewModel model)
         {
