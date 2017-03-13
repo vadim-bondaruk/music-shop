@@ -1,11 +1,14 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
     using System.Web.Mvc;
+
     using AutoMapper;
+
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
-    using Models;
+
+    using PVT.Q1._2017.Shop.Areas.Management.Models;
 
     /// <summary>
     ///     The track controller
@@ -16,6 +19,32 @@
         ///     The track service.
         /// </summary>
         private readonly ITrackService trackService;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        ///     The repository factory.
+        /// </param>
+        public TracksController(IRepositoryFactory repositoryFactory)
+        {
+            this.RepositoryFactory = repositoryFactory;
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        ///     The repository factory.
+        /// </param>
+        /// <param name="trackService">
+        ///     The track service.
+        /// </param>
+        public TracksController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        {
+            this.RepositoryFactory = repositoryFactory;
+            this.trackService = trackService;
+        }
 
         /// <summary>
         ///     Gets or sets the repository factory.
@@ -67,11 +96,7 @@
         {
             return this.View(
                 "TrackManage",
-                new TrackManagmentViewModel
-                    {
-                        Artist = new Artist { Name = "SomeArtist" },
-                        Track = new Track { Name = "SomeTrack" }
-                    });
+                new TrackManagmentViewModel());
         }
 
         /// <summary>
