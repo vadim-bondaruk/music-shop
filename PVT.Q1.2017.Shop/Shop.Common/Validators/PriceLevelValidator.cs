@@ -13,7 +13,7 @@
         /// </summary>
         public PriceLevelValidator()
         {
-            RuleFor(l => l.Name).NotNull().NotEmpty().Matches(@"^\S+(\s\S+)*$");
+            RuleFor(l => l.Name).Matches(@"^\S+(\s\S+)*$");
         }
     }
 }

@@ -13,7 +13,7 @@
         /// </summary>
         public UserValidator()
         {
-            RuleFor(u => u.IdentityKey).NotNull().NotEmpty().Matches(@"^\S+$");
+            RuleFor(u => u.IdentityKey).Matches(@"^\S+$");
             RuleFor(u => u.CurrencyId).GreaterThan(0);
             RuleFor(u => u.PriceLevelId).GreaterThan(0);
         }
