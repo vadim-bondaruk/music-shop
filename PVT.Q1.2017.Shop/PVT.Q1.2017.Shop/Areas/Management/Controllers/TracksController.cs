@@ -21,7 +21,7 @@
     /// <summary>
     ///     The track controller
     /// </summary>
-    public partial class ManageController : Controller
+    public partial class TracksController : Controller
     {
         /// <summary>
         /// </summary>
@@ -33,18 +33,18 @@
         private readonly ITrackService trackService;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ManageController" /> class.
+        ///     Initializes a new instance of the <see cref="TracksController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        public ManageController(IRepositoryFactory repositoryFactory)
+        public TracksController(IRepositoryFactory repositoryFactory)
         {
             this.RepositoryFactory = repositoryFactory;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ManageController" /> class.
+        ///     Initializes a new instance of the <see cref="TracksController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
@@ -52,20 +52,21 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        public ManageController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        public TracksController(IRepositoryFactory repositoryFactory, ITrackService trackService)
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ManageController" /> class.
+        ///     Initializes a new instance of the <see cref="TracksController" /> class.
         /// </summary>
-        public ManageController()
+        public TracksController()
         {
             this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
             this.RepositoryFactory = this._kernel.Get<IRepositoryFactory>();
-            Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackManagmentViewModel>());
+
+            // Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackManagmentViewModel>());
         }
 
         /// <summary>
@@ -75,13 +76,16 @@
 
         /// <summary>
         /// </summary>
+        /// <param name="model">
+        ///     The model.
+        /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult AddTrack()
+        public virtual ActionResult New()
         {
-            return this.View(new TrackManagmentViewModel());
-        }
-
+            return this.View("TrackManage", new TrackManagmentViewModel());
+        }  
+        
         /// <summary>
         /// </summary>
         /// <param name="model">
@@ -90,12 +94,12 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult AddTrack(TrackManagmentViewModel model)
+        public virtual ActionResult New(TrackManagmentViewModel model)
         {
             var trackRepo = this.RepositoryFactory.GetTrackRepository();
             var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
             trackRepo.AddOrUpdate(track);
-            return this.View();
+            return this.View("TrackManage");
         }
 
         /// <summary>
@@ -106,7 +110,7 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult UpdateTrack(TrackManagmentViewModel model)
+        public virtual ActionResult Update(TrackManagmentViewModel model)
         {
             var trackRepo = this.RepositoryFactory.GetTrackRepository();
             var track = Mapper.Map<TrackManagmentViewModel, Track>(model);

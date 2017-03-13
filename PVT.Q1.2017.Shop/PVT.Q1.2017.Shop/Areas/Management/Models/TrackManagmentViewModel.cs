@@ -25,11 +25,6 @@
         public TimeSpan Duration { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the track.
         /// </summary>
         public Track Track { get; set; }
