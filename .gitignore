@@ -19,17 +19,4 @@ PVT.Q1.2017.Shop/Shop.Security/obj
 *.Cache
 
 PVT\.Q1\.2017\.Shop/obj/
-PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop.mdf.ldf
-PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop.mdf.mdf
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703112047581_init.Designer.cs
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703112047581_init.cs
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703112047581_init.resx
 PVT.Q1.2017.Shop/TestResults/
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703120053560_init.Designer.cs
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703120053560_init.cs
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703120053560_init.resx
-PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop.mdf
-PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop_log.ldf
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703122151050_init.Designer.cs
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703122151050_init.cs
-PVT.Q1.2017.Shop/Shop.DAL/Migrations/201703122151050_init.resx

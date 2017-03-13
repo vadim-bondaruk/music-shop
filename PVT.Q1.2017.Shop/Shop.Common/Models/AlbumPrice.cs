@@ -1,10 +1,13 @@
 ﻿namespace Shop.Common.Models
 {
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The album price.
     /// </summary>
+    [Validator(typeof(AlbumPriceValidator))]
     public class AlbumPrice : BaseEntity
     {
         /// <summary>

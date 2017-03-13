@@ -40,6 +40,8 @@
 
             Bind<IUserService>().To<UserService>();
 
+            Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
+
             Bind<ICurrencyService>().To<CurrencyService>();
         }
     }

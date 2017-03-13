@@ -2,43 +2,33 @@
 
 namespace PVT.Q1._2017.Shop.Tests
 {
+    using System;
     using System.Linq;
-    using global::Shop.BLL;
+    using System.Linq.Expressions;
+    using global::Moq;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Infrastructure;
-    using IntegralTest;
+    using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Moq;
-    using Ninject;
+    using Mocks;
 
     [TestClass]
     public class TrackPriceServiceTest
     {
-        #region Fields
-
         private readonly ITrackPriceService _trackPriceService;
         private readonly IRepositoryFactory _factory;
 
-        #endregion //Fields
-
-        #region Constructors
-
         public TrackPriceServiceTest()
         {
-            this._factory = new RepositoryFactoryMoq();
-            this._trackPriceService = new TrackPriceService(this._factory);
+            _factory = new RepositoryFactoryMoq();
+            _trackPriceService = new TrackPriceService(_factory);
         }
 
-        #endregion //Constructors
-
-        #region Tests
-
         [TestMethod]
-        public void AddTrackPriceTest()
+        public void AddTrackPricesTest()
         {
-            using (var repository = this._factory.GetTrackPriceRepository())
+            using (var repository = _factory.GetTrackPriceRepository())
             {
                 repository.AddOrUpdate(new TrackPrice { Price = 1.99m });
                 repository.SaveChanges();
@@ -50,17 +40,27 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void GetTrackPriceTest()
         {
-            AddTrackPriceTest();
-            Assert.IsNotNull(this._trackPriceService.GetTrackPrice(new Track(), new PriceLevel(), new Currency()));
+            AddTrackPricesTest();
+            Assert.IsNotNull(_trackPriceService.GetTrackPrice(new Track(), new PriceLevel(), new Currency()));
+
+            Mock.Get(_factory.GetTrackPriceRepository())
+                .Verify(
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<TrackPrice, bool>>>(),
+                                     It.IsAny<Expression<Func<TrackPrice, BaseEntity>>[]>()), Times.Once);
         }
 
         [TestMethod]
         public void GetTrackPriceInfoTest()
         {
-            AddTrackPriceTest();
-            Assert.IsNotNull(this._trackPriceService.GetTrackPriceInfo(1));
-        }
+            AddTrackPricesTest();
+            Assert.IsNotNull(_trackPriceService.GetTrackPriceInfo(1));
 
-        #endregion //Tests
+            Mock.Get(_factory.GetTrackPriceRepository())
+                .Verify(
+                        m =>
+                            m.GetById(It.IsAny<int>(),
+                                      It.IsAny<Expression<Func<TrackPrice, BaseEntity>>[]>()), Times.Once);
+        }
     }
 }

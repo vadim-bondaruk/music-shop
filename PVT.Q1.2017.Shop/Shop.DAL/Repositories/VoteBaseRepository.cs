@@ -1,6 +1,8 @@
 ﻿namespace Shop.DAL.Repositories
 {
+    using System;
     using System.Data.Entity;
+    using System.Linq;
     using Common.Models;
     using Infrastruture;
 
@@ -16,6 +18,25 @@
         /// </param>
         public VoteBaseRepository(DbContext dbContext) : base(dbContext)
         {
+        }
+
+        /// <summary>
+        /// Returns average track rating for the specified <paramref name="track"/>.
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <returns>
+        /// The average track rating for the specified <paramref name="track"/>.
+        /// </returns>
+        public double GetAverageTrackRating(Track track)
+        {
+            if (track == null)
+            {
+                throw new ArgumentNullException(nameof(track));
+            }
+
+            return CurrentDbSet.Where(v => v.TrackId == track.Id).Average(v => (int)v.Mark);
         }
 
         /// <summary>

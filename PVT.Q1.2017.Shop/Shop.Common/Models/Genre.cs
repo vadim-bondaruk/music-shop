@@ -1,11 +1,14 @@
 ﻿namespace Shop.Common.Models
 {
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
-    /// The genre.
+    /// The track genre.
     /// </summary>
+    [Validator(typeof(GenreValidator))]
     public class Genre : BaseEntity
     {
         /// <summary>

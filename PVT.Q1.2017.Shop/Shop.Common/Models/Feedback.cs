@@ -1,10 +1,13 @@
 ﻿namespace Shop.Common.Models
 {
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     ///     The feedback.
     /// </summary>
+    [Validator(typeof(FeedbackValidator))]
     public class Feedback : BaseEntity
     {
         /// <summary>

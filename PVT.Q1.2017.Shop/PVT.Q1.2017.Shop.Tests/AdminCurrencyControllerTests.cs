@@ -12,7 +12,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
     using global::Shop.Common.ViewModels.Admin;
 
-    using PVT.Q1._2017.Shop.Tests.Moq;
+    using PVT.Q1._2017.Shop.Tests.Mocks;
 
     [TestClass]
     public class AdminCurrencyControllerTests

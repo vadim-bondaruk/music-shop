@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The track.
     /// </summary>
+    [Validator(typeof(TrackValidator))]
     public class Track : BaseEntity
     {
         /// <summary>

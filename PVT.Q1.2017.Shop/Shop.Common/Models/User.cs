@@ -1,11 +1,14 @@
 ﻿namespace Shop.Common.Models
 {
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     ///     The temporary user model (have to be extended by UserMenagement team).
     /// </summary>
+    [Validator(typeof(UserValidator))]
     public class User : BaseEntity
     {
         /// <summary>
