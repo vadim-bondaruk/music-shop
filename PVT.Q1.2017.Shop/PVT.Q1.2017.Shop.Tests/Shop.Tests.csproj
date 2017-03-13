@@ -118,7 +118,6 @@
     <Compile Include="UserServiceTest.cs" />
     <Compile Include="VoteServiceTest.cs" />
     <Compile Include="FeedbackServiceTest.cs" />
-    <Compile Include="Mocks\CurrencyRateRepositorMoq.cs" />
     <Compile Include="BllServiceTests\CurrencyRateServiceTest.cs" />
     <Compile Include="CartControllerTests.cs" />
     <Compile Include="CartRepositoryTests.cs" />

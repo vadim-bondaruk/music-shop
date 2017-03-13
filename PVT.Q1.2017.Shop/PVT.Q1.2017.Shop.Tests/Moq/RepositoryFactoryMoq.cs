@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests.Moq
 {
+    using System;
     using global::Shop.DAL.Infrastruture;
 
     public class RepositoryFactoryMoq : IRepositoryFactory
@@ -81,6 +82,11 @@
         public IAlbumTrackRelationRepository GetAlbumTrackRelationRepository()
         {
             return _albumTrackRelationRepositoryMoq.Repository;
+        }
+
+        public IUserPaymentMethodRepository GetUserPaymentMethodRepository()
+        {
+            throw new NotImplementedException();
         }
     }
 }
