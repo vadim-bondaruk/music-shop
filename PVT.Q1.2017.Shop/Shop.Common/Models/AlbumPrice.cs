@@ -1,31 +1,19 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AlbumPrice.cs" company="PVT Q1 2017">
-//   All rights reserved
-// </copyright>
-// <summary>
-//   The album price.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The album price.
     /// </summary>
+    [Validator(typeof(AlbumPriceValidator))]
     public class AlbumPrice : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Price for track
         /// </summary>
         public decimal Price { get; set; }
-
-        #endregion //Properties
-
-        #region Foreign Keys
 
         /// <summary>
         /// Album id
@@ -42,10 +30,6 @@ namespace Shop.Common.Models
         /// </summary>
         public int CurrencyId { get; set; }
 
-        #endregion //Foreign Keys
-
-        #region Navigation Properties
-
         /// <summary>
         /// Gets or sets the <see cref="Album"/>.
         /// </summary>
@@ -60,7 +44,5 @@ namespace Shop.Common.Models
         /// The currency.
         /// </summary>
         public virtual Currency Currency { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

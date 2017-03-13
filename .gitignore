@@ -19,4 +19,5 @@ PVT.Q1.2017.Shop/Shop.Security/obj
 *.Cache
 
 PVT\.Q1\.2017\.Shop/obj/
+PVT.Q1.2017.Shop/TestResults/
 *.coverage

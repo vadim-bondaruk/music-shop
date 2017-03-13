@@ -67,12 +67,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
+    <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.cs" />
     <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.Designer.cs">
       <DependentUpon>201703092357523_added_CurrencyRate_Date.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserConfiguration.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="DefaultRepositoriesNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AlbumBaseRepository.cs" />
+    <Compile Include="Repositories\AlbumTrackRelationBaseRepository.cs" />
     <Compile Include="Repositories\CartBaseRepository.cs" />
     <Compile Include="Repositories\CurrencyRateBaseRepository.cs" />
     <Compile Include="Repositories\AlbumPriceBaseRepository.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Repositories\PriceLevelBaseRepository.cs" />
     <Compile Include="Repositories\TrackPriceBaseRepository.cs" />
     <Compile Include="Repositories\UserBaseRepository.cs" />
+    <Compile Include="Repositories\UserPaymentMethodRepository.cs" />
     <Compile Include="Repositories\VoteBaseRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Infrastruture\ITrackPriceRepository.cs" />

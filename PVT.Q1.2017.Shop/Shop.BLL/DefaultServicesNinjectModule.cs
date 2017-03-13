@@ -30,7 +30,6 @@
         protected virtual void BindServices()
         {
             Bind<ITrackService>().To<TrackService>();
-            Bind<IArtistService>().To<ArtistService>();
             Bind<IAlbumService>().To<AlbumService>();
 
             Bind<IVoteService>().To<VoteService>();
@@ -40,6 +39,8 @@
             Bind<IAlbumPriceService>().To<AlbumPriceService>();
 
             Bind<IUserService>().To<UserService>();
+
+            Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
 
             Bind<ICurrencyService>().To<CurrencyService>();
 

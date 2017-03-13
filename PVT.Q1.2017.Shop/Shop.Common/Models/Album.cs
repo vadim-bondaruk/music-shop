@@ -2,22 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The album.
     /// </summary>
+    [Validator(typeof(AlbumValidator))]
     public class Album : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        public string Name
-        {
-            get; set;
-        }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the cover.
@@ -29,26 +27,10 @@
         /// </summary>
         public DateTime? ReleaseDate { get; set; }
 
-        #endregion //Prperties
-
-        #region Foreign Keys
-
         /// <summary>
         /// Gets or sets the artist.
         /// </summary>
-        public int? ArtistId
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// The track which the current album contains
-        /// </summary>
-        public int? TrackId { get; set; }
-
-        #endregion //Foreign Keys
-
-        #region Navigation Properties
+        public int? ArtistId { get; set; }
 
         /// <summary>
         /// Gets or sets the artist.
@@ -58,13 +40,11 @@
         /// <summary>
         /// Gets or sets all tracks from the album.
         /// </summary>
-        public virtual ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<AlbumTrackRelation> Tracks { get; set; }
 
         /// <summary>
         /// Gets or sets the album prices.
         /// </summary>
         public virtual ICollection<AlbumPrice> AlbumPrices { get; set; }
-
-        #endregion //Navigation Properties
     }
 }
