@@ -6,7 +6,7 @@
     /// <summary>
     /// The artist controller.
     /// </summary>
-    public class ArtistController : Controller
+    public partial class ArtistController : Controller
     {
         /// <summary>
         /// The repository factory.
@@ -30,7 +30,7 @@
         /// <returns>
         /// All artists view.
         /// </returns>
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             using (var repository = this._repositoryFactory.GetArtistRepository())
             {
@@ -47,7 +47,7 @@
         /// <returns>
         /// Artist info view.
         /// </returns>
-        public ActionResult Details(int id)
+        public virtual ActionResult Details(int id)
         {
             using (var repository = this._repositoryFactory.GetArtistRepository())
             {
@@ -64,7 +64,7 @@
         /// <returns>
         /// All artist albums view.
         /// </returns>
-        public ActionResult AlbumsList(int id)
+        public virtual ActionResult AlbumsList(int id)
         {
             using (var repository = this._repositoryFactory.GetAlbumRepository())
             {
@@ -81,7 +81,7 @@
         /// <returns>
         /// All artist tracks view.
         /// </returns>
-        public ActionResult TracksList(int id)
+        public virtual ActionResult TracksList(int id)
         {
             using (var repository = this._repositoryFactory.GetTrackRepository())
             {

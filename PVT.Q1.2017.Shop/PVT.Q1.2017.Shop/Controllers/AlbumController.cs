@@ -8,7 +8,7 @@
     /// <summary>
     /// The album controller.
     /// </summary>
-    public class AlbumController : Controller
+    public partial class AlbumController : Controller
     {
         /// <summary>
         /// The album service.
@@ -32,7 +32,7 @@
         /// <returns>
         /// All albums view.
         /// </returns>
-        public ActionResult Intex()
+        public virtual ActionResult Intex()
         {
             return this.View(this._albumService.GetAlbumsList());
         }
@@ -44,7 +44,7 @@
         /// <returns>
         /// Album view.
         /// </returns>
-        public ActionResult Details(int id)
+        public virtual ActionResult Details(int id)
         {
             return this.View(this._albumService.GetAlbumInfo(id));
         }

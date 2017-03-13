@@ -10,7 +10,7 @@
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
-    public class CartController : Controller
+    public partial class CartController : Controller
     {
         #region Fields
         /// <summary>
@@ -46,7 +46,7 @@
         /// Id текущего пользователя
         /// </param>
         [HttpGet]
-        public ViewResult Index(int currentUserId)
+        public virtual ViewResult Index(int currentUserId)
         {
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
             var currentUser = this._userRepository.GetById(currentUserId);
@@ -81,7 +81,7 @@
         /// Добавляемая песня
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult AddTrackToCart(int currentUserId, Track track)
+        public virtual RedirectToRouteResult AddTrackToCart(int currentUserId, Track track)
         {
             if (track == null)
             {
@@ -115,7 +115,7 @@
         /// Удаляемая песня
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track)
+        public virtual RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track)
         {
             var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault(t => t.Tracks.Contains(track));
             if (cart == null || track == null)
