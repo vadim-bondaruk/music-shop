@@ -6,18 +6,17 @@
     using DAL.Infrastruture;
     using DTO;
     using Exceptions;
-    using Infrastructure;          
-    using Shop.Infrastructure.Enums;
+    using Infrastructure;
     using Utils;
     using Validators;
+
+    using Shop.Infrastructure.Enums;
 
     /// <summary>
     /// The user service (have to be extended by UserMenagement team).
     /// </summary>
     public class UserService : BaseService, IUserService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
@@ -27,10 +26,6 @@
         public UserService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region IUserService Members
 
         /// <summary>
         /// Returns the user with the specified <paramref name="id"/>.
@@ -132,7 +127,5 @@
            
             return registered;
         }     
-
-        #endregion //IUserService Members
     }
 }

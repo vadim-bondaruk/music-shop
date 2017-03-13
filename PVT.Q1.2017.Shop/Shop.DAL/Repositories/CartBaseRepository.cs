@@ -11,10 +11,8 @@
     /// </summary>
     public class CartBaseRepository : BaseRepository<Cart>, ICartRepository
     {
-        #region Constructors
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="CurrencyRateRepository"/> class.
+        /// Initializes a new instance of the <see cref="CartBaseRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The db context.
@@ -22,10 +20,6 @@
         public CartBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
-
-        #region Protected Methods
 
         /// <summary> 
         /// Add track to User's Cart 
@@ -78,7 +72,5 @@
             foreach (var trackId in trackIds)
                 RemoveTrack(cartId, trackId);
         }
-
-        #endregion //Protected Methods
     }
 }

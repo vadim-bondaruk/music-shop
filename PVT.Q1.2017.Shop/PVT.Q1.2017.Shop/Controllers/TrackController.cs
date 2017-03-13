@@ -1,117 +1,47 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
-    #region
-
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.DAL.Infrastruture;
-
-    #endregion
+    using global::Shop.Common.Models;
 
     /// <summary>
     /// The track controller
     /// </summary>
     public class TrackController : Controller
     {
-        #region Fields
-
-        /// <summary>
-        /// The repository factory.
-        /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
-
         /// <summary>
         /// The track service.
         /// </summary>
         private readonly ITrackService _trackService;
 
-        #endregion //Fields
-
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackController"/> class.
         /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        public TrackController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        public TrackController(ITrackService trackService)
         {
-            this._repositoryFactory = repositoryFactory;
             this._trackService = trackService;
         }
 
-        #endregion //Constructors
-
-        #region Actions
-
         /// <summary>
+        /// Shows all tracks.
         /// </summary>
         /// <returns>
+        /// All tracks view.
         /// </returns>
-        public virtual ActionResult AlbumList()
+        public ActionResult Intex()
         {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
-            {
-                return this.View(repository.GetAll());
-            }
+            return this.View(this._trackService.GetTracksList());
         }
 
         /// <summary>
+        /// Shows track info.
         /// </summary>
-        /// <param name="artistId">The artist id.</param>
+        /// <param name="id">The track id.</param>
         /// <returns>
-        /// </returns>
-        public virtual ActionResult AlbumList(int artistId)
-        {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
-            {
-                return this.View(repository.GetAll(a => a.ArtistId.Equals(artistId)));
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult AlbumTracks(int id)
-        {
-            using (var repository = this._repositoryFactory.GetTrackRepository())
-            {
-                return this.View(repository.GetAll(t => t.AlbumId.Equals(id)));
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult ArtistList()
-        {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
-            {
-                return this.View(repository.GetAll());
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult ArtistTracks(int id)
-        {
-            return this.View(this._trackService.GetTracksWithPriceConfigured());
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
+        /// Track info view.
         /// </returns>
         public virtual ActionResult Details(int id)
         {
@@ -119,16 +49,15 @@
         }
 
         /// <summary>
-        /// Diplays tracks list.
+        /// Shows all albums where the specified track is exist.
         /// </summary>
+        /// <param name="id">The track id.</param>
         /// <returns>
-        /// The view that renders tracks list.
+        /// All albums where the specified track is exist.
         /// </returns>
-        public virtual ActionResult TrackList()
+        public virtual ActionResult AlbumsList(int id)
         {
-            return this.View(this._trackService.GetTracksWithPriceConfigured());
+            return this.View(this._trackService.GetAlbumsList(new Track { Id = id }));
         }
-
-        #endregion //Actions
     }
 }

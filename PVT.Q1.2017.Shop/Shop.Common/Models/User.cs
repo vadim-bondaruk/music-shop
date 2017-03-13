@@ -1,26 +1,18 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="User.cs" company="PVT.Q1.2017">
-//   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   The temporary user model.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Enums;
     using Infrastructure.Models;   
+    using Validators;
 
     /// <summary>
     ///     The temporary user model (have to be extended by UserMenagement team).
     /// </summary>
+    [Validator(typeof(UserValidator))]
     public class User : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Identity key
         /// </summary>
@@ -31,10 +23,6 @@ namespace Shop.Common.Models
         /// </summary>
         public double? Dicount { get; set; }
 
-        #endregion //Navigation Properties
-
-        #region Foreign Keys
-
         /// <summary>
         /// User currency id
         /// </summary>
@@ -44,10 +32,6 @@ namespace Shop.Common.Models
         /// ID for relation with <see cref="PriceLevel"/> 
         /// </summary>
         public int PriceLevelId { get; set; }
-
-        #endregion //Foreign Keys
-
-        #region Navigation Properties
 
         /// <summary>
         /// User currency
@@ -69,7 +53,6 @@ namespace Shop.Common.Models
         /// </summary>
         public virtual ICollection<Vote> Votes { get; set; }
 
-        #endregion //Navigation Properties
         /// <summary>
         /// Users first name
         /// </summary>

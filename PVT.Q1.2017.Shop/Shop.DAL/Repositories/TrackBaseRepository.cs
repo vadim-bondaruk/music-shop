@@ -1,6 +1,4 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
@@ -11,8 +9,6 @@ namespace Shop.DAL.Repositories
     /// </summary>
     public class TrackBaseRepository : BaseRepository<Track>, ITrackRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackBaseRepository"/> class.
         /// </summary>
@@ -22,10 +18,6 @@ namespace Shop.DAL.Repositories
         public TrackBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
-
-        #region Protected Methods
 
         /// <summary>
         /// Adds the specified <paramref name="track"/> into Db.
@@ -38,6 +30,16 @@ namespace Shop.DAL.Repositories
             EntityState artistEntryState;
             EntityState genreEntryState;
 
+            if (track.ArtistId == null && track.Artist != null)
+            {
+                track.ArtistId = track.Artist.Id;
+            }
+
+            if (track.GenreId == null && track.Genre != null)
+            {
+                track.GenreId = track.Genre.Id;
+            }
+
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The TrackBaseRepository should be SOLID, should only add information about track! Not about artist, album or genre!
             this.DetachNavigationProperty(track.Artist, out artistEntryState);
@@ -49,7 +51,5 @@ namespace Shop.DAL.Repositories
             // adding the track into Db
             base.Add(track);
         }
-
-        #endregion //Protected Methods
     }
 }
