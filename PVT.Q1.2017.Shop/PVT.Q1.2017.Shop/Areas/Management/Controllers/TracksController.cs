@@ -14,14 +14,13 @@
     using Ninject;
 
     using PVT.Q1._2017.Shop.Areas.Management.Models;
-    using PVT.Q1._2017.Shop.ViewModels;
 
     #endregion
 
     /// <summary>
     ///     The track controller
     /// </summary>
-    public partial class TracksController : Controller
+    public class TracksController : Controller
     {
         /// <summary>
         /// </summary>
@@ -65,14 +64,47 @@
         {
             this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
             this.RepositoryFactory = this._kernel.Get<IRepositoryFactory>();
-
-            // Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackManagmentViewModel>());
+            Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackManagmentViewModel>());
         }
 
         /// <summary>
         ///     Gets or sets the repository factory.
         /// </summary>
         public IRepositoryFactory RepositoryFactory { get; set; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="model"></param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        public virtual ActionResult Delete(TrackManagmentViewModel model)
+        {
+            var trackModel = Mapper.Map<TrackManagmentViewModel, Track>(model);
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            {
+                repository.Delete(trackModel);
+                repository.SaveChanges();
+            }
+
+            return this.View("TrackManage");
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="trackId"></param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult Details(int trackId)
+        {
+            var track = this.trackService.GetTrackInfo(trackId);
+            var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
+            return this.View(trackViewModel);
+        }
 
         /// <summary>
         /// </summary>
@@ -84,8 +116,8 @@
         public virtual ActionResult New()
         {
             return this.View("TrackManage", new TrackManagmentViewModel());
-        }  
-        
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="model">
@@ -116,19 +148,6 @@
             var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
             trackRepo.AddOrUpdate(track);
             return this.View();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="trackId"></param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult Details(int trackId)
-        {
-            var track = this.trackService.GetTrackInfo(trackId);
-            var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
-            return this.View(trackViewModel);
         }
     }
 }
