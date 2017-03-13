@@ -14,7 +14,7 @@
         public virtual ActionResult Index()
         {
             ////dummy code
-            return null;
+            return this.View();
         }
     }
 }
