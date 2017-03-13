@@ -31,7 +31,7 @@
         /// <returns>
         /// All tracks view.
         /// </returns>
-        public ActionResult Intex()
+        public ActionResult List()
         {
             return this.View(this._trackService.GetTracksList());
         }

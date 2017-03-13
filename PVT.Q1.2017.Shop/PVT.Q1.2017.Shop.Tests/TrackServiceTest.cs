@@ -187,7 +187,7 @@
                 });
             }
 
-            Assert.IsTrue(_trackService.GetAlbumsList(new Track()).Any());
+            Assert.IsTrue(_trackService.GetAlbumsList(new Track()).Albums.Any());
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(

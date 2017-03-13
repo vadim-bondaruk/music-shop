@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Models;
+    using ViewModels;
 
     /// <summary>
     /// The track service
@@ -87,6 +88,6 @@
         /// <returns>
         /// All albums whitch contain the specified <paramref name="track"/>.
         /// </returns>
-        ICollection<Album> GetAlbumsList(Track track);
+        TrackAlbumListViewModel GetAlbumsList(Track track);
     }
 }

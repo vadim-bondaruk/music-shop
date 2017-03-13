@@ -13,8 +13,7 @@
         /// <returns>View of index page</returns>
         public ActionResult Index()
         {
-            ////dummy code
-            return null;
+            return this.RedirectToAction("List", "Track");
         }
     }
 }

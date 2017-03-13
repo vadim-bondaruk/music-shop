@@ -1,10 +1,13 @@
 ﻿namespace Shop.BLL.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
     using DAL.Infrastruture;
+    using Exceptions;
     using Infrastructure;
+    using ViewModels;
 
     /// <summary>
     /// The track service
@@ -154,12 +157,46 @@
         /// <returns>
         /// All albums whitch contain the specified <paramref name="track"/>.
         /// </returns>
-        public ICollection<Album> GetAlbumsList(Track track)
+        public TrackAlbumListViewModel GetAlbumsList(Track track)
         {
+            if (track == null)
+            {
+                throw new ArgumentNullException(nameof(track));
+            }
+
+            Track existentTrack;
+            using (var repository = this.Factory.GetTrackRepository())
+            {
+                existentTrack = repository.GetById(track.Id, t => t.Artist);
+            }
+
+            if (existentTrack == null)
+            {
+                throw new EntityNotFoundException<Track>(track, "The specified is not found");
+            }
+
+            TrackAlbumListViewModel trackAlbumListViewModel = new TrackAlbumListViewModel
+            {
+                TrackId = existentTrack.Id,
+                TrackName = existentTrack.Name
+            };
+
+            if (existentTrack.Artist != null)
+            {
+                trackAlbumListViewModel.ArtistId = existentTrack.Artist.Id;
+                trackAlbumListViewModel.ArtistName = existentTrack.Artist.Name;
+            }
+
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                return repository.GetAll(r => r.TrackId == track.Id, r => r.Album).Select(r => r.Album).ToList();
+                var albums = repository.GetAll(r => r.TrackId == track.Id, r => r.Album).Select(r => r.Album).ToList();
+                foreach (var album in albums)
+                {
+                    trackAlbumListViewModel.Albums.Add(album);
+                }
             }
+
+            return trackAlbumListViewModel;
         }
     }
 }
