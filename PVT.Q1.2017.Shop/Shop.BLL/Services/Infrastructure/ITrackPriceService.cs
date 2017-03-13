@@ -21,7 +21,7 @@
         /// <returns>
         /// The track price in the specified currency for the specified  <paramref name="priceLevel"/> or <b>null</b>.
         /// </returns>
-        TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency);
+        TrackPrice GetTrackPrice(Track track, PriceLevel priceLevel, Currency currency);
 
         /// <summary>
         /// Returns the track price with the specified <paramref name="id"/>

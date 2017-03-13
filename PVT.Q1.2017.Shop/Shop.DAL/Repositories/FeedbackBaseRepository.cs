@@ -1,17 +1,14 @@
-using Shop.DAL.Infrastruture;
-
 namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The feedback repository.
     /// </summary>
     public class FeedbackBaseRepository : BaseRepository<Feedback>, IFeedbackRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FeedbackBaseRepository"/> class.
         /// </summary>
@@ -21,10 +18,6 @@ namespace Shop.DAL.Repositories
         public FeedbackBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
-
-        #region Protected Methods
 
         /// <summary>
         /// Adds the specified <paramref name="feedback"/> into Db.
@@ -37,6 +30,16 @@ namespace Shop.DAL.Repositories
             EntityState trackEntryState;
             EntityState userEntryState;
 
+            if (feedback.TrackId == 0 && feedback.Track != null)
+            {
+                feedback.TrackId = feedback.Track.Id;
+            }
+
+            if (feedback.UserId == 0 && feedback.User != null)
+            {
+                feedback.UserId = feedback.User.Id;
+            }
+
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The FeedbackBaseRepository should be SOLID, should only add information about feedbacks! Not about tracks or users!
             this.DetachNavigationProperty(feedback.Track, out trackEntryState);
@@ -48,7 +51,5 @@ namespace Shop.DAL.Repositories
             // adding the feedback into Db.
             base.Add(feedback);
         }
-
-        #endregion //Protected Methods
     }
 }

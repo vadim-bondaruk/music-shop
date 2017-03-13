@@ -11,8 +11,6 @@
     /// </summary>
     public class AlbumService : BaseService, IAlbumService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AlbumService"/> class.
         /// </summary>
@@ -22,10 +20,6 @@
         public AlbumService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region IAlbumService Members
 
         /// <summary>
         /// Returns the album with the specified <paramref name="id"/>.
@@ -51,9 +45,9 @@
         /// </returns>
         public ICollection<Track> GetTracksList(Album album)
         {
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id, t => t.Artist, t => t.Genre);
+                return repository.GetAll(r => r.AlbumId == album.Id, r => r.Track).Select(r => r.Track).ToList();
             }
         }
 
@@ -65,9 +59,13 @@
         /// </returns>
         public ICollection<Track> GetTracksWithoutPriceConfigured(Album album)
         {
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id && !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
+                return repository.GetAll(
+                                         r => r.AlbumId == album.Id &&
+                                              !r.Track.TrackPrices.Any(),
+                                         r => r.Track)
+                                 .Select(r => r.Track).ToList();
             }
         }
 
@@ -80,9 +78,13 @@
         /// </returns>
         public ICollection<Track> GetTracksWithPriceConfigured(Album album)
         {
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                return repository.GetAll(t => t.AlbumId == album.Id && t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
+                return repository.GetAll(
+                                         r => r.AlbumId == album.Id &&
+                                              r.Track.TrackPrices.Any(),
+                                         t => t.Track)
+                                 .Select(r => r.Track).ToList();
             }
         }
 
@@ -162,7 +164,5 @@
                                          p => p.PriceLevel);
             }
         }
-
-        #endregion //IAlbumService Members
     }
 }

@@ -7,16 +7,10 @@
     /// </summary>
     public abstract class BaseService
     {
-        #region Fields
-
         /// <summary>
         /// The repository factory to access the repositories.
         /// </summary>
         protected readonly IRepositoryFactory Factory; // <-- StyleCop generates SA1304 error when the name starts with '_' and lower case latter.
-
-        #endregion //Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseService"/> class.
@@ -28,7 +22,5 @@
         {
             this.Factory = factory;
         }
-
-        #endregion //Constructors
     }
 }
