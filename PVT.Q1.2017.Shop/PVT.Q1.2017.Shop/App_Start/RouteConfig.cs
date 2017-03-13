@@ -20,14 +20,9 @@
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
-                "Areas",
-                "{area}/{controller}/{action}/{id}",
-                new { area = "Managment", controller = "Manage", action = "AddTrack", id = UrlParameter.Optional },
-                namespaces: new[] { "Managment.Controllers" });
-            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new { controller = "Track", action = "List", id = UrlParameter.Optional });
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
     }
 }
