@@ -13,7 +13,7 @@
         /// </summary>
         public GenreValidator()
         {
-            RuleFor(g => g.Name).Matches(@"^\S+(\s\S+)*$");
+            RuleFor(g => g.Name).NotEmpty().Matches(@"^\S+(\s\S+)*$");
         }
     }
 }

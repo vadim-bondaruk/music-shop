@@ -13,7 +13,7 @@
         /// </summary>
         public CurrencyValidator()
         {
-            RuleFor(c => c.ShortName).Matches("^[A-Z]{3}$");
+            RuleFor(c => c.ShortName).NotEmpty().Length(3).Matches("^[A-Z]{3}$");
             RuleFor(c => c.Code).GreaterThan(0).LessThanOrEqualTo(999);
         }
     }

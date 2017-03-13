@@ -13,7 +13,7 @@
         /// </summary>
         public FeedbackValidator()
         {
-            RuleFor(f => f.Comments).Matches(@"^\S+(\s\S+)*$");
+            RuleFor(f => f.Comments).NotEmpty().Matches(@"^\S+(\s\S+)*$");
             RuleFor(f => f.TrackId).GreaterThan(0);
             RuleFor(f => f.UserId).GreaterThan(0);
         }

@@ -13,7 +13,7 @@
         /// </summary>
         public ArtistValidator()
         {
-            RuleFor(a => a.Name).Matches(@"^\S+(\s\S+)*$");
+            RuleFor(a => a.Name).NotEmpty().Matches(@"^\S+(\s\S+)*$");
         }
     }
 }
