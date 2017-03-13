@@ -1,8 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Security;
     using global::Shop.BLL.DTO;
-    using global::Shop.BLL.Exceptions;    
+    using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using ViewModels;
 
@@ -41,6 +42,53 @@
         public ActionResult Details(int id)
         {
             return this.View();
+        }
+
+        /// <summary>
+        /// GET: /User/Login
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Login(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return this.View();
+        }
+
+        /// <summary>
+        /// POST: /User/Login
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model, string returnUrl)
+        {
+            if (model.Email.EndsWith("@test@tut.by") && model.Password == "12345")
+            {
+                FormsAuthentication.SetAuthCookie(model.Email, false);
+                return this.Redirect(returnUrl ?? Url.Action("Success"));
+            }
+            else
+            {
+                ModelState.AddModelError(" ", "Некорректное имя пользователя или пароль");
+                return this.View();
+            }
+        }
+
+        /// <summary>
+        /// POST: /User/LogOut
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return this.RedirectToAction("Index", "Home");
         }
 
         /// <summary>

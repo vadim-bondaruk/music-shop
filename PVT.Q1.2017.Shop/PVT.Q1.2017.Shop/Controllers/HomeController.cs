@@ -1,6 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
     using System.Web.Mvc;
+    using Filters;
 
     /// <summary>
     /// Controller of Home page
