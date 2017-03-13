@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Areas.Payment.Services;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using ViewModels;
@@ -65,7 +66,7 @@
                 userCurrency.Code = 840;
                 userCurrency.ShortName = "USD";
                 cartView.CurrencyShortName = userCurrency.ShortName;
-                cartView.SetTotalPrice(userCurrency);
+                CartViewModelService.SetTotalPrice(cartView, userCurrency);
             }
 
             return this.View(cartView);

@@ -25,7 +25,7 @@ namespace PVT.Q1._2017.Shop.ViewModels
         /// <summary>
         /// Get total price of cart
         /// </summary>
-        public decimal TotalPrice { get; private set; }
+        public decimal TotalPrice { get; set; }
 
         /// <summary>
         /// Get currency short name

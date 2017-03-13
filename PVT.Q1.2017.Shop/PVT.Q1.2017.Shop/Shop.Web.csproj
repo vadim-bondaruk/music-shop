@@ -195,6 +195,7 @@
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
+    <Compile Include="Areas\Payment\Services\CartViewModelService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TrackController.cs" />
     <Compile Include="Global.asax.cs">
