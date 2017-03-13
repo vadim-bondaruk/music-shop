@@ -8,8 +8,6 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     @RenderSection("TrackList", false)
-    @RenderSection("TrackDetails", false)
-    
     @RenderSection("AddToCartButton", false)
     @RenderSection("ListSplitters", false)
 </head>
@@ -17,7 +15,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            @Html.ActionLink("MusicShop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
+            @Html.ActionLink("MusicShop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand", color = "Red" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
