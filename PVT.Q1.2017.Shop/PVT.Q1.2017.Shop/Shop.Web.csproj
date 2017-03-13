@@ -172,9 +172,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Management\Controllers\Tracks\TrackController.cs" />
+    <Compile Include="Areas\Management\Controllers\Tracks\ManageController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
-    <Compile Include="Areas\Management\Models\NewTrackViewModel.cs" />
+    <Compile Include="Areas\Management\Models\TrackManagmentViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />

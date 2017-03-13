@@ -21,7 +21,7 @@
     /// <summary>
     ///     The track controller
     /// </summary>
-    public partial class TrackController : Controller
+    public partial class ManageController : Controller
     {
         /// <summary>
         /// </summary>
@@ -33,18 +33,18 @@
         private readonly ITrackService trackService;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TrackController" /> class.
+        ///     Initializes a new instance of the <see cref="ManageController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        public TrackController(IRepositoryFactory repositoryFactory)
+        public ManageController(IRepositoryFactory repositoryFactory)
         {
             this.RepositoryFactory = repositoryFactory;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TrackController" /> class.
+        ///     Initializes a new instance of the <see cref="ManageController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
@@ -52,20 +52,20 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        public TrackController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        public ManageController(IRepositoryFactory repositoryFactory, ITrackService trackService)
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TrackController" /> class.
+        ///     Initializes a new instance of the <see cref="ManageController" /> class.
         /// </summary>
-        public TrackController()
+        public ManageController()
         {
             this._kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
             this.RepositoryFactory = this._kernel.Get<IRepositoryFactory>();
-            Mapper.Initialize(cfg => cfg.CreateMap<Track, NewTrackViewModel>());
+            Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackManagmentViewModel>());
         }
 
         /// <summary>
@@ -77,9 +77,9 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public virtual ActionResult NewTrack()
+        public virtual ActionResult AddTrack()
         {
-            return this.View(new NewTrackViewModel());
+            return this.View(new TrackManagmentViewModel());
         }
 
         /// <summary>
@@ -90,10 +90,26 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult NewTrack(NewTrackViewModel model)
+        public virtual ActionResult AddTrack(TrackManagmentViewModel model)
         {
             var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            var track = Mapper.Map<NewTrackViewModel, Track>(model);
+            var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
+            trackRepo.AddOrUpdate(track);
+            return this.View();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="model">
+        ///     The model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        public virtual ActionResult UpdateTrack(TrackManagmentViewModel model)
+        {
+            var trackRepo = this.RepositoryFactory.GetTrackRepository();
+            var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
             trackRepo.AddOrUpdate(track);
             return this.View();
         }
@@ -104,10 +120,10 @@
         /// <param name="trackId"></param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult TrackInfo(int trackId)
+        public virtual ActionResult Details(int trackId)
         {
             var track = this.trackService.GetTrackInfo(trackId);
-            var trackViewModel = Mapper.Map<Track, NewTrackViewModel>(track);
+            var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
             return this.View(trackViewModel);
         }
     }

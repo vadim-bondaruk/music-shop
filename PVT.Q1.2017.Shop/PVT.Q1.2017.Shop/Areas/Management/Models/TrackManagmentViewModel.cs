@@ -7,7 +7,7 @@
 
     /// <summary>
     /// </summary>
-    public class NewTrackViewModel
+    public class TrackManagmentViewModel
     {
         /// <summary>
         ///     Gets or sets the album.

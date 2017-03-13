@@ -22,7 +22,7 @@
             routes.MapRoute(
                 "Areas",
                 "{area}/{controller}/{action}/{id}",
-                new { area = "Managment", controller = "Track", action = "NewTrack", id = UrlParameter.Optional },
+                new { area = "Managment", controller = "Manage", action = "AddTrack", id = UrlParameter.Optional },
                 namespaces: new[] { "Managment.Controllers" });
             routes.MapRoute(
                 "Default",
