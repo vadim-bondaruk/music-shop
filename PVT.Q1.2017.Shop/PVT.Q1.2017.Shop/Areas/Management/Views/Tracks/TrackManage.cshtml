@@ -7,25 +7,25 @@
     <div id="trackData">
         <ul>
             <li>
-                @Html.EditorFor(m => m.Artist.Name, new { htmlAttributes = new { placeholder = "Artist" } })
+                @Html.EditorFor(m => m.Track.Artist.Name, new { htmlAttributes = new { placeholder = "Artist" } })
             </li>
             <li>
                 @Html.EditorFor(m => m.Track.Name, new { htmlAttributes = new { placeholder = "Name" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.Album.Name, new { htmlAttributes = new { placeholder = "Album" } })
+                @Html.EditorFor(m => m.Track.Albums, new { htmlAttributes = new { placeholder = "Album" } })
             </li>
             <li>
                 @Html.EditorFor(m => m.Track.Genre.Name, new { htmlAttributes = new { placeholder = "Genre" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.Track.ReleaseDate, new { htmlAttributes = new { placeholder = "Release Date" } })
+                @Html.EditorFor(m => m.Track.ReleaseDate, new { htmlAttributes = new { placeholder = "Release Date", type = "string" } })
             </li>
             <li>
                 @Html.EditorFor(m => m.Track.Duration, new { htmlAttributes = new { placeholder = "Duration" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.Artist.Name, new { htmlAttributes = new { placeholder = "Price" } })
+                @Html.EditorFor(m => m.Track.Name, new { htmlAttributes = new { placeholder = "Price" } })
             </li>
             <li class="cover-file">
                 <div class="mask">
