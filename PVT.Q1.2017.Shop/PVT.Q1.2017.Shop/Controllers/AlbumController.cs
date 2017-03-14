@@ -3,7 +3,6 @@
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.DAL.Infrastruture;
 
     /// <summary>
     /// The album controller.
@@ -32,7 +31,7 @@
         /// <returns>
         /// All albums view.
         /// </returns>
-        public ActionResult Intex()
+        public ActionResult List()
         {
             return this.View(this._albumService.GetAlbumsList());
         }

@@ -1,13 +1,13 @@
-﻿@model Shop.Common.Models.Track
-
+﻿@model Shop.Common.Models.Album
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete Album";
 }
 
-<h2>Details</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Track</h4>
+    <h4>Album</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -35,14 +35,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ArtistId)
         </dt>
 
@@ -50,20 +42,14 @@
             @Html.DisplayFor(model => model.ArtistId)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GenreId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GenreId)
-        </dd>
-
     </dl>
-</div>
-<p>
-    @if (User.IsInRole("EditTracks"))
-    {
-        @Html.ActionLink("Edit", "AddOrUpdate", "Track", new { id = Model.Id, area = "Management" }, null) @:|
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "List", "Album", new { area = string.Empty}, null)
+        </div>
     }
-    @Html.ActionLink("Back to List", "List")
-</p>
+</div>

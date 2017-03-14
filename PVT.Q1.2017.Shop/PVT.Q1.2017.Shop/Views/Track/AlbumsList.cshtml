@@ -1,35 +1,27 @@
-﻿@model ICollection<Shop.Common.Models.Album>
-
+﻿@model Shop.BLL.ViewModels.TrackAlbumListViewModel
 @{
     ViewBag.Title = "Track Albums List";
 }
 
-<h2>Track Albums List</h2>
-
-@Model.
+<h2>@Model.TrackName</h2>
+<h4>@Model.ArtistName</h4>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
+            Album
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            ReleaseDate
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArtistId)
+            Artist
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Albums) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
@@ -37,12 +29,18 @@
             @Html.DisplayFor(modelItem => item.ReleaseDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ArtistId)
+            @Html.DisplayFor(modelItem => item.ArtistName)
+            @Html.HiddenFor(modelItem => item.ArtistId)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @if (User.IsInRole("EditAlbums"))
+            {
+                @Html.ActionLink("Edit", "AddOrUpdate", "Album", new { id = item.Id, area = "Management" }, null)
+                @:|
+                @Html.ActionLink("Delete", "Delete", "Album", new { id = item.Id, area = "Management" }, null)
+                @:|
+            }
+            @Html.ActionLink("Details", "Details", "Album", new { id = item.Id }, null)
         </td>
     </tr>
 }

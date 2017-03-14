@@ -73,9 +73,11 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", "Track")
+    @Html.ActionLink("Back to List", "List", "Track", new { area = string.Empty }, null)
 </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section scripts
+{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

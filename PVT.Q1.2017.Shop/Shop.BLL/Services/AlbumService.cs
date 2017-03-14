@@ -2,9 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using AutoMapper;
     using Common.Models;
     using DAL.Infrastruture;
     using Infrastructure;
+    using ViewModels;
 
     /// <summary>
     /// The album service.
@@ -28,12 +30,15 @@
         /// <returns>
         /// The album with the specified <paramref name="id"/> or <b>null</b> if album doesn't exist.
         /// </returns>
-        public Album GetAlbumInfo(int id)
+        public AlbumViewModel GetAlbumInfo(int id)
         {
+            Album album;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                return repository.GetById(id, a => a.Artist);
+                album = repository.GetById(id, a => a.Artist);
             }
+
+            return this.CreateAlbumViewModel(album);
         }
 
         /// <summary>
@@ -94,12 +99,15 @@
         /// <returns>
         /// All registered albums.
         /// </returns>
-        public ICollection<Album> GetAlbumsList()
+        public ICollection<AlbumViewModel> GetAlbumsList()
         {
+            ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                return repository.GetAll(a => a.Artist);
+                albums = repository.GetAll(a => a.Artist);
             }
+
+            return this.CreateAlbumViewModels(albums);
         }
 
         /// <summary>
@@ -163,6 +171,48 @@
                                          p => p.Currency,
                                          p => p.PriceLevel);
             }
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="AlbumViewModel"/> using the specified <paramref name="album"/>.
+        /// </summary>
+        /// <param name="album">
+        /// The album.
+        /// </param>
+        /// <returns>
+        /// A new instance of the <see cref="AlbumViewModel"/> using the specified <paramref name="album"/>.
+        /// </returns>
+        private AlbumViewModel CreateAlbumViewModel(Album album)
+        {
+            var albumViewModel = Mapper.Map<AlbumViewModel>(album);
+            if (album.Artist != null)
+            {
+                albumViewModel.ArtistName = album.Artist.Name;
+            }
+
+            // TODO: fill album price by currency and price level
+            return albumViewModel;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="ICollection{AlbumViewModel}"/> using the specified list of <paramref name="albums"/>.
+        /// </summary>
+        /// <param name="albums">
+        /// The list of albums.
+        /// </param>
+        /// <returns>
+        /// A new instance of the <see cref="ICollection{AlbumViewModel}"/> using the specified list of <paramref name="albums"/>.
+        /// </returns>
+        private ICollection<AlbumViewModel> CreateAlbumViewModels(ICollection<Album> albums)
+        {
+            List<AlbumViewModel> albumViewModels = new List<AlbumViewModel>();
+            foreach (var album in albums)
+            {
+                var albumViewModel = this.CreateAlbumViewModel(album);
+                albumViewModels.Add(albumViewModel);
+            }
+
+            return albumViewModels;
         }
     }
 }

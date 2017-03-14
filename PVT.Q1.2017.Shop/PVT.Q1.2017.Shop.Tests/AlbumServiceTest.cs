@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using global::Shop.BLL;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -23,6 +24,8 @@
         {
             _factory = new RepositoryFactoryMoq();
             _albumService = new AlbumService(_factory);
+
+            DefaultModelsMapper.MapModels();
         }
 
         [TestMethod]
@@ -93,8 +96,6 @@
             var album = _albumService.GetAlbumsList().FirstOrDefault();
             Assert.IsNotNull(album);
 
-            album.AlbumPrices = new List<AlbumPrice> { new AlbumPrice { Price = 9.99m } };
-
             Assert.IsTrue(_albumService.GetAlbumsWithPriceConfigured().Any());
 
             Mock.Get(_factory.GetAlbumRepository())
@@ -127,7 +128,7 @@
 
             using (var repository = _factory.GetAlbumPriceRepository())
             {
-                repository.AddOrUpdate(new AlbumPrice { Album = album, AlbumId = album.Id, Price = 11.99m });
+                repository.AddOrUpdate(new AlbumPrice { AlbumId = album.Id, Price = 11.99m });
                 repository.SaveChanges();
             }
 
