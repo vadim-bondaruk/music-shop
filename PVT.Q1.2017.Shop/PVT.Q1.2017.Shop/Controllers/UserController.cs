@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using System.Web.Security;
+    using Filters;
     using global::Shop.BLL.DTO;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
@@ -70,7 +71,7 @@
             if (model.Email.EndsWith("@test@tut.by") && model.Password == "12345")
             {
                 FormsAuthentication.SetAuthCookie(model.Email, false);
-                return this.Redirect(returnUrl ?? Url.Action("Success"));
+                return this.Redirect(returnUrl ?? Url.Action("Index", "Home"));
             }
             else
             {
@@ -106,6 +107,8 @@
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(UserViewModel user)
         {
                 bool result = false;   

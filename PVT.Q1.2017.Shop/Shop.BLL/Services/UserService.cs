@@ -7,10 +7,9 @@
     using DTO;
     using Exceptions;
     using Infrastructure;
+    using Shop.Infrastructure.Enums;
     using Utils;
     using Validators;
-
-    using Shop.Infrastructure.Enums;
 
     /// <summary>
     /// The user service (have to be extended by UserMenagement team).
