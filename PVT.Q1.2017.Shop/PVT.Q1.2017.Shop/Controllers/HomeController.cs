@@ -43,6 +43,7 @@
         /// 
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

@@ -75,7 +75,8 @@
             }
             else
             {
-                ModelState.AddModelError(" ", "Некорректное имя пользователя или пароль");
+                ModelState.AddModelError("Error", "Некорректное имя пользователя или пароль");
+                
                 return this.View();
             }
         }
