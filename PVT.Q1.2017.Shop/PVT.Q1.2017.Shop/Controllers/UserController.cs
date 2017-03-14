@@ -5,7 +5,8 @@
     using Filters;
     using global::Shop.BLL.DTO;
     using global::Shop.BLL.Exceptions;
-    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.BLL.Services.Infrastructure;    
+    using global::Shop.Infrastructure.Security;
     using ViewModels;
 
     /// <summary>
@@ -17,13 +18,19 @@
         /// 
         /// </summary>
         private IUserService _userService;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        private IAuthModule _authModule;
 
         /// <summary>
         /// 
         /// </summary>
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IAuthModule authModule)
         {
             this._userService = userService;
+            this._authModule = authModule;
         }
 
         /// <summary>
@@ -68,16 +75,16 @@
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            if (model.Email.EndsWith("@test@tut.by") && model.Password == "12345")
+            try
             {
-                FormsAuthentication.SetAuthCookie(model.Email, false);
-                return this.Redirect(returnUrl ?? Url.Action("Index", "Home"));
+                this._authModule.LogIn(model.UserIdentity, model.Password);
             }
-            else
+            catch (UserValidationException ex)
             {
-                ModelState.AddModelError(" ", "Некорректное имя пользователя или пароль");
-                return this.View();
+                ModelState.AddModelError(ex.UserProperty, ex.Message);
             }
+
+            return this.View();
         }
 
         /// <summary>
@@ -88,8 +95,8 @@
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
-            FormsAuthentication.SignOut();
-            return this.RedirectToAction("Index", "Home");
+            this._authModule.LogOut();
+            return this.RedirectToAction("Login");
         }
 
         /// <summary>
