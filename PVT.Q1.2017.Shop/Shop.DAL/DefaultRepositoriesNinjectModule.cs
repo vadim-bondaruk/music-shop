@@ -11,12 +11,12 @@
     using Shop.DAL.Repositories;
 
     /// <summary>
-    ///     The default repositories bindings configuration
+    /// The default repositories bindings configuration
     /// </summary>
     public class DefaultRepositoriesNinjectModule : NinjectModule
     {
         /// <summary>
-        ///     Loads the module into the kernel.
+        /// Loads the module into the kernel.
         /// </summary>
         public override void Load()
         {
@@ -25,7 +25,7 @@
         }
 
         /// <summary>
-        ///     Configures the repository factory.
+        /// Configures the repository factory.
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
