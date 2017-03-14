@@ -128,6 +128,7 @@
     <Compile Include="AlbumPriceServiceTest.cs" />
     <Compile Include="TrackPriceServiceTest.cs" />
     <Compile Include="TrackServiceTest.cs" />
+    <Compile Include="UserPaymentMethodTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PVT.Q1.2017.Shop\Shop.Web.csproj">

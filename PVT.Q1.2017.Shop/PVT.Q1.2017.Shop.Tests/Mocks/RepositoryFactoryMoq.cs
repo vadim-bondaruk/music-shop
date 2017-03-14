@@ -82,5 +82,10 @@
         {
             return _albumTrackRelationRepositoryMoq.Repository;
         }
+
+        public IUserPaymentMethodRepository GetUserPaymentMethodRepository()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

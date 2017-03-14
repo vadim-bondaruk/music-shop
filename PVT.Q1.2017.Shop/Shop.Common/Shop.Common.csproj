@@ -93,6 +93,7 @@
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\TrackPrice.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserPaymentMethod.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\AlbumPriceValidator.cs" />
