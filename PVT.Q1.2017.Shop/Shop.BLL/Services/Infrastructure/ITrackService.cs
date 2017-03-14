@@ -82,12 +82,12 @@
         /// <summary>
         /// Returns all albums whitch contain the specified <paramref name="track"/>.
         /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
+        /// <param name="track">The track.</param>
+        /// <param name="currency">The currency whitch is used to load album price.</param>
+        /// <param name="priceLevel">The price level whitch is used to load album price.</param>
         /// <returns>
         /// All albums whitch contain the specified <paramref name="track"/>.
         /// </returns>
-        TrackAlbumListViewModel GetAlbumsList(Track track);
+        TrackAlbumListViewModel GetAlbumsList(Track track, Currency currency, PriceLevel priceLevel);
     }
 }

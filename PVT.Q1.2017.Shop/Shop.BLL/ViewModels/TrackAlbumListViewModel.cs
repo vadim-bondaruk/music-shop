@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.ViewModels
 {
     using System.Collections.Generic;
-    using Common.Models;
 
     /// <summary>
     /// Represents the albums list where the track exists.
@@ -13,7 +12,7 @@
         /// </summary>
         public TrackAlbumListViewModel()
         {
-            this.Albums = new List<Album>();
+            this.Albums = new List<AlbumViewModel>();
         }
 
         /// <summary>
@@ -39,6 +38,6 @@
         /// <summary>
         /// Gets or sets the albums.
         /// </summary>
-        public ICollection<Album> Albums { get; set; }
+        public ICollection<AlbumViewModel> Albums { get; set; }
     }
 }

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using global::Moq;
+    using global::Shop.BLL;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -26,6 +27,7 @@
         {
             _factory = new RepositoryFactoryMoq();
             _trackService = new TrackService(_factory);
+            DefaultModelsMapper.MapModels();
         }
 
         [TestMethod]
@@ -187,13 +189,10 @@
                 });
             }
 
-            Assert.IsTrue(_trackService.GetAlbumsList(new Track()).Albums.Any());
+            Assert.IsTrue(_trackService.GetAlbumsList(new Track(), new Currency(), new PriceLevel()).Albums.Any());
 
-            Mock.Get(_factory.GetAlbumTrackRelationRepository())
-                .Verify(
-                        m =>
-                            m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>(),
-                                     It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()), Times.Once);
+            Mock.Get(_factory.GetAlbumRepository())
+                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Album, bool>>>()), Times.Once);
         }
     }
 }

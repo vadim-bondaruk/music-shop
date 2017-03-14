@@ -57,7 +57,7 @@
         /// </returns>
         public virtual ActionResult AlbumsList(int id)
         {
-            return this.View(this._trackService.GetAlbumsList(new Track { Id = id }));
+            return null; // this.View(this._trackService.GetAlbumsList(new Track { Id = id }));
         }
     }
 }
