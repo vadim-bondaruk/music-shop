@@ -4,8 +4,6 @@
     using System.Data.Entity.ModelConfiguration;
     using Common.Models;
 
-    using Common.Models;
-
     /// <summary>
     /// Currency mapping
     /// </summary>
