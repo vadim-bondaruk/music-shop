@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using AutoMapper;
@@ -44,6 +45,7 @@
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;
+            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
         }
 
         /// <summary>
@@ -59,7 +61,7 @@
         /// <param name="model"></param>
         /// <returns>
         /// </returns>
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult Delete(TrackManagmentViewModel model)
         {
             var trackModel = Mapper.Map<TrackManagmentViewModel, Track>(model);
@@ -99,16 +101,22 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="newTrack">
-        /// The new track.
+        /// <param name="viewModel">
+        /// The view model.
         /// </param>
         /// <returns>
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult New([Bind(Include = "ArtistId, Name, AlbumId, GenreId, Duration, ReleaseDate")]Track newTrack)
+        public virtual ActionResult New(
+            [Bind(Include = "Track")] TrackManagmentViewModel viewModel)
         {
-            var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            trackRepo.AddOrUpdate(newTrack);
+            var track = Mapper.Map<TrackManagmentViewModel, Track>(viewModel);
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            {
+                repository.AddOrUpdate(track);
+                repository.SaveChanges();
+            }
+
             return this.View("TrackManage");
         }
 
