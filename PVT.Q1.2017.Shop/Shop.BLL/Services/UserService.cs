@@ -10,8 +10,6 @@
     /// </summary>
     public class UserService : BaseService, IUserService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
@@ -21,10 +19,6 @@
         public UserService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region IUserService Members
 
         /// <summary>
         /// Returns the user with the specified <paramref name="id"/>.
@@ -74,7 +68,5 @@
                 return repository.GetAll(v => v.UserId == user.Id, v => v.Track, v => v.User);
             }
         }
-
-        #endregion //IUserService Members
     }
 }

@@ -1,35 +1,22 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Vote.cs" company="PVT.Q1.2017">
 //   PVT.Q1.2017
-// </copyright>
-// <summary>
-//   The user vote.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
 namespace Shop.Common.Models
 {
-    #region
-
-    using Shop.Infrastructure.Models;
-
-    #endregion
+    using FluentValidation.Attributes;
+    using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     ///     The user vote.
     /// </summary>
+    [Validator(typeof(VoteValidator))]
     public class Vote : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         ///     Gets or sets the mark.
         /// </summary>
         public Mark Mark { get; set; }
-
-        #endregion //Properties
-
-        #region Foreign Keys
 
         /// <summary>
         ///     Gets or sets the track id.
@@ -41,10 +28,6 @@ namespace Shop.Common.Models
         /// </summary>
         public int UserId { get; set; }
 
-        #endregion //Foreign Keys
-
-        #region Navigation Properties
-
         /// <summary>
         ///     Gets or sets the track.
         /// </summary>
@@ -54,7 +37,5 @@ namespace Shop.Common.Models
         ///     Gets or sets the user.
         /// </summary>
         public virtual User User { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

@@ -10,8 +10,6 @@
     /// </summary>
     public class TrackPriceService : BaseService, ITrackPriceService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackPriceService"/> class.
         /// </summary>
@@ -21,10 +19,6 @@
         public TrackPriceService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region ITrackPriceService Members
 
         /// <summary>
         /// Returns the track price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
@@ -41,7 +35,7 @@
         /// <returns>
         /// The track price in the specified currency for the specified  <paramref name="priceLevel"/> or <b>null</b>.
         /// </returns>
-        public TrackPrice GeTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
+        public TrackPrice GetTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
         {
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
@@ -69,7 +63,5 @@
                 return repository.GetById(id, p => p.Track, p => p.Currency, p => p.PriceLevel);
             }
         }
-
-        #endregion ITrackPriceService Members
     }
 }

@@ -1,14 +1,13 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Common.Models;
     using DAL.Infrastruture;
     using Infrastructure;
 
+    /// <summary>
+    /// The user payment method service
+    /// </summary>
     public class UserPaymentMethodService : BaseService, IUserPaymentMethodService
     {
         /// <summary>
@@ -22,10 +21,14 @@
         }
 
         /// <summary>
-        /// Gets all user payment methods by user
+        /// Returns all payment methods available for the specified <paramref name="user"/>.
         /// </summary>
-        /// <param name="user">user</param>
-        /// <returns></returns>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <returns>
+        ///  All payment methods available for the specified <paramref name="user"/>.
+        /// </returns>
         public ICollection<UserPaymentMethod> UserPaymentMethodsByUser(User user)
         {
             if (user != null)

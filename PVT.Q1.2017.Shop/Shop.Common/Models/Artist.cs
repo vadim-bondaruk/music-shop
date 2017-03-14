@@ -1,25 +1,17 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Artist.cs" company="PVT Q1 2017">
-//   All rights reserved
-// </copyright>
-// <summary>
-//   Defines the Artist type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Shop.Common.Models
+﻿namespace Shop.Common.Models
 {
     using System;
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// The artist.
     /// </summary>
+    [Validator(typeof(ArtistValidator))]
     public class Artist : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -40,10 +32,6 @@ namespace Shop.Common.Models
         /// </summary>
         public byte[] Photo { get; set; }
 
-        #endregion //Properties
-
-        #region Navigation Properties
-
         /// <summary>
         /// Gets or sets all tracks of the current artist.
         /// </summary>
@@ -53,7 +41,5 @@ namespace Shop.Common.Models
         /// Gets or sets the albums.
         /// </summary>
         public virtual ICollection<Album> Albums { get; set; }
-
-        #endregion //Navigation Properties
     }
 }
