@@ -3,11 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop.Common.Models;
 using System.Collections.Generic;
 using PVT.Q1._2017.Shop.ViewModels;
+using PVT.Q1._2017.Shop.Areas.Payment.Services;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
     [TestClass]
-    public class CartViewModelTests
+    public class CartViewModelServiceTests
     {
         [TestMethod]
         public void SetTotalPrice_noTracksInCart_0()
@@ -18,7 +19,7 @@ namespace PVT.Q1._2017.Shop.Tests
             userCurrency.ShortName = "USD";
             //// Create and set CartView model
             var myCartView = new CartViewModel() { Tracks = new List<Track>() };
-            myCartView.SetTotalPrice(userCurrency);
+            CartViewModelService.SetTotalPrice(myCartView, userCurrency);
             Assert.IsTrue(myCartView.TotalPrice == 0);
         }
 
@@ -50,7 +51,7 @@ namespace PVT.Q1._2017.Shop.Tests
             var myCartView = new CartViewModel() { Tracks = new List<Track>() };
             myCartView.Tracks.Add(track1);
             myCartView.Tracks.Add(track2);
-            myCartView.SetTotalPrice(userCurrency);
+            CartViewModelService.SetTotalPrice(myCartView, userCurrency);
             Assert.IsTrue(myCartView.TotalPrice == 240);
         }
     }

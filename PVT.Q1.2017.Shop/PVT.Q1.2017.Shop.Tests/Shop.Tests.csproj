@@ -104,7 +104,7 @@
   <ItemGroup>
     <Compile Include="CartControllerTests.cs" />
     <Compile Include="CartRepositoryTests.cs" />
-    <Compile Include="CartViewModelTests.cs" />
+    <Compile Include="CartViewModelServiceTests.cs" />
     <Compile Include="CurrencyTest.cs" />
     <Compile Include="DataBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

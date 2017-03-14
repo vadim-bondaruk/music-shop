@@ -31,27 +31,5 @@ namespace PVT.Q1._2017.Shop.ViewModels
         /// Get currency short name
         /// </summary>
         public string CurrencyShortName { get; set; }
-
-        /// <summary>
-        /// Set TotalPrice for cart
-        /// </summary>
-        /// <param name="userCurrency">
-        /// Валюта, которую выбрал пользователь.
-        /// </param>
-        /// <returns> Успешно ли прошла операция подсчёта</returns>
-        public bool SetTotalPrice(Currency userCurrency)
-        {
-            foreach (Track anyTrack in this.Tracks)
-            {
-                if (anyTrack.TrackPrices == null)
-                {
-                    return false;
-                }
-
-                this.TotalPrice += anyTrack.TrackPrices.First(p => p.Currency.Code == userCurrency.Code).Price;
-            }
-
-            return true;
-        }
     }
 }
