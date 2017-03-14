@@ -14,8 +14,9 @@
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">
+        <div>
             @Html.ActionLink("MusicShop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand", color = "Red" })
+            <input type="button" class="regnewtrack" value="Registration" onClick='location.href="http://localhost:4912/Managment/Tracks/New/"'/>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -28,7 +29,7 @@
     @RenderBody()
     <hr/>
     <footer>
-        <p>&copy; @DateTime.Now.Year - PVT.Q1.2017</p>
+        <p class="copyright">&copy; @DateTime.Now.Year - PVT.Q1.2017</p>
     </footer>
 </div>
 

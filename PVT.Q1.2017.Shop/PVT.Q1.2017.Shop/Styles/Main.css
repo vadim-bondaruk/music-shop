@@ -4,6 +4,23 @@
     padding-bottom: 0.7em;
 }
 
+.regnewtrack {
+    width: 140px;
+    height: 40px;
+    border-radius: 25px;
+    position: absolute; 
+    margin-top: 240px;
+    font-weight: bold
+}
+
+.regnewtrack:hover {
+    background: black;
+}
+
+.copyright {
+    color: black;
+}
+
 footer {
     color: aliceblue;
     margin-left: 85%;

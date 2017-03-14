@@ -7,10 +7,12 @@
     using System.Web.Routing;
 
     using AutoMapper;
+
     using FluentValidation.Mvc;
 
     using global::Shop.Common.Models;
-    using ViewModels;
+
+    using PVT.Q1._2017.Shop.Areas.Management.Models;
 
     #endregion
 
@@ -27,6 +29,19 @@
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FluentValidationModelValidatorProvider.Configure();
+
+            this.MapTrackViewModel();
+        }
+
+        /// <summary>
+        /// </summary>
+        private void MapTrackViewModel()
+        {
+            Mapper.Initialize(
+                cfg =>
+                    cfg.CreateMap<TrackManagmentViewModel, Track>()
+                        .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Track.Name))
+                        .ForMember(c => c.Artist.Name, opt => opt.MapFrom(src => src.Track.Artist.Name)));
         }
     }
 }
