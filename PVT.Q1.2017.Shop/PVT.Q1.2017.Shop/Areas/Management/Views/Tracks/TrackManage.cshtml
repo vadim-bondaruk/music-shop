@@ -1,47 +1,9 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.TrackManagmentViewModel
 
-@*@using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-@*{*@
-@*    <div id="trackData">*@
-@*        <ul>*@
-@*            <li>*@
-@*                <input type="text" placeholder="Artist"/>*@
-@*            </li>*@
-@*            <li>*@
-@*                <input type="text" placeholder="Name"/>*@
-@*            </li>*@
-@*            <li>*@
-@*                <input type="text" placeholder="Album"/>*@
-@*            </li>*@
-@*            <li>*@
-@*                <input type="text" placeholder="Duration"/>*@
-@*            </li>*@
-@*            <li>*@
-@*                <input type="text" placeholder="Genre"/>*@
-@*            </li>*@
-@*            <li>*@
-@*                <input type="text" placeholder="Release Date"/>*@
-@*            </li>*@
-@*            <li>*@
-@*                <input type="text" placeholder="Artist"/>*@
-@*            </li>*@
-@*            <li class="cover-file">*@
-@*                <div class="mask">*@
-@*                    <input class="fake-input" id="file-path" type="text" placeholder="Cover"/>*@
-@*                    <input id="browsefile-button" type="button" value="Browse..."*@
-@*                           onclick="document.form1.filediag.click()"/>*@
-@*                </div>*@
-@*                <input class="original-input" type="file" name="filediag" style="display: none"/>*@
-@**@
-@*            </li>*@
-@*        </ul>*@
-@**@
-@*        <button type="submit" class="add-button">Add</button>*@
-@*    </div>*@
-@*}*@
 
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     <div id="trackData">
         <ul>
             <li>

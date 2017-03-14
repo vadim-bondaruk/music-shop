@@ -94,22 +94,21 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            var model = new TrackManagmentViewModel();
-            return this.View("TrackManage", model);
+            return this.View("TrackManage");
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="model">
-        ///     The model.
+        /// <param name="newTrack">
+        /// The new track.
         /// </param>
-        /// <returns />
-        [HttpPost]
-        public virtual ActionResult New(TrackManagmentViewModel model)
+        /// <returns>
+        /// </returns>
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual ActionResult New([Bind(Include = "ArtistId, Name, AlbumId, GenreId, Duration, ReleaseDate")]Track newTrack)
         {
             var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            trackRepo.AddOrUpdate(track);
+            trackRepo.AddOrUpdate(newTrack);
             return this.View("TrackManage");
         }
 
