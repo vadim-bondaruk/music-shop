@@ -1,10 +1,12 @@
 ﻿namespace Shop.BLL
 {
     using DAL;
+    using Infrastructure.Security;
     using Ninject;
     using Ninject.Modules;
     using Services;
     using Services.Infrastructure;
+    using Utils;
 
     /// <summary>
     /// Default cofiguration module.
@@ -43,6 +45,8 @@
             Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
 
             Bind<ICurrencyService>().To<CurrencyService>();
+
+            Bind<IAuthModule>().To<AuthModule>();
         }
     }
 }

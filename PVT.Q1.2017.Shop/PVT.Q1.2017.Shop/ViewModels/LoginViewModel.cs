@@ -15,8 +15,8 @@
         /// 
         /// </summary>
         [Required]
-        [Display(Name = "Электронная почта")]
-        public string Email { get; set; }
+        [Display(Name = "Электронная почта или логин")]
+        public string UserIdentity { get; set; }
 
         /// <summary>
         /// 
