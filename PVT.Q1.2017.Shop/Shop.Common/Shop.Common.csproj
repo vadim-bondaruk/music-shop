@@ -47,16 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\BaseAddress.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Mark.cs" />
+    <Compile Include="Models\PaymentCard.cs" />
     <Compile Include="Models\PriceLevel.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\TrackPrice.cs" />

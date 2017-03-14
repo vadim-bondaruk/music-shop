@@ -8,7 +8,6 @@
     /// </summary>
     public interface IUserPaymentMethodService
     {
-
         /// <summary>
         /// Returns all UserPaymentMethods that the specified <paramref name="user"/> have ever made.
         /// </summary>
