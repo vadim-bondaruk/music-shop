@@ -4,11 +4,10 @@
 
     using AutoMapper;
 
-    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
 
-    using Models;
+    using PVT.Q1._2017.Shop.Areas.Management.Models;
 
     /// <summary>
     /// </summary>
@@ -19,10 +18,10 @@
         private readonly IRepositoryFactory repositoryFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenresController"/> class.
+        ///     Initializes a new instance of the <see cref="GenresController" /> class.
         /// </summary>
         /// <param name="repoFactory">
-        /// The repo factory.
+        ///     The repo factory.
         /// </param>
         public GenresController(IRepositoryFactory repoFactory)
         {
@@ -30,34 +29,20 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenresController"/> class.
-        /// </summary>
-        /// <param name="repoFactory">
-        /// The repo factory.
-        /// </param>
-        /// <param name="trackService">
-        /// The track service.
-        /// </param>
-        public GenresController(IRepositoryFactory repoFactory, ITrackService trackService)
-        {
-            this.repositoryFactory = repoFactory;
-        }
-
-        /// <summary>
         /// </summary>
         /// <param name="model">
-        /// The model.
+        ///     The model.
         /// </param>
         /// <returns>
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(TrackManagmentViewModel model)
+        public virtual ActionResult Delete(GenreManagmentViewModel model)
         {
-            var trackModel = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            using (var repository = this.repositoryFactory.GetTrackRepository())
+            var genreModel = Mapper.Map<Genre>(model);
+            using (var repository = this.repositoryFactory.GetGenreRepository())
             {
-                repository.Delete(trackModel);
+                repository.Delete(genreModel);
                 repository.SaveChanges();
             }
 
@@ -67,7 +52,7 @@
         /// <summary>
         /// </summary>
         /// <param name="genreId">
-        /// The genre id.
+        ///     The genre id.
         /// </param>
         /// <returns>
         /// </returns>
@@ -76,8 +61,8 @@
             using (var genreRepo = this.repositoryFactory.GetGenreRepository())
             {
                 var genre = genreRepo.GetById(genreId);
-                var trackViewModel = Mapper.Map<GenreManagmentViewModel>(genre);
-                return this.View(trackViewModel);
+                var genreViewModel = Mapper.Map<GenreManagmentViewModel>(genre);
+                return this.View(genreViewModel);
             }
         }
 
@@ -114,7 +99,7 @@
         /// <summary>
         /// </summary>
         /// <param name="model">
-        /// The model.
+        ///     The model.
         /// </param>
         /// <returns>
         /// </returns>
