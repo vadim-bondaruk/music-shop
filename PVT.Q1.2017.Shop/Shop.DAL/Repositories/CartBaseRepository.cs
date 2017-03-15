@@ -4,6 +4,7 @@
     using System.Data.Entity;
     using Common.Models;
     using Infrastruture;
+    using System.Collections.Generic;
 
 
     /// <summary>
@@ -47,7 +48,7 @@
         /// </summary> 
         /// <param name="cartId">User's Cart ID</param> 
         /// <param name="trackIds">Added Tracks IDs</param> 
-        protected void AddTrack(int cartId, int[] trackIds)
+        protected void AddTrack(int cartId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
                 AddTrack(cartId, trackId);
@@ -73,7 +74,7 @@
         /// </summary> 
         /// <param name="cartId">User's Cart ID</param> 
         /// <param name="trackId">Removed Tracks IDs</param> 
-        protected void RemoveTrack(int cartId, int[] trackIds)
+        protected void RemoveTrack(int cartId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
                 RemoveTrack(cartId, trackId);
