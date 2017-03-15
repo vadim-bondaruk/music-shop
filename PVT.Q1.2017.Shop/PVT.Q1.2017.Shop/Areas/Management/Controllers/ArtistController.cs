@@ -18,7 +18,7 @@
         /// <summary>
         ///     The track service.
         /// </summary>
-        private readonly IArtistRepository artistRepository;
+        private readonly IRepositoryFactory repositoryFactory;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TracksController" /> class.
@@ -29,11 +29,10 @@
         public ArtistsController(IRepositoryFactory repositoryFactory, IArtistRepository artistRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.artistRepository = artistRepository;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
@@ -41,13 +40,15 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
+        /// <param name="artistRepository">
+        ///     The artist repository.
+        /// </param>
         public ArtistsController(
             IRepositoryFactory repositoryFactory,
             ITrackService trackService,
             IArtistRepository artistRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.artistRepository = artistRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
         }
 
@@ -86,9 +87,12 @@
         /// </returns>
         public virtual ActionResult Details(int artistId)
         {
-            var artist = this.artistRepository.GetById(artistId);
-            Mapper.Map<ArtistManagmentViewModel>(artist);
-            return this.View("ArtistManage");
+            using (var artistRepository = this.repositoryFactory.GetArtistRepository())
+            {
+                var artist = artistRepository.GetById(artistId);
+                Mapper.Map<ArtistManagmentViewModel>(artist);
+                return this.View("ArtistManage");
+            }
         }
 
         /// <summary>
@@ -115,25 +119,31 @@
         public virtual ActionResult New(
             [Bind(Include = "Name, Biography, Birthday, Photo")] ArtistManagmentViewModel viewModel)
         {
-            var track = Mapper.Map<Artist>(viewModel);
-            this.artistRepository.AddOrUpdate(track);
-            this.artistRepository.SaveChanges();
-            return this.View("ArtistManage");
+            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
+            {
+                var track = Mapper.Map<Artist>(viewModel);
+                artistRepo.AddOrUpdate(track);
+                artistRepo.SaveChanges();
+                return this.View("ArtistManage");
+            }
         }
 
         /// <summary>
         /// </summary>
         /// <param name="model">
-        ///     The model.
+        /// The model.
         /// </param>
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(TrackManagmentViewModel model)
+        public virtual ActionResult Update(ArtistManagmentViewModel model)
         {
-            var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            trackRepo.AddOrUpdate(track);
+            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
+            {
+                var artist = Mapper.Map<Artist>(model);
+                artistRepo.AddOrUpdate(artist);
+            }
+
             return this.View();
         }
     }
