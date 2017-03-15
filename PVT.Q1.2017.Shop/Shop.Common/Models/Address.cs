@@ -14,11 +14,11 @@
         /// <summary>
         /// Phone number in E.123 format. 50 characters max.
         /// </summary>
-        public string phone { get; set; }
+        public string Phone { get; set; }
 
         /// <summary>
         /// Type of address (e.g., HOME_OR_WORK, GIFT etc).
         /// </summary>
-        public string type { get; set; }
+        public string Type { get; set; }
     }
 }
