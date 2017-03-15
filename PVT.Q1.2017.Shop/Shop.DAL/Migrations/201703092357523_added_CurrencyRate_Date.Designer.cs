@@ -7,9 +7,9 @@ namespace Shop.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class added_CurrencyRate_Date : IMigrationMetadata
+    public sealed partial class Added_CurrencyRate_Date : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(added_CurrencyRate_Date));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Added_CurrencyRate_Date));
         
         string IMigrationMetadata.Id
         {
