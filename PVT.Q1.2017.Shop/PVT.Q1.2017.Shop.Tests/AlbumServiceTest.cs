@@ -69,7 +69,7 @@
                 });
             }
 
-            Assert.IsTrue(_albumService.GetTracksList(new Album()).Any());
+            Assert.IsTrue(_albumService.GetTracksList(1).Any());
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -132,7 +132,7 @@
                 repository.SaveChanges();
             }
 
-            Assert.IsTrue(_albumService.GetAlbumPrices(new Album()).Any());
+            Assert.IsTrue(_albumService.GetAlbumPrices(1).Any());
 
             Mock.Get(_factory.GetAlbumPriceRepository())
                 .Verify(
@@ -169,7 +169,7 @@
                 repository.SaveChanges();
             }
 
-            Assert.IsTrue(_albumService.GetTracksWithPriceConfigured(new Album()).Any());
+            Assert.IsTrue(_albumService.GetTracksWithPriceConfigured(1).Any());
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -198,7 +198,7 @@
                 });
             }
 
-            Assert.IsTrue(_albumService.GetTracksWithoutPriceConfigured(new Album()).Any());
+            Assert.IsTrue(_albumService.GetTracksWithoutPriceConfigured(1).Any());
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(

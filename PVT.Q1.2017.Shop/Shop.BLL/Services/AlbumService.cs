@@ -42,32 +42,33 @@
         }
 
         /// <summary>
-        /// Returns all registered tracks for the specified <paramref name="album"/>.
+        /// Returns all registered tracks for the specified album.
         /// </summary>
-        /// <param name="album">The album.</param>
+        /// <param name="albumId">The album id.</param>
         /// <returns>
-        /// All registered tracks for the specified <paramref name="album"/>.
+        /// All registered tracks for the specified album.
         /// </returns>
-        public ICollection<Track> GetTracksList(Album album)
+        public ICollection<Track> GetTracksList(int albumId)
         {
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                return repository.GetAll(r => r.AlbumId == album.Id, r => r.Track).Select(r => r.Track).ToList();
+                return repository.GetAll(r => r.AlbumId == albumId, r => r.Track).Select(r => r.Track).ToList();
             }
         }
 
         /// <summary>
-        /// Returns all tracks for the specified <paramref name="album"/> without price configured.
+        /// Returns all tracks for the specified album without price configured.
         /// </summary>
+        /// <param name="albumId">The album id.</param>
         /// <returns>
-        /// All tracks for the specified <paramref name="album"/> without price configured.
+        /// All tracks for the specified album without price configured.
         /// </returns>
-        public ICollection<Track> GetTracksWithoutPriceConfigured(Album album)
+        public ICollection<Track> GetTracksWithoutPriceConfigured(int albumId)
         {
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
                 return repository.GetAll(
-                                         r => r.AlbumId == album.Id &&
+                                         r => r.AlbumId == albumId &&
                                               !r.Track.TrackPrices.Any(),
                                          r => r.Track)
                                  .Select(r => r.Track).ToList();
@@ -75,18 +76,18 @@
         }
 
         /// <summary>
-        /// Returns all tracks for the specified <paramref name="album"/> with price specified.
+        /// Returns all tracks for the specified album with price specified.
         /// </summary>
-        /// <param name="album">The album.</param>
+        /// <param name="albumId">The album id.</param>
         /// <returns>
-        /// All tracks for the specified <paramref name="album"/> without price specified.
+        /// All tracks for the specified album without price specified.
         /// </returns>
-        public ICollection<Track> GetTracksWithPriceConfigured(Album album)
+        public ICollection<Track> GetTracksWithPriceConfigured(int albumId)
         {
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
                 return repository.GetAll(
-                                         r => r.AlbumId == album.Id &&
+                                         r => r.AlbumId == albumId &&
                                               r.Track.TrackPrices.Any(),
                                          t => t.Track)
                                  .Select(r => r.Track).ToList();
@@ -139,35 +140,35 @@
         }
 
         /// <summary>
-        /// Returns all <paramref name="album"/> prices for the specified  <paramref name="priceLevel"/>.
+        /// Returns all album prices for the specified price level.
         /// </summary>
-        /// <param name="album">The album.</param>
-        /// <param name="priceLevel">The price level.</param>
+        /// <param name="albumId">The album id.</param>
+        /// <param name="priceLevelId">The price level id.</param>
         /// <returns>
-        /// All <paramref name="album"/> prices for the specified  <paramref name="priceLevel"/>.
+        /// All album prices for the specified price level.
         /// </returns>
-        public ICollection<AlbumPrice> GetAlbumPrices(Album album, PriceLevel priceLevel)
+        public ICollection<AlbumPrice> GetAlbumPrices(int albumId, int priceLevelId)
         {
             using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetAll(
-                                         p => p.AlbumId == album.Id &&
-                                              p.PriceLevelId == priceLevel.Id,
+                                         p => p.AlbumId == albumId &&
+                                              p.PriceLevelId == priceLevelId,
                                          p => p.Currency);
             }
         }
 
         /// <summary>
-        /// Returns all <paramref name="album"/> prices.
+        /// Returns all album prices.
         /// </summary>
-        /// <param name="album">The album.</param>
-        /// <returns>All <paramref name="album"/> prices>.</returns>
-        public ICollection<AlbumPrice> GetAlbumPrices(Album album)
+        /// <param name="albumId">The album id.</param>
+        /// <returns>All album prices.</returns>
+        public ICollection<AlbumPrice> GetAlbumPrices(int albumId)
         {
             using (var repository = this.Factory.GetAlbumPriceRepository())
             {
                 return repository.GetAll(
-                                         p => p.AlbumId == album.Id,
+                                         p => p.AlbumId == albumId,
                                          p => p.Currency,
                                          p => p.PriceLevel);
             }

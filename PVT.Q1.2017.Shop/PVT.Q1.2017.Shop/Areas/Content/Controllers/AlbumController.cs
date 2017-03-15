@@ -65,7 +65,7 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this._albumService.GetTracksList(new Album { Id = id.Value }));
+            return this.View(this._albumService.GetTracksList(id.Value));
         }
     }
 }
