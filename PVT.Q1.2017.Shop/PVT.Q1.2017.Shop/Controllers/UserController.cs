@@ -2,7 +2,6 @@
 {
     using System.Web.Mvc;
     using System.Web.Security;
-    using Filters;
     using global::Shop.BLL.DTO;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;    
@@ -84,7 +83,7 @@
                 ModelState.AddModelError(ex.UserProperty, ex.Message);
             }
 
-                return this.View();
+            return this.RedirectToAction("Index", "Home");
             }
 
         /// <summary>

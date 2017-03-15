@@ -80,10 +80,14 @@
     <Compile Include="Migrations\201703151342298_AddUserRolesArray.cs" />
     <Compile Include="Migrations\201703151342298_AddUserRolesArray.Designer.cs">
       <DependentUpon>201703151342298_AddUserRolesArray.cs</DependentUpon>
-	 </Compile>
+    </Compile>
     <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.cs" />
     <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.Designer.cs">
       <DependentUpon>201703092357523_added_CurrencyRate_Date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703152237360_UserCreatTesting.cs" />
+    <Compile Include="Migrations\201703152237360_UserCreatTesting.Designer.cs">
+      <DependentUpon>201703152237360_UserCreatTesting.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -151,8 +155,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703092357523_added_CurrencyRate_Date.resx">
       <DependentUpon>201703092357523_added_CurrencyRate_Date.cs</DependentUpon>
-	</EmbeddedResource>
-    <Folder Include="Data\" />
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703152237360_UserCreatTesting.resx">
+      <DependentUpon>201703152237360_UserCreatTesting.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703142000510_LoginTesting.resx">
@@ -164,6 +170,9 @@
     <EmbeddedResource Include="Migrations\201703151342298_AddUserRolesArray.resx">
       <DependentUpon>201703151342298_AddUserRolesArray.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
