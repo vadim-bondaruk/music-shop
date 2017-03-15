@@ -13,7 +13,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetById()
         {
             var mock = new Mock<IRepository<Cart>>();
-            mock.Setup(o => o.GetById(1)).Returns(new Cart() { Id = 1 });
+            mock.Setup(o => o.GetById(1)).Returns(new Cart() {Id = 1});
             var res = mock.Object.GetById(1);
             Assert.IsNotNull(res);
         }
@@ -25,15 +25,14 @@ namespace PVT.Q1._2017.Shop.Tests
             var mock = new Mock<IRepository<Cart>>();
             mock.Setup(o => o.GetAll()).Returns(new List<Cart>()
             {
-                new Cart() { Id = 1 },
-                new Cart() { Id = 2 },
-                new Cart() { Id = 3 }
+                new Cart() {Id = 1},
+                new Cart() {Id = 2},
+                new Cart() {Id = 3}
             });
             var res = mock.Object.GetAll();
             Assert.IsNotNull(res);
             Assert.IsTrue(res.Count == 3);
         }
-
-        // TODO: Add other tests
+        //TODO: Add other tests
     }
 }

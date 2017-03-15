@@ -13,7 +13,7 @@
         /// </summary>
         public AlbumValidator()
         {
-            RuleFor(a => a.Name).NotNull().NotEmpty().Matches(@"^\S+(\s\S+)*$");
+            RuleFor(a => a.Name).NotEmpty().Matches(@"^\S+(\s\S+)*$");
             RuleFor(a => a.ArtistId).NotNull().GreaterThan(0);
         }
     }

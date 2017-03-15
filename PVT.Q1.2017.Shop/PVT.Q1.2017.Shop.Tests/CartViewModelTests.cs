@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PVT.Q1._2017.Shop.ViewModels;
 using Shop.Common.Models;
+using System.Collections.Generic;
+using PVT.Q1._2017.Shop.ViewModels;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
@@ -16,7 +16,6 @@ namespace PVT.Q1._2017.Shop.Tests
             var userCurrency = new Currency();
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
-
             //// Create and set CartView model
             var myCartView = new CartViewModel() { Tracks = new List<Track>() };
             myCartView.SetTotalPrice(userCurrency);
@@ -30,14 +29,12 @@ namespace PVT.Q1._2017.Shop.Tests
             var userCurrency = new Currency();
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
-
             //// Set TrackPrices
             var priceTrack = new TrackPrice();
             priceTrack.Currency = userCurrency;
             priceTrack.Price = 120;
             var pricesTrack = new List<TrackPrice>();
             pricesTrack.Add(priceTrack);
-
             //// Create two tracks
             var track1 = new Track()
             {
@@ -49,7 +46,6 @@ namespace PVT.Q1._2017.Shop.Tests
                 Name = "SuperTrack",
                 TrackPrices = pricesTrack
             };
-
             //// Create and set CartView model
             var myCartView = new CartViewModel() { Tracks = new List<Track>() };
             myCartView.Tracks.Add(track1);
