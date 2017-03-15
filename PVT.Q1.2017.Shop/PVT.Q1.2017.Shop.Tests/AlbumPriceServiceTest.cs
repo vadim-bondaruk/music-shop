@@ -11,7 +11,7 @@ namespace PVT.Q1._2017.Shop.Tests
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Mocks;
+    using Moq;
 
     [TestClass]
     public class AlbumPriceServiceTest

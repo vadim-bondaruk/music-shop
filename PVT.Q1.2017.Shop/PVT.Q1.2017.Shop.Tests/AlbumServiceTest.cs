@@ -10,8 +10,8 @@
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Mocks;
     using Moq;
+    using global::Moq;
 
     [TestClass]
     public class AlbumServiceTest
