@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.Shop.Tests.Mocks
+﻿namespace PVT.Q1._2017.Shop.Tests.Moq
 {
     using System;
     using System.Collections.Generic;
