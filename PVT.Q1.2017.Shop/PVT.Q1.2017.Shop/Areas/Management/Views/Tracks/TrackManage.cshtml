@@ -1,6 +1,6 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.TrackManagmentViewModel
 
-
+<h2 class="op-title">New track registration</h2>
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -13,7 +13,7 @@
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Name" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.Album.Name, new { htmlAttributes = new { placeholder = "Album", Type="text" } })
+                @Html.EditorFor(m => m.Album.Name, new { htmlAttributes = new { placeholder = "Album", Type = "text" } })
             </li>
             <li>
                 @Html.EditorFor(m => m.Genre.Name, new { htmlAttributes = new { placeholder = "Genre" } })
@@ -34,13 +34,13 @@
                            onclick="document.form1.filediag.click()"/>
                 </div>
                 <input class="original-input" type="file" name="filediag" style="display: none"/>
-    
+
             </li>
         </ul>
-    
+
         <button type="submit" class="add-button">Add</button>
     </div>
 }
 
 @section ManageStyle{
-   <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}
+    <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}
