@@ -19,7 +19,7 @@
         public Artist Artist { get; set; }
 
         /// <summary>
-        /// Gets or sets the duration.
+        ///     Gets or sets the duration.
         /// </summary>
         public TimeSpan? Duration { get; set; }
 
@@ -32,6 +32,11 @@
         ///     Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the price.
+        /// </summary>
+        public double Price { get; set; }
 
         /// <summary>
         ///     Gets or sets the release date.
