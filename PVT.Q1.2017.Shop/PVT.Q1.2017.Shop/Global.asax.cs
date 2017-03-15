@@ -30,18 +30,14 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FluentValidationModelValidatorProvider.Configure();
 
-            this.MapTrackViewModel();
+            MapTrackViewModel();
         }
 
         /// <summary>
         /// </summary>
-        private void MapTrackViewModel()
+        private static void MapTrackViewModel()
         {
-            Mapper.Initialize(
-                cfg =>
-                    cfg.CreateMap<TrackManagmentViewModel, Track>()
-                        .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Track.Name))
-                        .ForMember(c => c.Artist.Name, opt => opt.MapFrom(src => src.Track.Artist.Name)));
+            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
         }
     }
 }

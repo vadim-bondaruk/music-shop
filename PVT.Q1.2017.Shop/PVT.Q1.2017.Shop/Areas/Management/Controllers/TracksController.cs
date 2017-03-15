@@ -71,7 +71,7 @@
                 repository.SaveChanges();
             }
 
-            return this.View("TrackManage");
+            return this.View("TrackRegistration");
         }
 
         /// <summary>
@@ -96,7 +96,7 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("TrackManage");
+            return this.View("TrackRegistration");
         }
 
         /// <summary>
@@ -117,7 +117,7 @@
                 repository.SaveChanges();
             }
 
-            return this.View("TrackManage");
+            return this.View("TrackRegistration");
         }
 
         /// <summary>
