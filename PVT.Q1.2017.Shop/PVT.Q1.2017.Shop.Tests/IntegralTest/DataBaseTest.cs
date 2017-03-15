@@ -7,6 +7,7 @@
     using global::Shop.DAL.Context;
     using global::Shop.DAL.Infrastruture;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using Ninject;
 
     /// <summary>

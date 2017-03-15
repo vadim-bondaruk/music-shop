@@ -1,18 +1,23 @@
 namespace Shop.DAL.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
-    public partial class added_CurrencyRate_Date : DbMigration
+
+    /// <summary>
+    /// </summary>
+    public partial class Added_CurrencyRate_Date : DbMigration
     {
-        public override void Up()
-        {
-            AddColumn("dbo.tbCurrencyRates", "Date", c => c.DateTime(nullable: false));
-        }
-        
+        /// <summary>
+        /// </summary>
         public override void Down()
         {
-            DropColumn("dbo.tbCurrencyRates", "Date");
+            this.DropColumn("dbo.tbCurrencyRates", "Date");
+        }
+
+        /// <summary>
+        /// </summary>
+        public override void Up()
+        {
+            this.AddColumn("dbo.tbCurrencyRates", "Date", c => c.DateTime(false));
         }
     }
 }
