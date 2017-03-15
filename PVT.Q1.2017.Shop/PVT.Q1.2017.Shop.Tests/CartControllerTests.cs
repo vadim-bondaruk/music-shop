@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shop.Common.Models;
+using Shop.Infrastructure.Repositories;
 using Moq;
+using System.Collections.Generic;
 using PVT.Q1._2017.Shop.Controllers.Cart;
 using PVT.Q1._2017.Shop.ViewModels;
-using Shop.Common.Models;
 using Shop.DAL.Infrastruture;
-using Shop.Infrastructure.Repositories;
+using System;
+using System.Linq.Expressions;
+using System.Web.Mvc;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
