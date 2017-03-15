@@ -69,6 +69,10 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
+    <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.cs" />
+    <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.Designer.cs">
+      <DependentUpon>201703092357523_added_CurrencyRate_Date.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201703141950344_Init.cs" />
     <Compile Include="Migrations\201703141950344_Init.Designer.cs">
       <DependentUpon>201703141950344_Init.cs</DependentUpon>
@@ -135,6 +139,11 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703092357523_added_CurrencyRate_Date.resx">
+      <DependentUpon>201703092357523_added_CurrencyRate_Date.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703141950344_Init.resx">
