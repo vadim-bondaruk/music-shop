@@ -73,7 +73,7 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login([Bind(Include = "UserIdentity, Password, RememberMe")] LoginViewModel model)
         {
             try
             {
@@ -116,7 +116,8 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserViewModel user)
+        public ActionResult Create([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
+                                                    Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
                 bool result = false;   
                 /// TODO: Add insert logic here

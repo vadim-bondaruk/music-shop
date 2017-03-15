@@ -91,7 +91,7 @@
         /// <summary>
         /// Users role in this shop
         /// </summary>
-        public UserRoles UserRole { get; set; }
+        public UserRoles[] UserRoles { get; set; }
 
         /// <summary>
         /// Users country
