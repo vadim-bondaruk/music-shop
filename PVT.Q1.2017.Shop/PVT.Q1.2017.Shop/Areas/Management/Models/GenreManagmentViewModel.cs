@@ -1,14 +1,17 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Models
 {
-    using global::Shop.Common.Models;
-
     /// <summary>
     /// </summary>
     public class GenreManagmentViewModel
     {
         /// <summary>
-        /// Gets or sets the track.
+        /// Gets or sets the description.
         /// </summary>
-        public Genre Genre { get; set; }
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
     }
 }
