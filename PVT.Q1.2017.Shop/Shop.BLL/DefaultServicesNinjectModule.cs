@@ -43,6 +43,8 @@
             Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
 
             Bind<ICurrencyService>().To<CurrencyService>();
+
+            Bind<ICurrencyRateService>().To<CurrencyRateService>();
         }
     }
 }
