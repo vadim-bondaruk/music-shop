@@ -100,11 +100,11 @@
             }
 
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>()
-                            .ForMember("UserRole", opt => opt.MapFrom(userDTO => UserRoles.User))
+                            .ForMember("UserRoles", opt => opt.MapFrom(userDTO => this.GetDefaultUserRoles()))
                             .ForMember("Password", opt => opt.MapFrom(userDTO => PasswordEncryptor.GetHashString(userDTO.Password)))
-                            .ForMember("IdentityKey", opt => opt.MapFrom(userDTO => new string('-', 30)))
-                            .ForMember("PriceLevelId", opt => opt.MapFrom(userDTO => 1))
-                            .ForMember("CurrencyId", opt => opt.MapFrom(userDTO => 1)));                            
+                            .ForMember("IdentityKey", opt => opt.MapFrom(userDTO => this.GetIdentityKey()))
+                            .ForMember("PriceLevelId", opt => opt.MapFrom(userDTO => this.GetDefaultPriceLevelId()))
+                            .ForMember("CurrencyId", opt => opt.MapFrom(userDTO => this.GetDefaultCurrencyId())));                            
 
             var userDB = AutoMapper.Mapper.Map<User>(user);         
 
@@ -125,6 +125,42 @@
             }
            
             return registered;
-        }     
+        }
+
+        /// <summary>
+        /// Getting default user roles
+        /// </summary>
+        /// <returns></returns>
+        private UserRoles[] GetDefaultUserRoles()
+        {
+            return new UserRoles[] { UserRoles.User };
+        }
+
+        /// <summary>
+        /// Implement identity key receiving logic
+        /// </summary>
+        /// <returns></returns>
+        private string GetIdentityKey()
+        {
+            return new string('-', 30);
+        }
+
+        /// <summary>
+        /// Implenent receiving default value
+        /// </summary>
+        /// <returns></returns>
+        private int GetDefaultCurrencyId()
+        {
+            return 1;
+        }
+
+        /// <summary>
+        /// Implenent receiving default value
+        /// </summary>
+        /// <returns></returns>
+        private int GetDefaultPriceLevelId()
+        {
+            return 1;
+        }
     }
 }

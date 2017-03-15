@@ -73,6 +73,14 @@
     <Compile Include="Migrations\201703142000510_LoginTesting.Designer.cs">
       <DependentUpon>201703142000510_LoginTesting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703151326498_AddBind.cs" />
+    <Compile Include="Migrations\201703151326498_AddBind.Designer.cs">
+      <DependentUpon>201703151326498_AddBind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703151342298_AddUserRolesArray.cs" />
+    <Compile Include="Migrations\201703151342298_AddUserRolesArray.Designer.cs">
+      <DependentUpon>201703151342298_AddUserRolesArray.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -142,6 +150,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703142000510_LoginTesting.resx">
       <DependentUpon>201703142000510_LoginTesting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703151326498_AddBind.resx">
+      <DependentUpon>201703151326498_AddBind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703151342298_AddUserRolesArray.resx">
+      <DependentUpon>201703151342298_AddUserRolesArray.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
