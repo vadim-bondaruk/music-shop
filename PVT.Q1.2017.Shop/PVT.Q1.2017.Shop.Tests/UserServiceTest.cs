@@ -9,8 +9,8 @@ namespace PVT.Q1._2017.Shop.Tests
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Mocks;
     using Moq;
+    using global::Moq;
 
     [TestClass]
     public class UserServiceTest

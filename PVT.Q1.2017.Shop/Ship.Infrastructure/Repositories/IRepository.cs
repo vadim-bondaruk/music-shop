@@ -45,6 +45,12 @@
         void AddOrUpdate(TEntity model);
 
         /// <summary>
+        /// Adds or updates the specified array of <paramref name="models"/>.
+        /// </summary>
+        /// <param name="models">Models to add or update.</param>
+        void AddOrUpdate(TEntity[] models);
+
+        /// <summary>
         /// Deletes a model with the specified <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The model key.</param>

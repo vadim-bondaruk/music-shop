@@ -1,5 +1,6 @@
-﻿namespace PVT.Q1._2017.Shop.Tests.Mocks
+﻿namespace PVT.Q1._2017.Shop.Tests.Moq
 {
+    using System;
     using global::Shop.DAL.Infrastruture;
 
     public class RepositoryFactoryMoq : IRepositoryFactory
@@ -85,7 +86,7 @@
 
         public IUserPaymentMethodRepository GetUserPaymentMethodRepository()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

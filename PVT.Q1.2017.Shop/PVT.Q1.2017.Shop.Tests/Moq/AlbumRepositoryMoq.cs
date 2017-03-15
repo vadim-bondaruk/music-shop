@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.Shop.Tests.Mocks
+﻿namespace PVT.Q1._2017.Shop.Tests.Moq
 {
     using System;
     using System.Collections.Generic;
@@ -33,11 +33,11 @@
                  .Returns(_albums);
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _albums.FirstOrDefault());
+                 .Returns(() => _albums.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
-                 .Returns(() => _albums.FirstOrDefault());
+                 .Returns(() => _albums.Where(a => a.Artist != null).FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Album>())).Callback(() => _albums.Add(new Album
             {
