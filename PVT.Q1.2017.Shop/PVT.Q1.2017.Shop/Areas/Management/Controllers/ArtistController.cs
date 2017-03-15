@@ -4,65 +4,32 @@
 
     using AutoMapper;
 
-    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
 
     using PVT.Q1._2017.Shop.Areas.Management.Models;
 
     /// <summary>
-    ///     The track controller
     /// </summary>
     public class ArtistsController : Controller
     {
         /// <summary>
-        ///     The track service.
         /// </summary>
         private readonly IRepositoryFactory repositoryFactory;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        public ArtistsController(IRepositoryFactory repositoryFactory, IArtistRepository artistRepository)
-        {
-            this.RepositoryFactory = repositoryFactory;
-        }
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
         /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        /// <param name="trackService">
-        ///     The track service.
-        /// </param>
-        /// <param name="artistRepository">
-        ///     The artist repository.
-        /// </param>
-        public ArtistsController(
-            IRepositoryFactory repositoryFactory,
-            ITrackService trackService,
-            IArtistRepository artistRepository)
+        public ArtistsController(IRepositoryFactory repoFactory)
         {
-            this.RepositoryFactory = repositoryFactory;
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
+            this.repositoryFactory = repoFactory;
         }
 
         /// <summary>
-        ///     Gets or sets the repository factory.
         /// </summary>
-        public IRepositoryFactory RepositoryFactory { get; set; }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="trackId">
-        ///     The track id.
+        /// <param name="model">
+        ///     The model.
         /// </param>
-        /// <param name="model"></param>
         /// <returns>
         /// </returns>
         [HttpPost]
@@ -70,7 +37,7 @@
         public virtual ActionResult Delete(ArtistManagmentViewModel model)
         {
             var artistModel = Mapper.Map<ArtistManagmentViewModel, Artist>(model);
-            using (var repository = this.RepositoryFactory.GetArtistRepository())
+            using (var repository = this.repositoryFactory.GetArtistRepository())
             {
                 repository.Delete(artistModel);
                 repository.SaveChanges();
@@ -81,8 +48,9 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="artistId"></param>
+        /// <param name="artistId">
+        ///     The artist id.
+        /// </param>
         /// <returns>
         /// </returns>
         public virtual ActionResult Details(int artistId)
@@ -97,9 +65,6 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="model">
-        ///     The model.
-        /// </param>
         /// <returns>
         /// </returns>
         public virtual ActionResult New()
@@ -131,7 +96,7 @@
         /// <summary>
         /// </summary>
         /// <param name="model">
-        /// The model.
+        ///     The model.
         /// </param>
         /// <returns>
         /// </returns>
