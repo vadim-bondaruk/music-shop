@@ -15,7 +15,7 @@
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CurrencyRateRepository"/> class.
+        /// Initializes a new instance of the <see cref="CartBaseRepository"/> class.
         /// </summary>
         /// <param name="dbContext">
         /// The db context.
@@ -33,7 +33,7 @@
         /// </summary> 
         /// <param name="cartId">User's Cart ID</param> 
         /// <param name="trackId">Added Track ID</param> 
-        protected void AddTrack(int cartId, int trackId)
+        public void AddTrack(int cartId, int trackId)
         {
             var cart = GetById(cartId);
             var track = new TrackBaseRepository(DbContext).GetById(trackId);
@@ -48,7 +48,7 @@
         /// </summary> 
         /// <param name="cartId">User's Cart ID</param> 
         /// <param name="trackIds">Added Tracks IDs</param> 
-        protected void AddTrack(int cartId, IEnumerable<int> trackIds)
+        public void AddTrack(int cartId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
                 AddTrack(cartId, trackId);
@@ -59,7 +59,7 @@
         /// </summary> 
         /// <param name="cartId">User's Cart ID</param> 
         /// <param name="trackId">Removed Track ID</param> 
-        protected void RemoveTrack(int cartId, int trackId)
+        public void RemoveTrack(int cartId, int trackId)
         {
             var cart = GetById(cartId);
             var track = new TrackBaseRepository(DbContext).GetById(trackId);
@@ -74,7 +74,7 @@
         /// </summary> 
         /// <param name="cartId">User's Cart ID</param> 
         /// <param name="trackId">Removed Tracks IDs</param> 
-        protected void RemoveTrack(int cartId, IEnumerable<int> trackIds)
+        public void RemoveTrack(int cartId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
                 RemoveTrack(cartId, trackId);
