@@ -1,13 +1,13 @@
-﻿namespace PVT.Q1._2017.Shop.Tests.Mocks
+﻿namespace PVT.Q1._2017.Shop.Tests.Moq
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using global::Moq;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Models;
-    using Moq;
 
     public class AlbumTrackRelationRepositoryMoq
     {
