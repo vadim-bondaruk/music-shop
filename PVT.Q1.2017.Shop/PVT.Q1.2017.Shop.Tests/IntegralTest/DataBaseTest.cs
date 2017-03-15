@@ -2,11 +2,13 @@
 {
     using System;
     using System.Linq;
+
     using global::Shop.Common.Models;
     using global::Shop.DAL;
     using global::Shop.DAL.Context;
     using global::Shop.DAL.Infrastruture;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using Ninject;
 
     /// <summary>
