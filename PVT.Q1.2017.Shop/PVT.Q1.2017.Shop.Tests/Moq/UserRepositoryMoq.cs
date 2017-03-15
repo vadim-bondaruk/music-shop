@@ -11,40 +11,40 @@
 
     public class UserRepositoryMoq
     {
-        private readonly Mock<IUserRepository> _mock;
-        private readonly List<User> _users = new List<User>();
+        private readonly Mock<IUserDataRepository> _mock;
+        private readonly List<UserData> _users = new List<UserData>();
 
         public UserRepositoryMoq()
         {
-            _mock = new Mock<IUserRepository>();
+            _mock = new Mock<IUserDataRepository>();
 
             _mock.Setup(m => m.GetAll()).Returns(_users);
 
-            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
+            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
                 .Returns(_users);
 
-            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<User, bool>>>()))
+            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<UserData, bool>>>()))
                 .Returns(_users);
 
             _mock.Setup(
                        m =>
-                           m.GetAll(It.IsAny<Expression<Func<User, bool>>>(),
-                                    It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
+                           m.GetAll(It.IsAny<Expression<Func<UserData, bool>>>(),
+                                    It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
                 .Returns(_users);
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
-                                      It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
+                                      It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<User>())).Callback(() => _users.Add(new User
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<UserData>())).Callback(() => _users.Add(new UserData
             {
                 Id = _users.Count + 1
             }));
 
-            _mock.Setup(m => m.Delete(It.IsNotNull<User>())).Callback(() =>
+            _mock.Setup(m => m.Delete(It.IsNotNull<UserData>())).Callback(() =>
             {
                 if (_users.Any())
                 {
@@ -53,7 +53,7 @@
             });
         }
 
-        public IUserRepository Repository
+        public IUserDataRepository Repository
         {
             get { return _mock.Object; }
         }

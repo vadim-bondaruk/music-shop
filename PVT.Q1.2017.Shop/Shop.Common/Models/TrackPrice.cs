@@ -21,7 +21,7 @@
         public int TrackId { get; set; }
 
         /// <summary>
-        /// Get or set price level id
+        /// Price level id
         /// </summary>
         public int PriceLevelId { get; set; }
 
@@ -31,12 +31,12 @@
         public int CurrencyId { get; set; }
 
         /// <summary>
-        /// Gets or sets the track.
+        /// Track.
         /// </summary>
         public virtual Track Track { get; set; }
 
         /// <summary>
-        /// Get or set <see cref="PriceLevel"/>
+        /// Price level.
         /// </summary>
         public virtual PriceLevel PriceLevel { get; set; }
 

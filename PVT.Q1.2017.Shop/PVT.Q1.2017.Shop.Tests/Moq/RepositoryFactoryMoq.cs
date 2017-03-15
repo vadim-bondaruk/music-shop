@@ -69,7 +69,7 @@
             return _trackPriceRepositoryMoq.Repository;
         }
 
-        public IUserRepository GetUserRepository()
+        public IUserDataRepository GetUserDataRepository()
         {
             return _userRepositoryMoq.Repository;
         }

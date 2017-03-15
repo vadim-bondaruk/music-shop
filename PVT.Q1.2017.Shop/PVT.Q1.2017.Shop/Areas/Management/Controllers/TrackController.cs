@@ -46,7 +46,7 @@
                 return this.View();
             }
 
-            return this.View(this._trackService.GetTrackInfo(id.Value));
+            return this.View(this._trackService.GetTrack(id.Value));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@
                     repository.SaveChanges();
                 }
 
-                return this.RedirectToAction("Details", "Track", new { id = track.Id, area = string.Empty });
+                return this.RedirectToAction("Details", "Track", new { id = track.Id, area = "Content" });
             }
 
             return this.View(track);
@@ -90,10 +90,10 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Track", new { area = string.Empty });
+                return this.RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            return this.View(this._trackService.GetTrackInfo(id.Value));
+            return this.View(this._trackService.GetTrack(id.Value));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@
                 }
             }
 
-            return this.RedirectToAction("List", "Track", new { area = string.Empty });
+            return this.RedirectToAction("List", "Track", new { area = "Content" });
         }
     }
 }

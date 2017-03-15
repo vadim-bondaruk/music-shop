@@ -1,11 +1,10 @@
-﻿@model Shop.Common.Models.Album
+﻿@model Shop.Common.Models.ViewModels.AlbumViewModel
 
 @{
     ViewBag.Title = "Add Or Update Album";
 }
 
 <h2>Add Or Update Album</h2>
-
 
 @using (Html.BeginForm()) 
 {
@@ -15,15 +14,6 @@
         <h4>Album</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDeleted)
-                    @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -58,7 +48,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "List", "Album", new { area = string.Empty }, null)
+    @Html.ActionLink("Back to List", "List", "Album", new { area = "Content" }, null)
 </div>
 
 @section scripts

@@ -42,7 +42,7 @@
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Vote>())).Callback(() => _votes.Add(new Vote
             {
                 Id = _votes.Count + 1,
-                Mark = (Mark) (_votes.Count % 5 + 1)
+                Mark = (_votes.Count % 5) + 1
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<Vote>())).Callback(() =>

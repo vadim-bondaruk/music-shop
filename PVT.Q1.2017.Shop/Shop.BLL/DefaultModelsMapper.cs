@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using Common.Models;
-    using ViewModels;
+    using Common.Models.ViewModels;
 
     /// <summary>
     /// Default models mapper.

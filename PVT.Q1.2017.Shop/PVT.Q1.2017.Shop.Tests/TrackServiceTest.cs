@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -51,7 +52,7 @@
         public void GetTrackInfoTest()
         {
             AddTrackTest();
-            Assert.IsNotNull(this._trackService.GetTrackInfo(1));
+            Assert.IsNotNull(this._trackService.GetTrack(1));
         }
 
         [TestMethod]
@@ -100,7 +101,7 @@
 
             using (var repository = this._factory.GetVoteRepository())
             {
-                repository.AddOrUpdate(new Vote { Track = track, TrackId = track.Id, Mark = Mark.FiveStars });
+                repository.AddOrUpdate(new Vote { Track = track, TrackId = track.Id, Mark = 5 });
                 repository.SaveChanges();
             }
             Assert.IsTrue(_trackService.GetTrackVotes(new Track()).Any());

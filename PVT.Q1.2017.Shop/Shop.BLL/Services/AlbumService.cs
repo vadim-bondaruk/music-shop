@@ -4,9 +4,9 @@
     using System.Linq;
     using AutoMapper;
     using Common.Models;
+    using Common.Models.ViewModels;
     using DAL.Infrastruture;
     using Infrastructure;
-    using ViewModels;
 
     /// <summary>
     /// The album service.
@@ -30,7 +30,7 @@
         /// <returns>
         /// The album with the specified <paramref name="id"/> or <b>null</b> if album doesn't exist.
         /// </returns>
-        public AlbumViewModel GetAlbumInfo(int id)
+        public AlbumViewModel GetAlbum(int id)
         {
             Album album;
             using (var repository = this.Factory.GetAlbumRepository())

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using ViewModels;
+    using Common.Models.ViewModels;
 
     /// <summary>
     /// The album service.
@@ -16,7 +16,7 @@
         /// <returns>
         /// The album with the specified <paramref name="id"/> or <b>null</b> if album doesn't exist.
         /// </returns>
-        AlbumViewModel GetAlbumInfo(int id);
+        AlbumViewModel GetAlbum(int id);
 
         /// <summary>
         /// Returns all registered tracks for the specified <paramref name="album"/>.

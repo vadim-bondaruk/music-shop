@@ -5,10 +5,10 @@
     using System.Linq;
     using AutoMapper;
     using Common.Models;
+    using Common.Models.ViewModels;
     using DAL.Infrastruture;
     using Exceptions;
     using Infrastructure;
-    using ViewModels;
 
     /// <summary>
     /// The track service
@@ -74,7 +74,7 @@
         /// <returns>
         /// The track with the specified <paramref name="id"/> or <b>null</b> if track doesn't exist.
         /// </returns>
-        public Track GetTrackInfo(int id)
+        public Track GetTrack(int id)
         {
             using (var repository = Factory.GetTrackRepository())
             {

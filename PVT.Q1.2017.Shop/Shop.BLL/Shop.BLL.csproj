@@ -68,20 +68,14 @@
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
     <Compile Include="Services\Infrastructure\IUserPaymentMethodService.cs" />
-    <Compile Include="Services\Infrastructure\IUserService.cs" />
+    <Compile Include="Services\Infrastructure\IUserDataService.cs" />
     <Compile Include="Services\Infrastructure\IVoteService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\UserPaymentMethodService.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\UserDataService.cs" />
     <Compile Include="Services\VoteService.cs" />
-    <Compile Include="ViewModels\AlbumViewModel.cs" />
-    <Compile Include="ViewModels\ArtistViewModel.cs" />
-    <Compile Include="ViewModels\FeedbackViewModel.cs" />
-    <Compile Include="ViewModels\TrackAlbumListViewModel.cs" />
-    <Compile Include="ViewModels\TrackFeedbacksViewModel.cs" />
-    <Compile Include="ViewModels\TrackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

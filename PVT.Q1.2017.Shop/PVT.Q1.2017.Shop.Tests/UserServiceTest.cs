@@ -15,21 +15,21 @@ namespace PVT.Q1._2017.Shop.Tests
     [TestClass]
     public class UserServiceTest
     {
-        private readonly IUserService _userService;
+        private readonly IUserDataService _userService;
         private readonly IRepositoryFactory _factory;
 
         public UserServiceTest()
         {
             _factory = new RepositoryFactoryMoq();
-            _userService = new UserService(_factory);
+            _userService = new UserDataService(_factory);
         }
 
         [TestMethod]
         public void AddUserTest()
         {
-            using (var repository = _factory.GetUserRepository())
+            using (var repository = _factory.GetUserDataRepository())
             {
-                repository.AddOrUpdate(new User());
+                repository.AddOrUpdate(new UserData());
                 repository.SaveChanges();
 
                 Assert.IsTrue(repository.GetAll().Any());
@@ -41,7 +41,7 @@ namespace PVT.Q1._2017.Shop.Tests
         {
             AddUserTest();
 
-            var user = new User { Id = 1 };
+            var user = new UserData { Id = 1 };
             using (var repository = _factory.GetFeedbackRepository())
             {
                 repository.AddOrUpdate(new Feedback
@@ -67,13 +67,13 @@ namespace PVT.Q1._2017.Shop.Tests
         {
             AddUserTest();
 
-            var user = new User { Id = 1 };
+            var user = new UserData { Id = 1 };
             var track = new Track { Id = 2 };
             using (var repository = _factory.GetVoteRepository())
             {
                 repository.AddOrUpdate(new Vote
                 {
-                    Mark = Mark.FiveStars,
+                    Mark = 5,
                     User = user,
                     UserId = user.Id,
                     Track = track,
@@ -95,10 +95,10 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetUserInfoTest()
         {
             AddUserTest();
-            Assert.IsNotNull(_userService.GetUserInfo(1));
+            Assert.IsNotNull(_userService.GetUserData(1));
 
-            Mock.Get(_factory.GetUserRepository())
-                .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<User, BaseEntity>>[]>()), Times.Once);
+            Mock.Get(_factory.GetUserDataRepository())
+                .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()), Times.Once);
         }
     }
 }
