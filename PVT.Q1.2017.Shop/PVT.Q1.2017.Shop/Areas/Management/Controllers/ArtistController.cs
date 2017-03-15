@@ -1,6 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using AutoMapper;
@@ -14,12 +13,12 @@
     /// <summary>
     ///     The track controller
     /// </summary>
-    public class GenresController : Controller
+    public class ArtistsController : Controller
     {
         /// <summary>
         ///     The track service.
         /// </summary>
-        private readonly ITrackService trackService;
+        private readonly IArtistRepository artistRepository;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TracksController" /> class.
@@ -27,9 +26,10 @@
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        public GenresController(IRepositoryFactory repositoryFactory)
+        public ArtistsController(IRepositoryFactory repositoryFactory, IArtistRepository artistRepository)
         {
             this.RepositoryFactory = repositoryFactory;
+            this.artistRepository = artistRepository;
         }
 
         /// <summary>
@@ -41,10 +41,13 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        public GenresController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        public ArtistsController(
+            IRepositoryFactory repositoryFactory,
+            ITrackService trackService,
+            IArtistRepository artistRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.trackService = trackService;
+            this.artistRepository = artistRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
         }
 
@@ -61,30 +64,31 @@
         /// <param name="model"></param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(TrackManagmentViewModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(ArtistManagmentViewModel model)
         {
-            var trackModel = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            var artistModel = Mapper.Map<ArtistManagmentViewModel, Artist>(model);
+            using (var repository = this.RepositoryFactory.GetArtistRepository())
             {
-                repository.Delete(trackModel);
+                repository.Delete(artistModel);
                 repository.SaveChanges();
             }
 
-            return this.View("GenreManage");
+            return this.View("ArtistManage");
         }
 
         /// <summary>
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <param name="trackId"></param>
+        /// <param name="artistId"></param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int trackId)
+        public virtual ActionResult Details(int artistId)
         {
-            var track = this.trackService.GetTrackInfo(trackId);
-            var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
-            return this.View(trackViewModel);
+            var artist = this.artistRepository.GetById(artistId);
+            Mapper.Map<ArtistManagmentViewModel>(artist);
+            return this.View("ArtistManage");
         }
 
         /// <summary>
@@ -96,28 +100,25 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("GenreManage");
+            return this.View("ArtistManage");
         }
 
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
-        /// The view model.
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual ActionResult New(
-            [Bind(Include = "Track")] TrackManagmentViewModel viewModel)
+            [Bind(Include = "Name, Biography, Birthday, Photo")] ArtistManagmentViewModel viewModel)
         {
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(viewModel);
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
-            {
-                repository.AddOrUpdate(track);
-                repository.SaveChanges();
-            }
-
-            return this.View("GenreManage");
+            var track = Mapper.Map<Artist>(viewModel);
+            this.artistRepository.AddOrUpdate(track);
+            this.artistRepository.SaveChanges();
+            return this.View("ArtistManage");
         }
 
         /// <summary>

@@ -116,6 +116,7 @@
     <Content Include="Areas\Management\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Management\Views\Albums\AlbumManage.cshtml" />
     <Content Include="Areas\Management\Views\Genres\GenreManage.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\ArtistManage.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -140,10 +141,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
+    <Compile Include="Areas\Management\Models\ArtistManagmentViewModel.cs" />
     <Compile Include="Areas\Management\Models\GenreManagmentViewModel.cs" />
     <Compile Include="Areas\Management\Models\AlbumManagmentViewModel.cs" />
     <Compile Include="Areas\Management\Models\TrackManagmentViewModel.cs" />
@@ -170,10 +173,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Track\AddNew.cshtml" />
-    <Content Include="Views\Track\Details.cshtml" />
-    <Content Include="Views\Track\List.cshtml" />
-    <Content Include="Views\Track\AlbumList.cshtml" />
+    <Content Include="Views\Tracks\AddNew.cshtml" />
+    <Content Include="Views\Tracks\Details.cshtml" />
+    <Content Include="Views\Tracks\List.cshtml" />
+    <Content Include="Views\Tracks\AlbumList.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -187,8 +190,9 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Track\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
-    <Folder Include="Views\Album\" />
-    <Folder Include="Views\Artist\" />
+    <Folder Include="Views\Albums\" />
+    <Folder Include="Views\Artists\" />
+    <Folder Include="Views\Genres\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
