@@ -39,9 +39,7 @@
         {
             Mapper.Initialize(
                 cfg =>
-                    cfg.CreateMap<TrackManagmentViewModel, Track>()
-                        .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Track.Name))
-                        .ForMember(c => c.Artist.Name, opt => opt.MapFrom(src => src.Track.Artist.Name)));
+                    cfg.CreateMap<TrackManagmentViewModel, Track>());
         }
     }
 }
