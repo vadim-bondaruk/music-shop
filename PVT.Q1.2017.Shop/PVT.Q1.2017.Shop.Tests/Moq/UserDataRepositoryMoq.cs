@@ -9,12 +9,12 @@
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Models;
 
-    public class UserRepositoryMoq
+    public class UserDataRepositoryMoq
     {
         private readonly Mock<IUserDataRepository> _mock;
         private readonly List<UserData> _users = new List<UserData>();
 
-        public UserRepositoryMoq()
+        public UserDataRepositoryMoq()
         {
             _mock = new Mock<IUserDataRepository>();
 
