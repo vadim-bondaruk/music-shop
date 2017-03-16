@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using global::Shop.BLL;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -23,6 +24,8 @@
         {
             _factory = new RepositoryFactoryMoq();
             _albumService = new AlbumService(_factory);
+
+            DefaultModelsMapper.MapModels();
         }
 
         [TestMethod]
@@ -66,7 +69,7 @@
                 });
             }
 
-            Assert.IsTrue(_albumService.GetTracksList(new Album()).Any());
+            Assert.IsTrue(_albumService.GetTracksList(1).Any());
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -79,7 +82,7 @@
         public void GetAlbumInfoTest()
         {
             AddAlbumTest();
-            Assert.IsNotNull(_albumService.GetAlbumInfo(1));
+            Assert.IsNotNull(_albumService.GetAlbum(1));
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
@@ -92,8 +95,6 @@
 
             var album = _albumService.GetAlbumsList().FirstOrDefault();
             Assert.IsNotNull(album);
-
-            album.AlbumPrices = new List<AlbumPrice> { new AlbumPrice { Price = 9.99m } };
 
             Assert.IsTrue(_albumService.GetAlbumsWithPriceConfigured().Any());
 
@@ -127,11 +128,11 @@
 
             using (var repository = _factory.GetAlbumPriceRepository())
             {
-                repository.AddOrUpdate(new AlbumPrice { Album = album, AlbumId = album.Id, Price = 11.99m });
+                repository.AddOrUpdate(new AlbumPrice { AlbumId = album.Id, Price = 11.99m });
                 repository.SaveChanges();
             }
 
-            Assert.IsTrue(_albumService.GetAlbumPrices(new Album()).Any());
+            Assert.IsTrue(_albumService.GetAlbumPrices(1).Any());
 
             Mock.Get(_factory.GetAlbumPriceRepository())
                 .Verify(
@@ -168,7 +169,7 @@
                 repository.SaveChanges();
             }
 
-            Assert.IsTrue(_albumService.GetTracksWithPriceConfigured(new Album()).Any());
+            Assert.IsTrue(_albumService.GetTracksWithPriceConfigured(1).Any());
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -197,7 +198,7 @@
                 });
             }
 
-            Assert.IsTrue(_albumService.GetTracksWithoutPriceConfigured(new Album()).Any());
+            Assert.IsTrue(_albumService.GetTracksWithoutPriceConfigured(1).Any());
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(

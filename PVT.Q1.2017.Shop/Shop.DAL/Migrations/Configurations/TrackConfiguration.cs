@@ -18,8 +18,8 @@
             this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
 
-            this.HasOptional(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(false);
-            this.HasOptional(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
+            this.HasRequired(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
 
             this.ToTable("tbTracks");
         }

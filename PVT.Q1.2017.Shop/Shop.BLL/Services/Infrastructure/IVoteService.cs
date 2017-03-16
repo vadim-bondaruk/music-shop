@@ -20,7 +20,7 @@
         /// The vote for the <paramref name="track"/> which have made the specified <paramref name="user"/>
         /// or <b>null</b> in case if vote doesn't exist.
         /// </returns>
-        Vote GetTrackVote(Track track, User user);
+        Vote GetTrackVote(Track track, UserData user);
 
         /// <summary>
         /// Determines whether the specified <paramref name="user"/> have made a vote for the <paramref name="track"/>.
@@ -35,7 +35,7 @@
         /// <b>true</b> if the specified <paramref name="user"/> have made a vote for the <paramref name="track"/>;
         /// otherwise <b>false</b>.
         /// </returns>
-        bool VoteExists(Track track, User user);
+        bool VoteExists(Track track, UserData user);
 
         /// <summary>
         /// Returns the vote with the specified <paramref name="id"/>
@@ -44,6 +44,6 @@
         /// <returns>
         /// The vote with the specified <paramref name="id"/> or <b>null</b> if vote doesn't exist.
         /// </returns>
-        Vote GetVoteInfo(int id);
+        Vote GetVote(int id);
     }
 }

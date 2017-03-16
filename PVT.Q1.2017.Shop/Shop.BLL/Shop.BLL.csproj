@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultModelsMapper.cs" />
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Services\AlbumPriceService.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Exceptions\UserValidationException.cs" />
@@ -73,18 +75,18 @@
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
     <Compile Include="Services\Infrastructure\IUserPaymentMethodService.cs" />
-    <Compile Include="Services\Infrastructure\IUserService.cs" />
+    <Compile Include="Services\Infrastructure\IUserDataService.cs" />
     <Compile Include="Services\Infrastructure\IVoteService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\UserPaymentMethodService.cs" />
+    <Compile Include="Services\UserDataService.cs" />
     <Compile Include="Services\VoteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>

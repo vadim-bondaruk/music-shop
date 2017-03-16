@@ -33,11 +33,11 @@
                  .Returns(_albums);
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _albums.FirstOrDefault(a => a.Id > 0));
+                 .Returns(() => _albums.FirstOrDefault());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
-                 .Returns(() => _albums.Where(a => a.Artist != null).FirstOrDefault(a => a.Id > 0));
+                 .Returns(() => _albums.FirstOrDefault());
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Album>())).Callback(() => _albums.Add(new Album
             {

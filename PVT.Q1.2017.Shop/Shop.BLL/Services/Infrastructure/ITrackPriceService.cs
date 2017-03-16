@@ -30,6 +30,6 @@
         /// <returns>
         /// The track price with the specified <paramref name="id"/> or <b>null</b> if track price doesn't exist.
         /// </returns>
-        TrackPrice GetTrackPriceInfo(int id);
+        TrackPrice GetTrackPrice(int id);
     }
 }
