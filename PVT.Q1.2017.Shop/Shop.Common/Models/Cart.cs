@@ -11,7 +11,7 @@
         /// <summary>
         /// Gets or Sets a Current User
         /// </summary>
-        public int UserId { get; set; }
+        public UserData User { get; set; }
 
         /// <summary>
         /// Gets or sets a Collection of tracks for purchase

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Models;
+    using Common.Models.ViewModels;
 
     /// <summary>
     /// The album service.
@@ -15,33 +16,34 @@
         /// <returns>
         /// The album with the specified <paramref name="id"/> or <b>null</b> if album doesn't exist.
         /// </returns>
-        Album GetAlbumInfo(int id);
+        AlbumViewModel GetAlbum(int id);
 
         /// <summary>
-        /// Returns all registered tracks for the specified <paramref name="album"/>.
+        /// Returns all registered tracks for the specified album.
         /// </summary>
-        /// <param name="album">The album.</param>
+        /// <param name="albumId">The album id.</param>
         /// <returns>
-        /// All registered tracks for the specified <paramref name="album"/>.
+        /// All registered tracks for the specified album.
         /// </returns>
-        ICollection<Track> GetTracksList(Album album);
+        ICollection<Track> GetTracksList(int albumId);
 
         /// <summary>
-        /// Returns all tracks for the specified <paramref name="album"/> without price configured.
+        /// Returns all tracks for the specified album without price configured.
         /// </summary>
+        /// <param name="albumId">The album id.</param>
         /// <returns>
-        /// All tracks for the specified <paramref name="album"/> without price configured.
+        /// All tracks for the specified album without price configured.
         /// </returns>
-        ICollection<Track> GetTracksWithoutPriceConfigured(Album album);
+        ICollection<Track> GetTracksWithoutPriceConfigured(int albumId);
 
         /// <summary>
-        /// Returns all tracks for the specified <paramref name="album"/> with price specified.
+        /// Returns all tracks for the specified album with price specified.
         /// </summary>
-        /// <param name="album">The album.</param>
+        /// <param name="albumId">The album id.</param>
         /// <returns>
-        /// All tracks for the specified <paramref name="album"/> without price specified.
+        /// All tracks for the specified album without price specified.
         /// </returns>
-        ICollection<Track> GetTracksWithPriceConfigured(Album album);
+        ICollection<Track> GetTracksWithPriceConfigured(int albumId);
 
         /// <summary>
         /// Returns all registered albums.
@@ -49,7 +51,7 @@
         /// <returns>
         /// All registered albums.
         /// </returns>
-        ICollection<Album> GetAlbumsList();
+        ICollection<AlbumViewModel> GetAlbumsList();
 
         /// <summary>
         /// Returns all albums without price configured.
@@ -66,22 +68,22 @@
         /// All albums without price specified.
         /// </returns>
         ICollection<Album> GetAlbumsWithPriceConfigured();
-        
-        /// <summary>
-        /// Returns all <paramref name="album"/> prices for the specified  <paramref name="priceLevel"/>.
-        /// </summary>
-        /// <param name="album">The album.</param>
-        /// <param name="priceLevel">The price level.</param>
-        /// <returns>
-        /// All <paramref name="album"/> prices for the specified  <paramref name="priceLevel"/>.
-        /// </returns>
-        ICollection<AlbumPrice> GetAlbumPrices(Album album, PriceLevel priceLevel);
 
         /// <summary>
-        /// Returns all <paramref name="album"/> prices.
+        /// Returns all album prices for the specified price level.
         /// </summary>
-        /// <param name="album">The album.</param>
-        /// <returns>All <paramref name="album"/> prices>.</returns>
-        ICollection<AlbumPrice> GetAlbumPrices(Album album);
+        /// <param name="albumId">The album id.</param>
+        /// <param name="priceLevelId">The price level id.</param>
+        /// <returns>
+        /// All album prices for the specified price level.
+        /// </returns>
+        ICollection<AlbumPrice> GetAlbumPrices(int albumId, int priceLevelId);
+
+        /// <summary>
+        /// Returns all album prices.
+        /// </summary>
+        /// <param name="albumId">The album id.</param>
+        /// <returns>All album prices.</returns>
+        ICollection<AlbumPrice> GetAlbumPrices(int albumId);
     }
 }

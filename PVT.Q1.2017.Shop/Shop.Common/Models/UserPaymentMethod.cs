@@ -24,7 +24,7 @@ namespace Shop.Common.Models
         /// <summary>
         /// Gets or sets User for payment method settings
         /// </summary>
-        public User User { get; set; }
+        public UserData User { get; set; }
                 
         /// <summary>
         /// Gets or sets alias for this user payment method settings

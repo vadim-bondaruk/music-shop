@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Models;
+    using Common.Models.ViewModels;
 
     /// <summary>
     /// The track service
@@ -39,7 +40,7 @@
         /// <returns>
         /// The track with the specified <paramref name="id"/> or <b>null</b> if track doesn't exist.
         /// </returns>
-        Track GetTrackInfo(int id);
+        Track GetTrack(int id);
 
         /// <summary>
         /// Returns all track prices for the specified  <paramref name="priceLevel"/>.
@@ -81,12 +82,12 @@
         /// <summary>
         /// Returns all albums whitch contain the specified <paramref name="track"/>.
         /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
+        /// <param name="track">The track.</param>
+        /// <param name="currency">The currency whitch is used to load album price.</param>
+        /// <param name="priceLevel">The price level whitch is used to load album price.</param>
         /// <returns>
         /// All albums whitch contain the specified <paramref name="track"/>.
         /// </returns>
-        ICollection<Album> GetAlbumsList(Track track);
+        TrackAlbumListViewModel GetAlbumsList(Track track, Currency currency, PriceLevel priceLevel);
     }
 }

@@ -13,37 +13,37 @@
     public class Album : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the name.
+        /// Album name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the cover.
+        /// Cover.
         /// </summary>
         public byte[] Cover { get; set; }
 
         /// <summary>
-        /// Gets or sets the album release date.
+        /// Album release date.
         /// </summary>
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
         /// Gets or sets the artist.
         /// </summary>
-        public int? ArtistId { get; set; }
+        public int ArtistId { get; set; }
 
         /// <summary>
-        /// Gets or sets the artist.
+        /// Artist.
         /// </summary>
         public virtual Artist Artist { get; set; }
 
         /// <summary>
-        /// Gets or sets all tracks from the album.
+        /// All tracks from the album.
         /// </summary>
         public virtual ICollection<AlbumTrackRelation> Tracks { get; set; }
 
         /// <summary>
-        /// Gets or sets the album prices.
+        /// Album prices.
         /// </summary>
         public virtual ICollection<AlbumPrice> AlbumPrices { get; set; }
     }

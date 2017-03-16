@@ -15,7 +15,7 @@
         /// <returns>
         /// The currency with the specified <paramref name="id"/> or <b>null</b> if currency doesn't exist.
         /// </returns>
-        Currency GetCurrencyInfo(int id);
+        Currency GetCurrency(int id);
 
         /// <summary>
         /// Returns the currency with the specified <paramref name="code"/>.

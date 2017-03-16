@@ -12,7 +12,7 @@
     public class Genre : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the name.
+        /// The genre name.
         /// </summary>
         public string Name { get; set; }
 
