@@ -11,7 +11,7 @@ namespace PVT.Q1._2017.Shop.Tests
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Mocks;
+    using Moq;
 
     [TestClass]
     public class AlbumPriceServiceTest
@@ -54,7 +54,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetTrackPriceInfoTest()
         {
             AddAlbumPricesTest();
-            Assert.IsNotNull(_albumPriceService.GetAlbumPriceInfo(1));
+            Assert.IsNotNull(_albumPriceService.GetAlbumPrice(1));
 
             Mock.Get(_factory.GetAlbumPriceRepository())
                 .Verify(

@@ -10,12 +10,9 @@
         /// <summary>
         /// Gets the area name.
         /// </summary>
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
-            {
-                return "Management";
-            }
+            get { return "Management"; }
         }
 
         /// <summary>
@@ -27,9 +24,9 @@
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Management_default",
-                "Management/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional });
+                name: "Management_default",
+                url: "Management/{controller}/{action}/{id}",
+                defaults: new { controller = "Track", action = "AddOrUpdate", id = UrlParameter.Optional });
         }
     }
 }
