@@ -4,8 +4,9 @@
     using System.Web.Security;
     using global::Shop.BLL.DTO;
     using global::Shop.BLL.Exceptions;
-    using global::Shop.BLL.Services.Infrastructure;    
-    using global::Shop.Infrastructure.Security;
+    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
+    using global::Shop.Infrastructure.Security;       
     using ViewModels;
 
     /// <summary>
@@ -124,9 +125,9 @@
                 {
                 try
                 {
-                    AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, UserDTO>());
-                    var u = AutoMapper.Mapper.Map<UserDTO>(user);
-                    result = this._userService.RegisterUser(AutoMapper.Mapper.Map<UserDTO>(user));
+                    AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, User>());
+                    var userDB = AutoMapper.Mapper.Map<User>(user);
+                    result = this._userService.RegisterUser(userDB);
                 }
                 catch (UserValidationException ex)
                 {

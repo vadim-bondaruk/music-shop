@@ -17,15 +17,15 @@
         /// <summary>
         /// Database or repository with users data
         /// </summary>
-        protected readonly IRepositoryFactory Factory;
+        private readonly IUserRepository _users;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="factory"></param>
-        public AuthModule(IRepositoryFactory factory)
+        public AuthModule(IUserRepository users)
         {
-            this.Factory = factory;
+            this._users = users;
         }
 
         /// <summary>
@@ -50,11 +50,11 @@
 
             if (useridentity.Contains("@"))
             {
-                user = this.Factory.GetUserRepository().GetAll(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                user = this._users.GetAll(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             }
             else
             {
-                user = this.Factory.GetUserRepository().GetAll(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                user = this._users.GetAll(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             }
             
             if (user != null)

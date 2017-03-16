@@ -48,6 +48,7 @@
 
             Bind<ICurrencyRateService>().To<CurrencyRateService>();
             Bind<IAuthModule>().To<AuthModule>();
+            Bind<IUserService>().To<UserService>();
         }
     }
 }

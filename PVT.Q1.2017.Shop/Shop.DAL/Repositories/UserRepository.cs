@@ -8,13 +8,20 @@
     using Common.Models;
     using Shop.DAL.Context;
     using Infrastructure.Repositories;
+    using Infrastruture;
 
     /// <summary>
     /// 
     /// </summary>
-    public class UserRepository : Repository<User>
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(UserContext userContext) : base(userContext)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserRepository"/> class.
+        /// </summary>
+        /// <param name="dbContext">
+        /// The db context.
+        /// </param>
+        public UserRepository(DbContext dbContext) : base(dbContext)
         {
         }
     }

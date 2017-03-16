@@ -62,6 +62,8 @@
     <Compile Include="Services\AlbumService.cs" />
     <Compile Include="Services\CurrencyRateService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\Infrastructure\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />
     <Compile Include="Utils\PasswordEncryptor.cs" />
     <Compile Include="Validators\UserDataValidator.cs" />
@@ -101,7 +103,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>

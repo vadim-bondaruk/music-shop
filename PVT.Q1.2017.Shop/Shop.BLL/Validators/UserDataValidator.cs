@@ -12,17 +12,18 @@
     public static class UserDataValidator
     {
         /// <summary>
-        ///      THIS service will be replace (we will use Remote)
+        /// 
         /// </summary>
         /// <param name="login"></param>
+        /// <param name="repository"></param>
         /// <returns></returns>
-        /*public static bool IsLoginUnique(string login, IRepository<User> repository)
+        public static bool IsLoginUnique(string login, IRepository<User> repository)
         {
             if (string.IsNullOrEmpty(login))
             {
                 throw new ArgumentException("login");
             }
-          
+
             if (repository.GetAll().Where(u => u.Login != null && u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)).IsAny<User>())
             {
                 return false;
@@ -35,6 +36,7 @@
         /// 
         /// </summary>
         /// <param name="email"></param>
+        /// <param name="repository"></param>
         /// <returns></returns>
         public static bool IsEmailUnique(string email, IRepository<User> repository)
         {
@@ -49,6 +51,6 @@
             }
 
             return true;
-        }*/
+        }
     }
 }

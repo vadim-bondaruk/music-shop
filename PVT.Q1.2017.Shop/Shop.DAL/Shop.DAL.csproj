@@ -69,35 +69,13 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
-    <Compile Include="Migrations\201703142000510_LoginTesting.cs" />
-    <Compile Include="Migrations\201703142000510_LoginTesting.Designer.cs">
-      <DependentUpon>201703142000510_LoginTesting.cs</DependentUpon>
-      </Compile>
-    <Compile Include="Migrations\201703141950344_Init.cs" />
-    <Compile Include="Migrations\201703141950344_Init.Designer.cs">
-      <DependentUpon>201703141950344_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703151326498_AddBind.cs" />
-    <Compile Include="Migrations\201703151326498_AddBind.Designer.cs">
-      <DependentUpon>201703151326498_AddBind.cs</DependentUpon>
-      </Compile>
-    <Compile Include="Migrations\201703152237293_ReconfigureTracksContent.cs" />
-    <Compile Include="Migrations\201703152237293_ReconfigureTracksContent.Designer.cs">
-      <DependentUpon>201703152237293_ReconfigureTracksContent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703151342298_AddUserRolesArray.cs" />
-    <Compile Include="Migrations\201703151342298_AddUserRolesArray.Designer.cs">
-      <DependentUpon>201703151342298_AddUserRolesArray.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703152237360_UserCreatTesting.cs" />
-    <Compile Include="Migrations\201703152237360_UserCreatTesting.Designer.cs">
-      <DependentUpon>201703152237360_UserCreatTesting.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Infrastruture\IUserRepository.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserDataConfiguration.cs" />
     <Compile Include="Migrations\Configurations\CurrencyRateConfiguration.cs" />
     <Compile Include="Migrations\Configurations\CurrencyConfiguration.cs" />
@@ -133,6 +111,7 @@
     <Compile Include="Repositories\TrackPriceRepository.cs" />
     <Compile Include="Repositories\UserDataRepository.cs" />
     <Compile Include="Repositories\UserPaymentMethodRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VoteRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Infrastruture\ITrackPriceRepository.cs" />
@@ -155,28 +134,6 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703141950344_Init.resx">
-      <DependentUpon>201703141950344_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703152237293_ReconfigureTracksContent.resx">
-      <DependentUpon>201703152237293_ReconfigureTracksContent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703152237360_UserCreatTesting.resx">
-      <DependentUpon>201703152237360_UserCreatTesting.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703142000510_LoginTesting.resx">
-      <DependentUpon>201703142000510_LoginTesting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703151326498_AddBind.resx">
-      <DependentUpon>201703151326498_AddBind.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703151342298_AddUserRolesArray.resx">
-      <DependentUpon>201703151342298_AddUserRolesArray.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

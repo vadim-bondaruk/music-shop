@@ -2,11 +2,12 @@
 {
     using System;
     using Infrastructure.Enums;
+    using Infrastructure.Models;
 
     /// <summary>
     /// 
     /// </summary>
-    public class User
+    public class User : BaseEntity
     {
         /// <summary>
         /// Users first name
@@ -46,7 +47,7 @@
         /// <summary>
         /// Users role in this shop
         /// </summary>
-        public UserRoles[] UserRoles { get; set; }
+        public UserRoles UserRoles { get; set; }
 
         /// <summary>
         /// Users country
