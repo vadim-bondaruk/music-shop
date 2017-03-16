@@ -1,15 +1,43 @@
 ﻿namespace Shop.Common.Validators
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using FluentValidation;
+    using PVT.Q1._2017.Shop.ViewModels;
 
     /// <summary>
-    /// TODO: implement all necessary things
+    /// Defines rules for user registration
     /// </summary>
-    public class UserRegistrationValidator
+    public class UserRegistrationValidator : AbstractValidator<UserViewModel>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public UserRegistrationValidator()
+        {
+            RuleFor(u => u.Login).NotEmpty()
+                .WithMessage("Поле обязательно должно быть заполнено");
+            RuleFor(u => u.Login).Matches("^[a-zA-Z0-9_.-]*$")
+                .WithMessage("Только буквы латинского алфавита, цифры и знак подчеркивания");
+
+            RuleFor(u => u.Password).NotEmpty()
+                .WithMessage("Поле обязательно должно быть заполнено");
+            RuleFor(u => u.Password)
+                .Matches(@"^(?=.*\w)(?=.*\d)(?=.*[!-*]).[^\s]*$")
+                .WithMessage("Пароль должен содержать символы латинского алфавита, цифры и спецсимволы");
+            RuleFor(u => u.Password).Length(7, 50)
+                .WithMessage("Пароль должен содержать не менее 7 символов");
+
+            RuleFor(u => u.ConfirmPassword)
+                    .Equal(u => u.Password)
+                    .WithMessage("Пароли не совпадают. Повторите попытку");
+
+            RuleFor(u => u.Email).EmailAddress()
+                .WithMessage("Адрес введен некорректно");
+            RuleFor(u => u.Email).NotEmpty()
+                .WithMessage("Поле обязательно должно быть заполнено");
+
+            RuleFor(u => u.PhoneNumber)
+                .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")
+                .WithMessage("Некорректный номер");
+        }
     }
 }
