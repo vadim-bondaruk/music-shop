@@ -40,7 +40,9 @@
             Bind<IFeedbackRepository>()
                 .To<FeedbackRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetFeedbackRepository());
-            Bind<ICartRepository>().To<CartBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCartRepository());
+            Bind<ICartRepository>()
+                .To<CartRepository>()
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCartRepository());
             Bind<IVoteRepository>()
                 .To<VoteRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetVoteRepository());
@@ -70,7 +72,7 @@
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumTrackRelationRepository()); 
 
             Bind<IUserPaymentMethodRepository>().To<UserPaymentMethodRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
-            Bind<ICartRepository>().To<CartBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCartRepository());
+            
 
             Bind<IRepositoryFactory>().ToFactory();
         }

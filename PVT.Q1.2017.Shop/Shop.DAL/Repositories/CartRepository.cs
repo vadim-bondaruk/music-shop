@@ -25,11 +25,11 @@
         /// <summary> 
         /// Add track to User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
+        /// <param name="userId">User's ID</param> 
         /// <param name="trackId">Added Track ID</param> 
-        public void AddTrack(int cartId, int trackId)
+        public void AddTrack(int userId, int trackId)
         {
-            var cart = GetById(cartId);
+            var cart = GetById(userId);
             var track = new TrackRepository(DbContext).GetById(trackId);
             if (track == null)
                 throw new Exception("Incorrect Track Id");
@@ -40,22 +40,22 @@
         /// <summary> 
         /// Add track list to User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
+        /// <param name="userId">User's ID</param> 
         /// <param name="trackIds">Added Tracks IDs</param> 
-        public void AddTrack(int cartId, IEnumerable<int> trackIds)
+        public void AddTrack(int userId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
-                AddTrack(cartId, trackId);
+                AddTrack(userId, trackId);
         }
 
         /// <summary> 
         /// Remove track from User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
+        /// <param name="userId">User's ID</param> 
         /// <param name="trackId">Removed Track ID</param> 
-        public void RemoveTrack(int cartId, int trackId)
+        public void RemoveTrack(int userId, int trackId)
         {
-            var cart = GetById(cartId);
+            var cart = GetById(userId);
             var track = new TrackRepository(DbContext).GetById(trackId);
             if (track == null)
                 throw new Exception("Incorrect Track Id");
@@ -66,12 +66,12 @@
         /// <summary> 
         /// Remove track list from User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
-        /// <param name="trackId">Removed Tracks IDs</param> 
-        public void RemoveTrack(int cartId, IEnumerable<int> trackIds)
+        /// <param name="userId">User's ID</param> 
+        /// <param name="trackIds">Removed Tracks IDs</param> 
+        public void RemoveTrack(int userId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
-                RemoveTrack(cartId, trackId);
+                RemoveTrack(userId, trackId);
         }
     }
 }
