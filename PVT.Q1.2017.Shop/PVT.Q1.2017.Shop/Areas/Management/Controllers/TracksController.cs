@@ -71,7 +71,7 @@
                 repository.SaveChanges();
             }
 
-            return this.View("TrackManage");
+            return this.View("New");
         }
 
         /// <summary>
@@ -96,7 +96,7 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("TrackManage");
+            return this.View("New");
         }
 
         /// <summary>
@@ -108,16 +108,16 @@
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult New(
-            [Bind(Include = "Track")] TrackManagmentViewModel viewModel)
+            [Bind(Include = "Artist, Name, Album, Genre, Duration, ReleaseDate")] TrackManagmentViewModel viewModel)
         {
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(viewModel);
+            var track = Mapper.Map<Track>(viewModel);
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track);
                 repository.SaveChanges();
             }
 
-            return this.View("TrackManage");
+            return this.View("New");
         }
 
         /// <summary>

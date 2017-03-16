@@ -14,7 +14,7 @@
     /// <summary>
     ///     The track controller
     /// </summary>
-    public class GenresController : Controller
+    public class AlbumsController : Controller
     {
         /// <summary>
         ///     The track service.
@@ -27,7 +27,7 @@
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        public GenresController(IRepositoryFactory repositoryFactory)
+        public AlbumsController(IRepositoryFactory repositoryFactory)
         {
             this.RepositoryFactory = repositoryFactory;
         }
@@ -41,7 +41,7 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        public GenresController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        public AlbumsController(IRepositoryFactory repositoryFactory, ITrackService trackService)
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;

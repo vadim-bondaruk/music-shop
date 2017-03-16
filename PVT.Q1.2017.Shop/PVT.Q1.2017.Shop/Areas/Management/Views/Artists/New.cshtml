@@ -1,0 +1,49 @@
+﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.ArtistManagmentViewModel
+@*<head>
+    <script type="text/javascript"
+            src="tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript" language="javascript">
+        tinyMCE.init({
+            // General options
+            mode: "textareas",
+            theme: "advanced",
+            plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups"
+        });
+    </script>
+</head>*@
+<body>
+    <h2 class="op-title">New artist registration</h2>
+    @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div id="artistDetails">
+            <ul>
+                <li>
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Artist" } })
+                </li>
+                <li>
+                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Birthday", type = "text" } })
+                </li>
+                <li>
+                   @Html.TextAreaFor(e => e.Biography, 10, 155, new { @placeholder = "Biography" }) 
+                </li>
+
+                <li class="cover-file">
+                    <div class="mask">
+                        <input class="fake-input" id="file-path" type="text" placeholder="Photo" />
+                        <input id="browsefile-button" type="button" value="Browse..."
+                               onclick="document.form1.filediag.click()" />
+                    </div>
+                    <input class="original-input" type="file" name="filediag" style="display: none" />
+
+                </li>
+            </ul>
+            <button type="submit" class="add-button">Add</button>
+        </div>
+
+    }
+    
+</body>
+
+@section ManageStyle{
+    <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}
