@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Areas.Payment.Services;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using ViewModels;
@@ -12,7 +13,6 @@
     /// </summary>
     public class CartController : Controller
     {
-        #region Fields
         /// <summary>
         /// Репозиторий для хранения корзины
         /// </summary>
@@ -22,7 +22,17 @@
         /// Репозиторий для хранения пользователей 
         /// </summary>
         private IUserDataRepository _userRepository;
-        #endregion
+
+        /// <summary>
+        /// Репозиторий для хранения трэков
+        /// </summary>
+        private ITrackRepository _trackRepository;
+
+        /// <summary>
+        /// ViewModel для отображения корзины 
+        /// </summary>
+        private CartViewModel _viewModel;
+
         /// <summary>
         /// Конструктор для контроллера корзины
         /// </summary>
@@ -32,13 +42,14 @@
         /// <param name="userRepo">
         /// Репозиторий для хранения пользователей
         /// </param>
-        public CartController(ICartRepository cartRepo, IUserDataRepository userRepo)
+        public CartController(ICartRepository cartRepo, IUserDataRepository userRepo, ITrackRepository trackRepo)
         {
             this._cartRepository = cartRepo;
             this._userRepository = userRepo;
+            this._trackRepository = trackRepo;
+            this._viewModel = new CartViewModel { Tracks = new List<Track>() };
         }
 
-        #region Actions
         /// <summary>
         /// Действие для отображения корзины
         /// </summary>
@@ -48,27 +59,22 @@
         [HttpGet]
         public ViewResult Index(int currentUserId)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
-            var currentUser = this._userRepository.GetById(currentUserId);
-            var cartView = new CartViewModel { Tracks = new List<Track>() };
+            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
             if (cart != null)
             {
-                foreach (var t in cart.Tracks)
-                {
-                    cartView.Tracks.Add(t);
-                }
-
-                /// <summary>
-                /// Временные данные: пользователь выбрал отображение в долларах
-                /// </summary>
-                var userCurrency = new Currency();
-                userCurrency.Code = 840;
-                userCurrency.ShortName = "USD";
-                cartView.CurrencyShortName = userCurrency.ShortName;
-                cartView.SetTotalPrice(userCurrency);
+                this._viewModel.Tracks = (IList<Track>)cart.Tracks;
             }
 
-            return this.View(cartView);
+            /// <summary>
+            /// Временные данные: пользователь выбрал отображение в долларах
+            /// </summary>
+            var userCurrency = new Currency();
+            userCurrency.Code = 840;
+            userCurrency.ShortName = "USD";
+            this._viewModel.CurrencyShortName = userCurrency.ShortName;
+            CartViewModelService.SetTotalPrice(this._viewModel, userCurrency);
+
+            return this.View(this._viewModel);
         }
 
         /// <summary>
@@ -81,22 +87,22 @@
         /// Добавляемая песня
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult AddTrackToCart(int currentUserId, Track track)
+        public RedirectToRouteResult AddTrack(int currentUserId, int trackId = 0)
         {
+            var track = this._trackRepository.GetById(trackId);
             if (track == null)
             {
                 return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
 
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
-            var currentUser = this._userRepository.GetById(currentUserId);
-            if (cart == null && currentUser != null)
+            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
+            if (cart == null)
             {
-                var model = new Cart { User = currentUser, Tracks = new List<Track> { track } };
+                var model = new Cart { UserId = currentUserId, Tracks = new List<Track> { track } };
                 this._cartRepository.AddOrUpdate(model);
             }
 
-            if (cart != null)
+            if (cart != null && cart.Tracks.Count(t => t.Id == trackId) == 0)
             {
                 cart.Tracks.Add(track);
                 this._cartRepository.AddOrUpdate(cart);
@@ -115,26 +121,27 @@
         /// Удаляемая песня
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track)
+        public RedirectToRouteResult DeleteTrack(int currentUserId, int trackId = 0)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault(t => t.Tracks.Contains(track));
-            if (cart == null || track == null)
+            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
+            if (cart == null || trackId == 0)
             {
                 return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
 
-            if (cart.Tracks.Count == 1)
-            {
-                this._cartRepository.Delete(cart);
-            }
-            else
+            var track = cart.Tracks.FirstOrDefault(t => t.Id == trackId);
+            if (track != null)
             {
                 cart.Tracks.Remove(track);
                 this._cartRepository.AddOrUpdate(cart);
             }
 
+            if (cart.Tracks.Count == 0)
+            {
+                this._cartRepository.Delete(cart);
+            }
+
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
         }
-        #endregion 
     }
 }
