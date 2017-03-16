@@ -8,7 +8,6 @@
 
     /// <summary>
     /// </summary>
-    [Validator(typeof(CurrencyValidator))]
     public class CurrencyViewModel
     {
         /// <summary>
