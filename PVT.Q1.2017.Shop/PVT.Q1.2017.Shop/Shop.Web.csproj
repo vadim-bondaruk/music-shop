@@ -79,6 +79,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
@@ -86,6 +90,22 @@
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
@@ -97,7 +117,7 @@
     <Content Include="App_Data\Shop_log.ldf">
       <DependentUpon>Shop.mdf</DependentUpon>
     </Content>
-    <Content Include="Areas\Management\Styles\AddNewTrack.css" />
+    <Content Include="Areas\Management\Styles\details.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -112,11 +132,15 @@
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Tracks\TrackManage.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
     <Content Include="Areas\Management\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Management\Views\Albums\AlbumManage.cshtml" />
-    <Content Include="Areas\Management\Views\Genres\GenreManage.cshtml" />
-    <Content Include="Areas\Management\Views\Artists\ArtistManage.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\New.cshtml" />
+    <Content Include="Areas\Management\Views\Genres\New.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\New.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\Details.cshtml" />
+    <Content Include="Areas\Management\Views\Genres\Details.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -141,9 +165,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
-    <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Management\Models\ArtistManagmentViewModel.cs" />

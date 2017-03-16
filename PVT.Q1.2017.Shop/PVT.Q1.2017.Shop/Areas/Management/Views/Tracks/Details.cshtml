@@ -1,0 +1,43 @@
+﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.TrackManagmentViewModel
+
+<h2 class="op-title">New track registration</h2>
+@using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="trackData">
+        <ul>
+            <li>
+                @Html.EditorFor(m => m.Artist.Name, new { htmlAttributes = new { placeholder = "Artist" } })
+            </li>
+            <li>
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Name" } })
+            </li>
+            <li>
+                @Html.EditorFor(m => m.Album.Name, new { htmlAttributes = new { placeholder = "Album" } })
+            </li>
+            <li>
+                @Html.EditorFor(m => m.Genre.Name, new { htmlAttributes = new { placeholder = "Genre" } })
+            </li>
+            <li>
+                @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { placeholder = "Release Date", type = "text" } })
+            </li>
+            <li>
+                @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Duration" } })
+            </li>
+            <li class="cover-file">
+                <div class="mask">
+                    <input class="fake-input" id="file-path" type="text" placeholder="Cover"/>
+                    <input id="browsefile-button" type="button" value="Browse..."
+                           onclick="document.form1.filediag.click()"/>
+                </div>
+                <input class="original-input" type="file" name="filediag" style="display: none"/>
+
+            </li>
+        </ul>
+
+        <button type="submit" class="add-button">Add</button>
+    </div>
+}
+
+@section ManageStyle{
+    <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}

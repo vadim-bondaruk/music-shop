@@ -79,9 +79,13 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
-    <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.cs" />
-    <Compile Include="Migrations\201703092357523_added_CurrencyRate_Date.Designer.cs">
-      <DependentUpon>201703092357523_added_CurrencyRate_Date.cs</DependentUpon>
+    <Compile Include="Migrations\201703151837035_Init.cs" />
+    <Compile Include="Migrations\201703151837035_Init.Designer.cs">
+      <DependentUpon>201703151837035_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703161007053_new.cs" />
+    <Compile Include="Migrations\201703161007053_new.Designer.cs">
+      <DependentUpon>201703161007053_new.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -147,8 +151,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703092357523_added_CurrencyRate_Date.resx">
-      <DependentUpon>201703092357523_added_CurrencyRate_Date.cs</DependentUpon>
+    <Folder Include="App_Start\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703151837035_Init.resx">
+      <DependentUpon>201703151837035_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703161007053_new.resx">
+      <DependentUpon>201703161007053_new.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

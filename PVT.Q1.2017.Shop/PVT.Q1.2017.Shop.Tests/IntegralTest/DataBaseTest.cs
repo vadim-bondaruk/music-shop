@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+
     using global::Shop.Common.Models;
     using global::Shop.DAL;
     using global::Shop.DAL.Context;
