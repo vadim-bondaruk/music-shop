@@ -8,12 +8,44 @@
     public class HomeController : Controller
     {
         /// <summary>
-        /// Default start page
+        /// <returns>Default start page</returns>
         /// </summary>
         /// <returns>View of index page</returns>
         public ActionResult Index()
         {
-            return this.RedirectToAction("List", "Track", new { area = "Content" });
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.Message = "Ваш логин: " + User.Identity.Name;
+            }
+            else
+            {
+                ViewBag.Message = "Вы не авторизованы";
+            }
+
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult About()
+        {
+            ViewBag.Message = "Страница описания приложения";
+
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Контакты";
+
+            return this.View();
         }
     }
 }
