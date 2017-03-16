@@ -5,6 +5,7 @@
     using Common.Models;
     using Infrastruture;
     using System.Collections.Generic;
+    using Ninject;
 
 
     /// <summary>
@@ -30,7 +31,9 @@
         public void AddTrack(int userId, int trackId)
         {
             var cart = GetById(userId);
-            var track = new TrackRepository(DbContext).GetById(trackId);
+            var kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            var trackRepo = kernel.Get<ITrackRepository>();
+            var track = trackRepo.GetById(trackId);
             if (track == null)
                 throw new Exception("Incorrect Track Id");
             cart.Tracks.Add(track);
@@ -56,7 +59,9 @@
         public void RemoveTrack(int userId, int trackId)
         {
             var cart = GetById(userId);
-            var track = new TrackRepository(DbContext).GetById(trackId);
+            var kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            var trackRepo = kernel.Get<ITrackRepository>();
+            var track = trackRepo.GetById(trackId);
             if (track == null)
                 throw new Exception("Incorrect Track Id");
             cart.Tracks.Remove(track);
