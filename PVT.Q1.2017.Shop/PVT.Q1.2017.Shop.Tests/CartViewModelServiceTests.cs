@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shop.BLL.Services;
 using Shop.Common.Models;
+using Shop.Common.Models.ViewModels;
 using System.Collections.Generic;
-using PVT.Q1._2017.Shop.ViewModels;
-using PVT.Q1._2017.Shop.Areas.Payment.Services;
 
 namespace PVT.Q1._2017.Shop.Tests
 {

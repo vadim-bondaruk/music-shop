@@ -1,16 +1,7 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TrackPrice.cs" company="PVT Q1 2017">
-//   All rights reserved
-// </copyright>
-// <summary>
-//   CartView Model.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace PVT.Q1._2017.Shop.ViewModels
+﻿namespace Shop.Common.Models.ViewModels
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using global::Shop.Common.Models;
+    using Models;
 
     /// <summary>
     /// CartView model

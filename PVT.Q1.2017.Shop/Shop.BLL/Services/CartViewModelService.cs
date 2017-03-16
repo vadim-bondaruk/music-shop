@@ -1,8 +1,8 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Services
+﻿namespace Shop.BLL.Services
 {
     using System.Linq;
-    using global::Shop.Common.Models;
-    using ViewModels;
+    using Common.Models;
+    using Common.Models.ViewModels;
 
     /// <summary>
     /// Cart View Model service

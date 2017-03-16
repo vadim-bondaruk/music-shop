@@ -3,12 +3,12 @@ using Shop.Common.Models;
 using Moq;
 using System.Collections.Generic;
 using PVT.Q1._2017.Shop.Controllers.Cart;
-using PVT.Q1._2017.Shop.ViewModels;
 using Shop.DAL.Infrastruture;
 using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Linq;
+using Shop.Common.Models.ViewModels;
 
 namespace PVT.Q1._2017.Shop.Tests
 {

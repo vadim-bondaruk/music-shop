@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Areas.Payment.Services;
+    using global::Shop.BLL.Services;
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using ViewModels;
 
     /// <summary>
     /// Контоллер для корзины покупателя

@@ -88,5 +88,10 @@
         {
             throw new NotImplementedException();
         }
+
+        public ICartRepository GetCartRepository()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
