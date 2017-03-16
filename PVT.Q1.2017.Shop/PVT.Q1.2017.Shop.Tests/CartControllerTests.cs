@@ -90,7 +90,7 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<IUserDataRepository> moqUserRepository = new Mock<IUserDataRepository>();
 
             Mock<ITrackRepository> moqTrackRepository = new Mock<ITrackRepository>();
-            moqTrackRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(new Track());
+            moqTrackRepository.Setup(m => m.GetById(It.Is<int>(Id => Id == 0))).Returns((Track)null);
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object, moqTrackRepository.Object);
             RedirectToRouteResult result = cartController.AddTrack(1, 0);
