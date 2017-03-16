@@ -16,7 +16,7 @@ namespace Shop.Common.Models
         /// <summary>
         ///     Gets or sets the mark.
         /// </summary>
-        public Mark Mark { get; set; }
+        public int Mark { get; set; }
 
         /// <summary>
         ///     Gets or sets the track id.
@@ -36,6 +36,6 @@ namespace Shop.Common.Models
         /// <summary>
         ///     Gets or sets the user.
         /// </summary>
-        public virtual User User { get; set; }
+        public virtual UserData User { get; set; }
     }
 }

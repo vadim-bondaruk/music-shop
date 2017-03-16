@@ -13,7 +13,7 @@
         /// </summary>
         public VoteValidator()
         {
-            RuleFor(v => v.Mark).IsInEnum();
+            RuleFor(v => v.Mark).GreaterThan(0);
             RuleFor(v => v.TrackId).GreaterThan(0);
             RuleFor(v => v.UserId).GreaterThan(0);
         }

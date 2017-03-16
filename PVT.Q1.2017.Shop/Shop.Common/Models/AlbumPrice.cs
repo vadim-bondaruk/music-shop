@@ -11,7 +11,7 @@
     public class AlbumPrice : BaseEntity
     {
         /// <summary>
-        /// Price for track
+        /// Price for album
         /// </summary>
         public decimal Price { get; set; }
 
@@ -21,7 +21,7 @@
         public int AlbumId { get; set; }
 
         /// <summary>
-        /// Get or set price level id
+        /// Price level id
         /// </summary>
         public int PriceLevelId { get; set; }
 

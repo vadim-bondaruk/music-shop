@@ -22,6 +22,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -171,6 +172,13 @@
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Management\Views\Track\AddOrUpdate.cshtml" />
+    <Content Include="Areas\Management\Views\Track\Delete.cshtml" />
+    <Content Include="Areas\Management\Views\Album\AddOrUpdate.cshtml" />
+    <Content Include="Areas\Management\Views\Album\Delete.cshtml" />
+    <Content Include="Areas\Content\Views\web.config" />
+    <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -199,15 +207,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
+    <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
-    <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TrackController.cs" />
+    <Compile Include="Areas\Content\Controllers\TrackController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -221,10 +231,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="ViewModels\TrackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -236,11 +243,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="T4MVC.tt.hooks.t4" />
-    <Content Include="Views\Track\AddNew.cshtml" />
+    <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\Track\Details.cshtml" />
-    <Content Include="Views\Track\List.cshtml" />
-    <Content Include="Views\Track\AlbumList.cshtml" />
+    <Content Include="Areas\Content\Views\Track\List.cshtml" />
+    <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Album\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Views\User\Success.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -257,12 +265,11 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Track\" />
+    <Folder Include="Areas\Content\Models\" />
+    <Folder Include="Areas\Content\Views\Artist\" />
     <Folder Include="Areas\Management\Models\" />
-    <Folder Include="Areas\Management\Views\Shared\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
-    <Folder Include="Views\Album\" />
-    <Folder Include="Views\Artist\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

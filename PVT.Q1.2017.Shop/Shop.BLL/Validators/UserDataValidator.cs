@@ -12,11 +12,11 @@
     public static class UserDataValidator
     {
         /// <summary>
-        /// 
+        ///      THIS service will be replace (we will use Remote)
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public static bool IsLoginUnique(string login, IRepository<User> repository)
+        /*public static bool IsLoginUnique(string login, IRepository<User> repository)
         {
             if (string.IsNullOrEmpty(login))
             {
@@ -49,6 +49,6 @@
             }
 
             return true;
-        }
+        }*/
     }
 }

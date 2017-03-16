@@ -103,8 +103,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlbumServiceTest.cs" />
+    <Compile Include="CurrencyRateTest.cs" />
     <Compile Include="CurrencyServiceTest.cs" />
-    <Compile Include="IntegralTest\DataBaseTest.cs" />
     <Compile Include="Moq\AlbumPriceRepositoryMoq.cs" />
     <Compile Include="Moq\AlbumRepositoryMoq.cs" />
     <Compile Include="Moq\AlbumTrackRelationRepositoryMoq.cs" />
@@ -115,7 +115,7 @@
     <Compile Include="Moq\GenreRepositoryMoq.cs" />
     <Compile Include="Moq\PriceLevelRepositoryMoq.cs" />
     <Compile Include="Moq\RepositoryFactoryMoq.cs" />
-    <Compile Include="UserServiceTest.cs" />
+    <Compile Include="UserDataServiceTest.cs" />
     <Compile Include="VoteServiceTest.cs" />
     <Compile Include="FeedbackServiceTest.cs" />
     <Compile Include="BllServiceTests\CurrencyRateServiceTest.cs" />
@@ -124,7 +124,7 @@
     <Compile Include="CartViewModelTests.cs" />
     <Compile Include="Moq\TrackPriceRepositoryMoq.cs" />
     <Compile Include="Moq\TrackRepositoryMoq.cs" />
-    <Compile Include="Moq\UserRepositoryMoq.cs" />
+    <Compile Include="Moq\UserDataRepositoryMoq.cs" />
     <Compile Include="Moq\VoteRepositoryMoq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlbumPriceServiceTest.cs" />
