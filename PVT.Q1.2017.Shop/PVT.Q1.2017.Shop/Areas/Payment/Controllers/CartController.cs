@@ -90,7 +90,7 @@
         public RedirectToRouteResult AddTrack(int currentUserId, int trackId = 0)
         {
             var track = this._trackRepository.GetById(trackId);
-            if (track == null)
+            if (track == null || trackId == 0)
             {
                 return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
             }
