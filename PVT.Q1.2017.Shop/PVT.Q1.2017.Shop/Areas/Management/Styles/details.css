@@ -1,6 +1,7 @@
 body { line-height: 1; }
 
-ul { list-style: none;
+ul {
+    list-style: none;
     margin-top: 20px;
 }
 
@@ -16,8 +17,7 @@ body {
     font-size: 20px;
     text-shadow: 1px 1px 2px black, 0 0 1em red;
     margin-top: 1%;
-    margin-left: 43%;
-
+    margin-left: 42.5%;
 }
 
 input, button, label {
@@ -29,7 +29,7 @@ input, button, label {
     box-sizing: border-box;
 }
 
-input[type=text], input[type=date], input[type=time] {
+input[type=text], input[type=date], input[type=time], textarea {
     padding: 0 10px;
     width: 85%;
     height: 40px;
@@ -42,7 +42,7 @@ input[type=text], input[type=date], input[type=time] {
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
 }
 
-input[type=text]:focus, input[type=date]:focus, input[type=time]:focus {
+input[type=text]:focus, input[type=date]:focus, input[type=time]:focus, textarea:focus {
     color: white;
     background: rgba(0, 0, 0, 0.1);
     outline: 0;
@@ -67,7 +67,7 @@ input[type=text]:focus, input[type=date]:focus, input[type=time]:focus {
 }*/
 
 .add-button {
-   margin-left: 45%;  
+    margin-left: 45%;
     width: 10%;
     height: 40px;
     outline: 0;
@@ -97,28 +97,27 @@ li {
 }
 
 #browsefile-button:hover {
-   background: rgba(0, 0, 0, 0.16);
+    background: rgba(0, 0, 0, 0.16);
     /*border-color: #0591ba*/
-    
 }
 
-#footer-caption {
-    color: white
-}
+#footer-caption { color: white }
 
 .page-title {
     position: relative;
     color: white;
     font-size: 50px;
     margin-left: 40%;
-    
 }
 
-    .page-title {
-        text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red;
-    }
-    
-    .page-title:hover {
+.page-title { text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red; }
+
+.page-title:hover {
     color: aliceblue;
     text-decoration: none;
+}
+
+textarea {
+    padding-top: 10px;
+    height: 200px;
 }

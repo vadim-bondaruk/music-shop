@@ -43,7 +43,7 @@
                 repository.SaveChanges();
             }
 
-            return this.View("ArtistManage");
+            return this.View("New");
         }
 
         /// <summary>
@@ -59,7 +59,7 @@
             {
                 var artist = artistRepository.GetById(artistId);
                 Mapper.Map<ArtistManagmentViewModel>(artist);
-                return this.View("ArtistManage");
+                return this.View("New");
             }
         }
 
@@ -69,7 +69,7 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("ArtistManage");
+            return this.View("New");
         }
 
         /// <summary>
@@ -89,7 +89,7 @@
                 var track = Mapper.Map<Artist>(viewModel);
                 artistRepo.AddOrUpdate(track);
                 artistRepo.SaveChanges();
-                return this.View("ArtistManage");
+                return this.View("New");
             }
         }
 
@@ -109,7 +109,7 @@
                 artistRepo.AddOrUpdate(artist);
             }
 
-            return this.View();
+            return this.View("Details");
         }
     }
 }
