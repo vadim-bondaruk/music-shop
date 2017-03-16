@@ -73,9 +73,15 @@
             {
                 Mapper.Initialize(cfg => cfg.CreateMap<CurrencyViewModel, Currency>());
                 Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
-                this._currencyRepository.AddOrUpdate(currency);
-                this._currencyRepository.SaveChanges();
-                return this.RedirectToAction("Index");
+                try
+                {
+                    this._currencyRepository.AddOrUpdate(currency);
+                    this._currencyRepository.SaveChanges();
+                    return this.RedirectToAction("Index");
+                }
+                catch
+                {
+                }
             }
 
             return this.View(model);
@@ -119,11 +125,11 @@
                     Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
                     this._currencyRepository.AddOrUpdate(currency);
                     this._currencyRepository.SaveChanges();
-                   
+
                     return this.RedirectToAction("Index");
                 }
             }
-            catch (Exception e)
+            catch
             {
                 this.ModelState.AddModelError("Name", "Unable to save changes. Try again, and if the problem persists see your system administrator");
             }

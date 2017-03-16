@@ -1,17 +1,30 @@
 ﻿namespace Shop.Common.ViewModels.Admin
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using FluentValidation.Attributes;
+
+    using Shop.Common.Validators;
+
     /// <summary>
     /// </summary>
-    public class IndexCurrencyViewModel
+    [Validator(typeof(CurrencyValidator))]
+    public class CurrencyViewModel
     {
         /// <summary>
-        /// Identifier
+        /// Gets or sets the identifier
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
+        /// Soft deleted flag
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
         /// Gets or sets the shortname
         /// </summary>
+        [Required]
         public string ShortName { get; set; }
 
         /// <summary>
@@ -22,6 +35,7 @@
         /// <summary>
         /// Gets or sets the code
         /// </summary>
+        [Required]
         public int Code { get; set; }
 
         /// <summary>
