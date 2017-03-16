@@ -1,7 +1,7 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.TrackManagmentViewModel
 
 <h2 class="op-title">New track registration</h2>
-@using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { name= "form-reg", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div id="trackData">
@@ -25,12 +25,12 @@
                 @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Duration" } })
             </li>
             <li class="cover-file">
-                <div class="mask">
-                    <input class="fake-input" id="file-path" type="text" placeholder="Cover"/>
+                <div>
+                    <input id="file-path" type="text" placeholder="Cover" />
                     <input id="browsefile-button" type="button" value="Browse..."
-                           onclick="document.form1.filediag.click()"/>
+                           onclick="document.formreg.filediag.click()" />
                 </div>
-                <input class="original-input" type="file" name="filediag" style="display: none"/>
+                <input type="file" id="file" name="filediag" style="display: none" />
 
             </li>
         </ul>
@@ -39,5 +39,15 @@
     </div>
 }
 
+<script>
+    // = Load
+    // отслеживаем изменение инпута file
+    $('#file').change(function () {
+        // Если файл прикрепили то заносим значение value в переменную
+        var fileResult = $(this).val();
+        // И дальше передаем значение в инпут который под загрузчиком
+        $(this).parent().find('.fileLoad').find('input').val(fileResult);
+    });
+</script>
 @section ManageStyle{
     <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}

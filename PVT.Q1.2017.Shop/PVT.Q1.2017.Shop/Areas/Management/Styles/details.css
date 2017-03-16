@@ -1,3 +1,17 @@
+.page-title {
+    position: relative;
+    color: white;
+    font-size: 50px;
+    margin-left: 40%;
+}
+
+.page-title { text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red; }
+
+.page-title:hover {
+    color: aliceblue;
+    text-decoration: none;
+}
+
 body { line-height: 1; }
 
 ul {
@@ -5,7 +19,7 @@ ul {
     margin-top: 20px;
 }
 
-body { background: #373737 url("../img/bg.png") 0 0 repeat; }
+body { background: #373737 url("/img/bg.png") 0 0 repeat; }
 
 body {
     font: 14px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -29,7 +43,7 @@ input, button, label {
     box-sizing: border-box;
 }
 
-input[type=text], input[type=date], input[type=time], textarea {
+input[type=text], input[type=date], input[type=time], input[type=file], textarea {
     padding: 0 10px;
     width: 85%;
     height: 40px;
@@ -42,29 +56,11 @@ input[type=text], input[type=date], input[type=time], textarea {
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
 }
 
-input[type=text]:focus, input[type=date]:focus, input[type=time]:focus, textarea:focus {
+input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[type=time]:focus, textarea:focus {
     color: white;
     background: rgba(0, 0, 0, 0.1);
     outline: 0;
 }
-
-/*.add-button {
-    position: relative;
-    z-index: 2;
-    width: 80px;
-    height: 31px;
-    padding: 0 0 48px;
-    margin-left: 25%;
-    text-indent: 120%;
-    white-space: nowrap;
-    overflow: hidden;
-    background: none;
-    border: 0;
-    border-radius: 24px;
-    cursor: pointer;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.1);
-}*/
 
 .add-button {
     margin-left: 45%;
@@ -96,28 +92,23 @@ li {
     border-width: 0.5px;
 }
 
-#browsefile-button:hover {
-    background: rgba(0, 0, 0, 0.16);
-    /*border-color: #0591ba*/
-}
-
-#footer-caption { color: white }
-
-.page-title {
-    position: relative;
-    color: white;
-    font-size: 50px;
-    margin-left: 40%;
-}
-
-.page-title { text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red; }
-
-.page-title:hover {
-    color: aliceblue;
-    text-decoration: none;
-}
+#browsefile-button:hover { background: rgba(0, 0, 0, 0.16); }
 
 textarea {
     padding-top: 10px;
     height: 200px;
+}
+
+#footer-caption { color: white }
+
+@-webkit-keyframes autofill {
+    to {
+        color: white;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
 }
