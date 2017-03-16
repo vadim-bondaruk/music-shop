@@ -8,7 +8,7 @@
     /// <summary>
     /// 
     /// </summary>
-    [FluentValidation.Attributes.Validator(typeof(UserValidator))]
+    [FluentValidation.Attributes.Validator(typeof(UserRegistrationValidator))]
     public class UserViewModel
     {
         /// <summary>

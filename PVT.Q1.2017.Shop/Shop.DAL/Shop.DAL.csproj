@@ -89,7 +89,6 @@
     <Compile Include="Migrations\201703151342298_AddUserRolesArray.Designer.cs">
       <DependentUpon>201703151342298_AddUserRolesArray.cs</DependentUpon>
     </Compile>
-    </Compile>
     <Compile Include="Migrations\201703152237360_UserCreatTesting.cs" />
     <Compile Include="Migrations\201703152237360_UserCreatTesting.Designer.cs">
       <DependentUpon>201703152237360_UserCreatTesting.cs</DependentUpon>

@@ -82,6 +82,7 @@
     <Compile Include="Validators\TrackPriceValidator.cs" />
     <Compile Include="Validators\TrackValidator.cs" />
     <Compile Include="Validators\UserDataValidator.cs" />
+    <Compile Include="Validators\UserRegistrationValidator.cs" />
     <Compile Include="Validators\VoteValidator.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>

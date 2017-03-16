@@ -12,7 +12,7 @@
     using Validators;
 
     /// <summary>
-    /// The user service (have to be extended by UserMenagement team).
+    /// The user service.
     /// </summary>
     public class UserDataService : BaseService, IUserDataService
     {
@@ -75,7 +75,7 @@
             }
         }
 
-         /// <summary>
+        /* /// <summary>
         /// Addition new user to userRepository
         /// </summary>
         /// <param name="user"></param>
@@ -125,7 +125,7 @@
             }
            
             return registered;
-        }
+        }*/
 
         /// <summary>
         /// Getting default user roles
