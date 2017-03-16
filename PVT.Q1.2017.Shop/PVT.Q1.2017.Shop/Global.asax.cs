@@ -50,7 +50,6 @@
             // Array.Copy(src, dest, src.Length);
             // return dest;
             // }));
-
             Mapper.Initialize(
                 cfg =>
                     cfg.CreateMap<TrackManagmentViewModel, Track>()
@@ -66,6 +65,12 @@
                         .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday))
                         .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
                         .ForMember(dest => dest.Photo, opt => opt.ResolveUsing(a => a.Photo == null ? null : a.Photo)));
+
+            Mapper.Initialize(
+                cfg =>
+                    cfg.CreateMap<AlbumManagmentViewModel, Album>()
+                        .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                        .ForMember(dest => dest.ReleaseDate, opt => opt.MapFrom(src => src.ReleaseDate)));
         }
     }
 }

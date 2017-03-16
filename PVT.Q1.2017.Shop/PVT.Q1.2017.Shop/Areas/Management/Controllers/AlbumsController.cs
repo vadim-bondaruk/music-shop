@@ -108,12 +108,12 @@
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult New(
-            [Bind(Include = "Track")] TrackManagmentViewModel viewModel)
+            [Bind(Include = "Name, ReleaseDate, Cover")] AlbumManagmentViewModel viewModel)
         {
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(viewModel);
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            var album = Mapper.Map<Album>(viewModel);
+            using (var repository = this.RepositoryFactory.GetAlbumRepository())
             {
-                repository.AddOrUpdate(track);
+                repository.AddOrUpdate(album);
                 repository.SaveChanges();
             }
 

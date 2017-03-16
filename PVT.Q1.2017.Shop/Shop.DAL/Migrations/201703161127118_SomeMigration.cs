@@ -4,7 +4,7 @@ namespace Shop.DAL.Migrations
 
     /// <summary>
     /// </summary>
-    public partial class Init : DbMigration
+    public partial class SomeMigration : DbMigration
     {
         /// <summary>
         /// </summary>

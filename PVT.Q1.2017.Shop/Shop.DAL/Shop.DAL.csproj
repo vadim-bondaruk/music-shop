@@ -79,13 +79,9 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
-    <Compile Include="Migrations\201703151837035_Init.cs" />
-    <Compile Include="Migrations\201703151837035_Init.Designer.cs">
-      <DependentUpon>201703151837035_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703161007053_new.cs" />
-    <Compile Include="Migrations\201703161007053_new.Designer.cs">
-      <DependentUpon>201703161007053_new.cs</DependentUpon>
+    <Compile Include="Migrations\201703161127118_SomeMigration.cs" />
+    <Compile Include="Migrations\201703161127118_SomeMigration.Designer.cs">
+      <DependentUpon>201703161127118_SomeMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -154,15 +150,9 @@
     <Folder Include="App_Start\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703151837035_Init.resx">
-      <DependentUpon>201703151837035_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703161127118_SomeMigration.resx">
+      <DependentUpon>201703161127118_SomeMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703161007053_new.resx">
-      <DependentUpon>201703161007053_new.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Start\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Visual-StyleCop.MSBuild.4.7.59.0\build\Visual-StyleCop.MSBuild.Targets" Condition="Exists('..\packages\Visual-StyleCop.MSBuild.4.7.59.0\build\Visual-StyleCop.MSBuild.Targets')" />
