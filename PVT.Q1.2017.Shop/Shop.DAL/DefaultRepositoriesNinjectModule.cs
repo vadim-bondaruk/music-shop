@@ -70,6 +70,7 @@
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumTrackRelationRepository()); 
 
             Bind<IUserPaymentMethodRepository>().To<UserPaymentMethodRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
+            Bind<ICartRepository>().To<CartBaseRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCartRepository());
 
             Bind<IRepositoryFactory>().ToFactory();
         }
