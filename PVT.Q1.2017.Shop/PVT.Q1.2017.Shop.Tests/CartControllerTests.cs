@@ -25,7 +25,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 new Track { Id=3, Name = "Escape From Love" }
             };
             User user = new User { Id = 1 };
-            Cart cart = new Cart { Id = 1, User = user, Tracks = tracks };
+            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = tracks };
             ICollection<Cart> carts = new List<Cart>() { cart };
 
             Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
@@ -59,7 +59,7 @@ namespace PVT.Q1._2017.Shop.Tests
             };
 
             var user = new User { Id = 1 };
-            var cart = new Cart { Id = 1, User = user, Tracks = tracks };
+            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks };
             var addedTrack = new Track { Id = 4, Name = "Hallelujah" };
             ICollection<Cart> carts = new List<Cart>() { cart };
 
@@ -111,7 +111,7 @@ namespace PVT.Q1._2017.Shop.Tests
             };
 
             var user = new User { Id = 1 };
-            var cart = new Cart { Id = 1, User = user, Tracks = tracks };
+            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks };
             var deletedTrack = cart.Tracks.FirstOrDefault(t => t.Id == 1);
             ICollection<Cart> carts = new List<Cart>() { cart };
 
@@ -149,7 +149,7 @@ namespace PVT.Q1._2017.Shop.Tests
             Cart cart = new Cart
             {
                 Id = 1,
-                User = new User { Id = 1 },
+                UserId = 1,
                 Tracks = new List<Track>()
             };
             ICollection<Cart> carts = new List<Cart>() { cart };
