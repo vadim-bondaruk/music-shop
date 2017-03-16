@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Common.Models;
-    
+
     /// <summary>
     /// Currency service interface
     /// </summary>

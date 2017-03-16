@@ -20,7 +20,7 @@
         /// The feedback for the <paramref name="track"/> which have made the specified <paramref name="user"/>
         /// or <b>null</b> in case if feedback doesn't exist.
         /// </returns>
-        Feedback GetTrackFeedback(Track track, User user);
+        Feedback GetTrackFeedback(Track track, UserData user);
 
         /// <summary>
         /// Determines whether the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>.
@@ -35,7 +35,7 @@
         /// <b>true</b> if the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>;
         /// otherwise <b>false</b>.
         /// </returns>
-        bool FeedbackExists(Track track, User user);
+        bool FeedbackExists(Track track, UserData user);
 
         /// <summary>
         /// Returns the feedback with the specified <paramref name="id"/>
@@ -44,6 +44,6 @@
         /// <returns>
         /// The feedback with the specified <paramref name="id"/> or <b>null</b> if feedback doesn't exist.
         /// </returns>
-        Feedback GetFeedbackInfo(int id);
+        Feedback GetFeedback(int id);
     }
 }

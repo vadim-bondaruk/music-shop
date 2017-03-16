@@ -41,7 +41,7 @@
         ///     Gets or sets the user who wrote the
         ///     <see cref="Shop.Common.Models.Feedback.Comments" /> .
         /// </summary>
-        public virtual User User
+        public virtual UserData User
         {
             get; set;
         }

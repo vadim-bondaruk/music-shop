@@ -137,7 +137,7 @@
         /// <returns>
         /// The currency with the specified <paramref name="id"/> or <b>null</b> if currency doesn't exist.
         /// </returns>
-        public Currency GetCurrencyInfo(int id)
+        public Currency GetCurrency(int id)
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {

@@ -40,12 +40,12 @@
         /// <summary>
         /// Gets or sets the artist id.
         /// </summary>
-        public int? ArtistId { get; set; }
+        public int ArtistId { get; set; }
 
         /// <summary>
         /// Gets or sets the genre id.
         /// </summary>
-        public int? GenreId { get; set; }
+        public int GenreId { get; set; }
 
         /// <summary>
         /// Gets or sets the artist.

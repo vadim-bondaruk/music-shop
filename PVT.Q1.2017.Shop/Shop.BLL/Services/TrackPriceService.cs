@@ -56,7 +56,7 @@
         /// <returns>
         /// The track price with the specified <paramref name="id"/> or <b>null</b> if track price doesn't exist.
         /// </returns>
-        public TrackPrice GetTrackPriceInfo(int id)
+        public TrackPrice GetTrackPrice(int id)
         {
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
