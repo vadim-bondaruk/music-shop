@@ -37,6 +37,20 @@
         /// </summary>
         private static void MapTrackViewModel()
         {
+            // Mapper.Initialize(
+            // cfg => cfg.CreateMap<byte[], byte[]>().ConstructUsing(
+            // src =>
+            // {
+            // if ((src == null) || (src.Length == 0))
+            // {
+            // return new byte[] { 0 };
+            // }
+
+            // var dest = new byte[src.Length];
+            // Array.Copy(src, dest, src.Length);
+            // return dest;
+            // }));
+
             Mapper.Initialize(
                 cfg =>
                     cfg.CreateMap<TrackManagmentViewModel, Track>()
@@ -44,6 +58,14 @@
                         .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
                         .ForMember(dest => dest.ReleaseDate, opt => opt.MapFrom(src => src.ReleaseDate))
                         .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Duration)));
+
+            Mapper.Initialize(
+                cfg =>
+                    cfg.CreateMap<ArtistManagmentViewModel, Artist>()
+                        .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                        .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday))
+                        .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
+                        .ForMember(dest => dest.Photo, opt => opt.ResolveUsing(a => a.Photo == null ? null : a.Photo)));
         }
     }
 }

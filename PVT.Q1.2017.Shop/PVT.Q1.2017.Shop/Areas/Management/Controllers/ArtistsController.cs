@@ -86,8 +86,8 @@
         {
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {
-                var track = Mapper.Map<Artist>(viewModel);
-                artistRepo.AddOrUpdate(track);
+                var artist = Mapper.Map<Artist>(viewModel);
+                artistRepo.AddOrUpdate(artist);
                 artistRepo.SaveChanges();
                 return this.View("New");
             }
