@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">

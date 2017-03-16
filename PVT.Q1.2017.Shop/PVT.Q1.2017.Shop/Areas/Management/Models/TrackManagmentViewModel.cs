@@ -41,6 +41,6 @@
         /// <summary>
         ///     Gets or sets the release date.
         /// </summary>
-        public TimeSpan? ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
     }
 }

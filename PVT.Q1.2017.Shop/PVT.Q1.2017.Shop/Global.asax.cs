@@ -37,7 +37,13 @@
         /// </summary>
         private static void MapTrackViewModel()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
+            Mapper.Initialize(
+                cfg =>
+                    cfg.CreateMap<TrackManagmentViewModel, Track>()
+                        .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                        .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
+                        .ForMember(dest => dest.ReleaseDate, opt => opt.MapFrom(src => src.ReleaseDate))
+                        .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Duration)));
         }
     }
 }

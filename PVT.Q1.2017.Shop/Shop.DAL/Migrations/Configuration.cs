@@ -26,26 +26,26 @@ namespace Shop.DAL.Migrations
         /// </param>
         protected override void Seed(ShopContext context)
         {
-            if (!context.Set<Currency>().Any(c => c.ShortName == "EUR"))
-            {
-                context.Set<Currency>().AddOrUpdate(new Currency { ShortName = "EUR", Code = 978, FullName = "EURO" });
-            }
+            // if (!context.Set<Currency>().Any(c => c.ShortName == "EUR"))
+            // {
+            // context.Set<Currency>().AddOrUpdate(new Currency { ShortName = "EUR", Code = 978, FullName = "EURO" });
+            // }
 
-            if (!context.Set<Currency>().Any(c => c.ShortName == "USD"))
-            {
-                context.Set<Currency>()
-                    .AddOrUpdate(new Currency { ShortName = "USD", Code = 840, FullName = "US Dollar" });
-            }
+            // if (!context.Set<Currency>().Any(c => c.ShortName == "USD"))
+            // {
+            // context.Set<Currency>()
+            // .AddOrUpdate(new Currency { ShortName = "USD", Code = 840, FullName = "US Dollar" });
+            // }
 
-            context.SaveChanges();
+            // context.SaveChanges();
 
-            if (!context.Set<CurrencyRate>().Any())
-            {
-                context.Set<CurrencyRate>()
-                    .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 1.06M });
-            }
+            // if (!context.Set<CurrencyRate>().Any())
+            // {
+            // context.Set<CurrencyRate>()
+            // .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 1.06M });
+            // }
 
-            context.SaveChanges();
+            // context.SaveChanges();
 
             // This method will be called after migrating to the latest version.
 

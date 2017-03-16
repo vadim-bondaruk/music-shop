@@ -71,7 +71,7 @@
                 repository.SaveChanges();
             }
 
-            return this.View("GenreManage");
+            return this.View("New");
         }
 
         /// <summary>
@@ -96,7 +96,7 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("GenreManage");
+            return this.View("New");
         }
 
         /// <summary>
@@ -117,7 +117,7 @@
                 repository.SaveChanges();
             }
 
-            return this.View("GenreManage");
+            return this.View("New");
         }
 
         /// <summary>
