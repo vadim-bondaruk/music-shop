@@ -1,8 +1,8 @@
 ﻿namespace Shop.DAL.Migrations.Configurations
 {
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
     using Common.Models;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The <see cref="Album"/> configuration.
@@ -14,10 +14,10 @@
         /// </summary>
         public AlbumConfiguration()
         {
-            HasKey(t => t.Id);
+            HasKey(a => a.Id);
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            Property(t => t.ReleaseDate).IsOptional();
+            Property(a => a.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
+            Property(a => a.ReleaseDate).IsOptional();
 
             HasOptional(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
 

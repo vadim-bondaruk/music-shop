@@ -1,26 +1,20 @@
 ﻿namespace Shop.Common.Models
 {
     using System.Collections.Generic;
+    using FluentValidation.Attributes;
     using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
     /// Price level
     /// </summary>
+    [Validator(typeof(PriceLevelValidator))]
     public class PriceLevel : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        public string Name
-        {
-            get; set;
-        }
-
-        #endregion //Properties
-
-        #region Navigation Properties
+        public string Name { get; set; }
 
         /// <summary>
         /// Users 
@@ -36,7 +30,5 @@
         /// All album prices related to this price level
         /// </summary>
         public virtual ICollection<AlbumPrice> AlbumPriceLevels { get; set; }
-
-        #endregion //Navigation Properties
     }
 }

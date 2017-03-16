@@ -1,8 +1,8 @@
-﻿using Shop.Common.Models;
-using Shop.Infrastructure.Repositories;
-
-namespace Shop.DAL.Infrastruture
+﻿namespace Shop.DAL.Infrastruture
 {
+    using Common.Models;
+    using Infrastructure.Repositories;
+
     /// <summary>
     /// The artist repository
     /// </summary>

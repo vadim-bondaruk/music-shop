@@ -10,8 +10,6 @@
     /// </summary>
     public class VoteService : BaseService, IVoteService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="VoteService"/> class.
         /// </summary>
@@ -21,10 +19,6 @@
         public VoteService(IRepositoryFactory repositoryFactory) : base(repositoryFactory)
         {
         }
-
-        #endregion //Constructors
-
-        #region IVoteService Members
 
         /// <summary>
         /// Returns the vote which have made the specified <paramref name="user"/> for the <paramref name="track"/>.
@@ -85,7 +79,5 @@
                 return repository.GetById(id, v => v.Track, v => v.User);
             }
         }
-
-        #endregion //IVoteService Members
     }
 }

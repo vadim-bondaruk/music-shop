@@ -11,7 +11,8 @@ namespace Shop.Common.Models
 {
     #region
 
-    using Shop.Infrastructure.Models;
+    using System;
+    using Infrastructure.Models;
 
     #endregion
 
@@ -26,6 +27,11 @@ namespace Shop.Common.Models
         ///     Gets or sets the cross course.
         /// </summary>
         public decimal CrossCourse { get; set; }
+
+        /// <summary>
+        /// Date of currency rate
+        /// </summary>
+        public DateTime Date { get; set; }
 
         #endregion //Properties
 
