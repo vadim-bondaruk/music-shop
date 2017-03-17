@@ -87,6 +87,14 @@
     <Compile Include="Migrations\201703161007053_new.Designer.cs">
       <DependentUpon>201703161007053_new.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703170616534_SomeMigration.cs" />
+    <Compile Include="Migrations\201703170616534_SomeMigration.Designer.cs">
+      <DependentUpon>201703170616534_SomeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703170704245_UniqueName.cs" />
+    <Compile Include="Migrations\201703170704245_UniqueName.Designer.cs">
+      <DependentUpon>201703170704245_UniqueName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -159,6 +167,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703161007053_new.resx">
       <DependentUpon>201703161007053_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703170616534_SomeMigration.resx">
+      <DependentUpon>201703170616534_SomeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703170704245_UniqueName.resx">
+      <DependentUpon>201703170704245_UniqueName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
