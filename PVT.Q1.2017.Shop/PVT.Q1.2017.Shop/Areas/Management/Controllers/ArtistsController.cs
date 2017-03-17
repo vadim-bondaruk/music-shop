@@ -5,6 +5,7 @@
     using AutoMapper;
 
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     using PVT.Q1._2017.Shop.Areas.Management.Models;
@@ -34,9 +35,9 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(ArtistManagmentViewModel model)
+        public virtual ActionResult Delete(ArtistDetailsViewModel model)
         {
-            var artistModel = Mapper.Map<ArtistManagmentViewModel, Artist>(model);
+            var artistModel = Mapper.Map<ArtistDetailsViewModel, Artist>(model);
             using (var repository = this.repositoryFactory.GetArtistRepository())
             {
                 repository.Delete(artistModel);
@@ -58,8 +59,8 @@
             using (var artistRepository = this.repositoryFactory.GetArtistRepository())
             {
                 var artist = artistRepository.GetById(artistId);
-                Mapper.Map<ArtistManagmentViewModel>(artist);
-                return this.View("New");
+                Mapper.Map<ArtistDetailsViewModel>(artist);
+                return this.View("Details");
             }
         }
 
@@ -82,15 +83,30 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult New(
-            [Bind(Include = "Name, Biography, Birthday, Photo")] ArtistManagmentViewModel viewModel)
+            [Bind(Exclude = "Artists, Albums")] ArtistDetailsViewModel viewModel)
         {
+            Artist artist;
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {
-                var artist = Mapper.Map<Artist>(viewModel);
+                var bs = new byte[viewModel.UploadedImage.ContentLength];
+                using (var fs = viewModel.UploadedImage.InputStream)
+                {
+                    var offset = 0;
+                    do
+                    {
+                        offset += fs.Read(bs, offset, bs.Length - offset);
+                    }
+                    while (offset < bs.Length);
+                }
+
+                viewModel.Photo = bs;
+                artist = Mapper.Map<Artist>(viewModel);
                 artistRepo.AddOrUpdate(artist);
                 artistRepo.SaveChanges();
-                return this.View("New");
             }
+
+            this.ViewData["Name"] = artist.Name;
+            return this.RedirectToAction("Details");
         }
 
         /// <summary>
@@ -101,7 +117,7 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(ArtistManagmentViewModel model)
+        public virtual ActionResult Update(ArtistDetailsViewModel model)
         {
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {

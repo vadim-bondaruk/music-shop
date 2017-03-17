@@ -11,6 +11,7 @@
     using FluentValidation.Mvc;
 
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
 
     using PVT.Q1._2017.Shop.Areas.Management.Models;
 
@@ -30,27 +31,13 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FluentValidationModelValidatorProvider.Configure();
 
-            MapTrackViewModel();
+            InitMapper();
         }
 
         /// <summary>
         /// </summary>
-        private static void MapTrackViewModel()
+        private static void InitMapper()
         {
-            // Mapper.Initialize(
-            // cfg => cfg.CreateMap<byte[], byte[]>().ConstructUsing(
-            // src =>
-            // {
-            // if ((src == null) || (src.Length == 0))
-            // {
-            // return new byte[] { 0 };
-            // }
-
-            // var dest = new byte[src.Length];
-            // Array.Copy(src, dest, src.Length);
-            // return dest;
-            // }));
-
             Mapper.Initialize(
                 cfg =>
                     cfg.CreateMap<TrackManagmentViewModel, Track>()
@@ -61,11 +48,11 @@
 
             Mapper.Initialize(
                 cfg =>
-                    cfg.CreateMap<ArtistManagmentViewModel, Artist>()
+                    cfg.CreateMap<ArtistDetailsViewModel, Artist>()
                         .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                         .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday))
                         .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
-                        .ForMember(dest => dest.Photo, opt => opt.ResolveUsing(a => a.Photo == null ? null : a.Photo)));
+                        .ForMember(dest => dest.Photo, opt => opt.ResolveUsing(src => src.Photo)));
         }
     }
 }
