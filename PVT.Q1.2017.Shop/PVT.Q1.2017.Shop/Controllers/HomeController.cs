@@ -29,18 +29,6 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult About()
-        {
-            ViewBag.Message = "Страница описания приложения";
-
-            return this.View();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Контакты";

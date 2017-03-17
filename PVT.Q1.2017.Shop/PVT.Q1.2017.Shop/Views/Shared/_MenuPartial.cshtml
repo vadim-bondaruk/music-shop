@@ -1,4 +1,7 @@
-﻿<li>@Html.ActionLink("Home", "Index", "Home")</li>
-<li>@Html.ActionLink("Track", "List", "Track", new { area = "Content" })</li>
-<li>@Html.ActionLink("About", "About", "Home")</li>
-<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+﻿<li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
+@if (Request.IsAuthenticated)
+{
+    <li>@Html.ActionLink("Мой аккаунт", "Index", new { area = "User", controller = "Manage" })</li>
+}
+<li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
+
