@@ -1,17 +1,21 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.ArtistManagmentViewModel
 
+<body>
+    <h2 class="op-title">New artist registration</h2>
 
-@using (Html.BeginForm("New", "Albums", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <div id="artistDetails">
-        @Html.DisplayTextFor(m => m.Name);
-        @Html.DisplayTextFor(m => m.Birthday);
-        @Html.DisplayTextFor(m => m.Biography);
-        @Html.ValueFor(m =>m.Photo);
-        <button type="submit" class="add-button">Add</button>
-    </div>
-}
+    @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div id="artistDetails">
+            @Html.DisplayTextFor(m => m.Name.Where());
+            @Html.DisplayTextFor(m => m.Birthday);
+            @Html.DisplayTextFor(m => m.Biography);
+            @Html.ValueFor(m => m.Photo);
+            <button type="submit" class="add-button">Add</button>
+        </div>
+    }
+
+</body>
 
 @section ManageStyle{
-    <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}
+    <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}
