@@ -8,11 +8,8 @@
     /// <summary>
     /// The track controller
     /// </summary>
-    [Authorize]
     public class TrackController : Controller
     {
-        #region Fields
-
         /// <summary>
         /// The tracks service.
         /// </summary>
@@ -22,10 +19,6 @@
         /// The repository factory.
         /// </summary>
         private readonly IRepositoryFactory _repositoryFactory;
-
-        #endregion //Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackController"/> class.
@@ -40,54 +33,91 @@
             this._repositoryFactory = repositoryFactory;
         }
 
-        #endregion //Constructors
-
-        #region Actions
-
         /// <summary>
+        /// Displays the page for adding and editing tracks.
         /// </summary>
         /// <returns>
+        /// The view which generates page for adding and editing tracks.
         /// </returns>
-        public ActionResult Index()
+        public ActionResult AddOrUpdate(int? id)
         {
-            using (var repository = this._repositoryFactory.GetTrackRepository())
+            if (id == null)
             {
-                return this.View(repository.GetAll());
+                return this.View();
             }
+
+            return this.View(this._trackService.GetTrack(id.Value));
         }
 
         /// <summary>
+        /// Adds the new track in the system or edit existing track.
         /// </summary>
-        /// <returns>
-        /// </returns>
-        public ActionResult NewTrack()
-        {
-            return this.View();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="newTrack">
-        /// The new track.
+        /// <param name="track">
+        /// The track to add or edit.
         /// </param>
         /// <returns>
+        /// Redirects to view which displays track details in case if success;
+        /// otherwise returns the view whitch displays the currnet track with error.
         /// </returns>
-        [HttpPost]
-        public ActionResult NewTrack(Track newTrack)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult AddOrUpdate([Bind(Include = "Id,Name,Duration,ReleaseDate,ArtistId,GenreId")] Track track)
         {
-            if (this.ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 using (var repository = this._repositoryFactory.GetTrackRepository())
                 {
-                    repository.AddOrUpdate(newTrack);
+                    repository.AddOrUpdate(track);
+                    repository.SaveChanges();
                 }
 
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("Details", "Track", new { id = track.Id, area = "Content" });
             }
 
-            return this.View();
+            return this.View(track);
         }
 
-        #endregion //Actions
+        /// <summary>
+        /// Deletes the track with the specified <paramref name="id"/> from the system.
+        /// </summary>
+        /// <param name="id">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// The view which generates page for deleting tracks in case if <paramref name="id"/> was specified;
+        /// otherwise redirects to the list of tracks.
+        /// </returns>
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return this.RedirectToAction("List", "Track", new { area = "Content" });
+            }
+
+            return this.View(this._trackService.GetTrack(id.Value));
+        }
+
+        /// <summary>
+        /// Deletes the specified <paramref name="track"/> from the system.
+        /// </summary>
+        /// <param name="track">
+        /// The track to delete.
+        /// </param>
+        /// <returns>
+        /// Redirects to the view which generates page with tracks list.
+        /// </returns>
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Delete([Bind(Include = "Id")] Track track)
+        {
+            if (track != null && ModelState.IsValid)
+            {
+                using (var repository = this._repositoryFactory.GetTrackRepository())
+                {
+                    repository.Delete(track);
+                    repository.SaveChanges();
+                }
+            }
+
+            return this.RedirectToAction("List", "Track", new { area = "Content" });
+        }
     }
 }

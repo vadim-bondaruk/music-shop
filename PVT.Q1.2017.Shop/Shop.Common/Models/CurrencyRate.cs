@@ -12,14 +12,14 @@
     public class CurrencyRate : BaseEntity
     {
         /// <summary>
-        ///     Gets or sets the cross course.
+        ///     Cross course.
         /// </summary>
         public decimal CrossCourse { get; set; }
 
         /// <summary>
         /// Date of currency rate
         /// </summary>
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Currency id

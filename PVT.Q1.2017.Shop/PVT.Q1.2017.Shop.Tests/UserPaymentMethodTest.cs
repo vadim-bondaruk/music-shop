@@ -8,6 +8,7 @@
     using Moq;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Repositories;
+    using global::Moq;
 
     [TestClass]
     public class UserPaymentMethodRepositoryTest

@@ -29,7 +29,7 @@
         /// <returns>
         ///  All payment methods available for the specified <paramref name="user"/>.
         /// </returns>
-        public ICollection<UserPaymentMethod> UserPaymentMethodsByUser(User user)
+        public ICollection<UserPaymentMethod> UserPaymentMethodsByUser(UserData user)
         {
             if (user != null)
             {
