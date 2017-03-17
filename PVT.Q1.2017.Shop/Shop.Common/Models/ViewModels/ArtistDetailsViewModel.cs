@@ -1,10 +1,11 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Management.Models
+﻿namespace Shop.Common.Models.ViewModels
 {
     using System;
+    using System.Web;
 
     /// <summary>
     /// </summary>
-    public class ArtistManagmentViewModel
+    public class ArtistDetailsViewModel
     {
         /// <summary>
         ///     Gets or sets the biography.
@@ -15,6 +16,11 @@
         ///     Gets or sets the birthday.
         /// </summary>
         public DateTime? Birthday { get; set; }
+
+        /// <summary>
+        /// Gets or sets the my property.
+        /// </summary>
+        public HttpPostedFileBase UploadedImage { get; set; }
 
         /// <summary>
         ///     Gets or sets the name.

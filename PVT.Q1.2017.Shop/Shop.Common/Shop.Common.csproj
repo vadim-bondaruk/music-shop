@@ -47,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -109,10 +110,10 @@
     <Compile Include="Validators\TrackValidator.cs" />
     <Compile Include="Validators\UserValidator.cs" />
     <Compile Include="Validators\VoteValidator.cs" />
+    <Compile Include="Models\ViewModels\ArtistDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
