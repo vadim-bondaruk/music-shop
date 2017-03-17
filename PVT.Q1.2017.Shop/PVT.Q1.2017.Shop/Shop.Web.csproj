@@ -133,7 +133,6 @@
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
-    <Content Include="Areas\Management\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Management\Views\Albums\New.cshtml" />
     <Content Include="Areas\Management\Views\Genres\New.cshtml" />
     <Content Include="Areas\Management\Views\Artists\New.cshtml" />
@@ -190,7 +189,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-   
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -225,6 +223,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Content\Models\" />
     <Folder Include="Areas\Content\Views\Artist\" />
+    <Folder Include="Areas\Management\Views\Shared\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Views\Albums\" />
     <Folder Include="Views\Artists\" />
