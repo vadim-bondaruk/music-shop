@@ -17,6 +17,6 @@
         /// <returns>
         /// All UserPaymentMethods that the specified <paramref name="user"/> have ever made.
         /// </returns>
-        ICollection<UserPaymentMethod> UserPaymentMethodsByUser(User user);
+        ICollection<UserPaymentMethod> UserPaymentMethodsByUser(UserData user);
     }
 }
