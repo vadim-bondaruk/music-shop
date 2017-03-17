@@ -45,6 +45,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultModelsMapper.cs" />
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Services\AlbumPriceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefaultServicesNinjectModule.cs" />
@@ -62,13 +64,13 @@
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
     <Compile Include="Services\Infrastructure\IUserPaymentMethodService.cs" />
-    <Compile Include="Services\Infrastructure\IUserService.cs" />
+    <Compile Include="Services\Infrastructure\IUserDataService.cs" />
     <Compile Include="Services\Infrastructure\IVoteService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\UserPaymentMethodService.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\UserDataService.cs" />
     <Compile Include="Services\VoteService.cs" />
   </ItemGroup>
   <ItemGroup>

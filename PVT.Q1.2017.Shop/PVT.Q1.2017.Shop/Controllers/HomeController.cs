@@ -5,16 +5,15 @@
     /// <summary>
     /// Controller of Home page
     /// </summary>
-    public partial class HomeController : Controller
+    public class HomeController : Controller
     {
         /// <summary>
         /// Default start page
         /// </summary>
         /// <returns>View of index page</returns>
-        public virtual ActionResult Index()
+        public ActionResult Index()
         {
-            ////dummy code
-            return this.View();
+            return this.RedirectToAction("List", "Track", new { area = "Content" });
         }
     }
 }

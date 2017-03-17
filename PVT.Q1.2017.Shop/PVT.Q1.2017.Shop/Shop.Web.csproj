@@ -141,6 +141,13 @@
     <Content Include="Areas\Management\Views\Genres\Details.cshtml" />
     <Content Include="Areas\Management\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\Details.cshtml" />
+    <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Management\Views\Track\AddOrUpdate.cshtml" />
+    <Content Include="Areas\Management\Views\Track\Delete.cshtml" />
+    <Content Include="Areas\Management\Views\Album\AddOrUpdate.cshtml" />
+    <Content Include="Areas\Management\Views\Album\Delete.cshtml" />
+    <Content Include="Areas\Content\Views\web.config" />
+    <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -175,13 +182,22 @@
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
-    <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Areas\Content\Controllers\TrackController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4MVC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AlbumViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +215,13 @@
     <Content Include="Views\Tracks\List.cshtml" />
     <Content Include="Views\Tracks\AlbumList.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <None Include="T4MVC.tt.hooks.t4" />
+    <Content Include="Areas\Content\Views\Track\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Track\List.cshtml" />
+    <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Album\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -209,11 +232,14 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Track\" />
+    <Folder Include="Areas\Content\Models\" />
+    <Folder Include="Areas\Content\Views\Artist\" />
+    <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Views\Albums\" />
     <Folder Include="Views\Artists\" />
     <Folder Include="Views\Genres\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

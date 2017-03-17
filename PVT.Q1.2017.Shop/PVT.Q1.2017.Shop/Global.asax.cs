@@ -1,7 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop
 {
-    #region
-
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -9,6 +7,7 @@
     using AutoMapper;
 
     using FluentValidation.Mvc;
+    using global::Shop.BLL;
 
     using global::Shop.Common.Models;
     using global::Shop.Common.Models.ViewModels;

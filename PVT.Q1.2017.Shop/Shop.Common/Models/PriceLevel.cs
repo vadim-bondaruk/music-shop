@@ -19,7 +19,7 @@
         /// <summary>
         /// Users 
         /// </summary>
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<UserData> Users { get; set; }
 
         /// <summary>
         /// All track prices related to this price level
