@@ -48,7 +48,35 @@
         public void AddTrack(int userId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
-                AddTrack(userId, trackId);
+                this.AddTrack(userId, trackId);
+        }
+
+        /// <summary>
+        /// Add album to User's Cart
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <param name="albumId">Added Album ID</param>
+        public void AddAlbum(int userId, int albumId)
+        {
+            var cart = GetById(userId);
+            var kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            var albumRepo = kernel.Get<IAlbumRepository>();
+            var album = albumRepo.GetById(albumId);
+            if (album == null)
+                throw new Exception("Incorrect Album Id");
+            cart.Albums.Add(album);
+            AddOrUpdate(cart);
+        }
+
+        /// <summary>
+        /// Add albums to User's Cart
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <param name="albumIds">Added Albums IDs</param>
+        public void AddAlbum(int userId, IEnumerable<int> albumIds)
+        {
+            foreach (var albumId in albumIds)
+                this.AddAlbum(userId, albumId);
         }
 
         /// <summary> 
@@ -76,7 +104,35 @@
         public void RemoveTrack(int userId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
-                RemoveTrack(userId, trackId);
+                this.RemoveTrack(userId, trackId);
+        }
+
+        /// <summary>
+        /// Remove album from User's Cart
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <param name="albumId">Removed Album ID</param>
+        public void RemoveAlbum(int userId, int albumId)
+        {
+            var cart = GetById(userId);
+            var kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            var albumRepo = kernel.Get<IAlbumRepository>();
+            var album = albumRepo.GetById(albumId);
+            if (album == null)
+                throw new Exception("Incorrect Album Id");
+            cart.Albums.Remove(album);
+            AddOrUpdate(cart);
+        }
+
+        /// <summary>
+        /// Remove album list from User's Cart
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <param name="albumIds">Removed Albums IDs</param>
+        public void RemoveAlbum(int userId, IEnumerable<int> albumIds)
+        {
+            foreach (var albumId in albumIds)
+                this.RemoveAlbum(userId, albumId);
         }
     }
 }
