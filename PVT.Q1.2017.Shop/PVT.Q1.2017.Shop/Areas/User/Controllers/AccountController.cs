@@ -77,7 +77,7 @@
         public ActionResult LogOut()
         {
             this._authModule.LogOut();
-            return this.RedirectToAction("Login");
+            return this.RedirectToAction("Login", "Account", new { area = "User" });
         }
 
         /// <summary>
