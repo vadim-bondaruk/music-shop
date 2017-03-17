@@ -202,7 +202,6 @@
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
-    <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
@@ -249,6 +248,7 @@
     <Folder Include="Areas\Content\Models\" />
     <Folder Include="Areas\Content\Views\Artist\" />
     <Folder Include="Areas\Management\Models\" />
+    <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
