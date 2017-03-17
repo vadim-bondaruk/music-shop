@@ -14,8 +14,6 @@
 
     using PVT.Q1._2017.Shop.Areas.Management.Models;
 
-    #endregion
-
     /// <summary>
     ///     Base class in an ASP.NET application
     /// </summary>

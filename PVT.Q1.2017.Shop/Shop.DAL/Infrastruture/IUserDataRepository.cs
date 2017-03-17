@@ -1,10 +1,10 @@
-﻿using Shop.Common.Models;
-using Shop.Infrastructure.Repositories;
-
-namespace Shop.DAL.Infrastruture
+﻿namespace Shop.DAL.Infrastruture
 {
+    using Shop.Common.Models;
+    using Shop.Infrastructure.Repositories;
+
     /// <summary>
-    /// The user repository.
+    ///     The user repository.
     /// </summary>
     public interface IUserDataRepository : IRepository<UserData>
     {

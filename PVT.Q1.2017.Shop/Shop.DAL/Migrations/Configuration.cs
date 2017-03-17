@@ -2,18 +2,16 @@ namespace Shop.DAL.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using Common.Models;
-
-    using Context;
 
     using Shop.Common.Models;
+    using Shop.DAL.Context;
 
     /// <summary>
     /// </summary>
     internal sealed class Configuration : DbMigrationsConfiguration<ShopContext>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Configuration"/> class.
+        ///     Initializes a new instance of the <see cref="Configuration" /> class.
         /// </summary>
         public Configuration()
         {
@@ -23,24 +21,25 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         protected override void Seed(ShopContext context)
         {
-            AddDefaultCurrencies(context);
-            AddDefaultCurrencyRates(context);
-            AddDefaultGenre(context);
+            this.AddDefaultCurrencies(context);
+            this.AddDefaultCurrencyRates(context);
+            this.AddDefaultGenre(context);
         }
 
-        private void AddDefaultCurrencies(Context.ShopContext context)
+        /// <summary>
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        private void AddDefaultCurrencies(ShopContext context)
         {
             if (!context.Set<Currency>().Any(c => c.ShortName == "EUR"))
             {
-                context.Set<Currency>().AddOrUpdate(new[] { new Currency {
-                    ShortName = "EUR",
-                    Code = 978,
-                    FullName = "EURO"
-                }});
+                context.Set<Currency>().AddOrUpdate(new Currency { ShortName = "EUR", Code = 978, FullName = "EURO" });
             }
 
             // if (!context.Set<Currency>().Any(c => c.ShortName == "USD"))
@@ -48,11 +47,15 @@ namespace Shop.DAL.Migrations
             // context.Set<Currency>()
             // .AddOrUpdate(new Currency { ShortName = "USD", Code = 840, FullName = "US Dollar" });
             // }
-
             context.SaveChanges();
         }
 
-        private void AddDefaultCurrencyRates(Context.ShopContext context)
+        /// <summary>
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        private void AddDefaultCurrencyRates(ShopContext context)
         {
             // Õ≈ –¿¡Œ“¿≈“ “. . Date - ÌÂ Nullable ÚËÔ!!!
             /*if (!context.Set<CurrencyRate>().Any())
@@ -67,11 +70,16 @@ namespace Shop.DAL.Migrations
             context.SaveChanges();*/
         }
 
-        private void AddDefaultGenre(Context.ShopContext context)
+        /// <summary>
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        private void AddDefaultGenre(ShopContext context)
         {
             if (!context.Set<Genre>().Any())
             {
-                context.Set<Genre>().AddOrUpdate(new[] { new Genre { Name = "Unknown Genre" } });
+                context.Set<Genre>().AddOrUpdate(new Genre { Name = "Unknown Genre" });
                 context.SaveChanges();
             }
         }

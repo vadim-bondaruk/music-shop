@@ -1,48 +1,53 @@
 namespace Shop.DAL.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
+    /// <summary>
+    /// </summary>
     public partial class ReconfigureTracksContent : DbMigration
     {
-        public override void Up()
-        {
-            RenameTable(name: "dbo.tbUsers", newName: "tbUsersData");
-            DropForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists");
-            DropForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres");
-            DropIndex("dbo.tbAlbums", new[] { "ArtistId" });
-            DropIndex("dbo.tbTracks", new[] { "ArtistId" });
-            DropIndex("dbo.tbTracks", new[] { "GenreId" });
-            AlterColumn("dbo.tbAlbums", "ArtistId", c => c.Int(nullable: false));
-            AlterColumn("dbo.tbTracks", "ArtistId", c => c.Int(nullable: false));
-            AlterColumn("dbo.tbTracks", "GenreId", c => c.Int(nullable: false));
-            AlterColumn("dbo.tbCurrencyRates", "Date", c => c.DateTime(nullable: false));
-            CreateIndex("dbo.tbAlbums", "ArtistId");
-            CreateIndex("dbo.tbTracks", "ArtistId");
-            CreateIndex("dbo.tbTracks", "GenreId");
-            AddForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists", "Id", cascadeDelete: true);
-            AddForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres", "Id", cascadeDelete: true);
-            DropColumn("dbo.tbUsersData", "IdentityKey");
-        }
-        
+        /// <summary>
+        /// </summary>
         public override void Down()
         {
-            AddColumn("dbo.tbUsersData", "IdentityKey", c => c.String(nullable: false, maxLength: 128));
-            DropForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres");
-            DropForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists");
-            DropIndex("dbo.tbTracks", new[] { "GenreId" });
-            DropIndex("dbo.tbTracks", new[] { "ArtistId" });
-            DropIndex("dbo.tbAlbums", new[] { "ArtistId" });
-            AlterColumn("dbo.tbCurrencyRates", "Date", c => c.DateTime());
-            AlterColumn("dbo.tbTracks", "GenreId", c => c.Int());
-            AlterColumn("dbo.tbTracks", "ArtistId", c => c.Int());
-            AlterColumn("dbo.tbAlbums", "ArtistId", c => c.Int());
-            CreateIndex("dbo.tbTracks", "GenreId");
-            CreateIndex("dbo.tbTracks", "ArtistId");
-            CreateIndex("dbo.tbAlbums", "ArtistId");
-            AddForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres", "Id");
-            AddForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists", "Id");
-            RenameTable(name: "dbo.tbUsersData", newName: "tbUsers");
+            this.AddColumn("dbo.tbUsersData", "IdentityKey", c => c.String(false, 128));
+            this.DropForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres");
+            this.DropForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists");
+            this.DropIndex("dbo.tbTracks", new[] { "GenreId" });
+            this.DropIndex("dbo.tbTracks", new[] { "ArtistId" });
+            this.DropIndex("dbo.tbAlbums", new[] { "ArtistId" });
+            this.AlterColumn("dbo.tbCurrencyRates", "Date", c => c.DateTime());
+            this.AlterColumn("dbo.tbTracks", "GenreId", c => c.Int());
+            this.AlterColumn("dbo.tbTracks", "ArtistId", c => c.Int());
+            this.AlterColumn("dbo.tbAlbums", "ArtistId", c => c.Int());
+            this.CreateIndex("dbo.tbTracks", "GenreId");
+            this.CreateIndex("dbo.tbTracks", "ArtistId");
+            this.CreateIndex("dbo.tbAlbums", "ArtistId");
+            this.AddForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres", "Id");
+            this.AddForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists", "Id");
+            this.RenameTable("dbo.tbUsersData", "tbUsers");
+        }
+
+        /// <summary>
+        /// </summary>
+        public override void Up()
+        {
+            this.RenameTable("dbo.tbUsers", "tbUsersData");
+            this.DropForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists");
+            this.DropForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres");
+            this.DropIndex("dbo.tbAlbums", new[] { "ArtistId" });
+            this.DropIndex("dbo.tbTracks", new[] { "ArtistId" });
+            this.DropIndex("dbo.tbTracks", new[] { "GenreId" });
+            this.AlterColumn("dbo.tbAlbums", "ArtistId", c => c.Int(false));
+            this.AlterColumn("dbo.tbTracks", "ArtistId", c => c.Int(false));
+            this.AlterColumn("dbo.tbTracks", "GenreId", c => c.Int(false));
+            this.AlterColumn("dbo.tbCurrencyRates", "Date", c => c.DateTime(false));
+            this.CreateIndex("dbo.tbAlbums", "ArtistId");
+            this.CreateIndex("dbo.tbTracks", "ArtistId");
+            this.CreateIndex("dbo.tbTracks", "GenreId");
+            this.AddForeignKey("dbo.tbTracks", "ArtistId", "dbo.tbArtists", "Id", true);
+            this.AddForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres", "Id", true);
+            this.DropColumn("dbo.tbUsersData", "IdentityKey");
         }
     }
 }
