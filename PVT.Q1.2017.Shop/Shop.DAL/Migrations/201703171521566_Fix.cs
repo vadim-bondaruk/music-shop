@@ -4,7 +4,7 @@ namespace Shop.DAL.Migrations
 
     /// <summary>
     /// </summary>
-    public partial class Init : DbMigration
+    public partial class Fix : DbMigration
     {
         /// <summary>
         /// </summary>
@@ -15,11 +15,11 @@ namespace Shop.DAL.Migrations
             this.DropForeignKey("dbo.tbAlbumPrices", "AlbumId", "dbo.tbAlbums");
             this.DropForeignKey("dbo.tbAlbums", "ArtistId", "dbo.tbArtists");
             this.DropForeignKey("dbo.tbTracks", "GenreId", "dbo.tbGenres");
-            this.DropForeignKey("dbo.tbFeedbacks", "UserId", "dbo.tbUsers");
-            this.DropForeignKey("dbo.tbVotes", "UserId", "dbo.tbUsers");
+            this.DropForeignKey("dbo.tbFeedbacks", "UserId", "dbo.tbUsersData");
+            this.DropForeignKey("dbo.tbVotes", "UserId", "dbo.tbUsersData");
             this.DropForeignKey("dbo.tbVotes", "TrackId", "dbo.tbTracks");
-            this.DropForeignKey("dbo.tbUsers", "CurrencyId", "dbo.tbCurrencies");
-            this.DropForeignKey("dbo.tbUsers", "PriceLevelId", "dbo.tbPriceLevels");
+            this.DropForeignKey("dbo.tbUsersData", "CurrencyId", "dbo.tbCurrencies");
+            this.DropForeignKey("dbo.tbUsersData", "PriceLevelId", "dbo.tbPriceLevels");
             this.DropForeignKey("dbo.tbTrackPrices", "TrackId", "dbo.tbTracks");
             this.DropForeignKey("dbo.tbTrackPrices", "PriceLevelId", "dbo.tbPriceLevels");
             this.DropForeignKey("dbo.tbTrackPrices", "CurrencyId", "dbo.tbCurrencies");
@@ -38,13 +38,14 @@ namespace Shop.DAL.Migrations
             this.DropIndex("dbo.tbTrackPrices", new[] { "CurrencyId" });
             this.DropIndex("dbo.tbTrackPrices", new[] { "PriceLevelId" });
             this.DropIndex("dbo.tbTrackPrices", new[] { "TrackId" });
-            this.DropIndex("dbo.tbUsers", new[] { "PriceLevelId" });
-            this.DropIndex("dbo.tbUsers", new[] { "CurrencyId" });
+            this.DropIndex("dbo.tbUsersData", new[] { "PriceLevelId" });
+            this.DropIndex("dbo.tbUsersData", new[] { "CurrencyId" });
             this.DropIndex("dbo.tbFeedbacks", new[] { "UserId" });
             this.DropIndex("dbo.tbFeedbacks", new[] { "TrackId" });
             this.DropIndex("dbo.tbAlbumTrackRelations", "UniqueRelation_Index");
             this.DropIndex("dbo.tbTracks", new[] { "GenreId" });
             this.DropIndex("dbo.tbTracks", new[] { "ArtistId" });
+            this.DropIndex("dbo.tbArtists", "UniqueArtistName_Index");
             this.DropIndex("dbo.tbAlbums", new[] { "ArtistId" });
             this.DropIndex("dbo.tbAlbumPrices", new[] { "CurrencyId" });
             this.DropIndex("dbo.tbAlbumPrices", new[] { "PriceLevelId" });
@@ -55,7 +56,7 @@ namespace Shop.DAL.Migrations
             this.DropTable("dbo.tbCurrencies");
             this.DropTable("dbo.tbTrackPrices");
             this.DropTable("dbo.tbPriceLevels");
-            this.DropTable("dbo.tbUsers");
+            this.DropTable("dbo.tbUsersData");
             this.DropTable("dbo.tbFeedbacks");
             this.DropTable("dbo.tbAlbumTrackRelations");
             this.DropTable("dbo.tbTracks");
@@ -97,7 +98,7 @@ namespace Shop.DAL.Migrations
                                 Name = c.String(false, 150),
                                 Cover = c.Binary(),
                                 ReleaseDate = c.DateTime(),
-                                ArtistId = c.Int(),
+                                ArtistId = c.Int(false),
                                 IsDeleted = c.Boolean(false)
                             })
                 .PrimaryKey(t => t.Id)
@@ -105,17 +106,19 @@ namespace Shop.DAL.Migrations
                 .Index(t => t.ArtistId);
 
             this.CreateTable(
-                "dbo.tbArtists",
-                c =>
-                    new
-                        {
-                            Id = c.Int(false, true),
-                            Name = c.String(false, 150),
-                            Biography = c.String(),
-                            Birthday = c.DateTime(),
-                            Photo = c.Binary(),
-                            IsDeleted = c.Boolean(false)
-                        }).PrimaryKey(t => t.Id);
+                    "dbo.tbArtists",
+                    c =>
+                        new
+                            {
+                                Id = c.Int(false, true),
+                                Name = c.String(false, 150),
+                                Biography = c.String(),
+                                Birthday = c.DateTime(),
+                                Photo = c.Binary(),
+                                IsDeleted = c.Boolean(false)
+                            })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "UniqueArtistName_Index");
 
             this.CreateTable(
                     "dbo.tbTracks",
@@ -128,13 +131,13 @@ namespace Shop.DAL.Migrations
                                 Image = c.Binary(),
                                 TrackFile = c.Binary(),
                                 Duration = c.Time(precision: 7),
-                                ArtistId = c.Int(),
-                                GenreId = c.Int(),
+                                ArtistId = c.Int(false),
+                                GenreId = c.Int(false),
                                 IsDeleted = c.Boolean(false)
                             })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.tbArtists", t => t.ArtistId)
-                .ForeignKey("dbo.tbGenres", t => t.GenreId)
+                .ForeignKey("dbo.tbArtists", t => t.ArtistId, true)
+                .ForeignKey("dbo.tbGenres", t => t.GenreId, true)
                 .Index(t => t.ArtistId)
                 .Index(t => t.GenreId);
 
@@ -166,17 +169,16 @@ namespace Shop.DAL.Migrations
                             })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.tbTracks", t => t.TrackId, true)
-                .ForeignKey("dbo.tbUsers", t => t.UserId, true)
+                .ForeignKey("dbo.tbUsersData", t => t.UserId, true)
                 .Index(t => t.TrackId)
                 .Index(t => t.UserId);
 
             this.CreateTable(
-                    "dbo.tbUsers",
+                    "dbo.tbUsersData",
                     c =>
                         new
                             {
                                 Id = c.Int(false, true),
-                                IdentityKey = c.String(false, 128),
                                 Dicount = c.Double(),
                                 CurrencyId = c.Int(false),
                                 PriceLevelId = c.Int(false),
@@ -260,7 +262,7 @@ namespace Shop.DAL.Migrations
                             })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.tbTracks", t => t.TrackId)
-                .ForeignKey("dbo.tbUsers", t => t.UserId)
+                .ForeignKey("dbo.tbUsersData", t => t.UserId)
                 .Index(t => t.TrackId)
                 .Index(t => t.UserId);
 

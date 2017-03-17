@@ -7,13 +7,13 @@ namespace Shop.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UniqueName : IMigrationMetadata
+    public sealed partial class Fix : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UniqueName));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Fix));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703170704245_UniqueName"; }
+            get { return "201703171521566_Fix"; }
         }
         
         string IMigrationMetadata.Source
