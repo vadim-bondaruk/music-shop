@@ -10,16 +10,15 @@
     @RenderSection("TrackList", false)
     @RenderSection("AddToCartButton", false)
     @RenderSection("ListSplitters", false)
+    @RenderSection("Details", false)
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </button>
             @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
@@ -39,6 +38,7 @@
 
 <script src="~/Scripts/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/Styles/Main.css">
+    <link rel="stylesheet" type="text/css" href="/Areas/Management/Styles/details.css">
 @RenderSection("scripts", required: false)
 </body>
 </html>

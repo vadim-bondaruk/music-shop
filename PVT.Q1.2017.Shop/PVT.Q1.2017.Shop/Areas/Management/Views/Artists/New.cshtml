@@ -1,32 +1,32 @@
-﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.ArtistManagmentViewModel
+﻿@model Shop.Common.Models.ViewModels.ArtistDetailsViewModel
 <body>
-<h2 class="op-title">New artist registration</h2>
+<h2 class="op-title">Регистрация нового исполнителя</h2>
 @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
 {
     @Html.AntiForgeryToken()
     <div id="artistDetails">
         <ul>
             <li>
-                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Artist" } })
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Birthday", type = "text" } })
+                @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения", type = "text" } })
             </li>
             <li>
-                @Html.TextAreaFor(e => e.Biography, 10, 155, new { @placeholder = "Biography" })
+                @Html.TextAreaFor(e => e.Biography, 10, 155, new { @placeholder = "Биография" })
             </li>
             
             <li class="cover-file">
                 <div>
-                    <input id="file-path" type="text" placeholder="Cover" />
-                    <input id="browsefile-button" type="button" value="Browse..."
+                    <input id="file-path" type="text" placeholder="Фото" />
+                    <input id="browsefile-button" type="button" value="Обзор..."
                            onclick="document.formreg.UploadedImage.click()" />
                 </div>
                 <input  type="file" id="file" name="UploadedImage" style="display: none" />
 
             </li>
         </ul>
-        <button type="submit" class="add-button">Add</button>
+        <button type="submit" class="add-button">Добавить</button>
     </div>
 }
     
@@ -35,5 +35,5 @@
     
 </body>
 
-@section ManageStyle{
+@section Details{
     <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}
