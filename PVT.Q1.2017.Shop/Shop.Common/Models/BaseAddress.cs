@@ -1,11 +1,11 @@
 ﻿namespace Shop.Common.Models
 {
-    using Shop.Infrastructure.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// Base Address object used as billing address in a payment or extended for Shipping Address.
