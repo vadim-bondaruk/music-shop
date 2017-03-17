@@ -43,17 +43,22 @@ namespace Shop.DAL.Migrations
 
         private void AddDefaultCurrencyRates(Context.ShopContext context)
         {
-            // Õ≈ –¿¡Œ“¿≈“ “. . Date - ÌÂ Nullable ÚËÔ!!!
-            /*if (!context.Set<CurrencyRate>().Any())
+            if (!context.Set<CurrencyRate>().Any())
             {
                 context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
                     CurrencyId = 1,
                     TargetCurrencyId = 2,
-                    CrossCourse = 1.06M
+                    CrossCourse = 0.9M
+                }});
+
+                context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
+                    CurrencyId = 1,
+                    TargetCurrencyId = 2,
+                    CrossCourse = 1.2M
                 }});
             }
 
-            context.SaveChanges();*/
+            context.SaveChanges();
         }
 
         private void AddDefaultGenre(Context.ShopContext context)
