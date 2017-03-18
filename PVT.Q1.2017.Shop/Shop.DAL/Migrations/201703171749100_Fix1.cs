@@ -4,7 +4,7 @@ namespace Shop.DAL.Migrations
 
     /// <summary>
     /// </summary>
-    public partial class Fix : DbMigration
+    public partial class Fix1 : DbMigration
     {
         /// <summary>
         /// </summary>
@@ -45,7 +45,6 @@ namespace Shop.DAL.Migrations
             this.DropIndex("dbo.tbAlbumTrackRelations", "UniqueRelation_Index");
             this.DropIndex("dbo.tbTracks", new[] { "GenreId" });
             this.DropIndex("dbo.tbTracks", new[] { "ArtistId" });
-            this.DropIndex("dbo.tbArtists", "UniqueArtistName_Index");
             this.DropIndex("dbo.tbAlbums", new[] { "ArtistId" });
             this.DropIndex("dbo.tbAlbumPrices", new[] { "CurrencyId" });
             this.DropIndex("dbo.tbAlbumPrices", new[] { "PriceLevelId" });
@@ -106,19 +105,17 @@ namespace Shop.DAL.Migrations
                 .Index(t => t.ArtistId);
 
             this.CreateTable(
-                    "dbo.tbArtists",
-                    c =>
-                        new
-                            {
-                                Id = c.Int(false, true),
-                                Name = c.String(false, 150),
-                                Biography = c.String(),
-                                Birthday = c.DateTime(),
-                                Photo = c.Binary(),
-                                IsDeleted = c.Boolean(false)
-                            })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "UniqueArtistName_Index");
+                "dbo.tbArtists",
+                c =>
+                    new
+                        {
+                            Id = c.Int(false, true),
+                            Name = c.String(false, 150),
+                            Biography = c.String(),
+                            Birthday = c.DateTime(),
+                            Photo = c.Binary(),
+                            IsDeleted = c.Boolean(false)
+                        }).PrimaryKey(t => t.Id);
 
             this.CreateTable(
                     "dbo.tbTracks",
