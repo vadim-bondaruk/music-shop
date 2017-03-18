@@ -16,6 +16,7 @@ namespace Shop.DAL.Migrations
             AddDefaultCurrencies(context);
             AddDefaultCurrencyRates(context);
             AddDefaultGenre(context);
+            AddDefaultPriceLevels(context);
         }
 
         private void AddDefaultCurrencies(Context.ShopContext context)
@@ -66,6 +67,15 @@ namespace Shop.DAL.Migrations
             if (!context.Set<Genre>().Any())
             {
                 context.Set<Genre>().AddOrUpdate(new[] { new Genre { Name = "Unknown Genre" } });
+                context.SaveChanges();
+            }
+        }
+
+        private void AddDefaultPriceLevels(Context.ShopContext context)
+        {
+            if (!context.Set<PriceLevel>().Any())
+            {
+                context.Set<PriceLevel>().AddOrUpdate(new[] { new PriceLevel { Name = "Default" } });
                 context.SaveChanges();
             }
         }
