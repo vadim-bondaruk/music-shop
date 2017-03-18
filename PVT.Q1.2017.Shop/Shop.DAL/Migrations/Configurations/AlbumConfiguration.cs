@@ -19,7 +19,7 @@
             Property(a => a.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
             Property(a => a.ReleaseDate).IsOptional();
 
-            HasRequired(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
+            HasOptional(a => a.Artist).WithMany(a => a.Albums).HasForeignKey(a => a.ArtistId).WillCascadeOnDelete(false);
 
             ToTable("Albums");
         }

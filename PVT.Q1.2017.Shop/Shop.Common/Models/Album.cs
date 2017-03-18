@@ -18,19 +18,19 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// Cover.
+        /// Cover. Optional.
         /// </summary>
         public byte[] Cover { get; set; }
 
         /// <summary>
-        /// Album release date.
+        /// Album release date. Optional.
         /// </summary>
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the artist.
+        /// Artist id (foreign key). Optional.
         /// </summary>
-        public int ArtistId { get; set; }
+        public int? ArtistId { get; set; }
 
         /// <summary>
         /// Artist.
