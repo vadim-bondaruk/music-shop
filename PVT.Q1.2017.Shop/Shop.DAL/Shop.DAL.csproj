@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201703152237293_ReconfigureTracksContent.Designer.cs">
       <DependentUpon>201703152237293_ReconfigureTracksContent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703180835104_TablePrefixRemoved.cs" />
+    <Compile Include="Migrations\201703180835104_TablePrefixRemoved.Designer.cs">
+      <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -146,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703152237293_ReconfigureTracksContent.resx">
       <DependentUpon>201703152237293_ReconfigureTracksContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703180835104_TablePrefixRemoved.resx">
+      <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
