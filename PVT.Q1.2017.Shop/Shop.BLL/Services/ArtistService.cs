@@ -65,18 +65,22 @@
         {
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {
-                var bs = new byte[viewModel.UploadedImage.ContentLength];
-                using (var fs = viewModel.UploadedImage.InputStream)
+                if (viewModel.UploadedImage != null)
                 {
-                    var offset = 0;
-                    do
+                    var bs = new byte[viewModel.UploadedImage.ContentLength];
+                    using (var fs = viewModel.UploadedImage.InputStream)
                     {
-                        offset += fs.Read(bs, offset, bs.Length - offset);
+                        var offset = 0;
+                        do
+                        {
+                            offset += fs.Read(bs, offset, bs.Length - offset);
+                        }
+                        while (offset < bs.Length);
                     }
-                    while (offset < bs.Length);
-                }
 
-                viewModel.Photo = bs;
+                    viewModel.Photo = bs;
+                }
+                
                 var artist = Mapper.Map<Artist>(viewModel);
                 artistRepo.AddOrUpdate(artist);
                 artistRepo.SaveChanges();
