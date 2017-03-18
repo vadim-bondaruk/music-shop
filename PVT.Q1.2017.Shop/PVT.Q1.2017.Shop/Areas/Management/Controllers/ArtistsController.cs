@@ -4,11 +4,10 @@
 
     using AutoMapper;
 
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
-
-    using PVT.Q1._2017.Shop.Areas.Management.Models;
 
     /// <summary>
     /// </summary>
@@ -16,14 +15,23 @@
     {
         /// <summary>
         /// </summary>
+        private readonly IArtistService artistService;
+
+        /// <summary>
+        /// </summary>
         private readonly IRepositoryFactory repositoryFactory;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
         /// </summary>
-        public ArtistsController(IRepositoryFactory repoFactory)
+        /// <param name="artistService">
+        ///     The artist service.
+        /// </param>
+        /// <param name="repositoryFactory"></param>
+        public ArtistsController(IArtistService artistService, IRepositoryFactory repositoryFactory)
         {
-            this.repositoryFactory = repoFactory;
+            this.artistService = artistService;
+            this.repositoryFactory = repositoryFactory;
         }
 
         /// <summary>
@@ -50,18 +58,14 @@
         /// <summary>
         /// </summary>
         /// <param name="artistId">
-        ///     The artist id.
+        /// The artist id.
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int artistId)
+        public virtual ActionResult Details(int artistId = 0)
         {
-            using (var artistRepository = this.repositoryFactory.GetArtistRepository())
-            {
-                var artist = artistRepository.GetById(artistId);
-                Mapper.Map<ArtistDetailsViewModel>(artist);
-                return this.View("Details");
-            }
+            var artist = this.artistService.GetArtistViewModel(artistId);
+            return this.View(artist);
         }
 
         /// <summary>
@@ -70,7 +74,7 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("New");
+            return this.View();
         }
 
         /// <summary>
@@ -82,31 +86,10 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult New(
-            [Bind(Exclude = "Artists, Albums")] ArtistDetailsViewModel viewModel)
+        public virtual ActionResult New([Bind(Exclude = "Artists, Albums")] ArtistDetailsViewModel viewModel)
         {
-            Artist artist;
-            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
-            {
-                var bs = new byte[viewModel.UploadedImage.ContentLength];
-                using (var fs = viewModel.UploadedImage.InputStream)
-                {
-                    var offset = 0;
-                    do
-                    {
-                        offset += fs.Read(bs, offset, bs.Length - offset);
-                    }
-                    while (offset < bs.Length);
-                }
-
-                viewModel.Photo = bs;
-                artist = Mapper.Map<Artist>(viewModel);
-                artistRepo.AddOrUpdate(artist);
-                artistRepo.SaveChanges();
-            }
-
-            this.ViewData["Name"] = artist.Name;
-            return this.RedirectToAction("Details");
+            var id = this.artistService.SaveNewArtist(viewModel);
+            return this.RedirectToAction("Details", new { artistId = id });
         }
 
         /// <summary>
