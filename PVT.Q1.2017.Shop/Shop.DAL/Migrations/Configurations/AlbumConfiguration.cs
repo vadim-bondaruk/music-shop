@@ -21,7 +21,7 @@
 
             HasRequired(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
 
-            ToTable("tbAlbums");
+            ToTable("Albums");
         }
     }
 }

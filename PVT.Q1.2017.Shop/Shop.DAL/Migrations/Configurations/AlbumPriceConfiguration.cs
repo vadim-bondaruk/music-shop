@@ -20,7 +20,7 @@
             HasRequired(a => a.PriceLevel).WithMany(a => a.AlbumPriceLevels).HasForeignKey(p => p.PriceLevelId);
             HasRequired(a => a.Currency).WithMany(a => a.AlbumPrices).HasForeignKey(a => a.CurrencyId);
             HasRequired(a => a.Album).WithMany(a => a.AlbumPrices).HasForeignKey(a => a.AlbumId);
-            ToTable("tbAlbumPrices");
+            ToTable("AlbumPrices");
         }
     }
 }
