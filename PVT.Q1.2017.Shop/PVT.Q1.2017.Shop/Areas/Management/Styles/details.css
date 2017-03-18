@@ -3,6 +3,7 @@
     color: white;
     font-size: 50px;
     margin-left: 39.5%;
+    margin-top: 30px;
 }
 
 .navbar-brand { text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red; }
@@ -16,7 +17,7 @@
     color: white;
     font-size: 20px;
     text-shadow: 1px 1px 2px black, 0 0 1em red;
-    margin-left: 37.5%;
+    margin-left: 38.5%;
 }
 
 body { line-height: 1; }
@@ -110,4 +111,35 @@ footer { color: white }
 input:-webkit-autofill {
     -webkit-animation-name: autofill;
     -webkit-animation-fill-mode: both;
+}
+
+#artistDetails {
+    margin-left: 1%;
+}
+
+#artist-details-name {
+    color: white;
+    height: 55px;
+    font-size: 50px;
+    background: transparent;
+    -webkit-box-shadow: none;
+}
+
+#artist-details-bd {
+    margin-top: 1%;
+    color: white;
+    font-size: 20px;
+    background: transparent;
+    -webkit-box-shadow: none;
+}
+
+.artist-details-bio {
+    color: white;
+    font-size: 14px;
+}
+
+.artist-image {
+    margin-top: 10px;
+    margin-right: 20px;
+    float: left;
 }
