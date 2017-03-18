@@ -83,6 +83,7 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\AlbumTrackRelation.cs" />
+    <Compile Include="Models\ViewModels\AlbumManageViewModel.cs" />
     <Compile Include="Models\ViewModels\AlbumViewModel.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\ViewModels\ArtistViewModel.cs" />

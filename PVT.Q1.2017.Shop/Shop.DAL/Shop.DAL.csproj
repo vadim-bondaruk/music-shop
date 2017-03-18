@@ -79,12 +79,9 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
-    <Compile Include="Migrations\201703161127118_SomeMigration.cs" />
-    <Compile Include="Migrations\201703161127118_SomeMigration.Designer.cs">
-      <DependentUpon>201703161127118_SomeMigration.cs</DependentUpon>
-    <Compile Include="Migrations\201703171749100_Fix1.cs" />
-    <Compile Include="Migrations\201703171749100_Fix1.Designer.cs">
-      <DependentUpon>201703171749100_Fix1.cs</DependentUpon>
+    <Compile Include="Migrations\201703181344360_Fix.cs" />
+    <Compile Include="Migrations\201703181344360_Fix.Designer.cs">
+      <DependentUpon>201703181344360_Fix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -153,10 +150,8 @@
     <Folder Include="App_Start\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703161127118_SomeMigration.resx">
-      <DependentUpon>201703161127118_SomeMigration.cs</DependentUpon>
-    <EmbeddedResource Include="Migrations\201703171749100_Fix1.resx">
-      <DependentUpon>201703171749100_Fix1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703181344360_Fix.resx">
+      <DependentUpon>201703181344360_Fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
