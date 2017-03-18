@@ -1,7 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
+    using global::Moq;
+    using global::Shop.BLL;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -20,8 +24,9 @@
 
         public TrackServiceTest()
         {
-            this._factory = new RepositoryFactoryMoq();
-            this._trackService = new TrackService(this._factory);
+            _factory = new RepositoryFactoryMoq();
+            _trackService = new TrackService(_factory);
+            DefaultModelsMapper.MapModels();
         }
 
         [TestMethod]
@@ -47,7 +52,7 @@
         public void GetTrackInfoTest()
         {
             AddTrackTest();
-            Assert.IsNotNull(this._trackService.GetTrackInfo(1));
+            Assert.IsNotNull(this._trackService.GetTrack(1));
         }
 
         [TestMethod]
@@ -96,7 +101,7 @@
 
             using (var repository = this._factory.GetVoteRepository())
             {
-                repository.AddOrUpdate(new Vote { Track = track, TrackId = track.Id, Mark = Mark.FiveStars });
+                repository.AddOrUpdate(new Vote { Track = track, TrackId = track.Id, Mark = 5 });
                 repository.SaveChanges();
             }
             Assert.IsTrue(_trackService.GetTrackVotes(new Track()).Any());
@@ -145,7 +150,10 @@
                 });
             }
 
-                Assert.IsTrue(_trackService.GetAlbumsList(new Track()).Any());
+            Assert.IsTrue(_trackService.GetAlbumsList(new Track(), new Currency(), new PriceLevel()).Albums.Any());
+
+            Mock.Get(_factory.GetAlbumRepository())
+                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Album, bool>>>()), Times.Once);
         }
     }
 }

@@ -28,6 +28,6 @@
         /// <returns>
         /// The album price with the specified <paramref name="id"/> or <b>null</b> if album price doesn't exist.
         /// </returns>
-        AlbumPrice GetAlbumPriceInfo(int id);
+        AlbumPrice GetAlbumPrice(int id);
     }
 }

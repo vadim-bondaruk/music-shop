@@ -19,9 +19,8 @@
             this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(a => a.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
             this.Property(a => a.ReleaseDate).IsOptional();
-            this.Property(a => a.Cover).IsOptional();
-            this.HasOptional(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
 
+           this.HasRequired(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
             this.ToTable("tbAlbums");
         }
     }

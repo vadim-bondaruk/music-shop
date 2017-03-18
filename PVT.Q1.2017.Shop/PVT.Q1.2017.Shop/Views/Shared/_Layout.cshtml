@@ -10,12 +10,16 @@
     @RenderSection("TrackList", false)
     @RenderSection("AddToCartButton", false)
     @RenderSection("ListSplitters", false)
+    @RenderSection("Details", false)
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <div>
-            @Html.ActionLink("MusicShop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand", color = "Red" })
+        <div class="navbar-header">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -32,8 +36,9 @@
     </footer>
 </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/Styles/Main.css">
+    <link rel="stylesheet" type="text/css" href="/Areas/Management/Styles/details.css">
+@RenderSection("scripts", required: false)
 </body>
 </html>

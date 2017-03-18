@@ -25,14 +25,14 @@ namespace PVT.Q1._2017.Shop.Tests
                 new Track { Id=3, Name = "Escape From Love" }
             };
 
-            User user = new User { Id = 1 };
+            UserData user = new UserData { Id = 1 };
             Cart cart = new Cart { Id = 1, User = user, Tracks = tracks };
             ICollection<Cart> carts = new List<Cart>() { cart };
 
             Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
             moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
 
-            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+            Mock<IUserDataRepository> moqUserRepository = new Mock<IUserDataRepository>();
             moqUserRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(user);
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
@@ -56,7 +56,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 new Track { Id=3, Name = "Escape From Love" }
             };
 
-            User user = new User { Id = 1 };
+            UserData user = new UserData { Id = 1 };
             Cart cart = new Cart { Id = 1, User = user, Tracks = tracks };
             ICollection<Cart> carts = new List<Cart>() { cart };
 
@@ -64,7 +64,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
             moqCartRepository.Setup(m => m.AddOrUpdate(It.IsAny<Cart>()));
 
-            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+            Mock<IUserDataRepository> moqUserRepository = new Mock<IUserDataRepository>();
             moqUserRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(user);
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
@@ -80,7 +80,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void CartController_AddTrackToCart_WhenTrackIsNull()
         {
             Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
-            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+            Mock<IUserDataRepository> moqUserRepository = new Mock<IUserDataRepository>();
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
             RedirectToRouteResult result = cartController.AddTrackToCart(1, null);
@@ -101,7 +101,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 new Track { Id=3, Name = "Escape From Love" }
             };
 
-            User user = new User { Id = 1 };
+            UserData user = new UserData { Id = 1 };
             Cart cart = new Cart { Id = 1, User = user, Tracks = tracks };
             ICollection<Cart> carts = new List<Cart>() { cart };
 
@@ -110,7 +110,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.AddOrUpdate(It.IsAny<Cart>()));
             moqCartRepository.Setup(m => m.Delete(It.IsAny<Cart>()));
 
-            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+            Mock<IUserDataRepository> moqUserRepository = new Mock<IUserDataRepository>();
             moqUserRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(user);
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
@@ -126,12 +126,12 @@ namespace PVT.Q1._2017.Shop.Tests
         public void CartController_DeleteTrackFromCart_WhenTrackIsNull()
         {
 
-            Cart cart = new Cart { Id = 1, User = new User { Id = 1 }, Tracks = new List<Track>() };
+            Cart cart = new Cart { Id = 1, User = new UserData { Id = 1 }, Tracks = new List<Track>() };
             ICollection<Cart> carts = new List<Cart>() { cart };
             Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
             moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
 
-            Mock<IUserRepository> moqUserRepository = new Mock<IUserRepository>();
+            Mock<IUserDataRepository> moqUserRepository = new Mock<IUserDataRepository>();
 
             var cartController = new CartController(moqCartRepository.Object, moqUserRepository.Object);
             RedirectToRouteResult result = cartController.DeleteTrackFromCart(1, null);

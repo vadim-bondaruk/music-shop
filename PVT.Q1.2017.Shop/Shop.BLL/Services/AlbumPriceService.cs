@@ -54,7 +54,7 @@
         /// <returns>
         /// The album price with the specified <paramref name="id"/> or <b>null</b> if album price doesn't exist.
         /// </returns>
-        public AlbumPrice GetAlbumPriceInfo(int id)
+        public AlbumPrice GetAlbumPrice(int id)
         {
             using (var repository = this.Factory.GetAlbumPriceRepository())
             {

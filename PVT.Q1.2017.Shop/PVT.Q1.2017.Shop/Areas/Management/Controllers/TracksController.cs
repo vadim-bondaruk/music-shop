@@ -82,9 +82,9 @@
         /// </returns>
         public virtual ActionResult Details(int trackId)
         {
-            var track = this.trackService.GetTrackInfo(trackId);
-            var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
-            return this.View(trackViewModel);
+            //var track = this.trackService.GetTrackInfo(trackId);
+            //var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
+            return this.View();
         }
 
         /// <summary>

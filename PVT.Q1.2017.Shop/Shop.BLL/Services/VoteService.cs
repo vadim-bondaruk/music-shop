@@ -33,7 +33,7 @@
         /// The vote for the <paramref name="track"/> which have made the specified <paramref name="user"/>
         /// or <b>null</b> in case if vote doesn't exist.
         /// </returns>
-        public Vote GetTrackVote(Track track, User user)
+        public Vote GetTrackVote(Track track, UserData user)
         {
             using (var repository = this.Factory.GetVoteRepository())
             {
@@ -57,7 +57,7 @@
         /// <b>true</b> if the specified <paramref name="user"/> have made a vote for the <paramref name="track"/>;
         /// otherwise <b>false</b>.
         /// </returns>
-        public bool VoteExists(Track track, User user)
+        public bool VoteExists(Track track, UserData user)
         {
             using (var repository = this.Factory.GetVoteRepository())
             {
@@ -72,7 +72,7 @@
         /// <returns>
         /// The vote with the specified <paramref name="id"/> or <b>null</b> if vote doesn't exist.
         /// </returns>
-        public Vote GetVoteInfo(int id)
+        public Vote GetVote(int id)
         {
             using (var repository = this.Factory.GetVoteRepository())
             {
