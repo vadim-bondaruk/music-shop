@@ -18,9 +18,9 @@
         public DateTime? Birthday { get; set; }
 
         /// <summary>
-        /// Gets or sets the my property.
+        /// Gets or sets the birthday string.
         /// </summary>
-        public HttpPostedFileBase UploadedImage { get; set; }
+        public string BirthdayString { get; set; }
 
         /// <summary>
         ///     Gets or sets the name.
@@ -31,5 +31,10 @@
         ///     Gets or sets the photo.
         /// </summary>
         public byte[] Photo { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the my property.
+        /// </summary>
+        public HttpPostedFileBase UploadedImage { get; set; }
     }
 }
