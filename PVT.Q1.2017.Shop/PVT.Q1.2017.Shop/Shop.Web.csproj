@@ -165,10 +165,6 @@
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Management\Views\Track\AddOrUpdate.cshtml" />
-    <Content Include="Areas\Management\Views\Track\Delete.cshtml" />
-    <Content Include="Areas\Management\Views\Album\AddOrUpdate.cshtml" />
-    <Content Include="Areas\Management\Views\Album\Delete.cshtml" />
     <Content Include="Areas\Content\Views\web.config" />
     <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -230,11 +226,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="T4MVC.tt.hooks.t4" />
-    <Content Include="Areas\Content\Views\Track\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Track\List.cshtml" />
-    <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
-    <Content Include="Areas\Content\Views\Album\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -246,8 +237,12 @@
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Content\Models\" />
+    <Folder Include="Areas\Content\Views\Album\" />
     <Folder Include="Areas\Content\Views\Artist\" />
+    <Folder Include="Areas\Content\Views\Track\" />
     <Folder Include="Areas\Management\Models\" />
+    <Folder Include="Areas\Management\Views\Album\" />
+    <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Views\Home\" />
