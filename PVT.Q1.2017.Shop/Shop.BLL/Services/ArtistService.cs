@@ -1,8 +1,5 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System;
-    using System.Collections.Generic;
-
     using AutoMapper;
 
     using Shop.BLL.Services.Infrastructure;
@@ -16,14 +13,19 @@
     public class ArtistService : BaseService, IArtistService
     {
         /// <summary>
+        /// </summary>
+        private readonly IRepositoryFactory repositoryFactory;
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="ArtistService" /> class.
         /// </summary>
         /// <param name="factory">
-        ///     The repository factory.
+        ///     The factory.
         /// </param>
         public ArtistService(IRepositoryFactory factory)
             : base(factory)
         {
+            this.repositoryFactory = factory;
         }
 
         /// <summary>
@@ -33,7 +35,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public ArtistDetailsViewModel GetArtistInfo(int id)
+        public ArtistDetailsViewModel GetArtistViewModel(int id)
         {
             using (var repository = this.Factory.GetArtistRepository())
             {
@@ -43,37 +45,43 @@
                     return null;
                 }
 
-                var viewModel = Mapper.Map<ArtistDetailsViewModel>(artist);
-                return viewModel;
-            }
-        }
-
-        /// <summary>
-        ///     Returns all registered Artists.
-        /// </summary>
-        /// <returns>
-        ///     All registered Artists.
-        /// </returns>
-        public ICollection<Artist> GetArtistsList()
-        {
-            using (var repository = this.Factory.GetArtistRepository())
-            {
-                return repository.GetAll();
+                Mapper.Initialize(
+                    cfg =>
+                        cfg.CreateMap<Artist, ArtistDetailsViewModel>()
+                            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                            .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday))
+                            .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
+                            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo)));
+                return Mapper.Map<ArtistDetailsViewModel>(artist);
             }
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="artistId">
-        ///     The artist id.
+        /// <param name="viewModel">
+        ///     The view model.
         /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        public ICollection<Track> GetTracksList(int artistId)
+        public int SaveNewArtist(ArtistDetailsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
+            {
+                var bs = new byte[viewModel.UploadedImage.ContentLength];
+                using (var fs = viewModel.UploadedImage.InputStream)
+                {
+                    var offset = 0;
+                    do
+                    {
+                        offset += fs.Read(bs, offset, bs.Length - offset);
+                    }
+                    while (offset < bs.Length);
+                }
+
+                viewModel.Photo = bs;
+                var artist = Mapper.Map<Artist>(viewModel);
+                artistRepo.AddOrUpdate(artist);
+                artistRepo.SaveChanges();
+                return artist.Id;
+            }
         }
     }
 }

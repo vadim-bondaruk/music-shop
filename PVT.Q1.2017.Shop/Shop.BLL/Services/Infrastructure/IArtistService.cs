@@ -1,8 +1,5 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
-    using System.Collections.Generic;
-
-    using Shop.Common.Models;
     using Shop.Common.Models.ViewModels;
 
     /// <summary>
@@ -17,23 +14,13 @@
         /// <returns>
         ///     The Artist with the specified <paramref name="id" /> or <b>null</b> if Artist doesn't exist.
         /// </returns>
-        ArtistDetailsViewModel GetArtistInfo(int id);
-
-        /// <summary>
-        ///     Returns all registered Artists.
-        /// </summary>
-        /// <returns>
-        ///     All registered Artists.
-        /// </returns>
-        ICollection<Artist> GetArtistsList();
+        ArtistDetailsViewModel GetArtistViewModel(int id);
 
         /// <summary>
         /// </summary>
-        /// <param name="artistId">
-        /// The artist id.
+        /// <param name="viewModel">
+        /// The view model.
         /// </param>
-        /// <returns>
-        /// </returns>
-        ICollection<Track> GetTracksList(int artistId);
+        int SaveNewArtist(ArtistDetailsViewModel viewModel);
     }
 }
