@@ -1,27 +1,39 @@
 ﻿namespace Shop.Common.Models.ViewModels
 {
+    using System;
+
     /// <summary>
-    /// The track view model.
+    /// The album details view model.
     /// </summary>
-    public class TrackViewModel
+    public class AlbumDetailsViewModel
     {
         /// <summary>
-        /// Gets or sets the track id.
+        /// Album id.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the track name.
+        /// Album name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The track artist.
+        /// Album cover.
+        /// </summary>
+        public byte[] Cover { get; set; }
+
+        /// <summary>
+        /// Album release date.
+        /// </summary>
+        public DateTime? ReleaseDate { get; set; }
+
+        /// <summary>
+        /// The Artist. Optional.
         /// </summary>
         public ArtistViewModel Artist { get; set; }
 
         /// <summary>
-        /// Gets or sets the price.
+        /// Album price.
         /// </summary>
         public PriceViewModel Price { get; set; }
     }

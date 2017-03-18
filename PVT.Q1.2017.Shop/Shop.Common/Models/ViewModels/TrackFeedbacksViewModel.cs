@@ -28,9 +28,9 @@
         public string ArtistName { get; set; }
 
         /// <summary>
-        /// Gets or sets the track rating.
+        /// Track rating.
         /// </summary>
-        public double Rating { get; set; }
+        public RatingViewModel Rating { get; set; }
 
         /// <summary>
         /// Gets or sets the users feedbacks.

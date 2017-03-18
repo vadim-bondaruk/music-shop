@@ -12,7 +12,7 @@
         /// </summary>
         public TrackAlbumListViewModel()
         {
-            this.Albums = new List<AlbumViewModel>();
+            this.Albums = new List<AlbumDetailsViewModel>();
         }
 
         /// <summary>
@@ -38,6 +38,6 @@
         /// <summary>
         /// Gets or sets the albums.
         /// </summary>
-        public ICollection<AlbumViewModel> Albums { get; set; }
+        public ICollection<AlbumDetailsViewModel> Albums { get; set; }
     }
 }
