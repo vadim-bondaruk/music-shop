@@ -18,7 +18,7 @@
 
             Mapper.Initialize(
                 cfg =>
-                    cfg.CreateMap<ArtistDetailsViewModel, Artist>()
+                    cfg.CreateMap<ArtistManageViewModel, Artist>()
                         .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                         .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday))
                         .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))

@@ -43,9 +43,9 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(ArtistDetailsViewModel model)
+        public virtual ActionResult Delete(ArtistManageViewModel model)
         {
-            var artistModel = Mapper.Map<ArtistDetailsViewModel, Artist>(model);
+            var artistModel = Mapper.Map<ArtistManageViewModel, Artist>(model);
             using (var repository = this.repositoryFactory.GetArtistRepository())
             {
                 repository.Delete(artistModel);
@@ -86,7 +86,7 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult New([Bind(Exclude = "Artists, Albums")] ArtistDetailsViewModel viewModel)
+        public virtual ActionResult New([Bind(Exclude = "Artists, Albums")] ArtistManageViewModel viewModel)
         {
             var id = this.artistService.SaveNewArtist(viewModel);
             return this.RedirectToAction("Details", new { artistId = id });
@@ -100,7 +100,7 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(ArtistDetailsViewModel model)
+        public virtual ActionResult Update(ArtistManageViewModel model)
         {
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {

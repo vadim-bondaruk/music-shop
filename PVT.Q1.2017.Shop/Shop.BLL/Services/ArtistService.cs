@@ -35,7 +35,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public ArtistDetailsViewModel GetArtistViewModel(int id)
+        public ArtistManageViewModel GetArtistViewModel(int id)
         {
             using (var repository = this.Factory.GetArtistRepository())
             {
@@ -47,12 +47,12 @@
 
                 Mapper.Initialize(
                     cfg =>
-                        cfg.CreateMap<Artist, ArtistDetailsViewModel>()
+                        cfg.CreateMap<Artist, ArtistManageViewModel>()
                             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                             .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday))
                             .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
                             .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo)));
-                return Mapper.Map<ArtistDetailsViewModel>(artist);
+                return Mapper.Map<ArtistManageViewModel>(artist);
             }
         }
 
@@ -61,7 +61,7 @@
         /// <param name="viewModel">
         ///     The view model.
         /// </param>
-        public int SaveNewArtist(ArtistDetailsViewModel viewModel)
+        public int SaveNewArtist(ArtistManageViewModel viewModel)
         {
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {

@@ -5,7 +5,7 @@
 
     /// <summary>
     /// </summary>
-    public class ArtistDetailsViewModel
+    public class ArtistManageViewModel
     {
         /// <summary>
         ///     Gets or sets the biography.
