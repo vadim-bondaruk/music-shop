@@ -1,89 +1,69 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
-    using PVT.Q1._2017.Shop.Areas.Management.Models;
-
     /// <summary>
-    ///     The track controller
     /// </summary>
     public class AlbumsController : Controller
     {
         /// <summary>
-        ///     The track service.
         /// </summary>
-        private readonly ITrackService trackService;
+        private readonly IAlbumService albumService;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        /// </summary>
+        private readonly IRepositoryFactory repositoryFactory;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        public AlbumsController(IRepositoryFactory repositoryFactory)
+        /// <param name="albumService"></param>
+        public AlbumsController(IRepositoryFactory repositoryFactory, IAlbumService albumService)
         {
-            this.RepositoryFactory = repositoryFactory;
+            this.repositoryFactory = repositoryFactory;
+            this.albumService = albumService;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
         /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
+        /// <param name="viewModel">
+        ///     The view model.
         /// </param>
-        /// <param name="trackService">
-        ///     The track service.
-        /// </param>
-        public AlbumsController(IRepositoryFactory repositoryFactory, ITrackService trackService)
-        {
-            this.RepositoryFactory = repositoryFactory;
-            this.trackService = trackService;
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
-        }
-
-        /// <summary>
-        ///     Gets or sets the repository factory.
-        /// </summary>
-        public IRepositoryFactory RepositoryFactory { get; set; }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="trackId">
-        ///     The track id.
-        /// </param>
-        /// <param name="model"></param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(TrackManagmentViewModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(AlbumManageViewModel viewModel)
         {
-            var trackModel = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            var albumModel = Mapper.Map<AlbumManageViewModel, Album>(viewModel);
+            using (var repository = this.repositoryFactory.GetAlbumRepository())
             {
-                repository.Delete(trackModel);
+                repository.Delete(albumModel);
                 repository.SaveChanges();
             }
 
-            return this.View("New");
+            return this.View();
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="trackId"></param>
+        /// <param name="albumId">
+        ///     The album id.
+        /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int trackId)
+        public virtual ActionResult Details(int albumId)
         {
-            //var track = this.trackService.GetTrackInfo(trackId);
-            //var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
             return this.View();
         }
 
@@ -102,37 +82,31 @@
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
-        /// The view model.
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual ActionResult New(
-            [Bind(Include = "Name, ReleaseDate, Cover")] AlbumManagmentViewModel viewModel)
+            [Bind(Include = "ArtistName, Name, ReleaseDate, UploadedImage")] AlbumManageViewModel viewModel)
         {
-            var album = Mapper.Map<Album>(viewModel);
-            using (var repository = this.RepositoryFactory.GetAlbumRepository())
-            {
-                repository.AddOrUpdate(album);
-                repository.SaveChanges();
-            }
+            this.albumService.SaveNewAlbum(viewModel);
 
             return this.View("New");
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="model">
-        ///     The model.
-        /// </param>
+        /// <param name="viewModel"></param>
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(TrackManagmentViewModel model)
+        public virtual ActionResult Update(AlbumManageViewModel viewModel)
         {
-            var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            trackRepo.AddOrUpdate(track);
+            var albumRepo = this.repositoryFactory.GetAlbumRepository();
+            var album = Mapper.Map<AlbumManageViewModel, Album>(viewModel);
+            albumRepo.AddOrUpdate(album);
             return this.View();
         }
     }
