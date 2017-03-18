@@ -2,7 +2,7 @@
     position: relative;
     color: white;
     font-size: 50px;
-    margin-left: 40.5%;
+    margin-left: 39.5%;
     margin-top: 30px;
 }
 
@@ -14,6 +14,13 @@
 }
 
 .op-title {
+    color: white;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px black, 0 0 1em red;
+    margin-left: 38.5%;
+}
+
+.new-album-title {
     color: white;
     font-size: 20px;
     text-shadow: 1px 1px 2px black, 0 0 1em red;
@@ -92,7 +99,19 @@ li {
     border-width: 0.5px;
 }
 
+#browse-cover-file-button {
+    width: 11.4%;
+    height: 40px;
+    margin-left: 1px;
+    background: #404040;
+    color: #bbb;
+    border-color: #282828;
+    border-radius: 5px;
+    border-width: 0.5px;
+}
+
 #browsefile-button:hover { background: rgba(0, 0, 0, 0.16); }
+#browse-cover-file-button:hover { background: rgba(0, 0, 0, 0.16); }
 
 textarea {
     padding-top: 10px;

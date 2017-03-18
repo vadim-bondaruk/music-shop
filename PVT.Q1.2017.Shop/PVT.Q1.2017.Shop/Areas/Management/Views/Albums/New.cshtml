@@ -1,25 +1,65 @@
-﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.AlbumManagmentViewModel
+﻿@model Shop.Common.Models.ViewModels.AlbumManageViewModel
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI</title>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="/Scripts/openfile.dialog.js" type="text/javascript"></script>
+    <script src="/Scripts/datepicker-ru.js"></script>
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/sunny/jquery-ui.css">
+    <style type="text/css">
+        input {
+            width: 200px;
+            text-align: left;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function() {
+            $('#datep').datepicker();
+            $('#datep').datepicker($.datepicker.regional["ru"]);
+            $('#datep').datepicker({
+                changeYear: true
+            });
+        });
+    </script>
+
+</head>
+<h2 class="new-album-title">Регистрация нового альбома</h2>
+<body>
 
 
-@using (Html.BeginForm("New", "Albums", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm("New", "Albums", FormMethod.Post, new { name = "formreg", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div id="albumDetails">
         <ul>
             <li>
-                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Name" } })
+                @Html.EditorFor(m => m.ArtistName, new { htmlAttributes = new { placeholder = "Исполнитель" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.Cover, new { htmlAttributes = new { placeholder = "Cover" } })
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { placeholder = "ReleaseDate", type = "text" } })
+                @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { id= "datep", placeholder = "Дата релиза", type = "text" } })
+            </li>
+
+            <li class="cover-file">
+                <div>
+                    <input id="file-path" type="text" placeholder="Обложка"/>
+                    <input id="browse-cover-file-button" type="button" value="Обзор..."
+                           onclick="document.formreg.UploadedImage.click()"/>
+                </div>
+                <input type="file" id="file" name="UploadedImage" style="display: none"/>
+
             </li>
         </ul>
-    
-        <button type="submit" class="add-button">Add</button>
+        <button type="submit" class="add-button">Сохранить</button>
     </div>
 }
+</body>
 
-@section ManageStyle{
-   <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}
+
+@section Details{
+    <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}
