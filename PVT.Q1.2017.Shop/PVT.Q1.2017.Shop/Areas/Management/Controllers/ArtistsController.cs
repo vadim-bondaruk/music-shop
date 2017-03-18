@@ -52,7 +52,7 @@
                 repository.SaveChanges();
             }
 
-            return this.View("New");
+            return this.RedirectToAction("New");
         }
 
         /// <summary>
@@ -86,7 +86,7 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult New([Bind(Exclude = "Artists, Albums")] ArtistManageViewModel viewModel)
+        public virtual ActionResult New([Bind(Include = "Name, Birthday, Biography, UploadedImage")] ArtistManageViewModel viewModel)
         {
             var id = this.artistService.SaveNewArtist(viewModel);
             return this.RedirectToAction("Details", new { artistId = id });
