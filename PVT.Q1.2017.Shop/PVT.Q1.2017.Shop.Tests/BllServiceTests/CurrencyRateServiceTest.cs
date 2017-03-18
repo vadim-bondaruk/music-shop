@@ -19,7 +19,6 @@
 
         // usd.id = 1
         // eur.id = 2
-
         [TestMethod]
         public void GetActualRateTest()
         {
