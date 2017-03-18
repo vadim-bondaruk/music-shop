@@ -3,8 +3,10 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using AutoMapper;
     using FluentValidation.Mvc;
-    using global::Shop.BLL;
+    using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
 
     /// <summary>
     ///     Base class in an ASP.NET application
@@ -21,7 +23,8 @@
 
             FluentValidationModelValidatorProvider.Configure();
 
-            DefaultModelsMapper.MapModels();
+            // temporary... will be removed in the future...
+            Mapper.Initialize(cfg => cfg.CreateMap<TrackDetailsViewModel, Track>());
         }
     }
 }

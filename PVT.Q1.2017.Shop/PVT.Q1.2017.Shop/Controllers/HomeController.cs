@@ -13,7 +13,7 @@
         /// <returns>View of index page</returns>
         public ActionResult Index()
         {
-            return null;
+            return this.RedirectToAction("List", "Track", new { area = "Content" });
         }
     }
 }

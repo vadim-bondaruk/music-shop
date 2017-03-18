@@ -50,7 +50,7 @@
                 return this.View();
             }
 
-            return this.View(this._albumService.GetAlbum(id.Value));
+            return this.View(this._albumService.GetAlbumDetails(id.Value));
         }
 
         /// <summary>
@@ -64,7 +64,7 @@
         /// otherwise returns the view whitch displays the currnet album with error.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate([Bind(Include = "Id,Name,ReleaseDate,ArtistId")] AlbumViewModel model)
+        public ActionResult AddOrUpdate([Bind(Include = "Id,Name,ReleaseDate,ArtistId")] AlbumDetailsViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@
                 return this.RedirectToAction("List", "Album", new { area = "Content" });
             }
 
-            return this.View(this._albumService.GetAlbum(id.Value));
+            return this.View(this._albumService.GetAlbumDetails(id.Value));
         }
 
         /// <summary>
@@ -112,7 +112,7 @@
         /// Redirects to the view which generates page with albums list.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete([Bind(Include = "Id")] AlbumViewModel model)
+        public ActionResult Delete([Bind(Include = "Id")] AlbumDetailsViewModel model)
         {
             var album = Mapper.Map<Album>(model);
             if (album != null && ModelState.IsValid)

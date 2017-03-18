@@ -52,6 +52,7 @@
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\ViewModels\AlbumDetailsViewModel.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\ViewModels\AlbumTracksListViewModel.cs" />
     <Compile Include="Models\ViewModels\AlbumViewModel.cs" />
     <Compile Include="Models\ViewModels\ArtistDetailsViewModel.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -68,8 +69,7 @@
     <Compile Include="Models\ViewModels\GenreViewModel.cs" />
     <Compile Include="Models\ViewModels\PriceViewModel.cs" />
     <Compile Include="Models\ViewModels\RatingViewModel.cs" />
-    <Compile Include="Models\ViewModels\TrackAlbumListViewModel.cs" />
-    <Compile Include="Models\ViewModels\TrackFeedbacksViewModel.cs" />
+    <Compile Include="Models\ViewModels\TrackAlbumsListViewModel.cs" />
     <Compile Include="Models\TrackPrice.cs" />
     <Compile Include="Models\ViewModels\TrackDetailsViewModel.cs" />
     <Compile Include="Models\UserData.cs" />

@@ -6,14 +6,19 @@
     public class TrackViewModel
     {
         /// <summary>
-        /// Gets or sets the track id.
+        /// Track id.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the track name.
+        /// Track name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Track rating.
+        /// </summary>
+        public double Rating { get; set; }
 
         /// <summary>
         /// The track artist.
@@ -21,7 +26,7 @@
         public ArtistViewModel Artist { get; set; }
 
         /// <summary>
-        /// Gets or sets the price.
+        /// The track price.
         /// </summary>
         public PriceViewModel Price { get; set; }
     }

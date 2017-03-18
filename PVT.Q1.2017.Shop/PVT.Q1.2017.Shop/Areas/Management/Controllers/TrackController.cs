@@ -1,8 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
     using System.Web.Mvc;
+    using AutoMapper;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -46,7 +48,7 @@
                 return this.View();
             }
 
-            return this.View(this._trackService.GetTrack(id.Value));
+            return this.View(this._trackService.GetTrackDetails(id.Value));
         }
 
         /// <summary>
@@ -60,13 +62,13 @@
         /// otherwise returns the view whitch displays the currnet track with error.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate([Bind(Include = "Id,Name,Duration,ReleaseDate,ArtistId,GenreId")] Track track)
+        public ActionResult AddOrUpdate([Bind(Include = "Id,Name,Duration,ReleaseDate,ArtistId,GenreId")] TrackDetailsViewModel track)
         {
             if (ModelState.IsValid)
             {
                 using (var repository = this._repositoryFactory.GetTrackRepository())
                 {
-                    repository.AddOrUpdate(track);
+                    repository.AddOrUpdate(Mapper.Map<Track>(track));
                     repository.SaveChanges();
                 }
 
@@ -93,7 +95,7 @@
                 return this.RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            return this.View(this._trackService.GetTrack(id.Value));
+            return this.View(this._trackService.GetTrackDetails(id.Value));
         }
 
         /// <summary>
@@ -106,13 +108,13 @@
         /// Redirects to the view which generates page with tracks list.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete([Bind(Include = "Id")] Track track)
+        public ActionResult Delete([Bind(Include = "Id")] TrackDetailsViewModel track)
         {
             if (track != null && ModelState.IsValid)
             {
                 using (var repository = this._repositoryFactory.GetTrackRepository())
                 {
-                    repository.Delete(track);
+                    repository.Delete(Mapper.Map<Track>(track));
                     repository.SaveChanges();
                 }
             }
