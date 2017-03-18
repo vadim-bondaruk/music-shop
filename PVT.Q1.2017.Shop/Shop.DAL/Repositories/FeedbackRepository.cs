@@ -21,13 +21,13 @@ namespace Shop.DAL.Repositories
         }
 
         /// <summary>
-        /// Returns the number of votes for the specified track.
+        /// Returns the number of comments for the specified track.
         /// </summary>
         /// <param name="trackId">
         /// The track id.
         /// </param>
         /// <returns>
-        /// The number of votes for the specified track.
+        /// The number of comments for the specified track.
         /// </returns>
         public int GetFeedbacksCount(int trackId)
         {
