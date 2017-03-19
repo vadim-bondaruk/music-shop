@@ -5,7 +5,7 @@
     using Infrastructure.Models;
 
     /// <summary>
-    /// 
+    /// Basic user model for registration in the shop
     /// </summary>
     public class User : BaseEntity
     {

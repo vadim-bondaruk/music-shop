@@ -1,5 +1,6 @@
 ﻿namespace Shop.Common.Validators
 {
+    using System;
     using FluentValidation;
     using PVT.Q1._2017.Shop.ViewModels;
 
@@ -34,6 +35,9 @@
                 .WithMessage("Адрес введен некорректно");
             RuleFor(u => u.Email).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
+
+            RuleFor(u => u.BirthDate).InclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today)
+                .WithMessage("Дата рождения выбрана неверно");
 
             RuleFor(u => u.PhoneNumber)
                 .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")

@@ -41,7 +41,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Method for remote validation (login)
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -51,6 +51,21 @@
         {
             var a = !(this._userRepository
                 .GetAll(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase))
+                .IsAny());
+            return this.Json(a, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Method for remote validation (email)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult IsEmailUnique(string email)
+        {
+            var a = !(this._userRepository
+                .GetAll(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase))
                 .IsAny());
             return this.Json(a, JsonRequestBehavior.AllowGet);
         }

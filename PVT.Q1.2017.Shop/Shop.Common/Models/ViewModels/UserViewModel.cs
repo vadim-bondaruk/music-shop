@@ -27,7 +27,7 @@
         /// Users login (nickname)
         /// </summary>
         [Display(Name = "Логин")]
-        [Remote("IsLoginUnique", "Account", "User", ErrorMessage = "Уже существует такой логин")]
+        [Remote("IsLoginUnique", "Account", "User", ErrorMessage = "Такой логин уже существует")]
         public string Login { get; set; }
 
         /// <summary>
@@ -49,6 +49,7 @@
         /// </summary>
         [Display(Name = "Адрес почты")]
         [DataType(DataType.EmailAddress)]
+        [Remote("IsEmailUnique", "Account", "User", ErrorMessage = "Такой адрес уже зарегистрирован в магазине")]
         public string Email { get; set; }
 
         /// <summary>
@@ -60,7 +61,6 @@
         /// <summary>
         /// Users birth date
         /// </summary>
-        /// TODO: implement data check & validation
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
