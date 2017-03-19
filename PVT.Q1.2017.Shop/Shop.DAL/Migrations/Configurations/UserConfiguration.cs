@@ -27,7 +27,7 @@
             Property(p => p.Sex).IsRequired();
             Property(p => p.UserRoles).IsRequired();
 
-            ToTable("tbUsers");
+            ToTable("Users");
         }
     }
 }
