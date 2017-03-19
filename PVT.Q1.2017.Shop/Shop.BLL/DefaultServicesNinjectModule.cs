@@ -46,7 +46,7 @@
 
             Bind<ICurrencyRateService>().To<CurrencyRateService>();
 
-	        Bind<ICartService>().To<CartService>();
+            Bind<ICartService>().To<CartService>();
         }
     }
 }
