@@ -20,7 +20,7 @@
             this.HasRequired(f => f.Track).WithMany(t => t.Feedbacks).WillCascadeOnDelete(true);
             this.HasRequired(f => f.User).WithMany(t => t.Feedbacks).WillCascadeOnDelete(true);
 
-            this.ToTable("tbFeedbacks");
+            this.ToTable("Feedbacks");
         }
     }
 }

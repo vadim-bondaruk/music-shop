@@ -29,7 +29,7 @@
         {
             EntityState artistEntryState;
 
-            if (album.ArtistId <= 0 && album.Artist != null)
+            if (album.ArtistId == null && album.Artist != null)
             {
                 album.ArtistId = album.Artist.Id;
             }

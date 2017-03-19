@@ -33,7 +33,7 @@
             HasRequired(r => r.Track).WithMany(t => t.Albums).HasForeignKey(r => r.TrackId).WillCascadeOnDelete(true);
             HasRequired(r => r.Album).WithMany(a => a.Tracks).HasForeignKey(r => r.AlbumId).WillCascadeOnDelete(true);
             
-            ToTable("tbAlbumTrackRelations");
+            ToTable("AlbumTrackRelations");
         } 
     }
 }

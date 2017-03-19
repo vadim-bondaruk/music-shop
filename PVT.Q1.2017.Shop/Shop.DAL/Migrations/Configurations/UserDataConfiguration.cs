@@ -19,7 +19,7 @@
             Property(u => u.Dicount).IsOptional();
             HasRequired(u => u.UserCurrency).WithMany(c => c.Users).HasForeignKey(u => u.CurrencyId).WillCascadeOnDelete(false);
 
-            ToTable("tbUsersData");
+            ToTable("UsersData");
         }
     }
 }
