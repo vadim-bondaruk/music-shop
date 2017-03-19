@@ -1,11 +1,12 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
+    using System;
     using System.Web.Mvc;
-    using System.Web.Security;
-    using global::Shop.BLL.DTO;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using global::Shop.Common.Utils;
+    using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Security;
     using ViewModels;
 
@@ -27,10 +28,31 @@
         /// <summary>
         /// 
         /// </summary>
-        public AccountController(IUserService userService, IAuthModule authModule)
+        private IUserRepository _userRepository;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public AccountController(IUserService userService, IAuthModule authModule, IUserRepository _userRepository)
         {
             this._userService = userService;
             this._authModule = authModule;
+            this._userRepository = _userRepository;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult IsLoginUnique(string login)
+        {
+            var a = !(this._userRepository
+                .GetAll(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase))
+                .IsAny());
+            return this.Json(a, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

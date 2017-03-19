@@ -57,32 +57,6 @@ namespace PVT.Q1._2017.Shop.Tests
 
         }
 
-
-        [TestMethod]
-        [ExpectedException(typeof(UserValidationException))]
-        public void RegisterUser_UserInput_LoginExist()
-        {
-            Mock<IUserRepository> repo = new Mock<IUserRepository>();
-            repo.Setup(r => r.GetAll()).Returns(new List<User>() { new User() {Login= "OilMagnat" } });
-            UserService service = new UserService(repo.Object);
-            User user= new User
-            {
-                FirstName = "Abziz",
-                LastName = "Anand",
-                Login = "OilMagnat",
-                Sex = "W",
-                Email = "blablabla@gmail.com",
-                Password = "12345",
-                BirthDate = DateTime.Now.AddYears(-30),
-                PhoneNumber = "+37529 123-56-78",
-                Country = "Belarus"
-            };
-
-            var registered = service.RegisterUser(user);
-
-        }
-
-
         [TestMethod]
         [ExpectedException(typeof(UserValidationException))]
         public void RegisterUser_UserInput_EmailExist()

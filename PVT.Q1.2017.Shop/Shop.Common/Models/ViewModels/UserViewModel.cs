@@ -2,7 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using FluentValidation;
+    using System.Web.Mvc;
     using global::Shop.Common.Validators;
 
     /// <summary>
@@ -27,6 +27,7 @@
         /// Users login (nickname)
         /// </summary>
         [Display(Name = "Логин")]
+        [Remote("IsLoginUnique", "Account", "User", ErrorMessage = "Уже существует такой логин")]
         public string Login { get; set; }
 
         /// <summary>
@@ -59,6 +60,7 @@
         /// <summary>
         /// Users birth date
         /// </summary>
+        /// TODO: implement data check & validation
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }

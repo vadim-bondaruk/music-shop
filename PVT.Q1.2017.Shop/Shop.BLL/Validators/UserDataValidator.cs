@@ -11,7 +11,7 @@
     /// </summary>
     public static class UserDataValidator
     {
-        /// <summary>
+        /*/// <summary>
         /// 
         /// </summary>
         /// <param name="login"></param>
@@ -30,7 +30,7 @@
             }
 
             return true;
-        }
+        }*/
 
         /// <summary>
         /// 
