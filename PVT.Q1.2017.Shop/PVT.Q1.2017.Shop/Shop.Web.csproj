@@ -171,6 +171,12 @@
     <Content Include="Areas\Management\Views\Album\Delete.cshtml" />
     <Content Include="Areas\Content\Views\web.config" />
     <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\EditCurrency.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\All.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\CreateCurrency.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -199,8 +205,10 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
+    <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
