@@ -70,6 +70,18 @@
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Infrastruture\IUserRepository.cs" />
+    <Compile Include="Migrations\201703141950344_Init.cs" />
+    <Compile Include="Migrations\201703141950344_Init.Designer.cs">
+      <DependentUpon>201703141950344_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703152237293_ReconfigureTracksContent.cs" />
+    <Compile Include="Migrations\201703152237293_ReconfigureTracksContent.Designer.cs">
+      <DependentUpon>201703152237293_ReconfigureTracksContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703180835104_TablePrefixRemoved.cs" />
+    <Compile Include="Migrations\201703180835104_TablePrefixRemoved.Designer.cs">
+      <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -134,6 +146,17 @@
       <Project>{3d15cc83-6093-4606-a948-d834033d3692}</Project>
       <Name>Shop.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703141950344_Init.resx">
+      <DependentUpon>201703141950344_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703152237293_ReconfigureTracksContent.resx">
+      <DependentUpon>201703152237293_ReconfigureTracksContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703180835104_TablePrefixRemoved.resx">
+      <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

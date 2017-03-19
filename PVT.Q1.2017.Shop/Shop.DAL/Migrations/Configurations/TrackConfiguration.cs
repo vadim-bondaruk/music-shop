@@ -21,7 +21,7 @@
             this.HasRequired(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
             this.HasRequired(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
 
-            this.ToTable("tbTracks");
+            this.ToTable("Tracks");
         }
     }
 }

@@ -105,6 +105,14 @@ namespace Shop.DAL.Infrastruture
         IVoteRepository GetVoteRepository();
 
         /// <summary>
+        /// Returns the cart repository.
+        /// </summary>
+        /// <returns>
+        /// The cart repository.
+        /// </returns>
+        ICartRepository GetCartRepository();
+        
+        /// <summary>
         /// Returns the album and track relation repository.
         /// </summary>
         /// <returns>

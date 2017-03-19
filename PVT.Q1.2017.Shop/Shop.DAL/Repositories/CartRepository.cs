@@ -4,6 +4,8 @@
     using System.Data.Entity;
     using Common.Models;
     using Infrastruture;
+    using System.Collections.Generic;
+    using Ninject;
 
 
     /// <summary>
@@ -24,12 +26,14 @@
         /// <summary> 
         /// Add track to User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
+        /// <param name="userId">User's ID</param> 
         /// <param name="trackId">Added Track ID</param> 
-        protected void AddTrack(int cartId, int trackId)
+        public void AddTrack(int userId, int trackId)
         {
-            var cart = GetById(cartId);
-            var track = new TrackRepository(DbContext).GetById(trackId);
+            var cart = GetById(userId);
+            var kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            var trackRepo = kernel.Get<ITrackRepository>();
+            var track = trackRepo.GetById(trackId);
             if (track == null)
                 throw new Exception("Incorrect Track Id");
             cart.Tracks.Add(track);
@@ -39,23 +43,25 @@
         /// <summary> 
         /// Add track list to User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
+        /// <param name="userId">User's ID</param> 
         /// <param name="trackIds">Added Tracks IDs</param> 
-        protected void AddTrack(int cartId, int[] trackIds)
+        public void AddTrack(int userId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
-                AddTrack(cartId, trackId);
+                AddTrack(userId, trackId);
         }
 
         /// <summary> 
         /// Remove track from User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
+        /// <param name="userId">User's ID</param> 
         /// <param name="trackId">Removed Track ID</param> 
-        protected void RemoveTrack(int cartId, int trackId)
+        public void RemoveTrack(int userId, int trackId)
         {
-            var cart = GetById(cartId);
-            var track = new TrackRepository(DbContext).GetById(trackId);
+            var cart = GetById(userId);
+            var kernel = new StandardKernel(new DefaultRepositoriesNinjectModule());
+            var trackRepo = kernel.Get<ITrackRepository>();
+            var track = trackRepo.GetById(trackId);
             if (track == null)
                 throw new Exception("Incorrect Track Id");
             cart.Tracks.Remove(track);
@@ -65,12 +71,12 @@
         /// <summary> 
         /// Remove track list from User's Cart 
         /// </summary> 
-        /// <param name="cartId">User's Cart ID</param> 
-        /// <param name="trackId">Removed Tracks IDs</param> 
-        protected void RemoveTrack(int cartId, int[] trackIds)
+        /// <param name="userId">User's ID</param> 
+        /// <param name="trackIds">Removed Tracks IDs</param> 
+        public void RemoveTrack(int userId, IEnumerable<int> trackIds)
         {
             foreach (var trackId in trackIds)
-                RemoveTrack(cartId, trackId);
+                RemoveTrack(userId, trackId);
         }
     }
 }
