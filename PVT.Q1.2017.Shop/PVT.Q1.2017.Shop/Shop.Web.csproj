@@ -127,6 +127,7 @@
       <DependentUpon>Shop.mdf</DependentUpon>
     </Content>
     <Content Include="Areas\Management\Styles\details.css" />
+    <Content Include="Areas\Management\Styles\new-artist.css" />
     <Content Include="Areas\Management\Styles\edit-artist.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -160,6 +161,7 @@
     <Content Include="Areas\Management\Views\Artists\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-ru.js" />
+    <Content Include="Scripts\del-artist.js" />
     <Content Include="Scripts\image-change.js" />
     <Content Include="Scripts\jquery-3.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
