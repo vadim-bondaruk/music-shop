@@ -40,19 +40,7 @@
             using (var repository = this.Factory.GetArtistRepository())
             {
                 var artist = repository.GetById(id);
-                if (artist == null)
-                {
-                    return null;
-                }
-
-                Mapper.Initialize(
-                    cfg =>
-                        cfg.CreateMap<Artist, ArtistManageViewModel>()
-                            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                            .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.Birthday))
-                            .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
-                            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo)));
-                return Mapper.Map<ArtistManageViewModel>(artist);
+                return artist == null ? null : Mapper.Map<ArtistManageViewModel>(artist);
             }
         }
 
@@ -80,7 +68,7 @@
 
                     viewModel.Photo = bs;
                 }
-                
+
                 var artist = Mapper.Map<Artist>(viewModel);
                 artistRepo.AddOrUpdate(artist);
                 artistRepo.SaveChanges();
