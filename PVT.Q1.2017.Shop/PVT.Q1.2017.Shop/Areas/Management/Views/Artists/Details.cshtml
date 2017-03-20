@@ -1,18 +1,21 @@
 ﻿@model Shop.Common.Models.ViewModels.ArtistManageViewModel
 
 <body>
-<h2 class="op-title">Информация об исполнителе</h2>
-    
+<h2 class="details-artist-title">Информация об исполнителе</h2>
+
 @Html.AntiForgeryToken()
 <div id="artistDetails">
     @Html.TextBoxFor(model => model.Name, new { id = "artist-details-name", @readonly = "true", placeholder = "Исполнитель" });
-    @Html.TextBoxFor(model => model.Birthday, "{0:d MMMM yyyy}", new { id = "artist-details-bd", @readonly = "true", placeholder = "Дата рождения" });
-    <img class="artist-image" src="data:image;base64,@System.Convert.ToBase64String(Model.Photo)" width="276" height="346" />
+    @Html.TextBoxFor(model => model.Birthday, new { id = "artist-details-bd", @readonly = "true"});
+    <img class="artist-image" src="data:image;base64,@Convert.ToBase64String(Model.Photo)"/>
     <div class="artist-details-bio">@Html.DisplayTextFor(model => model.Biography);</div>
-    
-    
+    <ul class="service-links">
+        <li class="edit-link">@Html.ActionLink("Правка", "Edit", new { artistId = Model.Id }, new { @class = "edit-link" })</li>
+        <li class="delete-link">@Html.ActionLink("Удалить", "Delete", new { artistId = Model.Id }, new { @class = "delete-link" })</li>
+    </ul>
 
 </div>
+
 </body>
 
 @section Details{
