@@ -1,38 +1,30 @@
-.navbar-brand {
-    position: relative;
-    color: white;
-    font-size: 50px;
-    margin-left: 39.5%;
-    margin-top: 30px;
-}
+.body-content { margin: 1% auto; }
+
+.navbar { margin: 0.8% auto; }
 
 .navbar-brand { text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red; }
 
-.page-title:hover {
-    color: aliceblue;
-    text-decoration: none;
-}
+#artistDetails { margin: 0 3%; }
 
-.op-title {
+.details-artist-title {
+    text-align: center;
     color: white;
     font-size: 20px;
     text-shadow: 1px 1px 2px black, 0 0 1em red;
-    margin-left: 38.5%;
 }
+
+.details-block { position: relative; }
+
 
 .new-album-title {
+    text-align: center;
     color: white;
     font-size: 20px;
     text-shadow: 1px 1px 2px black, 0 0 1em red;
-    margin-left: 38.5%;
 }
+
 
 body { line-height: 1; }
-
-ul {
-    list-style: none;
-    margin-top: 20px;
-}
 
 body { background: #373737 url("/img/bg.png") 0 0 repeat; }
 
@@ -81,12 +73,18 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
     border-width: 0.5px;
 }
 
-li {
-    margin-left: 12%;
-    padding-top: 5px;
+.cover-file {
+    position: absolute;
+    margin-top: 1%;
+    width: 15%;
 }
 
-.cover-file { width: 75%; }
+.cover-file-input {
+    position: absolute;
+    margin-top: 1%;
+    width: 18%;
+}
+
 
 #browsefile-button {
     width: 11.3%;
@@ -98,6 +96,10 @@ li {
     border-radius: 5px;
     border-width: 0.5px;
 }
+
+#file-path { width: 77%; }
+
+
 
 #browse-cover-file-button {
     width: 11.4%;
@@ -111,14 +113,15 @@ li {
 }
 
 #browsefile-button:hover { background: rgba(0, 0, 0, 0.16); }
+
 #browse-cover-file-button:hover { background: rgba(0, 0, 0, 0.16); }
 
-textarea {
-    padding-top: 10px;
-    height: 200px;
+.artist-details-bio {
+    color: white;
+    font-size: 14px;
 }
 
-footer { color: white }
+#bio-area { height: 300px; }
 
 @-webkit-keyframes autofill {
     to {
@@ -132,10 +135,6 @@ input:-webkit-autofill {
     -webkit-animation-fill-mode: both;
 }
 
-#artistDetails {
-    margin-left: 1%;
-}
-
 #artist-details-name {
     color: white;
     height: 55px;
@@ -145,20 +144,44 @@ input:-webkit-autofill {
 }
 
 #artist-details-bd {
-    margin-top: 1%;
     color: white;
     font-size: 20px;
     background: transparent;
     -webkit-box-shadow: none;
 }
 
-.artist-details-bio {
-    color: white;
-    font-size: 14px;
-}
-
 .artist-image {
     margin-top: 10px;
     margin-right: 20px;
     float: left;
+    max-height: 600px;
+    max-width: 450px;
+    width: 20%;
 }
+
+.service-links {
+    position: absolute;
+    right: 100px;
+    margin-top: 10px;
+    display: block;
+    height: 25px;
+    list-style-type: none;
+}
+.service-links li {
+    display: inline-block;
+    margin-left: 2px;
+}
+
+a.edit-link { font-size: 15px; }
+
+a.delete-link {
+    color: red;
+    font-size: 15px;
+}
+
+.copyright {
+    width: 450px;
+    text-align: center;
+    margin: 15% auto;
+}
+

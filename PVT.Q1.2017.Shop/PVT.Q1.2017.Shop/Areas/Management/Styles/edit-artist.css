@@ -1,0 +1,65 @@
+﻿body { line-height: 1px; }
+
+.navbar-brand { margin: 10px 0 0 600px; }
+
+.edit-form { margin-top: 25%; }
+
+.main-block {
+    position: relative;
+}
+.image-block {
+    position: relative;
+    margin: -400px 0 0 80px;
+}
+
+#artist-img {
+    position: absolute;
+    vertical-align: top;
+    max-height: 600px;
+    max-width: 450px;
+    width: 20%;
+}
+
+#edit-image-link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    vertical-align: top;
+    color: firebrick;
+    font-weight: bold
+}
+
+#edit-image-link:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.edit-artist-title {
+    margin: 0 0 500px 0;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+
+.edit-artist-items {
+    list-style: none;
+    width: 1200px;
+    min-width: 800px;
+    margin: -470px 0 0 480px;
+}
+
+#biography {
+    width: 800px;
+    height: 500px;
+}
+
+.add-button {
+    alignment: center;
+    margin: 20px 0 0 0;
+}
+
+    .add-button:hover {
+        background: #4682b4;
+    }
+footer { margin-top: 100px; }
