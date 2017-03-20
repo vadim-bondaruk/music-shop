@@ -11,7 +11,7 @@
         /// <summary>
         /// Gets or sets a Collection of tracks for View
         /// </summary>
-        public IList<Track> Tracks { get; set; }
+        public ICollection<Track> Tracks { get; set; }
 
         /// <summary>
         /// Get total price of cart
