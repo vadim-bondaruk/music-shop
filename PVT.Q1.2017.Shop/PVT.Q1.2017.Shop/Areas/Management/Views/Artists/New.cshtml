@@ -1,39 +1,37 @@
 ﻿@model Shop.Common.Models.ViewModels.ArtistManageViewModel
 <body>
-<h2 class="details-artist-title">Регистрация нового исполнителя</h2>
+<h2 class="reg-new-artist-title">Регистрация нового исполнителя</h2>
 @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
 {
     @Html.AntiForgeryToken()
-    <div id="artistDetails">
-        <ul>
+    <div class="artistDetails">
+        <ul class="new-artist-items">
             <li>
-                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" } })
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель", id = "item-artistname" } })
             </li>
             <li>
-                @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения", type = "text" } })
+                @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения", type = "text", id = "item-bithday" } })
             </li>
             <li>
-                @Html.TextAreaFor(e => e.Biography, 10, 155, new { @placeholder = "Биография" })
-            </li>
-            
-            <li class="cover-file">
                 <div>
-                    <input id="file-path" type="text" placeholder="Фото" />
-                    <input id="browsefile-button" type="button" value="Обзор..."
-                           onclick="document.formreg.UploadedImage.click()" />
+                    <input id="photo-input" type="text" placeholder="Фото" onclick="document.formreg.UploadedImage.click()"/>
                 </div>
-                <input  type="file" id="file" name="UploadedImage" style="display: none" />
-
             </li>
+            <li>
+                @Html.TextAreaFor(e => e.Biography, new { placeholder = "Биография", id = "item-bio" })
+            </li>
+
         </ul>
-        <button type="submit" class="add-button">Добавить</button>
+        <input type="file" id="file" name="UploadedImage" style="display: none"/>
+        <button type="submit" id="save-button">Сохранить</button>
     </div>
 }
-    
-    <script src="/Scripts/jquery-3.2.0.min.js"></script>
-    <script src="/Scripts/openfile.dialog.js" type="text/javascript"></script>
-    
-</body>
 
-@section Details{
-    <link href="/Areas/Management/Styles/details.css" rel="stylesheet" type="text/css"/>}
+@section NewArtist
+{
+    <link href="/Areas/Management/Styles/new-artist.css" rel="stylesheet" type="text/css"/>
+}
+<script src="/Scripts/jquery-3.2.0.min.js"></script>
+<script src="/Scripts/openfile.dialog.js" type="text/javascript"></script>
+
+</body>
