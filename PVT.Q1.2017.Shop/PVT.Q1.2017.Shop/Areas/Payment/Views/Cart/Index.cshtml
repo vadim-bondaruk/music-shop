@@ -12,7 +12,8 @@
     <title>Корзина</title>
 </head>
 <body>
-    <form action="/Home/Index" method="post">
+    <form action="/Cart/DeleteTrack" method="post">
+        @Html.Hidden("currentUserId", @Model.CurrentUserId)
         <table border="1" cellpadding="3">
             <thead>
                 <tr>
@@ -32,17 +33,19 @@
                         <td>@anyTrack.Name</td>
                         <td>@anyTrack.Duration</td>
                         <td>@anyTrack.TrackPrices.First(p => p.Currency.ShortName == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
-                        <td>@Html.CheckBox("myCheckbox", false)</td>
+                        <td><button type="submit" name="TrackId" value=@anyTrack.Id>Удалить</button></td>
                     </tr>
                 }
             </tbody>
         </table>
+        </form>
         <br />
-        Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
-        <br />
-        <br />
-        <button type="submit" name="action" value="pay">Оплатить</button>
-        <button type="submit" name="action" value="remove">Удалить</button>
-    </form>
+        <form action="/Cart/Pay" method="post">
+            Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
+            <br />
+            <br />
+            @Html.Hidden("currentUserId", @Model.CurrentUserId)
+            <button type="submit" name="TotalPrice" value=@Model.TotalPrice>Оплатить</button>
+        </form>
 </body>
 </html>

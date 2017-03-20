@@ -11,6 +11,11 @@
         /// <summary>
         /// Gets or sets a Collection of tracks for View
         /// </summary>
+        public int CurrentUserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a Collection of tracks for View
+        /// </summary>
         public ICollection<Track> Tracks { get; set; }
 
         /// <summary>

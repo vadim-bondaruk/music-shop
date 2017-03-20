@@ -65,6 +65,7 @@
                 this._viewModel.Tracks = (IList<Track>)cart.Tracks;
             }
 
+            this._viewModel.CurrentUserId = currentUserId;
             /// <summary>
             /// Временные данные: пользователь выбрал отображение в долларах
             /// </summary>
