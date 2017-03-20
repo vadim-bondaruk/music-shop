@@ -1,9 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
     using System.Web.Mvc;
-    using AutoMapper;
+    using Helpers;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using ViewModels;
 
@@ -48,7 +47,7 @@
                 return this.View();
             }
 
-            var track = Mapper.Map<TrackManagementViewModel>(this._trackService.GetTrackDetails(id.Value));
+            var track = ManagementMapper.GetTrackManagementViewModel(this._trackService.GetTrackDetails(id.Value));
             return this.View(track);
         }
 
@@ -71,7 +70,7 @@
             {
                 using (var repository = this._repositoryFactory.GetTrackRepository())
                 {
-                    repository.AddOrUpdate(Mapper.Map<Track>(track));
+                    repository.AddOrUpdate(ManagementMapper.GetTrackModel(track));
                     repository.SaveChanges();
                 }
 
@@ -98,7 +97,7 @@
                 return this.RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            var track = Mapper.Map<TrackManagementViewModel>(this._trackService.GetTrackDetails(id.Value));
+            var track = ManagementMapper.GetTrackManagementViewModel(this._trackService.GetTrackDetails(id.Value));
             return this.View(track);
         }
 
@@ -118,7 +117,7 @@
             {
                 using (var repository = this._repositoryFactory.GetTrackRepository())
                 {
-                    repository.Delete(Mapper.Map<Track>(track));
+                    repository.Delete(ManagementMapper.GetTrackModel(track));
                     repository.SaveChanges();
                 }
             }

@@ -24,27 +24,6 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             FluentValidationModelValidatorProvider.Configure();
-
-            // temporary... will be removed in the future...
-            Mapper.Initialize(cfg => cfg.CreateMap<ArtistViewModel, Artist>());
-            Mapper.Initialize(cfg => cfg.CreateMap<GenreViewModel, Genre>());
-
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
-                                        .ForMember(dest => dest.Image, opt => opt.UseValue<HttpPostedFileBase>(null))
-                                        .ForMember(dest => dest.TrackFile, opt => opt.UseValue<HttpPostedFileBase>(null)));
-
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>()
-                                        .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                                        .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                                        .ForMember(dest => dest.TrackFile, opt => opt.ResolveUsing(src => src.TrackFile.ToBytes()))
-                                        .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.Image.ToBytes())));
-
-            Mapper.Initialize(cfg => cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>()
-                                        .ForMember(dest => dest.Cover, opt => opt.UseValue<HttpPostedFileBase>(null)));
-
-            Mapper.Initialize(cfg => cfg.CreateMap<AlbumManagementViewModel, Album>()
-                                        .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                                        .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.Cover.ToBytes())));
         }
     }
 }

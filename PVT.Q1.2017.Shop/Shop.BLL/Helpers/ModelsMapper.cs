@@ -217,7 +217,7 @@
         }
 
         /// <summary>
-        /// Configures and return a new instance of the common mapper.
+        /// Configures and returns a new instance of the common mapper.
         /// </summary>
         /// <returns>
         /// A new instance of the common mapper.
@@ -254,7 +254,7 @@
         }
 
         /// <summary>
-        /// Configures and return a new instance of the mapper for models which have a list of other models.
+        /// Configures and returns a new instance of the mapper for models which have a list of other models.
         /// </summary>
         /// <returns>
         /// A new instance of the mapper for models which have a list of other models.
@@ -276,7 +276,7 @@
         }
 
         /// <summary>
-        /// Configures and return a new instance of the mapper for models with detailed information.
+        /// Configures and returns a new instance of the mapper for models with detailed information.
         /// </summary>
         /// <returns>
         /// A new instance of the mapper for models with detailed information.

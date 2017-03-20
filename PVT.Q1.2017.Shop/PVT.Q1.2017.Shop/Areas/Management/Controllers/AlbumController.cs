@@ -1,10 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
     using System.Web.Mvc;
-    using AutoMapper;
+    using Helpers;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using ViewModels;
 
@@ -51,7 +49,7 @@
                 return this.View();
             }
 
-            var album = Mapper.Map<AlbumManagementViewModel>(this._albumService.GetAlbumDetails(id.Value));
+            var album = ManagementMapper.GetAlbumManagementViewModel(this._albumService.GetAlbumDetails(id.Value));
             return this.View(album);
         }
 
@@ -74,7 +72,7 @@
             {
                 using (var repository = this._repositoryFactory.GetAlbumRepository())
                 {
-                    repository.AddOrUpdate(Mapper.Map<Album>(album));
+                    repository.AddOrUpdate(ManagementMapper.GetAlbumModel(album));
                     repository.SaveChanges();
                 }
 
@@ -101,7 +99,7 @@
                 return this.RedirectToAction("List", "Album", new { area = "Content" });
             }
 
-            var album = Mapper.Map<AlbumManagementViewModel>(this._albumService.GetAlbumDetails(id.Value));
+            var album = ManagementMapper.GetAlbumManagementViewModel(this._albumService.GetAlbumDetails(id.Value));
             return this.View(album);
         }
 
@@ -115,13 +113,13 @@
         /// Redirects to the view which generates page with albums list.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete([Bind(Include = "Id")] AlbumDetailsViewModel album)
+        public ActionResult Delete([Bind(Include = "Id")] AlbumManagementViewModel album)
         {
             if (album != null && ModelState.IsValid)
             {
                 using (var repository = this._repositoryFactory.GetAlbumRepository())
                 {
-                    repository.Delete(Mapper.Map<Album>(album));
+                    repository.Delete(ManagementMapper.GetAlbumModel(album));
                     repository.SaveChanges();
                 }
             }
