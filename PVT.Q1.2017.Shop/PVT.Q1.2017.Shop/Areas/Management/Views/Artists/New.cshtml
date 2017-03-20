@@ -1,6 +1,6 @@
 ﻿@model Shop.Common.Models.ViewModels.ArtistManageViewModel
 <body>
-<h2 class="op-title">Регистрация нового исполнителя</h2>
+<h2 class="details-artist-title">Регистрация нового исполнителя</h2>
 @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
 {
     @Html.AntiForgeryToken()
