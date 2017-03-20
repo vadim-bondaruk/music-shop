@@ -96,7 +96,7 @@
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult AddOrUpdateCurrency(Currency currency)
         {
-            if (new CurrencyValidator().Validate(currency).IsValid)
+            if (ModelState.IsValid)
             {
                 using (var repo = this._factory.GetCurrencyRepository())
                 {
