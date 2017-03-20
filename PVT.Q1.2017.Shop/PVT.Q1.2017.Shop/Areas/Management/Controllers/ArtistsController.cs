@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
 
     using AutoMapper;
@@ -58,7 +59,7 @@
         /// <summary>
         /// </summary>
         /// <param name="artistId">
-        /// The artist id.
+        ///     The artist id.
         /// </param>
         /// <returns>
         /// </returns>
@@ -66,6 +67,19 @@
         {
             var artist = this.artistService.GetArtistViewModel(artistId);
             return this.View(artist);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="artistId">
+        ///     The artist id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult Edit(int artistId)
+        {
+            var viewModel = this.artistService.GetArtistViewModel(artistId);
+            return this.View(viewModel);
         }
 
         /// <summary>
@@ -84,9 +98,9 @@
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult New([Bind(Include = "Name, Birthday, Biography, UploadedImage")] ArtistManageViewModel viewModel)
+        [HttpPost ,ValidateAntiForgeryToken]
+        public virtual ActionResult New(
+            [Bind(Include = "Name, Birthday, Biography, UploadedImage")] ArtistManageViewModel viewModel)
         {
             var id = this.artistService.SaveNewArtist(viewModel);
             return this.RedirectToAction("Details", new { artistId = id });
@@ -94,21 +108,17 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="model">
-        ///     The model.
+        /// <param name="viewModel">
+        /// The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost]
-        public virtual ActionResult Update(ArtistManageViewModel model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public virtual ActionResult Update(
+            [Bind(Include = "Id, Name, Birthday, Biography, UploadedImage, Photo")] ArtistManageViewModel viewModel)
         {
-            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
-            {
-                var artist = Mapper.Map<Artist>(model);
-                artistRepo.AddOrUpdate(artist);
-            }
-
-            return this.View("Details");
+               this.artistService.SaveNewArtist(viewModel);
+            return this.RedirectToAction("Details", new { artistId = viewModel.Id });
         }
     }
 }
