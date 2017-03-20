@@ -30,12 +30,26 @@
 
         /// <summary>
         /// </summary>
+        /// <param name="artist">
+        /// The artist.
+        /// </param>
+        public void Delete(Artist artist)
+        {
+            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
+            {
+                artistRepo.Delete(artist);
+                artistRepo.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// </summary>
         /// <param name="id">
         ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
-        public ArtistManageViewModel GetArtistViewModel(int id)
+        public ArtistManageViewModel GetById(int id)
         {
             using (var repository = this.Factory.GetArtistRepository())
             {
@@ -49,7 +63,7 @@
         /// <param name="viewModel">
         ///     The view model.
         /// </param>
-        public int SaveNewArtist(ArtistManageViewModel viewModel)
+        public int Save(ArtistManageViewModel viewModel)
         {
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {
