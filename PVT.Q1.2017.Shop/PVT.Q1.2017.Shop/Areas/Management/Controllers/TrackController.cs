@@ -64,10 +64,10 @@
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult AddOrUpdate(
-            [Bind(Include = "Id,Name,Duration,ReleaseDate,Duration,Artist.ArtistId,Genre.GenreId,TrackFile,Image")]
+            [Bind(Include = "Id,Name,Duration,ReleaseDate,Duration,Artist.Id,Genre.Id,TrackFile,Image")]
             TrackManagementViewModel track)
         {
-            if (ModelState.IsValid)
+            if (track != null && ModelState.IsValid)
             {
                 using (var repository = this._repositoryFactory.GetTrackRepository())
                 {

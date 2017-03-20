@@ -198,6 +198,7 @@
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
+    <Compile Include="Areas\Management\ViewModels\AlbumManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />

@@ -6,6 +6,7 @@
     using global::Shop.Common.Models;
     using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using ViewModels;
 
     /// <summary>
     /// The album controller.
@@ -50,13 +51,14 @@
                 return this.View();
             }
 
-            return this.View(this._albumService.GetAlbumDetails(id.Value));
+            var album = Mapper.Map<AlbumManagementViewModel>(this._albumService.GetAlbumDetails(id.Value));
+            return this.View(album);
         }
 
         /// <summary>
         /// Adds the new album in the system or edit existing album.
         /// </summary>
-        /// <param name="model">
+        /// <param name="album">
         /// The album to add or edit.
         /// </param>
         /// <returns>
@@ -64,22 +66,22 @@
         /// otherwise returns the view whitch displays the currnet album with error.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate([Bind(Include = "Id,Name,ReleaseDate,ArtistId")] AlbumDetailsViewModel model)
+        public ActionResult AddOrUpdate(
+            [Bind(Include = "Id,Name,ReleaseDate,Artist.Id,Cover")]
+            AlbumManagementViewModel album)
         {
-            if (ModelState.IsValid)
+            if (album != null && ModelState.IsValid)
             {
-                var album = Mapper.Map<Album>(model);
-            
                 using (var repository = this._repositoryFactory.GetAlbumRepository())
                 {
-                    repository.AddOrUpdate(album);
+                    repository.AddOrUpdate(Mapper.Map<Album>(album));
                     repository.SaveChanges();
                 }
 
                 return this.RedirectToAction("Details", "Album", new { id = album.Id, area = "Content" });
             }
 
-            return this.View(model);
+            return this.View(album);
         }
 
         /// <summary>
@@ -99,27 +101,27 @@
                 return this.RedirectToAction("List", "Album", new { area = "Content" });
             }
 
-            return this.View(this._albumService.GetAlbumDetails(id.Value));
+            var album = Mapper.Map<AlbumManagementViewModel>(this._albumService.GetAlbumDetails(id.Value));
+            return this.View(album);
         }
 
         /// <summary>
         /// Deletes the specified album from the system.
         /// </summary>
-        /// <param name="model">
+        /// <param name="album">
         /// The album to delete.
         /// </param>
         /// <returns>
         /// Redirects to the view which generates page with albums list.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete([Bind(Include = "Id")] AlbumDetailsViewModel model)
+        public ActionResult Delete([Bind(Include = "Id")] AlbumDetailsViewModel album)
         {
-            var album = Mapper.Map<Album>(model);
             if (album != null && ModelState.IsValid)
             {
                 using (var repository = this._repositoryFactory.GetAlbumRepository())
                 {
-                    repository.Delete(album);
+                    repository.Delete(Mapper.Map<Album>(album));
                     repository.SaveChanges();
                 }
             }
