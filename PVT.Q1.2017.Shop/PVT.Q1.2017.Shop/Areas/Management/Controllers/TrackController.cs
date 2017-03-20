@@ -4,8 +4,8 @@
     using AutoMapper;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using ViewModels;
 
     /// <summary>
     /// The track controller
@@ -48,7 +48,8 @@
                 return this.View();
             }
 
-            return this.View(this._trackService.GetTrackDetails(id.Value));
+            var track = Mapper.Map<TrackManagementViewModel>(this._trackService.GetTrackDetails(id.Value));
+            return this.View(track);
         }
 
         /// <summary>
@@ -62,7 +63,9 @@
         /// otherwise returns the view whitch displays the currnet track with error.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate([Bind(Include = "Id,Name,Duration,ReleaseDate,ArtistId,GenreId")] TrackDetailsViewModel track)
+        public ActionResult AddOrUpdate(
+            [Bind(Include = "Id,Name,Duration,ReleaseDate,Duration,Artist.ArtistId,Genre.GenreId,TrackFile,Image")]
+            TrackManagementViewModel track)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +98,8 @@
                 return this.RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            return this.View(this._trackService.GetTrackDetails(id.Value));
+            var track = Mapper.Map<TrackManagementViewModel>(this._trackService.GetTrackDetails(id.Value));
+            return this.View(track);
         }
 
         /// <summary>
@@ -108,7 +112,7 @@
         /// Redirects to the view which generates page with tracks list.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete([Bind(Include = "Id")] TrackDetailsViewModel track)
+        public ActionResult Delete([Bind(Include = "Id")] TrackManagementViewModel track)
         {
             if (track != null && ModelState.IsValid)
             {

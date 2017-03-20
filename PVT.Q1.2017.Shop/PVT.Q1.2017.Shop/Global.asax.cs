@@ -3,6 +3,8 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Areas.Management.Extensions;
+    using Areas.Management.ViewModels;
     using AutoMapper;
     using FluentValidation.Mvc;
     using global::Shop.Common.Models;
@@ -24,7 +26,15 @@
             FluentValidationModelValidatorProvider.Configure();
 
             // temporary... will be removed in the future...
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackDetailsViewModel, Track>());
+            Mapper.Initialize(cfg => cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
+                                        .ForMember(dest => dest.Image, opt => opt.UseValue<HttpPostedFileBase>(null))
+                                        .ForMember(dest => dest.TrackFile, opt => opt.UseValue<HttpPostedFileBase>(null)));
+
+            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>()
+                                        .ForMember(dest => dest.ArtistId, opt => opt.ResolveUsing(src => src.Artist.Id))
+                                        .ForMember(dest => dest.GenreId, opt => opt.ResolveUsing(src => src.Genre.Id))
+                                        .ForMember(dest => dest.TrackFile, opt => opt.ResolveUsing(src => src.TrackFile.ToBytes()))
+                                        .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.Image)));
         }
     }
 }
