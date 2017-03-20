@@ -42,6 +42,9 @@
         /// <param name="userRepo">
         /// Репозиторий для хранения пользователей
         /// </param>
+        /// <param name="trackRepo">
+        /// Репозиторий для хранения трэков
+        /// </param>
         public CartController(ICartRepository cartRepo, IUserDataRepository userRepo, ITrackRepository trackRepo)
         {
             this._cartRepository = cartRepo;
