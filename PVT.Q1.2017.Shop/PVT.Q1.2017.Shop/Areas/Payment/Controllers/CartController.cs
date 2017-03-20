@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using global::Shop.BLL.Services;
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
@@ -19,38 +20,25 @@
         private ICartRepository _cartRepository;
 
         /// <summary>
-        /// Репозиторий для хранения пользователей 
+        /// Сервис для работы с данными в корзине
         /// </summary>
-        private IUserDataRepository _userRepository;
-
-        /// <summary>
-        /// Репозиторий для хранения трэков
-        /// </summary>
-        private ITrackRepository _trackRepository;
+        private ICartService _cartService;
 
         /// <summary>
         /// ViewModel для отображения корзины 
         /// </summary>
         private CartViewModel _viewModel;
 
-        /// <summary>
-        /// Конструктор для контроллера корзины
-        /// </summary>
-        /// <param name="cartRepo">
-        /// Репозиторий для хранения корзины
+        /// <param name="cartService">
+        /// Сервис для работы с данными в корзине
         /// </param>
-        /// <param name="userRepo">
-        /// Репозиторий для хранения пользователей
-        /// </param>
-        /// <param name="trackRepo">
-        /// Репозиторий для хранения трэков
-        /// </param>
-        public CartController(ICartRepository cartRepo, IUserDataRepository userRepo, ITrackRepository trackRepo)
+        /// <param name="repositoryFactory">
+        /// Фабрика для работы с репозиториями
+        public CartController(ICartService cartService, IRepositoryFactory repositoryFactory) 
         {
-            this._cartRepository = cartRepo;
-            this._userRepository = userRepo;
-            this._trackRepository = trackRepo;
-            this._viewModel = new CartViewModel { Tracks = new List<Track>() };
+            this._cartRepository = repositoryFactory.GetCartRepository();
+            this._cartService = cartService;
+            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>() };
         }
 
         /// <summary>
@@ -60,15 +48,13 @@
         /// Id текущего пользователя
         /// </param>
         [HttpGet]
-        public ViewResult Index(int currentUserId)
+        public ViewResult Index(int currentUserId = 0)
         {
             var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
-            if (cart != null)
-            {
-                this._viewModel.Tracks = (IList<Track>)cart.Tracks;
-            }
-
+            this._viewModel.Tracks = (IList<Track>)cart?.Tracks;
+            this._viewModel.Albums = (IList<Album>)cart?.Albums;
             this._viewModel.CurrentUserId = currentUserId;
+
             /// <summary>
             /// Временные данные: пользователь выбрал отображение в долларах
             /// </summary>
@@ -82,69 +68,66 @@
         }
 
         /// <summary>
-        /// Добавление песни в корзину и перенаправление на действие отображения корзины
+        /// Добавление альбома в корзину и перенаправление на действие отображения корзины
         /// </summary>
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="track">
-        /// Добавляемая песня
+        /// <param name="albumId">
+        /// Id добавляемого альбома
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult AddTrack(int currentUserId, int trackId = 0)
+        public RedirectToRouteResult AddAlbum(int currentUserId = 0, int albumId = 0)
         {
-            var track = this._trackRepository.GetById(trackId);
-            if (track == null || trackId == 0)
-            {
-                return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
-            }
-
-            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
-            if (cart == null)
-            {
-                var model = new Cart { UserId = currentUserId, Tracks = new List<Track> { track } };
-                this._cartRepository.AddOrUpdate(model);
-            }
-
-            if (cart != null && cart.Tracks.Count(t => t.Id == trackId) == 0)
-            {
-                cart.Tracks.Add(track);
-                this._cartRepository.AddOrUpdate(cart);
-            }
-
+            this._cartService.AddAlbum(currentUserId, albumId);
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
         }
 
         /// <summary>
-        /// Удаление песни из корзины и перенаправление на действие отображения корзины
+        /// Удаление альбома из корзины и перенаправление на действие отображения корзины
         /// </summary>
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="track">
-        /// Удаляемая песня
+        /// <param name="albumId">
+        /// Id удаляемого альбома
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult DeleteTrack(int currentUserId, int trackId = 0)
+        public RedirectToRouteResult DeleteAlbum(int currentUserId = 0, int albumId = 0)
         {
-            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
-            if (cart == null || trackId == 0)
-            {
-                return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
-            }
+            this._cartService.RemoveAlbum(currentUserId, albumId);
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+        }
 
-            var track = cart.Tracks.FirstOrDefault(t => t.Id == trackId);
-            if (track != null)
-            {
-                cart.Tracks.Remove(track);
-                this._cartRepository.AddOrUpdate(cart);
-            }
+        /// <summary>
+        /// Добавление трэка в корзину и перенаправление на действие отображения корзины
+        /// </summary>
+        /// <param name="currentUserId">
+        /// Id текущего пользователя
+        /// </param>
+        /// <param name="trackId">
+        /// Id добавляемого трэка
+        /// </param>
+        [HttpPost]
+        public RedirectToRouteResult AddTrack(int currentUserId = 0, int trackId = 0)
+        {
+            this._cartService.AddTrack(currentUserId, trackId);
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+        }
 
-            if (cart.Tracks.Count == 0)
-            {
-                this._cartRepository.Delete(cart);
-            }
-
+        /// <summary>
+        /// Удаление трэка из корзины и перенаправление на действие отображения корзины
+        /// </summary>
+        /// <param name="currentUserId">
+        /// Id текущего пользователя
+        /// </param>
+        /// <param name="trackId">
+        /// Id удаляемого трэка
+        /// </param>
+        [HttpPost]
+        public RedirectToRouteResult DeleteTrack(int currentUserId = 0, int trackId = 0)
+        {
+            this._cartService.RemoveTrack(currentUserId, trackId);
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
         }
     }
