@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.Shop.Controllers.Cart
+﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
