@@ -1,6 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
-    using System.Linq;
     using System.Web.Mvc;
 
     using AutoMapper;
@@ -37,22 +36,17 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="model">
-        ///     The model.
+        /// <param name="viewModel">
+        /// The view model.
         /// </param>
         /// <returns>
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(ArtistManageViewModel model)
+        public virtual ActionResult Delete([Bind(Include = "Id")]ArtistManageViewModel viewModel)
         {
-            var artistModel = Mapper.Map<ArtistManageViewModel, Artist>(model);
-            using (var repository = this.repositoryFactory.GetArtistRepository())
-            {
-                repository.Delete(artistModel);
-                repository.SaveChanges();
-            }
-
+            var artist = Mapper.Map<Artist>(viewModel);
+            this.artistService.Delete(artist);
             return this.RedirectToAction("New");
         }
 
@@ -65,7 +59,7 @@
         /// </returns>
         public virtual ActionResult Details(int artistId = 0)
         {
-            var artist = this.artistService.GetArtistViewModel(artistId);
+            var artist = this.artistService.GetById(artistId);
             return this.View(artist);
         }
 
@@ -78,7 +72,7 @@
         /// </returns>
         public virtual ActionResult Edit(int artistId)
         {
-            var viewModel = this.artistService.GetArtistViewModel(artistId);
+            var viewModel = this.artistService.GetById(artistId);
             return this.View(viewModel);
         }
 
@@ -98,26 +92,28 @@
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost ,ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual ActionResult New(
             [Bind(Include = "Name, Birthday, Biography, UploadedImage")] ArtistManageViewModel viewModel)
         {
-            var id = this.artistService.SaveNewArtist(viewModel);
+            var id = this.artistService.Save(viewModel);
             return this.RedirectToAction("Details", new { artistId = id });
         }
 
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
-        /// The view model.
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual ActionResult Update(
             [Bind(Include = "Id, Name, Birthday, Biography, UploadedImage, Photo")] ArtistManageViewModel viewModel)
         {
-               this.artistService.SaveNewArtist(viewModel);
+            this.artistService.Save(viewModel);
             return this.RedirectToAction("Details", new { artistId = viewModel.Id });
         }
     }
