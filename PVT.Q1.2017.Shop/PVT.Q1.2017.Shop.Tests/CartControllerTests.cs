@@ -2,7 +2,7 @@
 using Shop.Common.Models;
 using Moq;
 using System.Collections.Generic;
-using PVT.Q1._2017.Shop.Controllers.Cart;
+using PVT.Q1._2017.Shop.Areas.Payment.Controllers;
 using Shop.DAL.Infrastruture;
 using System;
 using System.Linq.Expressions;
