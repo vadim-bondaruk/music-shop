@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlbumServiceTest.cs" />
+    <Compile Include="BllServiceTests\PaymentServiceTest.cs" />
     <Compile Include="CurrencyRateTest.cs" />
     <Compile Include="CurrencyServiceTest.cs" />
     <Compile Include="Moq\AlbumPriceRepositoryMoq.cs" />

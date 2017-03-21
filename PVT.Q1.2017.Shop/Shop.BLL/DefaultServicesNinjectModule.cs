@@ -41,6 +41,7 @@
             Bind<IUserDataService>().To<UserDataService>();
 
             Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
+            Bind<IPaymentService>().To<PaymentService>();
 
             Bind<ICurrencyService>().To<CurrencyService>();
 

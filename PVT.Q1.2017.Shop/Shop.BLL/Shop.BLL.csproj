@@ -73,12 +73,14 @@
     <Compile Include="Services\Infrastructure\ICurrencyService.cs" />
     <Compile Include="Services\Infrastructure\IFeedbackService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumPriceService.cs" />
+    <Compile Include="Services\Infrastructure\IPaymentService.cs" />
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
     <Compile Include="Services\Infrastructure\IUserPaymentMethodService.cs" />
     <Compile Include="Services\Infrastructure\IUserDataService.cs" />
     <Compile Include="Services\Infrastructure\IVoteService.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\PaymentService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\UserPaymentMethodService.cs" />
@@ -103,6 +105,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
