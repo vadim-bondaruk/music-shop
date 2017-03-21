@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201703180835104_TablePrefixRemoved.Designer.cs">
       <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703202125138_Albums_ArtistId_added.cs" />
+    <Compile Include="Migrations\201703202125138_Albums_ArtistId_added.Designer.cs">
+      <DependentUpon>201703202125138_Albums_ArtistId_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -153,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703180835104_TablePrefixRemoved.resx">
       <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703202125138_Albums_ArtistId_added.resx">
+      <DependentUpon>201703202125138_Albums_ArtistId_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
