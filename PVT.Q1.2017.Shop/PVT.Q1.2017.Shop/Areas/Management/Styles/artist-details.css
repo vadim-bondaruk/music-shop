@@ -50,6 +50,8 @@ body {
 .col1 h1 {
     display: table-caption;
     color: white;
+    border: #373737;
+    text-shadow: -1px -1px 1px black, 0 0 0.1em white;
     font-size: 5em;
     vertical-align: middle;
 }

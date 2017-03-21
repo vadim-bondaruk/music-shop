@@ -27,6 +27,7 @@ input, button, label {
 }
 
 input[type=text], input[type=date], input[type=time], input[type=file], textarea {
+    max-width: 100%;
     color: #bbb;
     text-shadow: 1px 1px 1px black;
     background: rgba(0, 0, 0, 0.16);
@@ -43,6 +44,10 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
     outline: 0;
 }
 
+img {
+    max-width: 350px;
+    max-height: 500px;
+}
 
 .center {
     text-align: center;
@@ -51,19 +56,21 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
 
 .row {
     display: block;
+    margin-top: 50px;
 }
 
 .leftpan {
-    width: 200px;
+    width: 20%;
     display: inline-block;
+    vertical-align: top;
 }
 
 .rightpan {
     display: inline-block;
+    width: 70%;
 }
 
 .inputs {
-    margin-top: 50px;
     width: 90%;
     align-content: center; 
     display: inline-block;
@@ -72,11 +79,14 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
 
 .new-artist-items {
     list-style-type: none;
+     -webkit-padding-start: 0;
 }
 .new-artist-items li {
     width: 100%;
     height: 40px;
-    margin-top: 5px;   
+    margin-top: 5px;
+    padding: 0;
+   
 }
 
 .new-artist-items li input, textarea {
