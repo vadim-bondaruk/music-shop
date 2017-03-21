@@ -18,7 +18,7 @@ namespace Shop.DAL.Migrations.Configurations
             HasRequired(cr => cr.Currency).WithMany(c => c.CurrencyRates).HasForeignKey(cr => cr.CurrencyId).WillCascadeOnDelete(false);
             HasRequired(cr => cr.TargetCurrency).WithMany(c => c.TargetCurrencyRates).HasForeignKey(cr => cr.TargetCurrencyId).WillCascadeOnDelete(false);
 
-            ToTable("tbCurrencyRates");
+            ToTable("CurrencyRates");
         }
     }
 }
