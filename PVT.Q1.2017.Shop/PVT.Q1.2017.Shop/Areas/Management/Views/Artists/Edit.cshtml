@@ -7,26 +7,25 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.Photo)
-
-    <div class="main-block">
-        <div class="image-block">
-            <img id="artist-img" src="data:image;base64,@Convert.ToBase64String(Model.Photo)"/>
-            <span id="edit-image-link" onclick="document.formreg.UploadedImage.click()">Изменить</span>
+    <div class="outer">
+        <div class="main-block">
+            <div class="image-block">
+                <img id="artist-img" onclick="document.formreg.UploadedImage.click()" src="data:image;base64,@Convert.ToBase64String(Model.Photo)" />
+            </div>
+            <ul class="edit-artist-items">
+                <li>
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" }, value = Model.Name })
+                </li>
+                <li>
+                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения/основания", type = "text", value = Model.Birthday } })
+                </li>
+                <li class="bio">
+                    @Html.TextAreaFor(e => e.Biography, 10, 155, new { placeholder = "Биография", value = Model.Biography, @class = "bio" })
+                </li>
+            </ul>
         </div>
-        <ul class="edit-artist-items">
-            <li>
-                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" }, value = Model.Name })
-            </li>
-            <li>
-                @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения/основания", type = "text", value = Model.Birthday } })
-            </li>
-            <li>
-                @Html.TextAreaFor(e => e.Biography, 10, 155, new { placeholder = "Биография", value = Model.Biography, id = "biography" })
-            </li>
-        </ul>
         <button type="submit" class="save-button">Сохранить</button>
     </div>
-
     <input type="file" id="file" name="UploadedImage" style="display: none"/>
     
 }
@@ -37,5 +36,7 @@
 
 </body>
 
-@section EditArtist{
-    <link href="/Areas/Management/Styles/edit-artist.css" rel="stylesheet" type="text/css"/>}
+@section ArtistEdit{
+    <link href="/Areas/Management/Styles/artist-edit.css" rel="stylesheet" type="text/css"/>
+    <link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
+    }

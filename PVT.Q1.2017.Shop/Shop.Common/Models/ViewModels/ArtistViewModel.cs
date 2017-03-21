@@ -1,6 +1,7 @@
 ﻿namespace Shop.Common.Models.ViewModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// The artist view model.

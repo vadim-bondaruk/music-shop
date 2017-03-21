@@ -9,29 +9,31 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     @RenderSection("TrackList", false)
     @RenderSection("AddToCartButton", false)
-    @RenderSection("NewArtist", false)
-    @RenderSection("EditArtist", false)
-    @RenderSection("Details", false)
+    @RenderSection("ArtistNew", false)
+    @RenderSection("ArtistEdit", false)
+    @RenderSection("ArtistDetails", false)
+
 </head>
 
 <body>
-<ul class="topbar">
-    <li>
+    <div class="topbar">
+    <ul class="nav-items">
+        <li>
         @Html.ActionLink("New artist", "New", "Artists", null, null)
-    </li>
-    <li>
-        @Html.ActionLink("New genre", "Genres", "New", null)
-    </li>
-    <li>
-        <a href="/Areas/Management/Views/Tracks/New.cshtml">New track</a>
-    </li>
-    <li>
-        @Html.ActionLink("New album", "New", "Albums", null, null)
-    </li>
-    <li>
-        <a href="/Areas/Management/Views/Artists/New.cshtml">New artist</a>
-    </li>
-</ul>
+        <li>
+            @Html.ActionLink("Artist info", "Details", "Artists", new { artistId = "6" }, null)
+        </li>
+        <li>
+            @Html.ActionLink("New genre", "Genres", "New", null)
+        </li>
+        <li>
+            @Html.ActionLink("New track", "New", "Tracks", null, null)
+        </li>
+        <li>
+            @Html.ActionLink("New album", "New", "Albums", null, null)
+        </li>
+    </ul>
+        </div>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">

@@ -126,9 +126,10 @@
     <Content Include="App_Data\Shop_log.ldf">
       <DependentUpon>Shop.mdf</DependentUpon>
     </Content>
-    <Content Include="Areas\Management\Styles\details.css" />
-    <Content Include="Areas\Management\Styles\new-artist.css" />
-    <Content Include="Areas\Management\Styles\edit-artist.css" />
+    <Content Include="Areas\Management\Styles\artist-details.css" />
+    <Content Include="Areas\Management\Styles\artist-new.css" />
+    <Content Include="Areas\Management\Styles\artist-edit.css" />
+    <Content Include="Areas\Management\Styles\navpan.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />

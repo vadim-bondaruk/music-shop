@@ -1,0 +1,93 @@
+body { -webkit-margin-start: 0; }
+
+.navbar { margin: 0.8% auto; }
+
+.navbar-brand {
+    margin-top: 30px;
+     text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red;
+}
+
+#artistDetails { margin: 0 3%; }
+
+.details-artist-title {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+
+.details-block { position: relative; }
+
+
+.new-album-title {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+
+body {
+    line-height: 1;
+    font: 14px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #404040;
+    background: #373737 url("/img/bg.png") 0 0 repeat;
+}
+
+.main {
+    display: block;
+    width: 90%;
+    margin-left: 100px;
+}
+
+.left-part {
+
+    vertical-align: top;
+    display: inline-block;
+}
+
+.col1 { display: table; }
+
+.col1 h1 {
+    display: table-caption;
+    color: white;
+    font-size: 5em;
+    vertical-align: middle;
+}
+
+.col1 img {
+    display: table-cell;
+    max-width: 350px;
+    max-height: 500px;
+    vertical-align: top;
+}
+
+
+.right-part {
+    display: inline-block;
+    vertical-align: top;
+    margin: 80px 0 0 80px;
+    width: 70%;
+}
+
+.main h2 {
+    display: none;
+}
+
+.right-part article {
+    color: white;
+    min-width: 300px;
+    height: 600px;
+    overflow: auto;
+    -webkit-margin-start: 0;
+}
+
+.service-links {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+}
+
+.copyright {
+    color: white;
+    margin: 0 auto;
+}
