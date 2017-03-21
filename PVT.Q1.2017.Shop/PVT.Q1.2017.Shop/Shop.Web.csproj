@@ -167,6 +167,12 @@
     <Content Include="Areas\Content\Views\web.config" />
     <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\EditCurrency.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\All.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\CreateCurrency.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -195,12 +201,15 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
+    <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Areas\Content\Controllers\TrackController.cs" />
     <Compile Include="Global.asax.cs">
@@ -245,6 +254,7 @@
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
+    <Folder Include="Views\Error\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Shop.Common.Models.Currency>
+
+@{
+    ViewBag.Title = "All";
+}
+
+<h2>List of currencies</h2>
+
+<p>
+    @Html.ActionLink("Go back", "Index")
+</p>
+<p>
+    @Html.ActionLink("Create New", "CurrencyEditor")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShortName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Symbol)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShortName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Symbol)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "CurrencyEditor", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "DeleteCurrency", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
