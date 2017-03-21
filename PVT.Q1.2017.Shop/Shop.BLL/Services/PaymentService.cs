@@ -30,7 +30,14 @@
         public void CreatePaymentWithPaymentCard()
         {
             // Get a reference to the config
-            var config = ConfigManager.Instance.GetProperties();
+            // var config = ConfigManager.Instance.GetProperties();
+            // var config = ConfigManager.GetConfigWithDefaults(new Dictionary<string, string>());
+            var config = new Dictionary<string, string>()
+            {
+                { "mode", "sandbox" },
+                { "clientId", "Aa9fGBRFw-6pgCyMe2FQQf2SGccpQnILH4lPyjAXndpeyyrSEWPnRdO8tLMYwqzBy2h8GV0VisT-MJrH" },
+                { "clientSecret", "EO6ZTSoCXFTXEwFhzwwxtibA-omO7yVNn5z1FSK6qCYXEfLWvAzoCi9mNOoueIGfZBtf4TdmbHNn_Hzg" }
+            };
 
             // Use OAuthTokenCredential to request an access token from PayPal
             var accessToken = new OAuthTokenCredential(config).GetAccessToken();
