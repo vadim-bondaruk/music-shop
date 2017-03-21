@@ -47,6 +47,7 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
 img {
     max-width: 350px;
     max-height: 500px;
+    border-style: inset;
 }
 
 .center {
@@ -72,7 +73,6 @@ img {
 
 .inputs {
     width: 90%;
-    align-content: center; 
     display: inline-block;
 }
 .artistDetails { text-align: center; }

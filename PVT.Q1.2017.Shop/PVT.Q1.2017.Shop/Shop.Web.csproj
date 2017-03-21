@@ -137,6 +137,7 @@
     <Content Include="Global.asax" />
     <Content Include="img\arrow.png" />
     <Content Include="img\bg.png" />
+    <Content Include="img\defuserpic.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
