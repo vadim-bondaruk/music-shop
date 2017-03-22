@@ -19,7 +19,7 @@
             this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
             this.Property(a => a.Biography).IsMaxLength();
             this.Property(a => a.Birthday).IsOptional();
-            this.ToTable("tbArtists");
+            this.ToTable("Artists");
         }
     }
 }

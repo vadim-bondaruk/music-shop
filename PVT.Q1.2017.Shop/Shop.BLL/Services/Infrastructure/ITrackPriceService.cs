@@ -1,35 +1,43 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
-    using Common.Models;
+    using System.Collections.Generic;
+    using Common.Models.ViewModels;
 
     /// <summary>
+    /// The track price service.
     /// </summary>
     public interface ITrackPriceService
     {
         /// <summary>
-        /// Returns the track price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
+        /// Returns the track price in the specified currency and price level.
         /// </summary>
-        /// <param name="track">
-        /// The track.
+        /// <param name="trackId">
+        /// The track id.
         /// </param>
-        /// <param name="priceLevel">
-        /// The price level.
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
         /// </param>
-        /// <param name="currency">
-        /// The currency.
+        /// <param name="priceLevelId">
+        /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// The track price in the specified currency for the specified  <paramref name="priceLevel"/> or <b>null</b>.
+        /// The track price in the specified currency and price level or <b>null</b>.
         /// </returns>
-        TrackPrice GetTrackPrice(Track track, PriceLevel priceLevel, Currency currency);
+        PriceViewModel GetTrackPrice(int trackId, int? currencyCode = null, int? priceLevelId = null);
 
         /// <summary>
-        /// Returns the track price with the specified <paramref name="id"/>
+        /// Returns all track prices for the specified price level.
         /// </summary>
-        /// <param name="id">The track price id.</param>
-        /// <returns>
-        /// The track price with the specified <paramref name="id"/> or <b>null</b> if track price doesn't exist.
-        /// </returns>
-        TrackPrice GetTrackPrice(int id);
+        /// <param name="trackId">The track id.</param>
+        /// <param name="priceLevelId">The price level id.</param>
+        /// <returns>All track prices for the specified price level.</returns>
+        ICollection<PriceViewModel> GetTrackPrices(int trackId, int priceLevelId);
+
+        /// <summary>
+        /// Returns all track prices for the default price level.
+        /// </summary>
+        /// <param name="trackId">The track id.</param>
+        /// <returns>All track prices.</returns>
+        ICollection<PriceViewModel> GetTrackPrices(int trackId);
     }
 }

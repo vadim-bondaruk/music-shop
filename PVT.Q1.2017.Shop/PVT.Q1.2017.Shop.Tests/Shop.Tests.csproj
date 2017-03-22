@@ -36,8 +36,8 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -56,8 +56,8 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Moq, Version=4.5.3.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.5.3\lib\net45\Moq.dll</HintPath>
+    <Reference Include="Moq, Version=4.7.1.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.7.1\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -106,23 +106,26 @@
     <Compile Include="BllServiceTests\PaymentServiceTest.cs" />
     <Compile Include="CurrencyRateTest.cs" />
     <Compile Include="CurrencyServiceTest.cs" />
+    <Compile Include="ModelsMapperTest.cs" />
     <Compile Include="Moq\AlbumPriceRepositoryMoq.cs" />
     <Compile Include="Moq\AlbumRepositoryMoq.cs" />
     <Compile Include="Moq\AlbumTrackRelationRepositoryMoq.cs" />
     <Compile Include="Moq\ArtistRepositoryMoq.cs" />
+    <Compile Include="Moq\CartRepositoryMoq.cs" />
     <Compile Include="Moq\CurrencyRateRepositorMoq.cs" />
     <Compile Include="Moq\CurrencyRepositoryMoq.cs" />
     <Compile Include="Moq\FeedbackRepositoryMoq.cs" />
     <Compile Include="Moq\GenreRepositoryMoq.cs" />
     <Compile Include="Moq\PriceLevelRepositoryMoq.cs" />
     <Compile Include="Moq\RepositoryFactoryMoq.cs" />
+    <Compile Include="UserServiceTests.cs" />
     <Compile Include="UserDataServiceTest.cs" />
     <Compile Include="VoteServiceTest.cs" />
     <Compile Include="FeedbackServiceTest.cs" />
     <Compile Include="BllServiceTests\CurrencyRateServiceTest.cs" />
     <Compile Include="CartControllerTests.cs" />
     <Compile Include="CartRepositoryTests.cs" />
-    <Compile Include="CartViewModelTests.cs" />
+    <Compile Include="CartViewModelServiceTests.cs" />
     <Compile Include="Moq\TrackPriceRepositoryMoq.cs" />
     <Compile Include="Moq\TrackRepositoryMoq.cs" />
     <Compile Include="Moq\UserDataRepositoryMoq.cs" />

@@ -50,7 +50,7 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this._albumService.GetAlbum(id.Value));
+            return this.View(this._albumService.GetAlbumDetails(id.Value));
         }
 
         /// <summary>

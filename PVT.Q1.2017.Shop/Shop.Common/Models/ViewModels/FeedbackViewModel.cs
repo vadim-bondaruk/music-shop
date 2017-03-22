@@ -8,7 +8,7 @@
         /// <summary>
         /// Gets or sets the user id.
         /// </summary>
-        public int UserId { get; set; }
+        public int UserDataId { get; set; }
 
         /// <summary>
         /// Gets or sets the user name.
@@ -23,6 +23,6 @@
         /// <summary>
         /// Gets or sets the mark.
         /// </summary>
-        public int? Mark { get; set; }
+        public int Mark { get; set; }
     }
 }
