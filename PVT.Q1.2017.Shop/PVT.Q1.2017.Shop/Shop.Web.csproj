@@ -126,9 +126,12 @@
     <Content Include="App_Data\Shop_log.ldf">
       <DependentUpon>Shop.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\Management\Styles\albums-list.css" />
     <Content Include="Areas\Management\Styles\artist-details.css" />
+    <Content Include="Areas\Management\Styles\album-new.css" />
     <Content Include="Areas\Management\Styles\artist-new.css" />
     <Content Include="Areas\Management\Styles\artist-edit.css" />
+    <Content Include="Areas\Management\Styles\managment-common.css" />
     <Content Include="Areas\Management\Styles\navpan.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -156,11 +159,14 @@
     <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Management\Views\Track\AddOrUpdate.cshtml" />
     <Content Include="Areas\Management\Views\Track\Delete.cshtml" />
-    <Content Include="Areas\Management\Views\Album\AddOrUpdate.cshtml" />
-    <Content Include="Areas\Management\Views\Album\Delete.cshtml" />
     <Content Include="Areas\Content\Views\web.config" />
     <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Management\Views\Artists\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\Edit.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\List.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\List.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-ru.js" />
     <Content Include="Scripts\del-artist.js" />
@@ -187,20 +193,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Content\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
+    <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Management\Models\GenreManagmentViewModel.cs" />
     <Compile Include="Areas\Management\Models\TrackManagmentViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
-    <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
-    <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
+    <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Areas\Content\Controllers\TrackController.cs" />
+    <Compile Include="Areas\Content\Controllers\TracksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,11 +229,10 @@
     <Content Include="Views\Tracks\List.cshtml" />
     <Content Include="Views\Tracks\AlbumList.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Areas\Content\Views\Track\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Track\List.cshtml" />
-    <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
-    <Content Include="Areas\Content\Views\Album\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Album\List.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -237,7 +244,6 @@
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Content\Models\" />
-    <Folder Include="Areas\Content\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Shared\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Views\Albums\" />

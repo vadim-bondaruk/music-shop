@@ -87,6 +87,7 @@
     <Compile Include="Models\ViewModels\AlbumManageViewModel.cs" />
     <Compile Include="Models\ViewModels\AlbumViewModel.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\ViewModels\GenreManageViewModel.cs" />
     <Compile Include="Models\ViewModels\ArtistViewModel.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
