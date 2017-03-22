@@ -53,6 +53,8 @@
                     _currencies.RemoveAt(_currencies.Count - 1);
                 }
             });
+
+            _mock.Setup(m => m.GetDefaultCurrency()).Returns(new Currency { Code = 840, ShortName = "USD" });
         }
 
         public ICurrencyRepository Repository

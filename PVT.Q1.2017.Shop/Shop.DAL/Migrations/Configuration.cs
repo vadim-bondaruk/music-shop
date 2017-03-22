@@ -3,14 +3,12 @@ namespace Shop.DAL.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Common.Models;
-    using System;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Shop.DAL.Context.ShopContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(Context.ShopContext context)
@@ -46,21 +44,18 @@ namespace Shop.DAL.Migrations
 
         private void AddDefaultCurrencyRates(Context.ShopContext context)
         {
-      
             if (!context.Set<CurrencyRate>().Any())
             {
                 context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
                     CurrencyId = 1,
                     TargetCurrencyId = 2,
-                    CrossCourse = 0.9M,
-                    Date=DateTime.Now
+                    CrossCourse = 0.9M
                 }});
 
                 context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
                     CurrencyId = 1,
                     TargetCurrencyId = 2,
-                    CrossCourse = 1.2M,
-                    Date=DateTime.Now
+                    CrossCourse = 1.2M
                 }});
             }
 
