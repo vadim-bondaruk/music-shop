@@ -21,7 +21,7 @@
         /// <summary>
         /// Репозиторий для хранения пользователей 
         /// </summary>
-        private IUserRepository _userRepository;
+        private IUserDataRepository _userRepository;
         #endregion
         /// <summary>
         /// Конструктор для контроллера корзины
@@ -32,7 +32,7 @@
         /// <param name="userRepo">
         /// Репозиторий для хранения пользователей
         /// </param>
-        public CartController(ICartRepository cartRepo, IUserRepository userRepo)
+        public CartController(ICartRepository cartRepo, IUserDataRepository userRepo)
         {
             this._cartRepository = cartRepo;
             this._userRepository = userRepo;

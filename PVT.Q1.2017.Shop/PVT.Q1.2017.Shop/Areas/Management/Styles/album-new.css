@@ -1,0 +1,56 @@
+﻿img {
+    max-width: 350px;
+    max-height: 500px;
+    border-style: inset;
+}
+
+.center {
+    text-align: center;
+    width: 95%;
+}
+
+.row {
+    display: block;
+    margin-top: 50px;
+}
+
+.leftpan {
+    width: 20%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.rightpan {
+    display: inline-block;
+    width: 40%;
+}
+
+.rightpan ul {
+    vertical-align: top;
+    display: block;
+}
+.rightpan ul li {
+    margin-top: 25px;
+}
+
+.rightpan ul li input {
+}
+
+.rightpan ul #first {
+    margin-top: 0;
+}
+
+.save-button {
+    margin-top: 20px;
+    width: 120px;
+    height: 40px;
+    background: #404040;
+    color: #bbb;
+    border-color: #282828;
+    border-radius: 5px;
+    border-width: 0.1px;
+}
+
+footer {
+    display:none;
+}

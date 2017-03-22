@@ -1,0 +1,117 @@
+﻿body {
+    font: 14px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #404040;
+    background: #373737 url("/img/bg.png") 0 0 repeat;
+}
+
+.navbar-brand {
+    text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red;
+    width: 150px;
+    margin: 30px 0 0 auto;
+}
+
+.reg-new-artist-title {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+
+input, button, label {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input[type=text], input[type=date], input[type=time], input[type=file], textarea {
+    max-width: 100%;
+    color: #bbb;
+    text-shadow: 1px 1px 1px black;
+    background: rgba(0, 0, 0, 0.16);
+    border: 0;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+}
+
+input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[type=time]:focus, textarea:focus {
+    color: white;
+    background: rgba(0, 0, 0, 0.1);
+    outline: 0;
+}
+
+img {
+    max-width: 350px;
+    max-height: 500px;
+    border-style: inset;
+}
+
+.center {
+    text-align: center;
+    width: 100%;
+}
+
+.row {
+    display: block;
+    margin-top: 50px;
+}
+
+.leftpan {
+    width: 20%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.rightpan {
+    display: inline-block;
+    width: 70%;
+}
+
+.inputs {
+    width: 90%;
+    display: inline-block;
+}
+.artistDetails { text-align: center; }
+
+.new-artist-items {
+    list-style-type: none;
+     -webkit-padding-start: 0;
+}
+.new-artist-items li {
+    width: 100%;
+    height: 40px;
+    margin-top: 5px;
+    padding: 0;
+   
+}
+
+.new-artist-items li input, textarea {
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+}
+
+#item-bio {
+    padding-top: 10px;
+    height: 100%;
+    max-height: 450px;
+}
+
+.save-button {
+    margin-top: 20px;
+    width: 120px;
+    height: 40px;
+    background: #404040;
+    color: #bbb;
+    border-color: #282828;
+    border-radius: 5px;
+    border-width: 0.1px;
+}
+
+footer {
+    display:none;
+}

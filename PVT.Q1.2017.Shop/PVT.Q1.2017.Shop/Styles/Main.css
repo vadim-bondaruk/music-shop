@@ -1,7 +1,6 @@
 ﻿.navbar-brand {
     margin-left: 34%;
     font-size: 5em;
-    padding-bottom: 0.7em;
 }
 
 .regnewtrack {
@@ -18,7 +17,10 @@
 }
 
 .copyright {
-    color: black;
+    position: absolute;
+    bottom: 50px;
+    left: 48%;
+    color: white;
 }
 
 footer {

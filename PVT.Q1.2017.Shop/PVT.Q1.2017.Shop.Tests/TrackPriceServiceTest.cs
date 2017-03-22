@@ -8,10 +8,8 @@ namespace PVT.Q1._2017.Shop.Tests
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure;
-    using IntegralTest;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
-    using Ninject;
 
     [TestClass]
     public class TrackPriceServiceTest
@@ -58,7 +56,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetTrackPriceInfoTest()
         {
             AddTrackPriceTest();
-            Assert.IsNotNull(this._trackPriceService.GetTrackPriceInfo(1));
+            Assert.IsNotNull(this._trackPriceService.GetTrackPrice(1));
         }
 
         #endregion //Tests

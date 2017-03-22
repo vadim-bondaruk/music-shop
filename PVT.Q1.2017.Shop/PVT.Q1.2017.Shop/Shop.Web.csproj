@@ -49,6 +49,14 @@
       <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation.Mvc, Version=6.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentValidation.MVC5.6.4.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
@@ -70,6 +78,7 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -79,6 +88,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
@@ -86,6 +99,22 @@
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
@@ -97,7 +126,13 @@
     <Content Include="App_Data\Shop_log.ldf">
       <DependentUpon>Shop.mdf</DependentUpon>
     </Content>
-    <Content Include="Areas\Management\Styles\AddNewTrack.css" />
+    <Content Include="Areas\Management\Styles\albums-list.css" />
+    <Content Include="Areas\Management\Styles\artist-details.css" />
+    <Content Include="Areas\Management\Styles\album-new.css" />
+    <Content Include="Areas\Management\Styles\artist-new.css" />
+    <Content Include="Areas\Management\Styles\artist-edit.css" />
+    <Content Include="Areas\Management\Styles\managment-common.css" />
+    <Content Include="Areas\Management\Styles\navpan.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -105,6 +140,7 @@
     <Content Include="Global.asax" />
     <Content Include="img\arrow.png" />
     <Content Include="img\bg.png" />
+    <Content Include="img\defuserpic.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -112,15 +148,30 @@
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Tracks\TrackManage.cshtml" />
-    <Content Include="Areas\Management\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Management\Views\Albums\AlbumManage.cshtml" />
-    <Content Include="Areas\Management\Views\Genres\GenreManage.cshtml" />
-    <Content Include="Areas\Management\Views\Artists\ArtistManage.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\New.cshtml" />
+    <Content Include="Areas\Management\Views\Genres\New.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\New.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\Details.cshtml" />
+    <Content Include="Areas\Management\Views\Genres\Details.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\Details.cshtml" />
+    <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Management\Views\Track\AddOrUpdate.cshtml" />
+    <Content Include="Areas\Management\Views\Track\Delete.cshtml" />
+    <Content Include="Areas\Content\Views\web.config" />
+    <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\Edit.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\List.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\List.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\datepicker-ru.js" />
+    <Content Include="Scripts\del-artist.js" />
+    <Content Include="Scripts\image-change.js" />
+    <Content Include="Scripts\jquery-3.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -132,6 +183,7 @@
     <None Include="Settings.StyleCop">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Scripts\openfile.dialog.js" />
     <Content Include="Styles\Main.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -141,26 +193,26 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Content\Controllers\TrackController.cs" />
+    <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
-    <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
+    <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
-    <Compile Include="Areas\Management\Models\ArtistManagmentViewModel.cs" />
     <Compile Include="Areas\Management\Models\GenreManagmentViewModel.cs" />
-    <Compile Include="Areas\Management\Models\AlbumManagmentViewModel.cs" />
     <Compile Include="Areas\Management\Models\TrackManagmentViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
-    <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
+    <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Areas\Content\Controllers\TracksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AlbumViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -172,12 +224,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Tracks\AddNew.cshtml" />
     <Content Include="Views\Tracks\Details.cshtml" />
     <Content Include="Views\Tracks\List.cshtml" />
     <Content Include="Views\Tracks\AlbumList.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -188,7 +243,8 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Track\" />
+    <Folder Include="Areas\Content\Models\" />
+    <Folder Include="Areas\Management\Views\Shared\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Views\Albums\" />
     <Folder Include="Views\Artists\" />

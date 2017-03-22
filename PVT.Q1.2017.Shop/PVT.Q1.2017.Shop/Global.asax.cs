@@ -1,7 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop
 {
-    #region
-
+    using System.Data.Entity.Core.Objects;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -9,12 +8,12 @@
     using AutoMapper;
 
     using FluentValidation.Mvc;
+    using global::Shop.BLL;
 
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
 
     using PVT.Q1._2017.Shop.Areas.Management.Models;
-
-    #endregion
 
     /// <summary>
     ///     Base class in an ASP.NET application
@@ -29,17 +28,7 @@
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FluentValidationModelValidatorProvider.Configure();
-
-            this.MapTrackViewModel();
-        }
-
-        /// <summary>
-        /// </summary>
-        private void MapTrackViewModel()
-        {
-            Mapper.Initialize(
-                cfg =>
-                    cfg.CreateMap<TrackManagmentViewModel, Track>());
+            DefaultModelsMapper.MapModels();
         }
     }
 }

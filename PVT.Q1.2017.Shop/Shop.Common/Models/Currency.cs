@@ -44,7 +44,7 @@
         /// <summary>
         /// Get all users
         /// </summary>
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<UserData> Users { get; set; }
 
         /// <summary>
         /// Get all album prices

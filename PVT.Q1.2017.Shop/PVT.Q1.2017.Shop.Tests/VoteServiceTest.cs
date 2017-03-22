@@ -29,7 +29,7 @@ namespace PVT.Q1._2017.Shop.Tests
         {
             using (var repository = _factory.GetVoteRepository())
             {
-                repository.AddOrUpdate(new Vote() { Mark = Mark.FiveStars });
+                repository.AddOrUpdate(new Vote() { Mark = 5 });
                 repository.SaveChanges();
 
                 Assert.IsTrue(repository.GetAll().Any());
@@ -40,7 +40,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetVoteTest()
         {
             AddVoteTest();
-            Assert.IsNotNull(_voteService.GetTrackVote(new Track(), new User()));
+            Assert.IsNotNull(_voteService.GetTrackVote(new Track(), new UserData()));
 
             Mock.Get(_factory.GetVoteRepository())
                 .Verify(
@@ -53,7 +53,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void VoteExistsTest()
         {
             AddVoteTest();
-            Assert.IsTrue(_voteService.VoteExists(new Track(), new User()));
+            Assert.IsTrue(_voteService.VoteExists(new Track(), new UserData()));
 
             Mock.Get(_factory.GetVoteRepository())
                 .Verify(
@@ -66,7 +66,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetVoteInfoTest()
         {
             AddVoteTest();
-            Assert.IsNotNull(_voteService.GetVoteInfo(1));
+            Assert.IsNotNull(_voteService.GetVote(1));
 
             Mock.Get(_factory.GetVoteRepository())
                 .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Vote, BaseEntity>>[]>()), Times.Once);

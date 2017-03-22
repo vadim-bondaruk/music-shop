@@ -3,20 +3,53 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>MusicShop</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    
+
     @RenderSection("TrackList", false)
     @RenderSection("AddToCartButton", false)
-    @RenderSection("ListSplitters", false)
+    @RenderSection("ArtistNew", false)
+    @RenderSection("ArtistEdit", false)
+    @RenderSection("ArtistDetails", false) 
+    @RenderSection("AlbumNew", false)
+    @RenderSection("AlbumEdit", false)
+    @RenderSection("AlbumDetails", false)
+    @RenderSection("AlbumsList", false)
+
 </head>
+
 <body>
+    <div class="topbar">
+        <ul class="nav-items">
+            <li>
+                @Html.ActionLink("Albums list", "List", "Albums", null, null)
+            </li>
+            <li>
+            @Html.ActionLink("New artist", "New", "Artists", null, null)
+            <li>
+                @Html.ActionLink("Artist info", "Details", "Artists", new { artistId = "6" }, null)
+            </li>
+            <li>
+                @Html.ActionLink("New genre", "New", "Genres", null)
+            </li>
+            <li>
+                @Html.ActionLink("New track", "New", "Tracks", null, null)
+            </li>
+            <li>
+                @Html.ActionLink("New album", "New", "Albums", null, null)
+            </li>
+        </ul>
+        </div>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <div>
-            @Html.ActionLink("MusicShop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand", color = "Red" })
-            <input type="button" class="regnewtrack" value="Registration" onClick='location.href="http://localhost:4912/Managment/Tracks/New/"'/>
+        <div class="navbar-header">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -25,15 +58,13 @@
     </div>
 </div>
 
-<div class="container body-content">
+<div>
     @RenderBody()
-    <hr/>
     <footer>
         <p class="copyright">&copy; @DateTime.Now.Year - PVT.Q1.2017</p>
     </footer>
 </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/Styles/Main.css">
 </body>
