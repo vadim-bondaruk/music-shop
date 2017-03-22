@@ -7,6 +7,8 @@
     using Ninject.Modules;
     using Ninject.Web.Common;
     using Repositories;
+    using Infrastructure.Repositories;
+    using Common.Models;
 
     /// <summary>
     /// The default repositories bindings configuration
@@ -76,6 +78,7 @@
 
             Bind<IRepositoryFactory>().ToFactory();
             Bind<IUserRepository>().To<UserRepository>();
+            Bind<IRepository<User>>().To<UserRepository>();
         }
     }
 }

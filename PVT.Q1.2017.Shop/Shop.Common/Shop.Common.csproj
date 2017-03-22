@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
+    <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -112,6 +112,7 @@
     <Compile Include="Validators\PriceLevelValidator.cs" />
     <Compile Include="Validators\TrackPriceValidator.cs" />
     <Compile Include="Validators\TrackValidator.cs" />
+    <Compile Include="Validators\UniqueUserIdentityValidator.cs" />
     <Compile Include="Validators\UserDataValidator.cs" />
     <Compile Include="Validators\UserRegistrationValidator.cs" />
     <Compile Include="Validators\VoteValidator.cs" />
