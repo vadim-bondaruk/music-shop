@@ -18,7 +18,7 @@
         /// </summary>
         public override void Load()
         {
-            Bind<DbContext>().To<ShopContext>().InRequestScope();
+            Bind<DbContext>().To<ShopContext>();
             ConfigureRepositoryFactory();
         }
 
@@ -27,7 +27,6 @@
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
-            // Bind<ShopContext>().ToSelf().InRequestScope();
             Bind<ITrackRepository>()
                 .To<TrackRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetTrackRepository());
