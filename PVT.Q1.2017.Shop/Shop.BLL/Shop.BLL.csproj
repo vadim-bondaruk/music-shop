@@ -57,6 +57,8 @@
     <Compile Include="Helpers\ModelsMapper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Helpers\ServiceHelper.cs" />
+    <Compile Include="PayPalCommon.cs" />
+    <Compile Include="PayPalConfiguration.cs" />
     <Compile Include="Services\AlbumPriceService.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Exceptions\UserValidationException.cs" />

@@ -203,6 +203,7 @@
     <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
+    <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
@@ -256,6 +257,7 @@
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
+    <Folder Include="Areas\Payment\Views\Paypal\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />

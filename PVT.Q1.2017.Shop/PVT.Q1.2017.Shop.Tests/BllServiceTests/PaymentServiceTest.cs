@@ -12,7 +12,8 @@ namespace PVT.Q1._2017.Shop.Tests.BllServiceTests
         public void TestCreatePaymentWithPaymentCard()
         {
             var PaymentService = new PaymentService(new RepositoryFactoryMoq());
-            PaymentService.CreatePaymentWithPaymentCard();
+            PaymentService.RunSample();
+            // PaymentService.CreatePaymentWithPaymentCard();
             Assert.IsNull(null);
         }
     }
