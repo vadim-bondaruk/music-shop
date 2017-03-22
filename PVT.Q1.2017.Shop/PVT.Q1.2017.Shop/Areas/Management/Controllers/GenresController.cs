@@ -1,28 +1,24 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
-    using PVT.Q1._2017.Shop.Areas.Management.Models;
-
     /// <summary>
-    ///     The track controller
     /// </summary>
     public class GenresController : Controller
     {
         /// <summary>
-        ///     The track service.
         /// </summary>
-        private readonly ITrackService trackService;
+        private readonly IGenreService genreService;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        ///     Initializes a new instance of the <see cref="GenresController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
@@ -33,19 +29,19 @@
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        /// Initializes a new instance of the <see cref="GenresController"/> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        ///     The repository factory.
+        /// The repository factory.
         /// </param>
-        /// <param name="trackService">
-        ///     The track service.
+        /// <param name="genreService">
+        /// The genre service.
         /// </param>
-        public GenresController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        public GenresController(IRepositoryFactory repositoryFactory, IGenreService genreService)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.trackService = trackService;
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
+            this.genreService = genreService;
+            Mapper.Initialize(cfg => cfg.CreateMap<GenreManageViewModel, Genre>());
         }
 
         /// <summary>
@@ -55,19 +51,19 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="trackId">
-        ///     The track id.
+        /// <param name="model">
+        ///     The model.
         /// </param>
-        /// <param name="model"></param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(TrackManagmentViewModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(GenreManageViewModel model)
         {
-            var trackModel = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            var genreModel = Mapper.Map<GenreManageViewModel, Genre>(model);
+            using (var repository = this.RepositoryFactory.GetGenreRepository())
             {
-                repository.Delete(trackModel);
+                repository.Delete(genreModel);
                 repository.SaveChanges();
             }
 
@@ -76,14 +72,15 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="trackId"></param>
+        /// <param name="genreId">
+        ///     The genre id.
+        /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int trackId)
+        public virtual ActionResult Details(int genreId)
         {
-            //var track = this.trackService.GetTrackInfo(trackId);
-            //var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
+            // var Genre = this.GenreService.GetGenreInfo(GenreId);
+            // var GenreViewModel = Mapper.Map<Genre, GenreManageViewModel>(Genre);
             return this.View();
         }
 
@@ -102,18 +99,18 @@
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
-        /// The view model.
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult New(
-            [Bind(Include = "Track")] TrackManagmentViewModel viewModel)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult New([Bind(Include = "Genre")] GenreManageViewModel viewModel)
         {
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(viewModel);
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            var genre = Mapper.Map<GenreManageViewModel, Genre>(viewModel);
+            using (var repository = this.RepositoryFactory.GetGenreRepository())
             {
-                repository.AddOrUpdate(track);
+                repository.AddOrUpdate(genre);
                 repository.SaveChanges();
             }
 
@@ -128,12 +125,12 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(TrackManagmentViewModel model)
+        public virtual ActionResult Update(GenreManageViewModel model)
         {
-            var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
-            trackRepo.AddOrUpdate(track);
-            return this.View();
+            var genreRepo = this.RepositoryFactory.GetGenreRepository();
+            var genre = Mapper.Map<GenreManageViewModel, Genre>(model);
+            genreRepo.AddOrUpdate(genre);
+            return this.RedirectToAction("Details");
         }
     }
 }

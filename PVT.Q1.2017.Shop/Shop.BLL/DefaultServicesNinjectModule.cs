@@ -33,6 +33,7 @@
             this.Bind<IArtistService>().To<ArtistService>();
             this.Bind<ITrackService>().To<TrackService>();
             this.Bind<IAlbumService>().To<AlbumService>();
+            this.Bind<IGenreService>().To<GenreService>();
 
             this.Bind<IVoteService>().To<VoteService>();
             this.Bind<IFeedbackService>().To<FeedbackService>();

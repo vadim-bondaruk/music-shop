@@ -11,12 +11,12 @@
     using Shop.DAL.Repositories;
 
     /// <summary>
-    /// The default repositories bindings configuration
+    ///     The default repositories bindings configuration
     /// </summary>
     public class DefaultRepositoriesNinjectModule : NinjectModule
     {
         /// <summary>
-        /// Loads the module into the kernel.
+        ///     Loads the module into the kernel.
         /// </summary>
         public override void Load()
         {
@@ -25,51 +25,50 @@
         }
 
         /// <summary>
-        /// Configures the repository factory.
+        ///     Configures the repository factory.
         /// </summary>
         protected virtual void ConfigureRepositoryFactory()
         {
             // Bind<ShopContext>().ToSelf().InRequestScope();
-            Bind<ITrackRepository>()
+            this.Bind<ITrackRepository>()
                 .To<TrackRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetTrackRepository());
-            Bind<IArtistRepository>()
+            this.Bind<IArtistRepository>()
                 .To<ArtistRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetArtistRepository());
-            Bind<IAlbumRepository>()
+            this.Bind<IAlbumRepository>()
                 .To<AlbumRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumRepository());
-            Bind<IFeedbackRepository>()
+            this.Bind<IFeedbackRepository>()
                 .To<FeedbackRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetFeedbackRepository());
-            Bind<IVoteRepository>()
+            this.Bind<IVoteRepository>()
                 .To<VoteRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetVoteRepository());
-            Bind<IGenreRepository>()
+            this.Bind<IGenreRepository>()
                 .To<GenreRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetGenreRepository());
-            Bind<ITrackPriceRepository>()
+            this.Bind<ITrackPriceRepository>()
                 .To<TrackPriceRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetTrackPriceRepository());
-            Bind<IAlbumPriceRepository>()
+            this.Bind<IAlbumPriceRepository>()
                 .To<AlbumPriceRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumPriceRepository());
-            Bind<ICurrencyRateRepository>()
+            this.Bind<ICurrencyRateRepository>()
                 .To<CurrencyRateRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCurrencyRateRepository());
-            Bind<ICurrencyRepository>()
+            this.Bind<ICurrencyRepository>()
                 .To<CurrencyRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCurrencyRepository());
-            Bind<IPriceLevelRepository>()
+            this.Bind<IPriceLevelRepository>()
                 .To<PriceLevelRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPriceLevelRepository());
-            Bind<IUserDataRepository>()
+            this.Bind<IUserDataRepository>()
                 .To<UserDataRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserDataRepository());
-            Bind<IAlbumTrackRelationRepository>()
+            this.Bind<IAlbumTrackRelationRepository>()
                 .To<AlbumTrackRelationRepository>()
-                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumTrackRelationRepository()); 
-
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumTrackRelationRepository());
             this.Bind<IUserPaymentMethodRepository>()
                 .To<UserPaymentMethodRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
