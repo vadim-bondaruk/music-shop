@@ -9,12 +9,15 @@
     using PayPal.Api;
     using Shop.BLL.Services.Infrastructure;
     using System.Web.Configuration;
+    using System.Web;
 
     /// <summary>
     /// The payment service class
     /// </summary>
     public class PaymentService : BaseService, IPaymentService
     {
+        private PayPal.Api.Payment payment;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentService"/> class.
         /// </summary>
@@ -24,227 +27,11 @@
         public PaymentService(IRepositoryFactory factory) : base(factory)
         {
         }
-
+               
         /// <summary>
         /// Create PayPal payment with payment card info
         /// </summary>
-        public void CreatePaymentWithPaymentCard()
-        {
-            // Get a reference to the config
-            // var config = ConfigManager.Instance.GetProperties();
-            // var config = ConfigManager.GetConfigWithDefaults(new Dictionary<string, string>());
-            var config = new Dictionary<string, string>()
-            {
-                { "mode", "sandbox" },
-                { "clientId", WebConfigurationManager.AppSettings["clientId"] },
-                { "clientSecret", WebConfigurationManager.AppSettings["clientSecret"] }
-            };
-
-            // Use OAuthTokenCredential to request an access token from PayPal
-            var accessToken = new OAuthTokenCredential(config).GetAccessToken();
-
-            var apiContext = new APIContext(accessToken);
-            apiContext.Config = config;
-            // var payment = Payment.Get(apiContext, "PAY-0XL713371A312273YKE2GCNI");
-
-            ////////////////////////////
-            // A transaction defines the contract of a payment - what is the payment for and who is fulfilling it. 
-            var transaction = new Transaction()
-            {
-                amount = new Amount()
-                {
-                    currency = "USD",
-                    total = "7",
-                    details = new Details()
-                    {
-                        shipping = "1",
-                        subtotal = "5",
-                        tax = "1"
-                    }
-                },
-                description = "This is the payment transaction description.",
-                item_list = new ItemList()
-                {
-                    items = new List<Item>()
-                    {
-                        new Item()
-                        {
-                            name = "Item Name",
-                            currency = "USD",
-                            price = "1",
-                            quantity = "5",
-                            sku = "sku"
-                        }
-                    },
-                    shipping_address = new ShippingAddress
-                    {
-                        city = "Johnstown",
-                        country_code = "US",
-                        line1 = "52 N Main ST",
-                        postal_code = "43210",
-                        state = "OH",
-                        recipient_name = "Joe Buyer"
-                    }
-                },
-                invoice_number = "111222333"// Common.GetRandomInvoiceNumber()
-            };
-
-            // A resource representing a Payer that funds a payment.
-            var payer = new Payer()
-            {
-                payment_method = "credit_card",
-                funding_instruments = new List<FundingInstrument>()
-                {
-                    new FundingInstrument()
-                    {
-                        credit_card = new CreditCard()
-                        {
-                            billing_address = new Address()
-                            {
-                                city = "Johnstown",
-                                country_code = "US",
-                                line1 = "52 N Main ST",
-                                postal_code = "43210",
-                                state = "OH"
-                            },
-                            cvv2 = "874",
-                            expire_month = 11,
-                            expire_year = 2018,
-                            first_name = "Joe",
-                            last_name = "Shopper",
-                            number = "4877274905927862",
-                            type = "visa"
-                        }
-                    }
-                },
-                payer_info = new PayerInfo
-                {
-                    email = "test@email.com"
-                }
-            };
-
-            // A Payment resource; create one using the above types and intent as `sale` or `authorize`
-            var payment = new Payment()
-            {
-                intent = "sale",
-                payer = payer,
-                transactions = new List<Transaction>() { transaction }
-            };
-
-            // Create a payment using a valid APIContext
-            var createdPayment = payment.Create(apiContext);
-        }
-
-        public void RunSample()
-        {
-            // ### Api Context
-            // Pass in a `APIContext` object to authenticate 
-            // the call and to send a unique request id 
-            // (that ensures idempotency). The SDK generates
-            // a request id if you do not pass one explicitly. 
-            // See [Configuration.cs](/Source/Configuration.html) to know more about APIContext.
-            var apiContext = Configuration.GetAPIContext();
-
-            // A transaction defines the contract of a payment - what is the payment for and who is fulfilling it. 
-            var transaction = new Transaction()
-            {
-                amount = new Amount()
-                {
-                    currency = "USD",
-                    total = "7",
-                    details = new Details()
-                    {
-                        shipping = "1",
-                        subtotal = "5",
-                        tax = "1"
-                    }
-                },
-                description = "This is the payment transaction description.",
-                item_list = new ItemList()
-                {
-                    items = new List<Item>()
-                    {
-                        new Item()
-                        {
-                            name = "Item Name",
-                            currency = "USD",
-                            price = "1",
-                            quantity = "5",
-                            sku = "sku"
-                        }
-                    },
-                    shipping_address = new ShippingAddress
-                    {
-                        city = "Johnstown",
-                        country_code = "US",
-                        line1 = "52 N Main ST",
-                        postal_code = "43210",
-                        state = "OH",
-                        recipient_name = "Joe Buyer"
-                    }
-                },
-                invoice_number = PayPalCommon.GetRandomInvoiceNumber()
-            };
-
-            // A resource representing a Payer that funds a payment.
-            var payer = new Payer()
-            {
-                payment_method = "credit_card",
-                funding_instruments = new List<FundingInstrument>()
-                {
-                    new FundingInstrument()
-                    {
-                        credit_card = new CreditCard()
-                        {
-                            billing_address = new Address()
-                            {
-                                city = "Johnstown",
-                                country_code = "US",
-                                line1 = "52 N Main ST",
-                                postal_code = "43210",
-                                state = "OH"
-                            },
-                            cvv2 = "874",
-                            expire_month = 11,
-                            expire_year = 2018,
-                            first_name = "Joe",
-                            last_name = "Shopper",
-                            number = "4877274905927862",
-                            type = "visa"
-                        }
-                    }
-                },
-                payer_info = new PayerInfo
-                {
-                    email = "test@email.com"
-                }
-            };
-
-            // A Payment resource; create one using the above types and intent as `sale` or `authorize`
-            var payment = new Payment()
-            {
-                intent = "sale",
-                payer = payer,
-                transactions = new List<Transaction>() { transaction }
-            };
-
-            // ^ Ignore workflow code segment
-            // #region Track Workflow
-            // this.flow.AddNewRequest("Create credit card payment", payment);
-            // #endregion
-
-            // Create a payment using a valid APIContext
-            var createdPayment = payment.Create(apiContext);
-
-            // ^ Ignore workflow code segment
-            // #region Track Workflow
-            // this.flow.RecordResponse(createdPayment);
-            // #endregion
-
-            // For more information, please visit [PayPal Developer REST API Reference](https://developer.paypal.com/docs/api/).
-        }
-
-        public string PaymentWithCreditCard()
+        public string CreatePaymentWithCreditCard()
         {
 
             var rnd = new Random();
@@ -357,22 +144,169 @@
 
                 //if the createdPayment.state is "approved" it means the payment was successful else not
 
-                if (createdPayment.state.ToLower() == "approved")
+                if (createdPayment.state.ToLower() != "approved")
                 {
-                    return "approved";
+                    return "Failure";
                 }
-                if (createdPayment.state.ToLower() == "created")
-                {
-                    return "created";
-                }
-
             }
             catch (PayPal.PayPalException ex)
             {
                 //Logger.Log("Error: " + ex.Message);
+                return "Failure";
+            }
+            return "Success";
+        }
+
+        /// <summary>
+        /// Create PayPal payment with PayPal account
+        /// </summary>
+        public string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session)
+        {
+            //getting the apiContext as earlier
+            APIContext apiContext = Configuration.GetAPIContext();
+
+            try
+            {
+                string payerId = Request.Params["PayerID"];
+
+                if (string.IsNullOrEmpty(payerId))
+                {
+                    //this section will be executed first because PayerID doesn't exist
+                    //it is returned by the create function call of the payment class
+
+                    // Creating a payment
+                    // baseURL is the url on which paypal sendsback the data.
+                    // So we have provided URL of this controller only
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority +
+                                "/Paypal/PaymentWithPayPal?";
+
+                    //guid we are generating for storing the paymentID received in session
+                    //after calling the create function and it is used in the payment execution
+
+                    var guid = Convert.ToString((new Random()).Next(100000));
+
+                    //CreatePayment function gives us the payment approval url
+                    //on which payer is redirected for paypal account payment
+
+                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+
+                    //get links returned from paypal in response to Create function call
+
+                    var links = createdPayment.links.GetEnumerator();
+
+                    string paypalRedirectUrl = null;
+
+                    while (links.MoveNext())
+                    {
+                        Links lnk = links.Current;
+
+                        if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            //saving the payapalredirect URL to which user will be redirected for payment
+                            paypalRedirectUrl = lnk.href;
+                        }
+                    }
+
+                    // saving the paymentID in the key guid
+                    Session.Add(guid, createdPayment.id);
+
+                    //return Redirect(paypalRedirectUrl);
+                    return paypalRedirectUrl;
+                }
+                else
+                {
+                    // This section is executed when we have received all the payments parameters
+
+                    // from the previous call to the function Create
+
+                    // Executing a payment
+
+                    var guid = Request.Params["guid"];
+
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+
+                    if (executedPayment.state.ToLower() != "approved")
+                    {
+                        return "FailureView";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Logger.log("Error" + ex.Message);
                 return "FailureView";
             }
+
             return "SuccessView";
+        }
+
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        {
+
+            //similar to credit card create itemlist and add item objects to it
+            var itemList = new ItemList() { items = new List<Item>() };
+
+            itemList.items.Add(new Item()
+            {
+                name = "Item Name",
+                currency = "USD",
+                price = "5",
+                quantity = "1",
+                sku = "sku"
+            });
+
+            var payer = new Payer() { payment_method = "paypal" };
+
+            // Configure Redirect Urls here with RedirectUrls object
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirectUrl,
+                return_url = redirectUrl
+            };
+
+            // similar as we did for credit card, do here and create details object
+            var details = new Details()
+            {
+                tax = "1",
+                shipping = "1",
+                subtotal = "5"
+            };
+
+            // similar as we did for credit card, do here and create amount object
+            var amount = new Amount()
+            {
+                currency = "USD",
+                total = "7", // Total must be equal to sum of shipping, tax and subtotal.
+                details = details
+            };
+
+            var transactionList = new List<Transaction>();
+
+            transactionList.Add(new Transaction()
+            {
+                description = "Transaction description.",
+                invoice_number = "your invoice number",
+                amount = amount,
+                item_list = itemList
+            });
+
+            this.payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls
+            };
+
+            // Create a payment using a APIContext
+            return this.payment.Create(apiContext);
+        }
+
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExecution = new PaymentExecution() { payer_id = payerId };
+            this.payment = new Payment() { id = paymentId };
+            return this.payment.Execute(apiContext, paymentExecution);
         }
     }
 }

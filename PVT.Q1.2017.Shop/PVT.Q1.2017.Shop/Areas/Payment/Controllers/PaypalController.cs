@@ -19,15 +19,27 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 
         // GET: Payment/Paypal
         public ActionResult Index()
-        { 
+        {
             return View();
         }
 
         // GET: Payment/Paypal
         public ActionResult PaymentWithCreditCard()
         {
-            var viewName = _paymentService.PaymentWithCreditCard();
+            var viewName = _paymentService.CreatePaymentWithCreditCard();
             return Content(viewName); // View("SuccessView");
+        }
+
+        public ActionResult PaymentWithPaypal()
+        {
+            var content = _paymentService.PaymentWithPaypal(this.Request, this.Session);
+
+            if (content.StartsWith("http"))
+            {
+                return Redirect(content);
+            }
+                
+            return Content(content);
         }
     }
 }

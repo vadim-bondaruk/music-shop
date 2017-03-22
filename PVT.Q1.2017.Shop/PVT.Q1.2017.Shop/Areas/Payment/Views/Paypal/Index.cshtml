@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = null;
+    //Layout = null;
 }
 
 <!DOCTYPE html>
@@ -13,6 +13,9 @@
 <body>
     <div> 
         @Html.ActionLink("Pay Direct With Credit Card", "PaymentWithCreditCard", "Paypal")
+    </div>
+    <div>
+        @Html.ActionLink("Pay Direct With PayPal account", "PaymentWithPaypal", "Paypal")
     </div>
 </body>
 </html>

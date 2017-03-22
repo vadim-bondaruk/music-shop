@@ -166,6 +166,9 @@
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithCreditCard.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Payment\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -259,7 +262,6 @@
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
-    <Folder Include="Areas\Payment\Views\Shared\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
     <Folder Include="ViewModels\" />

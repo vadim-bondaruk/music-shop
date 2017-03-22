@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Web;
 
     /// <summary>
     /// The payment service interface
@@ -12,7 +13,9 @@
     public interface IPaymentService
     {
 
-        string PaymentWithCreditCard();
+        string CreatePaymentWithCreditCard();
+
+        string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session);
 
     }
 }
