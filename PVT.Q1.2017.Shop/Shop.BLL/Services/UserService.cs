@@ -6,7 +6,7 @@
     using DAL.Infrastruture;
     using DTO;
     using Exceptions;
-    using Infrastructure;          
+    using Infrastructure;
     using Shop.Infrastructure.Enums;
     using Utils;
     using Validators;
@@ -16,8 +16,6 @@
     /// </summary>
     public class UserService : BaseService, IUserService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
@@ -27,10 +25,6 @@
         public UserService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region IUserService Members
 
         /// <summary>
         /// Returns the user with the specified <paramref name="id"/>.
@@ -106,14 +100,13 @@
             }
 
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>()
-                            .ForMember("UserRole", opt => opt.MapFrom(userDTO => UserRoles.User))
+                            .ForMember("UserRoles", opt => opt.MapFrom(userDTO => this.GetDefaultUserRoles()))
                             .ForMember("Password", opt => opt.MapFrom(userDTO => PasswordEncryptor.GetHashString(userDTO.Password)))
-                            .ForMember("IdentityKey", opt => opt.MapFrom(userDTO => new string('-', 30))));
+                            .ForMember("IdentityKey", opt => opt.MapFrom(userDTO => this.GetIdentityKey()))
+                            .ForMember("PriceLevelId", opt => opt.MapFrom(userDTO => this.GetDefaultPriceLevelId()))
+                            .ForMember("CurrencyId", opt => opt.MapFrom(userDTO => this.GetDefaultCurrencyId())));                            
 
-            var userDB = AutoMapper.Mapper.Map<User>(user);
-
-            userDB.PriceLevelId = this.Factory.GetPriceLevelRepository().GetById(1).Id;
-            userDB.CurrencyId = this.Factory.GetCurrencyRepository().GetById(1).Id;
+            var userDB = AutoMapper.Mapper.Map<User>(user);         
 
             try
             {
@@ -132,8 +125,42 @@
             }
            
             return registered;
-        }     
+        }
 
-        #endregion //IUserService Members
+        /// <summary>
+        /// Getting default user roles
+        /// </summary>
+        /// <returns></returns>
+        private UserRoles[] GetDefaultUserRoles()
+        {
+            return new UserRoles[] { UserRoles.User };
+        }
+
+        /// <summary>
+        /// Implement identity key receiving logic
+        /// </summary>
+        /// <returns></returns>
+        private string GetIdentityKey()
+        {
+            return new string('-', 30);
+        }
+
+        /// <summary>
+        /// Implenent receiving default value
+        /// </summary>
+        /// <returns></returns>
+        private int GetDefaultCurrencyId()
+        {
+            return 1;
+        }
+
+        /// <summary>
+        /// Implenent receiving default value
+        /// </summary>
+        /// <returns></returns>
+        private int GetDefaultPriceLevelId()
+        {
+            return 1;
+        }
     }
 }

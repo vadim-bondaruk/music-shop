@@ -1,8 +1,8 @@
 ﻿namespace Shop.DAL.Migrations.Configurations
 {
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
     using Common.Models;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// The <see cref="Vote"/> configuration.

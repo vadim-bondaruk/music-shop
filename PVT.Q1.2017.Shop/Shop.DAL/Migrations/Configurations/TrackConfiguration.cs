@@ -21,13 +21,6 @@
             this.HasOptional(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(false);
             this.HasOptional(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(false);
 
-            HasMany(t => t.Albums).WithMany(a => a.Tracks).Map(m =>
-            {
-                m.ToTable("tbTracksAndAlbumsRelations");
-                m.MapLeftKey("TrackID");
-                m.MapRightKey("AlbumID");
-            });
-
             this.ToTable("tbTracks");
         }
     }

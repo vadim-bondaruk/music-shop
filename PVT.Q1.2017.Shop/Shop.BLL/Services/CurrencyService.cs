@@ -12,8 +12,6 @@
     /// </summary>
     public class CurrencyService : BaseService, ICurrencyService
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CurrencyService"/> class.
         /// </summary>
@@ -23,10 +21,6 @@
         public CurrencyService(IRepositoryFactory factory) : base(factory)
         {
         }
-
-        #endregion //Constructors
-
-        #region ICurrencyService Members
 
         /// <summary>
         /// Returns the currency with the specified <paramref name="code"/>.
@@ -150,7 +144,5 @@
                 return repositry.GetById(id);
             }
         }
-
-        #endregion //ICurrencyService Members
     }
 }

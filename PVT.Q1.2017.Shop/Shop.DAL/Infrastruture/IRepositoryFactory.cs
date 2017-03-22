@@ -103,5 +103,21 @@ namespace Shop.DAL.Infrastruture
         /// The track repository.
         /// </returns>
         IVoteRepository GetVoteRepository();
+
+        /// <summary>
+        /// Returns the album and track relation repository.
+        /// </summary>
+        /// <returns>
+        /// The album and track relation repository.
+        /// </returns>
+        IAlbumTrackRelationRepository GetAlbumTrackRelationRepository();
+
+        /// <summary>
+        /// Returns the user payment method repository.
+        /// </summary>
+        /// <returns>
+        /// The user payment method repository.
+        /// </returns>
+        IUserPaymentMethodRepository GetUserPaymentMethodRepository();
     }
 }

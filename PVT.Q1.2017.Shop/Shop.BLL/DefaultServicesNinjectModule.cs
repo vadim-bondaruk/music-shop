@@ -1,10 +1,12 @@
 ﻿namespace Shop.BLL
 {
     using DAL;
+    using Infrastructure.Security;
     using Ninject;
     using Ninject.Modules;
     using Services;
     using Services.Infrastructure;
+    using Utils;
 
     /// <summary>
     /// Default cofiguration module.
@@ -30,7 +32,6 @@
         protected virtual void BindServices()
         {
             Bind<ITrackService>().To<TrackService>();
-            Bind<IArtistService>().To<ArtistService>();
             Bind<IAlbumService>().To<AlbumService>();
 
             Bind<IVoteService>().To<VoteService>();
@@ -41,7 +42,11 @@
 
             Bind<IUserService>().To<UserService>();
 
+            Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
+
             Bind<ICurrencyService>().To<CurrencyService>();
+
+            Bind<IAuthModule>().To<AuthModule>();
         }
     }
 }

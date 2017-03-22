@@ -1,17 +1,14 @@
-﻿using Shop.DAL.Infrastruture;
-
-namespace Shop.DAL.Repositories
+﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
     using Common.Models;
+    using Infrastruture;
 
     /// <summary>
     /// The currency rate repository.
     /// </summary>
     public class CurrencyRateBaseRepository : BaseRepository<CurrencyRate>, ICurrencyRateRepository
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CurrencyRateBaseRepository"/> class.
         /// </summary>
@@ -21,10 +18,6 @@ namespace Shop.DAL.Repositories
         public CurrencyRateBaseRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-        #endregion //Constructors
-
-        #region Protected Methods
 
         /// <summary>
         /// Adds the specified <paramref name="currencyRate"/> into Db.
@@ -37,6 +30,16 @@ namespace Shop.DAL.Repositories
             EntityState currencyEntryState;
             EntityState targetCurrencyEntryState;
 
+            if (currencyRate.CurrencyId == 0 && currencyRate.Currency != null)
+            {
+                currencyRate.CurrencyId = currencyRate.Currency.Id;
+            }
+
+            if (currencyRate.TargetCurrencyId == 0 && currencyRate.TargetCurrency != null)
+            {
+                currencyRate.TargetCurrencyId = currencyRate.TargetCurrency.Id;
+            }
+
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The CurrencyRateBaseRepository should be SOLID, should only add information about currency rate! Not about currencies!
             this.DetachNavigationProperty(currencyRate.Currency, out currencyEntryState);
@@ -48,7 +51,5 @@ namespace Shop.DAL.Repositories
             // adding the currency rate into Db.
             base.Add(currencyRate);
         }
-
-        #endregion //Protected Methods
     }
 }

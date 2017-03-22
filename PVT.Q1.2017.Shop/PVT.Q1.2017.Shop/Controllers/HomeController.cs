@@ -1,6 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
     using System.Web.Mvc;
+    using Filters;
 
     /// <summary>
     /// Controller of Home page
@@ -15,8 +16,38 @@
         /// <returns>View of index page</returns>
         public ActionResult Index()
         {
-            ////dummy code
-            return null;
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.Message = "Ваш логин: " + User.Identity.Name;
+            }
+            else
+            {
+                ViewBag.Message = "Вы не авторизованы";
+            }
+
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return this.View();
         }
     }
 }
