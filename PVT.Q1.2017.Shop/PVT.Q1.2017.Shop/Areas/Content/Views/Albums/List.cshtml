@@ -7,7 +7,7 @@
 <h2>Albums</h2>
 
 <p>
-    @Html.ActionLink("New Album", "AddOrUpdate", "Album", new { area = "Management" }, null)
+    @*@Html.ActionLink("New Album", "AddOrUpdate", "Albums", new { area = "Management" }, null)*@
 </p>
 
 <table class="table">
@@ -42,11 +42,16 @@
             @Html.DisplayFor(modelItem => item.ArtistName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "AddOrUpdate", "Album", new { id = item.Id, area = "Management" }, null) |
+            @*@Html.ActionLink("Edit", "AddOrUpdate", "Albums", new { id = item.Id, area = "Management" }, null) |*@
             @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", "Album", new { id = item.Id, area = "Management" }, null)
+            @Html.ActionLink("Delete", "Delete", "Albums", new { id = item.Id, area = "Management" }, null)
         </td>
     </tr>
 }
 
 </table>
+
+@section{
+<link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
+    <link href="/Areas/Management/Styles/albums-list.css"/>
+}
