@@ -87,6 +87,11 @@
         public DbSet<Genre> Genres { get; set; }
 
         /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
+        public DbSet<User> Users { get; set; }
+
+        /// <summary>
         /// The Db configuration.
         /// </summary>
         /// <param name="modelBuilder">

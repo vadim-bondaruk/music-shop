@@ -58,17 +58,12 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
+    <Compile Include="Infrastruture\IUserRepository.cs" />
     <Compile Include="Migrations\201703141950344_Init.cs" />
     <Compile Include="Migrations\201703141950344_Init.Designer.cs">
       <DependentUpon>201703141950344_Init.cs</DependentUpon>
@@ -90,6 +85,7 @@
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserDataConfiguration.cs" />
     <Compile Include="Migrations\Configurations\CurrencyRateConfiguration.cs" />
     <Compile Include="Migrations\Configurations\CurrencyConfiguration.cs" />
@@ -125,6 +121,7 @@
     <Compile Include="Repositories\TrackPriceRepository.cs" />
     <Compile Include="Repositories\UserDataRepository.cs" />
     <Compile Include="Repositories\UserPaymentMethodRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VoteRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Infrastruture\ITrackPriceRepository.cs" />
@@ -162,6 +159,7 @@
       <DependentUpon>201703181116310_NewAlbumAndArtistRelations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
