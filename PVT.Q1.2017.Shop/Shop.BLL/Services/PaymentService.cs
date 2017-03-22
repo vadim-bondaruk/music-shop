@@ -246,6 +246,8 @@
 
         public string PaymentWithCreditCard()
         {
+
+            var rnd = new Random();
             //create and item for which you are taking payment
             //if you need to add more items in the list
             //Then you will need to create multiple item objects or use some loop to instantiate object
@@ -281,13 +283,13 @@
             crdtCard.expire_year = 2020; //card expire year
             crdtCard.first_name = "Aman";
             crdtCard.last_name = "Thakur";
-            crdtCard.number = "1234567890123456"; //enter your credit card number here
+            crdtCard.number = "4111111111111111"; //enter your credit card number here
             crdtCard.type = "visa"; //credit card type here paypal allows 4 types
 
             // Specify details of your payment amount.
             Details details = new Details();
             details.shipping = "1";
-            details.subtotal = "5";
+            details.subtotal = "5"; 
             details.tax = "1";
 
             // Specify your total payment amount and assign the details object
@@ -302,7 +304,7 @@
             tran.amount = amnt;
             tran.description = "Description about the payment amount.";
             tran.item_list = itemList;
-            tran.invoice_number = "your invoice number which you are generating";
+            tran.invoice_number = rnd.Next(100000000,999999999).ToString();
 
             // Now, we have to make a list of transaction and add the transactions object
             // to this list. You can create one or more object as per your requirements
@@ -351,12 +353,19 @@
 
                 Payment createdPayment = pymnt.Create(apiContext);
 
+                var approvalUrl = createdPayment.GetApprovalUrl();
+
                 //if the createdPayment.state is "approved" it means the payment was successful else not
 
-                if (createdPayment.state.ToLower() != "approved")
+                if (createdPayment.state.ToLower() == "approved")
                 {
-                    return "FailureView";
+                    return "approved";
                 }
+                if (createdPayment.state.ToLower() == "created")
+                {
+                    return "created";
+                }
+
             }
             catch (PayPal.PayPalException ex)
             {

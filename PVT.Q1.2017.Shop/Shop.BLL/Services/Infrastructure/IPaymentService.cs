@@ -11,5 +11,8 @@
     /// </summary>
     public interface IPaymentService
     {
+
+        string PaymentWithCreditCard();
+
     }
 }
