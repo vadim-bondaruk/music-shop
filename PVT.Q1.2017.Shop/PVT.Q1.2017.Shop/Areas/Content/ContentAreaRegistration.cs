@@ -3,7 +3,7 @@
     using System.Web.Mvc;
 
     /// <summary>
-    /// The content area registration.
+    /// The management area registration
     /// </summary>
     public class ContentAreaRegistration : AreaRegistration 
     {
@@ -16,7 +16,7 @@
         }
 
         /// <summary>
-        /// Registers the area.
+        /// Registers the management area.
         /// </summary>
         /// <param name="context">
         /// The context.
@@ -24,9 +24,9 @@
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Content_default",
-                "Content/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional });
+                name: "Content_default",
+                url: "Content/{controller}/{action}/{id}",
+                defaults: new { controller = "Albums", action = "List", id = UrlParameter.Optional });
         }
     }
 }
