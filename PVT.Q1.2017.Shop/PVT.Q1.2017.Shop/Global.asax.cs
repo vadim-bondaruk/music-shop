@@ -3,7 +3,11 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Antlr.Runtime.Misc;
+    using App_Start;
     using FluentValidation.Mvc;
+    using Ninject;
+    using Ninject.Web.Common;
     using global::Shop.BLL;
 
     /// <summary>
@@ -17,9 +21,10 @@
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);                 
 
-            FluentValidationModelValidatorProvider.Configure();
+            FluentValidationModelValidatorProvider
+                .Configure(provider => provider.ValidatorFactory = new CustomValidatorFactory(FluentValidationHelper.GetKernel()));
 
             DefaultModelsMapper.MapModels();
         }
