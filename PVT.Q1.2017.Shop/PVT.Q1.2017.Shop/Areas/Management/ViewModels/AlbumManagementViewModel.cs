@@ -2,11 +2,14 @@
 {
     using System;
     using System.Web;
+    using FluentValidation.Attributes;
     using global::Shop.Common.Models.ViewModels;
+    using Validators;
 
     /// <summary>
     /// The album management view model.
     /// </summary>
+    [Validator(typeof(AlbumManagementValidator))]
     public class AlbumManagementViewModel
     {
         /// <summary>
