@@ -1,16 +1,15 @@
 namespace Shop.DAL.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Common.Models;
-    using System;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Shop.DAL.Context.ShopContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(Context.ShopContext context)

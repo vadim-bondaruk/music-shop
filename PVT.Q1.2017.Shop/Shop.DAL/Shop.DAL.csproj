@@ -86,6 +86,10 @@
     <Compile Include="Migrations\201703202125138_Albums_ArtistId_added.Designer.cs">
       <DependentUpon>201703202125138_Albums_ArtistId_added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703220759301_UsersDB.cs" />
+    <Compile Include="Migrations\201703220759301_UsersDB.Designer.cs">
+      <DependentUpon>201703220759301_UsersDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -163,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703202125138_Albums_ArtistId_added.resx">
       <DependentUpon>201703202125138_Albums_ArtistId_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703220759301_UsersDB.resx">
+      <DependentUpon>201703220759301_UsersDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
