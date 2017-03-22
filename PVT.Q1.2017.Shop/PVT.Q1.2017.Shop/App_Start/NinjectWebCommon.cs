@@ -18,7 +18,7 @@ namespace PVT.Q1._2017.Shop.App_Start
     /// <summary>
     /// Base implementation that adds injection support
     /// </summary>
-    public static class NinjectWebCommon
+    public static class NinjectWebCommon 
     {
         /// <summary>
         /// A basic Bootstrapper that can be used to setup web applications
@@ -28,13 +28,13 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start()
+        public static void Start() 
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             Bootstrapper.Initialize(CreateKernel);
         }
-
+        
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -42,7 +42,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         {
             Bootstrapper.ShutDown();
         }
-
+        
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -69,7 +69,7 @@ namespace PVT.Q1._2017.Shop.App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
-        {
+        {     
             kernel.Load(GetModules());
             DependencyResolver.SetResolver(new CustomDependencyResolver(kernel));
         }
@@ -82,7 +82,8 @@ namespace PVT.Q1._2017.Shop.App_Start
         {
             return new INinjectModule[]
             {
-                new DefaultServicesNinjectModule()
+                new DefaultServicesNinjectModule(),
+                new WebNinjectModule()
             };
         }
     }

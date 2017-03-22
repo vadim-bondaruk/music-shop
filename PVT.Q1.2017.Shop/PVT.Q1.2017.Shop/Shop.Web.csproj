@@ -100,33 +100,17 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\T4MVCExtensions.4.0.0\lib\net45\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -154,6 +138,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Shop.mdf" />
+    <Content Include="App_Data\Shop_log.ldf">
+      <DependentUpon>Shop.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -184,6 +172,8 @@
     <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
     <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
+    <Content Include="Areas\Content\Views\Artist\List.cshtml" />
+    <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -208,6 +198,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\CustomDependencyResolver.cs" />
+    <Compile Include="App_Start\CustomValidatorFactory.cs" />
+    <Compile Include="App_Start\FluentValidationHelper.cs" />
+    <Compile Include="App_Start\FluentValidationNinjectModule.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
@@ -216,7 +209,13 @@
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
+    <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
+    <Compile Include="Areas\Management\Helpers\ManagementMapper.cs" />
+    <Compile Include="Areas\Management\Validators\AlbumManagementValidator.cs" />
+    <Compile Include="Areas\Management\Validators\TrackManagementValidator.cs" />
+    <Compile Include="Areas\Management\ViewModels\AlbumManagementViewModel.cs" />
+    <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
@@ -243,7 +242,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -264,20 +265,15 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Content\Models\" />
-    <Folder Include="Areas\Content\Views\Album\" />
-    <Folder Include="Areas\Content\Views\Artist\" />
     <Folder Include="Areas\Content\Views\Track\" />
-    <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
-    <Folder Include="Views\Error\" />
     <Folder Include="Areas\User\Models\" />
-    <Folder Include="Views\Home\" />
     <Folder Include="Areas\User\Views\Shared\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -325,13 +321,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Visual-StyleCop.MSBuild.4.7.59.0\build\Visual-StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Visual-StyleCop.MSBuild.4.7.59.0\build\Visual-StyleCop.MSBuild.Targets'))" />
-  </Target>
-  <Import Project="..\packages\Visual-StyleCop.MSBuild.4.7.59.0\build\Visual-StyleCop.MSBuild.Targets" Condition="Exists('..\packages\Visual-StyleCop.MSBuild.4.7.59.0\build\Visual-StyleCop.MSBuild.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

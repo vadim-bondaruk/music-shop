@@ -42,6 +42,15 @@
                 throw new ArgumentException("user");
             }
 
+            // if (!UserDataValidator.IsLoginUnique(user.Login, this._userRepossitory))
+            // {
+            //     throw new UserValidationException("User with the same login already exists", "Login");
+            // }
+               
+            // if (!UserDataValidator.IsEmailUnique(user.Email, this._userRepossitory))
+            // {
+            //     throw new UserValidationException("User with the same email already exists", "Email");
+            // }
             user.Password = PasswordEncryptor.GetHashString(user.Password);
             user.UserRoles = this.GetDefaultUserRoles();
            

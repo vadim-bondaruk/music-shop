@@ -7,6 +7,8 @@
     using Ninject.Modules;
     using Ninject.Web.Common;
     using Repositories;
+    using Infrastructure.Repositories;
+    using Common.Models;
 
     /// <summary>
     /// The default repositories bindings configuration
@@ -72,10 +74,11 @@
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumTrackRelationRepository()); 
 
             Bind<IUserPaymentMethodRepository>().To<UserPaymentMethodRepository>().NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
-            
 
             Bind<IRepositoryFactory>().ToFactory();
+
             Bind<IUserRepository>().To<UserRepository>();
+            Bind<IRepository<User>>().To<UserRepository>();
         }
     }
 }
