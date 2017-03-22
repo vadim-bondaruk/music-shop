@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
+    using Common.Models.ViewModels;
     using DAL.Infrastruture;
+    using Helpers;
     using Infrastructure;
 
     /// <summary>
@@ -20,7 +22,13 @@
         /// </param>
         public CurrencyService(IRepositoryFactory factory) : base(factory)
         {
+            this.DefaultCurrency = ServiceHelper.GetDefaultCurrency(factory);
         }
+
+        /// <summary>
+        /// Gets the default currency.
+        /// </summary>
+        public CurrencyViewModel DefaultCurrency { get; private set; }
 
         /// <summary>
         /// Returns the currency with the specified <paramref name="code"/>.
@@ -31,12 +39,15 @@
         /// <returns>
         /// The currency with the specified <paramref name="code"/> or <b>null</b> if currency doesn't exist.
         /// </returns>
-        public Currency GetCurrencyByCode(int code)
+        public CurrencyViewModel GetCurrencyByCode(int code)
         {
+            Currency currency;
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll(c => c.Code == code).FirstOrDefault();
+                currency = repositry.GetAll(c => c.Code == code).FirstOrDefault();
             }
+
+            return ModelsMapper.GetCurrencyViewModel(currency);
         }
 
         /// <summary>
@@ -48,12 +59,15 @@
         /// <returns>
         /// The currency with the specified <paramref name="name"/> or <b>null</b> if currency doesn't exist.
         /// </returns>
-        public Currency GetCurrencyByName(string name)
+        public CurrencyViewModel GetCurrencyByName(string name)
         {
+            Currency currency;
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                currency = repositry.GetAll(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             }
+
+            return ModelsMapper.GetCurrencyViewModel(currency);
         }
 
         /// <summary>
@@ -62,12 +76,15 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        public ICollection<Currency> GetCurrenciesList()
+        public ICollection<CurrencyViewModel> GetCurrenciesList()
         {
+            ICollection<Currency> allCurrencies;
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll();
+                allCurrencies = repositry.GetAll();
             }
+
+            return allCurrencies.Select(ModelsMapper.GetCurrencyViewModel).ToList();
         }
 
         /// <summary>
@@ -110,13 +127,13 @@
         /// Determines whether the specified <paramref name="currency"/> already exists.
         /// </summary>
         /// <param name="currency">
-        /// The currency.
+        ///     The currency.
         /// </param>
         /// <returns>
         /// <b>true</b> if the specified <paramref name="currency"/> already exists;
         /// otherwise <b>false</b>.
         /// </returns>
-        public bool CurrencyExists(Currency currency)
+        public bool CurrencyExists(CurrencyViewModel currency)
         {
             if (currency == null)
             {
@@ -125,7 +142,7 @@
 
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll(c => c.Id == currency.Id ||
+                return repositry.GetAll(c => c.Code == currency.Code ||
                                              c.ShortName.Equals(currency.ShortName.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
             }
         }

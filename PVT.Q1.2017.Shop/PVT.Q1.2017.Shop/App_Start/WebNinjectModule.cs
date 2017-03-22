@@ -5,15 +5,13 @@
     /// <summary>
     /// Defines bindings for application
     /// </summary>
-    /// 
-    /// </summary>
     public class WebNinjectModule : NinjectModule
     {
         /// <summary>
         /// Loads the module into the kernel.
         /// </summary>
         public override void Load()
-        {                 
+        {
         }
     }
 }

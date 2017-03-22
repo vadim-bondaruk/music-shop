@@ -34,7 +34,6 @@
             Bind<ITrackService>().To<TrackService>();
             Bind<IAlbumService>().To<AlbumService>();
 
-            Bind<IVoteService>().To<VoteService>();
             Bind<IFeedbackService>().To<FeedbackService>();
 
             Bind<ITrackPriceService>().To<TrackPriceService>();
