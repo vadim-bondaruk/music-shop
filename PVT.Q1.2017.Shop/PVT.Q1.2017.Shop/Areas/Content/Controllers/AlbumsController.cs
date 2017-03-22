@@ -8,7 +8,7 @@
     /// <summary>
     ///     The album controller.
     /// </summary>
-    public class AlbumController : Controller
+    public class AlbumsController : Controller
     {
         /// <summary>
         ///     The album service.
@@ -16,12 +16,12 @@
         private readonly IAlbumService _albumService;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AlbumController" /> class.
+        ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
         /// </summary>
         /// <param name="albumService">
         ///     The album service.
         /// </param>
-        public AlbumController(IAlbumService albumService)
+        public AlbumsController(IAlbumService albumService)
         {
             this._albumService = albumService;
         }
@@ -52,15 +52,6 @@
         public ActionResult List()
         {
             return this.View(this._albumService.GetAlbumsList());
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        public ActionResult New()
-        {
-            return this.View();
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
     /// <summary>
     /// The artist controller.
     /// </summary>
-    public class ArtistController : Controller
+    public class ArtistsController : Controller
     {
         /// <summary>
         /// The repository factory.
@@ -14,12 +14,12 @@
         private readonly IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArtistController"/> class.
+        /// Initializes a new instance of the <see cref="ArtistsController"/> class.
         /// </summary>
         /// <param name="repositoryFactory">
         /// The repository factory.
         /// </param>
-        public ArtistController(IRepositoryFactory repositoryFactory)
+        public ArtistsController(IRepositoryFactory repositoryFactory)
         {
             this._repositoryFactory = repositoryFactory;
         }
