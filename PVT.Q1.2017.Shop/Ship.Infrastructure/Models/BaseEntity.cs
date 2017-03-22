@@ -13,6 +13,6 @@
         /// <summary>
         /// Soft deleted flag
         /// </summary>
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }      
     }
 }

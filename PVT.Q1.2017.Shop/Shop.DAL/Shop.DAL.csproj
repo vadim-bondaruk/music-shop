@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
+    <Compile Include="Infrastruture\IUserRepository.cs" />
     <Compile Include="Migrations\201703141950344_Init.cs" />
     <Compile Include="Migrations\201703141950344_Init.Designer.cs">
       <DependentUpon>201703141950344_Init.cs</DependentUpon>
@@ -90,6 +91,7 @@
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserDataConfiguration.cs" />
     <Compile Include="Migrations\Configurations\CurrencyRateConfiguration.cs" />
     <Compile Include="Migrations\Configurations\CurrencyConfiguration.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Repositories\TrackPriceRepository.cs" />
     <Compile Include="Repositories\UserDataRepository.cs" />
     <Compile Include="Repositories\UserPaymentMethodRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VoteRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Infrastruture\ITrackPriceRepository.cs" />
@@ -161,6 +164,9 @@
     <EmbeddedResource Include="Migrations\201703202125138_Albums_ArtistId_added.resx">
       <DependentUpon>201703202125138_Albums_ArtistId_added.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

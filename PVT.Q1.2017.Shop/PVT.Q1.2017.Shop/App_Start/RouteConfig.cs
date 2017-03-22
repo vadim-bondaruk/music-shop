@@ -4,7 +4,7 @@
     using System.Web.Routing;
 
     /// <summary>
-    /// Global filters of route table
+    /// 
     /// </summary>
     public class RouteConfig
     {
@@ -14,7 +14,7 @@
         /// <param name="routes">Collection of routes</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");           
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

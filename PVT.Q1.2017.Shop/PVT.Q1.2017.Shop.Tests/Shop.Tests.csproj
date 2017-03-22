@@ -115,6 +115,7 @@
     <Compile Include="Moq\GenreRepositoryMoq.cs" />
     <Compile Include="Moq\PriceLevelRepositoryMoq.cs" />
     <Compile Include="Moq\RepositoryFactoryMoq.cs" />
+    <Compile Include="UserServiceTests.cs" />
     <Compile Include="UserDataServiceTest.cs" />
     <Compile Include="VoteServiceTest.cs" />
     <Compile Include="FeedbackServiceTest.cs" />
