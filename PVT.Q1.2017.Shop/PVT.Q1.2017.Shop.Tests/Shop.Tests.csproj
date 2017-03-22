@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlbumServiceTest.cs" />
+    <Compile Include="CartServiceTest.cs" />
     <Compile Include="CurrencyServiceTest.cs" />
     <Compile Include="Moq\AlbumPriceRepositoryMoq.cs" />
     <Compile Include="Moq\AlbumRepositoryMoq.cs" />
@@ -120,7 +121,6 @@
     <Compile Include="FeedbackServiceTest.cs" />
     <Compile Include="BllServiceTests\CurrencyRateServiceTest.cs" />
     <Compile Include="CartControllerTests.cs" />
-    <Compile Include="CartRepositoryTests.cs" />
     <Compile Include="CartViewModelServiceTests.cs" />
     <Compile Include="Moq\TrackPriceRepositoryMoq.cs" />
     <Compile Include="Moq\TrackRepositoryMoq.cs" />
