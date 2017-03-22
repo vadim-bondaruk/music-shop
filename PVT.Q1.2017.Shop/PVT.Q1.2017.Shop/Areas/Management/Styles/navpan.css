@@ -28,4 +28,4 @@
     text-decoration: none;
 }
 
-.nav-items > li:hover { opacity: 0.6; }
+.nav-items > li>a:hover { color: #dc143c }

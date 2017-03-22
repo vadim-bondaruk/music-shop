@@ -19,7 +19,7 @@
                             @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения", type = "text", id = "item-birthday" } })
                         </li>
                         <li>
-                            <input id="photo-input" type="text" placeholder="Фото" onclick="document.formreg.UploadedImage.click()"/>
+                            <input id="file-path" type="text" placeholder="Фото" onclick="document.formreg.UploadedImage.click()"/>
                         </li>
                         <li>
                             @Html.TextAreaFor(e => e.Biography, new { placeholder = "Биография", id = "item-bio" })
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom-panel">
+        <div>
             <button type="submit" class="save-button">Сохранить</button>
         </div>
         <input type="file" id="file" name="UploadedImage" style="display: none"/>
