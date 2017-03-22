@@ -22,16 +22,33 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Music Shop", "TrackList", "Track", new { area = string.Empty }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Track", "TrackList", "Track")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                @Html.Partial("_MenuPartial")
             </ul>
-            @Html.Partial("_LoginPartial")
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { area = "User", id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", new { area = "User", controller = "Manage" }, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+                    </ul>
+                }
+            }
+            else
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Регистрация", "Register", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "registerLink" })</li>
+                    <li>@Html.ActionLink("Войти", "Login", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "loginLink" })</li>
+                </ul>
+            }
         </div>
     </div>
 </div>
@@ -46,5 +63,6 @@
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+@RenderSection("scripts", required: false)
 </body>
 </html>

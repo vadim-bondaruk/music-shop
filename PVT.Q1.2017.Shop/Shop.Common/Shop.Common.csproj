@@ -33,12 +33,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
+    <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,17 +79,25 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\AlbumTrackRelation.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModels\AlbumViewModel.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\ViewModels\ArtistViewModel.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\ViewModels\CartViewModel.cs" />
+    <Compile Include="Models\ViewModels\FeedbackViewModel.cs" />
     <Compile Include="Models\Genre.cs" />
-    <Compile Include="Models\Mark.cs" />
     <Compile Include="Models\PriceLevel.cs" />
     <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\TrackAlbumListViewModel.cs" />
+    <Compile Include="Models\ViewModels\TrackFeedbacksViewModel.cs" />
     <Compile Include="Models\TrackPrice.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModels\TrackViewModel.cs" />
+    <Compile Include="Models\UserData.cs" />
     <Compile Include="Models\UserPaymentMethod.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,12 +112,14 @@
     <Compile Include="Validators\PriceLevelValidator.cs" />
     <Compile Include="Validators\TrackPriceValidator.cs" />
     <Compile Include="Validators\TrackValidator.cs" />
-    <Compile Include="Validators\UserValidator.cs" />
+    <Compile Include="Validators\UniqueUserIdentityValidator.cs" />
+    <Compile Include="Validators\UserDataValidator.cs" />
+    <Compile Include="Validators\UserRegistrationValidator.cs" />
     <Compile Include="Validators\VoteValidator.cs" />
+    <Compile Include="Models\ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">

@@ -28,10 +28,11 @@
                 {
                     <tr>
                         <td>@anyTrack.Artist</td>
-                        <td width="200">@anyTrack.Album</td>
+                        <td width="200">@anyTrack.Albums.First().Name</td>
                         <td>@anyTrack.Name</td>
                         <td>@anyTrack.Duration</td>
                         <td>@anyTrack.TrackPrices.First(p => p.Currency.Name == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
+                        <td>@Html.CheckBox("myCheckbox", false)</td>
                     </tr>
                 }
             </tbody>
@@ -40,7 +41,8 @@
         Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
         <br />
         <br />
-        <input type="submit" value="Оплатить" />
+        <button type="submit" name="action" value="pay">Оплатить</button>
+        <button type="submit" name="action" value="remove">Удалить</button>
     </form>
 </body>
 </html>

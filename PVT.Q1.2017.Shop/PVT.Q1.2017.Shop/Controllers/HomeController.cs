@@ -1,7 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
     using System.Web.Mvc;
-    using Filters;
 
     /// <summary>
     /// Controller of Home page
@@ -9,9 +8,7 @@
     public class HomeController : Controller
     {
         /// <summary>
-        /// Default start page
-        /// </summary>
-        /// <returns>View of index page</returns>
+        /// <returns>Default start page</returns>
         /// </summary>
         /// <returns>View of index page</returns>
         public ActionResult Index()
@@ -32,20 +29,9 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return this.View();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Контакты";
 
             return this.View();
         }

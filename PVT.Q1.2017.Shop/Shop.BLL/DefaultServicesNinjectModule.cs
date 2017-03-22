@@ -40,13 +40,15 @@
             Bind<ITrackPriceService>().To<TrackPriceService>();
             Bind<IAlbumPriceService>().To<AlbumPriceService>();
 
-            Bind<IUserService>().To<UserService>();
+            Bind<IUserDataService>().To<UserDataService>();
 
             Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
 
             Bind<ICurrencyService>().To<CurrencyService>();
 
+            Bind<ICurrencyRateService>().To<CurrencyRateService>();
             Bind<IAuthModule>().To<AuthModule>();
+            Bind<IUserService>().To<UserService>();
         }
     }
 }

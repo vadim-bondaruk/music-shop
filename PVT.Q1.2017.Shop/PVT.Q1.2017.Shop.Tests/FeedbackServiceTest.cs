@@ -9,8 +9,8 @@
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Mocks;
     using Moq;
+    using global::Moq;
 
     [TestClass]
     public class FeedbackServiceTest
@@ -40,7 +40,7 @@
         public void GetFeedbackTest()
         {
             AddFeedbackTest();
-            Assert.IsNotNull(_feedbackService.GetTrackFeedback(new Track(), new User()));
+            Assert.IsNotNull(_feedbackService.GetTrackFeedback(new Track(), new UserData()));
 
             Mock.Get(_factory.GetFeedbackRepository())
                 .Verify(
@@ -53,7 +53,7 @@
         public void FeedbackExistsTest()
         {
             AddFeedbackTest();
-            Assert.IsTrue(_feedbackService.FeedbackExists(new Track(), new User()));
+            Assert.IsTrue(_feedbackService.FeedbackExists(new Track(), new UserData()));
 
             Mock.Get(_factory.GetFeedbackRepository())
                 .Verify(
@@ -66,7 +66,7 @@
         public void GetFeedbackInfoTest()
         {
             AddFeedbackTest();
-            Assert.IsNotNull(_feedbackService.GetFeedbackInfo(1));
+            Assert.IsNotNull(_feedbackService.GetFeedback(1));
 
             Mock.Get(_factory.GetFeedbackRepository())
                 .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);

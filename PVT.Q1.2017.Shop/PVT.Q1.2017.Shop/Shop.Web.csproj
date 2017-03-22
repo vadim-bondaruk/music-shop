@@ -22,6 +22,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -124,8 +125,8 @@
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -153,10 +154,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Shop.mdf" />
-    <Content Include="App_Data\Shop_log.ldf">
-      <DependentUpon>Shop.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -171,6 +168,22 @@
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Content\Views\web.config" />
+    <Content Include="Areas\User\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\User\Views\web.config" />
+    <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\User\Views\Account\Register.cshtml" />
+    <Content Include="Areas\User\Views\Account\Login.cshtml" />
+    <Content Include="Areas\User\Views\Account\Success.cshtml" />
+    <Content Include="Areas\User\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Areas\User\Views\Manage\Index.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\EditCurrency.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\All.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\CreateCurrency.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
+    <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -195,21 +208,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\CustomDependencyResolver.cs" />
+    <Compile Include="App_Start\CustomValidatorFactory.cs" />
+    <Compile Include="App_Start\FluentValidationHelper.cs" />
+    <Compile Include="App_Start\FluentValidationNinjectModule.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
+    <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
+    <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
-    <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
-    <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Areas\User\Controllers\AccountController.cs" />
+    <Compile Include="Areas\User\Controllers\ManageController.cs" />
+    <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TrackController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Filters\ShopAuthentication.cs" />
+    <Compile Include="Areas\Content\Controllers\TrackController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -222,10 +243,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AlbumViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="ViewModels\TrackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -237,17 +254,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="T4MVC.tt.hooks.t4" />
-    <Content Include="Views\Track\AddNew.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\Track\Details.cshtml" />
-    <Content Include="Views\Track\List.cshtml" />
-    <Content Include="Views\Track\AlbumList.cshtml" />
-    <Content Include="Views\User\Success.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -258,12 +267,20 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Track\" />
+    <Folder Include="Areas\Content\Models\" />
+    <Folder Include="Areas\Content\Views\Album\" />
+    <Folder Include="Areas\Content\Views\Artist\" />
+    <Folder Include="Areas\Content\Views\Track\" />
     <Folder Include="Areas\Management\Models\" />
-    <Folder Include="Areas\Management\Views\Shared\" />
+    <Folder Include="Areas\Management\Views\Album\" />
+    <Folder Include="Areas\Management\Views\Track\" />
+    <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\Payment\Views\Shared\" />
-    <Folder Include="Views\Album\" />
-    <Folder Include="Views\Artist\" />
+    <Folder Include="Views\Error\" />
+    <Folder Include="Areas\User\Models\" />
+    <Folder Include="Views\Home\" />
+    <Folder Include="Areas\User\Views\Shared\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -38,7 +38,7 @@ namespace Shop.DAL.Migrations.Configurations
             Property(c => c.Symbol).IsOptional().IsUnicode().HasMaxLength(10);
             Property(c => c.IsDeleted);
 
-            ToTable("tbCurrencies");
+            ToTable("Currencies");
         }
     }
 }

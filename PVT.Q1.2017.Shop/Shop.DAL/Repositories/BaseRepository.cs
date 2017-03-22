@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Linq.Expressions;
     using Infrastructure.Models;
@@ -166,7 +167,16 @@
 
             Delete(model.Id);
         }
-        
+
+        /// <summary>
+        /// Adds or updates the specified array of <paramref name="models"/>.
+        /// </summary>
+        /// <param name="models">A model to add or update.</param>
+        public virtual void AddOrUpdate(TEntity[] models)
+        {
+            this._dbContext.Set<TEntity>().AddOrUpdate(models);
+        }
+
         /// <summary>
         /// Saves all changes.
         /// </summary>

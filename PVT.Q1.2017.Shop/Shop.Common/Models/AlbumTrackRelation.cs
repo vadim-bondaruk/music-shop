@@ -8,22 +8,22 @@ namespace Shop.Common.Models
     public class AlbumTrackRelation : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the album id.
+        /// Album id.
         /// </summary>
         public int AlbumId { get; set; }
 
         /// <summary>
-        /// Gets or sets the album.
-        /// </summary>
-        public virtual Album Album { get; set; }
-
-        /// <summary>
-        /// Gets or sets the track id.
+        /// Track id.
         /// </summary>
         public int TrackId { get; set; }
 
         /// <summary>
-        /// Gets or sets the track.
+        /// Album.
+        /// </summary>
+        public virtual Album Album { get; set; }
+
+        /// <summary>
+        /// Track.
         /// </summary>
         public virtual Track Track { get; set; }
     }

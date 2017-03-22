@@ -33,7 +33,7 @@
         /// The feedback for the <paramref name="track"/> which have made the specified <paramref name="user"/>
         /// or <b>null</b> in case if feedback doesn't exist.
         /// </returns>
-        public Feedback GetTrackFeedback(Track track, User user)
+        public Feedback GetTrackFeedback(Track track, UserData user)
         {
             using (var repository = this.Factory.GetFeedbackRepository())
             {
@@ -57,7 +57,7 @@
         /// <b>true</b> if the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>;
         /// otherwise <b>false</b>.
         /// </returns>
-        public bool FeedbackExists(Track track, User user)
+        public bool FeedbackExists(Track track, UserData user)
         {
             using (var repository = this.Factory.GetFeedbackRepository())
             {
@@ -72,7 +72,7 @@
         /// <returns>
         /// The feedback with the specified <paramref name="id"/> or <b>null</b> if feedback doesn't exist.
         /// </returns>
-        public Feedback GetFeedbackInfo(int id)
+        public Feedback GetFeedback(int id)
         {
             using (var repository = this.Factory.GetFeedbackRepository())
             {

@@ -89,12 +89,12 @@ namespace Shop.DAL.Infrastruture
         ITrackRepository GetTrackRepository();
 
         /// <summary>
-        /// Returns the user repository.
+        /// Returns the user data repository.
         /// </summary>
         /// <returns>
-        /// The user repository.
+        /// The user data repository.
         /// </returns>
-        IUserRepository GetUserRepository();
+        IUserDataRepository GetUserDataRepository();
 
         /// <summary>
         /// Returns the vote repository.
@@ -104,6 +104,14 @@ namespace Shop.DAL.Infrastruture
         /// </returns>
         IVoteRepository GetVoteRepository();
 
+        /// <summary>
+        /// Returns the cart repository.
+        /// </summary>
+        /// <returns>
+        /// The cart repository.
+        /// </returns>
+        ICartRepository GetCartRepository();
+        
         /// <summary>
         /// Returns the album and track relation repository.
         /// </summary>

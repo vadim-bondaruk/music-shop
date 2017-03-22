@@ -18,7 +18,7 @@
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
          
-            ToTable("tbPriceLevels");
+            ToTable("PriceLevels");
         }
     }
 }

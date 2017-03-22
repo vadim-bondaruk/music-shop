@@ -1,18 +1,14 @@
 ﻿namespace PVT.Q1._2017.Shop
 {
-    #region
-
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-
-    using AutoMapper;
+    using Antlr.Runtime.Misc;
+    using App_Start;
     using FluentValidation.Mvc;
-
-    using global::Shop.Common.Models;
-    using ViewModels;
-
-    #endregion
+    using Ninject;
+    using Ninject.Web.Common;
+    using global::Shop.BLL;
 
     /// <summary>
     ///     Base class in an ASP.NET application
@@ -25,10 +21,12 @@
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);                 
 
-            FluentValidationModelValidatorProvider.Configure();
-            //// Mapper.Initialize(cfg => cfg.CreateMap<Track, TrackViewModel>());
+            FluentValidationModelValidatorProvider
+                .Configure(provider => provider.ValidatorFactory = new CustomValidatorFactory(FluentValidationHelper.GetKernel()));
+
+            DefaultModelsMapper.MapModels();
         }
     }
 }
