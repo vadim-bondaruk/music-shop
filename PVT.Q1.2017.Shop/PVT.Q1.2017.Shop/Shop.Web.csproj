@@ -169,6 +169,7 @@
     <Content Include="Areas\Admin\Views\Currency\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -197,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
@@ -255,7 +257,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Content\Views\Track\" />
     <Folder Include="Areas\Management\Views\Album\" />

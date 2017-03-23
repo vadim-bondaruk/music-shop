@@ -1,4 +1,6 @@
-﻿namespace Shop.Common.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shop.Common.Models.ViewModels
 {
     /// <summary>
     /// The currency view model.
@@ -6,18 +8,30 @@
     public class CurrencyViewModel
     {
         /// <summary>
-        /// ISO 4217 litteral code of currency
+        /// Gets or sets the identifier
         /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Soft deleted flag
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shortname
+        /// </summary>
+        [Required]
         public string ShortName { get; set; }
 
         /// <summary>
-        /// Full name of currency
+        /// Gets or sets the fullname
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// ISO 4217 numeric code of currency
+        /// Gets or sets the code
         /// </summary>
+        [Required]
         public int Code { get; set; }
 
         /// <summary>
