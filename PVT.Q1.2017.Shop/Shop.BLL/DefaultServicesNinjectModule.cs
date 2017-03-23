@@ -47,6 +47,8 @@
             Bind<ICurrencyService>().To<CurrencyService>();
 
             Bind<ICurrencyRateService>().To<CurrencyRateService>();
+
+            Bind<ICartService>().To<CartService>();
             Bind<IAuthModule>().To<AuthModule>();
             Bind<IUserService>().To<UserService>();
         }

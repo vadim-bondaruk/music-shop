@@ -147,12 +147,12 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
-    <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Content\Views\web.config" />
     <Content Include="Areas\User\Views\_ViewStart.cshtml" />
     <Content Include="Areas\User\Views\web.config" />
     <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\User\Views\Account\Register.cshtml" />
     <Content Include="Areas\User\Views\Account\Login.cshtml" />
     <Content Include="Areas\User\Views\Account\Success.cshtml" />
@@ -166,6 +166,8 @@
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithCreditCard.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Index.cshtml" />
+    <Content Include="Areas\Content\Views\Artist\List.cshtml" />
+    <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\Payment\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
@@ -204,6 +206,8 @@
     <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Management\Helpers\ManagementMapper.cs" />
+    <Compile Include="Areas\Management\Validators\AlbumManagementValidator.cs" />
+    <Compile Include="Areas\Management\Validators\TrackManagementValidator.cs" />
     <Compile Include="Areas\Management\ViewModels\AlbumManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
@@ -256,8 +260,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Content\Views\Album\" />
-    <Folder Include="Areas\Content\Views\Artist\" />
     <Folder Include="Areas\Content\Views\Track\" />
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />
