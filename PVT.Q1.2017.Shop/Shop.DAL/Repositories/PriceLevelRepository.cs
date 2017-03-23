@@ -1,6 +1,7 @@
 ﻿namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
+    using System.Linq;
     using Common.Models;
     using Infrastruture;
 
@@ -17,6 +18,17 @@
         /// </param>
         public PriceLevelRepository(DbContext dbContext) : base(dbContext)
         {
+        }
+
+        /// <summary>
+        /// Returns the default price level.
+        /// </summary>
+        /// <returns>
+        /// The default price level.
+        /// </returns>
+        public PriceLevel GetDefaultPriceLevel()
+        {
+            return CurrentDbSet.FirstOrDefault();
         }
     }
 }

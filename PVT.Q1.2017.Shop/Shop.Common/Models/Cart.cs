@@ -17,5 +17,10 @@
         /// Collection of tracks for purchase
         /// </summary>
         public ICollection<Track> Tracks { get; set; }
+
+        /// <summary>
+        /// Collection of albums for purchase
+        /// </summary>
+        public ICollection<Album> Albums { get; set; }
     }
 }

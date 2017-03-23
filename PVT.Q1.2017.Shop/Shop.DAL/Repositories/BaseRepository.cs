@@ -14,8 +14,6 @@
     /// </summary>
     public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
     {
-        #region Fields
-
         /// <summary>
         /// The Db context.
         /// </summary>
@@ -35,10 +33,6 @@
         /// Indicates whether the inner resources are already disposed.
         /// </summary>
         private bool _disposed;
-
-        #endregion //Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
@@ -60,10 +54,6 @@
             this._currentDbSet = this._dbContext.Set<TEntity>();
         }
 
-        #endregion //Constructors
-
-        #region Properties
-
         /// <summary>
         /// Gets the db context.
         /// </summary>
@@ -79,10 +69,6 @@
         {
             get { return this._currentDbSet; }
         }
-
-        #endregion //Properties
-
-        #region IRepository<TEntity> Members
 
         /// <summary>
         /// Tries to find a model by the specified <paramref name="id"/>.
@@ -203,10 +189,6 @@
             }
         }
 
-        #endregion //IRepository<TEntity> Members
-
-        #region IDisposable Pattern
-
         /// <summary>
         /// Disposes resources.
         /// </summary>
@@ -231,10 +213,6 @@
                 }
             }
         }
-
-        #endregion //IDisposable Pattern
-
-        #region Protected Methods
 
         /// <summary>
         /// Updates the specified <paramref name="modelFromDb"/> by values from <paramref name="model"/>.
@@ -305,7 +283,5 @@
                 previousEntityState = EntityState.Detached;
             }
         }
-
-        #endregion //Protected Methods
     }
 }

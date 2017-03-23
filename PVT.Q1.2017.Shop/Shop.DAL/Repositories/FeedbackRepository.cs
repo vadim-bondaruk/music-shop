@@ -1,6 +1,7 @@
 namespace Shop.DAL.Repositories
 {
     using System.Data.Entity;
+    using System.Linq;
     using Common.Models;
     using Infrastruture;
 
@@ -17,6 +18,20 @@ namespace Shop.DAL.Repositories
         /// </param>
         public FeedbackRepository(DbContext dbContext) : base(dbContext)
         {
+        }
+
+        /// <summary>
+        /// Returns the number of comments for the specified track.
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// The number of comments for the specified track.
+        /// </returns>
+        public int GetFeedbacksCount(int trackId)
+        {
+            return CurrentDbSet.Count(v => v.TrackId == trackId);
         }
 
         /// <summary>

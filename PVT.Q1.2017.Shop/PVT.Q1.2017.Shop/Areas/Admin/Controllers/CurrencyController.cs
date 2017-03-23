@@ -1,4 +1,6 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
+﻿using System.Linq;
+
+namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +8,7 @@
     using AutoMapper;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.ViewModels.Admin;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -41,10 +43,8 @@
         /// <returns></returns>
         public ViewResult Index()
         {
-            var currencies = this._curencyService.GetCurrenciesList();
-            Mapper.Initialize(cfg => cfg.CreateMap<Currency, CurrencyViewModel>());
-            var model = Mapper.Map<ICollection<Currency>, IEnumerable<CurrencyViewModel>>(currencies);
-            return this.View(model);
+            var currencies = _curencyService.GetCurrenciesList();
+            return this.View(currencies);
         }
 
         /// <summary>

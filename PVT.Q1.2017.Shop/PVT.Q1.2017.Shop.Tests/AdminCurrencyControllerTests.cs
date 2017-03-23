@@ -1,19 +1,17 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shop.DAL.Infrastruture;
 using Shop.BLL.Services.Infrastructure;
 using System.Collections.Generic;
 using Shop.Common.Models;
 using PVT.Q1._2017.Shop.Areas.Admin.Controllers;
+using Shop.Common.Models.ViewModels;
+using System.Web.Mvc;
+using PVT.Q1._2017.Shop.Tests.Moq;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
-    using System.Web.Mvc;
-
-    using global::Shop.Common.ViewModels.Admin;
-
-    using PVT.Q1._2017.Shop.Tests.Moq;
-
     [TestClass]
     public class AdminCurrencyControllerTests
     {
@@ -23,12 +21,12 @@ namespace PVT.Q1._2017.Shop.Tests
             // Arrange - create the mock service
             var currencyRepositoryMoq = new Mock<ICurrencyRepository>();
             var mockService = new Mock<ICurrencyService>();
-            mockService.Setup(x => x.GetCurrenciesList()).Returns(new List<Currency>()
+            mockService.Setup(x => x.GetCurrenciesList()).Returns(new List<CurrencyViewModel>()
             {
-                new Currency { Id = 1, ShortName = "USD" },
-                new Currency { Id = 2, ShortName = "Euro" },
-                new Currency { Id = 3, ShortName = "BYR" }
+                new CurrencyViewModel {ShortName = "USD", Code = 840},
+                new CurrencyViewModel {ShortName = "EUR", Code = 978}
             });
+
             var controller = new CurrencyController(currencyRepositoryMoq.Object, mockService.Object);
 
             // Act

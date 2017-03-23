@@ -20,7 +20,7 @@
             this.HasRequired(v => v.Track).WithMany(t => t.Votes).WillCascadeOnDelete(false);
             this.HasRequired(v => v.User).WithMany(t => t.Votes).WillCascadeOnDelete(false);
 
-            this.ToTable("tbVotes");
+            this.ToTable("Votes");
         }
     }
 }
