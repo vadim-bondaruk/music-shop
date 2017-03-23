@@ -21,6 +21,9 @@ namespace Shop.Common.Models.ViewModels
         /// Gets or sets the shortname
         /// </summary>
         [Required]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$", ErrorMessage = "Поле ShortName должно состоять из 3 прописных символов")]
+
         public string ShortName { get; set; }
 
         /// <summary>
@@ -32,6 +35,7 @@ namespace Shop.Common.Models.ViewModels
         /// Gets or sets the code
         /// </summary>
         [Required]
+        [Range(0,999)]
         public int Code { get; set; }
 
         /// <summary>

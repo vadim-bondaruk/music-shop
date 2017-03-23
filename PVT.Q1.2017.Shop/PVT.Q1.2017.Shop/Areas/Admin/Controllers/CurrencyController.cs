@@ -133,8 +133,7 @@ namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
             {
                 this.ModelState.AddModelError("Name", "Unable to save changes. Try again, and if the problem persists see your system administrator");
             }
-
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("Create", model);
         }
     }
 }
