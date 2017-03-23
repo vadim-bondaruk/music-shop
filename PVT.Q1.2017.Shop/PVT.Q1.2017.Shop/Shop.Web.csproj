@@ -145,14 +145,16 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Management\Views\web.config" />
+    <Content Include="Areas\Management\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
     <Content Include="Areas\Management\Views\Albums\New.cshtml" />
     <Content Include="Areas\Management\Views\Genres\New.cshtml" />
     <Content Include="Areas\Management\Views\Artists\New.cshtml" />
-    <Content Include="Areas\Management\Views\Artists\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
     <Content Include="Areas\Management\Views\Genres\Details.cshtml" />
     <Content Include="Areas\Management\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\Details.cshtml" />
@@ -163,7 +165,6 @@
     <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Management\Views\Artists\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Albums\Edit.cshtml" />
-    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
     <Content Include="Areas\Content\Views\Artists\List.cshtml" />
     <Content Include="Areas\Content\Views\Genres\List.cshtml" />
     <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
@@ -195,6 +196,7 @@
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\TrackController.cs" />
+    <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
@@ -205,7 +207,6 @@
     <Compile Include="Areas\Payment\Models\CartViewModel.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
-    <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Areas\Content\Controllers\TracksController.cs" />
     <Compile Include="Global.asax.cs">

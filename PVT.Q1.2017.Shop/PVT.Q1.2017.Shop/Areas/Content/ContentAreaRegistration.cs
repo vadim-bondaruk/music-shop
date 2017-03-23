@@ -26,7 +26,7 @@
             context.MapRoute(
                 name: "Content_default",
                 url: "Content/{controller}/{action}/{id}",
-                defaults: new { controller = "Albums", action = "List", id = UrlParameter.Optional });
+                defaults: new { action = "List", id = UrlParameter.Optional });
         }
     }
 }
