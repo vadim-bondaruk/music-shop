@@ -76,7 +76,7 @@
                     repository.SaveChanges();
                 }
 
-                return this.RedirectToAction("Details", "Album", new { id = album.Id, area = "Content" });
+                return this.RedirectToAction("Details", "Albums", new { id = album.Id, area = "Content" });
             }
 
             return this.View(album);
@@ -96,7 +96,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Album", new { area = "Content" });
+                return this.RedirectToAction("List", "Albums", new { area = "Content" });
             }
 
             var album = ManagementMapper.GetAlbumManagementViewModel(this._albumService.GetAlbumDetails(id.Value));
@@ -124,7 +124,7 @@
                 }
             }
 
-            return this.RedirectToAction("List", "Album", new { area = "Content" });
+            return this.RedirectToAction("List", "Albums", new { area = "Content" });
         }
     }
 }
