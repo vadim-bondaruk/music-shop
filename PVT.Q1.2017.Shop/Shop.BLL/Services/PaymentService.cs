@@ -151,6 +151,7 @@
             }
             catch (PayPal.PayPalException ex)
             {
+                // TODO: LOGGER
                 //Logger.Log("Error: " + ex.Message);
                 return "Failure";
             }
@@ -233,6 +234,7 @@
             }
             catch (Exception ex)
             {
+                // TODO: LOGGER
                 // Logger.log("Error" + ex.Message);
                 return "FailureView";
             }
