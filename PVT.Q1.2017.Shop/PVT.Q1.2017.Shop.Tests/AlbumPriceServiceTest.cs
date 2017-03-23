@@ -40,8 +40,8 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void GetAlbumPriceTest()
         {
-            AddAlbumPricesTest();
-            Assert.IsNotNull(_albumPriceService.GeAlbumPrice(new Album(), new PriceLevel(), new Currency()));
+            AddAlbumPricesTest(); 
+            Assert.IsNotNull(_albumPriceService.GetAlbumPrice(1, 840, 1));
 
             Mock.Get(_factory.GetAlbumPriceRepository())
                 .Verify(
@@ -59,8 +59,8 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock.Get(_factory.GetAlbumPriceRepository())
                 .Verify(
                         m =>
-                            m.GetById(It.IsAny<int>(),
-                                      It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()), Times.Once);
+                            m.GetAll(It.IsAny<Expression<Func<AlbumPrice, bool>>>(),
+                                     It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()), Times.Once);
         }
     }
 }

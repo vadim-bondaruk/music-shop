@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
-    using Common.Models;
     using Common.Models.ViewModels;
 
     /// <summary>
@@ -10,84 +9,69 @@
     public interface ITrackService
     {
         /// <summary>
-        /// Returns all registered tracks.
+        /// Returns the track details using the specified currency and price level for track price.
         /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="id">The track id.</param>
+        /// <returns>
+        /// The information about track with the specified <paramref name="id"/> or <b>null</b> if track doesn't exist.
+        /// </returns>
+        TrackDetailsViewModel GetTrackDetails(int id, int? currencyCode = null, int? priceLevel = null);
+
+        /// <summary>
+        /// Returns all registered tracks using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        ICollection<Track> GetTracksList();
+        ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null);
 
         /// <summary>
-        /// Returns all tracks without price configured.
+        /// Returns all tracks which don't have price.
         /// </summary>
         /// <returns>
         /// All tracks without price configured.
         /// </returns>
-        ICollection<Track> GetTracksWithoutPriceConfigured();
+        ICollection<TrackViewModel> GetTracksWithoutPrice();
 
         /// <summary>
-        /// Returns all tracks with price specified.
+        /// Returns all tracks with price specified using the specified currency and price level for track price.
         /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
         /// <returns>
         /// All tracks with price specified.
         /// </returns>
-        ICollection<Track> GetTracksWithPriceConfigured();
+        ICollection<TrackViewModel> GetTracksWithPrice(int? currencyCode = null, int? priceLevel = null);
 
         /// <summary>
-        /// Returns the track with the specified <paramref name="id"/>
+        /// Returns all albums which contain the specified track using the specified currency and price level.
         /// </summary>
-        /// <param name="id">The track id.</param>
-        /// <returns>
-        /// The track with the specified <paramref name="id"/> or <b>null</b> if track doesn't exist.
-        /// </returns>
-        Track GetTrack(int id);
-
-        /// <summary>
-        /// Returns all track prices for the specified  <paramref name="priceLevel"/>.
-        /// </summary>
-        /// <param name="track">The track</param>
-        /// <param name="priceLevel">The price level.</param>
-        /// <returns>All track prices for the specified  <paramref name="priceLevel"/>.</returns>
-        ICollection<TrackPrice> GetTrackPrices(Track track, PriceLevel priceLevel);
-
-        /// <summary>
-        /// Returns all <paramref name="track"/> prices.
-        /// </summary>
-        /// <param name="track">The track.</param>
-        /// <returns>All <paramref name="track"/> prices>.</returns>
-        ICollection<TrackPrice> GetTrackPrices(Track track);
-
-        /// <summary>
-        /// Returns all track votes.
-        /// </summary>
-        /// <param name="track">
-        /// The track.
+        /// <param name="trackId">The track id.</param>
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevelId">
+        /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// All track votes.
+        /// All albums which contain the specified track.
         /// </returns>
-        ICollection<Vote> GetTrackVotes(Track track);
-
-        /// <summary>
-        /// Returns all track feedbacks.
-        /// </summary>
-        /// <param name="track">
-        /// The track.
-        /// </param>
-        /// <returns>
-        /// All track feedbacks.
-        /// </returns>
-        ICollection<Feedback> GetTrackFeedbacks(Track track);
-
-        /// <summary>
-        /// Returns all albums whitch contain the specified <paramref name="track"/>.
-        /// </summary>
-        /// <param name="track">The track.</param>
-        /// <param name="currency">The currency whitch is used to load album price.</param>
-        /// <param name="priceLevel">The price level whitch is used to load album price.</param>
-        /// <returns>
-        /// All albums whitch contain the specified <paramref name="track"/>.
-        /// </returns>
-        TrackAlbumListViewModel GetAlbumsList(Track track, Currency currency, PriceLevel priceLevel);
+        TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null);
     }
 }

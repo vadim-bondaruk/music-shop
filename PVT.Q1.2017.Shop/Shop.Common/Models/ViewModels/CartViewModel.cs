@@ -11,7 +11,17 @@
         /// <summary>
         /// Gets or sets a Collection of tracks for View
         /// </summary>
-        public IList<Track> Tracks { get; set; }
+        public int CurrentUserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a Collection of tracks for View
+        /// </summary>
+        public ICollection<Track> Tracks { get; set; }
+
+        /// <summary>
+        /// Gets or sets a Collection of Albums for View
+        /// </summary>
+        public ICollection<Album> Albums { get; set; }
 
         /// <summary>
         /// Get total price of cart

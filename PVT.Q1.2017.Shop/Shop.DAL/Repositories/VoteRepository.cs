@@ -1,12 +1,12 @@
 ﻿namespace Shop.DAL.Repositories
 {
-    using System;
     using System.Data.Entity;
     using System.Linq;
     using Common.Models;
     using Infrastruture;
 
     /// <summary>
+    /// The vote repository.
     /// </summary>
     public class VoteRepository : BaseRepository<Vote>, IVoteRepository
     {
@@ -21,22 +21,31 @@
         }
 
         /// <summary>
-        /// Returns average track rating for the specified <paramref name="track"/>.
+        /// Returns the number of votes for the specified track.
         /// </summary>
-        /// <param name="track">
-        /// The track.
+        /// <param name="trackId">
+        /// The track id.
         /// </param>
         /// <returns>
-        /// The average track rating for the specified <paramref name="track"/>.
+        /// The number of votes for the specified track.
         /// </returns>
-        public double GetAverageTrackRating(Track track)
+        public int GetVotesCount(int trackId)
         {
-            if (track == null)
-            {
-                throw new ArgumentNullException(nameof(track));
-            }
+            return CurrentDbSet.Count(v => v.TrackId == trackId);
+        }
 
-            return CurrentDbSet.Where(v => v.TrackId == track.Id).Average(v => (int)v.Mark);
+        /// <summary>
+        /// Returns average track rating for the specified track.
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// The average track rating for the specified  track.
+        /// </returns>
+        public double GetAverageMark(int trackId)
+        {
+            return CurrentDbSet.Any(v => v.TrackId == trackId) ? CurrentDbSet.Where(v => v.TrackId == trackId).Average(v => v.Mark) : 0d;
         }
 
         /// <summary>

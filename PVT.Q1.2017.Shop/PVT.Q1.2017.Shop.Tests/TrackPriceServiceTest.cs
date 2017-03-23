@@ -50,14 +50,15 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetTrackPriceTest()
         {
             AddTrackPriceTest();
-            Assert.IsNotNull(this._trackPriceService.GetTrackPrice(new Track(), new PriceLevel(), new Currency()));
+            Assert.IsNotNull(this._trackPriceService.GetTrackPrice(1));
         }
 
         [TestMethod]
         public void GetTrackPriceInfoTest()
         {
             AddTrackPriceTest();
-            Assert.IsNotNull(this._trackPriceService.GetTrackPrice(1));
+            Assert.IsNotNull(this._trackPriceService.GetTrackPrices(1));
+            Assert.IsTrue(this._trackPriceService.GetTrackPrices(1).Any());
         }
 
         #endregion //Tests

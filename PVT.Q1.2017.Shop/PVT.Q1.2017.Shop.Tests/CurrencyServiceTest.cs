@@ -61,7 +61,7 @@
         public void GetCurrencyInfoTest()
         {
             this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.GetCurrency(1));
+            Assert.IsNotNull(this._currencyService.DefaultCurrency);
         }
     }
 }

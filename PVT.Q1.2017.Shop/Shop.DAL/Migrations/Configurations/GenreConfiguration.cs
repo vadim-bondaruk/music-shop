@@ -17,7 +17,7 @@
             this.HasKey(t => t.Id);
             this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsVariableLength().IsUnicode();
-            this.ToTable("tbGenres");
+            this.ToTable("Genres");
         }
     }
 }

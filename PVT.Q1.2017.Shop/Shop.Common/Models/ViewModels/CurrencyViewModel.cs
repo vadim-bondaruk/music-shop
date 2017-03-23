@@ -1,40 +1,23 @@
-﻿namespace Shop.Common.ViewModels.Admin
+﻿namespace Shop.Common.Models.ViewModels
 {
-    using System.ComponentModel.DataAnnotations;
-
-    using FluentValidation.Attributes;
-
-    using Shop.Common.Validators;
-
     /// <summary>
+    /// The currency view model.
     /// </summary>
     public class CurrencyViewModel
     {
         /// <summary>
-        /// Gets or sets the identifier
+        /// ISO 4217 litteral code of currency
         /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Soft deleted flag
-        /// </summary>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
-        /// Gets or sets the shortname
-        /// </summary>
-        [Required]
         public string ShortName { get; set; }
 
         /// <summary>
-        /// Gets or sets the fullname
+        /// Full name of currency
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// Gets or sets the code
+        /// ISO 4217 numeric code of currency
         /// </summary>
-        [Required]
         public int Code { get; set; }
 
         /// <summary>
