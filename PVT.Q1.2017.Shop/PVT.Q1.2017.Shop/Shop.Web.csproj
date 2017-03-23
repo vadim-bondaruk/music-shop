@@ -147,12 +147,12 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
-    <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Content\Views\web.config" />
     <Content Include="Areas\User\Views\_ViewStart.cshtml" />
     <Content Include="Areas\User\Views\web.config" />
     <Content Include="Areas\Content\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Payment\Views\Cart\Index.cshtml" />
     <Content Include="Areas\User\Views\Account\Register.cshtml" />
     <Content Include="Areas\User\Views\Account\Login.cshtml" />
     <Content Include="Areas\User\Views\Account\Success.cshtml" />
