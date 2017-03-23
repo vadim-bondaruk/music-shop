@@ -1,10 +1,12 @@
 ﻿namespace Shop.BLL
 {
     using DAL;
+    using Infrastructure.Security;
     using Ninject;
     using Ninject.Modules;
     using Services;
     using Services.Infrastructure;
+    using Utils;
 
     /// <summary>
     /// Default cofiguration module.
@@ -32,7 +34,6 @@
             Bind<ITrackService>().To<TrackService>();
             Bind<IAlbumService>().To<AlbumService>();
 
-            Bind<IVoteService>().To<VoteService>();
             Bind<IFeedbackService>().To<FeedbackService>();
 
             Bind<ITrackPriceService>().To<TrackPriceService>();
@@ -47,6 +48,8 @@
             Bind<ICurrencyRateService>().To<CurrencyRateService>();
 
             Bind<ICartService>().To<CartService>();
+            Bind<IAuthModule>().To<AuthModule>();
+            Bind<IUserService>().To<UserService>();
         }
     }
 }

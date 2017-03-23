@@ -1,8 +1,11 @@
 ﻿namespace Shop.BLL.Services
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
+    using Common.Models.ViewModels;
     using DAL.Infrastruture;
+    using Helpers;
     using Infrastructure;
 
     /// <summary>
@@ -21,47 +24,75 @@
         }
 
         /// <summary>
-        /// Returns the track price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
+        /// Returns the track price in the specified currency and price level.
         /// </summary>
-        /// <param name="track">
-        /// The track.
+        /// <param name="trackId">
+        /// The track id.
         /// </param>
-        /// <param name="priceLevel">
-        /// The price level.
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
         /// </param>
-        /// <param name="currency">
-        /// The currency.
+        /// <param name="priceLevelId">
+        /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// The track price in the specified currency for the specified  <paramref name="priceLevel"/> or <b>null</b>.
+        /// The track price in the specified currency and price level or <b>null</b>.
         /// </returns>
-        public TrackPrice GetTrackPrice(Track track, PriceLevel priceLevel, Currency currency)
+        public PriceViewModel GetTrackPrice(int trackId, int? currencyCode = null, int? priceLevelId = null)
         {
+            if (currencyCode == null)
+            {
+                currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
+            }
+
+            if (priceLevelId == null)
+            {
+                priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
+            }
+
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
-                return repository.GetAll(
-                                         p => p.TrackId == track.Id &&
-                                              p.PriceLevelId == priceLevel.Id &&
-                                              p.CurrencyId == currency.Id,
-                                         p => p.Track,
-                                         p => p.Currency,
-                                         p => p.PriceLevel).FirstOrDefault();
+                return ServiceHelper.GetTrackPrice(repository, trackId, currencyCode.Value, priceLevelId.Value);
             }
         }
 
         /// <summary>
-        /// Returns the track price with the specified <paramref name="id"/>
+        /// Returns all track prices for the specified price level.
         /// </summary>
-        /// <param name="id">The track price id.</param>
-        /// <returns>
-        /// The track price with the specified <paramref name="id"/> or <b>null</b> if track price doesn't exist.
-        /// </returns>
-        public TrackPrice GetTrackPrice(int id)
+        /// <param name="trackId">The track id.</param>
+        /// <param name="priceLevelId">The price level id.</param>
+        /// <returns>All track prices for the specified price level.</returns>
+        public ICollection<PriceViewModel> GetTrackPrices(int trackId, int priceLevelId)
         {
+            ICollection<TrackPrice> trackPrices;
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
-                return repository.GetById(id, p => p.Track, p => p.Currency, p => p.PriceLevel);
+                trackPrices = repository.GetAll(
+                                         p => p.TrackId == trackId &&
+                                              p.PriceLevelId == priceLevelId,
+                                         p => p.Currency);
             }
+
+            return trackPrices.Select(ModelsMapper.GetPriceViewModel).ToList();
+        }
+
+        /// <summary>
+        /// Returns all track prices for the default price level.
+        /// </summary>
+        /// <param name="trackId">The track id.</param>
+        /// <returns>All track prices.</returns>
+        public ICollection<PriceViewModel> GetTrackPrices(int trackId)
+        {
+            ICollection<TrackPrice> trackPrices;
+            using (var repository = this.Factory.GetTrackPriceRepository())
+            {
+                trackPrices = repository.GetAll(
+                                         p => p.TrackId == trackId,
+                                         p => p.Currency,
+                                         p => p.PriceLevel);
+            }
+
+            return trackPrices.Select(ModelsMapper.GetPriceViewModel).ToList();
         }
     }
 }

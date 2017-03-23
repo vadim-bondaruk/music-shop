@@ -6,7 +6,7 @@
     using Infrastructure;
 
     /// <summary>
-    /// The user service (have to be extended by UserMenagement team).
+    /// The user service.
     /// </summary>
     public class UserDataService : BaseService, IUserDataService
     {

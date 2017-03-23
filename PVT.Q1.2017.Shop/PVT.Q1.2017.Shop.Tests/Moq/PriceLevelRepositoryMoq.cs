@@ -52,6 +52,8 @@
                     _priceLevels.RemoveAt(_priceLevels.Count - 1);
                 }
             });
+
+            _mock.Setup(m => m.GetDefaultPriceLevel()).Returns(new PriceLevel { Id = 1, Name = "Some Price Level" });
         }
 
         public IPriceLevelRepository Repository

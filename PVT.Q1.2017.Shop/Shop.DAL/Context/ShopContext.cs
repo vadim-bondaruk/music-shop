@@ -90,6 +90,11 @@
         /// Carts
         /// </summary>
         public DbSet<Cart> Carts { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
+        public DbSet<User> Users { get; set; }
 
         /// <summary>
         /// The Db configuration.
