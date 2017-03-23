@@ -1,92 +1,120 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
     using System.Web.Mvc;
+
+    using AutoMapper;
+
+    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
-    /// The artist controller.
     /// </summary>
     public class ArtistsController : Controller
     {
         /// <summary>
-        /// The repository factory.
         /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IArtistService artistService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArtistsController"/> class.
         /// </summary>
-        /// <param name="repositoryFactory">
-        /// The repository factory.
+        private readonly IRepositoryFactory repositoryFactory;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
+        /// </summary>
+        /// <param name="artistService">
+        ///     The artist service.
         /// </param>
-        public ArtistsController(IRepositoryFactory repositoryFactory)
+        /// <param name="repositoryFactory"></param>
+        public ArtistsController(IArtistService artistService, IRepositoryFactory repositoryFactory)
         {
-            this._repositoryFactory = repositoryFactory;
+            this.artistService = artistService;
+            this.repositoryFactory = repositoryFactory;
         }
 
         /// <summary>
-        /// Shows all artists.
         /// </summary>
+        /// <param name="viewModel">
+        /// The view model.
+        /// </param>
         /// <returns>
-        /// All artists view.
         /// </returns>
-        public ActionResult Index()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete([Bind(Include = "Id")]ArtistManageViewModel viewModel)
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
-            {
-                return this.View(repository.GetAll());
-            }
+            var artist = Mapper.Map<Artist>(viewModel);
+            this.artistService.Delete(artist);
+            return this.RedirectToAction("New");
         }
 
         /// <summary>
-        /// Show artist info.
         /// </summary>
-        /// <param name="id">
-        /// The artist id.
+        /// <param name="artistId">
+        ///     The artist id.
         /// </param>
         /// <returns>
-        /// Artist info view.
         /// </returns>
-        public ActionResult Details(int id)
+        public virtual ActionResult Details(int artistId = 0)
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
-            {
-                return this.View(repository.GetById(id));
-            }
+            var artist = this.artistService.GetById(artistId);
+            return this.View(artist);
         }
 
         /// <summary>
-        /// Shows all artist albums
         /// </summary>
-        /// <param name="id">
-        /// The artist id.
+        /// <param name="artistId">
+        ///     The artist id.
         /// </param>
         /// <returns>
-        /// All artist albums view.
         /// </returns>
-        public ActionResult AlbumsList(int id)
+        public virtual ActionResult Edit(int artistId)
         {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
-            {
-                return this.View(repository.GetAll(a => a.ArtistId == id));
-            }
+            var viewModel = this.artistService.GetById(artistId);
+            return this.View(viewModel);
         }
 
         /// <summary>
-        /// Shows all artist tracks.
         /// </summary>
-        /// <param name="id">
-        /// The artist id.
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult New()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        ///     The view model.
         /// </param>
         /// <returns>
-        /// All artist tracks view.
         /// </returns>
-        public ActionResult TracksList(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult New(
+            [Bind(Include = "Name, Birthday, Biography, UploadedImage")] ArtistManageViewModel viewModel)
         {
-            using (var repository = this._repositoryFactory.GetTrackRepository())
-            {
-                return this.View(repository.GetAll(t => t.ArtistId == id));
-            }
+            var id = this.artistService.Save(viewModel);
+            return this.RedirectToAction("Details", new { artistId = id });
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        ///     The view model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Update(
+            [Bind(Include = "Id, Name, Birthday, Biography, UploadedImage, Photo")] ArtistManageViewModel viewModel)
+        {
+            this.artistService.Save(viewModel);
+            return this.RedirectToAction("Details", new { artistId = viewModel.Id });
         }
     }
 }
