@@ -1,11 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop
 {
-    #region
-
     using System.Web.Mvc;
     using System.Web.Routing;
-
-    #endregion
 
     /// <summary>
     ///     Global filters of route table
