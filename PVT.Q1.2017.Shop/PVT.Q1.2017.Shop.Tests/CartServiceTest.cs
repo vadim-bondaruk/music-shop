@@ -21,7 +21,6 @@ namespace PVT.Q1._2017.Shop.Tests
 		{
 			_factory = new RepositoryFactoryMoq();
 			_cartService = new CartService(_factory);
-			//DefaultModelsMapper.MapModels();
 		}
 
 		[TestMethod]
