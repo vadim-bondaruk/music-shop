@@ -9,13 +9,18 @@
     public class Cart : BaseEntity
     {
         /// <summary>
-        /// Gets or Sets a Current User
+        /// Current User
         /// </summary>
-        public UserData User { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets a Collection of tracks for purchase
+        /// Collection of tracks for purchase
         /// </summary>
         public ICollection<Track> Tracks { get; set; }
+
+        /// <summary>
+        /// Collection of albums for purchase
+        /// </summary>
+        public ICollection<Album> Albums { get; set; }
     }
 }

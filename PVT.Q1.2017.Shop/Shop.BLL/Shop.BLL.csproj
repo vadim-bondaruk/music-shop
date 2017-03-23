@@ -38,7 +38,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -46,42 +46,45 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultModelsMapper.cs" />
+    <Compile Include="Helpers\ModelsMapper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="Helpers\ServiceHelper.cs" />
     <Compile Include="Services\AlbumPriceService.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Exceptions\UserValidationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefaultServicesNinjectModule.cs" />
-    <Compile Include="Services\ArtistService.cs" />
     <Compile Include="Services\AlbumService.cs" />
+    <Compile Include="Services\CartService.cs" />
+    <Compile Include="Services\CartViewModelService.cs" />
     <Compile Include="Services\CurrencyRateService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\Infrastructure\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Utils\AuthModule.cs" />
+    <Compile Include="Utils\PasswordEncryptor.cs" />
+    <Compile Include="Validators\UserDataValidator.cs" />
     <Compile Include="Services\FeedbackService.cs" />
-    <Compile Include="Services\Infrastructure\IArtistService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumService.cs" />
+    <Compile Include="Services\Infrastructure\ICartService.cs" />
     <Compile Include="Services\Infrastructure\ICurrencyRateService.cs" />
     <Compile Include="Services\Infrastructure\ICurrencyService.cs" />
     <Compile Include="Services\Infrastructure\IFeedbackService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
-    <Compile Include="Services\Infrastructure\IGenreService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
     <Compile Include="Services\Infrastructure\IUserPaymentMethodService.cs" />
     <Compile Include="Services\Infrastructure\IUserDataService.cs" />
-    <Compile Include="Services\Infrastructure\IVoteService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
-    <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\UserPaymentMethodService.cs" />
     <Compile Include="Services\UserDataService.cs" />
-    <Compile Include="Services\VoteService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Start\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
-      <Project>{C0E3B0F8-3FD8-4D53-B3B1-B98BDF5DA9CF}</Project>
+      <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>
       <Name>Shop.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shop.Common\Shop.Common.csproj">
@@ -94,7 +97,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>

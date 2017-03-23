@@ -1,44 +1,46 @@
-﻿namespace PVT.Q1._2017.Shop.Controllers.Cart
+﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using global::Shop.BLL.Services;
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using ViewModels;
 
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
-    public partial class CartController : Controller
+    public class CartController : Controller
     {
-        #region Fields
         /// <summary>
         /// Репозиторий для хранения корзины
         /// </summary>
         private ICartRepository _cartRepository;
 
         /// <summary>
-        /// Репозиторий для хранения пользователей 
+        /// Сервис для работы с данными в корзине
         /// </summary>
-        private IUserDataRepository _userRepository;
-        #endregion
+        private ICartService _cartService;
+
         /// <summary>
-        /// Конструктор для контроллера корзины
+        /// ViewModel для отображения корзины 
         /// </summary>
-        /// <param name="cartRepo">
-        /// Репозиторий для хранения корзины
+        private CartViewModel _viewModel;
+
+        /// <param name="cartService">
+        /// Сервис для работы с данными в корзине
         /// </param>
-        /// <param name="userRepo">
-        /// Репозиторий для хранения пользователей
-        /// </param>
-        public CartController(ICartRepository cartRepo, IUserDataRepository userRepo)
+        /// <param name="repositoryFactory">
+        /// Фабрика для работы с репозиториями
+        public CartController(ICartService cartService, IRepositoryFactory repositoryFactory) 
         {
-            this._cartRepository = cartRepo;
-            this._userRepository = userRepo;
+            this._cartRepository = repositoryFactory.GetCartRepository();
+            this._cartService = cartService;
+            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>() };
         }
 
-        #region Actions
         /// <summary>
         /// Действие для отображения корзины
         /// </summary>
@@ -46,95 +48,87 @@
         /// Id текущего пользователя
         /// </param>
         [HttpGet]
-        public virtual ViewResult Index(int currentUserId)
+        public ViewResult Index(int currentUserId = 0)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
-            var currentUser = this._userRepository.GetById(currentUserId);
-            var cartView = new CartViewModel { Tracks = new List<Track>() };
-            if (cart != null)
-            {
-                foreach (var t in cart.Tracks)
-                {
-                    cartView.Tracks.Add(t);
-                }
+            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
+            this._viewModel.Tracks = (ICollection<Track>)cart?.Tracks;
+            this._viewModel.Albums = (ICollection<Album>)cart?.Albums;
+            this._viewModel.CurrentUserId = currentUserId;
 
-                /// <summary>
-                /// Временные данные: пользователь выбрал отображение в долларах
-                /// </summary>
-                var userCurrency = new Currency();
-                userCurrency.Code = 840;
-                userCurrency.ShortName = "USD";
-                cartView.CurrencyShortName = userCurrency.ShortName;
-                cartView.SetTotalPrice(userCurrency);
-            }
+            /// <summary>
+            /// Временные данные: пользователь выбрал отображение в долларах
+            /// </summary>
+            var userCurrency = new Currency();
+            userCurrency.Code = 840;
+            userCurrency.ShortName = "USD";
+            this._viewModel.CurrencyShortName = userCurrency.ShortName;
+            CartViewModelService.SetTotalPrice(this._viewModel, userCurrency);
 
-            return this.View(cartView);
+            return this.View(this._viewModel);
         }
 
         /// <summary>
-        /// Добавление песни в корзину и перенаправление на действие отображения корзины
+        /// Добавление альбома в корзину и перенаправление на действие отображения корзины
         /// </summary>
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="track">
-        /// Добавляемая песня
+        /// <param name="albumId">
+        /// Id добавляемого альбома
         /// </param>
         [HttpPost]
-        public virtual RedirectToRouteResult AddTrackToCart(int currentUserId, Track track)
+        public RedirectToRouteResult AddAlbum(int currentUserId = 0, int albumId = 0)
         {
-            if (track == null)
-            {
-                return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
-            }
-
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault();
-            var currentUser = this._userRepository.GetById(currentUserId);
-            if (cart == null && currentUser != null)
-            {
-                var model = new Cart { User = currentUser, Tracks = new List<Track> { track } };
-                this._cartRepository.AddOrUpdate(model);
-            }
-
-            if (cart != null)
-            {
-                cart.Tracks.Add(track);
-                this._cartRepository.AddOrUpdate(cart);
-            }
-
+            this._cartService.AddAlbum(currentUserId, albumId);
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
         }
 
         /// <summary>
-        /// Удаление песни из корзины и перенаправление на действие отображения корзины
+        /// Удаление альбома из корзины и перенаправление на действие отображения корзины
         /// </summary>
         /// <param name="currentUserId">
         /// Id текущего пользователя
         /// </param>
-        /// <param name="track">
-        /// Удаляемая песня
+        /// <param name="albumId">
+        /// Id удаляемого альбома
         /// </param>
         [HttpPost]
-        public virtual RedirectToRouteResult DeleteTrackFromCart(int currentUserId, Track track)
+        public RedirectToRouteResult DeleteAlbum(int currentUserId = 0, int albumId = 0)
         {
-            var cart = this._cartRepository.GetAll(c => c.User.Id == currentUserId).FirstOrDefault(t => t.Tracks.Contains(track));
-            if (cart == null || track == null)
-            {
-                return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
-            }
-
-            if (cart.Tracks.Count == 1)
-            {
-                this._cartRepository.Delete(cart);
-            }
-            else
-            {
-                cart.Tracks.Remove(track);
-                this._cartRepository.AddOrUpdate(cart);
-            }
-
+            this._cartService.RemoveAlbum(currentUserId, albumId);
             return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
         }
-        #endregion 
+
+        /// <summary>
+        /// Добавление трэка в корзину и перенаправление на действие отображения корзины
+        /// </summary>
+        /// <param name="currentUserId">
+        /// Id текущего пользователя
+        /// </param>
+        /// <param name="trackId">
+        /// Id добавляемого трэка
+        /// </param>
+        [HttpPost]
+        public RedirectToRouteResult AddTrack(int currentUserId = 0, int trackId = 0)
+        {
+            this._cartService.AddTrack(currentUserId, trackId);
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+        }
+
+        /// <summary>
+        /// Удаление трэка из корзины и перенаправление на действие отображения корзины
+        /// </summary>
+        /// <param name="currentUserId">
+        /// Id текущего пользователя
+        /// </param>
+        /// <param name="trackId">
+        /// Id удаляемого трэка
+        /// </param>
+        [HttpPost]
+        public RedirectToRouteResult DeleteTrack(int currentUserId = 0, int trackId = 0)
+        {
+            this._cartService.RemoveTrack(currentUserId, trackId);
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+        }
     }
 }

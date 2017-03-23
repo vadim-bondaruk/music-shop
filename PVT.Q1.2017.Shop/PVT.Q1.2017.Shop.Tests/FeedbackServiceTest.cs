@@ -40,7 +40,7 @@
         public void GetFeedbackTest()
         {
             AddFeedbackTest();
-            Assert.IsNotNull(_feedbackService.GetTrackFeedback(new Track(), new UserData()));
+            Assert.IsNotNull(_feedbackService.GetTrackFeedback(1, 1));
 
             Mock.Get(_factory.GetFeedbackRepository())
                 .Verify(
@@ -53,7 +53,7 @@
         public void FeedbackExistsTest()
         {
             AddFeedbackTest();
-            Assert.IsTrue(_feedbackService.FeedbackExists(new Track(), new UserData()));
+            Assert.IsTrue(_feedbackService.FeedbackExists(1, 1));
 
             Mock.Get(_factory.GetFeedbackRepository())
                 .Verify(
@@ -63,13 +63,19 @@
         }
 
         [TestMethod]
-        public void GetFeedbackInfoTest()
+        public void GetTrackFeedbacksTest()
         {
             AddFeedbackTest();
-            Assert.IsNotNull(_feedbackService.GetFeedback(1));
+
+            var feedbacks = _feedbackService.GetTrackFeedbacks(1);
+            Assert.IsNotNull(feedbacks);
+            Assert.IsTrue(feedbacks.Any());
 
             Mock.Get(_factory.GetFeedbackRepository())
-                .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);
+                .Verify(
+                        m =>
+                            m.GetAll(It.IsAny<Expression<Func<Feedback, bool>>>(),
+                                     It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);
         }
     }
 }

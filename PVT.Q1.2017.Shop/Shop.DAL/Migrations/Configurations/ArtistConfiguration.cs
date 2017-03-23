@@ -24,7 +24,7 @@
             // new IndexAnnotation(new[] { new IndexAttribute("UniqueArtistName_Index") { IsUnique = true } }));
             this.Property(a => a.Biography).IsMaxLength();
             this.Property(a => a.Birthday).IsOptional();
-            this.ToTable("tbArtists");
+            this.ToTable("Artists");
         }
     }
 }

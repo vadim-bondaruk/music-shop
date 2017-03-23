@@ -2,26 +2,26 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
-
-    using Shop.Common.Models;
+    using Common.Models;
 
     /// <summary>
-    ///     The <see cref="Album" /> configuration.
+    /// The <see cref="Album"/> configuration.
     /// </summary>
-    public class AlbumConfiguration : EntityTypeConfiguration<Album>
+    public class AlbumConfiguration : EntityTypeConfiguration<Album>    
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AlbumConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="AlbumConfiguration"/> class.
         /// </summary>
         public AlbumConfiguration()
         {
-            this.HasKey(a => a.Id);
-            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(a => a.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
-            this.Property(a => a.ReleaseDate).IsOptional();
+            HasKey(a => a.Id);
+            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(a => a.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
+            Property(a => a.ReleaseDate).IsOptional();
 
-           this.HasRequired(a => a.Artist).WithMany(a => a.Albums).WillCascadeOnDelete(false);
-            this.ToTable("tbAlbums");
+            HasOptional(a => a.Artist).WithMany(a => a.Albums).HasForeignKey(a => a.ArtistId).WillCascadeOnDelete(false);
+
+            ToTable("Albums");
         }
     }
 }

@@ -2,7 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
-
     using Common.Models;
 
     /// <summary>
@@ -15,13 +14,13 @@
         /// </summary>
         public AlbumPriceConfiguration()
         {
-            this.HasKey(t => t.Id);
+            HasKey(t => t.Id);
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(a => a.IsDeleted);
+            Property(a => a.IsDeleted);
             HasRequired(a => a.PriceLevel).WithMany(a => a.AlbumPriceLevels).HasForeignKey(p => p.PriceLevelId);
             HasRequired(a => a.Currency).WithMany(a => a.AlbumPrices).HasForeignKey(a => a.CurrencyId);
             HasRequired(a => a.Album).WithMany(a => a.AlbumPrices).HasForeignKey(a => a.AlbumId);
-            this.ToTable("tbAlbumPrices");
+            ToTable("AlbumPrices");
         }
     }
 }

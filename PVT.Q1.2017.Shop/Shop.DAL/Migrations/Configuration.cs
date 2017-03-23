@@ -2,84 +2,80 @@ namespace Shop.DAL.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Common.Models;
 
-    using Shop.Common.Models;
-    using Shop.DAL.Context;
-
-    /// <summary>
-    /// </summary>
-    internal sealed class Configuration : DbMigrationsConfiguration<ShopContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Shop.DAL.Context.ShopContext>
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Configuration" /> class.
-        /// </summary>
         public Configuration()
         {
-            this.AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = false;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="context">
-        ///     The context.
-        /// </param>
-        protected override void Seed(ShopContext context)
+        protected override void Seed(Context.ShopContext context)
         {
-            this.AddDefaultCurrencies(context);
-            this.AddDefaultCurrencyRates(context);
-            this.AddDefaultGenre(context);
+            AddDefaultCurrencies(context);
+            AddDefaultCurrencyRates(context);
+            AddDefaultGenre(context);
+            AddDefaultPriceLevels(context);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
-        private void AddDefaultCurrencies(ShopContext context)
+        private void AddDefaultCurrencies(Context.ShopContext context)
         {
             if (!context.Set<Currency>().Any(c => c.ShortName == "EUR"))
             {
-                context.Set<Currency>().AddOrUpdate(new Currency { ShortName = "EUR", Code = 978, FullName = "EURO" });
+                context.Set<Currency>().AddOrUpdate(new[] { new Currency {
+                    ShortName = "EUR",
+                    Code = 978,
+                    FullName = "EURO"
+                }});
             }
 
-            // if (!context.Set<Currency>().Any(c => c.ShortName == "USD"))
-            // {
-            // context.Set<Currency>()
-            // .AddOrUpdate(new Currency { ShortName = "USD", Code = 840, FullName = "US Dollar" });
-            // }
+            if (!context.Set<Currency>().Any(c => c.ShortName == "USD"))
+            {
+                context.Set<Currency>().AddOrUpdate(new[] { new Currency {
+                    ShortName = "USD",
+                    Code = 840,
+                    FullName = "US Dollar"
+                }});
+            }
+
             context.SaveChanges();
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
-        private void AddDefaultCurrencyRates(ShopContext context)
+        private void AddDefaultCurrencyRates(Context.ShopContext context)
         {
-            // Õ≈ –¿¡Œ“¿≈“ “. . Date - ÌÂ Nullable ÚËÔ!!!
-            /*if (!context.Set<CurrencyRate>().Any())
+            if (!context.Set<CurrencyRate>().Any())
             {
                 context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
                     CurrencyId = 1,
                     TargetCurrencyId = 2,
-                    CrossCourse = 1.06M
+                    CrossCourse = 0.9M
+                }});
+
+                context.Set<CurrencyRate>().AddOrUpdate(new[] { new CurrencyRate {
+                    CurrencyId = 1,
+                    TargetCurrencyId = 2,
+                    CrossCourse = 1.2M
                 }});
             }
 
-            context.SaveChanges();*/
+            context.SaveChanges();
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
-        private void AddDefaultGenre(ShopContext context)
+        private void AddDefaultGenre(Context.ShopContext context)
         {
             if (!context.Set<Genre>().Any())
             {
-                context.Set<Genre>().AddOrUpdate(new Genre { Name = "Unknown Genre" });
+                context.Set<Genre>().AddOrUpdate(new[] { new Genre { Name = "Unknown Genre" } });
+                context.SaveChanges();
+            }
+        }
+
+        private void AddDefaultPriceLevels(Context.ShopContext context)
+        {
+            if (!context.Set<PriceLevel>().Any())
+            {
+                context.Set<PriceLevel>().AddOrUpdate(new[] { new PriceLevel { Name = "Default" } });
                 context.SaveChanges();
             }
         }

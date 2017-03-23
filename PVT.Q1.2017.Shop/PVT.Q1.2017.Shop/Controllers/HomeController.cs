@@ -8,12 +8,32 @@
     public class HomeController : Controller
     {
         /// <summary>
-        /// Default start page
+        /// <returns>Default start page</returns>
         /// </summary>
         /// <returns>View of index page</returns>
         public ActionResult Index()
         {
-            return this.RedirectToAction("New", "Artists", new { area = "Management" });
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.Message = "Ваш логин: " + User.Identity.Name;
+            }
+            else
+            {
+                ViewBag.Message = "Вы не авторизованы";
+            }
+
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Контакты";
+
+            return this.View();
         }
     }
 }

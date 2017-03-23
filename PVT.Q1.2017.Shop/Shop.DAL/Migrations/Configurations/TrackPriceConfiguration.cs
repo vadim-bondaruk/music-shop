@@ -21,7 +21,7 @@
             this.HasRequired(t => t.PriceLevel).WithMany(t => t.TrackPriceLevels).HasForeignKey(t => t.PriceLevelId).WillCascadeOnDelete(false);
             this.HasRequired(t => t.Track).WithMany(t => t.TrackPrices).HasForeignKey(t => t.TrackId).WillCascadeOnDelete(false);
             this.HasRequired(t => t.Currency).WithMany(t => t.TrackPrices).HasForeignKey(t => t.CurrencyId).WillCascadeOnDelete(false);
-            this.ToTable("tbTrackPrices");
+            this.ToTable("TrackPrices");
         }
     }
 }

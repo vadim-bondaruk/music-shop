@@ -12,6 +12,14 @@
     public class CurrencyRate : BaseEntity
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="CurrencyRate"/> class.
+        /// </summary>
+        public CurrencyRate()
+        {
+            this.Date = DateTime.Today;
+        }
+
+        /// <summary>
         ///     Cross course.
         /// </summary>
         public decimal CrossCourse { get; set; }

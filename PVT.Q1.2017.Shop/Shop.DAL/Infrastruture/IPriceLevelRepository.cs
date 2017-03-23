@@ -17,5 +17,12 @@ namespace Shop.DAL.Infrastruture
     /// </summary>
     public interface IPriceLevelRepository : IRepository<PriceLevel>
     {
+        /// <summary>
+        /// Returns the default price level.
+        /// </summary>
+        /// <returns>
+        /// The default price level.
+        /// </returns>
+        PriceLevel GetDefaultPriceLevel();
     }
 }

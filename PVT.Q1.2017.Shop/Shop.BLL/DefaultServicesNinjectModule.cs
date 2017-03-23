@@ -1,19 +1,20 @@
 ﻿namespace Shop.BLL
 {
+    using DAL;
+    using Infrastructure.Security;
     using Ninject;
     using Ninject.Modules;
-
-    using Shop.BLL.Services;
-    using Shop.BLL.Services.Infrastructure;
-    using Shop.DAL;
+    using Services;
+    using Services.Infrastructure;
+    using Utils;
 
     /// <summary>
-    ///     Default cofiguration module.
+    /// Default cofiguration module.
     /// </summary>
     public class DefaultServicesNinjectModule : NinjectModule
     {
         /// <summary>
-        ///     Loads configuration settings.
+        /// Loads configuration settings.
         /// </summary>
         public override void Load()
         {
@@ -24,30 +25,31 @@
 
             this.BindServices();
         }
-
+        
         /// <summary>
-        ///     Binds services.
+        /// Binds services.
         /// </summary>
         protected virtual void BindServices()
         {
-            this.Bind<IArtistService>().To<ArtistService>();
-            this.Bind<ITrackService>().To<TrackService>();
-            this.Bind<IAlbumService>().To<AlbumService>();
-            this.Bind<IGenreService>().To<GenreService>();
+            Bind<ITrackService>().To<TrackService>();
+            Bind<IAlbumService>().To<AlbumService>();
 
-            this.Bind<IVoteService>().To<VoteService>();
-            this.Bind<IFeedbackService>().To<FeedbackService>();
+            Bind<IFeedbackService>().To<FeedbackService>();
 
-            this.Bind<ITrackPriceService>().To<TrackPriceService>();
-            this.Bind<IAlbumPriceService>().To<AlbumPriceService>();
+            Bind<ITrackPriceService>().To<TrackPriceService>();
+            Bind<IAlbumPriceService>().To<AlbumPriceService>();
 
-            this.Bind<IUserDataService>().To<UserDataService>();
+            Bind<IUserDataService>().To<UserDataService>();
 
-            this.Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
+            Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
 
-            this.Bind<ICurrencyService>().To<CurrencyService>();
+            Bind<ICurrencyService>().To<CurrencyService>();
 
-            this.Bind<ICurrencyRateService>().To<CurrencyRateService>();
+            Bind<ICurrencyRateService>().To<CurrencyRateService>();
+
+            Bind<ICartService>().To<CartService>();
+            Bind<IAuthModule>().To<AuthModule>();
+            Bind<IUserService>().To<UserService>();
         }
     }
 }
