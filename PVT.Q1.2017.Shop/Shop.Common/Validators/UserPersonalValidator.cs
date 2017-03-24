@@ -13,7 +13,13 @@
         /// 
         /// </summary>
         public UserPersonalValidator()
-        {            
+        {
+            RuleFor(u => u.FirstName).NotEmpty()
+                .WithMessage("Поле обязательно должно быть заполнено");
+
+            RuleFor(u => u.LastName).NotEmpty()
+                .WithMessage("Поле обязательно должно быть заполнено");
+
             RuleFor(u => u.BirthDate).InclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today)
                 .WithMessage("Дата рождения выбрана неверно");
 
