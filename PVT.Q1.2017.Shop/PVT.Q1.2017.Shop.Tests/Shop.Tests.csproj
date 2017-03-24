@@ -132,6 +132,7 @@
     <Compile Include="AlbumPriceServiceTest.cs" />
     <Compile Include="TrackPriceServiceTest.cs" />
     <Compile Include="TrackServiceTest.cs" />
+    <Compile Include="AdminCurrencyControllerTests.cs" />
     <Compile Include="UserPaymentMethodTest.cs" />
   </ItemGroup>
   <ItemGroup>
