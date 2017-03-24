@@ -61,7 +61,7 @@
             {
                 if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new UserValidationException("Pasword not confirm", "Password");
+                    throw new UserValidationException("Не верный пароль", "Password");
                 }
 
                 if (redirect)
@@ -75,7 +75,7 @@
             }
             else
             {
-                throw new UserValidationException("User not found", "Useridentity");
+                throw new UserValidationException("Такой пользователь не зарегистрирован", "Useridentity");
             }          
         }
         
