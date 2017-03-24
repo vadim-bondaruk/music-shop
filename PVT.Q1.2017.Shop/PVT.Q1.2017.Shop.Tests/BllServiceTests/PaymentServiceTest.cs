@@ -14,7 +14,7 @@ namespace PVT.Q1._2017.Shop.Tests.BllServiceTests
             var PaymentService = new PaymentService(new RepositoryFactoryMoq());
             var result = PaymentService.CreatePaymentWithCreditCard();
             var expected = "created";
-            // PaymentService.CreatePaymentWithPaymentCard();
+            
             Assert.AreSame(expected, result);
         }
     }

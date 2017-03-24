@@ -23,8 +23,8 @@
             RuleFor(t => t.First_name).NotEmpty().Length(4, 50);
             RuleFor(t => t.Last_name).NotEmpty().Length(4, 50);
             RuleFor(t => t.Valid_until).NotEmpty();
-            RuleFor(t => t.CVV2).NotEmpty();
-            RuleFor(t => t.Number).NotEmpty();
+            RuleFor(t => t.CVV2).NotEmpty().Length(3,3);
+            RuleFor(t => t.Number).CreditCard();
         }
     }
 }

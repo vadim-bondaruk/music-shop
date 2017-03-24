@@ -19,6 +19,14 @@
         /// <summary>
         /// Type of address (e.g., HOME_OR_WORK, GIFT etc).
         /// </summary>
-        public string Type { get; set; }
+        public AddressType Type { get; set; }
+    }
+
+    public enum AddressType
+    {
+        Home = 1,
+        Work,
+        Gift,
+        Other
     }
 }

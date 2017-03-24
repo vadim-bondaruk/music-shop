@@ -47,10 +47,10 @@
 
             //Now make a List of Item and add the above item to it
             //you can create as many items as you want and add to this list
-            List<Item> itms = new List<Item>();
-            itms.Add(item);
+            List<Item> items = new List<Item>();
+            items.Add(item);
             ItemList itemList = new ItemList();
-            itemList.items = itms;
+            itemList.items = items;
 
             //Address for the payment
             Address billingAddress = new Address();

@@ -12,9 +12,9 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
     {
         private readonly IPaymentService _paymentService;
 
-        public PaypalController(IPaymentService PaymentService)
+        public PaypalController(IPaymentService paymentService)
         {
-            this._paymentService = PaymentService;
+            this._paymentService = paymentService;
         }
 
         // GET: Payment/Paypal
