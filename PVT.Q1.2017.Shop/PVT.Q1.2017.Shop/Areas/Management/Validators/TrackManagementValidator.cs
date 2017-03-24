@@ -1,25 +1,26 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Validators
 {
     using FluentValidation;
-    using ViewModels;
+
+    using global::Shop.Common.Models.ViewModels;
 
     /// <summary>
-    /// The <see cref="TrackManagementViewModel"/> validator
+    ///     The <see cref="TrackManagementViewModel" /> validator
     /// </summary>
     public class TrackManagementValidator : AbstractValidator<TrackManagementViewModel>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackManagementValidator"/> class.
+        ///     Initializes a new instance of the <see cref="TrackManagementValidator" /> class.
         /// </summary>
         public TrackManagementValidator()
         {
-            RuleFor(t => t.Name).NotEmpty().WithMessage("Укажите название трека");
-            RuleFor(t => t.Name).Matches(@"^\S+(\s\S+)*$").WithMessage("Название трека указано не корректно");
+            this.RuleFor(t => t.Name).NotEmpty().WithMessage("Укажите название трека");
+            this.RuleFor(t => t.Name).Matches(@"^\S+(\s\S+)*$").WithMessage("Название трека указано не корректно");
 
-            RuleFor(t => t.TrackFile).NotNull().WithMessage("Укажите файл трека");
+            this.RuleFor(t => t.TrackFile).NotNull().WithMessage("Укажите файл трека");
 
-            RuleFor(t => t.Artist).NotNull().WithMessage("Не указан исполнитель трека");
-            RuleFor(t => t.Genre).NotNull().WithMessage("Не указан жанр трека");
+            this.RuleFor(t => t.Artist).NotNull().WithMessage("Не указан исполнитель трека");
+            this.RuleFor(t => t.Genre).NotNull().WithMessage("Не указан жанр трека");
         }
     }
 }
