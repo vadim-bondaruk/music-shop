@@ -8,8 +8,6 @@
     using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
-    using PVT.Q1._2017.Shop.Areas.Management.Helpers;
-
     /// <summary>
     ///     The artist controller.
     /// </summary>
@@ -60,9 +58,14 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ArtistViewModel model)
+        public ActionResult New(ArtistManagementViewModel model)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Artist, ArtistManagementViewModel>());
+            Mapper.Initialize(
+                cfg =>
+                    {
+                        cfg.CreateMap<ArtistManagementViewModel, Artist>()
+                            .ForMember(dst => dst.Name, opt => opt.MapFrom(src => src.Name));
+                    });
             var artist = Mapper.Map<Artist>(model);
             using (var repository = this._repositoryFactory.GetArtistRepository())
             {
