@@ -1,4 +1,4 @@
-﻿@model Shop.Common.Models.ViewModels.ArtistManageViewModel
+﻿@model Shop.Common.Models.ViewModels.ArtistManagementViewModel
 <body>
 <h2 class="reg-new-artist-title">Регистрация нового исполнителя</h2>
 @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
@@ -42,6 +42,7 @@
 
 @section ArtistEdit
 {
+    <link href="/Areas/Management/Styles/managment-common.css" rel="stylesheet" type="text/css"/>
     <link href="/Areas/Management/Styles/artist-new.css" rel="stylesheet" type="text/css"/>
     <link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
 }
