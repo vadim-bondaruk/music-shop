@@ -41,7 +41,7 @@
         {
             this.RepositoryFactory = repositoryFactory;
             this.genreService = genreService;
-            Mapper.Initialize(cfg => cfg.CreateMap<GenreManageViewModel, Genre>());
+            Mapper.Initialize(cfg => cfg.CreateMap<GenreManagementViewModel, Genre>());
         }
 
         /// <summary>
@@ -58,9 +58,9 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(GenreManageViewModel model)
+        public virtual ActionResult Delete(GenreManagementViewModel model)
         {
-            var genreModel = Mapper.Map<GenreManageViewModel, Genre>(model);
+            var genreModel = Mapper.Map<GenreManagementViewModel, Genre>(model);
             using (var repository = this.RepositoryFactory.GetGenreRepository())
             {
                 repository.Delete(genreModel);
@@ -105,9 +105,9 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult New([Bind(Include = "Genre")] GenreManageViewModel viewModel)
+        public virtual ActionResult New([Bind(Include = "Genre")] GenreManagementViewModel viewModel)
         {
-            var genre = Mapper.Map<GenreManageViewModel, Genre>(viewModel);
+            var genre = Mapper.Map<GenreManagementViewModel, Genre>(viewModel);
             using (var repository = this.RepositoryFactory.GetGenreRepository())
             {
                 repository.AddOrUpdate(genre);
@@ -125,10 +125,10 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(GenreManageViewModel model)
+        public virtual ActionResult Update(GenreManagementViewModel model)
         {
             var genreRepo = this.RepositoryFactory.GetGenreRepository();
-            var genre = Mapper.Map<GenreManageViewModel, Genre>(model);
+            var genre = Mapper.Map<GenreManagementViewModel, Genre>(model);
             genreRepo.AddOrUpdate(genre);
             return this.RedirectToAction("Details");
         }

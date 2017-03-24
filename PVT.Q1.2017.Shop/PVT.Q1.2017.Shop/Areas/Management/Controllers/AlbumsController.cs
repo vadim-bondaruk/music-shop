@@ -43,9 +43,9 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(AlbumManageViewModel viewModel)
+        public virtual ActionResult Delete(AlbumManagementViewModel viewModel)
         {
-            var albumModel = Mapper.Map<AlbumManageViewModel, Album>(viewModel);
+            var albumModel = Mapper.Map<AlbumManagementViewModel, Album>(viewModel);
             using (var repository = this.repositoryFactory.GetAlbumRepository())
             {
                 repository.Delete(albumModel);
@@ -89,9 +89,9 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult New(
-            [Bind(Include = "ArtistName, Name, ReleaseDate, UploadedImage")] AlbumManageViewModel viewModel)
+            [Bind(Include = "ArtistName, Name, ReleaseDate, UploadedImage")] AlbumManagementViewModel viewModel)
         {
-            this.albumService.SaveNewAlbum(viewModel);
+            //this.albumService.SaveNewAlbum(viewModel);
 
             return this.View("New");
         }
@@ -102,10 +102,10 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(AlbumManageViewModel viewModel)
+        public virtual ActionResult Update(AlbumManagementViewModel viewModel)
         {
             var albumRepo = this.repositoryFactory.GetAlbumRepository();
-            var album = Mapper.Map<AlbumManageViewModel, Album>(viewModel);
+            var album = Mapper.Map<AlbumManagementViewModel, Album>(viewModel);
             albumRepo.AddOrUpdate(album);
             return this.View();
         }
