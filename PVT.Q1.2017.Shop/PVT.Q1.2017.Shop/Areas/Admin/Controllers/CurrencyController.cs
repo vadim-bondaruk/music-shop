@@ -1,9 +1,5 @@
-﻿using System.Linq;
-
-namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
+﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
     using AutoMapper;
     using global::Shop.BLL.Services.Infrastructure;
