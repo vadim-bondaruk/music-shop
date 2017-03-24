@@ -1,12 +1,14 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
     using System.Web.Mvc;
+
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
     /// The artist controller.
     /// </summary>
-    public class ArtistController : Controller
+    public class ArtistsController : Controller
     {
         /// <summary>
         /// The repository factory.
@@ -14,12 +16,12 @@
         private readonly IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArtistController"/> class.
+        /// Initializes a new instance of the <see cref="ArtistsController"/> class.
         /// </summary>
         /// <param name="repositoryFactory">
         /// The repository factory.
         /// </param>
-        public ArtistController(IRepositoryFactory repositoryFactory)
+        public ArtistsController(IRepositoryFactory repositoryFactory)
         {
             this._repositoryFactory = repositoryFactory;
         }
@@ -87,6 +89,21 @@
             {
                 return this.View(repository.GetAll(t => t.ArtistId == id));
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        ///     The view model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult New(
+            [Bind(Include = "Name, Birthday, Biography, UploadedImage")] ArtistManagementViewModel viewModel)
+        {
+            return null; /*this.RedirectToAction("Details", new { artistId = id });*/
         }
     }
 }
