@@ -20,24 +20,12 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void CartController_ActionIndexTest()
         {
-            IList<Track> tracks = new List<Track>
-            {
-                new Track { Id=1, Name = "Wide Awake" },
-                new Track { Id=2, Name = "Be mine" },
-            };
-
-            IList<Album> albums = new List<Album>
-            {
-                new Album { Id=1, Name = "Gold" },
-                new Album { Id=2, Name = "Platinum" },
-            };
-
-            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = tracks, Albums = albums };
+            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<Track>(), Albums = new List<Album>() };
             ICollection<Cart> carts = new List<Cart> { cart };
 
             Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
             moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
-            moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
+            moqCartRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
 
@@ -45,23 +33,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
-            CartViewModel cartView = (CartViewModel)cartController.Index(1).Model;
-
-            IList<Track> cartViewTracks = (IList<Track>)cartView.Tracks;
-            IList<Album> cartViewAlbums = (IList<Album>)cartView.Albums;
-
-            Assert.IsTrue(cartView.CurrentUserId == 1);
-            Assert.IsTrue(cartViewTracks?.Count == 2);
-            Assert.IsTrue(cartViewTracks[0].Id == 1);
-            Assert.IsTrue(string.Compare(cartViewTracks[0].Name, tracks[0].Name, StringComparison.OrdinalIgnoreCase) == 0);
-            Assert.IsTrue(cartViewTracks[1].Id == 2);
-            Assert.IsTrue(string.Compare(cartViewTracks[1].Name, tracks[1].Name, StringComparison.OrdinalIgnoreCase) == 0);
-
-            Assert.IsTrue(cartViewAlbums?.Count == 2);
-            Assert.IsTrue(cartViewAlbums[0].Id == 1);
-            Assert.IsTrue(string.Compare(cartViewAlbums[0].Name, albums[0].Name, StringComparison.OrdinalIgnoreCase) == 0);
-            Assert.IsTrue(cartViewAlbums[1].Id == 2);
-            Assert.IsTrue(string.Compare(cartViewAlbums[1].Name, albums[1].Name, StringComparison.OrdinalIgnoreCase) == 0);
+            var Result = cartController.Index(1);
+            Assert.IsInstanceOfType(Result, typeof(ViewResult));
         }
 
         [TestMethod]
