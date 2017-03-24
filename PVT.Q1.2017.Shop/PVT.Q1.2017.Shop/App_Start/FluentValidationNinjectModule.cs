@@ -23,6 +23,7 @@
             Bind<IValidator<UserViewModel>>().To<UserRegistrationValidator>();
             Bind<IRepository<User>>().To<UserRepository>();
             Bind<DbContext>().To<ShopContext>();
+            Bind<IValidator<LoginViewModel>>().To<LoginViewValidator>();
         }
     }
 }

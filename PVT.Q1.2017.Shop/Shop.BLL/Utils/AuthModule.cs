@@ -39,12 +39,12 @@
             if (useridentity == null)
             {
                 throw new ArgumentException("useridentity");
-            }                
+            }
 
             if (password == null)
             {
                 throw new ArgumentException("password");
-            }                
+            }
 
             User user;
 

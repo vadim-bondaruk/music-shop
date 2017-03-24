@@ -86,6 +86,7 @@
     <Compile Include="Validators\CurrencyValidator.cs" />
     <Compile Include="Validators\FeedbackValidator.cs" />
     <Compile Include="Validators\GenreValidator.cs" />
+    <Compile Include="Validators\LoginViewValidator.cs" />
     <Compile Include="Validators\PriceLevelValidator.cs" />
     <Compile Include="Validators\TrackPriceValidator.cs" />
     <Compile Include="Validators\TrackValidator.cs" />
