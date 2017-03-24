@@ -1,5 +1,6 @@
 namespace Shop.DAL.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Common.Models;
