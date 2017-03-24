@@ -3,7 +3,7 @@
     using System;
     using System.Web;
     using FluentValidation.Attributes;
-    using global::Shop.Common.Models.ViewModels;
+    using global::Shop.Common.ViewModels;
     using Validators;
 
     /// <summary>

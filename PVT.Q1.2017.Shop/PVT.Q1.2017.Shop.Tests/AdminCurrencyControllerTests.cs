@@ -6,12 +6,13 @@ using Shop.BLL.Services.Infrastructure;
 using System.Collections.Generic;
 using Shop.Common.Models;
 using PVT.Q1._2017.Shop.Areas.Admin.Controllers;
-using Shop.Common.Models.ViewModels;
 using System.Web.Mvc;
 using PVT.Q1._2017.Shop.Tests.Moq;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
+    using global::Shop.Common.ViewModels;
+
     [TestClass]
     public class AdminCurrencyControllerTests
     {
