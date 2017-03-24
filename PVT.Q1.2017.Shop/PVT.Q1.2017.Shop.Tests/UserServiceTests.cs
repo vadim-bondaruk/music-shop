@@ -12,7 +12,6 @@ using Shop.BLL.Exceptions;
 using Shop.BLL.Services;
 using Shop.BLL.Services.Infrastructure;
 using Shop.DAL.Infrastruture;
-using PVT.Q1._2017.Shop.ViewModels;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
