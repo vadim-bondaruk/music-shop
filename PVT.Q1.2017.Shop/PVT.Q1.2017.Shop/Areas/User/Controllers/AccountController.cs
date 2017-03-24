@@ -6,9 +6,9 @@
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.Utils;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Security;
-    using ViewModels;
 
     /// <summary>
     /// 

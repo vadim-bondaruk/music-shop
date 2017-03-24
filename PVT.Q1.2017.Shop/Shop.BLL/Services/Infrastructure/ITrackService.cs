@@ -1,7 +1,7 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
-    using Common.Models.ViewModels;
+    using Common.ViewModels;
 
     /// <summary>
     /// The track service

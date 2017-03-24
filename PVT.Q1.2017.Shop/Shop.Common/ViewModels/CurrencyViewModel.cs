@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Shop.Common.Models.ViewModels
+﻿namespace Shop.Common.ViewModels
 {
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// The currency view model.
     /// </summary>
