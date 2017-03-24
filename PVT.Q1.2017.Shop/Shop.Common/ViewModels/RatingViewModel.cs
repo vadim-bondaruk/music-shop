@@ -1,4 +1,4 @@
-﻿namespace Shop.Common.Models.ViewModels
+﻿namespace Shop.Common.ViewModels
 {
     /// <summary>
     /// The rating view model.
