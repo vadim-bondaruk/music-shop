@@ -10,6 +10,7 @@
     using Shop.BLL.Services.Infrastructure;
     using System.Web.Configuration;
     using System.Web;
+    using Shop.BLL.Helpers;
 
     /// <summary>
     /// The payment service class
