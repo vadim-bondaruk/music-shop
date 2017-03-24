@@ -14,6 +14,8 @@
 <body>
     <form action="/Cart/DeleteTrack" method="post">
         @Html.Hidden("currentUserId", @Model.CurrentUserId)
+        <b>Tracks</b>
+        <br />
         <table border="1" cellpadding="3">
             <thead>
                 <tr>
@@ -33,13 +35,39 @@
                         <td>@anyTrack.Name</td>
                         <td>@anyTrack.Duration</td>
                         <td>@anyTrack.TrackPrices.First(p => p.Currency.ShortName == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
-                        <td><button type="submit" name="TrackId" value=@anyTrack.Id>Удалить</button></td>
+                        <td><button type="submit" name="trackId" value=@anyTrack.Id>Удалить</button></td>
                     </tr>
                 }
             </tbody>
         </table>
         </form>
         <br />
+    <form action="/Cart/DeleteAlbum" method="post">
+        @Html.Hidden("currentUserId", @Model.CurrentUserId)
+        <b>Albums</b>
+        <br />
+        <table border="1" cellpadding="3">
+            <thead>
+                <tr>
+                    <th><font color="blue">Исполнитель</font></th>
+                    <th><font color="blue">Название альбома</font></th>
+                    <th><font color="blue">Цена</font></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var anyAlbum in Model.Albums)
+            {
+                    <tr>
+                        <td>@anyAlbum.Artist.Name</td>
+                        <td>@anyAlbum.Name</td>
+                        <td>@anyAlbum.AlbumPrices.FirstOrDefault(a => a.Currency.ShortName == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
+                        <td><button type="submit" name="albumId" value=@anyAlbum.Id>Удалить</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+    <br />
         <form action="/Cart/Pay" method="post">
             Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
             <br />
