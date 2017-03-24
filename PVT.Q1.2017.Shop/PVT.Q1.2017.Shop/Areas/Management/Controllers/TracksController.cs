@@ -7,9 +7,9 @@
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
-    using PVT.Q1._2017.Shop.Areas.Management.Models;
 
     /// <summary>
     ///     The track controller
@@ -45,7 +45,7 @@
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagmentViewModel, Track>());
+            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
         /// <summary>
@@ -62,9 +62,9 @@
         /// <returns>
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(TrackManagmentViewModel model)
+        public virtual ActionResult Delete(TrackManagementViewModel model)
         {
-            var trackModel = Mapper.Map<TrackManagmentViewModel, Track>(model);
+            var trackModel = Mapper.Map<TrackManagementViewModel, Track>(model);
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
                 repository.Delete(trackModel);
@@ -83,7 +83,7 @@
         public virtual ActionResult Details(int trackId)
         {
             //var track = this.trackService.GetTrackInfo(trackId);
-            //var trackViewModel = Mapper.Map<Track, TrackManagmentViewModel>(track);
+            //var trackViewModel = Mapper.Map<Track, TrackManagementViewModel>(track);
             return this.View();
         }
 
@@ -108,7 +108,7 @@
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
         public virtual ActionResult New(
-            [Bind(Include = "Artist, Name, Album, Genre, Duration, ReleaseDate")] TrackManagmentViewModel viewModel)
+            [Bind(Include = "Artist, Name, Album, Genre, Duration, ReleaseDate")] TrackManagementViewModel viewModel)
         {
             var track = Mapper.Map<Track>(viewModel);
             using (var repository = this.RepositoryFactory.GetTrackRepository())
@@ -128,10 +128,10 @@
         /// <returns>
         /// </returns>
         [HttpPost]
-        public virtual ActionResult Update(TrackManagmentViewModel model)
+        public virtual ActionResult Update(TrackManagementViewModel model)
         {
             var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            var track = Mapper.Map<TrackManagmentViewModel, Track>(model);
+            var track = Mapper.Map<TrackManagementViewModel, Track>(model);
             trackRepo.AddOrUpdate(track);
             return this.View();
         }

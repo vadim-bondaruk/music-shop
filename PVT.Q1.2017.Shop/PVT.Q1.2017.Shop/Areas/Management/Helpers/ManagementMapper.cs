@@ -28,15 +28,15 @@
         /// <summary>
         /// Executes a mapping from the <see cref="TrackManagementViewModel"/> model to a new <see cref="Track"/> model.
         /// </summary>
-        /// <param name="track">
+        /// <param name="trackManagementViewModel">
         /// The track management view model.
         /// </param>
         /// <returns>
         /// A new <see cref="Track"/> DTO model.
         /// </returns>
-        public static Track GetTrackModel(TrackManagementViewModel track)
+        public static Track GetTrackModel(TrackManagementViewModel trackManagementViewModel)
         {
-            return ManagementModelsMapper.Map<Track>(track);
+            return ManagementModelsMapper.Map<Track>(trackManagementViewModel);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@
         {
             MapperConfiguration managementConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ArtistViewModel, Artist>();
+                cfg.CreateMap<ArtistManagementViewModel, Artist>();
                 cfg.CreateMap<GenreViewModel, Genre>();
 
                 cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
