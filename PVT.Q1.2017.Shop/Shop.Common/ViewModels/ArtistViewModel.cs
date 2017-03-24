@@ -1,17 +1,17 @@
-﻿namespace Shop.Common.Models.ViewModels
+﻿namespace Shop.Common.ViewModels
 {
     /// <summary>
-    /// The genre view model.
+    /// The artist view model.
     /// </summary>
-    public class GenreViewModel
+    public class ArtistViewModel
     {
         /// <summary>
-        /// The genre id.
+        /// Artist id.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The genre name.
+        /// Artist name.
         /// </summary>
         public string Name { get; set; }
     }
