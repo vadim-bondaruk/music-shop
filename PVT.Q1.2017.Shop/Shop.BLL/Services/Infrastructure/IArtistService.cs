@@ -22,13 +22,13 @@
         /// <returns>
         ///     The Artist with the specified <paramref name="id" /> or <b>null</b> if Artist doesn't exist.
         /// </returns>
-        ArtistManageViewModel GetById(int id);
+        ArtistManagementViewModel GetById(int id);
 
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
         ///     The view model.
         /// </param>
-        int Save(ArtistManageViewModel viewModel);
+        int Save(ArtistManagementViewModel viewModel);
     }
 }

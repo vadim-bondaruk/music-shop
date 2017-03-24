@@ -49,12 +49,12 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public ArtistManageViewModel GetById(int id)
+        public ArtistManagementViewModel GetById(int id)
         {
             using (var repository = this.Factory.GetArtistRepository())
             {
                 var artist = repository.GetById(id);
-                return artist == null ? null : Mapper.Map<ArtistManageViewModel>(artist);
+                return artist == null ? null : Mapper.Map<ArtistManagementViewModel>(artist);
             }
         }
 
@@ -63,7 +63,7 @@
         /// <param name="viewModel">
         ///     The view model.
         /// </param>
-        public int Save(ArtistManageViewModel viewModel)
+        public int Save(ArtistManagementViewModel viewModel)
         {
             using (var artistRepo = this.repositoryFactory.GetArtistRepository())
             {
