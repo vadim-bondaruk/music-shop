@@ -64,7 +64,7 @@
 
                 registered = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // write data to log
                 throw;

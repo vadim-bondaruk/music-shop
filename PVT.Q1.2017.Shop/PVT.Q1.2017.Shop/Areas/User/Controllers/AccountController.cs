@@ -93,13 +93,20 @@
         [ValidateAntiForgeryToken]
         public ActionResult Login([Bind(Include = "UserIdentity, Password, RememberMe")] LoginViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                this._authModule.LogIn(model.UserIdentity, model.Password);
+                try
+                {
+                    this._authModule.LogIn(model.UserIdentity, model.Password);
+                }
+                catch (UserValidationException ex)
+                {
+                    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                } 
             }
-            catch (UserValidationException ex)
+            else
             {
-                ModelState.AddModelError(ex.UserProperty, ex.Message);
+                return View();
             }
 
             return this.RedirectToAction("Index", "Home", new { area = string.Empty });
