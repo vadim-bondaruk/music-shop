@@ -3,5 +3,11 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
+
+@Html.ActionLink("Редактировать личные данные", "UpdatePersonal", "Manage") | @Html.ActionLink("Изменить пароль", "ChangePassword", "Manage") | @Html.ActionLink("Изменить логин", "ChangeLogin", "Manage")
+
+
+
+
+

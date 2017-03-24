@@ -166,6 +166,7 @@
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <Content Include="Areas\Content\Views\Artist\List.cshtml" />
     <Content Include="Areas\Content\Views\Album\List.cshtml" />
+    <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

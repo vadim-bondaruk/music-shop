@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201703222040250_AddedUser.Designer.cs">
       <DependentUpon>201703222040250_AddedUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703232107437_UpdateCart.cs" />
+    <Compile Include="Migrations\201703232107437_UpdateCart.Designer.cs">
+      <DependentUpon>201703232107437_UpdateCart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -164,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703222040250_AddedUser.resx">
       <DependentUpon>201703222040250_AddedUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703232107437_UpdateCart.resx">
+      <DependentUpon>201703232107437_UpdateCart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
