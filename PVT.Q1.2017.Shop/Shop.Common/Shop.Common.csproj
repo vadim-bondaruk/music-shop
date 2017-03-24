@@ -53,7 +53,7 @@
     <Compile Include="Models\ViewModels\AlbumDetailsViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Artist.cs" />
-    <Compile Include="Models\ViewModels\AlbumManageViewModel.cs" />
+    <Compile Include="Models\ViewModels\AlbumManagementViewModel.cs" />
     <Compile Include="Models\ViewModels\AlbumTracksListViewModel.cs" />
     <Compile Include="Models\ViewModels\AlbumViewModel.cs" />
     <Compile Include="Models\ViewModels\ArtistDetailsViewModel.cs" />
@@ -61,7 +61,7 @@
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\ViewModels\ArtistManageViewModel.cs" />
+    <Compile Include="Models\ViewModels\ArtistManagementViewModel.cs" />
     <Compile Include="Models\ViewModels\ArtistViewModel.cs" />
     <Compile Include="Models\ViewModels\CartViewModel.cs" />
     <Compile Include="Models\ViewModels\CurrencyViewModel.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\PriceLevel.cs" />
     <Compile Include="Models\Track.cs" />
-    <Compile Include="Models\ViewModels\GenreManageViewModel.cs" />
+    <Compile Include="Models\ViewModels\GenreManagementViewModel.cs" />
     <Compile Include="Models\ViewModels\GenreViewModel.cs" />
     <Compile Include="Models\ViewModels\PriceViewModel.cs" />
     <Compile Include="Models\ViewModels\RatingViewModel.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="Models\ViewModels\TrackDetailsViewModel.cs" />
     <Compile Include="Models\UserData.cs" />
     <Compile Include="Models\UserPaymentMethod.cs" />
+    <Compile Include="Models\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Models\ViewModels\TrackViewModel.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
