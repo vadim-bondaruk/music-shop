@@ -235,7 +235,7 @@
             catch (Exception ex)
             {
                 // TODO: LOGGER
-                // Logger.log("Error" + ex.Message);
+                // Logger.log("Error " + ex.Message);
                 return "FailureView";
             }
 
@@ -250,7 +250,7 @@
 
             itemList.items.Add(new Item()
             {
-                name = "Item Name",
+                name = "Song Name",
                 currency = "USD",
                 price = "5",
                 quantity = "1",
