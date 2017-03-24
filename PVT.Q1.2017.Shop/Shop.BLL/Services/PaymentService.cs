@@ -287,7 +287,7 @@
             transactionList.Add(new Transaction()
             {
                 description = "Transaction description.",
-                invoice_number = "your invoice number",
+                invoice_number = (new Random()).Next(1000000).ToString(), // "your invoice number",
                 amount = amount,
                 item_list = itemList
             });

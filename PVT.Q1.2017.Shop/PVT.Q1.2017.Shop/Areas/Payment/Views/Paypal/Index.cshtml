@@ -1,6 +1,6 @@
 ﻿
 @{
-    //Layout = null;
+//Layout = null;
 }
 
 <!DOCTYPE html>
@@ -12,10 +12,15 @@
 </head>
 <body>
     <div> 
+        @Ajax.ActionLink("Pay Direct With Credit Card", "PaymentWithCreditCard", new AjaxOptions())
         @Html.ActionLink("Pay Direct With Credit Card", "PaymentWithCreditCard", "Paypal")
     </div>
     <div>
         @Html.ActionLink("Pay Direct With PayPal account", "PaymentWithPaypal", "Paypal")
+    </div>
+    <div>
+        @Ajax.ActionLink("Pay Direct With PayPal account", "PaymentWithPaypal", 
+                                                            new AjaxOptions())
     </div>
 </body>
 </html>
