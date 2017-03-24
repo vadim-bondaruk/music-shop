@@ -64,17 +64,9 @@
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Infrastruture\IUserRepository.cs" />
-    <Compile Include="Migrations\201703180835104_TablePrefixRemoved.cs" />
-    <Compile Include="Migrations\201703180835104_TablePrefixRemoved.Designer.cs">
-      <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703181116310_NewAlbumAndArtistRelations.cs" />
-    <Compile Include="Migrations\201703181116310_NewAlbumAndArtistRelations.Designer.cs">
-      <DependentUpon>201703181116310_NewAlbumAndArtistRelations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703222040250_AddedUser.cs" />
-    <Compile Include="Migrations\201703222040250_AddedUser.Designer.cs">
-      <DependentUpon>201703222040250_AddedUser.cs</DependentUpon>
+    <Compile Include="Migrations\201703241012324_Artists.cs" />
+    <Compile Include="Migrations\201703241012324_Artists.Designer.cs">
+      <DependentUpon>201703241012324_Artists.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -142,17 +134,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703180835104_TablePrefixRemoved.resx">
-      <DependentUpon>201703180835104_TablePrefixRemoved.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703181116310_NewAlbumAndArtistRelations.resx">
-      <DependentUpon>201703181116310_NewAlbumAndArtistRelations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703222040250_AddedUser.resx">
-      <DependentUpon>201703222040250_AddedUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703241012324_Artists.resx">
+      <DependentUpon>201703241012324_Artists.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
