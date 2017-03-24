@@ -67,21 +67,18 @@ namespace PVT.Q1._2017.Shop.Tests
 
             RedirectToRouteResult result = cartController.AddTrack(0, 3);
             Assert.IsFalse(result.Permanent);
-            Assert.IsFalse(cart.Tracks.Contains(addedTrack));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(0, result.RouteValues["currentUserId"]);
 
             result = cartController.AddTrack(1, 0);
             Assert.IsFalse(result.Permanent);
-            Assert.IsFalse(cart.Tracks.Contains(addedTrack));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
 
             result = cartController.AddTrack(1, 3);
             Assert.IsFalse(result.Permanent);
-            Assert.IsTrue(cart.Tracks.Contains(addedTrack));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
@@ -117,21 +114,18 @@ namespace PVT.Q1._2017.Shop.Tests
 
             RedirectToRouteResult result = cartController.AddAlbum(0, 3);
             Assert.IsFalse(result.Permanent);
-            Assert.IsFalse(cart.Albums.Contains(addedAlbum));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(0, result.RouteValues["currentUserId"]);
 
             result = cartController.AddAlbum(1, 0);
             Assert.IsFalse(result.Permanent);
-            Assert.IsFalse(cart.Albums.Contains(addedAlbum));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
 
             result = cartController.AddAlbum(1, 3);
             Assert.IsFalse(result.Permanent);
-            Assert.IsTrue(cart.Albums.Contains(addedAlbum));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
@@ -167,21 +161,18 @@ namespace PVT.Q1._2017.Shop.Tests
 
             RedirectToRouteResult result = cartController.DeleteTrack(0, 3);
             Assert.IsFalse(result.Permanent);
-            Assert.IsTrue(cart.Tracks.Contains(deletedTrack));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(0, result.RouteValues["currentUserId"]);
 
             result = cartController.DeleteTrack(1, 0);
             Assert.IsFalse(result.Permanent);
-            Assert.IsTrue(cart.Tracks.Contains(deletedTrack));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
 
             result = cartController.DeleteTrack(1, 2);
             Assert.IsFalse(result.Permanent);
-            Assert.IsFalse(cart.Tracks.Contains(deletedTrack));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
@@ -217,21 +208,18 @@ namespace PVT.Q1._2017.Shop.Tests
 
             RedirectToRouteResult result = cartController.DeleteAlbum(0, 3);
             Assert.IsFalse(result.Permanent);
-            Assert.IsTrue(cart.Albums.Contains(deletedAlbum));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(0, result.RouteValues["currentUserId"]);
 
             result = cartController.DeleteAlbum(1, 0);
             Assert.IsFalse(result.Permanent);
-            Assert.IsTrue(cart.Albums.Contains(deletedAlbum));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
 
             result = cartController.DeleteAlbum(1, 2);
             Assert.IsFalse(result.Permanent);
-            Assert.IsFalse(cart.Albums.Contains(deletedAlbum));
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual(1, result.RouteValues["currentUserId"]);
