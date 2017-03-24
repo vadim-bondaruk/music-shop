@@ -5,7 +5,6 @@
     using Infrastruture;
     using Ninject.Extensions.Factory;
     using Ninject.Modules;
-    using Ninject.Web.Common;
     using Repositories;
 
     /// <summary>
