@@ -50,7 +50,7 @@
         [HttpGet]
         public ViewResult Index(int currentUserId = 0)
         {
-            var cart = this._cartRepository.FirstOrDefault(c => c.UserId == currentUserId);
+            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
             this._viewModel.Tracks = (ICollection<Track>)cart?.Tracks;
             this._viewModel.Albums = (ICollection<Album>)cart?.Albums;
             this._viewModel.CurrentUserId = currentUserId;

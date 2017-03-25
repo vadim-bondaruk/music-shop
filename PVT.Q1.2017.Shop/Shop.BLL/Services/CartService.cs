@@ -29,7 +29,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
+                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
                 if (cart == null)
                 {
                     cart = new Cart { UserId = userId, Tracks = new List<Track>() };
@@ -39,7 +39,7 @@
                 Track track;
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
-                    track = trackRepository.FirstOrDefault(t => t.Id == trackId);
+                    track = trackRepository.GetById(trackId);
                     if (track == null || trackId == 0)
                     {
                         throw new Exception($"Трек с ID={trackId} не найден.");
@@ -78,7 +78,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
+                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
                 if (cart == null || trackId == 0)
                 {
                     return;
@@ -87,7 +87,7 @@
                 Track track;
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
-                    track = trackRepository.FirstOrDefault(t => t.Id == trackId);
+                    track = trackRepository.GetById(trackId);
                 }
 
                 if (track != null && cart.Tracks != null)
@@ -126,7 +126,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
+                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
                 if (cart == null)
                 {
                     cart = new Cart { UserId = userId, Albums = new List<Album>() };
@@ -136,7 +136,7 @@
                 Album album;
                 using (var albumRepository = Factory.GetAlbumRepository())
                 {
-                    album = albumRepository.FirstOrDefault(a => a.Id == albumId);
+                    album = albumRepository.GetById(albumId);
                     if (album == null || albumId == 0)
                     {
                         throw new Exception($"Альбом с ID={albumId} не найден.");
@@ -175,7 +175,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
+                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
                 if (cart == null || albumId == 0)
                 {
                     return;
@@ -184,7 +184,7 @@
                 Album album;
                 using (var albumRepository = Factory.GetAlbumRepository())
                 {
-                    album = albumRepository.FirstOrDefault(t => t.Id == albumId);
+                    album = albumRepository.GetById(albumId);
                 }
 
                 if (album != null && cart.Albums != null)
