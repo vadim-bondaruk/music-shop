@@ -32,7 +32,7 @@
         /// </returns>
         public ActionResult List()
         {
-            return this.View(this._trackService.GetTracksList());
+            return this.View();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this._trackService.GetTrack(id.Value));
+            return this.View();
         }
 
         /// <summary>
