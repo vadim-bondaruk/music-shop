@@ -4,7 +4,7 @@
     using AutoMapper;
     using Extensions;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
+    using global::Shop.Common.ViewModels;
     using ViewModels;
 
     /// <summary>

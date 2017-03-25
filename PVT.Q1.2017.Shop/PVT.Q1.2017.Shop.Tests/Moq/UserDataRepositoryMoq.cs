@@ -32,6 +32,15 @@
                                     It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
                 .Returns(_users);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<UserData, bool>>>()))
+                 .Returns(() => _users.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<UserData, bool>>>(),
+                                             It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
+                 .Returns(() => _users.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 

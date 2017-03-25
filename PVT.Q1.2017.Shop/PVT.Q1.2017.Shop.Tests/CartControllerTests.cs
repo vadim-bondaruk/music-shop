@@ -8,12 +8,13 @@ using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Linq;
-using Shop.Common.Models.ViewModels;
 using Shop.BLL.Services.Infrastructure;
 using System.Collections;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
+    using global::Shop.Common.ViewModels;
+
     [TestClass]
     public class CartControllerTests
     {
@@ -37,6 +38,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
             Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
             moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
+            moqCartRepository.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(() => carts.FirstOrDefault());
             moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
