@@ -4,10 +4,15 @@
     background: #373737 url("/img/bg.png") 0 0 repeat;
 }
 
+.navbar-header {
+    display: block;
+    text-align: center;
+}
+
 .navbar-brand {
+    font-size: 5em;
     text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red;
-    width: 150px;
-    margin: 30px 0 0 auto;
+    margin: 30px 0 0 1%;
 }
 
 .title {
@@ -52,7 +57,7 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
 @-webkit-keyframes autofill {
     to {
         color: #bbb;
-         background: rgba(0, 0, 0, 0.16);
+        background: rgba(0, 0, 0, 0.16);
     }
 }
 
@@ -61,11 +66,9 @@ input:-webkit-autofill {
     -webkit-animation-fill-mode: both;
 }
 
-ul {
-    list-style-type: none;
-}
+ul { list-style-type: none; }
 
-ul>li {
+ul > li {
     padding: 0;
     height: 40px;
     margin-top: 5px;
