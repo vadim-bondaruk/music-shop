@@ -3,7 +3,6 @@
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -47,7 +46,7 @@
         /// <summary>
         /// </summary>
         /// <param name="id">
-        /// The artist id.
+        ///     The artist id.
         /// </param>
         /// <returns>
         /// </returns>
@@ -55,7 +54,13 @@
         {
             using (var repository = this._repositoryFactory.GetArtistRepository())
             {
-                var viewModel = ModelsMapper.GetArtistDetailsViewModel(repository.GetById(id));
+                var model = repository.GetById(id);
+                if (model == null)
+                {
+                    return this.View("_NotFound");
+                }
+
+                var viewModel = ModelsMapper.GetArtistDetailsViewModel(model);
                 return this.View(viewModel);
             }
         }
@@ -72,6 +77,15 @@
             {
                 return this.View(repository.GetAll());
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public ActionResult NotFound()
+        {
+            return this.View();
         }
 
         /// <summary>
