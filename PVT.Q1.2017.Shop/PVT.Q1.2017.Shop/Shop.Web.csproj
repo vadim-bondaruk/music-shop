@@ -197,6 +197,7 @@
     <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\TrackManage.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-ru.js" />
     <Content Include="Scripts\del-artist.js" />
