@@ -136,12 +136,17 @@
 
                         cfg.CreateMap<AlbumManagementViewModel, Album>()
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.Cover.ToBytes()))
-                            .ReverseMap();
+                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.Cover.ToBytes()));
 
                         cfg.CreateMap<ArtistManagementViewModel, Artist>()
-                            .ForMember(dest => dest.Photo, opt => opt.ResolveUsing(src => src.Photo))
-                             .ForMember(dest => dest.Photo, opt => opt.ResolveUsing(src => src.PostedPhoto.ToBytes()));
+                            .ForMember(
+                                dest => dest.Photo,
+                                opt =>
+                                    opt.MapFrom(
+                                        src =>
+                                            src.PostedPhoto !=null
+                                                ? src.PostedPhoto.ToBytes()
+                                                : src.Photo));
 
                         cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
                             .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
