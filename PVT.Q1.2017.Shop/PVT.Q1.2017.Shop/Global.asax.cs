@@ -22,8 +22,14 @@
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
             FluentValidationModelValidatorProvider.Configure();
+
+            //Mapper.Initialize(
+            //   cfg =>
+            //   {
+            //       cfg.CreateMap<ArtistManagementViewModel, Artist>();
+            //       cfg.CreateMap<ArtistDetailsViewModel, Artist>();
+            //   });
         }
     }
 }
