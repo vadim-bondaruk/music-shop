@@ -18,6 +18,7 @@
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(u => u.Dicount).IsOptional();
             HasRequired(u => u.UserCurrency).WithMany(c => c.Users).HasForeignKey(u => u.CurrencyId).WillCascadeOnDelete(false);
+            HasRequired(u => u.User).WithOptional(u => u.UserData);
 
             ToTable("UsersData");
         }
