@@ -22,7 +22,7 @@ else
             <div class="service-links">
                 @Html.ActionLink("Правка", "Edit", new { id = Model.Id, area = "Management" }, null);
                 <a href="javascript:document.forms[0].submit()" style="color: red">Удалить</a>
-                @using (Html.BeginForm("Delete", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formdel", @class = "edit-form" }))
+                @using (Html.BeginForm("Delete", "Artists", new { area = "Management" }, FormMethod.Post, new { enctype = "multipart/form-data", name = "formdel", @class = "edit-form" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.Id, "artistId")
