@@ -50,12 +50,13 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete([Bind(Include = "Id")] ArtistManagementViewModel viewModel)
+        public virtual ActionResult Delete([Bind(Include = "Id, Photo")] ArtistManagementViewModel viewModel)
         {
             using (var repo = this._repositoryFactory.GetArtistRepository())
             {
-                var artist = Mapper.Map<Artist>(viewModel);
+                var artist = ManagementMapper.GetArtistModel(viewModel);
                 repo.Delete(artist);
+                repo.SaveChanges();
             }
 
             return this.RedirectToAction("New");
