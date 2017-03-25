@@ -49,10 +49,8 @@
         [HttpGet]
         public ActionResult IsLoginUnique(string login)
         {
-            var a = !(this._userRepository
-                .GetAll(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase))
-                .IsAny());
-            return this.Json(a, JsonRequestBehavior.AllowGet);
+            var isUnique = this._userRepository.FirstOrDefault(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)) == null;
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -64,10 +62,8 @@
         [HttpGet]
         public ActionResult IsEmailUnique(string email)
         {
-            var a = !(this._userRepository
-                .GetAll(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase))
-                .IsAny());
-            return this.Json(a, JsonRequestBehavior.AllowGet);
+            var isUnique = this._userRepository.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)) == null;
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
