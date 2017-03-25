@@ -15,10 +15,11 @@
         private readonly GenreRepositoryMoq _genreRepositoryMoq = new GenreRepositoryMoq();
         private readonly PriceLevelRepositoryMoq _priceLevelRepositoryMoq = new PriceLevelRepositoryMoq();
         private readonly TrackPriceRepositoryMoq _trackPriceRepositoryMoq = new TrackPriceRepositoryMoq();
-        private readonly UserDataRepositoryMoq _userRepositoryMoq = new UserDataRepositoryMoq();
+        private readonly UserDataRepositoryMoq _userDataRepositoryMoq = new UserDataRepositoryMoq();
         private readonly VoteRepositoryMoq _voteRepositoryMoq = new VoteRepositoryMoq();
         private readonly CartRepositoryMoq _cartRepositoryMoq = new CartRepositoryMoq();
         private readonly AlbumTrackRelationRepositoryMoq _albumTrackRelationRepositoryMoq = new AlbumTrackRelationRepositoryMoq();
+        private readonly UserRepositoryMoq _userRepositoryMoq = new UserRepositoryMoq();
 
         public IAlbumRepository GetAlbumRepository()
         {
@@ -72,7 +73,7 @@
 
         public IUserDataRepository GetUserDataRepository()
         {
-            return _userRepositoryMoq.Repository;
+            return _userDataRepositoryMoq.Repository;
         }
 
         public IVoteRepository GetVoteRepository()
@@ -95,5 +96,9 @@
             return _cartRepositoryMoq.Repository;
         }
 
+        public IUserRepository GetUserRepository()
+        {
+            return _userRepositoryMoq.Repository;
+        }
     }
 }
