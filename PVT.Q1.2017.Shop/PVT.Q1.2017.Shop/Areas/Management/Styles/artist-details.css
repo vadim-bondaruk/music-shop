@@ -2,10 +2,7 @@ body { -webkit-margin-start: 0; }
 
 .navbar { margin: 0.8% auto; }
 
-.navbar-brand {
-    margin-top: 30px;
-     text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red;
-}
+
 
 #artistDetails { margin: 0 3%; }
 
@@ -77,19 +74,20 @@ body {
 
 .right-part article {
     color: white;
-    min-width: 300px;
+    min-width: 600px;
     height: 600px;
     overflow: auto;
     -webkit-margin-start: 0;
 }
 
 .service-links {
-    position: absolute;
     top: 50px;
     right: 30px;
+    text-align: right;
 }
 
 .copyright {
     color: white;
-    margin: 0 auto;
+    margin: 0 47%;
+    width: 300px;
 }
