@@ -4,15 +4,12 @@
 
     using AutoMapper;
 
-    using global::Shop.BLL.Helpers;
-    using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
-    using PVT.Q1._2017.Shop.Areas.Management.Helpers;
-    using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+    using Helpers;
+    using ViewModels;
 
     /// <summary>
     ///     The artist controller.
@@ -50,7 +47,7 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete([Bind(Include = "Id, Photo")] ArtistManagementViewModel viewModel)
+        public virtual ActionResult Delete([Bind(Include = "Id")] ArtistManagementViewModel viewModel)
         {
             using (var repo = this._repositoryFactory.GetArtistRepository())
             {
@@ -125,9 +122,9 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ArtistManagementViewModel model)
+        public ActionResult New(ArtistManagementViewModel viewModel)
         {
-            var artist = Mapper.Map<Artist>(model);
+            var artist = ManagementMapper.GetArtistModel(viewModel);
             using (var repository = this._repositoryFactory.GetArtistRepository())
             {
                 repository.AddOrUpdate(artist);
