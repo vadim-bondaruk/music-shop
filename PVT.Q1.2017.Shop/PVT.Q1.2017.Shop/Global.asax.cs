@@ -8,7 +8,6 @@
     using AutoMapper;
     using FluentValidation.Mvc;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
 
     /// <summary>
     ///     Base class in an ASP.NET application

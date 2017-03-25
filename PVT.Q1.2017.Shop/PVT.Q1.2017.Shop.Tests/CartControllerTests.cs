@@ -8,12 +8,13 @@ using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Linq;
-using Shop.Common.Models.ViewModels;
 using Shop.BLL.Services.Infrastructure;
 using System.Collections;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
+    using global::Shop.Common.ViewModels;
+
     [TestClass]
     public class CartControllerTests
     {
