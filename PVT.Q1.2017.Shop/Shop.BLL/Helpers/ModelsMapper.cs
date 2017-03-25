@@ -224,9 +224,11 @@
         /// </returns>
         private static IMapper CreateCommonMapper()
         {
-            MapperConfiguration commonMapperConfiguration = new MapperConfiguration(cfg =>
+            var commonMapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Artist, ArtistViewModel>();
+
+                cfg.CreateMap<Artist, ArtistDetailsViewModel>();
 
                 cfg.CreateMap<Genre, GenreViewModel>();
 
@@ -261,7 +263,7 @@
         /// </returns>
         private static IMapper CreateSpecialListMapper()
         {
-            MapperConfiguration specialListMapperConfiguration = new MapperConfiguration(cfg =>
+            var specialListMapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Artist, ArtistViewModel>();
 
@@ -283,13 +285,17 @@
         /// </returns>
         private static IMapper CreateModelsDetailsMapper()
         {
-            MapperConfiguration detailsMapperConfiguration = new MapperConfiguration(cfg =>
+            var detailsMapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Genre, GenreViewModel>();
 
                 cfg.CreateMap<Artist, ArtistViewModel>();
 
-                cfg.CreateMap<Artist, ArtistDetailsViewModel>();
+                cfg.CreateMap<Artist, ArtistDetailsViewModel>()
+                    .ForMember(model => model.Photo, opt => opt.MapFrom(src => src.Photo));
+
+                cfg.CreateMap<ArtistDetailsViewModel, Artist>()
+                  .ForMember(model => model.Photo, opt => opt.MapFrom(src => src.Photo));
 
                 cfg.CreateMap<Album, AlbumDetailsViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist));
