@@ -91,7 +91,6 @@
     <Compile Include="Services\TrackPriceService.cs" />
     <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\UserPaymentMethodService.cs" />
-    <Compile Include="Services\UserDataService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

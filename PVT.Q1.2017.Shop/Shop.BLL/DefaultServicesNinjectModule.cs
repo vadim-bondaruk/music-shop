@@ -39,8 +39,6 @@
             Bind<ITrackPriceService>().To<TrackPriceService>();
             Bind<IAlbumPriceService>().To<AlbumPriceService>();
 
-            Bind<IUserDataService>().To<UserDataService>();
-
             Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
             Bind<IPaymentService>().To<PaymentService>();
 
