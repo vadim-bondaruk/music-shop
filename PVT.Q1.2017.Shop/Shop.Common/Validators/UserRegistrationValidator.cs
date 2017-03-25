@@ -2,7 +2,8 @@
 {
     using System;
     using FluentValidation;
-    using PVT.Q1._2017.Shop.ViewModels;
+
+    using Shop.Common.Models.ViewModels;
 
     /// <summary>
     /// Defines rules for user registration

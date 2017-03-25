@@ -1,10 +1,6 @@
-﻿namespace PVT.Q1._2017.Shop.ViewModels
+﻿namespace Shop.Common.Models.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Web;
 
     /// <summary>
     /// 

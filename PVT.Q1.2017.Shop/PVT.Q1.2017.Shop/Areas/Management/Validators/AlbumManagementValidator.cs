@@ -4,6 +4,8 @@
 
     using global::Shop.Common.Models.ViewModels;
 
+    using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+
     /// <summary>
     ///     The <see cref="AlbumManagementViewModel" /> validator.
     /// </summary>

@@ -2,24 +2,25 @@
 {
     using System.Web.Mvc;
 
+    using global::Shop.BLL.Helpers;
     using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
-    /// The artist controller.
+    ///     The artist controller.
     /// </summary>
     public class ArtistsController : Controller
     {
         /// <summary>
-        /// The repository factory.
+        ///     The repository factory.
         /// </summary>
         private readonly IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArtistsController"/> class.
+        ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        /// The repository factory.
+        ///     The repository factory.
         /// </param>
         public ArtistsController(IRepositoryFactory repositoryFactory)
         {
@@ -27,44 +28,13 @@
         }
 
         /// <summary>
-        /// Shows all artists.
-        /// </summary>
-        /// <returns>
-        /// All artists view.
-        /// </returns>
-        public ActionResult Index()
-        {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
-            {
-                return this.View(repository.GetAll());
-            }
-        }
-
-        /// <summary>
-        /// Show artist info.
+        ///     Shows all artist albums
         /// </summary>
         /// <param name="id">
-        /// The artist id.
+        ///     The artist id.
         /// </param>
         /// <returns>
-        /// Artist info view.
-        /// </returns>
-        public ActionResult Details(int id)
-        {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
-            {
-                return this.View(repository.GetById(id));
-            }
-        }
-
-        /// <summary>
-        /// Shows all artist albums
-        /// </summary>
-        /// <param name="id">
-        /// The artist id.
-        /// </param>
-        /// <returns>
-        /// All artist albums view.
+        ///     All artist albums view.
         /// </returns>
         public ActionResult AlbumsList(int id)
         {
@@ -75,13 +45,43 @@
         }
 
         /// <summary>
-        /// Shows all artist tracks.
         /// </summary>
         /// <param name="id">
         /// The artist id.
         /// </param>
         /// <returns>
-        /// All artist tracks view.
+        /// </returns>
+        public ActionResult Details(int id)
+        {
+            using (var repository = this._repositoryFactory.GetArtistRepository())
+            {
+                var viewModel = ModelsMapper.GetArtistDetailsViewModel(repository.GetById(id));
+                return this.View(viewModel);
+            }
+        }
+
+        /// <summary>
+        ///     Shows all artists.
+        /// </summary>
+        /// <returns>
+        ///     All artists view.
+        /// </returns>
+        public ActionResult Index()
+        {
+            using (var repository = this._repositoryFactory.GetArtistRepository())
+            {
+                return this.View(repository.GetAll());
+            }
+        }
+
+        /// <summary>
+        ///     Shows all artist tracks.
+        /// </summary>
+        /// <param name="id">
+        ///     The artist id.
+        /// </param>
+        /// <returns>
+        ///     All artist tracks view.
         /// </returns>
         public ActionResult TracksList(int id)
         {
@@ -89,21 +89,6 @@
             {
                 return this.View(repository.GetAll(t => t.ArtistId == id));
             }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="viewModel">
-        ///     The view model.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult New(
-            [Bind(Include = "Name, Birthday, Biography, UploadedImage")] ArtistManagementViewModel viewModel)
-        {
-            return null; /*this.RedirectToAction("Details", new { artistId = id });*/
         }
     }
 }

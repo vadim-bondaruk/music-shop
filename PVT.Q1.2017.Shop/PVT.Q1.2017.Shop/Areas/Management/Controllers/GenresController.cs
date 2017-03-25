@@ -9,6 +9,8 @@
     using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
+    using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+
     /// <summary>
     /// </summary>
     public class GenresController : Controller
