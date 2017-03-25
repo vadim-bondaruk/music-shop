@@ -2,6 +2,7 @@
 {
     using AutoMapper;
 
+    using Shop.BLL.Helpers;
     using Shop.BLL.Services.Infrastructure;
     using Shop.Common.Models;
     using Shop.Common.Models.ViewModels;
@@ -30,63 +31,17 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="artist">
-        /// The artist.
-        /// </param>
-        public void Delete(Artist artist)
-        {
-            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
-            {
-                artistRepo.Delete(artist);
-                artistRepo.SaveChanges();
-            }
-        }
-
-        /// <summary>
-        /// </summary>
         /// <param name="id">
         ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
-        public ArtistManagementViewModel GetById(int id)
+        public ArtistDetailsViewModel GetArtistDetails(int id)
         {
             using (var repository = this.Factory.GetArtistRepository())
             {
                 var artist = repository.GetById(id);
-                return artist == null ? null : Mapper.Map<ArtistManagementViewModel>(artist);
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="viewModel">
-        ///     The view model.
-        /// </param>
-        public int Save(ArtistManagementViewModel viewModel)
-        {
-            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
-            {
-                if (viewModel.UploadedImage != null)
-                {
-                    var bs = new byte[viewModel.UploadedImage.ContentLength];
-                    using (var fs = viewModel.UploadedImage.InputStream)
-                    {
-                        var offset = 0;
-                        do
-                        {
-                            offset += fs.Read(bs, offset, bs.Length - offset);
-                        }
-                        while (offset < bs.Length);
-                    }
-
-                    viewModel.Photo = bs;
-                }
-
-                var artist = Mapper.Map<Artist>(viewModel);
-                artistRepo.AddOrUpdate(artist);
-                artistRepo.SaveChanges();
-                return artist.Id;
+                return ModelsMapper.GetArtistDetailsViewModel(artist);
             }
         }
     }
