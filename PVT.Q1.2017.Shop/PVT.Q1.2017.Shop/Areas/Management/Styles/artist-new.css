@@ -1,4 +1,5 @@
 ﻿body {
+    padding: 0;
     font: 14px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #404040;
     background: #373737 url("/img/bg.png") 0 0 repeat;
@@ -6,8 +7,8 @@
 
 .navbar-brand {
     text-shadow: 1px 1px 1px black, 0 0.1em 0.5em red;
-    width: 150px;
-    margin: 30px 0 0 auto;
+    width: 370px;
+    margin: 30px 0 0 0;
 }
 
 .reg-new-artist-title {
