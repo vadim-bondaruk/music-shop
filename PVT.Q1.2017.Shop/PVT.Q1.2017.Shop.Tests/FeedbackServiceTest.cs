@@ -45,8 +45,8 @@
             Mock.Get(_factory.GetFeedbackRepository())
                 .Verify(
                         m =>
-                            m.GetAll(It.IsAny<Expression<Func<Feedback, bool>>>(),
-                                     It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);
+                            m.FirstOrDefault(It.IsAny<Expression<Func<Feedback, bool>>>(),
+                                             It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);
         }
 
         [TestMethod]
@@ -58,8 +58,8 @@
             Mock.Get(_factory.GetFeedbackRepository())
                 .Verify(
                         m =>
-                            m.GetAll(It.IsAny<Expression<Func<Feedback, bool>>>(),
-                                     It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);
+                            m.FirstOrDefault(It.IsAny<Expression<Func<Feedback, bool>>>(),
+                                             It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);
         }
 
         [TestMethod]

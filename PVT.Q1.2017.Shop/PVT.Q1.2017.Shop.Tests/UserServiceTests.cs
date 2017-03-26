@@ -1,30 +1,41 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
-using Shop.Infrastructure.Repositories;
-using Shop.Common.Models;
-using Shop.BLL.DTO;
-using Shop.BLL.Exceptions;
-using Shop.BLL.Services;
-using Shop.BLL.Services.Infrastructure;
-using Shop.DAL.Infrastruture;
-
-namespace PVT.Q1._2017.Shop.Tests
+﻿namespace PVT.Q1._2017.Shop.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using global::Moq;
+    using global::Shop.BLL.Services;
+    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
+    using global::Shop.DAL.Infrastruture;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
+
     [TestClass]
     public class UserServiceTests
     {
+        private readonly IRepositoryFactory _factory;
+
+        public UserServiceTests()
+        {
+            _factory = new RepositoryFactoryMoq();
+
+            using (var repository = this._factory.GetCurrencyRepository())
+            {
+                repository.AddOrUpdate(new Currency { Id = 1, ShortName = "USD", Code = 840 });
+                repository.SaveChanges();
+            }
+
+            using (var repository = this._factory.GetPriceLevelRepository())
+            {
+                repository.AddOrUpdate(new PriceLevel { Id = 1, Name = "Default Price Level" });
+                repository.SaveChanges();
+            }
+        }
 
         [TestMethod]
         public void RegisterUser_UserInput_ReturnTrue()
         {
-            Mock<IUserRepository> repo = new Mock<IUserRepository>();
-            repo.Setup(r => r.GetAll()).Returns(new List<User>() { new User()});
-            IUserService service = new UserService(repo.Object);
+            IUserService service = new UserService(_factory);
             User user = new User
             {
                 FirstName = "Abziz",
@@ -39,21 +50,15 @@ namespace PVT.Q1._2017.Shop.Tests
             };
 
             var registered = service.RegisterUser(user);
-
             Assert.IsTrue(registered);
         }
 
-
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(ArgumentException), AllowDerivedTypes = true)]
         public void RegisterUser_NullInput()
         {
-            Mock<IUserRepository> repo = new Mock<IUserRepository>();
-            repo.Setup(r =>r.GetAll()).Returns(new List<User>() { new User() });
-            UserService service = new UserService(repo.Object);
-           
-            var registered = service.RegisterUser(null);
-
+            UserService service = new UserService(_factory);
+            service.RegisterUser(null);
         }
     }
 }

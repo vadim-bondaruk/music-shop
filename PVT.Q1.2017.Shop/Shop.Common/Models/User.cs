@@ -58,5 +58,10 @@
         /// 
         /// </summary>
         public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// The user data.
+        /// </summary>
+        public virtual UserData UserData { get; set; }
     }
 }
