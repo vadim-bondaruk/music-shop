@@ -1,7 +1,7 @@
 ﻿@model Shop.Common.ViewModels.CartViewModel
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -14,6 +14,8 @@
 <body>
     <form action="/Cart/DeleteTrack" method="post">
         @Html.Hidden("currentUserId", @Model.CurrentUserId)
+        <br />
+        <br />
         <b>Tracks</b>
         <br />
         <table border="1" cellpadding="3">
