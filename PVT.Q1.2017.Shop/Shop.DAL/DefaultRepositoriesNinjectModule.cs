@@ -78,8 +78,6 @@
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserRepository());
 
             Bind<IRepositoryFactory>().ToFactory();
-
-            Bind<IUserRepository>().To<UserRepository>();
         }
     }
 }
