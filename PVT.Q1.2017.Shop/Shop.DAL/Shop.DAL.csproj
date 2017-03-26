@@ -132,6 +132,7 @@
     <Compile Include="Infrastruture\ICartRepository.cs" />
     <Compile Include="Repositories\PaymentCardRepository.cs" />
     <Compile Include="Repositories\PriceLevelRepository.cs" />
+    <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Repositories\TrackPriceRepository.cs" />
     <Compile Include="Repositories\UserDataRepository.cs" />
     <Compile Include="Repositories\UserPaymentMethodRepository.cs" />

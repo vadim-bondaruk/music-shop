@@ -8,18 +8,22 @@
     public class Setting : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the default currency id.
+        /// The default currency id.
         /// </summary>
         public int DefaultCurrencyId { get; set; }
 
-        public int PriceLevelId { get; set; }
         /// <summary>
-        /// Gets or sets the default currency.
+        /// The default priceId
+        /// </summary>
+        public int PriceLevelId { get; set; }
+
+        /// <summary>
+        /// The default currency.
         /// </summary>
         public virtual Currency DefaultCurrency { get; set; }
 
         /// <summary>
-        /// Gets or sets the price level.
+        /// The price level.
         /// </summary>
         public virtual PriceLevel PriceLevel { get; set; }
     }
