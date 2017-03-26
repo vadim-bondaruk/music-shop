@@ -64,6 +64,7 @@
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IBaseAddressRepository.cs" />
     <Compile Include="Infrastruture\IPaymentCardRepository.cs" />
+    <Compile Include="Infrastruture\ISettingRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Infrastruture\IUserRepository.cs" />
     <Compile Include="Migrations\201703141950344_Init.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\SettingConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserDataConfiguration.cs" />
