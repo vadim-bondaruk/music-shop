@@ -50,11 +50,11 @@
 
             if (useridentity.Contains("@"))
             {
-                user = this._users.GetAll(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                user = this._users.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
             }
             else
             {
-                user = this._users.GetAll(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                user = this._users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
             }
             
             if (user != null)

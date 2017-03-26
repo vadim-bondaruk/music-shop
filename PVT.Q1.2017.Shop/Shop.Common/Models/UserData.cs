@@ -27,6 +27,11 @@
         public int PriceLevelId { get; set; }
 
         /// <summary>
+        /// The user id.
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
         /// User currency
         /// </summary>
         public virtual Currency UserCurrency { get; set; }
@@ -45,5 +50,10 @@
         /// All votes
         /// </summary>
         public virtual ICollection<Vote> Votes { get; set; }
+
+        /// <summary>
+        /// The user.
+        /// </summary>
+        public virtual User User { get; set; }
     }
 }

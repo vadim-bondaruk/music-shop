@@ -10,7 +10,7 @@
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;

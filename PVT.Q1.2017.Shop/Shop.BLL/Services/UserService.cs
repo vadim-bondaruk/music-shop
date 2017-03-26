@@ -3,29 +3,24 @@
     using System;
     using Common.Models;
     using DAL.Infrastruture;
-    using Exceptions;
+    using Helpers;
     using Infrastructure;
     using Shop.Infrastructure.Enums;        
     using Utils;
-    using Validators;
 
     /// <summary>
     /// The user service
     /// </summary>
-    public class UserService : IUserService
+    public class UserService : BaseService, IUserService
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        private readonly IUserRepository _userRepossitory;
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userRepository"></param>
-        public UserService(IUserRepository userRepository) 
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        public UserService(IRepositoryFactory repositoryFactory) : base(repositoryFactory)
         {
-            this._userRepossitory = userRepository;
         }
 
         /// <summary>
@@ -35,11 +30,9 @@
         /// <returns></returns>
         public bool RegisterUser(User user)
         {
-            var registered = false;
-
             if (user == null)
             {
-                throw new ArgumentException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             // if (!UserDataValidator.IsLoginUnique(user.Login, this._userRepossitory))
@@ -53,24 +46,35 @@
             // }
             user.Password = PasswordEncryptor.GetHashString(user.Password);
             user.UserRoles = this.GetDefaultUserRoles();
-           
+
             try
             {
-                using (var userRepository = this._userRepossitory)
+                using (var userRepository = Factory.GetUserRepository())
                 {
                     userRepository.AddOrUpdate(user);
                     userRepository.SaveChanges();
                 }
 
-                registered = true;
+                using (var userDataRepository = Factory.GetUserDataRepository())
+                {
+                    var userData = new UserData
+                    {
+                        UserId = user.Id,
+                        CurrencyId = ServiceHelper.GetDefaultCurrency(Factory).Id,
+                        PriceLevelId = ServiceHelper.GetDefaultPriceLevel(Factory)
+                    };
+
+                    userDataRepository.AddOrUpdate(userData);
+                    userDataRepository.SaveChanges();
+                }
+
+                return true;
             }
             catch (Exception)
             {
-                // write data to log
-                throw;
+                // TODO: write data to log
+                return false;
             }
-
-            return registered;
         }            
 
         /// <summary>

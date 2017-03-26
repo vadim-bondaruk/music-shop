@@ -10,10 +10,12 @@
 namespace Shop.Common.Models
 {
     using Infrastructure.Models;
-
+    using Validators;
+    
     /// <summary>
     /// Define settings for user payment methods
     /// </summary>
+    [FluentValidation.Attributes.Validator(typeof(UserPaymentMethodValidator))]
     public class UserPaymentMethod : BaseEntity
     {
         /// <summary>
