@@ -48,6 +48,7 @@
         /// Id текущего пользователя
         /// </param>
         [HttpGet]
+        [Authorize]
         public ViewResult Index(int currentUserId = 0)
         {
             var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
@@ -77,6 +78,7 @@
         /// Id добавляемого альбома
         /// </param>
         [HttpPost]
+        [Authorize]
         public RedirectToRouteResult AddAlbum(int currentUserId = 0, int albumId = 0)
         {
             this._cartService.AddAlbum(currentUserId, albumId);
@@ -109,6 +111,7 @@
         /// Id добавляемого трэка
         /// </param>
         [HttpPost]
+        [Authorize]
         public RedirectToRouteResult AddTrack(int currentUserId = 0, int trackId = 0)
         {
             this._cartService.AddTrack(currentUserId, trackId);
@@ -125,6 +128,7 @@
         /// Id удаляемого трэка
         /// </param>
         [HttpPost]
+        [Authorize]
         public RedirectToRouteResult DeleteTrack(int currentUserId = 0, int trackId = 0)
         {
             this._cartService.RemoveTrack(currentUserId, trackId);
