@@ -97,6 +97,11 @@
         public DbSet<User> Users { get; set; }
 
         /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
+        public DbSet<Setting> Settings { get; set; }
+
+        /// <summary>
         /// The Db configuration.
         /// </summary>
         /// <param name="modelBuilder">
