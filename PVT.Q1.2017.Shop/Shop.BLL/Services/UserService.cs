@@ -26,6 +26,28 @@
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
+        public bool IsUserExist(string userIdentity)
+            {
+
+                User user = null;
+
+                if (!string.IsNullOrEmpty(userIdentity))
+                {
+                    using (var userRepository = this.Factory.GetUserRepository())
+                    {
+                        user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                    } 
+                }
+
+                return user != null;
+            }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         public bool RegisterUser(User user)
@@ -35,15 +57,6 @@
                 throw new ArgumentNullException(nameof(user));
             }
 
-            // if (!UserDataValidator.IsLoginUnique(user.Login, this._userRepossitory))
-            // {
-            //     throw new UserValidationException("User with the same login already exists", "Login");
-            // }
-               
-            // if (!UserDataValidator.IsEmailUnique(user.Email, this._userRepossitory))
-            // {
-            //     throw new UserValidationException("User with the same email already exists", "Email");
-            // }
             user.Password = PasswordEncryptor.GetHashString(user.Password);
             user.UserRoles = this.GetDefaultUserRoles();
 
@@ -70,7 +83,7 @@
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // TODO: write data to log
                 return false;

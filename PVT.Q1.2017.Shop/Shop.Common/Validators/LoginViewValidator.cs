@@ -1,7 +1,7 @@
 ﻿namespace Shop.Common.Validators
 {
     using FluentValidation;
-    using PVT.Q1._2017.Shop.ViewModels;
+    using ViewModels;
 
     /// <summary>
     /// 

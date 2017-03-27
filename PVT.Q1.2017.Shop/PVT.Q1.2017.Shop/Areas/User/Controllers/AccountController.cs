@@ -5,10 +5,10 @@
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Utils;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Security;
+    using Helpers;
 
     /// <summary>
     /// 
@@ -28,16 +28,16 @@
         /// <summary>
         /// 
         /// </summary>
-        private IUserRepository _userRepository;
+        private IRepositoryFactory _factory;
 
         /// <summary>
         /// 
         /// </summary>
-        public AccountController(IUserService userService, IAuthModule authModule, IUserRepository _userRepository)
+        public AccountController(IUserService userService, IAuthModule authModule, IRepositoryFactory factory)
         {
             this._userService = userService;
             this._authModule = authModule;
-            this._userRepository = _userRepository;
+            this._factory = factory;
         }
 
         /// <summary>
@@ -49,7 +49,8 @@
         [HttpGet]
         public ActionResult IsLoginUnique(string login)
         {
-            var isUnique = this._userRepository.FirstOrDefault(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)) == null;
+            var isUnique = !_userService.IsUserExist(login);
+
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
@@ -62,10 +63,19 @@
         [HttpGet]
         public ActionResult IsEmailUnique(string email)
         {
-            var isUnique = this._userRepository.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)) == null;
+            var isUnique = !_userService.IsUserExist(email);
+
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult IsUserNotExist(string userIdentity)
+        {
+            var isUnique = _userService.IsUserExist(userIdentity);
+
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// GET: User/Account/Login
         /// </summary>
@@ -116,7 +126,9 @@
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
+            this.HttpContext.Session.Abandon();
             this._authModule.LogOut();
+
             return this.RedirectToAction("Login", "Account", new { area = "User" });
         }
 
@@ -146,20 +158,22 @@
             {
                 try
                 {
-                    AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, User>());
-                    var userDB = AutoMapper.Mapper.Map<User>(user);
+                   // AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, User>());
+                    var userDB = UserMapper.GetUserModel(user);// AutoMapper.Mapper.Map<User>(user);
                     result = this._userService.RegisterUser(userDB);
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
-
+               
                 if (result)
                 {
                     return this.RedirectToAction("Success");
                 }
             }
+
+            ModelState.AddModelError("", "Возникла ошибка при сохранении данных");
 
             return this.View(user);
         }
@@ -186,7 +200,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(FormCollection collection)
         {
-                return this.View();
+            return this.View();
         }
 
         /// <summary>

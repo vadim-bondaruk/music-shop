@@ -60,5 +60,17 @@
             UserService service = new UserService(_factory);
             service.RegisterUser(null);
         }
+
+        [TestMethod]
+        public void IsUserUnique_NullOrEmptyInput()
+        {
+            UserService service = new UserService(_factory);
+
+            var resultNull = service.IsUserExist(null);
+            var resultEmpty = service.IsUserExist("");
+
+            Assert.IsFalse(resultNull);
+            Assert.IsFalse(resultEmpty);
+        }
     }
 }

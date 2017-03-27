@@ -1,9 +1,9 @@
 ﻿namespace Shop.Common.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Web;
-
+    using System.Web.Mvc;
+    using Validators;
+    using ViewModels;
     /// <summary>
     /// 
     /// </summary>
@@ -14,6 +14,7 @@
         /// 
         /// </summary>
         [Display(Name = "Электронная почта или логин")]
+        [Remote("IsUserNotExist", "Account", "User", ErrorMessage = "Такого пользователя не существует")]
         public string UserIdentity { get; set; }
 
         /// <summary>
