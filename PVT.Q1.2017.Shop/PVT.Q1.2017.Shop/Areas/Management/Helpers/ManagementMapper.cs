@@ -49,9 +49,9 @@
         /// <returns>
         ///     A new <see cref="Album" /> DTO model.
         /// </returns>
-        public static Album GetAlbumModel(AlbumManagementViewModel album)
+        public static Album GetAlbumModel(AlbumManagementViewModel viewModel)
         {
-            return ManagementModelsMapper.Map<Album>(album);
+            return ManagementModelsMapper.Map<Album>(viewModel);
         }
 
         /// <summary>
@@ -132,21 +132,26 @@
                             .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.Image.ToBytes()));
 
                         cfg.CreateMap<AlbumDetailsViewModel, Album>()
-                            .ForMember(dest => dest.Cover, opt => opt.UseValue<HttpPostedFileBase>(null));
+                            .ForMember(dest => dest.Cover, opt => opt.MapFrom(src => src.Cover));
+
+                        cfg.CreateMap<Album, AlbumDetailsViewModel>()
+                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.Cover));
+
+                        cfg.CreateMap<Album, AlbumManagementViewModel>()
+                            .ForMember(dest => dest.Cover, opt => opt.MapFrom(src => src.Cover))
+                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist));
 
                         cfg.CreateMap<AlbumManagementViewModel, Album>()
-                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.Cover.ToBytes()));
+                            .ForMember(
+                                dest => dest.Cover,
+                                opt =>
+                                    opt.MapFrom(src => src.PostedCover != null ? src.PostedCover.ToBytes() : src.Cover));
 
                         cfg.CreateMap<ArtistManagementViewModel, Artist>()
                             .ForMember(
                                 dest => dest.Photo,
                                 opt =>
-                                    opt.MapFrom(
-                                        src =>
-                                            src.PostedPhoto !=null
-                                                ? src.PostedPhoto.ToBytes()
-                                                : src.Photo));
+                                    opt.MapFrom(src => src.PostedPhoto != null ? src.PostedPhoto.ToBytes() : src.Photo));
 
                         cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
                             .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
