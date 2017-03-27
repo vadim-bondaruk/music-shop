@@ -1,7 +1,5 @@
 ﻿namespace Shop.BLL.Services
 {
-    using AutoMapper;
-
     using Shop.BLL.Helpers;
     using Shop.BLL.Services.Infrastructure;
     using Shop.Common.Models;
@@ -27,6 +25,22 @@
             : base(factory)
         {
             this.repositoryFactory = factory;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public Artist GetArtist(int id)
+        {
+            using (var repository = this.Factory.GetArtistRepository())
+            {
+                var artist = repository.GetById(id);
+                return artist;
+            }
         }
 
         /// <summary>

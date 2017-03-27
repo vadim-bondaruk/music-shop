@@ -9,6 +9,7 @@
     using global::Shop.DAL.Infrastruture;
 
     using Helpers;
+
     using ViewModels;
 
     /// <summary>
@@ -49,9 +50,10 @@
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete([Bind(Include = "Id")] ArtistManagementViewModel viewModel)
         {
+            Artist artist;
             using (var repo = this._repositoryFactory.GetArtistRepository())
             {
-                var artist = ManagementMapper.GetArtistModel(viewModel);
+                artist = ManagementMapper.GetArtistModel(viewModel);
                 repo.Delete(artist);
                 repo.SaveChanges();
             }
@@ -69,7 +71,7 @@
         public virtual ActionResult Edit(int id)
         {
             var artist = ManagementMapper.GetArtistManagementViewModel(this._artistService.GetArtistDetails(id));
-           return this.View(artist);
+            return this.View(artist);
         }
 
         /// <summary>
@@ -129,7 +131,9 @@
             {
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();
-                return this.View();
+                return this.RedirectToAction(
+                    "Details",
+                    new { area = "Content", Controller = "Artists", id = artist.Id });
             }
         }
     }

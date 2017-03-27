@@ -1,43 +1,22 @@
-﻿@model Shop.Common.Models.ViewModels.AlbumViewModel
+﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.GenreManagementViewModel
 
-@{
-    ViewBag.Title = "Details";
+
+@using (Html.BeginForm("New", "Genres", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="genreDetails">
+        <ul>
+            <li>
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Name" } })
+            </li>
+            <li>
+                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { placeholder = "Description" } })
+            </li>
+        </ul>
+
+        <button type="submit" class="add-button">Add</button>
+    </div>
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Album</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ArtistName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ArtistName)
-            @Html.HiddenFor(model => model.ArtistId)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "AddOrUpdate", "Album", new { id = Model.Id, area = "Management" }, null) |
-    @Html.ActionLink("Back to List", "List")
-</p>
+@section ManageStyle{
+    <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}

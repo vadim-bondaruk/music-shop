@@ -1,6 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.ViewModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Web;
 
     using global::Shop.Common.Models;
@@ -52,6 +53,8 @@
         /// <summary>
         /// Gets or sets the track file.
         /// </summary>
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
         public HttpPostedFileBase TrackFile { get; set; }
     }
 }

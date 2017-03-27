@@ -22,6 +22,11 @@
         public DateTime? Birthday { get; set; }
 
         /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         ///     Gets or sets the id.
         /// </summary>
         public int? Id { get; set; }
@@ -42,7 +47,7 @@
         public HttpPostedFileBase UploadedImage { get; set; }
 
         /// <summary>
-        /// Gets or sets the value.
+        ///     Gets or sets the value.
         /// </summary>
         [Bindable(true)]
         public virtual string Value { get; set; }

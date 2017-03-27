@@ -134,6 +134,7 @@
     </Content>
     <Content Include="Areas\Management\Styles\album-new.css" />
     <Content Include="Areas\Management\Styles\albums-list.css" />
+    <Content Include="Areas\Management\Styles\album-details.css" />
     <Content Include="Areas\Management\Styles\artist-details.css" />
     <Content Include="Areas\Management\Styles\artist-edit.css" />
     <Content Include="Areas\Management\Styles\artist-new.css" />
@@ -170,12 +171,9 @@
     <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
     <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
-    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Artists\List.cshtml" />
     <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\List.cshtml" />
     <Content Include="Areas\Content\Views\Albums\List.cshtml" />
-    <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Genres\List.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
     <Content Include="Areas\Content\Views\Index.cshtml" />
@@ -186,18 +184,18 @@
     <Content Include="Areas\Management\Views\Artists\New.cshtml" />
     <Content Include="Areas\Management\Views\Artists\Index.cshtml" />
     <Content Include="Areas\Management\Views\Albums\AlbumManage.cshtml" />
-    <Content Include="Areas\Management\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Management\Views\Albums\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Albums\New.cshtml" />
-    <Content Include="Areas\Management\Views\Genres\Details.cshtml" />
-    <Content Include="Areas\Management\Views\Genres\GenreManage.cshtml" />
-    <Content Include="Areas\Management\Views\Genres\List.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
+    <None Include="Areas\Management\Views\Genres\Edit" />
+    <Content Include="Areas\Content\Views\Genres\List.cshtml" />
     <Content Include="Areas\Management\Views\Genres\New.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\Details.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\TrackManage.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-ru.js" />
     <Content Include="Scripts\del-artist.js" />

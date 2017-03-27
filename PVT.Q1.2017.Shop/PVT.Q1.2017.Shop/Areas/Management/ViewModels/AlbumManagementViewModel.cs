@@ -1,6 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.ViewModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Web;
 
     using global::Shop.Common.Models;
@@ -11,14 +12,24 @@
     public class AlbumManagementViewModel
     {
         /// <summary>
-        /// Gets or sets the artist.
+        ///     Gets or sets the artist.
         /// </summary>
         public Artist Artist { get; set; }
 
         /// <summary>
+        /// Gets or sets the artst name.
+        /// </summary>
+        public string ArtistName { get; set; }
+
+        /// <summary>
         ///     Gets or sets the album cover.
         /// </summary>
-        public HttpPostedFileBase Cover { get; set; }
+        public byte[] Cover { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the id id.
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         ///     Gets or sets the album name.
@@ -26,13 +37,15 @@
         public string Name { get; set; }
 
         /// <summary>
-        ///     Gets or sets the album release date.
+        ///     Gets or sets the posted cover.
         /// </summary>
-        public DateTime? ReleaseDate { get; set; }
+        public HttpPostedFileBase PostedCover { get; set; }
 
         /// <summary>
-        ///     Gets or sets the album price.
+        ///     Gets or sets the album release date.
         /// </summary>
-        public HttpPostedFileBase UploadedImage { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
+        public DateTime? ReleaseDate { get; set; }
     }
 }

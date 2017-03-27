@@ -7,7 +7,7 @@
     <div class="center">
         <div class="row">
             <div class="leftpan">
-                <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src='/img/defuserpic.png'" src="data:image;base64"/>
+                <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
             </div>
             <div class="rightpan">
                 <div class="inputs">
@@ -19,7 +19,7 @@
                             @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения", type = "text", id = "item-birthday" } })
                         </li>
                         <li>
-                            @Html.TextAreaFor(m => m.Biography, new { placeholder = "Биография", id = "item-bio", style="heigth: 200px" })
+                            @Html.TextAreaFor(m => m.Biography, new { placeholder = "Биография", id = "item-bio", style = "heigth: 200px" })
                         </li>
                     </ul>
                 </div>
@@ -29,7 +29,6 @@
             <button type="submit" class="save-button">Сохранить</button>
         </div>
         <input type="file" id="file" name="PostedPhoto" style="display: none"/>
-
     </div>
 }
 <script src="/Scripts/jquery-3.2.0.min.js"></script>

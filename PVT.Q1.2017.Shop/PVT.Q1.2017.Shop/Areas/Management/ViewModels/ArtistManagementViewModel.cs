@@ -18,7 +18,7 @@
         ///     Gets or sets the birthday.
         /// </summary>
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}г.", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { get; set; }
 
         /// <summary>
@@ -40,11 +40,5 @@
         ///     Gets or sets the photo.
         /// </summary>
         public HttpPostedFileBase PostedPhoto { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the value.
-        /// </summary>
-        [Bindable(true)]
-        public virtual string Value { get; set; }
     }
 }

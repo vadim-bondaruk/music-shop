@@ -44,7 +44,10 @@
             @Html.ActionLink("New album", "New", "Albums", null, null)
         </li> 
         <li>
-            @Html.ActionLink("Details", "Details", "Artists", new {area="Content", id=1}, null)
+            @Html.ActionLink("Edit artist", "Edit", "Artists", new { area = "Management", id = 6 }, null)
+        </li>
+        <li>
+            @Html.ActionLink("Edit album", "Edit", "Albums", new {area="Management", id=3}, null)
         </li>
     </ul>
 </div>
