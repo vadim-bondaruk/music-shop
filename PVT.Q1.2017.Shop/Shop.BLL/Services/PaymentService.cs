@@ -184,7 +184,7 @@
                     // baseURL is the url on which paypal sendsback the data.
                     // So we have provided URL of this controller only
                     string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority +
-                                "/Paypal/PaymentWithPayPal?";
+                                "/Paypal/PaymentWithPayPalDemo?";
 
                     //guid we are generating for storing the paymentID received in session
                     //after calling the create function and it is used in the payment execution

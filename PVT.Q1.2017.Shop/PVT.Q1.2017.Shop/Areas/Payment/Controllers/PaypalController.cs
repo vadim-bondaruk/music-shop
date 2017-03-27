@@ -24,13 +24,11 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             return View();
         }
 
-        [HttpGet]
         public ActionResult Success()
         {
             return View();
         }
 
-        [HttpGet]
         public ActionResult Failure()
         {
             return View();
@@ -43,17 +41,23 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             return Content(viewName); // View("SuccessView");
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult PaymentWithPaypalDemo()
         {
-            var content = _paymentService.PaymentWithPaypalDemo(this.Request, this.Session);
+            var status = _paymentService.PaymentWithPaypalDemo(this.Request, this.Session);
 
-            if (content.StartsWith("http"))
+            if (status.StartsWith("http"))
             {
-                return Redirect(content);
+                return Redirect(status);
             }
-                
-            return Content(content);
+            if (status == "Success")
+            {
+                return RedirectToAction("Success", "Paypal", new { Area = "Payment"});
+            }
+            else
+            {
+                return RedirectToAction("Failure", "Paypal", new { Area = "Payment" });
+            }
         }
 
         [HttpPost]
@@ -71,11 +75,11 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             }
             if(status == "Success")
             {
-                return RedirectToAction("Success");
+                return RedirectToAction("Success", "Paypal", new { Area = "Payment" });
             }
             else
             {
-                return RedirectToAction("Failure");
+                return RedirectToAction("Failure", "Paypal", new { Area = "Payment" });
             }
         }
     }
