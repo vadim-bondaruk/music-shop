@@ -65,6 +65,7 @@
                 if (artist != null)
                 {
                     viewModel.ArtistName = artist.Name;
+                    viewModel.Artist = artist;
                 }
             }
 

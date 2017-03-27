@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201703241012324_Artists.Designer.cs">
       <DependentUpon>201703241012324_Artists.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703271323263_new_artist_field.cs" />
+    <Compile Include="Migrations\201703271323263_new_artist_field.Designer.cs">
+      <DependentUpon>201703271323263_new_artist_field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -136,6 +140,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703241012324_Artists.resx">
       <DependentUpon>201703241012324_Artists.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703271323263_new_artist_field.resx">
+      <DependentUpon>201703271323263_new_artist_field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

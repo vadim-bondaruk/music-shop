@@ -46,6 +46,7 @@
         /// <param name="album">
         ///     The album management view model.
         /// </param>
+        /// <param name="viewModel"></param>
         /// <returns>
         ///     A new <see cref="Album" /> DTO model.
         /// </returns>
@@ -128,8 +129,14 @@
                         cfg.CreateMap<TrackManagementViewModel, Track>()
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
                             .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                            .ForMember(dest => dest.TrackFile, opt => opt.ResolveUsing(src => src.TrackFile.ToBytes()))
-                            .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.Image.ToBytes()));
+                            .ForMember(
+                                dest => dest.TrackFile,
+                                opt =>
+                                    opt.MapFrom(src => src.PostedTrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
+                            .ForMember(
+                                dest => dest.Image,
+                                opt =>
+                                    opt.MapFrom(src => src.PostedImage != null ? src.PostedImage.ToBytes() : src.Image));
 
                         cfg.CreateMap<AlbumDetailsViewModel, Album>()
                             .ForMember(dest => dest.Cover, opt => opt.MapFrom(src => src.Cover));

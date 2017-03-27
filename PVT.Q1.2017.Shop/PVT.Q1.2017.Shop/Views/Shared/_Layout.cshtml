@@ -30,9 +30,6 @@
             @Html.ActionLink("Albums", "List", "Albums", new { area = "Content" }, null)
         </li>
 
-        <li>
-            @Html.ActionLink("Album details", "Details", "Albums", new { area = "Content" }, null)
-        </li>
 
         <li>
             @Html.ActionLink("New artist", "New", "Artists", new { area = "Management" }, null)
@@ -46,14 +43,20 @@
             @Html.ActionLink("Edit track", "Edit", "Tracks", new { area = "Management", id = 1 }, null)
         </li>
 
+
+        <li>
+            @Html.ActionLink("Edit artist", "Edit", "Artists", new { area = "Management", id = 1 }, null)
+        </li>
+
+        <li>
+            @Html.ActionLink("New artist", "New", "Artists", new { area = "Management" }, null)
+        </li>
+        <li>
+            @Html.ActionLink("Album details", "Details", "Albums", new { area = "Content", id=1}, null)
+        </li>
         <li>
             @Html.ActionLink("New album", "New", "Albums", null, null)
         </li>
-
-        <li>
-            @Html.ActionLink("Edit artist", "Edit", "Artists", new { area = "Management", id = 6 }, null)
-        </li>
-
         <li>
             @Html.ActionLink("Edit album", "Edit", "Albums", new { area = "Management", id = 3 }, null)
         </li>

@@ -1,6 +1,7 @@
 ﻿namespace Shop.Common.Validators
 {
     using FluentValidation;
+
     using Models;
 
     /// <summary>
@@ -13,7 +14,7 @@
         /// </summary>
         public ArtistValidator()
         {
-            this.RuleFor(a => a.Name).NotEmpty().Matches(@"^\S+(\s\S+)*$");
+            this.RuleFor(a => a.Name).NotEmpty().Matches(@"^\S+(\s\S+)*$"); 
         }
     }
 }

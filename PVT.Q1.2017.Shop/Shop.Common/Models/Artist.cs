@@ -2,8 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+
     using FluentValidation.Attributes;
+
     using Infrastructure.Models;
+
     using Validators;
 
     /// <summary>
@@ -41,5 +44,10 @@
         /// All albums of the current artist.
         /// </summary>
         public virtual ICollection<Album> Albums { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether is creation.
+        /// </summary>
+        public virtual bool IsCreation { get; set; }
     }
 }

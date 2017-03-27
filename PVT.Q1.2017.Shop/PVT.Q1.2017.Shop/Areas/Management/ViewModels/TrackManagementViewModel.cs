@@ -33,12 +33,22 @@
         /// <summary>
         ///     Gets or sets the image.
         /// </summary>
-        public HttpPostedFileBase Image { get; set; }
+        public byte[] Image { get; set; }
 
         /// <summary>
         ///     Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the posted image.
+        /// </summary>
+        public HttpPostedFileBase PostedImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the posted track file.
+        /// </summary>
+        public HttpPostedFileBase PostedTrackFile { get; set; }
 
         /// <summary>
         ///     Gets or sets the price.
@@ -48,13 +58,13 @@
         /// <summary>
         ///     Gets or sets the release date.
         /// </summary>
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the track file.
+        ///     Gets or sets the track file.
         /// </summary>
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
-        public HttpPostedFileBase TrackFile { get; set; }
+        public byte[] TrackFile { get; set; }
     }
 }

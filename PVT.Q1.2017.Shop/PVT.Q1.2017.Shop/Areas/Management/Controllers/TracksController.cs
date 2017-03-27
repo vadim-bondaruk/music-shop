@@ -8,6 +8,7 @@
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
 
+    using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
 
     /// <summary>
@@ -21,14 +22,20 @@
         private readonly ITrackService trackService;
 
         /// <summary>
+        /// </summary>
+        private readonly IArtistService artistService;
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="TracksController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        public TracksController(IRepositoryFactory repositoryFactory)
+        /// <param name="artistService"></param>
+        public TracksController(IRepositoryFactory repositoryFactory, IArtistService artistService)
         {
             this.RepositoryFactory = repositoryFactory;
+            this.artistService = artistService;
         }
 
         /// <summary>
@@ -40,10 +47,15 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        public TracksController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        /// <param name="artistService"></param>
+        public TracksController(
+            IRepositoryFactory repositoryFactory,
+            ITrackService trackService,
+            IArtistService artistService)
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;
+            this.artistService = artistService;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
@@ -96,14 +108,16 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="model">
-        ///     The model.
+        /// <param name="id">
+        /// The id.
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult New()
+        public virtual ActionResult New(int id)
         {
-            return this.View();
+            var artist = this.artistService.GetArtist(id);
+            //artist.IsCreation = true;
+            return this.View(new TrackManagementViewModel() { Artist = artist });
         }
 
         /// <summary>
@@ -115,17 +129,16 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult New(
-            [Bind(Include = "Artist, Name, Album, Genre, Duration, ReleaseDate")] TrackManagementViewModel viewModel)
+        public virtual ActionResult New(TrackManagementViewModel viewModel)
         {
-            var track = Mapper.Map<Track>(viewModel);
+            var track = ManagementMapper.GetTrackModel(viewModel);
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track);
                 repository.SaveChanges();
             }
 
-            return this.View("New");
+            return this.View();
         }
 
         /// <summary>
