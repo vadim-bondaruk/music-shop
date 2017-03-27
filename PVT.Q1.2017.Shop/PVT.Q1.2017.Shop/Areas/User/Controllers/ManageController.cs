@@ -146,5 +146,13 @@
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangeLogin()
+        {
+            return View();
+        }
     }
 }

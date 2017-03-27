@@ -63,7 +63,6 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />
     <Compile Include="Utils\PasswordEncryptor.cs" />
-    <Compile Include="Validators\UserDataValidator.cs" />
     <Compile Include="Services\FeedbackService.cs" />
     <Compile Include="Services\Infrastructure\IAlbumService.cs" />
     <Compile Include="Services\Infrastructure\ICartService.cs" />
@@ -81,7 +80,9 @@
     <Compile Include="Services\UserPaymentMethodService.cs" />
     <Compile Include="Services\UserDataService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>
