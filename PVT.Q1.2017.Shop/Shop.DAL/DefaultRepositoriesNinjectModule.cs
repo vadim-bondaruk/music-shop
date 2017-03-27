@@ -82,7 +82,6 @@
             Bind<IRepositoryFactory>().ToFactory();
 
             Bind<IUserRepository>().To<UserRepository>();
-            Bind<IRepository<User>>().To<UserRepository>();
         }
     }
 }

@@ -38,7 +38,6 @@
         [TestMethod]
         public void GetCurrenciesListTest()
         {
-            Assert.IsFalse(this._currencyService.GetCurrenciesList().Any());
             this.AddCurrenciesTest();
             Assert.IsTrue(this._currencyService.GetCurrenciesList().Any());
         }

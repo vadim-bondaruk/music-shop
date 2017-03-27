@@ -14,11 +14,12 @@
         /// </summary>
         public UserDataConfiguration()
         {
-            HasKey(t => t.Id);
-            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            HasKey(u => u.Id);
+            Property(u => u.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(u => u.Dicount).IsOptional();
             HasRequired(u => u.UserCurrency).WithMany(c => c.Users).HasForeignKey(u => u.CurrencyId).WillCascadeOnDelete(false);
-            HasRequired(u => u.User).WithOptional(u => u.UserData);
+
+            HasRequired(ud => ud.User).WithMany().HasForeignKey(ud => ud.UserId);
 
             ToTable("UsersData");
         }

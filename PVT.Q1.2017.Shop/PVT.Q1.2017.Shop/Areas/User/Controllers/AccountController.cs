@@ -101,21 +101,15 @@
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    this._authModule.LogIn(model.UserIdentity, model.Password);
-                }
-                catch (UserValidationException ex)
-                {
-                    ModelState.AddModelError(ex.UserProperty, ex.Message);
-                } 
-            }
-            else
+            try
             {
-                return View();
+                this._authModule.LogIn(model.UserIdentity, model.Password);
+                return this.RedirectToAction("Index", "Home", new { area = string.Empty });
             }
-
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            catch (UserValidationException ex)
+            {
+                ModelState.AddModelError(ex.UserProperty, ex.Message);
+            }
         }
 
         /// <summary>
@@ -153,7 +147,7 @@
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-            /// TODO: Add insert logic here
+            // TODO: Add insert logic here
             if (ModelState.IsValid)
             {
                 try
@@ -200,7 +194,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(FormCollection collection)
         {
-            return this.View();
+                return this.View();
         }
 
         /// <summary>
