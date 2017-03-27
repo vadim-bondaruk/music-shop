@@ -10,6 +10,8 @@
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Security;
     using Helpers;
+    using App_Start;
+    using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
@@ -105,13 +107,16 @@
                 try
                 {
                     this._authModule.LogIn(model.UserIdentity, model.Password);
-                return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+                    return this.RedirectToAction("Index", "Home", new { area = string.Empty });
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
-                } 
+                }
             }
+        }
+
+            return View();
         }
 
         /// <summary>
@@ -154,8 +159,8 @@
             {
                 try
                 {
-                   // AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, User>());
-                    var userDB = UserMapper.GetUserModel(user);// AutoMapper.Mapper.Map<User>(user);
+                   
+                    var userDB = UserMapper.GetUserModel(user);
                     result = this._userService.RegisterUser(userDB);
                 }
                 catch (UserValidationException ex)
@@ -191,6 +196,7 @@
         /// POST: User/Account/ForgotPassword
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
@@ -271,6 +277,7 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ShopAuthorize(UserRoles.User)]
         public ActionResult Success()
         {
             return this.View();

@@ -1,9 +1,4 @@
-﻿using Shop.BLL.Services;
-using Shop.BLL.Services.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Shop.BLL.Services.Infrastructure;
 using System.Web.Mvc;
 
 namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
