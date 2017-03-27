@@ -11,10 +11,13 @@
     <div class="outer">
         <div class="main-block">
             <div class="image-block">
-                <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src='/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Photo)"/>
+                <div class="image-block-list">
+                    <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Photo)" />
+                    @Html.ActionLink("Добавить альбом", "New", new { id = Model.Id, area = "Management", Controller = "Albums" }, new { id = "add-new-album" });
+                </div>
             </div>
             <ul class="edit-artist-items">
-                <li>
+                <li class="top-li">
                     @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" }, value = Model.Name })
                 </li>
                 <li>
@@ -28,8 +31,6 @@
         <button type="submit" class="save-button">Сохранить</button>
     </div>
     <input type="file" id="file" name="PostedPhoto" style="display: none" value=@Model.Photo/>
-
-    @Html.ActionLink("Добавить альбом", "New", new { id = Model.Id, area = "Management", Controller = "Albums" }, null);
 }
 
 <script src="/Scripts/jquery-3.2.0.min.js"></script>
@@ -39,7 +40,7 @@
 </body>
 
 @section ArtistEdit{
-<link href="~/Areas/Management/Styles/managment-common.css" rel="stylesheet" />
+    <link href="~/Areas/Management/Styles/managment-common.css" rel="stylesheet"/>
     <link href="/Areas/Management/Styles/artist-edit.css" rel="stylesheet" type="text/css"/>
     <link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
 }

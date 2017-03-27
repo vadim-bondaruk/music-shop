@@ -40,19 +40,26 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
 
 .edit-form { margin-top: 50px; }
 
-.main-block { margin-top: 3%; }
+.main-block {
+    display: block; 
+    margin-top: 3%;
+    text-align: center;
+}
 
 .image-block {
     display: inline-block;
-    vertical-align: top;
-    margin-left: -250px;
-    height: 100%;
 }
 
-#artist-img {
+.image-block-list {
+    display: table;
+}
+
+.image-block #artist-img {
+    display: table-caption;
     max-height: 450px;
     max-width: 300px;
 }
+
 
 #artist-img:hover { opacity: 0.6; }
 
@@ -69,7 +76,6 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
     vertical-align: top;
     display: inline-block;
     list-style: none;
-    margin-left: 50px;
     width: 60%;
     height: 100%;
     min-width: 600px;
@@ -77,6 +83,8 @@ input[type=text]:focus, input[type=date]:focus, input[type=file]:focus, input[ty
 }
 
 .edit-artist-items li { margin-top: 5px; }
+
+.edit-artist-items>.top-li{ margin-top: 0;}
 
 .bio {
     height: 30%;

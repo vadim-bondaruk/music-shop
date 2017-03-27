@@ -7,7 +7,7 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    
+
     @RenderSection("cssStyles", required: false)
 
 
@@ -29,25 +29,33 @@
         <li>
             @Html.ActionLink("Albums", "List", "Albums", new { area = "Content" }, null)
         </li>
+
         <li>
             @Html.ActionLink("Album details", "Details", "Albums", new { area = "Content" }, null)
         </li>
+
         <li>
-        @Html.ActionLink("New artist", "New", "Artists", new { area = "Management" }, null)
-        <li>
-            @Html.ActionLink("New genre", "New", "Genres", null)
+            @Html.ActionLink("New artist", "New", "Artists", new { area = "Management" }, null)
         </li>
+
         <li>
-            @Html.ActionLink("New track", "New", "Tracks", null, null)
+            @Html.ActionLink("New track", "New", "Tracks", new { area = "Management" }, null)
         </li>
+
+        <li>
+            @Html.ActionLink("Edit track", "Edit", "Tracks", new { area = "Management", id = 1 }, null)
+        </li>
+
         <li>
             @Html.ActionLink("New album", "New", "Albums", null, null)
-        </li> 
+        </li>
+
         <li>
             @Html.ActionLink("Edit artist", "Edit", "Artists", new { area = "Management", id = 6 }, null)
         </li>
+
         <li>
-            @Html.ActionLink("Edit album", "Edit", "Albums", new {area="Management", id=3}, null)
+            @Html.ActionLink("Edit album", "Edit", "Albums", new { area = "Management", id = 3 }, null)
         </li>
     </ul>
 </div>
@@ -73,7 +81,9 @@
                         <li>
                             @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", new { area = "User", controller = "Manage" }, htmlAttributes: new { title = "Manage" })
                         </li>
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a>
+                        </li>
                     </ul>
                 }
             }
