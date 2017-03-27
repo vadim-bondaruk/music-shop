@@ -18,6 +18,9 @@
     /// </summary>
     public class PaymentService : BaseService, IPaymentService
     {
+        /// <summary>
+        /// PayPal payment
+        /// </summary>
         private PayPal.Api.Payment payment;
 
         /// <summary>
@@ -35,7 +38,6 @@
         /// </summary>
         public string CreatePaymentWithCreditCard()
         {
-
             var rnd = new Random();
             //create and item for which you are taking payment
             //if you need to add more items in the list
@@ -331,6 +333,12 @@
             return "SuccessView";
         }
 
+        /// <summary>
+        /// Creates demo payment 
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="redirectUrl">URL for redirecting after cancel of return from PayPal payment page</param>
+        /// <returns></returns>
         private Payment CreatePaymentDemo(APIContext apiContext, string redirectUrl)
         {
 
@@ -393,6 +401,13 @@
             return this.payment.Create(apiContext);
         }
 
+        /// <summary>
+        /// Executes payment info by payerId and paymentId
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="payerId">Payer id</param>
+        /// <param name="paymentId">Payment id</param>
+        /// <returns></returns>
         private Payment ExecutePaymentDemo(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
@@ -400,6 +415,12 @@
             return this.payment.Execute(apiContext, paymentExecution);
         }
 
+        /// <summary>
+        /// Creates PayPal payment 
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="redirectUrl">URL for redirecting after cancel of return from PayPal payment page</param>
+        /// <returns></returns>
         private Payment CreatePayment(APIContext apiContext, string redirectUrl, CartViewModel cart)
         {
             // TODO: получить валюту корзины в человеческом виде
@@ -469,6 +490,14 @@
             return this.payment.Create(apiContext);
         }
 
+        /// <summary>
+        /// Executes payment info by payerId and paymentId
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="payerId">Payer id</param>
+        /// <param name="paymentId">Payment id</param>
+        /// /// <param name="cart">cart with tracks</param>
+        /// <returns></returns>
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId, CartViewModel cart)
         {
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
