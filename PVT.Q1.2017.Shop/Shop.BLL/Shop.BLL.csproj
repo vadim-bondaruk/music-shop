@@ -49,6 +49,9 @@
     <Compile Include="Helpers\ModelsMapper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Helpers\ServiceHelper.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Services\AlbumPriceService.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Exceptions\UserValidationException.cs" />
@@ -85,7 +88,10 @@
     <Compile Include="Services\UserPaymentMethodService.cs" />
     <Compile Include="Services\UserDataService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="bin\Debug\Shop.BLL.dll" />
+    <Content Include="bin\Debug\Shop.BLL.pdb" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>

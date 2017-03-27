@@ -8,60 +8,12 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 
-    @RenderSection("cssStyles", required: false)
-
-
-    @RenderSection("TrackList", false)
+    @RenderSection("cssStyles", false)
     @RenderSection("AddToCartButton", false)
-    @RenderSection("ArtistNew", false)
-    @RenderSection("ArtistEdit", false)
-    @RenderSection("ArtistDetails", false)
-    @RenderSection("AlbumNew", false)
-    @RenderSection("AlbumEdit", false)
-    @RenderSection("AlbumDetails", false)
-    @RenderSection("AlbumsList", false)
 
 </head>
 
 <body>
-<div class="topbar">
-    <ul class="nav-items">
-        <li>
-            @Html.ActionLink("Albums", "List", "Albums", new { area = "Content" }, null)
-        </li>
-
-
-        <li>
-            @Html.ActionLink("New artist", "New", "Artists", new { area = "Management" }, null)
-        </li>
-
-        <li>
-            @Html.ActionLink("New track", "New", "Tracks", new { area = "Management" }, null)
-        </li>
-
-        <li>
-            @Html.ActionLink("Edit track", "Edit", "Tracks", new { area = "Management", id = 1 }, null)
-        </li>
-
-
-        <li>
-            @Html.ActionLink("Edit artist", "Edit", "Artists", new { area = "Management", id = 1 }, null)
-        </li>
-
-        <li>
-            @Html.ActionLink("New artist", "New", "Artists", new { area = "Management" }, null)
-        </li>
-        <li>
-            @Html.ActionLink("Album details", "Details", "Albums", new { area = "Content", id=1}, null)
-        </li>
-        <li>
-            @Html.ActionLink("New album", "New", "Albums", null, null)
-        </li>
-        <li>
-            @Html.ActionLink("Edit album", "Edit", "Albums", new { area = "Management", id = 3 }, null)
-        </li>
-    </ul>
-</div>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">

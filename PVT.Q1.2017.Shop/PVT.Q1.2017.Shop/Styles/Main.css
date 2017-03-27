@@ -1,0 +1,29 @@
+﻿.navbar-brand {
+    margin-left: 34%;
+    font-size: 5em;
+}
+
+.regnewtrack {
+    width: 140px;
+    height: 40px;
+    border-radius: 25px;
+    position: absolute; 
+    margin-top: 240px;
+    font-weight: bold
+}
+
+.regnewtrack:hover {
+    background: black;
+}
+
+.copyright {
+    position: absolute;
+    bottom: 50px;
+    left: 48%;
+    color: white;
+}
+
+footer {
+    color: aliceblue;
+    margin-left: 85%;
+}
