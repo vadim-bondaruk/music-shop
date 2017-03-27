@@ -144,7 +144,10 @@
                 var approvalUrl = createdPayment.GetApprovalUrl();
 
                 //if the createdPayment.state is "approved" it means the payment was successful else not
-
+                if (createdPayment.state.ToLower() == "created")
+                {
+                    return "created";
+                }
                 if (createdPayment.state.ToLower() != "approved")
                 {
                     return "Failure";
