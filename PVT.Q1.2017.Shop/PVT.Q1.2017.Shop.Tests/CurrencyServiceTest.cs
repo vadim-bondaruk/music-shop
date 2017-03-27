@@ -38,7 +38,6 @@
         [TestMethod]
         public void GetCurrenciesListTest()
         {
-            Assert.IsFalse(this._currencyService.GetCurrenciesList().Any());
             this.AddCurrenciesTest();
             Assert.IsTrue(this._currencyService.GetCurrenciesList().Any());
         }
@@ -61,7 +60,7 @@
         public void GetCurrencyInfoTest()
         {
             this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.GetCurrency(1));
+            Assert.IsNotNull(this._currencyService.DefaultCurrency);
         }
     }
 }

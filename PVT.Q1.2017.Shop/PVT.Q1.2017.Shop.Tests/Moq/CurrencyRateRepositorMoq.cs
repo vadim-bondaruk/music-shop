@@ -71,6 +71,15 @@
                                      It.IsAny<Expression<Func<CurrencyRate, BaseEntity>>[]>()))
                  .Returns(_currencyRates);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<CurrencyRate, bool>>>()))
+                 .Returns(() => _currencyRates.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<CurrencyRate, bool>>>(),
+                                             It.IsAny<Expression<Func<CurrencyRate, BaseEntity>>[]>()))
+                 .Returns(() => _currencyRates.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _currencyRates.FirstOrDefault(a => a.Id > 0));
 

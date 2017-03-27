@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Models;
+    using Common.ViewModels;
 
     /// <summary>
     /// The currency service.
@@ -9,13 +10,9 @@
     public interface ICurrencyService
     {
         /// <summary>
-        /// Returns the currency with the specified <paramref name="id"/>
+        /// The default currency.
         /// </summary>
-        /// <param name="id">The currency id.</param>
-        /// <returns>
-        /// The currency with the specified <paramref name="id"/> or <b>null</b> if currency doesn't exist.
-        /// </returns>
-        Currency GetCurrency(int id);
+        CurrencyViewModel DefaultCurrency { get; }
 
         /// <summary>
         /// Returns the currency with the specified <paramref name="code"/>.
@@ -26,7 +23,7 @@
         /// <returns>
         /// The currency with the specified <paramref name="code"/> or <b>null</b> if currency doesn't exist.
         /// </returns>
-        Currency GetCurrencyByCode(int code);
+        CurrencyViewModel GetCurrencyByCode(int code);
 
         /// <summary>
         /// Returns the currency with the specified <paramref name="name"/>.
@@ -37,7 +34,7 @@
         /// <returns>
         /// The currency with the specified <paramref name="name"/> or <b>null</b> if currency doesn't exist.
         /// </returns>
-        Currency GetCurrencyByName(string name);
+        CurrencyViewModel GetCurrencyByName(string name);
 
         /// <summary>
         /// Returns all registered currencies.
@@ -45,7 +42,7 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        ICollection<Currency> GetCurrenciesList();
+        ICollection<CurrencyViewModel> GetCurrenciesList();
 
         /// <summary>
         /// Determines whether a currency with the specified <paramref name="name"/> exists.
@@ -75,12 +72,12 @@
         /// Determines whether the specified <paramref name="currency"/> already exists.
         /// </summary>
         /// <param name="currency">
-        /// The currency.
+        ///     The currency.
         /// </param>
         /// <returns>
         /// <b>true</b> if the specified <paramref name="currency"/> already exists;
         /// otherwise <b>false</b>.
         /// </returns>
-        bool CurrencyExists(Currency currency);
+        bool CurrencyExists(CurrencyViewModel currency);
     }
 }

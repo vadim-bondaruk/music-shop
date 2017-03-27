@@ -1,13 +1,11 @@
 ﻿namespace Shop.BLL.Utils
 {
     using System;
-    using System.Linq;
     using System.Web.Security;
     using Common.Models;
     using DAL.Infrastruture;
     using Exceptions;
-    using Shop.Infrastructure.Security;        
-    using Utils;
+    using Shop.Infrastructure.Security;
 
     /// <summary>
     /// Authentification module
@@ -17,15 +15,15 @@
         /// <summary>
         /// Database or repository with users data
         /// </summary>
-        private readonly IUserRepository _users;
+        private readonly IRepositoryFactory _factory;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="factory"></param>
-        public AuthModule(IUserRepository users)
+        public AuthModule(IRepositoryFactory users)
         {
-            this._users = users;
+            this._factory = users;
         }
 
         /// <summary>
@@ -39,44 +37,47 @@
             if (useridentity == null)
             {
                 throw new ArgumentException("useridentity");
-            }                
+            }
 
             if (password == null)
             {
                 throw new ArgumentException("password");
-            }                
-
-            User user;
-
-            if (useridentity.Contains("@"))
-            {
-                user = this._users.GetAll(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             }
-            else
-            {
-                user = this._users.GetAll(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-            }
-            
-            if (user != null)
-            {
-                if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new UserValidationException("Pasword not confirm", "Password");
-                }
 
-                if (redirect)
+            User user;            
+
+            using (var users = this._factory.GetUserRepository())
+            {
+                if (useridentity.Contains("@"))
                 {
-                    FormsAuthentication.RedirectFromLoginPage(useridentity, true);
+                    user = users.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
                 }
                 else
                 {
-                    FormsAuthentication.SetAuthCookie(useridentity, true);
-                }                      
+                    user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                }
+
+                if (user != null)
+                {
+                    if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new UserValidationException("Pasword not confirm", "Password");
+                    }
+
+                    if (redirect)
+                    {
+                        FormsAuthentication.RedirectFromLoginPage(useridentity, true);
+                    }
+                    else
+                    {
+                        FormsAuthentication.SetAuthCookie(useridentity, true);
+                    }
+                }
+                else
+                {
+                    throw new UserValidationException("User not found", "Useridentity");
+                }           
             }
-            else
-            {
-                throw new UserValidationException("User not found", "Useridentity");
-            }          
         }
         
         /// <summary>

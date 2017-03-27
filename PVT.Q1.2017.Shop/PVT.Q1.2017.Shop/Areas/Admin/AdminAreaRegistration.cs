@@ -12,7 +12,7 @@
         /// </summary>
         public override string AreaName
         {
-            get { return "Administration"; }
+            get { return "Admin"; }
         }
 
         /// <summary>

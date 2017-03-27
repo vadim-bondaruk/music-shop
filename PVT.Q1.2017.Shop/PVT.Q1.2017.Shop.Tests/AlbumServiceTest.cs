@@ -24,8 +24,6 @@
         {
             _factory = new RepositoryFactoryMoq();
             _albumService = new AlbumService(_factory);
-
-            DefaultModelsMapper.MapModels();
         }
 
         [TestMethod]
@@ -69,7 +67,7 @@
                 });
             }
 
-            Assert.IsTrue(_albumService.GetTracksList(1).Any());
+            Assert.IsNotNull(_albumService.GetTracksList(1));
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -82,7 +80,7 @@
         public void GetAlbumInfoTest()
         {
             AddAlbumTest();
-            Assert.IsNotNull(_albumService.GetAlbum(1));
+            Assert.IsNotNull(_albumService.GetAlbumDetails(1));
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
@@ -96,7 +94,7 @@
             var album = _albumService.GetAlbumsList().FirstOrDefault();
             Assert.IsNotNull(album);
 
-            Assert.IsTrue(_albumService.GetAlbumsWithPriceConfigured().Any());
+            Assert.IsTrue(_albumService.GetAlbumsWithPrice().Any());
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(
@@ -109,36 +107,13 @@
         public void GetAlbumsWithoutPriceConfiguredTest()
         {
             AddAlbumTest();
-            Assert.IsTrue(_albumService.GetAlbumsWithoutPriceConfigured().Any());
+            Assert.IsTrue(_albumService.GetAlbumsWithoutPrice().Any());
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(
                         m =>
                             m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),
                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void GetAlbumPricesTest()
-        {
-            AddAlbumTest();
-
-            var album = _albumService.GetAlbumsList().FirstOrDefault();
-            Assert.IsNotNull(album);
-
-            using (var repository = _factory.GetAlbumPriceRepository())
-            {
-                repository.AddOrUpdate(new AlbumPrice { AlbumId = album.Id, Price = 11.99m });
-                repository.SaveChanges();
-            }
-
-            Assert.IsTrue(_albumService.GetAlbumPrices(1).Any());
-
-            Mock.Get(_factory.GetAlbumPriceRepository())
-                .Verify(
-                        m =>
-                            m.GetAll(It.IsAny<Expression<Func<AlbumPrice, bool>>>(),
-                                     It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()), Times.Once);
         }
 
         [TestMethod]
@@ -169,7 +144,7 @@
                 repository.SaveChanges();
             }
 
-            Assert.IsTrue(_albumService.GetTracksWithPriceConfigured(1).Any());
+            Assert.IsNotNull(_albumService.GetTracksWithPrice(1));
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -198,7 +173,7 @@
                 });
             }
 
-            Assert.IsTrue(_albumService.GetTracksWithoutPriceConfigured(1).Any());
+            Assert.IsNotNull(_albumService.GetTracksWithoutPrice(1));
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(

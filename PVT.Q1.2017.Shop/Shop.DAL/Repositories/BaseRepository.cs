@@ -82,8 +82,7 @@
         /// </returns>
         public virtual TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(x => x.Id == id), includes);
-            return query.FirstOrDefault();
+            return FirstOrDefault(x => x.Id == id);
         }
 
         /// <summary>
@@ -104,11 +103,28 @@
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="includes">The additional include if needed.</param>
-        /// <returns>Entities which corespond to <paramref name="filter"/>.</returns>
+        /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
         public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this._currentDbSet.Where(filter);
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter), includes);
             return query.ToList();
+        }
+
+        /// <summary>
+        /// Tries to find an entity from the repository using the specified <paramref name="filter"/>.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
+        {
+            if (includes == null || includes.Length == 0)
+            {
+                return this._currentDbSet.FirstOrDefault(filter);
+            }
+
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter), includes);
+            return query.FirstOrDefault();
         }
 
         /// <summary>

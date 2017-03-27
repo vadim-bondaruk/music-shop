@@ -1,6 +1,7 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
-    using Common.Models;
+    using System.Collections.Generic;
+    using Common.ViewModels;
 
     /// <summary>
     /// The feedback service.
@@ -8,42 +9,55 @@
     public interface IFeedbackService
     {
         /// <summary>
-        /// Returns the feedback which have made the specified <paramref name="user"/> for the <paramref name="track"/>.
+        /// Adds a new feedback or updates existent feedback for the specified track.
         /// </summary>
-        /// <param name="track">
-        /// The track.
+        /// <param name="trackId">
+        /// The track id.
         /// </param>
-        /// <param name="user">
-        /// The user who have left opinion for the <paramref name="track"/>.
+        /// <param name="feedbackViewModel">
+        /// The user feedback.
+        /// </param>
+        void AddOrUpdateFeedback(int trackId, FeedbackViewModel feedbackViewModel);
+
+        /// <summary>
+        /// Returns the feedback which have made the specified user for the track.
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="userDataId">
+        /// The user who have left a comment and/or a vote for the track.
         /// </param>
         /// <returns>
-        /// The feedback for the <paramref name="track"/> which have made the specified <paramref name="user"/>
+        /// The feedback for the <paramref name="trackId"/> which have made the specified <paramref name="userDataId"/>
         /// or <b>null</b> in case if feedback doesn't exist.
         /// </returns>
-        Feedback GetTrackFeedback(Track track, UserData user);
+        FeedbackViewModel GetTrackFeedback(int trackId, int userDataId);
 
         /// <summary>
-        /// Determines whether the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>.
+        /// Determines whether the specified user have made a feedback for the track.
         /// </summary>
-        /// <param name="track">
-        /// The track.
+        /// <param name="trackId">
+        ///     The track id.
         /// </param>
-        /// <param name="user">
-        /// The user.
+        /// <param name="userDataId">
+        ///     The user data id.
         /// </param>
         /// <returns>
-        /// <b>true</b> if the specified <paramref name="user"/> have made a feedback for the <paramref name="track"/>;
+        /// <b>true</b> if the specified user have made a feedback for the track;
         /// otherwise <b>false</b>.
         /// </returns>
-        bool FeedbackExists(Track track, UserData user);
+        bool FeedbackExists(int trackId, int userDataId);
 
         /// <summary>
-        /// Returns the feedback with the specified <paramref name="id"/>
+        /// Returns all track feedbacks.
         /// </summary>
-        /// <param name="id">The feedback id.</param>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
         /// <returns>
-        /// The feedback with the specified <paramref name="id"/> or <b>null</b> if feedback doesn't exist.
+        /// All track feedbacks.
         /// </returns>
-        Feedback GetFeedback(int id);
+        ICollection<FeedbackViewModel> GetTrackFeedbacks(int trackId);
     }
 }

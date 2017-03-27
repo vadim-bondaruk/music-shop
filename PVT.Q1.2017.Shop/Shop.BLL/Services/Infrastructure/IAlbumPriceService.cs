@@ -1,33 +1,45 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
-    using Common.Models;
+    using System.Collections.Generic;
+    using Common.ViewModels;
 
     /// <summary>
+    /// The album price service.
     /// </summary>
     public interface IAlbumPriceService
     {
         /// <summary>
-        /// Returns the album price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/>.
+        /// Returns the album price in the specified currency and price level.
         /// </summary>
-        /// <param name="album"></param>
-        /// <param name="priceLevel">
-        ///     The price level.
+        /// <param name="albumId">
+        /// The album id.
         /// </param>
-        /// <param name="currency">
-        ///     The currency.
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevelId">
+        /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// The album price in the specified <paramref name="currency"/> for the specified  <paramref name="priceLevel"/> or <b>null</b>.
+        /// The album price in the specified currency and price level or <b>null</b>.
         /// </returns>
-        AlbumPrice GeAlbumPrice(Album album, PriceLevel priceLevel, Currency currency);
+        PriceViewModel GetAlbumPrice(int albumId, int? currencyCode = null, int? priceLevelId = null);
 
         /// <summary>
-        /// Returns the album price with the specified <paramref name="id"/>.
+        /// Returns all album prices for the specified price level.
         /// </summary>
-        /// <param name="id">The album price id.</param>
+        /// <param name="albumId">The album id.</param>
+        /// <param name="priceLevelId">The price level id.</param>
         /// <returns>
-        /// The album price with the specified <paramref name="id"/> or <b>null</b> if album price doesn't exist.
+        /// All album prices for the specified price level.
         /// </returns>
-        AlbumPrice GetAlbumPrice(int id);
+        ICollection<PriceViewModel> GetAlbumPrices(int albumId, int priceLevelId);
+
+        /// <summary>
+        /// Returns all album prices.
+        /// </summary>
+        /// <param name="albumId">The album id.</param>
+        /// <returns>All album prices.</returns>
+        ICollection<PriceViewModel> GetAlbumPrices(int albumId);
     }
 }
