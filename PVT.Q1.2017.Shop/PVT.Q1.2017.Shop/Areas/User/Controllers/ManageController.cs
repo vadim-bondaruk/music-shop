@@ -86,18 +86,11 @@
             bool result = false;            
             if (ModelState.IsValid)
             {
-                try
-                {
-                    int Id = _userService.GetIdOflogin(User.Identity.Name);
-                    AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserPersonalViewModel, User>());
-                    var userDB = AutoMapper.Mapper.Map<User>(user);
-                    result = _userService.UpdatePersonal(userDB, Id);                                                                            
-                }
-                catch (UserValidationException ex)
-                {
-                    ModelState.AddModelError(ex.UserProperty, ex.Message);
-                }
-
+                int Id = _userService.GetIdOflogin(User.Identity.Name);
+                AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserPersonalViewModel, User>());
+                var userDB = AutoMapper.Mapper.Map<User>(user);
+                result = _userService.UpdatePersonal(userDB, Id);   
+                                                                                             
                 if (result)
                 {
                     return this.RedirectToAction("UpdatePersonal");
@@ -105,6 +98,52 @@
             }
 
             return this.View(user);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword([Bind(Include = @"OldPassword, Password, ConfirmPassword")] ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = _userService.GetIdOflogin(User.Identity.Name);
+                try
+                {
+                    if (_userService.UpdatePassword(id, model.Password, model.OldPassword))
+                    {
+                        return this.RedirectToAction("ChangePasswordSuccess");
+                    }
+                }
+                catch (UserValidationException ex)
+                {
+                    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangePasswordSuccess()
+        {
+            return View();
         }
 
     }

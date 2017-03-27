@@ -21,12 +21,12 @@
         /// 
         /// </summary>
         private readonly IUserRepository _userRepossitory;
-        
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userRepository"></param>
-        public UserService(IUserRepository userRepository) 
+        public UserService(IUserRepository userRepository)
         {
             this._userRepossitory = userRepository;
         }
@@ -49,14 +49,14 @@
             // {
             //     throw new UserValidationException("User with the same login already exists", "Login");
             // }
-               
+
             // if (!UserDataValidator.IsEmailUnique(user.Email, this._userRepossitory))
             // {
             //     throw new UserValidationException("User with the same email already exists", "Email");
             // }
             user.Password = PasswordEncryptor.GetHashString(user.Password);
             user.UserRoles = this.GetDefaultUserRoles();
-           
+
             try
             {
                 using (var userRepository = this._userRepossitory)
@@ -74,7 +74,7 @@
             }
 
             return registered;
-        }            
+        }
 
         /// <summary>
         /// Getting default user role
@@ -90,9 +90,9 @@
         /// </summary>
         /// <param name="userIdentity">Login or password</param>
         /// <returns>Returns the Id </returns>
-        public int GetIdOflogin (string userIdentity)
+        public int GetIdOflogin(string userIdentity)
         {
-            User user;   
+            User user;
             if (userIdentity.Contains("@"))
             {
                 user = this._userRepossitory.GetAll(u => u.Email.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
@@ -101,6 +101,7 @@
             {
                 user = this._userRepossitory.GetAll(u => u.Login.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             }
+
             return user.Id;
         }
 
@@ -109,9 +110,9 @@
         /// Updates user model data by Id
         /// </summary>
         /// <param name="user"></param>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public bool UpdatePersonal (User user, int Id)
+        public bool UpdatePersonal(User user, int id)
         {
             var update = false;
 
@@ -120,7 +121,7 @@
                 throw new ArgumentException("user");
             }
 
-            var userId = _userRepossitory.GetById(Id);
+            var userId = _userRepossitory.GetById(id);
             userId.FirstName = user.FirstName;
             userId.LastName = user.LastName;
             userId.Sex = user.Sex;
@@ -139,13 +140,80 @@
                 update = true;
             }
             catch (Exception ex)
-            {
-                // write data to log
+            {                
                 throw;
             }
 
             return update;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity">Login or password</param>
+        /// <returns></returns>
+        public string GetEmailByUserIdentity(string userIdentity)
+        {
+
+            User user;
+            string userEmail = string.Empty;
+            if (userIdentity.Contains("@"))
+            {
+                user = this._userRepossitory.GetAll(u => u.Email.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                if (user == null)
+                {
+                    throw new UserValidationException("Такой почтовый адрес не зарегистрирован", "UserIdentity");
+                }
+                userEmail = userIdentity;
+            }
+            else
+            {
+                user = this._userRepossitory.GetAll(u => u.Login.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                if (user == null)
+                {
+                    throw new UserValidationException("Пользователь с таким ником не зарегистрирован", "UserIdentity");
+                }
+                userEmail = user.Email;
+            }
+            return userEmail;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <param name="oldPassword"></param>
+        /// <returns></returns>
+        public bool UpdatePassword(int id, string newPassword, string oldPassword)
+        {
+            var update = false;
+
+            var userId = _userRepossitory.GetById(id);            
+            if (userId.Password.Equals(PasswordEncryptor.GetHashString(oldPassword)))
+            {
+                userId.Password = PasswordEncryptor.GetHashString(newPassword);
+            }
+            else
+            {
+                throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
+            }
+            try
+            {
+                using (var userRepository = this._userRepossitory)
+                {
+                    userRepository.AddOrUpdate(userId);
+                    userRepository.SaveChanges();
+                }
+
+                update = true;
+            }
+            catch (Exception ex)
+            {                
+                throw;
+            }
+            return update;
+        }
     }
 }

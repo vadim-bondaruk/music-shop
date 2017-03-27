@@ -27,5 +27,22 @@
         /// <param name="user"></param>
         /// <returns></returns>
         bool UpdatePersonal(User user, int Id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
+        string GetEmailByUserIdentity(string userIdentity);
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <param name="oldPassword"></param>
+        /// <returns></returns>
+        bool UpdatePassword(int id, string newPassword, string oldPassword);
     }
 }
