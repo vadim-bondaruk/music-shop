@@ -1,7 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
     using System;
-    using System.Web.Mvc;
+    using System.Net.Mail;
+    using System.Web.Mvc;   
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -172,26 +173,93 @@
         /// <summary>
         /// GET: User/Account/ForgotPassword
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="returnUrl"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult ForgotPassword()
+        public ActionResult ForgotPassword(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return this.View();
         }
+
 
         /// <summary>
         /// POST: User/Account/ForgotPassword
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="collection"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword(FormCollection collection)
+        public ActionResult ForgotPassword([Bind(Include = "UserIdentity")] ForgotPasswordViewModel model)
         {
-                return this.View();
+            if (ModelState.IsValid)
+            {
+                try 
+                {
+                    string UsetEmail = _userService.GetEmailByUserIdentity(model.UserIdentity);
+
+                    //TODO 
+                    string newPassword = "!Ivan87";
+
+                    //int id = _userService.GetIdOflogin(User.Identity.Name);
+                    
+                    //try
+                    //{
+                    //    if (_userService.UpdatePassword(id, newPassword, model.OldPassword))
+                    //    {
+                    //        return this.RedirectToAction("ChangePasswordSuccess");
+                    //    }
+                    //}
+                    //catch (UserValidationException ex)
+                    //{
+                    //    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                    //    return View();
+                    //}
+
+                    MailAddress from = new MailAddress("flash87@tut.by", "Music Shop");
+                    // кому отправляем
+                    MailAddress to = new MailAddress(UsetEmail);
+                    // создаем объект сообщения
+                    MailMessage message = new MailMessage(from, to);
+                    // тема письма
+                    message.Subject = "Ваш пароль был изменен";
+                    // текст письма - включаем в него ссылку
+                    message.Body = string.Format("Новый пароль: " + newPassword);
+                    message.IsBodyHtml = true;
+                    // адрес smtp-сервера, с которого мы и будем отправлять письмо
+                    SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
+                    // логин и пароль
+                    smtp.Credentials = new System.Net.NetworkCredential("flash87@tut.by", "1258flash");
+                    smtp.EnableSsl = true;
+                    smtp.Send(message);
+                    return RedirectToAction("ForgotPasswordSuccess");
+                }
+                catch (UserValidationException ex)
+                {
+                    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                    return View();
+                }                
+                catch (Exception ex)
+                {
+                    throw;
+                }            
+            
+            }
+            else
+            {
+                return View();
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// GET: User/Account/ForgotPasswordSuccess
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ForgotPasswordSuccess()
+        {                       
+            return this.View();
         }
 
         /// <summary>
