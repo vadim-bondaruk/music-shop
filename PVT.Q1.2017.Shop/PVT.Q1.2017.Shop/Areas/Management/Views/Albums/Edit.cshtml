@@ -1,33 +1,34 @@
-﻿@model Shop.Common.Models.ViewModels.ArtistManageViewModel
+﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.AlbumManagementViewModel
 
 <body>
-<h2 class="edit-artist-title">Редактирование информации об исполнителе</h2>
-@using (Html.BeginForm("Update", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg", @class = "edit-form" }))
+<h2 class="edit-artist-title">Редактирование информации об альбоме</h2>
+@using (Html.BeginForm("Edit", "Albums", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg", @class = "edit-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
-    @Html.HiddenFor(m => m.Photo)
+    @Html.HiddenFor(m => m.Cover)
+
+    <input type="hidden" name="@Html.NameFor(m => m.Artist.Id)" value="@Model.Artist.Id" />
     <div class="outer">
         <div class="main-block">
             <div class="image-block">
-                <img id="artist-img" onclick="document.formreg.UploadedImage.click()" src="data:image;base64,@Convert.ToBase64String(Model.Photo)" />
+                <img id="artist-img" onclick="document.formreg.PostedCover.click()" src="data:image;base64,@Convert.ToBase64String(Model.Cover)"/>
             </div>
             <ul class="edit-artist-items">
                 <li>
-                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" }, value = Model.Name })
+                    @Html.EditorFor(m => m.ArtistName, new { htmlAttributes = new { placeholder = "Исполнитель" }, value = Model.ArtistName })
                 </li>
                 <li>
-                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения/основания", type = "text", value = Model.Birthday } })
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", type = "text", value = Model.Name } })
                 </li>
-                <li class="bio">
-                    @Html.TextAreaFor(e => e.Biography, 10, 155, new { placeholder = "Биография", value = Model.Biography, @class = "bio" })
+                <li>
+                    @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { placeholder = "Дата выпуска", type = "text", value = Model.ReleaseDate }})
                 </li>
             </ul>
         </div>
         <button type="submit" class="save-button">Сохранить</button>
     </div>
-    <input type="file" id="file" name="UploadedImage" style="display: none"/>
-    
+    <input type="file" id="file" name="PostedCover" style="display: none"/>
 }
 
 <script src="/Scripts/jquery-3.2.0.min.js"></script>
@@ -37,6 +38,7 @@
 </body>
 
 @section ArtistEdit{
+    <link href="~/Areas/Management/Styles/managment-common.css" rel="stylesheet"/>
     <link href="/Areas/Management/Styles/artist-edit.css" rel="stylesheet" type="text/css"/>
     <link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
-    }
+}
