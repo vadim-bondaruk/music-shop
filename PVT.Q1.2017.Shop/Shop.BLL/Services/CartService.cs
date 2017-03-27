@@ -29,7 +29,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
+                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
                 if (cart == null)
                 {
                     cart = new Cart { UserId = userId, Tracks = new List<Track>() };
@@ -78,7 +78,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
+                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
                 if (cart == null || trackId == 0)
                 {
                     return;
@@ -126,7 +126,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
+                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
                 if (cart == null)
                 {
                     cart = new Cart { UserId = userId, Albums = new List<Album>() };
@@ -175,7 +175,7 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetAll(c => c.UserId == userId).FirstOrDefault();
+                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
                 if (cart == null || albumId == 0)
                 {
                     return;
