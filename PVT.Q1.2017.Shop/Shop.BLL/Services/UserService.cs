@@ -7,9 +7,6 @@
     using Infrastructure;
     using Shop.Infrastructure.Enums;
     using Utils;
-    using Validators;
-    using PVT.Q1._2017.Shop.ViewModels;
-    using Helpers;
     using System.Linq;
 
     /// <summary>
