@@ -1,4 +1,5 @@
-﻿@model Shop.Common.Models.ViewModels.AlbumManageViewModel
+﻿@using Shop.Common.Models
+@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.AlbumManagementViewModel
 <head>
     <meta charset="utf-8">
     <title>jQuery UI</title>
@@ -27,35 +28,35 @@
 </head>
 <h2 class="title">Регистрация нового альбома</h2>
 <body>
+    
 @using (Html.BeginForm("New", "Albums", FormMethod.Post, new { name = "formreg", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    <input type="hidden" name="@Html.NameFor(m => m.Artist.Id)" value="@Model.Artist.Id"/>
+
     <div class="center">
         <div class="row">
             <div class="leftpan">
-                <img id="artist-img" onclick="document.formreg.UploadedImage.click()" onerror="this.src='/img/defuserpic.png'" src="data:image;base64" />
+                <img id="artist-img" onclick="document.formreg.PostedCover.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
             </div>
+           
             <div class="rightpan">
-                <ul>
+                <ul> 
                     <li id="first">
-                        @Html.EditorFor(m => m.ArtistName, new { htmlAttributes = new { placeholder = "Исполнитель"} })
+                        <input type="text" value=@Model.Artist.Name readonly="readonly"/>
                     </li>
                     <li>
-                        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название" } })
+                        @Html.EditorFor(m => Model.Name, new { htmlAttributes = new { placeholder = "Название" } })
                     </li>
                     <li>
-                        @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { id = "datep", placeholder = "Дата релиза", type = "text" } })
-                    </li>
-                    <li>
-                        <input id="file-path" type="text" placeholder="Обложка" onclick="document.formreg.UploadedImage.click()"/>
+                        @Html.EditorFor(m => Model.ReleaseDate, new { htmlAttributes = new { id = "datep", placeholder = "Дата релиза", type = "text" } })
                     </li>
                 </ul>
             </div>
         </div>
-
         <button type="submit" class="save-button">Сохранить</button>
     </div>
-    <input type="file" id="file" name="UploadedImage" style="display: none" />
+    <input type="file" id="file" name="PostedCover" style="display: none"/>
 }
 
 
