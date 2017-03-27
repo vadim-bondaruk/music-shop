@@ -35,7 +35,7 @@ namespace PVT.Q1._2017.Shop.Tests
 
             // Assert
             Assert.IsInstanceOfType(result.Model, typeof(List<CurrencyViewModel>));
-            Assert.IsTrue(((List<CurrencyViewModel>)result.Model).Count == 3);
+            Assert.IsTrue(((List<CurrencyViewModel>)result.Model).Count == 2);
         }
 
         [TestMethod]

@@ -42,13 +42,13 @@
             Feedback feedback;
             using (var repository = this.Factory.GetFeedbackRepository())
             {
-                feedback = repository.GetAll(f => f.TrackId == trackId && f.UserId == userDataId).FirstOrDefault();
+                feedback = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == userDataId);
             }
 
             Vote vote;
             using (var repository = this.Factory.GetVoteRepository())
             {
-                vote = repository.GetAll(v => v.TrackId == trackId && v.UserId == userDataId).FirstOrDefault();
+                vote = repository.FirstOrDefault(v => v.TrackId == trackId && v.UserId == userDataId);
             }
 
             FeedbackViewModel feedbackViewModel = null;
@@ -100,13 +100,13 @@
             bool feedbackCommentsExist;
             using (var repository = this.Factory.GetFeedbackRepository())
             {
-                feedbackCommentsExist = repository.GetAll(f => f.TrackId == trackId && f.UserId == userDataId).Any();
+                feedbackCommentsExist = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == userDataId) != null;
             }
 
             bool voteExists;
             using (var repository = this.Factory.GetVoteRepository())
             {
-                voteExists = repository.GetAll(v => v.TrackId == trackId && v.UserId == userDataId).Any();
+                voteExists = repository.FirstOrDefault(v => v.TrackId == trackId && v.UserId == userDataId) != null;
             }
 
             return feedbackCommentsExist || voteExists;
@@ -183,7 +183,7 @@
             {
                 using (var repository = this.Factory.GetFeedbackRepository())
                 {
-                    var feedback = repository.GetAll(f => f.TrackId == trackId && f.UserId == feedbackViewModel.UserDataId).FirstOrDefault();
+                    var feedback = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == feedbackViewModel.UserDataId);
 
                     if (feedback == null)
                     {
@@ -203,7 +203,7 @@
             {
                 using (var repository = this.Factory.GetVoteRepository())
                 {
-                    var vote = repository.GetAll(v => v.TrackId == trackId && v.UserId == feedbackViewModel.UserDataId).FirstOrDefault();
+                    var vote = repository.FirstOrDefault(v => v.TrackId == trackId && v.UserId == feedbackViewModel.UserDataId);
 
                     if (vote == null)
                     {

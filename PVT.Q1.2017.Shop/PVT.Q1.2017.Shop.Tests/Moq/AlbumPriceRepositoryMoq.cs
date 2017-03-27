@@ -32,6 +32,15 @@
                                      It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
                  .Returns(_albumPrices);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<AlbumPrice, bool>>>()))
+                 .Returns(() => _albumPrices.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<AlbumPrice, bool>>>(),
+                                             It.IsAny<Expression<Func<AlbumPrice, BaseEntity>>[]>()))
+                 .Returns(() => _albumPrices.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _albumPrices.FirstOrDefault(a => a.Id > 0));
 

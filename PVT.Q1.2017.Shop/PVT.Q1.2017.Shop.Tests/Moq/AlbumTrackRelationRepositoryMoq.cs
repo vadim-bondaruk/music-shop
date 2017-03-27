@@ -32,6 +32,15 @@
                                      It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
                  .Returns(_albumTrackRelations);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>()))
+                 .Returns(() => _albumTrackRelations.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>(),
+                                             It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()))
+                 .Returns(() => _albumTrackRelations.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _albumTrackRelations.FirstOrDefault(a => a.Id > 0));
 

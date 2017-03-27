@@ -49,10 +49,8 @@
         [HttpGet]
         public ActionResult IsLoginUnique(string login)
         {
-            var a = !(this._userRepository
-                .GetAll(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase))
-                .IsAny());
-            return this.Json(a, JsonRequestBehavior.AllowGet);
+            var isUnique = this._userRepository.FirstOrDefault(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)) == null;
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -64,10 +62,8 @@
         [HttpGet]
         public ActionResult IsEmailUnique(string email)
         {
-            var a = !(this._userRepository
-                .GetAll(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase))
-                .IsAny());
-            return this.Json(a, JsonRequestBehavior.AllowGet);
+            var isUnique = this._userRepository.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)) == null;
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -96,13 +92,13 @@
             try
             {
                 this._authModule.LogIn(model.UserIdentity, model.Password);
+                return this.RedirectToAction("Index", "Home", new { area = string.Empty });
             }
             catch (UserValidationException ex)
             {
                 ModelState.AddModelError(ex.UserProperty, ex.Message);
+                return View(model);
             }
-
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
         }
 
         /// <summary>
@@ -138,7 +134,7 @@
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-            /// TODO: Add insert logic here
+            // TODO: Add insert logic here
             if (ModelState.IsValid)
             {
                 try

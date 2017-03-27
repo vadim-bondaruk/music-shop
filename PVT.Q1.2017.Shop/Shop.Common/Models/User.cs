@@ -55,7 +55,7 @@
         public string Country { get; set; }
 
         /// <summary>
-        /// 
+        /// The phone number
         /// </summary>
         public string PhoneNumber { get; set; }
     }

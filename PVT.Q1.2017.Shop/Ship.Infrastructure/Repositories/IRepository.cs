@@ -35,8 +35,16 @@
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="includes">The additional include if needed.</param>
-        /// <returns>Entities which corespond to </returns>
+        /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
         ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
+
+        /// <summary>
+        /// Tries to find an entity from the repository using the specified <paramref name="filter"/>.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.

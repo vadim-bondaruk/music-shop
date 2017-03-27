@@ -9,51 +9,51 @@
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Models;
 
-    public class UserDataRepositoryMoq
+    public class UserRepositoryMoq
     {
-        private readonly Mock<IUserDataRepository> _mock;
-        private readonly List<UserData> _users = new List<UserData>();
+        private readonly Mock<IUserRepository> _mock;
+        private readonly List<User> _users = new List<User>();
 
-        public UserDataRepositoryMoq()
+        public UserRepositoryMoq()
         {
-            _mock = new Mock<IUserDataRepository>();
+            _mock = new Mock<IUserRepository>();
 
             _mock.Setup(m => m.GetAll()).Returns(_users);
 
-            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
+            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
                 .Returns(_users);
 
-            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<UserData, bool>>>()))
+            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<User, bool>>>()))
                 .Returns(_users);
 
             _mock.Setup(
                        m =>
-                           m.GetAll(It.IsAny<Expression<Func<UserData, bool>>>(),
-                                    It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
+                           m.GetAll(It.IsAny<Expression<Func<User, bool>>>(),
+                                    It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
                 .Returns(_users);
 
-            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<UserData, bool>>>()))
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
                  .Returns(() => _users.FirstOrDefault());
 
             _mock.Setup(
                         m =>
-                            m.FirstOrDefault(It.IsAny<Expression<Func<UserData, bool>>>(),
-                                             It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
+                            m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>(),
+                                             It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
                  .Returns(() => _users.FirstOrDefault());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
-                                      It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
+                                      It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<UserData>())).Callback(() => _users.Add(new UserData
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<User>())).Callback(() => _users.Add(new User
             {
                 Id = _users.Count + 1
             }));
 
-            _mock.Setup(m => m.Delete(It.IsNotNull<UserData>())).Callback(() =>
+            _mock.Setup(m => m.Delete(It.IsNotNull<User>())).Callback(() =>
             {
                 if (_users.Any())
                 {
@@ -62,7 +62,7 @@
             });
         }
 
-        public IUserDataRepository Repository
+        public IUserRepository Repository
         {
             get { return _mock.Object; }
         }
