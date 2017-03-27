@@ -176,6 +176,8 @@
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\Paypal\Success.cshtml" />
+    <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
