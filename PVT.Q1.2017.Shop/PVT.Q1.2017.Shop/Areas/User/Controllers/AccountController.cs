@@ -234,7 +234,7 @@
                     // адрес smtp-сервера, с которого мы и будем отправлять письмо
                     SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
                     // логин и пароль
-                    smtp.Credentials = new System.Net.NetworkCredential("flash87@tut.by", "1258flash");
+                    smtp.Credentials = new System.Net.NetworkCredential("flash87@tut.by", "pasword");
                     smtp.EnableSsl = true;
                     smtp.Send(message);
                     return RedirectToAction("ForgotPasswordSuccess");

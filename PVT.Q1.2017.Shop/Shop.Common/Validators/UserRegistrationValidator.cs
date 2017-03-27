@@ -4,7 +4,7 @@
     using FluentValidation;
     using Infrastructure.Repositories;
     using Models;
-    using PVT.Q1._2017.Shop.ViewModels;
+    using ViewModels;
 
     /// <summary>
     /// Defines rules for user registration
