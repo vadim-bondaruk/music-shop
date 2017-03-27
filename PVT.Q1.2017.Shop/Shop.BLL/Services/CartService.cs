@@ -32,26 +32,36 @@
                 var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
                 if (cart == null)
                 {
-                    cart = new Cart { UserId = userId, Tracks = new List<Track>() };
+                    cart = new Cart { UserId = userId, Tracks = new List<OrderTrack>() };
                     cartRepository.AddOrUpdate(cart);
                 }
 
-                Track track;
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
-                    track = trackRepository.GetById(trackId);
+                    var track = trackRepository.GetById(trackId);
                     if (track == null || trackId == 0)
                     {
+                        //TODO: New exceptions
                         throw new Exception($"Трек с ID={trackId} не найден.");
                     }
+
+                    if (cart.Tracks == null)
+                    {
+                        cart.Tracks = new List<OrderTrack>();
+                    }
+
+                    var orderTrack = new OrderTrack() {CartId = cart.Id, Track = track, TrackId = trackId};
+                    cart.Tracks.Add(orderTrack);
+
+                    if (track.Carts == null)
+                    {
+                        track.Carts = new List<OrderTrack>();
+                    }
+
+                    track.Carts.Add(orderTrack);
+                    trackRepository.AddOrUpdate(track);
                 }
 
-                if (cart.Tracks == null)
-                {
-                    cart.Tracks = new List<Track>();
-                }
-
-                cart.Tracks.Add(track);
                 cartRepository.AddOrUpdate(cart);
             }
         }
@@ -78,29 +88,28 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
+                var cart = cartRepository.GetById(userId);
                 if (cart == null || trackId == 0)
                 {
                     return;
                 }
 
-                Track track;
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
-                    track = trackRepository.GetById(trackId);
+                    var track = trackRepository.GetById(trackId);
+                    if (track != null && cart.Albums != null)
+                    {
+                        var orderTrack = track.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                        while (orderTrack != null)
+                        {
+                            track.Carts.Remove(orderTrack);
+                            cart.Tracks.Remove(orderTrack);
+                            orderTrack = track.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                        }
+                    }
                 }
 
-                if (track != null && cart.Tracks != null)
-                {
-                    cart.Tracks.Remove(track);
-                    cartRepository.AddOrUpdate(cart);
-                }
-
-                if ((cart.Tracks == null || cart.Tracks.Count == 0) 
-                    && (cart.Albums == null || cart.Albums.Count == 0))
-                {
-                    cartRepository.Delete(cart);
-                }
+                cartRepository.AddOrUpdate(cart);
             }
         }
 
@@ -129,26 +138,35 @@
                 var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
                 if (cart == null)
                 {
-                    cart = new Cart { UserId = userId, Albums = new List<Album>() };
+                    cart = new Cart { UserId = userId, Albums = new List<OrderAlbum>() };
                     cartRepository.AddOrUpdate(cart);
                 }
 
-                Album album;
                 using (var albumRepository = Factory.GetAlbumRepository())
                 {
-                    album = albumRepository.GetById(albumId);
+                    var album = albumRepository.GetById(albumId);
                     if (album == null || albumId == 0)
                     {
                         throw new Exception($"Альбом с ID={albumId} не найден.");
                     }
-                }
 
-                if (cart.Albums == null)
-                {
-                    cart.Albums = new List<Album>();
-                }
+                    if (cart.Albums == null)
+                    {
+                        cart.Albums = new List<OrderAlbum>();
+                    }
 
-                cart.Albums.Add(album);
+                    var orderAlbum = new OrderAlbum() { CartId = cart.Id, Album = album, AlbumId = albumId };
+                    cart.Albums.Add(orderAlbum);
+                    
+                    if (album.Carts == null)
+                    {
+                        album.Carts = new List<OrderAlbum>();
+                    }
+
+                    album.Carts.Add(orderAlbum);
+                    albumRepository.AddOrUpdate(album);
+                }
+                
                 cartRepository.AddOrUpdate(cart);
             }
         }
@@ -175,29 +193,28 @@
         {
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.FirstOrDefault(c => c.UserId == userId);
+                var cart = cartRepository.GetById(userId);
                 if (cart == null || albumId == 0)
                 {
                     return;
                 }
 
-                Album album;
                 using (var albumRepository = Factory.GetAlbumRepository())
                 {
-                    album = albumRepository.GetById(albumId);
+                    var album = albumRepository.GetById(albumId);
+                    if (album != null && cart.Albums != null)
+                    {
+                        var orderAlbum = album.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                        while (orderAlbum != null)
+                        {
+                            album.Carts.Remove(orderAlbum);
+                            cart.Albums.Remove(orderAlbum);
+                            orderAlbum = album.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                        }
+                    }
                 }
 
-                if (album != null && cart.Albums != null)
-                {
-                    cart.Albums.Remove(album);
-                    cartRepository.AddOrUpdate(cart);
-                }
-
-                if ((cart.Albums == null || cart.Albums.Count == 0)
-                    && (cart.Tracks == null || cart.Tracks.Count == 0))
-                {
-                    cartRepository.Delete(cart);
-                }
+                cartRepository.AddOrUpdate(cart);
             }
         }
 

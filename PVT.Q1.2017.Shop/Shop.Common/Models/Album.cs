@@ -46,5 +46,10 @@
         /// Album prices.
         /// </summary>
         public virtual ICollection<AlbumPrice> AlbumPrices { get; set; }
+
+        /// <summary>
+        /// Carts with this Album
+        /// </summary>
+        public virtual ICollection<OrderAlbum> Carts { get; set; }
     }
 }

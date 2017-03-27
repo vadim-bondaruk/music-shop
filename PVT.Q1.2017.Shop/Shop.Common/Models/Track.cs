@@ -76,5 +76,10 @@
         /// Gets or sets all user feedbacks the current track.
         /// </summary>
         public virtual ICollection<Feedback> Feedbacks { get; set; }
+
+        /// <summary>
+        /// Carts with this Track
+        /// </summary>
+        public virtual ICollection<OrderTrack> Carts { get; set; }
     }
 }
