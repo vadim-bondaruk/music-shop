@@ -32,6 +32,15 @@
                                      It.IsAny<Expression<Func<Cart, BaseEntity>>[]>()))
                  .Returns(_carts);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Cart, bool>>>()))
+                 .Returns(() => _carts.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<Cart, bool>>>(),
+                                             It.IsAny<Expression<Func<Cart, BaseEntity>>[]>()))
+                 .Returns(() => _carts.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _carts.FirstOrDefault(a => a.Id > 0));
 

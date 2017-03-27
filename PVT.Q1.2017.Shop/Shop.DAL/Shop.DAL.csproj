@@ -62,6 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
+    <Compile Include="Infrastruture\IBaseAddressRepository.cs" />
+    <Compile Include="Infrastruture\IPaymentCardRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Infrastruture\IUserRepository.cs" />
     <Compile Include="Migrations\201703141950344_Init.cs" />
@@ -84,9 +86,13 @@
     <Compile Include="Migrations\201703222040250_AddedUser.Designer.cs">
       <DependentUpon>201703222040250_AddedUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703232107437_UpdateCart.cs" />
-    <Compile Include="Migrations\201703232107437_UpdateCart.Designer.cs">
-      <DependentUpon>201703232107437_UpdateCart.cs</DependentUpon>
+    <Compile Include="Migrations\201703252105050_UserAndUserDataRelations.cs" />
+    <Compile Include="Migrations\201703252105050_UserAndUserDataRelations.Designer.cs">
+      <DependentUpon>201703252105050_UserAndUserDataRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703262002034_FixUserAndUserDataRelations.cs" />
+    <Compile Include="Migrations\201703262002034_FixUserAndUserDataRelations.Designer.cs">
+      <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -108,6 +114,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AlbumRepository.cs" />
     <Compile Include="Repositories\AlbumTrackRelationRepository.cs" />
+    <Compile Include="Repositories\BaseAddressRepository.cs" />
     <Compile Include="Repositories\CartRepository.cs" />
     <Compile Include="Repositories\CurrencyRateRepository.cs" />
     <Compile Include="Repositories\AlbumPriceRepository.cs" />
@@ -125,6 +132,7 @@
     <Compile Include="Infrastruture\IRepositoryFactory.cs" />
     <Compile Include="Infrastruture\IUserDataRepository.cs" />
     <Compile Include="Infrastruture\ICartRepository.cs" />
+    <Compile Include="Repositories\PaymentCardRepository.cs" />
     <Compile Include="Repositories\PriceLevelRepository.cs" />
     <Compile Include="Repositories\TrackPriceRepository.cs" />
     <Compile Include="Repositories\UserDataRepository.cs" />
@@ -169,8 +177,11 @@
     <EmbeddedResource Include="Migrations\201703222040250_AddedUser.resx">
       <DependentUpon>201703222040250_AddedUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703232107437_UpdateCart.resx">
-      <DependentUpon>201703232107437_UpdateCart.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703252105050_UserAndUserDataRelations.resx">
+      <DependentUpon>201703252105050_UserAndUserDataRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703262002034_FixUserAndUserDataRelations.resx">
+      <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

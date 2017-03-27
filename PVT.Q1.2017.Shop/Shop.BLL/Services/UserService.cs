@@ -3,7 +3,7 @@
     using System;
     using Common.Models;
     using DAL.Infrastruture;
-    using Exceptions;
+    using Helpers;
     using Infrastructure;
     using Shop.Infrastructure.Enums;
     using Utils;
@@ -15,20 +15,38 @@
     /// <summary>
     /// The user service
     /// </summary>
-    public class UserService : IUserService
+    public class UserService : BaseService, IUserService
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        private readonly IUserRepository _userRepossitory;
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        public UserService(IRepositoryFactory repositoryFactory) : base(repositoryFactory)
+        {
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userRepository"></param>
-        public UserService(IUserRepository userRepository)
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
+        public bool IsUserExist(string userIdentity)
         {
-            this._userRepossitory = userRepository;
+
+                User user = null;
+
+                if (!string.IsNullOrEmpty(userIdentity))
+                {
+                    using (var userRepository = this.Factory.GetUserRepository())
+                    {
+                        user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                    } 
+                }
+
+                return user != null;
         }
 
         /// <summary>
@@ -38,43 +56,46 @@
         /// <returns></returns>
         public bool RegisterUser(User user)
         {
-            var registered = false;
-
             if (user == null)
             {
-                throw new ArgumentException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
-            // if (!UserDataValidator.IsLoginUnique(user.Login, this._userRepossitory))
-            // {
-            //     throw new UserValidationException("User with the same login already exists", "Login");
-            // }
 
-            // if (!UserDataValidator.IsEmailUnique(user.Email, this._userRepossitory))
-            // {
-            //     throw new UserValidationException("User with the same email already exists", "Email");
-            // }
             user.Password = PasswordEncryptor.GetHashString(user.Password);
             user.UserRoles = this.GetDefaultUserRoles();
 
             try
             {
-                using (var userRepository = this._userRepossitory)
+                using (var userRepository = Factory.GetUserRepository())
                 {
                     userRepository.AddOrUpdate(user);
                     userRepository.SaveChanges();
                 }
 
-                registered = true;
+                using (var userDataRepository = Factory.GetUserDataRepository())
+                {
+                    var userData = new UserData
+                    {
+                        UserId = user.Id,
+                        CurrencyId = ServiceHelper.GetDefaultCurrency(Factory).Id,
+                        PriceLevelId = ServiceHelper.GetDefaultPriceLevel(Factory)
+                    };
+
+                    userDataRepository.AddOrUpdate(userData);
+                    userDataRepository.SaveChanges();
+                }
+
+                return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // write data to log
-                throw;
+                // TODO: write data to log
+                return false;
             }
 
             return registered;
-        }
+        }            
 
         /// <summary>
         /// Getting default user role

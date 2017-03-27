@@ -6,7 +6,7 @@
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -50,7 +50,7 @@
         [HttpGet]
         public ViewResult Index(int currentUserId = 0)
         {
-            var cart = this._cartRepository.GetAll(c => c.UserId == currentUserId).FirstOrDefault();
+            var cart = this._cartRepository.FirstOrDefault(c => c.UserId == currentUserId);
             this._viewModel.Tracks = (ICollection<Track>)cart?.Tracks;
             this._viewModel.Albums = (ICollection<Album>)cart?.Albums;
             this._viewModel.CurrentUserId = currentUserId;

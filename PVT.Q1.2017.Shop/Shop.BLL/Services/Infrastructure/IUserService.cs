@@ -15,6 +15,13 @@
         bool RegisterUser(User user);
 
         /// <summary>
+        /// Check if user already exist
+        /// </summary>
+        /// <param name="userIdentity"> user login or email </param>
+        /// <returns></returns>
+        bool IsUserExist(string userIdentity);
+
+       /// <summary>
         /// Returns the Id by his login or password
         /// </summary>
         /// <param name="userIdentity"></param>

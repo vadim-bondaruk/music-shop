@@ -5,15 +5,9 @@
     using System.Web.Routing;
     using Areas.Management.Extensions;
     using Areas.Management.ViewModels;
-    using Antlr.Runtime.Misc;
-    using App_Start;
     using AutoMapper;
     using FluentValidation.Mvc;
-    using Ninject;
-    using Ninject.Web.Common;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
-    using global::Shop.BLL;
 
     /// <summary>
     ///     Base class in an ASP.NET application
@@ -28,8 +22,7 @@
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            FluentValidationModelValidatorProvider
-                .Configure(provider => provider.ValidatorFactory = new CustomValidatorFactory(FluentValidationHelper.GetKernel()));
+            FluentValidationModelValidatorProvider.Configure();
         }
     }
 }

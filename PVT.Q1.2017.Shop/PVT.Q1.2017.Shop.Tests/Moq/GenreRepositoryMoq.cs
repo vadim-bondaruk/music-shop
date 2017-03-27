@@ -32,6 +32,15 @@
                                      It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
                  .Returns(_genres);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Genre, bool>>>()))
+                 .Returns(() => _genres.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<Genre, bool>>>(),
+                                             It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
+                 .Returns(() => _genres.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _genres.FirstOrDefault(a => a.Id > 0));
 

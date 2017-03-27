@@ -20,38 +20,46 @@
         }
 
         /// <summary>
-        /// Adds the specified <paramref name="user"/> into Db.
+        /// Adds the specified <paramref name="userData"/> into Db.
         /// </summary>
-        /// <param name="user">
+        /// <param name="userData">
         /// The user to add.
         /// </param>
-        protected override void Add(UserData user)
+        protected override void Add(UserData userData)
         {
             EntityState priveLevelEntryState;
             EntityState currencyEntryState;
+            EntityState userEntryState;
 
-            if (user.PriceLevelId == 0 && user.PriceLevel != null)
+            if (userData.PriceLevelId == 0 && userData.PriceLevel != null)
             {
-                user.PriceLevelId = user.PriceLevel.Id;
+                userData.PriceLevelId = userData.PriceLevel.Id;
             }
 
-            if (user.CurrencyId == 0 && user.UserCurrency != null)
+            if (userData.CurrencyId == 0 && userData.UserCurrency != null)
             {
-                user.CurrencyId = user.UserCurrency.Id;
+                userData.CurrencyId = userData.UserCurrency.Id;
+            }
+
+            if (userData.UserId == 0 && userData.User != null)
+            {
+                userData.UserId = userData.User.Id;
             }
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The UserBaseRepository should be SOLID, should only add information about user! Not about price level or user currency!
-            this.DetachNavigationProperty(user.PriceLevel, out priveLevelEntryState);
-            this.DetachNavigationProperty(user.UserCurrency, out currencyEntryState);
+            this.DetachNavigationProperty(userData.PriceLevel, out priveLevelEntryState);
+            this.DetachNavigationProperty(userData.UserCurrency, out currencyEntryState);
+            this.DetachNavigationProperty(userData.User, out userEntryState);
 
-            user.PriceLevel = null;
-            user.UserCurrency = null;
+            userData.PriceLevel = null;
+            userData.UserCurrency = null;
+            userData.User = null;
 
             // detach more navigation properties here...
 
             // adding the user into Db
-            base.Add(user);
+            base.Add(userData);
         }
     }
 }

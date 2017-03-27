@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
-    using Common.Models.ViewModels;
+    using Common.ViewModels;
     using DAL.Infrastruture;
     using Exceptions;
     using Helpers;

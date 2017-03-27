@@ -32,6 +32,15 @@
                                      It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
                  .Returns(_priceLevels);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<PriceLevel, bool>>>()))
+                 .Returns(() => _priceLevels.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<PriceLevel, bool>>>(),
+                                             It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
+                 .Returns(() => _priceLevels.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _priceLevels.FirstOrDefault(a => a.Id > 0));
 
