@@ -1,40 +1,48 @@
 ﻿namespace Shop.Common.Models.ViewModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
-    /// The album details view model.
+    ///     The album details view model.
     /// </summary>
     public class AlbumDetailsViewModel
     {
         /// <summary>
-        /// Album id.
+        ///     The Artist. Optional.
         /// </summary>
-        public int Id { get; set; }
+        public Artist Artist { get; set; }
 
         /// <summary>
-        /// Album name.
+        /// Gets or sets the artist name.
         /// </summary>
-        public string Name { get; set; }
+        public string ArtistName { get; set; }
 
         /// <summary>
-        /// Album cover.
+        ///     Album cover.
         /// </summary>
         public byte[] Cover { get; set; }
 
         /// <summary>
-        /// Album release date.
+        ///     Album id.
         /// </summary>
-        public DateTime? ReleaseDate { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
-        /// The Artist. Optional.
+        ///     Album name.
         /// </summary>
-        public ArtistViewModel Artist { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Album price.
+        ///     Album price.
         /// </summary>
         public PriceViewModel Price { get; set; }
+
+        /// <summary>
+        ///     Album release date.
+        /// </summary>
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}г.", ApplyFormatInEditMode = true)]
+        public DateTime? ReleaseDate { get; set; }
     }
 }

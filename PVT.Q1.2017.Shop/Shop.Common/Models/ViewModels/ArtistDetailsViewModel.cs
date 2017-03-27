@@ -1,6 +1,7 @@
 ﻿namespace Shop.Common.Models.ViewModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Web;
 
     /// <summary>
@@ -16,6 +17,8 @@
         /// <summary>
         ///     Artist birthday.
         /// </summary>
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}г.", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { get; set; }
 
         /// <summary>
