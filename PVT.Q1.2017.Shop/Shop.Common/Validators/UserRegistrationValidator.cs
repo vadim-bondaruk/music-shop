@@ -25,9 +25,13 @@
 
             RuleFor(u => u.FirstName).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
+            RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я]*$")
+                .WithMessage("Используйте только буквы");
 
             RuleFor(u => u.LastName).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
+            RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я]*$")
+                .WithMessage("Используйте только буквы");
 
             RuleFor(u => u.Login).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
@@ -55,8 +59,8 @@
             RuleFor(u => u.Email)
                 .SetValidator(new UniqueUserIdentityValidator(this._userRepository, "Пользователь с таким адресом электронной почты уже существует"));
 
-            RuleFor(u => u.BirthDate).InclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today)
-                .WithMessage("Дата рождения выбрана неверно");
+            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today.AddYears(-5))
+                .WithMessage("Дата рождения выбрана некорректно");
 
             RuleFor(u => u.PhoneNumber)
                 .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")
