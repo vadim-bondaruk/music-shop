@@ -27,13 +27,14 @@
 
 .rightpan ul {
     vertical-align: top;
-    display: block;
 }
 .rightpan ul li {
     margin-top: 25px;
 }
 
 .rightpan ul li input {
+    background: rgba(0, 0, 0, 0.16);
+    width: 100%;
 }
 
 .rightpan ul #first {
