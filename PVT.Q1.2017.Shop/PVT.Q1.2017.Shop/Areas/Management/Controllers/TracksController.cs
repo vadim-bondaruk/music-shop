@@ -1,13 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
@@ -62,7 +60,8 @@
         /// <param name="model"></param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(TrackManagementViewModel model)
         {
             var trackModel = Mapper.Map<TrackManagementViewModel, Track>(model);
@@ -77,14 +76,21 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="trackId"></param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int trackId)
+        public virtual ActionResult Edit()
         {
-            //var track = this.trackService.GetTrackInfo(trackId);
-            //var trackViewModel = Mapper.Map<Track, TrackManagementViewModel>(track);
+            return this.View();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(int id)
+        {
             return this.View();
         }
 
@@ -97,17 +103,18 @@
         /// </returns>
         public virtual ActionResult New()
         {
-            return this.View("New");
+            return this.View();
         }
 
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
-        /// The view model.
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual ActionResult New(
             [Bind(Include = "Artist, Name, Album, Genre, Duration, ReleaseDate")] TrackManagementViewModel viewModel)
         {
