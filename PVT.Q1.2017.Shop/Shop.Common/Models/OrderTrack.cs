@@ -18,6 +18,11 @@
         public int TrackId { get; set; }
 
         /// <summary>
+        /// Cart
+        /// </summary>
+        public virtual Cart Cart { get; set; }
+
+        /// <summary>
         /// Track
         /// </summary>
         public virtual Track Track { get; set; }

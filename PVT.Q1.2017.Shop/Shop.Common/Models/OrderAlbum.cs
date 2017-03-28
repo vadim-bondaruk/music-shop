@@ -18,6 +18,11 @@
         public int AlbumId { get; set; }
 
         /// <summary>
+        /// Cart
+        /// </summary>
+        public virtual Cart Cart { get; set; }
+
+        /// <summary>
         /// Album
         /// </summary>
         public virtual Album Album { get; set; }
