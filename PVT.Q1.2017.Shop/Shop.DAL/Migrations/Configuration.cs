@@ -15,7 +15,7 @@ namespace Shop.DAL.Migrations
         {
             AddDefaultCurrencies(context);
             AddDefaultCurrencyRates(context);
-            AddDefaultGenre(context);
+            AddDefaultGenres(context);
             AddDefaultPriceLevels(context);
         }
 
@@ -62,11 +62,25 @@ namespace Shop.DAL.Migrations
             context.SaveChanges();
         }
 
-        private void AddDefaultGenre(Context.ShopContext context)
+        private void AddDefaultGenres(Context.ShopContext context)
         {
             if (!context.Set<Genre>().Any())
             {
-                context.Set<Genre>().AddOrUpdate(new[] { new Genre { Name = "Unknown Genre" } });
+                // source: https://en.wikipedia.org/wiki/List_of_popular_music_genres
+                context.Set<Genre>().AddOrUpdate(new[]
+                {
+                    new Genre { Name = "Unknown" },
+                    new Genre { Name = "Blues" },
+                    new Genre { Name = "Country" },
+                    new Genre { Name = "Electronic" },
+                    new Genre { Name = "Folk" },
+                    new Genre { Name = "Hip hop" },
+                    new Genre { Name = "Jazz" },
+                    new Genre { Name = "Latin" },
+                    new Genre { Name = "Pop" },
+                    new Genre { Name = "R&B and soul" },
+                    new Genre { Name = "Rock" }
+                });
                 context.SaveChanges();
             }
         }
