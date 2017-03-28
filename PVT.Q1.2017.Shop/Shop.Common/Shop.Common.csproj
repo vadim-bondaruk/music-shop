@@ -82,6 +82,7 @@
     <Compile Include="ViewModels\TrackDetailsViewModel.cs" />
     <Compile Include="Models\UserData.cs" />
     <Compile Include="Models\UserPaymentMethod.cs" />
+    <Compile Include="ViewModels\TrackViewModel.cs" />
     <Compile Include="ViewModels\UserPersonalViewModel.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

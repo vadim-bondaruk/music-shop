@@ -2,7 +2,7 @@
 {
     using System;
     using System.Net.Mail;
-    using System.Web.Mvc;   
+    using System.Web.Mvc;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -12,6 +12,7 @@
     using Helpers;
     using App_Start;
     using global::Shop.Infrastructure.Enums;
+    using ViewModels;
 
     /// <summary>
     /// 
@@ -88,7 +89,7 @@
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -114,8 +115,6 @@
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
             }
-        }
-
             return View();
         }
 
@@ -159,7 +158,7 @@
             {
                 try
                 {
-                   
+
                     var userDB = UserMapper.GetUserModel(user);
                     result = this._userService.RegisterUser(userDB);
                 }
@@ -167,7 +166,7 @@
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
-               
+
                 if (result)
                 {
                     return this.RedirectToAction("Success");
@@ -205,7 +204,7 @@
         {
             if (ModelState.IsValid)
             {
-                try 
+                try
                 {
                     string UsetEmail = _userService.GetEmailByUserIdentity(model.UserIdentity);
 
@@ -213,7 +212,7 @@
                     string newPassword = "!Ivan87";
 
                     //int id = _userService.GetIdOflogin(User.Identity.Name);
-                    
+
                     //try
                     //{
                     //    if (_userService.UpdatePassword(id, newPassword, model.OldPassword))
@@ -246,21 +245,21 @@
                     return RedirectToAction("ForgotPasswordSuccess");
                 }
                 catch (UserValidationException ex)
-        {
+                {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                     return View();
-                }                
+                }
                 catch (Exception ex)
                 {
                     throw;
-                }            
-            
+                }
+
             }
             else
             {
-                return View();
+                return this.View();
             }
-            return View();
+            return this.View();
         }
 
         /// <summary>
@@ -268,8 +267,8 @@
         /// </summary>
         /// <returns></returns>
         public ActionResult ForgotPasswordSuccess()
-        {                       
-                return this.View();
+        {
+            return this.View();
         }
 
         /// <summary>
