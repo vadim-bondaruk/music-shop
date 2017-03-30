@@ -30,16 +30,16 @@
         /// <summary>
         /// 
         /// </summary>
-        private IUserRepository _userRepository;
+        private IRepositoryFactory Factory;
 
         /// <summary>
         /// 
         /// </summary>
-        public ManageController(IUserService userService, IAuthModule authModule, IUserRepository _userRepository)
+        public ManageController(IUserService userService, IAuthModule authModule, IRepositoryFactory factory)
         {
             this._userService = userService;
             this._authModule = authModule;
-            this._userRepository = _userRepository;
+            this.Factory = factory;
         }
 
         /// <summary>
@@ -68,9 +68,13 @@
                 return this.View();
             }            
             int Id = _userService.GetIdOflogin(User.Identity.Name);
-            var userDB = _userRepository.GetById(Id);
+            User userDB = null;
+            using (var userRepository = this.Factory.GetUserRepository())
+            {
+                userDB = userRepository.GetById(Id);                                     
+            }
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<User, UserPersonalViewModel>());
-            var user = AutoMapper.Mapper.Map<UserPersonalViewModel>(userDB);            
+            var user = AutoMapper.Mapper.Map<UserPersonalViewModel>(userDB);
             return this.View(user);
         }
 

@@ -127,8 +127,8 @@
         /// <summary>
         /// Updates user model data by Id
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="id"></param>
+        /// <param name="user">model user</param>
+        /// <param name="id">Id from model user</param>
         /// <returns></returns>
         public bool UpdatePersonal(User user, int id)
         {
@@ -159,34 +159,67 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns the email by his login or password
         /// </summary>
         /// <param name="userIdentity">Login or password</param>
         /// <returns></returns>
         public string GetEmailByUserIdentity(string userIdentity)
         {
-
-            User user = null;
-            string userEmail = string.Empty;
-            int id = GetIdOflogin(userIdentity);
-            using (var userRepository = this.Factory.GetUserRepository())
+            if (string.IsNullOrEmpty(userIdentity))
             {
-                user = userRepository.GetById(id);
-                if (user != null)
+                User user = null;
+                string userEmail = string.Empty;
+                int id = GetIdOflogin(userIdentity);
+
+                using (var userRepository = this.Factory.GetUserRepository())
                 {
-                    userEmail = user.Email;
-                }               
-            }           
-            return userEmail;
+                    user = userRepository.GetById(id);
+                    if (user != null)
+                    {
+                        userEmail = user.Email;
+                    }
+                }
+                return userEmail;
+            }
+            else
+            {
+                throw new UserValidationException("Вы ввели неправеьный ник или email", "");
+            }
         }
 
+        /// <summary>
+        /// Update user password data by Id
+        /// </summary>
+        /// <param name="id">Id from model user</param>
+        /// <param name="newPassword">new password</param>
+        /// <returns></returns>
+        public bool UpdatePassword(int id, string newPassword)
+        {
+            var update = false;
+            try
+            {
+                using (var userRepository = Factory.GetUserRepository())
+                {
+                    var userDB = userRepository.GetById(id);
+                    userDB.Password = PasswordEncryptor.GetHashString(newPassword);                  
+                    userRepository.AddOrUpdate(userDB);
+                    userRepository.SaveChanges();
+                }
+                update = true;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return update;
+        }
 
         /// <summary>
-        /// 
+        /// Update user password data by Id
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="newPassword"></param>
-        /// <param name="oldPassword"></param>
+        /// <param name="id">Id from model user</param>
+        /// <param name="newPassword">new password</param>
+        /// <param name="oldPassword">old password</param>
         /// <returns></returns>
         public bool UpdatePassword(int id, string newPassword, string oldPassword)
         {

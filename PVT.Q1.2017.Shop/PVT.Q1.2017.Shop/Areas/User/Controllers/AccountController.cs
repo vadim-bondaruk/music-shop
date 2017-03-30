@@ -207,43 +207,34 @@
                 try
                 {
                     string UsetEmail = _userService.GetEmailByUserIdentity(model.UserIdentity);
-
+                    int id = _userService.GetIdOflogin(UsetEmail);
                     //TODO 
                     string newPassword = "!Ivan87";
-
-                    //int id = _userService.GetIdOflogin(User.Identity.Name);
-
-                    //try
-                    //{
-                    //    if (_userService.UpdatePassword(id, newPassword, model.OldPassword))
-                    //    {
-                    //        return this.RedirectToAction("ChangePasswordSuccess");
-                    //    }
-                    //}
-                    //catch (UserValidationException ex)
-                    //{
-                    //    ModelState.AddModelError(ex.UserProperty, ex.Message);
-                    //    return View();
-                    //}
-
-                    MailAddress from = new MailAddress("q1music-shop@yandex.ru", "Music Shop");
-
-                       // кому отправляем
-                       MailAddress to = new MailAddress(UsetEmail);
-                    // создаем объект сообщения
-                    MailMessage message = new MailMessage(from, to);
-                    // тема письма
-                    message.Subject = "Ваш пароль был изменен";
-                    // текст письма - включаем в него ссылку
-                    message.Body = string.Format("Новый пароль: " + newPassword);
-                    message.IsBodyHtml = true;
-                    // адрес smtp-сервера, с которого мы и будем отправлять письмо
-                    SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
-                    // логин и пароль
-                    smtp.Credentials = new System.Net.NetworkCredential("q1music-shop@yandex.ru", "f,kznjuhfa");
-                    smtp.EnableSsl = true;
-                    smtp.Send(message);
-                    return RedirectToAction("ForgotPasswordSuccess");
+                    if (_userService.UpdatePassword(id, newPassword))
+                    {
+                        
+                        MailAddress from = new MailAddress("q1music-shop@yandex.ru", "Music Shop");
+                        // кому отправляем
+                        MailAddress to = new MailAddress(UsetEmail);
+                        // создаем объект сообщения
+                        MailMessage message = new MailMessage(from, to);
+                        // тема письма
+                        message.Subject = "Ваш пароль был изменен";
+                        // текст письма - включаем в него ссылку
+                        message.Body = string.Format("Новый пароль: " + newPassword);
+                        message.IsBodyHtml = true;
+                        // адрес smtp-сервера, с которого мы и будем отправлять письмо
+                        SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
+                        // логин и пароль
+                        smtp.Credentials = new System.Net.NetworkCredential("q1music-shop@yandex.ru", "f,kznjuhfa");
+                        smtp.EnableSsl = true;
+                        smtp.Send(message);
+                        return RedirectToAction("ForgotPasswordSuccess");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Ошибка");
+                    }                       
                 }
                 catch (UserValidationException ex)
                 {
