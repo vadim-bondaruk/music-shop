@@ -226,9 +226,10 @@
                     //    return View();
                     //}
 
-                    MailAddress from = new MailAddress("flash87@tut.by", "Music Shop");
-                    // кому отправляем
-                    MailAddress to = new MailAddress(UsetEmail);
+                    MailAddress from = new MailAddress("q1music-shop@yandex.ru", "Music Shop");
+
+                       // кому отправляем
+                       MailAddress to = new MailAddress(UsetEmail);
                     // создаем объект сообщения
                     MailMessage message = new MailMessage(from, to);
                     // тема письма
@@ -239,7 +240,7 @@
                     // адрес smtp-сервера, с которого мы и будем отправлять письмо
                     SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
                     // логин и пароль
-                    smtp.Credentials = new System.Net.NetworkCredential("flash87@tut.by", "1258flash");
+                    smtp.Credentials = new System.Net.NetworkCredential("q1music-shop@yandex.ru", "f,kznjuhfa");
                     smtp.EnableSsl = true;
                     smtp.Send(message);
                     return RedirectToAction("ForgotPasswordSuccess");
