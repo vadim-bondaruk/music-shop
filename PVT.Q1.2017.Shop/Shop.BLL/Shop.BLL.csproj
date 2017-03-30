@@ -69,7 +69,9 @@
     <Compile Include="Services\CartViewModelService.cs" />
     <Compile Include="Services\CurrencyRateService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\Infrastructure\ISettingService.cs" />
     <Compile Include="Services\Infrastructure\IUserService.cs" />
+    <Compile Include="Services\SettingService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />
     <Compile Include="Utils\PasswordEncryptor.cs" />
