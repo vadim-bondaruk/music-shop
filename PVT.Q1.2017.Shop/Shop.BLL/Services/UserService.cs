@@ -8,6 +8,7 @@
     using Shop.Infrastructure.Enums;
     using Utils;
     using System.Linq;
+    using Exceptions;
 
     /// <summary>
     /// The user service
@@ -90,8 +91,6 @@
                 // TODO: write data to log
                 return false;
             }
-
-            return registered;
         }            
 
         /// <summary>
@@ -110,14 +109,15 @@
         /// <returns>Returns the Id </returns>
         public int GetIdOflogin(string userIdentity)
         {
-            User user;
-            if (userIdentity.Contains("@"))
+            User user = null;
+
+            if (!string.IsNullOrEmpty(userIdentity))
             {
-                user = this._userRepossitory.GetAll(u => u.Email.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-            }
-            else
-            {
-                user = this._userRepossitory.GetAll(u => u.Login.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                using (var userRepository = this.Factory.GetUserRepository())
+                {
+                    user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                                                      : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                }
             }
 
             return user.Id;
@@ -138,29 +138,22 @@
             {
                 throw new ArgumentException("user");
             }
-
-            var userId = _userRepossitory.GetById(id);
-            userId.FirstName = user.FirstName;
-            userId.LastName = user.LastName;
-            userId.Sex = user.Sex;
-            userId.BirthDate = user.BirthDate;
-            userId.Country = user.Country;
-            userId.PhoneNumber = user.PhoneNumber;
-
-            try
+            using (var userRepository = this.Factory.GetUserRepository())
             {
-                using (var userRepository = this._userRepossitory)
-                {
-                    userRepository.AddOrUpdate(userId);
-                    userRepository.SaveChanges();
-                }
+                var userUpdate = userRepository.GetById(id);
+                userUpdate.FirstName = user.FirstName;
+                userUpdate.LastName = user.LastName;
+                userUpdate.Sex = user.Sex;
+                userUpdate.BirthDate = user.BirthDate;
+                userUpdate.Country = user.Country;
+                userUpdate.PhoneNumber = user.PhoneNumber;
 
+                userRepository.AddOrUpdate(userUpdate);
+                userRepository.SaveChanges();
+
+            }
                 update = true;
-            }
-            catch (Exception ex)
-            {                
-                throw;
-            }
+
 
             return update;
         }
@@ -173,26 +166,17 @@
         public string GetEmailByUserIdentity(string userIdentity)
         {
 
-            User user;
+            User user = null;
             string userEmail = string.Empty;
-            if (userIdentity.Contains("@"))
+            int id = GetIdOflogin(userIdentity);
+            using (var userRepository = this.Factory.GetUserRepository())
             {
-                user = this._userRepossitory.GetAll(u => u.Email.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                if (user == null)
+                user = userRepository.GetById(id);
+                if (user != null)
                 {
-                    throw new UserValidationException("Такой почтовый адрес не зарегистрирован", "UserIdentity");
-                }
-                userEmail = userIdentity;
-            }
-            else
-            {
-                user = this._userRepossitory.GetAll(u => u.Login.Equals(userIdentity, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                if (user == null)
-                {
-                    throw new UserValidationException("Пользователь с таким ником не зарегистрирован", "UserIdentity");
-                }
-                userEmail = user.Email;
-            }
+                    userEmail = user.Email;
+                }               
+            }           
             return userEmail;
         }
 
@@ -207,24 +191,22 @@
         public bool UpdatePassword(int id, string newPassword, string oldPassword)
         {
             var update = false;
-
-            var userId = _userRepossitory.GetById(id);            
-            if (userId.Password.Equals(PasswordEncryptor.GetHashString(oldPassword)))
-            {
-                userId.Password = PasswordEncryptor.GetHashString(newPassword);
-            }
-            else
-            {
-                throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
-            }
             try
             {
-                using (var userRepository = this._userRepossitory)
+                using (var userRepository = Factory.GetUserRepository())
                 {
-                    userRepository.AddOrUpdate(userId);
+                    var userUpdate = userRepository.GetById(id);
+                    if (userUpdate.Password.Equals(PasswordEncryptor.GetHashString(oldPassword)))
+                    {
+                        userUpdate.Password = PasswordEncryptor.GetHashString(newPassword);
+                    }
+                    else
+                    {
+                        throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
+                    }
+                    userRepository.AddOrUpdate(userUpdate);
                     userRepository.SaveChanges();
                 }
-
                 update = true;
             }
             catch (Exception ex)
@@ -233,5 +215,7 @@
             }
             return update;
         }
+
+        
     }
 }

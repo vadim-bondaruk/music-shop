@@ -7,7 +7,6 @@
     using Exceptions;
     using Shop.Infrastructure.Security;
 
-
     /// <summary>
     /// Authentification module
     /// </summary>
@@ -45,10 +44,19 @@
                 throw new ArgumentException("password");
             }
 
-            User user;            
+            User user;
 
             using (var users = this._factory.GetUserRepository())
             {
+                if (useridentity.Contains("@"))
+                {
+                    user = users.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                }
+                else
+                {
+                    user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                }
+
                 if (user != null)
                 {
                     if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
@@ -68,19 +76,16 @@
                 else
                 {
                     throw new UserValidationException("Такой пользователь не зарегистрирован", "Useridentity");
-                }           
+               }
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         public void LogOut()
         {
-            FormsAuthentication.SignOut();            
+            FormsAuthentication.SignOut();
         }
     }
 }
-
-
-    
