@@ -32,7 +32,7 @@
         /// <summary>
         /// 
         /// </summary>
-        private IRepositoryFactory _factory;
+        private IRepositoryFactory Factory;
 
         /// <summary>
         /// 
@@ -41,7 +41,7 @@
         {
             this._userService = userService;
             this._authModule = authModule;
-            this._factory = factory;
+            this.Factory = factory;
         }
 
         /// <summary>

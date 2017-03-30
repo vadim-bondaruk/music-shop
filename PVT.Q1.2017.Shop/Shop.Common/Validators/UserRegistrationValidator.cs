@@ -14,14 +14,14 @@
         /// <summary>
         /// 
         /// </summary>
-        private readonly IRepository<User> _userRepository;
+        //private readonly IRepository<User> _userRepository;
 
         /// <summary>
         /// 
         /// </summary>
-        public UserRegistrationValidator(IRepository<User> userRepository)
+        public UserRegistrationValidator()
         {
-            this._userRepository = userRepository;
+            //this._userRepository = userRepository;
 
             RuleFor(u => u.FirstName).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
