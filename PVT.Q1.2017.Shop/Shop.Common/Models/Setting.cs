@@ -15,7 +15,7 @@
         /// <summary>
         /// The default priceId
         /// </summary>
-        public int PriceLevelId { get; set; }
+        public int DefaultPriceLevelId { get; set; }
 
         /// <summary>
         /// The default currency.
@@ -25,6 +25,6 @@
         /// <summary>
         /// The price level.
         /// </summary>
-        public virtual PriceLevel PriceLevel { get; set; }
+        public virtual PriceLevel DefaultPriceLevel { get; set; }
     }
 }
