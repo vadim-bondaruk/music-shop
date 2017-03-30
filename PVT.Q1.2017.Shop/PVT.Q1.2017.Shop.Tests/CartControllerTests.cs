@@ -21,8 +21,8 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void CartController_ActionIndexTest()
         {
-            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<Track>(), Albums = new List<Album>() };
-            ICollection<Cart> carts = new List<Cart> { cart };
+            Cart cart = new Cart { Id = 1, UserId = 1};
+            ICollection<Cart> carts = new List<Cart> { new Cart { Id = 1, UserId = 1 } };
 
             Mock<ICartRepository> moqCartRepository = new Mock<ICartRepository>();
             moqCartRepository.Setup(m => m.GetAll(It.IsAny<Expression<Func<Cart, bool>>>())).Returns(carts);
@@ -42,14 +42,16 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void CartController_AddTrackToCart()
         {
-            IList<Track> tracks = new List<Track>
+            var addedTrack = new Track { Id = 3, Name = "Hallelujah" };
+            var addedOrderTrack = new OrderTrack { CartId = 1, Track = addedTrack };
+
+            IList<OrderTrack> tracks = new List<OrderTrack>
             {
-                new Track { Id=1, Name = "Wide Awake" },
-                new Track { Id=2, Name = "Be mine" },
+                new OrderTrack { CartId = 1, Track = new Track { Id = 1, Name = "Wide Awake" } },
+                new OrderTrack { CartId = 1, Track = new Track { Id = 1, Name = "Be mine" } },
             };
 
-            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks, Albums = new List<Album>() };
-            var addedTrack = new Track { Id = 3, Name = "Hallelujah" };
+            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks, Albums = new List<OrderAlbum>() };
 
             ICollection<Cart> carts = new List<Cart>() { cart };
 
@@ -58,7 +60,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
-            moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Tracks.Add(addedTrack));
+            moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Tracks.Add(addedOrderTrack));
             moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 0), It.IsAny<int>()));
             moqCartService.Setup(m => m.AddTrack(It.IsAny<int>(), It.Is<int>(t => t == 0)));
 
@@ -89,14 +91,16 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
          public void CartController_AddAlbumToCart()
          {
-            IList<Album> albums = new List<Album>
+            var addedAlbum = new Album { Id = 3, Name = "So-So" };
+            var addedOrderAlbum = new OrderAlbum { CartId = 1, Album = addedAlbum };
+
+            IList<OrderAlbum> albums = new List<OrderAlbum>
             {
-                new Album { Id=1, Name = "Gold" },
-                new Album { Id=2, Name = "Platinum" },
+                new OrderAlbum { CartId=1, Album = new Album { Id = 1, Name = "Gold" } },
+                new OrderAlbum { CartId=1, Album  = new Album { Id =2, Name = "Platinum" } },
             };
 
-            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<Track>(), Albums = albums };
-            var addedAlbum = new Album { Id = 3, Name = "So-So" };
+            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<OrderTrack>(), Albums = albums };
 
             ICollection<Cart> carts = new List<Cart> { cart };
 
@@ -105,7 +109,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
-            moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Albums.Add(addedAlbum));
+            moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Albums.Add(addedOrderAlbum));
             moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 0), It.IsAny<int>()));
             moqCartService.Setup(m => m.AddAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0)));
 
@@ -136,13 +140,13 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void CartController_DeleteTrackFromCart()
         {
-            IList<Track> tracks = new List<Track>
+            IList<OrderTrack> tracks = new List<OrderTrack>
             {
-                new Track { Id=1, Name = "Wide Awake" },
-                new Track { Id=2, Name = "Be mine" },
+                new OrderTrack { CartId = 1, Track = new Track { Id = 1, Name = "Wide Awake" } },
+                new OrderTrack { CartId = 1, Track = new Track { Id = 1, Name = "Be mine" } },
             };
 
-            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks, Albums = new List<Album>() };
+            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks, Albums = new List<OrderAlbum>() };
             var deletedTrack = tracks[1];
 
             ICollection<Cart> carts = new List<Cart>() { cart };
@@ -183,13 +187,13 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void CartController_DeleteAlbumFromCart()
         {
-            IList<Album> albums = new List<Album>
+            IList<OrderAlbum> albums = new List<OrderAlbum>
             {
-                new Album { Id=1, Name = "Gold" },
-                new Album { Id=2, Name = "Platinum" },
+                new OrderAlbum { CartId=1, Album = new Album { Id = 1, Name = "Gold" } },
+                new OrderAlbum { CartId=1, Album  = new Album { Id =2, Name = "Platinum" } },
             };
 
-            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<Track>(), Albums = albums };
+            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<OrderTrack>(), Albums = albums };
             var deletedAlbum = albums[1];
 
             ICollection<Cart> carts = new List<Cart>() { cart };
