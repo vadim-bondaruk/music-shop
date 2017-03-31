@@ -2,40 +2,42 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common.Models;
-    using Common.Models.ViewModels;
-    using DAL.Infrastruture;
-    using Exceptions;
-    using Helpers;
-    using Infrastructure;
+
+    using Shop.BLL.Exceptions;
+    using Shop.BLL.Helpers;
+    using Shop.BLL.Services.Infrastructure;
+    using Shop.Common.Models;
+    using Shop.Common.Models.ViewModels;
+    using Shop.DAL.Infrastruture;
 
     /// <summary>
-    /// The album service.
+    ///     The album service.
     /// </summary>
     public class AlbumService : BaseService, IAlbumService
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumService"/> class.
+        ///     Initializes a new instance of the <see cref="AlbumService" /> class.
         /// </summary>
         /// <param name="factory">
-        /// The repository factory.
+        ///     The repository factory.
         /// </param>
-        public AlbumService(IRepositoryFactory factory) : base(factory)
+        public AlbumService(IRepositoryFactory factory)
+            : base(factory)
         {
         }
 
         /// <summary>
-        /// Returns the album details using the specified currency and price level for album price.
+        ///     Returns the album details using the specified currency and price level for album price.
         /// </summary>
         /// <param name="id">The album id.</param>
         /// <param name="currencyCode">
-        /// The currency code for album price. If it doesn't specified than default currency is used.
+        ///     The currency code for album price. If it doesn't specified than default currency is used.
         /// </param>
         /// <param name="priceLevelId">
-        /// The price level for album price. If it doesn't specified than default price level is used.
+        ///     The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// The information about album with the specified <paramref name="id"/> or <b>null</b> if album doesn't exist.
+        ///     The information about album with the specified <paramref name="id" /> or <b>null</b> if album doesn't exist.
         /// </returns>
         public AlbumDetailsViewModel GetAlbumDetails(int id, int? currencyCode = null, int? priceLevelId = null)
         {
@@ -57,107 +59,29 @@
                 priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
             }
 
-            using (var repository = Factory.GetAlbumPriceRepository())
+            using (var repository = this.Factory.GetAlbumPriceRepository())
             {
-                albumViewModel.Price = ServiceHelper.GetAlbumPrice(repository, id, currencyCode.Value, priceLevelId.Value);
+                albumViewModel.Price = ServiceHelper.GetAlbumPrice(
+                    repository,
+                    id,
+                    currencyCode.Value,
+                    priceLevelId.Value);
             }
 
             return albumViewModel;
         }
 
         /// <summary>
-        /// Returns all registered tracks for the specified album using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="albumId">The album id.</param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <returns>
-        /// All registered tracks with price for the specified album.
-        /// </returns>
-        public AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null)
-        {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
-
-            ICollection<Track> tracks;
-            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
-            {
-                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track).Select(r => r.Track).ToList();
-            }
-
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
-            return albumTracksListViewModel;
-        }
-
-        /// <summary>
-        /// Returns all tracks for the specified album without price.
-        /// </summary>
-        /// <param name="albumId">The album id.</param>
-        /// <returns>
-        /// All tracks for the specified album without price.
-        /// </returns>
-        public AlbumTracksListViewModel GetTracksWithoutPrice(int albumId)
-        {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
-
-            ICollection<AlbumTrackRelation> albumTrackRelations;
-            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
-            {
-                albumTrackRelations = repository.GetAll(
-                                           r => r.AlbumId == albumId &&
-                                                !r.Track.TrackPrices.Any(),
-                                           r => r.Track);
-            }
-
-            albumTracksListViewModel.Tracks = albumTrackRelations.Select(r => ModelsMapper.GetTrackViewModel(r.Track)).ToList();
-            return albumTracksListViewModel;
-        }
-
-        /// <summary>
-        /// Returns all tracks for the specified album with price specified using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="albumId">The album id.</param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <returns>
-        /// All tracks for the specified album without price specified.
-        /// </returns>
-        public AlbumTracksListViewModel GetTracksWithPrice(int albumId, int? currencyCode = null, int? priceLevel = null)
-        {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
-
-            ICollection<Track> tracks;
-            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
-            {
-                tracks = repository.GetAll(
-                                           r => r.AlbumId == albumId &&
-                                                r.Track.TrackPrices.Any(),
-                                           t => t.Track)
-                                   .Select(r => r.Track).ToList();
-            }
-
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
-            return albumTracksListViewModel;
-        }
-
-        /// <summary>
-        /// Returns all registered albums using the specified currency and price level for album price.
+        ///     Returns all registered albums using the specified currency and price level for album price.
         /// </summary>
         /// <param name="currencyCode">
-        /// The currency code for album price. If it doesn't specified than default currency is used.
+        ///     The currency code for album price. If it doesn't specified than default currency is used.
         /// </param>
         /// <param name="priceLevel">
-        /// The price level for album price. If it doesn't specified than default price level is used.
+        ///     The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// All registered albums.
+        ///     All registered albums.
         /// </returns>
         public ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null)
         {
@@ -171,10 +95,10 @@
         }
 
         /// <summary>
-        /// Returns all albums without price configured.
+        ///     Returns all albums without price configured.
         /// </summary>
         /// <returns>
-        /// All albums without price configured.
+        ///     All albums without price configured.
         /// </returns>
         public ICollection<AlbumViewModel> GetAlbumsWithoutPrice()
         {
@@ -188,16 +112,16 @@
         }
 
         /// <summary>
-        /// Returns all albums with price specified using the specified currency and price level for album price.
+        ///     Returns all albums with price specified using the specified currency and price level for album price.
         /// </summary>
         /// <param name="currencyCode">
-        /// The currency code for album price. If it doesn't specified than default currency is used.
+        ///     The currency code for album price. If it doesn't specified than default currency is used.
         /// </param>
         /// <param name="priceLevel">
-        /// The price level for album price. If it doesn't specified than default price level is used.
+        ///     The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// All albums with price specified.
+        ///     All albums with price specified.
         /// </returns>
         public ICollection<AlbumViewModel> GetAlbumsWithPrice(int? currencyCode = null, int? priceLevel = null)
         {
@@ -211,16 +135,124 @@
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="AlbumTracksListViewModel"/> type.
         /// </summary>
-        /// <param name="albumId">
-        /// The album id.
+        /// <returns>
+        /// </returns>
+        public ICollection<AlbumDetailsViewModel> GetAllViewModels()
+        {
+            ICollection<Album> albums;
+            using (var repository = this.Factory.GetAlbumRepository())
+            {
+                albums = repository.GetAll();
+            }
+
+            return albums.Select(ModelsMapper.GetAlbumDetailsViewModel).ToList();
+        }
+
+        /// <summary>
+        ///     Returns all registered tracks for the specified album using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="albumId">The album id.</param>
+        /// <param name="currencyCode">
+        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        ///     The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <returns>
-        /// A new instance of the <see cref="AlbumTracksListViewModel"/> type
+        ///     All registered tracks with price for the specified album.
+        /// </returns>
+        public AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null)
+        {
+            var albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            {
+                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track).Select(r => r.Track).ToList();
+            }
+
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(
+                this.Factory,
+                tracks,
+                currencyCode,
+                priceLevel);
+            return albumTracksListViewModel;
+        }
+
+        /// <summary>
+        ///     Returns all tracks for the specified album without price.
+        /// </summary>
+        /// <param name="albumId">The album id.</param>
+        /// <returns>
+        ///     All tracks for the specified album without price.
+        /// </returns>
+        public AlbumTracksListViewModel GetTracksWithoutPrice(int albumId)
+        {
+            var albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+
+            ICollection<AlbumTrackRelation> albumTrackRelations;
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            {
+                albumTrackRelations = repository.GetAll(
+                    r => r.AlbumId == albumId && !r.Track.TrackPrices.Any(),
+                    r => r.Track);
+            }
+
+            albumTracksListViewModel.Tracks =
+                albumTrackRelations.Select(r => ModelsMapper.GetTrackViewModel(r.Track)).ToList();
+            return albumTracksListViewModel;
+        }
+
+        /// <summary>
+        ///     Returns all tracks for the specified album with price specified using the specified currency and price level for
+        ///     track price.
+        /// </summary>
+        /// <param name="albumId">The album id.</param>
+        /// <param name="currencyCode">
+        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        ///     The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <returns>
+        ///     All tracks for the specified album without price specified.
+        /// </returns>
+        public AlbumTracksListViewModel GetTracksWithPrice(
+            int albumId,
+            int? currencyCode = null,
+            int? priceLevel = null)
+        {
+            var albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            {
+                tracks =
+                    repository.GetAll(r => r.AlbumId == albumId && r.Track.TrackPrices.Any(), t => t.Track)
+                        .Select(r => r.Track)
+                        .ToList();
+            }
+
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(
+                this.Factory,
+                tracks,
+                currencyCode,
+                priceLevel);
+            return albumTracksListViewModel;
+        }
+
+        /// <summary>
+        ///     Creates a new instance of the <see cref="AlbumTracksListViewModel" /> type.
+        /// </summary>
+        /// <param name="albumId">
+        ///     The album id.
+        /// </param>
+        /// <returns>
+        ///     A new instance of the <see cref="AlbumTracksListViewModel" /> type
         /// </returns>
         /// <exception cref="EntityNotFoundException{T}">
-        /// When an album with the specified id doesn't exist.
+        ///     When an album with the specified id doesn't exist.
         /// </exception>
         private AlbumTracksListViewModel CreateAlbumTracksListViewModel(int albumId)
         {
