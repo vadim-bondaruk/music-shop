@@ -1,8 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
+    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -40,6 +43,20 @@
             using (var repository = this._repositoryFactory.GetAlbumRepository())
             {
                 return this.View(repository.GetAll(a => a.ArtistId == id));
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public ActionResult List()
+        {
+            using (var repository = this._repositoryFactory.GetArtistRepository())
+            {
+                var artists = repository.GetAll();
+                var models = artists.Select(ModelsMapper.GetArtistDetailsViewModel).ToList();
+                return this.View(models);
             }
         }
 

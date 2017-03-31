@@ -1,5 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
@@ -80,7 +82,8 @@
         /// </returns>
         public ActionResult List()
         {
-            return this.View(this.albumService.GetAlbumsList());
+            return this.View(this.albumService.GetAllViewModels());
+
         }
 
         /// <summary>
