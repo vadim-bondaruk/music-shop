@@ -1,6 +1,23 @@
-﻿.navbar-brand {
-    margin-left: 34%;
-    font-size: 5em;
+﻿.navbar {
+    display: block;
+}
+
+.container {
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+}
+
+.nav {
+    display: block;
+}
+.navbar-brand {
+    font-size: 3.5em;
+}
+
+.topbar {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .regnewtrack {
@@ -20,7 +37,7 @@
     position: absolute;
     bottom: 50px;
     left: 48%;
-    color: white;
+    color: black;
 }
 
 footer {
