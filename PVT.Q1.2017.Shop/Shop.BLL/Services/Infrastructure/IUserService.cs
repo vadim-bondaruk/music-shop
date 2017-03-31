@@ -58,5 +58,13 @@
         /// <param name="oldPassword">old password</param>
         /// <returns></returns>
         bool UpdatePassword(int id, string newPassword, string oldPassword);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <param name="newLogin"></param>
+        /// <returns></returns>
+        bool UpdateLogin(string userIdentity, string newLogin);
     }
 }

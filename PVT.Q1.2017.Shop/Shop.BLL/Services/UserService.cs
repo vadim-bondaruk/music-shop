@@ -209,6 +209,7 @@
             }
             catch (Exception ex)
             {
+                // TODO: write data to log
                 throw;
             }
             return update;
@@ -243,12 +244,43 @@
                 update = true;
             }
             catch (Exception ex)
-            {                
+            {
+                // TODO: write data to log             
                 throw;
             }
             return update;
         }
 
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <param name="newLogin"></param>
+        /// <returns></returns>
+        public bool UpdateLogin (string userIdentity, string newLogin)
+        {
+            User user = null;
+
+            if (!string.IsNullOrEmpty(userIdentity))
+            {
+                try
+                {
+                    using (var userRepository = this.Factory.GetUserRepository())
+                    {
+                        user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                        user.Login = newLogin;
+                        userRepository.AddOrUpdate(user);
+                        userRepository.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // TODO: write data to log             
+                    throw;
+                }
+            }
+            return user != null;
+        }
     }
 }

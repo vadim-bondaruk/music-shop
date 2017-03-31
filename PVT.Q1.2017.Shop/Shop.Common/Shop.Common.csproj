@@ -50,6 +50,7 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\AlbumTrackRelation.cs" />
+    <Compile Include="Validators\ChangeLoginValidator.cs" />
     <Compile Include="Validators\LoginViewValidator.cs" />
     <Compile Include="Validators\UserRegistrationValidator.cs" />
     <Compile Include="ViewModels\AlbumDetailsViewModel.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="ViewModels\ChangeLoginViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ArtistViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />

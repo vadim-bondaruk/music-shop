@@ -180,6 +180,8 @@
     <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePasswordSuccess.cshtml" />
+    <Content Include="Areas\User\Views\Manage\ChangeLogin.cshtml" />
+    <Content Include="Areas\User\Views\Manage\ChangeLoginSuccess.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

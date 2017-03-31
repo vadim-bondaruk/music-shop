@@ -10,6 +10,9 @@
     using global::Shop.Infrastructure.Security;
     using ViewModels;
     using System.Linq;
+    using System.Web.Security;
+    using global::Shop.Common.ViewModels;
+    using global::Shop.BLL.Utils;
 
     /// <summary>
     /// 
@@ -114,7 +117,7 @@
         }
 
         /// <summary>
-        /// 
+        /// POST: User/Manage/ChangePassword 
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -156,6 +159,42 @@
         /// <returns></returns>
         public ActionResult ChangeLogin()
         {
+            return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeLogin([Bind(Include = @"Login")] ChangeLoginViewModel user)
+        {
+            if (ModelState.IsValid)
+            {                               
+                if (_userService.UpdateLogin(User.Identity.Name, user.Login))
+                {
+                    if (!User.Identity.Name.Contains("@"))
+                    {
+                            FormsAuthentication.SetAuthCookie(user.Login, true);
+                    }
+                    string subject = "Ваш Логин был изменен";
+                    string body = "Новый логин: " + user.Login;
+                    string usetEmail = _userService.GetEmailByUserIdentity(user.Login);
+                    if (!MailDispatch.SendingMail(usetEmail, subject, body))
+                    {
+                        ModelState.AddModelError("", "Ошибка отправки");
+                        return View();
+                    }                    
+                    return this.RedirectToAction("ChangeLoginSuccess");
+                }
+            }
+            return View();
+        }
+
+        public ActionResult ChangeLoginSuccess(string message)
+        {
+            ViewBag.Massage = "Операция выплнена успешно!!!";
             return View();
         }
     }
