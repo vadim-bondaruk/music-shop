@@ -21,8 +21,8 @@
 
             this.RuleFor(t => t.TrackFile).NotNull().WithMessage("Укажите файл трека");
 
-            this.RuleFor(t => t.Artist).NotNull().WithMessage("Не указан исполнитель трека");
-            this.RuleFor(t => t.Genre).NotNull().WithMessage("Не указан жанр трека");
+            this.RuleFor(t => t.ArtistId).GreaterThan(0).WithMessage("Не указан исполнитель трека");
+            this.RuleFor(t => t.GenreId).GreaterThan(0).WithMessage("Не указан жанр трека");
         }
     }
 }
