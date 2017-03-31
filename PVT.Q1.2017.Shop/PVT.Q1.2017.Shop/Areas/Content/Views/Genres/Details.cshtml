@@ -1,22 +1,22 @@
-﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.GenreManagementViewModel
+﻿@model Shop.Common.Models.ViewModels.GenreDetailsViewModel
+
+@Html.AntiForgeryToken()
+<body>
+<div id="genreDetails">
+    <ul>
+        <li>
+            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Имя" } })
+        </li>
+        <li>
+            @Html.EditorFor(m => m.Description, new { htmlAttributes = new { placeholder = "Описание" } })
+        </li>
+    </ul>
+
+    <button type="submit" class="btn" id="btn-save">Cj</button>
+</div>
+</body>
 
 
-@using (Html.BeginForm("New", "Genres", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <div id="genreDetails">
-        <ul>
-            <li>
-                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Name" } })
-            </li>
-            <li>
-                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { placeholder = "Description" } })
-            </li>
-        </ul>
-
-        <button type="submit" class="add-button">Add</button>
-    </div>
+@section cssStyles{
+    <link href="~/Styles/tracks.css" rel="stylesheet"/>
 }
-
-@section ManageStyle{
-    <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}

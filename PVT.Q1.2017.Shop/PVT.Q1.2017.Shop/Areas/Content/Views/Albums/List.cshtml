@@ -1,57 +1,35 @@
-﻿@model IEnumerable<Shop.Common.Models.ViewModels.AlbumViewModel>
+﻿@model IEnumerable<Shop.Common.Models.ViewModels.AlbumDetailsViewModel>
 
 @{
-    ViewBag.Title = "Albums";
+    ViewBag.Title = "Все альбомы";
 }
 
-<h2>Albums</h2>
+<title class="title">Все альбомы</title>
 
-<p>
-    @*@Html.ActionLink("New Album", "AddOrUpdate", "Albums", new { area = "Management" }, null)*@
-</p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArtistId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArtistName)
-        </th>
-        <th></th>
-    </tr>
+    <div class="list">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li onclick="itemClick(@item.Id)">
+                    <img src="data:image;base64,@Convert.ToBase64String(item.Cover)" onerror="this.src = '/img/defuserpic.png'"/>
+                    <div>
+                        <h2>@Html.DisplayFor(modelItem => item.Artist.Name)</h2>
+                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                        <p>@Html.DisplayFor(modelItem => item.ReleaseDate)</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReleaseDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArtistId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArtistName)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "AddOrUpdate", "Albums", new { id = item.Id, area = "Management" }, null) |*@
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", "Albums", new { id = item.Id, area = "Management" }, null)
-        </td>
-    </tr>
-}
 
-</table>
+<script>
+    function itemClick(id) {
+        window.open("Albums/Details/" + id, "_self");
+    }
+</script>
 
-@section cssStyles {
-<link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
-    <link href="/Areas/Management/Styles/albums-list.css"/>
+@section cssStyles{
+    <link href="~/Styles/tracks.css" rel="stylesheet"/>
 }
