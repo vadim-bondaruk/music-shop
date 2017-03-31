@@ -169,13 +169,17 @@
 
                 if (result)
                 {
+                    this._authModule.LogIn(user.Login, user.Password);
                     return this.RedirectToAction("Success");
                 }
             }
 
-            ModelState.AddModelError("", "Возникла ошибка при сохранении данных");
-
-            return this.View(user);
+            else
+            {
+                ModelState.AddModelError("", "Возникла ошибка при сохранении данных");
+                return this.View(user);
+            }
+            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
         }
 
         /// <summary>
