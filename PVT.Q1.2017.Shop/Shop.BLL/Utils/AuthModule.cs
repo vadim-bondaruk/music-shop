@@ -32,7 +32,7 @@
         /// <param name="useridentity">User login or email</param>
         /// <param name="password"></param>
         /// <param name="redirect"></param>
-        public void LogIn(string useridentity, string password, bool redirect = true)
+        public void LogIn(string useridentity, string password, bool redirect)
         {
             if (useridentity == null)
             {
@@ -66,11 +66,11 @@
 
                     if (redirect)
                     {
-                        FormsAuthentication.RedirectFromLoginPage(useridentity, true);
+                        FormsAuthentication.RedirectFromLoginPage(user.Login, true);
                     }
                     else
-                    {
-                        FormsAuthentication.SetAuthCookie(useridentity, true);
+                    {                       
+                        FormsAuthentication.RedirectFromLoginPage(user.Login, false);
                     }
                 }
                 else
