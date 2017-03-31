@@ -279,7 +279,7 @@
             Assert.IsNotNull(track.Artist);
             Assert.IsTrue(track.Artist.Id == trackDto.ArtistId);
 
-            Assert.IsNotNull(track.Genre);
+            Assert.IsNotNull(track.Genre.Id);
             Assert.IsTrue(track.Genre.Id == trackDto.GenreId);
         }
 

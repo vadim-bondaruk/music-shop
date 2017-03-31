@@ -72,6 +72,10 @@
     <Compile Include="Migrations\201703271323263_new_artist_field.Designer.cs">
       <DependentUpon>201703271323263_new_artist_field.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703302150333_DelIsCreationField.cs" />
+    <Compile Include="Migrations\201703302150333_DelIsCreationField.Designer.cs">
+      <DependentUpon>201703302150333_DelIsCreationField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -146,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703271323263_new_artist_field.resx">
       <DependentUpon>201703271323263_new_artist_field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703302150333_DelIsCreationField.resx">
+      <DependentUpon>201703302150333_DelIsCreationField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
