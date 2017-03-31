@@ -165,7 +165,7 @@
         /// <returns></returns>
         public string GetEmailByUserIdentity(string userIdentity)
         {
-            if (string.IsNullOrEmpty(userIdentity))
+            if (!string.IsNullOrEmpty(userIdentity))
             {
                 User user = null;
                 string userEmail = string.Empty;
