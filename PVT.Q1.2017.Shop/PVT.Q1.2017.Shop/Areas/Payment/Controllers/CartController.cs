@@ -34,6 +34,7 @@
         /// </param>
         /// <param name="repositoryFactory">
         /// Фабрика для работы с репозиториями
+        /// </param>
         public CartController(ICartService cartService, IRepositoryFactory repositoryFactory) 
         {
             this._cartRepository = repositoryFactory.GetCartRepository();
@@ -52,8 +53,8 @@
         public ViewResult Index(int currentUserId = 0)
         {
             var cart = this._cartRepository.FirstOrDefault(c => c.UserId == currentUserId);
-            this._viewModel.Tracks = (ICollection<Track>)cart?.Tracks;
-            this._viewModel.Albums = (ICollection<Album>)cart?.Albums;
+            this._viewModel.Tracks = _cartService.GetOrderTracks(currentUserId);
+            this._viewModel.Albums = _cartService.GetOrderAlbums(currentUserId);
             this._viewModel.CurrentUserId = currentUserId;
 
             /// <summary>
