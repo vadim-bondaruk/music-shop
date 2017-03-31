@@ -81,6 +81,30 @@
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="genre">
+        ///     The genre.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static GenreManagementViewModel GetGenreManagementViewModel(Genre genre)
+        {
+            return ManagementModelsMapper.Map<GenreManagementViewModel>(genre);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        /// The view model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static Genre GetGenreModel(GenreManagementViewModel viewModel)
+        {
+            return ManagementModelsMapper.Map<Genre>(viewModel);
+        }
+
+        /// <summary>
         ///     Executes a mapping from the <see cref="TrackDetailsViewModel" /> model to a new
         ///     <see cref="TrackManagementViewModel" /> model.
         /// </summary>
@@ -120,19 +144,19 @@
             var managementConfiguration = new MapperConfiguration(
                 cfg =>
                     {
-                        cfg.CreateMap<GenreViewModel, Genre>();
+                        cfg.CreateMap<GenreManagementViewModel, Genre>().ReverseMap();
 
                         cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
                             .ForMember(dest => dest.Image, opt => opt.UseValue<HttpPostedFileBase>(null))
                             .ForMember(dest => dest.TrackFile, opt => opt.UseValue<HttpPostedFileBase>(null));
 
                         cfg.CreateMap<TrackManagementViewModel, Track>()
-                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
                             .ForMember(
                                 dest => dest.TrackFile,
                                 opt =>
-                                    opt.MapFrom(src => src.PostedTrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
+                                    opt.MapFrom(
+                                        src =>
+                                            src.PostedTrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
                             .ForMember(
                                 dest => dest.Image,
                                 opt =>
