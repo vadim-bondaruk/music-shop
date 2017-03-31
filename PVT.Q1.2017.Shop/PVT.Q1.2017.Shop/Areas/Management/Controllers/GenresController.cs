@@ -9,6 +9,7 @@
     using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
+    using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
 
     /// <summary>
@@ -107,31 +108,15 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult New([Bind(Include = "Genre")] GenreManagementViewModel viewModel)
+        public virtual ActionResult New(GenreManagementViewModel viewModel)
         {
-            var genre = Mapper.Map<GenreManagementViewModel, Genre>(viewModel);
+            var genre = ManagementMapper.GetGenreModel(viewModel);
             using (var repository = this.RepositoryFactory.GetGenreRepository())
             {
                 repository.AddOrUpdate(genre);
                 repository.SaveChanges();
             }
 
-            return this.View("New");
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="model">
-        ///     The model.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [HttpPost]
-        public virtual ActionResult Update(GenreManagementViewModel model)
-        {
-            var genreRepo = this.RepositoryFactory.GetGenreRepository();
-            var genre = Mapper.Map<GenreManagementViewModel, Genre>(model);
-            genreRepo.AddOrUpdate(genre);
             return this.RedirectToAction("Details");
         }
     }

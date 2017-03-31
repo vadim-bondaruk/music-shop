@@ -78,14 +78,14 @@
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(AlbumManagementViewModel viewModel)
         {
-            var albumModel = Mapper.Map<AlbumManagementViewModel, Album>(viewModel);
+            var albumModel = ManagementMapper.GetAlbumModel(viewModel);
             using (var repository = this.repositoryFactory.GetAlbumRepository())
             {
                 repository.Delete(albumModel);
                 repository.SaveChanges();
             }
 
-            return this.View();
+            return this.RedirectToAction("List");
         }
 
         /// <summary>

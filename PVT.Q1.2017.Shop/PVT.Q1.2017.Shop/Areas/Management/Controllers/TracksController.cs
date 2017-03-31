@@ -17,13 +17,13 @@
     public class TracksController : Controller
     {
         /// <summary>
+        /// </summary>
+        private readonly IArtistService artistService;
+
+        /// <summary>
         ///     The track service.
         /// </summary>
         private readonly ITrackService trackService;
-
-        /// <summary>
-        /// </summary>
-        private readonly IArtistService artistService;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TracksController" /> class.
@@ -109,15 +109,23 @@
         /// <summary>
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult New(int id)
+        public virtual ActionResult Add(int id)
         {
             var artist = this.artistService.GetArtist(id);
-            //artist.IsCreation = true;
-            return this.View(new TrackManagementViewModel() { Artist = artist });
+            return this.View("New", new TrackManagementViewModel { ArtistId = artist.Id });
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult New()
+        {
+            return this.View(new TrackManagementViewModel());
         }
 
         /// <summary>
@@ -134,26 +142,17 @@
             var track = ManagementMapper.GetTrackModel(viewModel);
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
+                Artist artist;
+                using (var repo = this.RepositoryFactory.GetArtistRepository())
+                {
+                    artist = repo.GetById(viewModel.ArtistId);
+                }
+
+                track.ArtistId = artist.Id;
                 repository.AddOrUpdate(track);
                 repository.SaveChanges();
             }
 
-            return this.View();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="model">
-        ///     The model.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [HttpPost]
-        public virtual ActionResult Update(TrackManagementViewModel model)
-        {
-            var trackRepo = this.RepositoryFactory.GetTrackRepository();
-            var track = Mapper.Map<TrackManagementViewModel, Track>(model);
-            trackRepo.AddOrUpdate(track);
             return this.View();
         }
     }
