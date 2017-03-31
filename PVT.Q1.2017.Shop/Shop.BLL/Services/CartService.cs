@@ -230,5 +230,81 @@
                 this.RemoveAlbum(userId, albumId);
             }
         }
+
+        /// <summary>
+        /// Get chosen to purchase Track's IDs
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns Array of IDs</returns>
+        public IEnumerable<int> GetOrderTracksIds(int userId)
+        {
+            var returnResult = new Stack<int>();
+            using (var cartRepository = Factory.GetCartRepository())
+            {
+                var cart = cartRepository.GetByUserId(userId);
+                foreach (var orderTrack in cart.Tracks)
+                {
+                    returnResult.Push(orderTrack.TrackId);
+                }
+            }
+            return returnResult.ToArray();
+        }
+
+        /// <summary>
+        /// Get collection of chosen to purchase Tracks
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns List of Tracks</returns>
+        public ICollection<Track> GetOrderTracks(int userId)
+        {
+            var returnResult = new List<Track>();
+            using (var cartRepository = Factory.GetCartRepository())
+            {
+                var cart = cartRepository.GetByUserId(userId);
+                using (var trackRepository = Factory.GetTrackRepository())
+                {
+                    returnResult.AddRange(cart.Tracks.Select(o => trackRepository.GetById(o.TrackId)));
+                }
+            }
+            return returnResult;
+        }
+
+        /// <summary>
+        /// Get chosen to purchase Album's IDs
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns Array of IDs</returns>
+        public IEnumerable<int> GetOrderAlbumsIds(int userId)
+        {
+            var returnResult = new Stack<int>();
+            using (var cartRepository = Factory.GetCartRepository())
+            {
+                var cart = cartRepository.GetByUserId(userId);
+                foreach (var orderAlbum in cart.Albums)
+                {
+                    returnResult.Push(orderAlbum.AlbumId);
+                }
+            }
+            return returnResult.ToArray();
+        }
+
+        /// <summary>
+        /// Get collection of chosen to purchase Albums
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns List of Albums</returns>
+        public ICollection<Album> GetOrderAlbums(int userId)
+        {
+            var returnResult = new List<Album>();
+            using (var cartRepository = Factory.GetCartRepository())
+            {
+                var cart = cartRepository.GetByUserId(userId);
+                using (var albumsRepository = Factory.GetAlbumRepository())
+                {
+                    returnResult.AddRange(cart.Albums.Select(o => albumsRepository.GetById(o.AlbumId)));
+                }
+            }
+            return returnResult;
+        }
     }
 }
