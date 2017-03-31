@@ -2,6 +2,7 @@
 {
     using System.Security.Cryptography;
     using System.Text;
+    using System.Web.Security;
 
     /// <summary>
     /// 
@@ -33,6 +34,16 @@
         {
             var sha1 = SHA1.Create();
             return sha1.ComputeHash(Encoding.UTF8.GetBytes(password));
+        }
+
+        /// <summary>
+        /// Return a random password of the specified length -10,
+        /// 2-the minimum number of non-alphanumeric characters (such as @, #, !, %, &, and so on) in the generated password.
+        /// </summary>
+        /// <returns></returns>
+        public static string RendomPassword()
+        {
+            return Membership.GeneratePassword(10, 2);
         }
     }
 }
