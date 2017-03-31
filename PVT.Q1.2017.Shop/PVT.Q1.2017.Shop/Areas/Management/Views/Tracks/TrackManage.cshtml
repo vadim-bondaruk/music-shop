@@ -1,4 +1,4 @@
-﻿@model PVT.Q1._2017.Shop.Areas.Management.Models.TrackManagmentViewModel
+﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.TrackManagementViewModel
 
 
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -41,6 +41,6 @@
         <button type="submit" class="add-button">Add</button>
     </div>
 }
-
-@section ManageStyle{
-   <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}
+@section cssStyles{
+    <link href="/Styles/tracks.css" rel="stylesheet" type="text/css" />
+}

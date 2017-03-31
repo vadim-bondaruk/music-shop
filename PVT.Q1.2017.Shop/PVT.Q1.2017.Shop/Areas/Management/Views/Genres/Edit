@@ -18,5 +18,6 @@
     </div>
 }
 
-@section ManageStyle{
-    <link href="/Areas/Management/Styles/AddNewTrack.css" rel="stylesheet" type="text/css"/>}
+@section cssStyles{
+    <link href="/Styles/tracks.css" rel="stylesheet" type="text/css"/>
+}

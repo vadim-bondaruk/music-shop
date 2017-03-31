@@ -1,36 +1,43 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
 
 <body>
-<h2 class="edit-artist-title">Редактирование информации об исполнителе</h2>
+<h2 class="title">Редактирование информации об исполнителе</h2>
 @using (Html.BeginForm("Edit", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg", @class = "edit-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.Photo)
 
-    <div class="outer">
-        <div class="main-block">
-            <div class="image-block">
-                <div class="image-block-list">
-                    <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Photo)" />
-                    @Html.ActionLink("Добавить альбом", "New", new { id = Model.Id, area = "Management", Controller = "Albums" }, new { id = "add-new-album" });
-                    @Html.ActionLink("Добавить трек", "New", new { id = Model.Id, area = "Management", Controller = "Tracks" }, new { id = "add-new-track" });
+    <div class="main-center">
+        <div class="col-1">
+            <div class="col-2">
+                <div class="image-block">
+                    <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" style="margin-top: 25px;"onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Photo)"/>
+                </div>
+                <div class="details">
+                    <ul>
+                        <li>
+                            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель" }, value = Model.Name })
+                        </li>
+                        <li>
+                            @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата рождения/основания", type = "text", value = Model.Birthday } })
+                        </li>
+                        <li class="bio-area">
+                            @Html.TextAreaFor(e => e.Biography, new { @class = "form-control", placeholder = "Биография", value = Model.Biography })
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <a class="btn" id="add-track" aria-label="Left Align" href="@Url.Action("Add", "Tracks", new { area = "Management", id= Model.Id })">+ Трек</a>
+                    <a class="btn" id="add-album" aria-label="Left Align" href=@Url.Action("New", "Albums", new { area = "Management", id= Model.Id })>+ Альбом</a>
+                    <button type="submit" class="btn" id="btn-save" aria-label="Left Align">Сохранить</button>
                 </div>
             </div>
-            <ul class="edit-artist-items">
-                <li class="top-li">
-                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" }, value = Model.Name })
-                </li>
-                <li>
-                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения/основания", type = "text", value = Model.Birthday } })
-                </li>
-                <li class="bio">
-                    @Html.TextAreaFor(e => e.Biography, 10, 155, new { placeholder = "Биография", value = Model.Biography, @class = "bio" })
-                </li>
-            </ul>
         </div>
-        <button type="submit" class="save-button">Сохранить</button>
     </div>
+
+    
+
     <input type="file" id="file" name="PostedPhoto" style="display: none" value=@Model.Photo/>
 }
 
@@ -40,8 +47,6 @@
 
 </body>
 
-@section ArtistEdit{
-    <link href="~/Areas/Management/Styles/managment-common.css" rel="stylesheet"/>
-    <link href="/Areas/Management/Styles/artist-edit.css" rel="stylesheet" type="text/css"/>
-    <link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
+@section cssStyles{
+    <link href="/Styles/tracks.css" rel="stylesheet" type="text/css"/>
 }

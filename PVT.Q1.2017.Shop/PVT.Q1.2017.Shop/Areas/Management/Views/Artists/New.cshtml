@@ -1,44 +1,46 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
 <body>
-<h2 class="reg-new-artist-title">Регистрация нового исполнителя</h2>
-@using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="center">
-        <div class="row">
-            <div class="leftpan">
-                <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
-            </div>
-            <div class="rightpan">
-                <div class="inputs">
-                    <ul class="new-artist-items">
-                        <li>
-                            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Исполнитель" } })
-                        </li>
-                        <li>
-                            @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { placeholder = "Дата рождения", type = "text", id = "item-birthday" } })
-                        </li>
-                        <li>
-                            @Html.TextAreaFor(m => m.Biography, new { placeholder = "Биография", id = "item-bio", style = "heigth: 200px" })
-                        </li>
-                    </ul>
+<div class="main-center">
+    <h2 class="title">Регистрация нового исполнителя</h2>
+    @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="main-center">
+
+            <div class="col-1">
+                <div class="col-2">
+                    <div class="row">
+                        <div class="image-block" style="display: inline-block; vertical-align: top; width: 30%;">
+                            <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
+                        </div>
+                        <div class="details" id="new-artist-details">
+                            <ul>
+                                <li>
+                                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель", style = "max-width: 100%; margin-top: 0;" } })
+                                </li>
+                                <li>
+                                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control mr-sm-2 mr", placeholder = "Дата рождения", type = "text", id = "item-birthday", style = "max-width: 100%" } })
+                                </li>
+                                <li>
+                                    @Html.TextAreaFor(m => m.Biography, new { @class = "form-control", placeholder = "Биография", id = "item-bio", style = "heigth: 200px" })
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn" id="btn-save">Сохранить</button>
                 </div>
             </div>
         </div>
-        <div>
-            <button type="submit" class="save-button">Сохранить</button>
-        </div>
         <input type="file" id="file" name="PostedPhoto" style="display: none"/>
-    </div>
-}
+    }
+</div>
 <script src="/Scripts/jquery-3.2.0.min.js"></script>
 <script src="/Scripts/openfile.dialog.js" type="text/javascript"></script>
 <script src="/Scripts/file-change.js" type="text/javascript"></script>
 </body>
 
-@section ArtistEdit
-{
-    <link href="/Areas/Management/Styles/managment-common.css" rel="stylesheet" type="text/css"/>
-    <link href="/Areas/Management/Styles/artist-new.css" rel="stylesheet" type="text/css"/>
-    <link href="/Areas/Management/Styles/navpan.css" rel="stylesheet" type="text/css"/>
+@section cssStyles{
+    <link href="/Styles/tracks.css" rel="stylesheet" type="text/css"/>
 }
