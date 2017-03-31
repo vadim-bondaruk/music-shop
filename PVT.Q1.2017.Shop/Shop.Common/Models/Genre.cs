@@ -10,7 +10,6 @@
     /// <summary>
     ///     The track genre.
     /// </summary>
-    [Validator(typeof(GenreValidator))]
     public class Genre : BaseEntity
     {
         /// <summary>

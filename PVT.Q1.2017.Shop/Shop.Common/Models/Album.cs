@@ -9,7 +9,6 @@
     /// <summary>
     /// The album.
     /// </summary>
-    [Validator(typeof(AlbumValidator))]
     public class Album : BaseEntity
     {
         /// <summary>

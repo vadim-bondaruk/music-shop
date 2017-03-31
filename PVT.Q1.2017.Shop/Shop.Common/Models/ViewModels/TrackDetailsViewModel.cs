@@ -45,11 +45,6 @@
         /// <summary>
         /// The track genre.
         /// </summary>
-        public GenreViewModel Genre { get; set; }
-
-        /// <summary>
-        /// Gets or sets the price.
-        /// </summary>
         public PriceViewModel Price { get; set; }
 
         /// <summary>
