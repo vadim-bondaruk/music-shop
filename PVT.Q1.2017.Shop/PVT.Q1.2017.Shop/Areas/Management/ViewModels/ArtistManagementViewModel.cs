@@ -5,6 +5,10 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web;
 
+    using FluentValidation.Attributes;
+
+    using global::Shop.Common.Validators;
+
     /// <summary>
     /// </summary>
     public class ArtistManagementViewModel
