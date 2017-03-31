@@ -51,8 +51,10 @@
             string userName = user.Identity.Name;
 
             // TODO: Get user from Repository by Name
-            var userDB = DependencyResolver.Current.GetService<IRepositoryFactory>()
-                .GetUserRepository()?.FirstOrDefault(u =>u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            var userDB = userName.Contains("@") ? DependencyResolver.Current.GetService<IRepositoryFactory>()
+                .GetUserRepository()?.FirstOrDefault(u => u.Email.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                                                : DependencyResolver.Current.GetService<IRepositoryFactory>()
+                .GetUserRepository()?.FirstOrDefault(u => u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase));
 
             if (user != null && this._userRoles.Length > 0)
             {
