@@ -1,9 +1,7 @@
 ﻿$(document).ready(function() {
     // handling input changes
-    $("#Photo").change(function () {
-        // if file attached - save path to var
+    $("#track-file").change(function () {
         var fileResult = $(this).val().replace("C:\\fakepath\\", "");
-        // send value to fake input
         $(this).parent().find("#file-path").val(fileResult);
     });
 });
