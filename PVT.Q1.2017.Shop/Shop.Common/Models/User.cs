@@ -58,6 +58,15 @@
         /// The phone number
         /// </summary>
         public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// User role
+        /// </summary>
         public object UserRole { get; set; }
+
+        /// <summary>
+        /// Verification of email confirmation
+        /// </summary>
+        public bool ConfirmedEmail { get; set; }
     }
 }
