@@ -70,7 +70,8 @@
                 .Verify(m => m.GetById(It.IsAny<int>()), Times.Once);
 
             Mock.Get(_factory.GetTrackRepository())
-                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Track, bool>>>()), Times.Once);
+                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Track, bool>>>(),
+                                      It.IsAny<Expression<Func<Track, BaseEntity>>[]>()), Times.Once);
         }
 
         [TestMethod]
@@ -90,7 +91,8 @@
                 .Verify(m => m.GetById(It.IsAny<int>()), Times.Once);
 
             Mock.Get(_factory.GetAlbumRepository())
-                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Album, bool>>>()), Times.Once);
+                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),
+                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
         }
 
         [TestMethod]
