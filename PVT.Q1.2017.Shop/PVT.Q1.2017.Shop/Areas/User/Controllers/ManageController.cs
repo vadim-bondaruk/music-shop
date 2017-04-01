@@ -151,7 +151,7 @@
         }
 
         /// <summary>
-        /// 
+        /// GET: User/Manage/ChangePasswordSuccess 
         /// </summary>
         /// <returns></returns>
         public ActionResult ChangePasswordSuccess()
@@ -160,7 +160,7 @@
         }
 
         /// <summary>
-        /// 
+        /// GET: User/Manage/ChangeLogin  
         /// </summary>
         /// <returns></returns>
         public ActionResult ChangeLogin()
@@ -169,7 +169,7 @@
         }
 
         /// <summary>
-        /// 
+        /// POST: User/Manage/ChangeLogin  
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -198,10 +198,50 @@
             return View();
         }
 
+        /// <summary>
+        /// GET: User/Manage/ChangeLoginSuccess 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public ActionResult ChangeLoginSuccess(string message)
         {
             ViewBag.Massage = "Операция выплнена успешно!!!";
             return View();         
+        }
+
+        /// <summary>
+        /// GET: User/Manage/ChangeLoginSuccess 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Delete()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// POST: User/Manage/ChangeLoginSuccess 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int? Id)
+        {
+            try
+            {
+                using (var userRepository = this.Factory.GetUserRepository())
+                {
+                    userRepository.Delete(this.CurrentUser.Id);
+                    userRepository.SaveChanges();
+                    this.HttpContext.Session.Abandon();
+                    this._authModule.LogOut();
+                }
+            }           
+            catch (Exception ex)
+            {
+                //TODO 
+                throw; 
+            }               
+            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
         }
     }
 }
