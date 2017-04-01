@@ -73,6 +73,11 @@
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Method for remote validation (userIdentity)
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult IsUserNotExist(string userIdentity)
@@ -81,6 +86,7 @@
 
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
+
         /// <summary>
         /// GET: User/Account/Login
         /// </summary>
@@ -159,28 +165,83 @@
             {
                 try
                 {
-
-                    var userDB = UserMapper.GetUserModel(user);
+                    var userDB = UserMapper.GetUserModel(user);                    
                     result = this._userService.RegisterUser(userDB);
+                    if (result)
+                    {
+                        string subject = "Подтверждение регистрации";
+                        string body = string.Format("Для завершения регистрации перейдите по ссылке:" +
+                            "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
+                            Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
+                        if (MailDispatch.SendingMail(userDB.Email, subject, body))
+                        {
+                            return this.RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Ошибка отправки сообщения");
+                        }                       
+                    }
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
-                }
+                }               
+            }           
+            return this.View(user);
 
-                if (result)
-                {
-                    this._authModule.LogIn(user.Login, user.Password);
-                    return this.RedirectToAction("Success");
-                }
-            }
+        }
 
-            else
+        /// <summary>
+        /// GET: User/Account/Siterules
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Siterules()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// GET: User/Account/Confirm
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Confirm(string Email)
+        {
+            if (Email != null)
             {
-                ModelState.AddModelError("", "Возникла ошибка при сохранении данных");
-                return this.View(user);
+                ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие" +
+                    "инструкции по завершению регистрации";
+            }           
+            return this.View();
+        }
+
+        /// <summary>
+        /// GET: User/Account/ConfirmEmail
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail(string token, string email)
+        {
+            if (token == null)
+            {
+                throw new ArgumentException ("Token");
             }
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            if (token == null)
+            {
+                throw new ArgumentException("Email");
+            }
+            if(_userService.UpdateConfirmEmail(token, email))
+            {
+                return RedirectToAction("Success", "Accaunt", new { area = "User" });
+            }
+
+            return RedirectToAction("Confirm", "Account", new { Email = "" });            
         }
 
         /// <summary>
@@ -251,11 +312,10 @@
         }
 
         /// <summary>
-        /// User/Account/Success
+        /// GET: User/Account/Success
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        [ShopAuthorize(UserRoles.User)]
+        /// <returns></returns>       
         public ActionResult Success()
         {
             return this.View();
