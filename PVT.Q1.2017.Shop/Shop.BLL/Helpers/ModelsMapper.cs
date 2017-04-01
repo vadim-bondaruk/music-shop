@@ -12,26 +12,26 @@
         /// <summary>
         /// The mapper for models with detailed information.
         /// </summary>
-        private static readonly IMapper ModelDetailsMapper;
+        private static readonly IMapper _modelDetailsMapper;
 
         /// <summary>
         /// The common mapper.
         /// </summary>
-        private static readonly IMapper CommonMapper;
+        private static readonly IMapper _commonMapper;
 
         /// <summary>
         /// The mapper for models which have a list of other models.
         /// </summary>
-        private static readonly IMapper SpecialListMapper;
+        private static readonly IMapper _specialListMapper;
 
         /// <summary>
         /// Initializes static members of the <see cref="ModelsMapper"/> class.
         /// </summary>
         static ModelsMapper()
         {
-            ModelDetailsMapper = CreateModelsDetailsMapper();
-            CommonMapper = CreateCommonMapper();
-            SpecialListMapper = CreateSpecialListMapper();
+            _modelDetailsMapper = CreateModelsDetailsMapper();
+            _commonMapper = CreateCommonMapper();
+            _specialListMapper = CreateSpecialListMapper();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@
         /// </returns>
         public static AlbumDetailsViewModel GetAlbumDetailsViewModel(Album album)
         {
-            return ModelDetailsMapper.Map<AlbumDetailsViewModel>(album);
+            return _modelDetailsMapper.Map<AlbumDetailsViewModel>(album);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// </returns>
         public static AlbumViewModel GetAlbumViewModel(Album album)
         {
-            return CommonMapper.Map<AlbumViewModel>(album);
+            return _commonMapper.Map<AlbumViewModel>(album);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@
         /// </returns>
         public static ArtistDetailsViewModel GetArtistDetailsViewModel(Artist artist)
         {
-            return ModelDetailsMapper.Map<ArtistDetailsViewModel>(artist);
+            return _modelDetailsMapper.Map<ArtistDetailsViewModel>(artist);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@
         /// </returns>
         public static ArtistViewModel GetArtistViewModel(Artist artist)
         {
-            return CommonMapper.Map<ArtistViewModel>(artist);
+            return _commonMapper.Map<ArtistViewModel>(artist);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@
         /// </returns>
         public static TrackDetailsViewModel GetTrackDetailsViewModel(Track track)
         {
-            return ModelDetailsMapper.Map<TrackDetailsViewModel>(track);
+            return _modelDetailsMapper.Map<TrackDetailsViewModel>(track);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@
         /// </returns>
         public static TrackViewModel GetTrackViewModel(Track track)
         {
-            return CommonMapper.Map<TrackViewModel>(track);
+            return _commonMapper.Map<TrackViewModel>(track);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@
         /// </returns>
         public static CurrencyViewModel GetCurrencyViewModel(Currency currency)
         {
-            return CommonMapper.Map<CurrencyViewModel>(currency);
+            return _commonMapper.Map<CurrencyViewModel>(currency);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@
         /// </returns>
         public static GenreViewModel GetGenreViewModel(Genre genre)
         {
-            return CommonMapper.Map<GenreViewModel>(genre);
+            return _commonMapper.Map<GenreViewModel>(genre);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@
         /// </returns>
         public static PriceViewModel GetPriceViewModel(TrackPrice trackPrice)
         {
-            return CommonMapper.Map<PriceViewModel>(trackPrice);
+            return _commonMapper.Map<PriceViewModel>(trackPrice);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@
         /// </returns>
         public static PriceViewModel GetPriceViewModel(AlbumPrice albumPrice)
         {
-            return CommonMapper.Map<PriceViewModel>(albumPrice);
+            return _commonMapper.Map<PriceViewModel>(albumPrice);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@
         /// </returns>
         public static TrackAlbumsListViewModel GetTrackAlbumsListViewModel(Track track)
         {
-            return SpecialListMapper.Map<TrackAlbumsListViewModel>(track);
+            return _specialListMapper.Map<TrackAlbumsListViewModel>(track);
         }
 
         /// <summary>
@@ -195,11 +195,11 @@
         /// The album DTO model.
         /// </param>
         /// <returns>
-        /// A new <see cref="TrackAlbumsListViewModel"/> model.
+        /// A new <see cref="AlbumTracksListViewModel"/> model.
         /// </returns>
         public static AlbumTracksListViewModel GetAlbumTracksListViewModel(Album album)
         {
-            return SpecialListMapper.Map<AlbumTracksListViewModel>(album);
+            return _specialListMapper.Map<AlbumTracksListViewModel>(album);
         }
 
         /// <summary>
@@ -213,7 +213,35 @@
         /// </returns>
         public static FeedbackViewModel GetFeedbackViewModel(Feedback feedback)
         {
-            return CommonMapper.Map<FeedbackViewModel>(feedback);
+            return _commonMapper.Map<FeedbackViewModel>(feedback);
+        }
+
+        /// <summary>
+        /// Executes a mapping from the <see cref="Artist"/> model to a new <see cref="ArtistTracksListViewModel"/> model.
+        /// </summary>
+        /// <param name="artist">
+        /// The artist DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="ArtistTracksListViewModel"/> model.
+        /// </returns>
+        public static ArtistTracksListViewModel GetArtistTracksListViewModel(Artist artist)
+        {
+            return _specialListMapper.Map<ArtistTracksListViewModel>(artist);
+        }
+
+        /// <summary>
+        /// Executes a mapping from the <see cref="Artist"/> model to a new <see cref="ArtistAlbumsListViewModel"/> model.
+        /// </summary>
+        /// <param name="artist">
+        /// The artist DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="ArtistAlbumsListViewModel"/> model.
+        /// </returns>
+        public static ArtistAlbumsListViewModel GetArtistAlbumsListViewModel(Artist artist)
+        {
+            return _specialListMapper.Map<ArtistAlbumsListViewModel>(artist);
         }
 
         /// <summary>
@@ -270,6 +298,10 @@
 
                 cfg.CreateMap<Album, AlbumTracksListViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
+
+                cfg.CreateMap<Artist, ArtistTracksListViewModel>();
+
+                cfg.CreateMap<Artist, ArtistAlbumsListViewModel>();
             });
 
             return specialListMapperConfiguration.CreateMapper();
