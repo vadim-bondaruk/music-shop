@@ -4,4 +4,7 @@
     <li>@Html.ActionLink("Мой аккаунт", "Index", new { area = "User", controller = "Manage" })</li>
 }
 <li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
-
+@if (Request.IsAuthenticated)
+{
+    <li>@Html.ActionLink("Администрирование", "Index", new { area = "Admin", controller = "Currency" })</li>
+}

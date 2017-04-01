@@ -16,6 +16,7 @@
     using Shop.Controllers;
     using App_Start;
     using global::Shop.Infrastructure.Enums;
+    using Helpers;
 
     /// <summary>
     /// 
@@ -100,6 +101,7 @@
                 //int id = _userService.GetIdOflogin(User.Identity.Name);
                 AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserPersonalViewModel, User>());
                 var userDB = AutoMapper.Mapper.Map<User>(user);
+                //var userDB = UserMapper.GetUserModel(user);
                 result = _userService.UpdatePersonal(userDB, this.CurrentUser.Id);   
                                                                                              
                 if (result)
