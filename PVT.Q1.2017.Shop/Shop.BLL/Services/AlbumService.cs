@@ -5,7 +5,6 @@
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
-    using Exceptions;
     using Helpers;
     using Infrastructure;
 
@@ -219,9 +218,6 @@
         /// <returns>
         /// A new instance of the <see cref="AlbumTracksListViewModel"/> type
         /// </returns>
-        /// <exception cref="EntityNotFoundException{T}">
-        /// When an album with the specified id doesn't exist.
-        /// </exception>
         private AlbumTracksListViewModel CreateAlbumTracksListViewModel(int albumId)
         {
             Album album;

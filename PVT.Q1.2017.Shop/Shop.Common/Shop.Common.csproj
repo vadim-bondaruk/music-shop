@@ -57,6 +57,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\BaseAddress.cs" />
+    <Compile Include="ViewModels\ArtistTracksListViewModel.cs" />
     <Compile Include="ViewModels\AlbumTracksListViewModel.cs" />
     <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\ArtistDetailsViewModel.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="ViewModels\GenreViewModel.cs" />
     <Compile Include="ViewModels\PriceViewModel.cs" />
     <Compile Include="ViewModels\RatingViewModel.cs" />
+    <Compile Include="ViewModels\ArtistAlbumsListViewModel.cs" />
     <Compile Include="ViewModels\TrackAlbumsListViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\TrackPrice.cs" />

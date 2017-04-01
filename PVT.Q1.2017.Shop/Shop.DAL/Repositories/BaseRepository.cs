@@ -82,7 +82,7 @@
         /// </returns>
         public virtual TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            return FirstOrDefault(x => x.Id == id);
+            return FirstOrDefault(x => x.Id == id, includes);
         }
 
         /// <summary>
@@ -125,6 +125,25 @@
 
             IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter), includes);
             return query.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the number of entities contained in the repository.
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// The number of entities contained in the repository.
+        /// </returns>
+        public int Count(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter == null)
+            {
+                return this._currentDbSet.Count();
+            }
+
+            return this._currentDbSet.Count(filter);
         }
 
         /// <summary>

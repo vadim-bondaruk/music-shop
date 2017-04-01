@@ -32,6 +32,7 @@
         /// </returns>
         public ActionResult List()
         {
+            // TODO: передавать currency и price level из UserData текущего пользователя
             return this.View(this._trackService.GetTracksList());
         }
 
@@ -49,7 +50,14 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this._trackService.GetTrackDetails(id.Value));
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var trackViewModel = _trackService.GetTrackDetails(id.Value);
+            if (trackViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return this.View(trackViewModel);
         }
 
         /// <summary>
@@ -66,7 +74,14 @@
                 return this.RedirectToAction("List");
             }
 
-            return null; // this.View(this._trackService.GetAlbumsList(new Track { Id = id }));
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
+            if (trackAlbumsViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return this.View(trackAlbumsViewModel);
         }
     }
 }

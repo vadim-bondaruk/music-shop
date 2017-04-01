@@ -238,7 +238,7 @@
             }
             if(_userService.UpdateConfirmEmail(token, email))
             {
-                return RedirectToAction("Success", "Accaunt", new { area = "User" });
+                return RedirectToAction("Success", "Account", new { area = "User" });
             }
 
             return RedirectToAction("Confirm", "Account", new { Email = "" });            

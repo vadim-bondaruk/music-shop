@@ -289,6 +289,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Content\Views\Album\" />
+    <Folder Include="Areas\Content\Views\Artist\" />
     <Folder Include="Areas\Content\Views\Track\" />
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />

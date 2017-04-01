@@ -16,15 +16,17 @@
         /// <summary>
         /// Database or repository with users data
         /// </summary>
-        private readonly IRepositoryFactory _factory;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="AuthModule"/> class.
         /// </summary>
-        /// <param name="factory"></param>
-        public AuthModule(IRepositoryFactory users)
+        /// <param name="factory">
+        /// The repository factory.
+        /// </param>
+        public AuthModule(IRepositoryFactory factory)
         {
-            this._factory = users;
+            this._repositoryFactory = factory;
         }
 
         /// <summary>
@@ -46,16 +48,15 @@
             }
 
             User user;
-
-            using (var users = this._factory.GetUserRepository())
+            using (var repository = _repositoryFactory.GetUserRepository())
             {
                 if (useridentity.Contains("@"))
                 {
-                    user = users.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                    user = repository.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
                 }
                 else
                 {
-                    user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                    user = repository.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
                 }
 
                 if (user != null)
@@ -73,16 +74,17 @@
                         FormsAuthentication.RedirectFromLoginPage(user.Login, true);
                     }
                     else
-                    {                       
+                    {
                         FormsAuthentication.RedirectFromLoginPage(user.Login, false);
                     }
                 }
                 else
                 {
                     throw new UserValidationException("Такой пользователь не зарегистрирован", "Useridentity");
-               }
+                }
             }
         }
+
 
         /// <summary>
         /// 

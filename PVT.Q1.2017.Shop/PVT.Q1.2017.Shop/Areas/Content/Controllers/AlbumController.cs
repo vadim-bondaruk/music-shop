@@ -2,7 +2,6 @@
 {
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
 
     /// <summary>
     /// The album controller.
@@ -33,6 +32,7 @@
         /// </returns>
         public ActionResult List()
         {
+            // TODO: передавать currency и price level из UserData текущего пользователя
             return this.View(this._albumService.GetAlbumsList());
         }
 
@@ -50,13 +50,22 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this._albumService.GetAlbumDetails(id.Value));
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var albumViewModel = _albumService.GetAlbumDetails(id.Value);
+            if (albumViewModel == null)
+            {
+                return HttpNotFound($"Альбом с id = { id.Value } не найден");
+            }
+
+            return this.View(albumViewModel);
         }
 
         /// <summary>
+        /// Shows all tracks from the album.
         /// </summary>
         /// <param name="id">The album id.</param>
         /// <returns>
+        /// Album with tracks view.
         /// </returns>
         public virtual ActionResult TracksList(int? id)
         {
@@ -65,7 +74,14 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this._albumService.GetTracksList(id.Value));
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var albumTracksViewModel = _albumService.GetTracksList(id.Value);
+            if (albumTracksViewModel == null)
+            {
+                return HttpNotFound($"Альбом с id = { id.Value } не найден");
+            }
+
+            return this.View(albumTracksViewModel);
         }
     }
 }
