@@ -128,6 +128,25 @@
         }
 
         /// <summary>
+        /// Gets the number of entities contained in the repository.
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// The number of entities contained in the repository.
+        /// </returns>
+        public int Count(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter == null)
+            {
+                return this._currentDbSet.Count();
+            }
+
+            return this._currentDbSet.Count(filter);
+        }
+
+        /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.
         /// </summary>
         /// <param name="model">
