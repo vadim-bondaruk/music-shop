@@ -13,11 +13,12 @@
     using global::Shop.Infrastructure.Enums;
     using ViewModels;
     using global::Shop.BLL.Utils;
+    using Shop.Controllers;
 
     /// <summary>
     /// 
     /// </summary>
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         /// <summary>
         /// 
@@ -107,7 +108,7 @@
             {
                 try
                 {
-                    this._authModule.LogIn(model.UserIdentity, model.Password);
+                    this._authModule.LogIn(model.UserIdentity, model.Password, model.RememberMe);
                     return this.RedirectToAction("Index", "Home", new { area = string.Empty });
                 }
                 catch (UserValidationException ex)

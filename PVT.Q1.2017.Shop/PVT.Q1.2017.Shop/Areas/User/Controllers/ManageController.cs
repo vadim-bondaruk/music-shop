@@ -13,12 +13,15 @@
     using System.Web.Security;
     using global::Shop.Common.ViewModels;
     using global::Shop.BLL.Utils;
+    using Shop.Controllers;
+    using App_Start;
+    using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
     /// </summary>
-    [Authorize]
-    public class ManageController : Controller
+    [ShopAuthorize(UserRoles.User)]
+    public class ManageController : BaseController
     {
         /// <summary>
         /// 
@@ -63,18 +66,19 @@
         {
             if (User.Identity.IsAuthenticated)
             {
-                ViewBag.Message = "Ваш логин: " + User.Identity.Name;                
+                ViewBag.Message = "Ваш логин: " + User.Identity.Name;
             }
             else
             {
                 ViewBag.Message = "Вы не авторизованы";
                 return this.View();
-            }            
-            int Id = _userService.GetIdOflogin(User.Identity.Name);
+            }
+            int id = this.CurrentUser.Id;            
+            //int id = _userService.GetIdOflogin(User.Identity.Name);
             User userDB = null;
             using (var userRepository = this.Factory.GetUserRepository())
             {
-                userDB = userRepository.GetById(Id);                                     
+                userDB = userRepository.GetById(id);                                     
             }
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<User, UserPersonalViewModel>());
             var user = AutoMapper.Mapper.Map<UserPersonalViewModel>(userDB);
@@ -93,10 +97,10 @@
             bool result = false;            
             if (ModelState.IsValid)
             {
-                int Id = _userService.GetIdOflogin(User.Identity.Name);
+                //int id = _userService.GetIdOflogin(User.Identity.Name);
                 AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserPersonalViewModel, User>());
                 var userDB = AutoMapper.Mapper.Map<User>(user);
-                result = _userService.UpdatePersonal(userDB, Id);   
+                result = _userService.UpdatePersonal(userDB, this.CurrentUser.Id);   
                                                                                              
                 if (result)
                 {
@@ -108,7 +112,7 @@
         }
 
         /// <summary>
-        /// 
+        /// GET: User/Manage/ChangePassword 
         /// </summary>
         /// <returns></returns>
         public ActionResult ChangePassword()
@@ -127,10 +131,10 @@
         {
             if (ModelState.IsValid)
             {
-                int id = _userService.GetIdOflogin(User.Identity.Name);
+                //int id = _userService.GetIdOflogin(User.Identity.Name);
                 try
                 {
-                    if (_userService.UpdatePassword(id, model.Password, model.OldPassword))
+                    if (_userService.UpdatePassword(this.CurrentUser.Id, model.Password, model.OldPassword))
                     {
                         return this.RedirectToAction("ChangePasswordSuccess");
                     }
@@ -175,8 +179,8 @@
                 if (_userService.UpdateLogin(User.Identity.Name, user.Login))
                 {
                     if (!User.Identity.Name.Contains("@"))
-                    {
-                            FormsAuthentication.SetAuthCookie(user.Login, true);
+                    {                         
+                        FormsAuthentication.RedirectFromLoginPage(user.Login, false);
                     }
                     string subject = "Ваш Логин был изменен";
                     string body = "Новый логин: " + user.Login;
