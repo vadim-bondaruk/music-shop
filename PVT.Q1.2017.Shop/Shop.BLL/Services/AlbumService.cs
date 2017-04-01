@@ -5,7 +5,6 @@
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
-    using Exceptions;
     using Helpers;
     using Infrastructure;
 
