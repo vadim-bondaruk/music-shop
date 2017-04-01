@@ -6,6 +6,7 @@
     using DAL.Infrastruture;
     using Exceptions;
     using Shop.Infrastructure.Security;
+    using System.Web;
 
     /// <summary>
     /// Authentification module
@@ -63,7 +64,10 @@
                     {
                         throw new UserValidationException("Не верный пароль", "Password");
                     }
-
+                    if (!user.ConfirmedEmail)
+                    {
+                        throw new UserValidationException("Не подтвержден email", "");
+                    }
                     if (redirect)
                     {
                         FormsAuthentication.RedirectFromLoginPage(user.Login, true);
