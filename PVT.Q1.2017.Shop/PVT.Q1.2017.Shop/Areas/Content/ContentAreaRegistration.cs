@@ -26,7 +26,7 @@
             context.MapRoute(
                 "Content_default",
                 "Content/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional });
+                new { action = "List", id = UrlParameter.Optional });
         }
     }
 }
