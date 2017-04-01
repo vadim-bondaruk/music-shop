@@ -111,6 +111,30 @@
         }
 
         [TestMethod]
+        public void GetArtistTracksListViewModelTest()
+        {
+            var artistDto = CreateArtist();
+            var artistViewModel = ModelsMapper.GetArtistTracksListViewModel(artistDto);
+
+            Assert.IsNotNull(artistViewModel);
+
+            Assert.IsTrue(artistViewModel.Id == artistDto.Id);
+            Assert.IsTrue(artistViewModel.Name.Equals(artistDto.Name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [TestMethod]
+        public void GetArtistAlbumsListViewModelTest()
+        {
+            var artistDto = CreateArtist();
+            var artistViewModel = ModelsMapper.GetArtistAlbumsListViewModel(artistDto);
+
+            Assert.IsNotNull(artistViewModel);
+
+            Assert.IsTrue(artistViewModel.Id == artistDto.Id);
+            Assert.IsTrue(artistViewModel.Name.Equals(artistDto.Name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [TestMethod]
         public void GetCurrencyViewModelTest()
         {
             var currencyDto = CreateCurrency();

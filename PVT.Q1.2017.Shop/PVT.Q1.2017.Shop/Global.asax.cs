@@ -3,11 +3,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Areas.Management.Extensions;
-    using Areas.Management.ViewModels;
-    using AutoMapper;
     using FluentValidation.Mvc;
-    using global::Shop.Common.Models;
 
     /// <summary>
     ///     Base class in an ASP.NET application
