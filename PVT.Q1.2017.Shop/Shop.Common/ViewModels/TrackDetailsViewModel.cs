@@ -30,7 +30,7 @@
         /// <summary>
         /// Gets or sets the track file.
         /// </summary>
-        public byte[] TrackFile { get; set; }
+        public byte[] TrackSample { get; set; }
 
         /// <summary>
         /// Gets or sets the track duration.
