@@ -1,6 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Helpers
 {
-    using System.Web;
     using AutoMapper;
     using Extensions;
     using global::Shop.Common.Models;
@@ -15,14 +14,14 @@
         /// <summary>
         /// The mapper for models with detailed information.
         /// </summary>
-        private static readonly IMapper ManagementModelsMapper;
+        private static readonly IMapper _managementModelsMapper;
 
         /// <summary>
         /// Initializes static members of the <see cref="ManagementMapper"/> class.
         /// </summary>
         static ManagementMapper()
         {
-            ManagementModelsMapper = CreateManagementMapper();
+            _managementModelsMapper = CreateManagementMapper();
         }
 
         /// <summary>
@@ -36,7 +35,7 @@
         /// </returns>
         public static Track GetTrackModel(TrackManagementViewModel track)
         {
-            return ManagementModelsMapper.Map<Track>(track);
+            return _managementModelsMapper.Map<Track>(track);
         }
 
         /// <summary>
@@ -50,7 +49,7 @@
         /// </returns>
         public static TrackManagementViewModel GetTrackManagementViewModel(TrackDetailsViewModel track)
         {
-            return ManagementModelsMapper.Map<TrackManagementViewModel>(track);
+            return _managementModelsMapper.Map<TrackManagementViewModel>(track);
         }
 
         /// <summary>
@@ -64,7 +63,7 @@
         /// </returns>
         public static Album GetAlbumModel(AlbumManagementViewModel album)
         {
-            return ManagementModelsMapper.Map<Album>(album);
+            return _managementModelsMapper.Map<Album>(album);
         }
 
         /// <summary>
@@ -78,7 +77,7 @@
         /// </returns>
         public static AlbumManagementViewModel GetAlbumManagementViewModel(AlbumDetailsViewModel album)
         {
-            return ManagementModelsMapper.Map<AlbumManagementViewModel>(album);
+            return _managementModelsMapper.Map<AlbumManagementViewModel>(album);
         }
 
         /// <summary>
@@ -94,22 +93,20 @@
                 cfg.CreateMap<ArtistViewModel, Artist>();
                 cfg.CreateMap<GenreViewModel, Genre>();
 
-                cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
-                                            .ForMember(dest => dest.Image, opt => opt.UseValue<HttpPostedFileBase>(null))
-                                            .ForMember(dest => dest.TrackFile, opt => opt.UseValue<HttpPostedFileBase>(null));
+                cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>();
 
                 cfg.CreateMap<TrackManagementViewModel, Track>()
                                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
                                             .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                                            .ForMember(dest => dest.TrackFile, opt => opt.ResolveUsing(src => src.TrackFile.ToBytes()))
-                                            .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.Image.ToBytes()));
+                                            .ForMember(dest => dest.TrackFile, opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
+                                            .ForMember(dest => dest.TrackSample, opt => opt.ResolveUsing(src => src.PostedTrackSample.ToBytes()))
+                                            .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.PostedImage.ToBytes()));
 
-                cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>()
-                                            .ForMember(dest => dest.Cover, opt => opt.UseValue<HttpPostedFileBase>(null));
+                cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
 
                 cfg.CreateMap<AlbumManagementViewModel, Album>()
                                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.Cover.ToBytes()));
+                                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.PostedCover.ToBytes()));
             });
 
             return managementConfiguration.CreateMapper();

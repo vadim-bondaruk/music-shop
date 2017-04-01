@@ -61,6 +61,11 @@
                 albumViewModel.Price = ServiceHelper.GetAlbumPrice(repository, id, currencyCode.Value, priceLevelId.Value);
             }
 
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
+            {
+               albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
+            }
+
             return albumViewModel;
         }
 
@@ -223,7 +228,7 @@
             Album album;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                album = repository.GetById(albumId);
+                album = repository.GetById(albumId, a => a.Artist);
             }
 
             return ModelsMapper.GetAlbumTracksListViewModel(album);

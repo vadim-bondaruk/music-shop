@@ -160,6 +160,14 @@
                 }
             }
 
+            using (var repository = factory.GetAlbumTrackRelationRepository())
+            {
+                foreach (var albumViewModel in albumViewModels)
+                {
+                    albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
+                }
+            }
+
             return albumViewModels;
         }
 
