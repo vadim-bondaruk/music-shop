@@ -254,7 +254,9 @@
         {
             MapperConfiguration commonMapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Artist, ArtistViewModel>();
+                cfg.CreateMap<Artist, ArtistViewModel>()
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Genre, GenreViewModel>();
 
@@ -291,7 +293,9 @@
         {
             MapperConfiguration specialListMapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Artist, ArtistViewModel>();
+                cfg.CreateMap<Artist, ArtistViewModel>()
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Track, TrackAlbumsListViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
@@ -299,9 +303,11 @@
                 cfg.CreateMap<Album, AlbumTracksListViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
 
-                cfg.CreateMap<Artist, ArtistTracksListViewModel>();
+                cfg.CreateMap<Artist, ArtistTracksListViewModel>()
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
 
-                cfg.CreateMap<Artist, ArtistAlbumsListViewModel>();
+                cfg.CreateMap<Artist, ArtistAlbumsListViewModel>()
+                   .ForMember(dest => dest.Albums, opt => opt.Ignore());
             });
 
             return specialListMapperConfiguration.CreateMapper();
@@ -319,9 +325,13 @@
             {
                 cfg.CreateMap<Genre, GenreViewModel>();
 
-                cfg.CreateMap<Artist, ArtistViewModel>();
+                cfg.CreateMap<Artist, ArtistViewModel>()
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
-                cfg.CreateMap<Artist, ArtistDetailsViewModel>();
+                cfg.CreateMap<Artist, ArtistDetailsViewModel>()
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Album, AlbumDetailsViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist));

@@ -82,7 +82,7 @@
         /// </returns>
         public virtual TEntity GetById(int id, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            return FirstOrDefault(x => x.Id == id);
+            return FirstOrDefault(x => x.Id == id, includes);
         }
 
         /// <summary>

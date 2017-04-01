@@ -73,7 +73,7 @@
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetTrackRepository())
             {
-                tracks = repository.GetAll(t => t.ArtistId == artistId);
+                tracks = repository.GetAll(t => t.ArtistId == artistId, t => t.Artist);
             }
 
             artistTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
@@ -100,7 +100,7 @@
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId);
+                albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId, a => a.Artist);
             }
 
             artistAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel);
