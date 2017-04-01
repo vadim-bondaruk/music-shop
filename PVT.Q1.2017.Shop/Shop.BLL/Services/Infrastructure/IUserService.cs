@@ -66,5 +66,13 @@
         /// <param name="newLogin"></param>
         /// <returns></returns>
         bool UpdateLogin(string userIdentity, string newLogin);
+
+        /// <summary>
+        /// Sets the user to the "Confirm Email" field in true
+        /// </summary>
+        /// <param name="id">Id from model user</param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        bool UpdateConfirmEmail(string id, string email);
     }
 }

@@ -259,19 +259,18 @@
         /// <returns></returns>
         public bool UpdateLogin (string userIdentity, string newLogin)
         {
-            User user = null;
-
             if (!string.IsNullOrEmpty(userIdentity))
             {
                 try
                 {
                     using (var userRepository = this.Factory.GetUserRepository())
                     {
-                        user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                        var user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
                                                           : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
                         user.Login = newLogin;
                         userRepository.AddOrUpdate(user);
                         userRepository.SaveChanges();
+                        return user != null;
                     }
                 }
                 catch (Exception ex)
@@ -280,7 +279,41 @@
                     throw;
                 }
             }
-            return user != null;
+            return false;
         }
+
+        /// <summary>
+        /// Sets the user to the "Confirm Email" field in true
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool UpdateConfirmEmail (string token, string email)
+        {
+            try
+            {
+                using (var userRepository = this.Factory.GetUserRepository())
+                {                   
+                    var user = userRepository.GetById(Int32.Parse(token));
+                    if (user != null)
+                    {
+                        if (user.Email == email)
+                        {
+                            user.ConfirmedEmail = true;
+                            userRepository.AddOrUpdate(user);
+                            userRepository.SaveChanges();
+                            return true;                        
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: write data to log             
+                throw;
+            }
+            return false;
+        }
+
     }
 }
