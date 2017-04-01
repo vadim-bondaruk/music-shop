@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Helpers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
