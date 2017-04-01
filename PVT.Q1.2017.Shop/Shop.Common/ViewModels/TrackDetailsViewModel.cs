@@ -56,5 +56,10 @@
         /// Track rating.
         /// </summary>
         public RatingViewModel Rating { get; set; }
+
+        /// <summary>
+        /// The number of albums where the current track exist.
+        /// </summary>
+        public int AlbumsCount { get; set; }
     }
 }

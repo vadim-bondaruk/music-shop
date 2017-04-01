@@ -64,6 +64,11 @@
 
             trackViewModel.Rating = ServiceHelper.CalculateTrackRating(this.Factory, id);
 
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            {
+                trackViewModel.AlbumsCount = repository.Count(r => r.TrackId == id);
+            }
+
             return trackViewModel;
         }
 

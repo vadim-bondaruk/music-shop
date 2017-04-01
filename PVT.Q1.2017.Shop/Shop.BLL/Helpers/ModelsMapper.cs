@@ -342,7 +342,8 @@
 
                 cfg.CreateMap<Track, TrackDetailsViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
-                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre));
+                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
             });
 
             return detailsMapperConfiguration.CreateMapper();
