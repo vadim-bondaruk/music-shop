@@ -43,7 +43,7 @@
         /// <returns>
         /// Track info view.
         /// </returns>
-        public virtual ActionResult Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -67,7 +67,7 @@
         /// <returns>
         /// All albums where the specified track is exist.
         /// </returns>
-        public virtual ActionResult AlbumsList(int? id)
+        public ActionResult AlbumsList(int? id)
         {
             if (id == null)
             {
@@ -83,5 +83,21 @@
 
             return this.View(trackAlbumsViewModel);
         }
+
+        public ActionResult LoadSample(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            var trackViewModel = _trackService.GetTrackDetails(id.Value);
+            if (trackViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return File(trackViewModel.TrackSample, "audio/mp3");
+        } 
     }
 }
