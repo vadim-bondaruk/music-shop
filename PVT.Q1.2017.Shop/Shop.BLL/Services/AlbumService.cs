@@ -228,7 +228,7 @@
             Album album;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                album = repository.GetById(albumId);
+                album = repository.GetById(albumId, a => a.Artist);
             }
 
             return ModelsMapper.GetAlbumTracksListViewModel(album);
