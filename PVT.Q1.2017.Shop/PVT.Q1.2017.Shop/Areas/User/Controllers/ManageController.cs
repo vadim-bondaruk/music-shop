@@ -20,7 +20,7 @@
     /// <summary>
     /// 
     /// </summary>
-    [ShopAuthorize(UserRoles.User)]
+    [ShopAuthorize(UserRoles.User, UserRoles.Admin)]
     public class ManageController : BaseController
     {
         /// <summary>
@@ -199,7 +199,7 @@
         public ActionResult ChangeLoginSuccess(string message)
         {
             ViewBag.Massage = "Операция выплнена успешно!!!";
-            return View();
+            return View();         
         }
     }
 }
