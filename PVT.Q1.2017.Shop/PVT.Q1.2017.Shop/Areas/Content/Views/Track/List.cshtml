@@ -1,0 +1,14 @@
+﻿@model ICollection<Shop.Common.ViewModels.TrackViewModel>
+
+@{
+    ViewBag.Title = "Список треков";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("TracksListPartialView", Model)
+
+@section cssStyles
+{
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
+}
