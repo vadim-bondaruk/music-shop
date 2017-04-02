@@ -100,5 +100,10 @@
         {
             return _userRepositoryMoq.Repository;
         }
+
+        public ISettingRepository GetSettingRepository()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
