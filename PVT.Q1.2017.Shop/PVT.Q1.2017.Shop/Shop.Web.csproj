@@ -136,6 +136,8 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="img\failure.png" />
+    <Content Include="img\success.png" />
     <Content Include="Content\ratingStars.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\ratingStars.css" />
