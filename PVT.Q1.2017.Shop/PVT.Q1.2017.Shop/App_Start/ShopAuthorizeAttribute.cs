@@ -60,10 +60,10 @@
                 {
                     return false;
                 }
-                else
-                {
-                    httpContext.User = new CurrentUser(userDB);
-                }
+                //else
+                //{
+                //    httpContext.User = new CurrentUser(userDB);
+                //}
             }
 
             return base.AuthorizeCore(httpContext);

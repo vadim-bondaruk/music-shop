@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.Shop.Controllers
+﻿namespace PVT.Q1._2017.BLL.Utils
 {
     using System;
     using System.Security.Principal;

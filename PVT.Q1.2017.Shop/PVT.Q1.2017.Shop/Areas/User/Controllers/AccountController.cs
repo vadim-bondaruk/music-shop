@@ -1,16 +1,15 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
+    using global::Shop.BLL.Utils.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using global::Shop.Infrastructure.Security;
     using Helpers;
     using App_Start;
     using global::Shop.Infrastructure.Enums;
+    using System.Web;
 
     /// <summary>
     /// 
@@ -104,8 +103,8 @@
             if (ModelState.IsValid)
             {
                 try
-                {
-                    this._authModule.LogIn(model.UserIdentity, model.Password);
+                {   
+                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current);
                     return this.RedirectToAction("Index", "Home", new { area = string.Empty });
                 }
                 catch (UserValidationException ex)
