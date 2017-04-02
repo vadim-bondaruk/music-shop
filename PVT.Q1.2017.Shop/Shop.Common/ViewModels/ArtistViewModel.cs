@@ -14,5 +14,15 @@
         /// Artist name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The number of the artist tracks.
+        /// </summary>
+        public int TracksCount { get; set; }
+
+        /// <summary>
+        /// The number of the artist albums.
+        /// </summary>
+        public int AlbumsCount { get; set; }
     }
 }

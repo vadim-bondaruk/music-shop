@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201703262002034_FixUserAndUserDataRelations.Designer.cs">
       <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704012052497_AddedTrackSample.cs" />
+    <Compile Include="Migrations\201704012052497_AddedTrackSample.Designer.cs">
+      <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -182,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703262002034_FixUserAndUserDataRelations.resx">
       <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704012052497_AddedTrackSample.resx">
+      <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -1,0 +1,88 @@
+﻿@model Shop.Common.ViewModels.AlbumDetailsViewModel
+
+@{
+    ViewBag.Title = "Информация об альбоме";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h4>@Model.Name</h4>
+        @if (Model.Artist != null)
+        {
+            <h5>@Model.Artist.Name</h5>
+        }
+
+        @if (Model.Cover != null && Model.Cover.Length > 0)
+        {
+            <img src="data:image;base64,@Convert.ToBase64String(Model.Cover)" alt="Обложка альбома"
+                 class="img-thumbnail img-responsive" style="max-width: 300px; max-height: 300px" />
+        }
+
+        <div>
+            <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Album", new { id = Model.Id, area = "Content" })"
+               title="Нажмите, чтобы увидеть все треки альбома">
+                Треки <span class="badge">@Model.TracksCount</span>
+            </a>
+            
+            @if (Model.Artist != null)
+            {
+                <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
+                   title="Нажмите, чтобы увидеть информацию об исполнителе">
+                    Информация об исполнителе
+                </a>
+            }
+        </div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            @if (Model.ReleaseDate != null)
+            {
+                <dt>
+                    Дата релиза
+                </dt>
+
+                <dd>
+                    @Model.ReleaseDate.Value.ToShortDateString()
+                </dd>
+            }
+            
+            @if (Model.Price != null)
+            {
+                <dt>
+                    Цена
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(m => m.Price)
+                </dd>
+            }
+        </dl>
+
+        <p>
+            @Html.Partial("EditAlbumButtonPartialView", Model.Id)
+            @Html.Partial("DeleteAlbumButtonPartialView", Model.Id)
+            
+            @if (Model.Price != null)
+            {
+                @Html.Partial("EditAlbumPriceButtonPartialView", Model.Id)
+            }
+            else
+            {
+                @Html.Partial("AddAlbumPriceButtonPartialView", Model.Id)
+            }
+        </p>
+    </div>
+</div>
+
+<p>
+    @Html.Partial("CreateAlbumButtonPartialView")
+    
+    @if (Model.Price != null)
+    {
+        @Html.Partial("BuyAlbumButtonPartialView", Model.Id)
+    }
+
+    @Html.ActionLink("Cписок альбомов", "List", "Album", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })
+</p>
