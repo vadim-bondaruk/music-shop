@@ -51,6 +51,14 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentBootstrap, Version=3.3.5.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentBootstrap.3.3.5.4\lib\net40\FluentBootstrap.dll</HintPath>
       <Private>True</Private>
@@ -146,7 +154,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
@@ -208,6 +215,7 @@
     <Content Include="Areas\Content\Views\Shared\EditTrackPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\AddAlbumPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditAlbumPriceButtonPartialView.cshtml" />
+    <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -299,8 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Setting\" />
-    <Folder Include="Areas\Content\Views\Track\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />

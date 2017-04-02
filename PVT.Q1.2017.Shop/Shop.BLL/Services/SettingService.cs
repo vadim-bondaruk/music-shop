@@ -2,13 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
     using DAL.Infrastruture;
-
     using Infrastructure;
-
     using Shop.Common.Models;
     using Shop.Common.ViewModels;
+    using Helpers;
 
     /// <summary>
     /// </summary>
@@ -84,6 +82,21 @@
                 repository.AddOrUpdate(setting);
                 repository.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ICollection<SettingViewModel> GetList()
+        {
+            ICollection<Setting> allSetting;
+            using (var repositry = this.Factory.GetSettingRepository())
+            {
+                allSetting = repositry.GetAll();
+            }
+
+            return allSetting.Select(ModelsMapper.GetSettingViewModel).ToList();
         }
     }
 }

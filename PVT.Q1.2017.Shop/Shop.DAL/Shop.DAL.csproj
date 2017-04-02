@@ -99,6 +99,10 @@
     <Compile Include="Migrations\201704012052497_AddedTrackSample.Designer.cs">
       <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704021251253_AddSetting.cs" />
+    <Compile Include="Migrations\201704021251253_AddSetting.Designer.cs">
+      <DependentUpon>201704021251253_AddSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -192,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704012052497_AddedTrackSample.resx">
       <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704021251253_AddSetting.resx">
+      <DependentUpon>201704021251253_AddSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

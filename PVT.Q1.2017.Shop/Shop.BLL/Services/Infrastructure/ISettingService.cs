@@ -1,6 +1,7 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Shop.Common.ViewModels;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The setting service
@@ -18,5 +19,11 @@
         /// </summary>
         /// <param name="settingViewModel"></param>
         void SaveSettingViewModel(SettingViewModel settingViewModel);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        ICollection<SettingViewModel> GetList();
     }
 }

@@ -25,7 +25,7 @@
         // GET: Admin/Setting
         public ActionResult Index()
         {
-            var setting = _settingService.GetSettingViewModel();
+            var setting = _settingService.GetList();
             return View(setting);
         }
     }

@@ -245,6 +245,20 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Setting"/> model to a new <see cref="SettingViewModel"/> model.
+        /// </summary>
+        /// <param name="setting">
+        /// The setting DTO model
+        /// </param>
+        /// <returns>
+        /// A new <see cref="SettingViewModel"/> model
+        /// </returns>
+        public static SettingViewModel GetSettingViewModel(Setting setting)
+        {
+            return _specialListMapper.Map<SettingViewModel>(setting);
+        }
+
+        /// <summary>
         /// Configures and returns a new instance of the common mapper.
         /// </summary>
         /// <returns>
@@ -279,6 +293,8 @@
 
                 cfg.CreateMap<Feedback, FeedbackViewModel>()
                    .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
+
+                cfg.CreateMap<Setting, SettingViewModel>();
             });
 
             return commonMapperConfiguration.CreateMapper();
