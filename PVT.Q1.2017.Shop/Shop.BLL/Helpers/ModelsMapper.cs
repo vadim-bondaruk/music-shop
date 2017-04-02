@@ -263,7 +263,8 @@
                 cfg.CreateMap<Currency, CurrencyViewModel>();
 
                 cfg.CreateMap<Album, AlbumViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist));
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Track, TrackViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
@@ -298,10 +299,12 @@
                    .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Track, TrackAlbumsListViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.Albums, opt => opt.Ignore());
 
                 cfg.CreateMap<Album, AlbumTracksListViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
 
                 cfg.CreateMap<Artist, ArtistTracksListViewModel>()
                    .ForMember(dest => dest.Tracks, opt => opt.Ignore());
@@ -334,11 +337,13 @@
                    .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Album, AlbumDetailsViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist));
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Track, TrackDetailsViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
-                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre));
+                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
             });
 
             return detailsMapperConfiguration.CreateMapper();

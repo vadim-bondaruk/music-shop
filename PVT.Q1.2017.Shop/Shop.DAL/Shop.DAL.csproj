@@ -94,9 +94,13 @@
     <Compile Include="Migrations\201703262002034_FixUserAndUserDataRelations.Designer.cs">
       <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704011337226_UserAddConfirmedEmail.cs" />
-    <Compile Include="Migrations\201704011337226_UserAddConfirmedEmail.Designer.cs">
-      <DependentUpon>201704011337226_UserAddConfirmedEmail.cs</DependentUpon>
+    <Compile Include="Migrations\201704012052497_AddedTrackSample.cs" />
+    <Compile Include="Migrations\201704012052497_AddedTrackSample.Designer.cs">
+      <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704021715282_FixUser.cs" />
+    <Compile Include="Migrations\201704021715282_FixUser.Designer.cs">
+      <DependentUpon>201704021715282_FixUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -187,8 +191,11 @@
     <EmbeddedResource Include="Migrations\201703262002034_FixUserAndUserDataRelations.resx">
       <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704011337226_UserAddConfirmedEmail.resx">
-      <DependentUpon>201704011337226_UserAddConfirmedEmail.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704012052497_AddedTrackSample.resx">
+      <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704021715282_FixUser.resx">
+      <DependentUpon>201704021715282_FixUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

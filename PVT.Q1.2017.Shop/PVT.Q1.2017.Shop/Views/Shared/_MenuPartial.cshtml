@@ -3,6 +3,9 @@
 {
     <li>@Html.ActionLink("Мой аккаунт", "Index", new { area = "User", controller = "Manage" })</li>
 }
+<li>@Html.ActionLink("Исполнители", "List", "Artist", new { area = "Content" }, null)</li>
+<li>@Html.ActionLink("Альбомы", "List", "Album", new { area = "Content" }, null)</li>
+<li>@Html.ActionLink("Треки", "List", "Track", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
 @if (Request.IsAuthenticated)
 {

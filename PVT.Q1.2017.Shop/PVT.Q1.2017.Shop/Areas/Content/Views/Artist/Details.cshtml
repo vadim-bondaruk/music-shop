@@ -1,0 +1,66 @@
+﻿@model Shop.Common.ViewModels.ArtistDetailsViewModel
+
+@{
+    ViewBag.Title = "Информация об исполнителе";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h4>@Model.Name</h4>
+        @if (Model.Photo != null && Model.Photo.Length > 0)
+        {
+            <img src="data:image;base64,@Convert.ToBase64String(Model.Photo)" alt="Фото исполнителя"
+                 class="img-thumbnail img-responsive" style="max-width: 300px; max-height: 300px" />
+        }
+        
+        <div>
+            <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Artist", new { id = Model.Id, area = "Content" })"
+                title="Нажмите, чтобы увидеть все треки исполнителя">
+                Треки исполнителя <span class="badge">@Model.TracksCount</span>
+            </a>
+            
+            <a class="btn btn-sm btn-success" href="@Url.Action("AlbumsList", "Artist", new { id = Model.Id, area = "Content" })"
+                title="Нажмите, чтобы увидеть все альбомы исполнителя">
+                Альбомы исполнителя <span class="badge">@Model.AlbumsCount</span>
+            </a>
+        </div>
+
+        <hr/>
+        <dl>
+            @if (Model.Birthday != null)
+            {
+                <dt>
+                    День рождения/основания
+                </dt>
+
+                <dd>
+                     @Model.Birthday.Value.ToShortDateString()
+                </dd>
+            }
+            
+            @if (!string.IsNullOrWhiteSpace(Model.Biography))
+            {
+                <dt>
+                    Биография
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Biography)
+                </dd>
+            }
+        </dl>
+
+        <p>
+            @Html.Partial("EditArtistButtonPartialView", Model.Id)
+            @Html.Partial("DeleteArtistButtonPartialView", Model.Id)
+        </p>
+    </div>
+</div>
+
+<p>
+    @Html.Partial("CreateArtistButtonPartialView")
+
+    @Html.ActionLink("Cписок исполнителей", "List", "Artist", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })
+</p>

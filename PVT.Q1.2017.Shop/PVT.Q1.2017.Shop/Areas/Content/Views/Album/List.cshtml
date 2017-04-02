@@ -1,0 +1,14 @@
+﻿@model ICollection<Shop.Common.ViewModels.AlbumViewModel>
+
+@{
+    ViewBag.Title = "Список альбомов";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.Partial("CreateAlbumButtonPartialView")
+</p>
+        
+@Html.Partial("AlbumsListPartialView", Model)
+

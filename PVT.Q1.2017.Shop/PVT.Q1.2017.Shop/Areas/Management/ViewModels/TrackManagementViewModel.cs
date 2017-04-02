@@ -28,14 +28,34 @@
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        /// Track image.
+        /// The track image. Optional.
         /// </summary>
-        public HttpPostedFileBase Image { get; set; }
+        public byte[] Image { get; set; }
 
         /// <summary>
-        /// Track file.
+        /// The track file. Required. We are selling it!
         /// </summary>
-        public HttpPostedFileBase TrackFile { get; set; }
+        public byte[] TrackFile { get; set; }
+
+        /// <summary>
+        /// The track sample. Optional.
+        /// </summary>
+        public byte[] TrackSample { get; set; }
+
+        /// <summary>
+        /// Posted track image file.
+        /// </summary>
+        public HttpPostedFileBase PostedImage { get; set; }
+
+        /// <summary>
+        /// Posted track file.
+        /// </summary>
+        public HttpPostedFileBase PostedTrackFile { get; set; }
+
+        /// <summary>
+        /// Posted track sample file.
+        /// </summary>
+        public HttpPostedFileBase PostedTrackSample { get; set; }
 
         /// <summary>
         /// Track duration.

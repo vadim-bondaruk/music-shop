@@ -67,7 +67,7 @@
         /// <returns>
         /// Album with tracks view.
         /// </returns>
-        public virtual ActionResult TracksList(int? id)
+        public ActionResult TracksList(int? id)
         {
             if (id == null)
             {
