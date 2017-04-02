@@ -16,3 +16,6 @@ textarea {
     max-width: 280px;
 }
 
+.btn {
+    margin-bottom: 2px !important;
+}
