@@ -32,6 +32,7 @@
         /// </returns>
         public ActionResult List()
         {
+            // TODO: передавать currency и price level из UserData текущего пользователя
             return this.View(this._trackService.GetTracksList());
         }
 
@@ -42,14 +43,21 @@
         /// <returns>
         /// Track info view.
         /// </returns>
-        public virtual ActionResult Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this._trackService.GetTrackDetails(id.Value));
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var trackViewModel = _trackService.GetTrackDetails(id.Value);
+            if (trackViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return this.View(trackViewModel);
         }
 
         /// <summary>
@@ -59,14 +67,37 @@
         /// <returns>
         /// All albums where the specified track is exist.
         /// </returns>
-        public virtual ActionResult AlbumsList(int? id)
+        public ActionResult AlbumsList(int? id)
         {
             if (id == null)
             {
                 return this.RedirectToAction("List");
             }
 
-            return null; // this.View(this._trackService.GetAlbumsList(new Track { Id = id }));
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
+            if (trackAlbumsViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return this.View(trackAlbumsViewModel);
         }
+
+        public ActionResult LoadSample(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            var trackViewModel = _trackService.GetTrackDetails(id.Value);
+            if (trackViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return File(trackViewModel.TrackSample, "audio/mp3");
+        } 
     }
 }

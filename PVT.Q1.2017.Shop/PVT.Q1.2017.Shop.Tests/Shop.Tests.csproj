@@ -102,6 +102,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArtistServiceTest.cs" />
     <Compile Include="AlbumServiceTest.cs" />
     <Compile Include="BllServiceTests\PaymentServiceTest.cs" />
     <Compile Include="CartServiceTest.cs" />

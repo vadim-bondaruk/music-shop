@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
-    using Common.Models;
     using Common.ViewModels;
 
     /// <summary>

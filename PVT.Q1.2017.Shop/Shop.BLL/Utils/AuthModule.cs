@@ -1,13 +1,11 @@
 ﻿namespace Shop.BLL.Utils
 {
     using System;
-    using System.Linq;
     using System.Web.Security;
     using Common.Models;
     using DAL.Infrastruture;
     using Exceptions;
-    using Shop.Infrastructure.Security;        
-    using Utils;
+    using Shop.Infrastructure.Security;
 
     /// <summary>
     /// Authentification module
@@ -17,15 +15,17 @@
         /// <summary>
         /// Database or repository with users data
         /// </summary>
-        private readonly IUserRepository _users;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="AuthModule"/> class.
         /// </summary>
-        /// <param name="factory"></param>
-        public AuthModule(IUserRepository users)
+        /// <param name="factory">
+        /// The repository factory.
+        /// </param>
+        public AuthModule(IRepositoryFactory factory)
         {
-            this._users = users;
+            this._repositoryFactory = factory;
         }
 
         /// <summary>
@@ -47,16 +47,20 @@
             }                
 
             User user;
+            using (var repository = _repositoryFactory.GetUserRepository())
+            {
+                if (useridentity.Contains("@"))
+                {
+                    user =
+                        repository.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                }
+                else
+                {
+                    user =
+                        repository.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                }
+            }
 
-            if (useridentity.Contains("@"))
-            {
-                user = this._users.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
-            }
-            else
-            {
-                user = this._users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
-            }
-            
             if (user != null)
             {
                 if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
