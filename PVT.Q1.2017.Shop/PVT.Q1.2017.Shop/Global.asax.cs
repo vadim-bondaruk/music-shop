@@ -44,16 +44,19 @@
 
                 UserPrincipalSerializeModel serializeUser = serializer.Deserialize<UserPrincipalSerializeModel>(authTicket.UserData);
 
-                User user = new User
+                if (serializeUser != null)
                 {
-                    Id = serializeUser.Id,
-                    Login = serializeUser.Login,
-                    Email = serializeUser.Email
-                };
+                    User user = new User
+                    {
+                        Id = serializeUser.Id,
+                        Login = serializeUser.Login,
+                        Email = serializeUser.Email
+                    };
 
-                CurrentUser newUser = new CurrentUser(user);
+                    CurrentUser newUser = new CurrentUser(user);
 
-                HttpContext.Current.User = newUser;
+                    HttpContext.Current.User = newUser; 
+                }
             }
         }
     }

@@ -61,8 +61,7 @@
                     Login = user.Login,
                     Email = user.Email
                 };
-
-                if (!user.ConfirmedEmail)
+                if(!user.ConfirmedEmail)
                 {
                     throw new UserValidationException("Не подтвержден email", "");
                 }
@@ -76,13 +75,13 @@
             }
             //return new CurrentUser(user);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         public void LogOut()
         {
-            FormsAuthentication.SignOut();            
+            FormsAuthentication.SignOut();
         }
 
         /// <summary>
@@ -91,7 +90,7 @@
         /// <param name="user"></param>
         /// <param name="isPersistent"></param>
         /// <param name="expires"></param>
-        public HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent, int expires = 20)
+        private HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent = true, int expires = 1440)
         {
             if (user == null)
             {
@@ -103,16 +102,23 @@
             string cookiesData = serializer.Serialize(user);
 
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
-                    1, 
-                    user.Login, 
-                    DateTime.Now, 
-                    DateTime.Now.AddMinutes(expires), 
-                    isPersistent, 
-                    cookiesData);
+                    1,
+                    user.Login,
+                    DateTime.Now,
+                    DateTime.Now.AddMinutes(expires),
+                    isPersistent,
+                    cookiesData,
+                    FormsAuthentication.FormsCookiePath);
 
             string encTicket = FormsAuthentication.Encrypt(ticket);
+            var cookies = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
 
-            return new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);             
+            if (ticket.IsPersistent)
+            {
+                cookies.Expires = ticket.Expiration;
+            }
+                
+            return cookies;
         }
 
         /// <summary>
@@ -136,7 +142,7 @@
                     {
                         user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
                     }
-                } 
+                }
             }
 
             return user;
