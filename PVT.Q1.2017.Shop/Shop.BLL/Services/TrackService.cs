@@ -155,7 +155,7 @@
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id));
+                albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id), a => a.Artist);
             }
 
             trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId);
@@ -179,7 +179,7 @@
             Track track;
             using (var repository = this.Factory.GetTrackRepository())
             {
-                track = repository.GetById(trackId);
+                track = repository.GetById(trackId, t => t.Artist);
             }
 
             return ModelsMapper.GetTrackAlbumsListViewModel(track);

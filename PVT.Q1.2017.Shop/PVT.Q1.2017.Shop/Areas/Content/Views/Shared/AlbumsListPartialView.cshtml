@@ -39,9 +39,9 @@
                 @Html.DisplayFor(m => album.Price)
             </td>
             <td>
-                @Html.Partial("EditTrackButtonPartialView", album.Id)
+                @Html.Partial("EditAlbumButtonPartialView", album.Id)
 
-                @Html.Partial("DeleteTrackButtonPartialView", album.Id)
+                @Html.Partial("DeleteAlbumButtonPartialView", album.Id)
 
                 @if (album.Price != null)
                 {
