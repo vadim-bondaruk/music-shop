@@ -46,33 +46,34 @@
                 throw new ArgumentException("password");
             }
 
-            User user = this.GetUser(useridentity);            
- 
-                if (user != null)
-                {
-                    if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
-                    {
-                        throw new UserValidationException("Не верный пароль", "Password");
-                    }
+            User user = this.GetUser(useridentity);
 
-                    UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
-                    {
-                        Id = user.Id,
-                        Login = user.Login,
-                        Email = user.Email
-                    };
-                 
-                    if (!user.ConfirmedEmail)
-                    {
-                        throw new UserValidationException("Не подтвержден email", "");
-                    }
-
-                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
-            }
-                else
+            if (user != null)
+            {
+                if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new UserValidationException("User not found", "Useridentity");
+                    throw new UserValidationException("Не верный пароль", "Password");
                 }
+
+                UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Email = user.Email
+                };
+
+                if (!user.ConfirmedEmail)
+                {
+                    throw new UserValidationException("Не подтвержден email", "");
+                }
+
+                context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
+
+            }
+            else
+            {
+                throw new UserValidationException("Не верный логи", "Useridentity");
+            }
             //return new CurrentUser(user);
         }
         

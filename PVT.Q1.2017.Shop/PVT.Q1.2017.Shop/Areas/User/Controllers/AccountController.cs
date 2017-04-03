@@ -128,6 +128,7 @@
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
+                    return View(model);
                 }
             }
 
