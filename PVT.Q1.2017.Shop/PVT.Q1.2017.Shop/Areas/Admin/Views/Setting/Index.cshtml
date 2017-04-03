@@ -1,54 +1,52 @@
-﻿@model IEnumerable<Shop.Common.ViewModels.SettingViewModel>
+﻿@model Shop.Common.ViewModels.SettingViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Setting";
 }
 
-<!DOCTYPE html>
+<h3>Настройки системы</h3>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DefaultCurrencyId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DefaultCurrencyFullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DefaultPriceLevelId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DefaultPriceLevelName)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DefaultCurrencyId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DefaultCurrencyFullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DefaultPriceLevelId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DefaultPriceLevelName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-inline">
+        <h4>Настройки системы:</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DefaultCurrencyFullName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DefaultCurrencyId, new SelectList(Model.DefaultCurrencyFullName, "Id", "DefaultCurrencyId"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DefaultCurrencyId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DefaultPriceLevelName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DefaultPriceLevelId, new SelectList(Model.DefaultPriceLevelName, "Id", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DefaultPriceLevelId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("На главную", "Index", new { area = "", controller = "Home" })
+</div>
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+@section Scripts {
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -7,6 +7,7 @@
     using Shop.Common.Models;
     using Shop.Common.ViewModels;
     using Helpers;
+    using System;
 
     /// <summary>
     /// </summary>
@@ -51,8 +52,11 @@
                 // set selected value  // TODO best way to show drop down list?
                 settingViewModel.DefaultCurrencyId = setting.DefaultCurrencyId;
                 settingViewModel.DefaultPriceLevelId = setting.DefaultPriceLevelId;
-                settingViewModel.DefaultCurrencyFullName = settingViewModel.DefaultCurrencyViewModelList.FirstOrDefault(x => x.Id == settingViewModel.DefaultCurrencyId).FullName;  // TODO add checking
-                settingViewModel.DefaultPriceLevelName = settingViewModel.DefaultPriceLevelViewModelList.FirstOrDefault(x => x.Id == settingViewModel.DefaultPriceLevelId).Name;  // TODO add checking
+                settingViewModel.DefaultCurrencyFullName = settingViewModel.DefaultCurrencyViewModelList
+                    .FirstOrDefault(x => x.Id == settingViewModel.DefaultCurrencyId).FullName;  // TODO add checking
+
+                settingViewModel.DefaultPriceLevelName = settingViewModel.DefaultPriceLevelViewModelList
+                    .FirstOrDefault(x => x.Id == settingViewModel.DefaultPriceLevelId).Name;  // TODO add checking
             }
 
             return settingViewModel;
@@ -82,21 +86,6 @@
                 repository.AddOrUpdate(setting);
                 repository.SaveChanges();
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ICollection<SettingViewModel> GetList()
-        {
-            ICollection<Setting> allSetting;
-            using (var repositry = this.Factory.GetSettingRepository())
-            {
-                allSetting = repositry.GetAll();
-            }
-
-            return allSetting.Select(ModelsMapper.GetSettingViewModel).ToList();
         }
     }
 }

@@ -19,11 +19,5 @@
         /// </summary>
         /// <param name="settingViewModel"></param>
         void SaveSettingViewModel(SettingViewModel settingViewModel);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        ICollection<SettingViewModel> GetList();
     }
 }
