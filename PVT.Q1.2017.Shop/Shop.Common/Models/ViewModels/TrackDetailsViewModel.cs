@@ -3,53 +3,63 @@
     using System;
 
     /// <summary>
-    /// The track view model.
+    ///     The track view model.
     /// </summary>
     public class TrackDetailsViewModel
     {
         /// <summary>
-        /// Gets or sets the track id.
+        /// Gets or sets the album name.
         /// </summary>
-        public int Id { get; set; }
+        public string AlbumName { get; set; }
 
         /// <summary>
-        /// Gets or sets the track name.
+        ///     The track artist.
         /// </summary>
-        public string Name { get; set; }
+        public string ArtistName { get; set; }
 
         /// <summary>
-        /// Gets or sets the track release date.
-        /// </summary>
-        public DateTime? ReleaseDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the track image.
-        /// </summary>
-        public byte[] Image { get; set; }
-
-        /// <summary>
-        /// Gets or sets the track file.
-        /// </summary>
-        public byte[] TrackFile { get; set; }
-
-        /// <summary>
-        /// Gets or sets the track duration.
+        ///     Gets or sets the track duration.
         /// </summary>
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
-        /// The track artist.
+        ///     Gets or sets the genre name.
         /// </summary>
-        public ArtistViewModel Artist { get; set; }
+        public string GenreName { get; set; }
 
         /// <summary>
-        /// The track genre.
+        ///     Gets or sets the track id.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the track image.
+        /// </summary>
+        public byte[] Image { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the track name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     The track genre.
         /// </summary>
         public PriceViewModel Price { get; set; }
 
         /// <summary>
-        /// Track rating.
+        ///     Track rating.
         /// </summary>
         public RatingViewModel Rating { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the track release date.
+        /// </summary>
+        public DateTime? ReleaseDate { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the track file.
+        /// </summary>
+        public byte[] TrackFile { get; set; }
     }
 }
