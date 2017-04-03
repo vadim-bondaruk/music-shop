@@ -49,7 +49,7 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View();
+            return this.View(this._trackService.GetTrackDetails(id.Value));
         }
 
         /// <summary>

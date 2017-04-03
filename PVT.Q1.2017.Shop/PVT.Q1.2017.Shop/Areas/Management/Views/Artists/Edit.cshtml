@@ -1,7 +1,7 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
 
 <body>
-<h2 class="title">Редактирование информации об исполнителе</h2>
+<h2 class="title" style="position: initial; margin-top: 15px">Редактирование информации об исполнителе</h2>
 @using (Html.BeginForm("Edit", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg", @class = "edit-form" }))
 {
     @Html.AntiForgeryToken()
@@ -28,9 +28,9 @@
                     </ul>
                 </div>
                 <div>
-                    <a class="btn" id="add-track" aria-label="Left Align" href="@Url.Action("Add", "Tracks", new { area = "Management", id= Model.Id })">+ Трек</a>
-                    <a class="btn" id="add-album" aria-label="Left Align" href=@Url.Action("New", "Albums", new { area = "Management", id= Model.Id })>+ Альбом</a>
-                    <button type="submit" class="btn" id="btn-save" aria-label="Left Align">Сохранить</button>
+                    <a class="btn btn-primary" id="add-track" aria-label="Left Align" href="@Url.Action("New", "Tracks", new { area = "Management", id= Model.Id })">+ Трек</a>
+                    <a class="btn btn-primary" id="add-album" aria-label="Left Align" href=@Url.Action("New", "Albums", new { area = "Management", id= Model.Id })>+ Альбом</a>
+                    <button type="submit" class="btn btn-primary" id="btn-save" aria-label="Left Align">Сохранить</button>
                 </div>
             </div>
         </div>

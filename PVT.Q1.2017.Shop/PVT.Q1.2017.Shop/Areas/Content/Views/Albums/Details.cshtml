@@ -13,14 +13,15 @@
                 <h3>Дата выхода: @Html.ValueFor(model => model.ReleaseDate, "{0:dd MMMM yyyy} г.")</h3>
                 <div class="image-block">
                     <div class="img-container">
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.Cover)" onerror="this.src = '/img/defuserpic.png'" />
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Cover)" onerror="this.src = '/img/defuserpic.png'"/>
                     </div>
                 </div>
-                <div class="links">
+                <div class="links" style="width: 500px">
                     <div style="display: inline-block; width: 400px;">
-                        <div class="btn-align" style="display: block; text-align: center">
-                            @Html.ActionLink("Правка", "Edit", new { area = "Management", Controller = "Albums", id = Model.Id }, new { @class = "btn", id = "btn-edit", style = "display: inline-block" })
-                            <a class="btn" id="btn-delete" href="javascript:document.forms[0].submit()" style="display: inline-block">Удалить</a>
+                        <div class="btn-align" style="display: block; width: 500px; text-align: right; margin-top: 15px">
+                            <a href="@Url.Action("List", "Albums", new {Area="Content"})" class="btn btn-default">Отмена</a>
+                            <a class="btn btn-default"href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.Id })">Правка</a>
+                            <a class="btn btn-default" href="javascript:document.forms[0].submit()" style="display: inline-block">Удалить</a>
                             @using (Html.BeginForm("Delete", "Albums", new { area = "Management" }, FormMethod.Post, new { enctype = "multipart/form-data", name = "formdel", @class = "edit-form" }))
                             {
                                 @Html.AntiForgeryToken()

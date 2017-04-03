@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using AutoMapper;
@@ -18,7 +19,19 @@
     {
         /// <summary>
         /// </summary>
+        private readonly IAlbumRepository albumRepository;
+
+        /// <summary>
+        /// </summary>
+        private readonly IArtistRepository artistRepository;
+
+        /// <summary>
+        /// </summary>
         private readonly IArtistService artistService;
+
+        /// <summary>
+        /// </summary>
+        private readonly IGenreRepository genreRepository;
 
         /// <summary>
         ///     The track service.
@@ -31,11 +44,28 @@
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        /// <param name="artistService"></param>
-        public TracksController(IRepositoryFactory repositoryFactory, IArtistService artistService)
+        /// <param name="artistService">
+        ///     The artist service.
+        /// </param>
+        /// <param name="artistRepository">
+        ///     The artist repository.
+        /// </param>
+        /// <param name="genreRepository">
+        ///     The genre repository.
+        /// </param>
+        /// <param name="albumRepository"></param>
+        public TracksController(
+            IRepositoryFactory repositoryFactory,
+            IArtistService artistService,
+            IArtistRepository artistRepository,
+            IGenreRepository genreRepository,
+            IAlbumRepository albumRepository)
         {
             this.RepositoryFactory = repositoryFactory;
             this.artistService = artistService;
+            this.artistRepository = artistRepository;
+            this.genreRepository = genreRepository;
+            this.albumRepository = albumRepository;
         }
 
         /// <summary>
@@ -48,14 +78,23 @@
         ///     The track service.
         /// </param>
         /// <param name="artistService"></param>
+        /// <param name="artistRepository"></param>
+        /// <param name="genreRepository"></param>
+        /// <param name="albumRepository"></param>
         public TracksController(
             IRepositoryFactory repositoryFactory,
             ITrackService trackService,
-            IArtistService artistService)
+            IArtistService artistService,
+            IArtistRepository artistRepository,
+            IGenreRepository genreRepository,
+            IAlbumRepository albumRepository)
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;
             this.artistService = artistService;
+            this.artistRepository = artistRepository;
+            this.genreRepository = genreRepository;
+            this.albumRepository = albumRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
@@ -63,6 +102,27 @@
         ///     Gets or sets the repository factory.
         /// </summary>
         public IRepositoryFactory RepositoryFactory { get; set; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult New(int id)
+        {
+            ICollection<Genre> genres;
+            using (var repo = this.genreRepository)
+            {
+                genres = repo.GetAll();
+            }
+
+            this.ViewBag.Genres = genres;
+
+            var artist = this.artistService.GetArtist(id);
+            return this.View(new TrackManagementViewModel { Artist = artist });
+        }
 
         /// <summary>
         /// </summary>
@@ -108,28 +168,6 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult Add(int id)
-        {
-            var artist = this.artistService.GetArtist(id);
-            return this.View("New", new TrackManagementViewModel { ArtistId = artist.Id });
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult New()
-        {
-            return this.View(new TrackManagementViewModel());
-        }
-
-        /// <summary>
-        /// </summary>
         /// <param name="viewModel">
         ///     The view model.
         /// </param>
@@ -142,18 +180,11 @@
             var track = ManagementMapper.GetTrackModel(viewModel);
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
-                Artist artist;
-                using (var repo = this.RepositoryFactory.GetArtistRepository())
-                {
-                    artist = repo.GetById(viewModel.ArtistId);
-                }
-
-                track.ArtistId = artist.Id;
                 repository.AddOrUpdate(track);
                 repository.SaveChanges();
             }
 
-            return this.View();
+            return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
         }
     }
 }

@@ -1,52 +1,39 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
+    using System.Web.Mvc;
+
+    using global::Shop.Common.Models;
 
     /// <summary>
     /// </summary>
     public class TrackManagementViewModel
     {
         /// <summary>
-        ///     Gets or sets the album id.
+        ///     Gets or sets the artist.
         /// </summary>
-        public int AlbumId { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the album name.
-        /// </summary>
-        [Display(Name = "Альбом")]
-        public string AlbumName { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the artist id.
-        /// </summary>
-        public int ArtistId { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the artist name.
-        /// </summary>
-        [Display(Name = "Исполнитель")]
-        public string ArtistName { get; set; }
+        [DisplayName("Исполнитель")]
+        public Artist Artist { get; set; }
 
         /// <summary>
         ///     Gets or sets the duration.
         /// </summary>
-        [Display(Name = "Продолжительность")]
+        [DisplayName("Продолжительность")]
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
-        /// Gets or sets the genre id.
+        ///     Gets or sets the genre.
         /// </summary>
-        public int GenreId { get; set; }
+        /*public Genre Genre { get; set; }*/
 
         /// <summary>
-        ///     Gets or sets the genre name.
+        ///     Gets or sets the genre id.
         /// </summary>
-        [Display(Name = "Жанр")]
-        public string GenreName { get; set; }
+        public int GenreId { get; set; }
 
         /// <summary>
         ///     Gets or sets the image.
@@ -73,7 +60,7 @@
         /// <summary>
         ///     Gets or sets the price.
         /// </summary>
-        [Display(Name = "Стоимость")]
+        [DisplayName("Стоимость")]
         public double Price { get; set; }
 
         /// <summary>
@@ -81,6 +68,7 @@
         /// </summary>
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
+        [DisplayName("Дата выхода")]
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>

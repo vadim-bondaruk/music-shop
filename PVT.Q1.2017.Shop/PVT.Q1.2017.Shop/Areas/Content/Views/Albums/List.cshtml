@@ -11,8 +11,8 @@
         <ul>
             @foreach (var item in Model)
             {
-                <li onclick="itemClick(@item.Id)">
-                    <img src="data:image;base64,@Convert.ToBase64String(item.Cover)" onerror="this.src = '/img/defuserpic.png'"/>
+                <li id="albums-item" onclick="itemClick(@item.Id)" style="height: 200px">
+                    <img src="data:image;base64,@Convert.ToBase64String(item.Cover)" onerror="this.src = '/img/defuserpic.png'" style="width: 200px; height: 200px;"/>
                     <div>
                         <h2>@Html.DisplayFor(modelItem => item.Artist.Name)</h2>
                         <h3>@Html.DisplayFor(modelItem => item.Name)</h3>

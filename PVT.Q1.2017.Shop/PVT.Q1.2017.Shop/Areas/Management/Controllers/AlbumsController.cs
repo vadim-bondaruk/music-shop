@@ -1,9 +1,13 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using AutoMapper;
 
+    using Castle.Core.Internal;
+
+    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
@@ -107,6 +111,7 @@
                     {
                         viewModel.ArtistName = album.Artist.Name;
                     }
+
                     return this.View(viewModel);
                 }
             }
@@ -140,11 +145,21 @@
                         artistRepo.AddOrUpdate(artist);
                         artistRepo.SaveChanges();
                         album.Artist = artist;
+                        albumRepo.AddOrUpdate(album);
+                        albumRepo.SaveChanges();
+
+                        if (artist.Albums.IsNullOrEmpty())
+                        {
+                            artist.Albums = new List<Album>() { album };
+                        }
+                        else
+                        {
+                            artist.Albums.Add(album);
+                        }
+                        artistRepo.AddOrUpdate(artist);
+                        artistRepo.SaveChanges();
                     }
                 }
-
-                albumRepo.AddOrUpdate(album);
-                albumRepo.SaveChanges();
                 return this.RedirectToAction("Details", new { id = album.Id, area = "Content", Controller = "Albums" });
             }
         }
@@ -179,13 +194,28 @@
             {
                 var artist = this.artistService.GetArtist(viewModel.Artist.Id);
 
+
                 if (artist != null)
                 {
                     viewModel.Artist = artist;
+                    var albumItem = ManagementMapper.GetAlbumModel(viewModel);
+                    if (artist.Albums.IsNullOrEmpty())
+                    {
+                        artist.Albums = new List<Album>() { albumItem };
+                    }
+                    else
+                    {
+                        artist.Albums.Add(albumItem);
+                    }
                 }
 
                 album = ManagementMapper.GetAlbumModel(viewModel);
                 albumRepo.AddOrUpdate(album);
+                using (var artistRepo = this.repositoryFactory.GetArtistRepository())
+                {
+                    artistRepo.AddOrUpdate(artist);
+                    artistRepo.SaveChanges();
+                }
                 albumRepo.SaveChanges();
             }
 

@@ -87,7 +87,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public static GenreManagementViewModel GetGenreManagementViewModel(Genre genre)
+        public static GenreManagementViewModel GetGenreManagementViewModel(GenreDetailsViewModel genre)
         {
             return ManagementModelsMapper.Map<GenreManagementViewModel>(genre);
         }
@@ -145,6 +145,7 @@
                 cfg =>
                     {
                         cfg.CreateMap<GenreManagementViewModel, Genre>().ReverseMap();
+                        cfg.CreateMap<GenreDetailsViewModel, GenreManagementViewModel>().ReverseMap();
 
                         cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
                             .ForMember(dest => dest.Image, opt => opt.UseValue<HttpPostedFileBase>(null))

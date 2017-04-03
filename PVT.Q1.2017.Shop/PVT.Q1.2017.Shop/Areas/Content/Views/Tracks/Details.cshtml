@@ -1,66 +1,33 @@
-﻿@model Shop.Common.Models.Track
+﻿@model Shop.Common.Models.ViewModels.TrackDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
-
-<div>
-    <h4>Track</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ArtistId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ArtistId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GenreId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GenreId)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "AddOrUpdate", "Track", new { id = Model.Id, area = "Management" }, null) |
-    @Html.ActionLink("Back to List", "List")
-</p>
+<ul style="width: 40%; display: inline-table; vertical-align: middle">
+    <li>
+        @Html.DisplayNameFor(m => m.Name)
+        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
+    </li>
+    <li>
+        @Html.DisplayNameFor(m => m.ArtistName)
+        @Html.TextBoxFor(m => m.Artist.Name, new { PlaceHolder = "Исполнитель", @class = "form-control", ReadOnly = "true" })
+    </li>
+    <li>
+        @Html.DisplayNameFor(m => m.ReleaseDate)
+        @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { placeholder = "Дата выхода", type = "text", @class = "form-control" } })
+    </li>
+    <li>
+        @Html.DisplayNameFor(m => m.GenreId)
+        @Html.DropDownListFor(model => model.GenreId, new SelectList(ViewBag.Genres, "Id", "Name"), new { htmlAttributes = new { @class = "form-control" } })
+    </li>
+    <li>
+        @Html.DisplayNameFor(m => m.Duration)
+        @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Продолжительность", type = "text", @class = "form-control" } })
+    </li>
+    <li>
+        @Html.DisplayNameFor(m => m.PostedTrackFile)
+        <input placeholder="Файл" type="text" class="form-control" id="file-path" onclick="document.formreg.PostedTrackFile.click()" />
+    </li>
+</ul>

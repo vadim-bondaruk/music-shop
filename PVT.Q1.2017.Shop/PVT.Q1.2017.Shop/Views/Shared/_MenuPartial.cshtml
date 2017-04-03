@@ -17,9 +17,6 @@
             <li>
                 <a href="@Url.Action("New","Genres", new {area="Management"})">Новый жанр</a>
             </li>
-            <li>
-                <a href="#">Новый альбом</a>
-            </li>
             <li role="separator" class="divider"></li>
             <li>
                 <a href="#">Треки</a>
@@ -31,7 +28,7 @@
                 <a href="@Url.Action("List","Albums", new {area="Content"})">Альбомы</a>
             </li>
             <li>
-                <a href="#">Жанры</a>
+                <a href="@Url.Action("List","Genres", new {area="Content"})">Жанры</a>
             </li>
            
            

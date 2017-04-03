@@ -172,7 +172,7 @@ li > input { width: 100% }
     font-style: normal;
 }
 
-.btn {
+.btndef {
     text-align: center;
     vertical-align: middle;
     border: none;
@@ -193,7 +193,7 @@ li > input { width: 100% }
     transition: all 0.3s;
 }
 
-.btn:after {
+.btndef:after {
     content: '';
     position: absolute;
     z-index: -1;
@@ -202,16 +202,16 @@ li > input { width: 100% }
     transition: all 0.3s;
 }
 
-.btn {
+.btndef {
     width: 110px;
     height: 35px;
     border: 3px solid black;
     color: black;
 }
 
-.btn { overflow: hidden; }
+.btndef { overflow: hidden; }
 
-.btn:after {
+.btndef:after {
     width: 0;
     height: 103%;
     top: 50%;
@@ -224,66 +224,26 @@ li > input { width: 100% }
     transform: translateX(-50%) translateY(-50%);
 }
 
-.btn:hover,
-.btn:active {
+.btndef:hover,
+.btndef:active {
     color: white;
     opacity: 5%;
 }
 
-.btn:hover:after {
+.btndef:hover:after {
     width: 90%;
     opacity: 1;
 }
 
-.btn:active:after {
+.btndef:active:after {
     width: 101%;
     opacity: 1;
 }
 
-#add-track {
-    padding-top: 6px;
-    padding-left: 11px;
-}
-
-#add-album {
-    padding-top: 6px;
-    padding-left: 9px;
-}
-
-#btn-edit, #btn-listen {
-    padding-top: 6px;
-    padding-left: 10px;
-}
-
-#btn-delete {
-    padding-top: 6px;
-    padding-left: 14px;
-}
-
-#btn-delete:after {
-    background: #ff0000;
-    color: #ffffff;
-}
-
-#btn-edit:after {
-    background: #00bfff;
-    color: #ffffff;
-}
-
-#btn-listen:after {
-    background: #008000;
-    color: #ffffff;
-}
-
-#btn-save {
-    padding-top: 6px;
-    padding-left: 5px;
-}
-
-.btn_center {
-    display: block;
-    text-align: center;
-    width: 100%;
+.btn:hover {
+    border: solid;
+    border-width: .2px;
+    border-color: red;
 }
 
 .button-group {
@@ -332,12 +292,12 @@ li > input { width: 100% }
 
 .list > ul > li > div > p {
     font: 200 14px/1.5 Georgia, Times New Roman, serif;
-      margin: 0 auto;
+    margin: 0 auto;
     line-height: 1.4;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
     height: 90px;
     width: 100%;
 }
@@ -361,6 +321,8 @@ li > input { width: 100% }
     display: inline-block;
     width: 600px;
 }
+
+
 .vertical .details {
     display: block;
     width: 100%;
@@ -372,5 +334,27 @@ li > input { width: 100% }
     max-width: 500px;
     overflow: hidden;
 }
+
+.ul-inline {
+    display: inline-block;
+    width: 40%;
+    margin: 0;
+    -webkit-padding-start: 0;
+}
+
+.ul-inline > li > textarea {
+    max-width: 100%;
+    max-height: 600px;
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+    border: solid;
+    border-width: 0.5px;
+    padding: 10px;
+}
+
+#albums-item:hover{ border: solid;border-width: 0.4px; border-color: skyblue}
+
+
 
 .copyright { display: none; }

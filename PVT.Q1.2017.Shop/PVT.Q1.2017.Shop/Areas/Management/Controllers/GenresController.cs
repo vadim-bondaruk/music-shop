@@ -1,12 +1,12 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System;
     using System.Web.Mvc;
 
     using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
@@ -32,13 +32,13 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenresController"/> class.
+        ///     Initializes a new instance of the <see cref="GenresController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        /// The repository factory.
+        ///     The repository factory.
         /// </param>
         /// <param name="genreService">
-        /// The genre service.
+        ///     The genre service.
         /// </param>
         public GenresController(IRepositoryFactory repositoryFactory, IGenreService genreService)
         {
@@ -54,37 +54,62 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="model">
-        ///     The model.
+        /// <param name="id">
+        /// The id.
         /// </param>
         /// <returns>
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(GenreManagementViewModel model)
+        public virtual ActionResult Delete(int id)
         {
-            var genreModel = Mapper.Map<GenreManagementViewModel, Genre>(model);
             using (var repository = this.RepositoryFactory.GetGenreRepository())
             {
-                repository.Delete(genreModel);
+                repository.Delete(id);
                 repository.SaveChanges();
             }
 
-            return this.View("New");
+            return this.RedirectToAction("List", "Genres", new { Area = "Content" });
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="genreId">
-        ///     The genre id.
+        /// <param name="id">
+        ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int genreId)
+        public ActionResult Edit(int id)
         {
-            // var Genre = this.GenreService.GetGenreInfo(GenreId);
-            // var GenreViewModel = Mapper.Map<Genre, GenreManageViewModel>(Genre);
-            return this.View();
+            var genreManagementViewModel =
+                ManagementMapper.GetGenreManagementViewModel(this.genreService.GetGenreDetailsViewModel(id));
+            return this.View(genreManagementViewModel);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        ///     The view model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(GenreManagementViewModel viewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction("List", "Genres", new { Area = "Content" });
+            }
+
+            var genreModel = ManagementMapper.GetGenreModel(viewModel);
+            using (var repo = this.RepositoryFactory.GetGenreRepository())
+            {
+                repo.AddOrUpdate(genreModel);
+                repo.SaveChanges();
+            }
+
+            return this.RedirectToAction("Details", "Genres", new { Area = "Content", id = viewModel.Id });
         }
 
         /// <summary>
@@ -117,7 +142,7 @@
                 repository.SaveChanges();
             }
 
-            return this.RedirectToAction("Details");
+            return this.RedirectToAction("Details", new { id = viewModel.Id, area = "Content" });
         }
     }
 }

@@ -83,7 +83,6 @@
         public ActionResult List()
         {
             return this.View(this.albumService.GetAllViewModels());
-
         }
 
         /// <summary>

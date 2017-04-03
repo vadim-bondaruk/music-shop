@@ -20,11 +20,11 @@
         /// <summary>
         ///     The repository factory.
         /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IRepositoryFactory repositoryFactory;
 
         /// <summary>
         /// </summary>
-        private readonly IArtistService _artistService;
+        private readonly IArtistService artistService;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
@@ -35,8 +35,8 @@
         /// <param name="artistService"></param>
         public ArtistsController(IRepositoryFactory repositoryFactory, IArtistService artistService)
         {
-            this._repositoryFactory = repositoryFactory;
-            this._artistService = artistService;
+            this.repositoryFactory = repositoryFactory;
+            this.artistService = artistService;
         }
 
         /// <summary>
@@ -50,10 +50,9 @@
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete([Bind(Include = "Id")] ArtistManagementViewModel viewModel)
         {
-            Artist artist;
-            using (var repo = this._repositoryFactory.GetArtistRepository())
+            using (var repo = this.repositoryFactory.GetArtistRepository())
             {
-                artist = ManagementMapper.GetArtistModel(viewModel);
+                var artist = ManagementMapper.GetArtistModel(viewModel);
                 repo.Delete(artist);
                 repo.SaveChanges();
             }
@@ -70,7 +69,7 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var artist = ManagementMapper.GetArtistManagementViewModel(this._artistService.GetArtistDetails(id));
+            var artist = ManagementMapper.GetArtistManagementViewModel(this.artistService.GetArtistDetailsViewModel(id));
             return this.View(artist);
         }
 
@@ -86,7 +85,7 @@
         public virtual ActionResult Edit(
             [Bind(Include = "Id, Name, Birthday, Biography, Photo, PostedPhoto")] ArtistManagementViewModel viewModel)
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
+            using (var repository = this.repositoryFactory.GetArtistRepository())
             {
                 var artist = ManagementMapper.GetArtistModel(viewModel);
                 repository.AddOrUpdate(artist);
@@ -103,7 +102,7 @@
         /// </returns>
         public ActionResult Index()
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
+            using (var repository = this.repositoryFactory.GetArtistRepository())
             {
                 return this.View(repository.GetAll());
             }
@@ -127,7 +126,7 @@
         public ActionResult New(ArtistManagementViewModel viewModel)
         {
             var artist = ManagementMapper.GetArtistModel(viewModel);
-            using (var repository = this._repositoryFactory.GetArtistRepository())
+            using (var repository = this.repositoryFactory.GetArtistRepository())
             {
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();

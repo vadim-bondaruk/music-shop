@@ -1,0 +1,99 @@
+﻿.button-edit {
+    display: block;
+    overflow: initial;
+    background-color: #fff;
+    width: 150px;
+    height: 40px;
+    line-height: 100px;
+    color: #000000;
+    position: absolute;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+    -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+
+.button-edit span,
+.button-edit .icon-edit {
+    display: block;
+    text-align: center;
+    margin-top: 140px;
+    position: absolute;
+    top: 0;
+}
+
+.button-edit span {
+    height: 100%;
+    margin-top: -30px;
+    width: 72%;
+    line-height: inherit;
+    text-transform: uppercase;
+    left: 0;
+    -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+
+.button-edit span:after {
+    content: '';
+    background-color: #696969;
+    width: 2px;
+    height: 70%;
+    position: absolute;
+    top: 90%;
+    right: -1px;
+}
+
+.button-edit .icon-edit {
+    width: 28%;
+    right: 0px;
+    top: -170px;
+    -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+
+.button-edit .icon-edit .fa {
+    font-size: 35px;
+    vertical-align: middle;
+    -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4), height 0.25s ease;
+    transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4), height 0.25s ease;
+}
+
+.button-edit .icon-edit .fa-edit {
+    height: 36px;
+    width: 36px;
+}
+
+.fa-edit:before, .fa-close:before, .fa-times:before {
+    content: "\270E‬";
+    width: 36px;
+    height: 36px;
+}
+
+.fa-success:before {
+    content: "\‭270E‬";
+}
+
+.button-edit .icon-edit .fa-success {
+     display: none;
+}
+
+.button-edit.success span, .button-edit:hover span {
+    left: -78%;
+    opacity: 0;
+}
+
+.button-edit.success .icon-edit, .button-edit:hover .icon-edit { width: 100%;color: black }
+
+.button-edit.success .icon-edit .fa { font-size: 25px; }
+
+.button-edit.success { background-color: #008000; }
+
+.button-edit.success .icon-edit .fa-edit { display: none; }
+
+.button-edit.success .icon-edit .fa-success { display: inline-block;margin-top: -5px; }
+
+.button-edit:hover .icon-edit .fa-edit { height: 46px; }
+
+.button-edit:active { opacity: 1; }
