@@ -124,7 +124,7 @@
                 }
             }
 
-            return this.View();
+            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
         }
 
         /// <summary>
@@ -220,6 +220,11 @@
         public ActionResult Success()
         {
             return this.View();
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
     }
 }
