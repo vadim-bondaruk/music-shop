@@ -64,7 +64,7 @@
 
                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, isPersistent));
 
-                context.Response.Redirect(FormsAuthentication.GetRedirectUrl(user.Login, isPersistent));
+                //context.Response.Redirect(FormsAuthentication.GetRedirectUrl(user.Login, isPersistent));
             }
             else
             {
@@ -107,8 +107,14 @@
                     FormsAuthentication.FormsCookiePath);
 
             string encTicket = FormsAuthentication.Encrypt(ticket);
+            var cookies = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
 
-            return new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+            if (ticket.IsPersistent)
+            {
+                cookies.Expires = ticket.Expiration;
+            }
+                
+            return cookies;
         }
 
         /// <summary>
