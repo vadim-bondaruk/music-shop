@@ -1,7 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
@@ -39,7 +38,7 @@
         {
             this._cartRepository = repositoryFactory.GetCartRepository();
             this._cartService = cartService;
-            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>() };
+            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>(), IsEmpty = true };
         }
 
         /// <summary>
@@ -50,7 +49,7 @@
         /// </param>
         [HttpGet]
         [Authorize]
-        //TODO: проверить ввод ID юзера, иначе автоматом идет ноль
+        //TODO: реализовать передачу текущего id пользователя из главного меню
         public ViewResult Index(int currentUserId = 1)
         {
             if (_cartRepository.GetByUserId(currentUserId) == null)
