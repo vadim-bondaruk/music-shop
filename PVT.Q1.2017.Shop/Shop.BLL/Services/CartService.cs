@@ -1,11 +1,12 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
     using DAL.Infrastruture;
     using Infrastructure;
+    using Exceptions;
+
 
     /// <summary>
     /// The Cart Service
@@ -41,8 +42,7 @@
                     var track = trackRepository.GetById(trackId);
                     if (track == null || trackId == 0)
                     {
-                        //TODO: New exceptions
-                        throw new Exception($"Трек с ID={trackId} не найден.");
+                        throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
                     }
 
                     if (cart.Tracks == null)
@@ -97,7 +97,12 @@
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
                     var track = trackRepository.GetById(trackId);
-                    if (track != null && cart.Albums != null)
+                    if (track == null || trackId == 0)
+                    {
+                        throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
+                    }
+
+                    if (cart.Albums != null)
                     {
                         var orderTrack = track.Carts.FirstOrDefault(c => c.CartId == cart.Id);
                         while (orderTrack != null)
@@ -147,7 +152,7 @@
                     var album = albumRepository.GetById(albumId);
                     if (album == null || albumId == 0)
                     {
-                        throw new Exception($"Альбом с ID={albumId} не найден.");
+                        throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
                     }
 
                     if (cart.Albums == null)
@@ -202,7 +207,12 @@
                 using (var albumRepository = Factory.GetAlbumRepository())
                 {
                     var album = albumRepository.GetById(albumId);
-                    if (album != null && cart.Albums != null)
+                    if (album == null || albumId == 0)
+                    {
+                        throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
+                    }
+
+                    if (cart.Albums != null)
                     {
                         var orderAlbum = album.Carts.FirstOrDefault(c => c.CartId == cart.Id);
                         while (orderAlbum != null)
