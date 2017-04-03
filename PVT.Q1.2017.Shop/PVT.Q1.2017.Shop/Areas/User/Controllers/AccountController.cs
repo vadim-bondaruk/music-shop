@@ -1,15 +1,14 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
     using System.Web.Mvc;
+    using App_Start;
+    using Helpers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.BLL.Utils.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using Helpers;
-    using App_Start;
     using global::Shop.Infrastructure.Enums;
-    using System.Web;
 
     /// <summary>
     /// 
@@ -50,7 +49,7 @@
         [HttpGet]
         public ActionResult IsLoginUnique(string login)
         {
-            var isUnique = !_userService.IsUserExist(login);
+            var isUnique = !this._userService.IsUserExist(login);
 
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
@@ -64,19 +63,25 @@
         [HttpGet]
         public ActionResult IsEmailUnique(string email)
         {
-            var isUnique = !_userService.IsUserExist(email);
+            var isUnique = !this._userService.IsUserExist(email);
 
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult IsUserNotExist(string userIdentity)
         {
-            var isUnique = _userService.IsUserExist(userIdentity);
+            var isUnique = this._userService.IsUserExist(userIdentity);
 
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
+
         /// <summary>
         /// GET: User/Account/Login
         /// </summary>
@@ -105,7 +110,13 @@
                 try
                 {   
                     this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current);
-                    return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+
+                    var returnUrl = HttpContext.Request.QueryString["ReturnUrl"];
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return this.Redirect(returnUrl);
+                    }
                 }
                 catch (UserValidationException ex)
                 {
@@ -113,7 +124,7 @@
                 }
             }
 
-            return View();
+            return this.View();
         }
 
         /// <summary>
@@ -151,12 +162,11 @@
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-            // TODO: Add insert logic here
+           
             if (ModelState.IsValid)
             {
                 try
-                {
-                   
+                {                   
                     var userDB = UserMapper.GetUserModel(user);
                     result = this._userService.RegisterUser(userDB);
                 }
@@ -171,7 +181,7 @@
                 }
             }
 
-            ModelState.AddModelError("", "Возникла ошибка при сохранении данных");
+            ModelState.AddModelError(string.Empty, "Возникла ошибка при сохранении данных");
 
             return this.View(user);
         }
