@@ -204,9 +204,9 @@
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public ActionResult ChangeLoginSuccess(string message)
+        public ActionResult ChangeLoginSuccess()
         {
-            ViewBag.Massage = "Операция выплнена успешно!!!";
+            ViewBag.Message = "Операция выполнена успешно!!!";
             return View();         
         }
 
