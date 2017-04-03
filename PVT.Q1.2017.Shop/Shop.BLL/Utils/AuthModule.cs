@@ -46,36 +46,38 @@
                 throw new ArgumentException("password");
             }
 
-            User user = this.GetUser(useridentity);            
- 
-                if (user != null)
+            User user = this.GetUser(useridentity);
+
+            if (user != null)
+            {
+                if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
                 {
-                    if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
-                    {
-                        throw new UserValidationException("Pasword not confirm", "Password");
-                    }
+                    throw new UserValidationException("Pasword not confirm", "Password");
+                }
 
-                    UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
-                    {
-                        Id = user.Id,
-                        Login = user.Login,
-                        Email = user.Email
-                    };
+                UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Email = user.Email
+                };
 
-                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, isPersistent));
+                context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, isPersistent));
+
+                context.Response.Redirect(FormsAuthentication.GetRedirectUrl(user.Login, isPersistent));
             }
-                else
-                {
-                    throw new UserValidationException("User not found", "Useridentity");
-                }      
+            else
+            {
+                throw new UserValidationException("User not found", "Useridentity");
+            }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         public void LogOut()
         {
-            FormsAuthentication.SignOut();            
+            FormsAuthentication.SignOut();
         }
 
         /// <summary>
@@ -84,7 +86,7 @@
         /// <param name="user"></param>
         /// <param name="isPersistent"></param>
         /// <param name="expires"></param>
-        private HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent = true, int expires = 20)
+        private HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent = true, int expires = 1440)
         {
             if (user == null)
             {
@@ -96,16 +98,17 @@
             string cookiesData = serializer.Serialize(user);
 
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
-                    1, 
-                    user.Login, 
-                    DateTime.Now, 
-                    DateTime.Now.AddMinutes(expires), 
-                    isPersistent, 
-                    cookiesData);
+                    1,
+                    user.Login,
+                    DateTime.Now,
+                    DateTime.Now.AddMinutes(expires),
+                    isPersistent,
+                    cookiesData,
+                    FormsAuthentication.FormsCookiePath);
 
             string encTicket = FormsAuthentication.Encrypt(ticket);
 
-            return new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);             
+            return new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
         }
 
         /// <summary>
@@ -129,7 +132,7 @@
                     {
                         user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
                     }
-                } 
+                }
             }
 
             return user;
