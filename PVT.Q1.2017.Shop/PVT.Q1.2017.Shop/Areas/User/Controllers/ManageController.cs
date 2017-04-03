@@ -139,7 +139,8 @@
                 {
                     if (_userService.UpdatePassword(this.CurrentUser.Id, model.Password, model.OldPassword))
                     {
-                        return this.RedirectToAction("ChangePasswordSuccess");
+                        TempData["message"] = "Пароль успешно изменён";
+                        return this.RedirectToAction("ChangeAccepted");
                     }
                 }
                 catch (UserValidationException ex)
@@ -192,8 +193,9 @@
                     {
                         ModelState.AddModelError("", "Ошибка отправки");
                         return View();
-                    }                    
-                    return this.RedirectToAction("ChangeLoginSuccess");
+                    }
+                    TempData["message"] = "Логин успешно изменен";
+                    return this.RedirectToAction("ChangeAccepted");
                 }
             }
             return View();
@@ -243,6 +245,17 @@
                 throw; 
             }               
             return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+        }
+
+        /// <summary>
+        /// Unified action, displays messages about account changes
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangeAccepted()
+        {
+            ViewBag.Message = TempData["message"];
+
+            return this.View();
         }
     }
 }
