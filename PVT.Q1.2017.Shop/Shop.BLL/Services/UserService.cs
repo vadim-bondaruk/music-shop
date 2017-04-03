@@ -40,11 +40,11 @@
                     using (var userRepository = this.Factory.GetUserRepository())
                     {
                         user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
-                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);                        
                     } 
                 }
-
-                return user != null;
+            //return user != null || user.IsDeleted.Equals(false);
+            return user != null;
         }
 
         /// <summary>
@@ -111,13 +111,17 @@
         {
             User user = null;
 
-            if (!string.IsNullOrEmpty(userIdentity))
+            if (IsUserExist(userIdentity))
             {
                 using (var userRepository = this.Factory.GetUserRepository())
                 {
                     user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
                                                       : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
                 }
+            }
+            else
+            {
+                throw new UserValidationException("Вы ввели неправеьный ник или email", "");
             }
 
             return user.Id;
@@ -165,7 +169,7 @@
         /// <returns></returns>
         public string GetEmailByUserIdentity(string userIdentity)
         {
-            if (!string.IsNullOrEmpty(userIdentity))
+            if (IsUserExist(userIdentity))
             {
                 User user = null;
                 string userEmail = string.Empty;
@@ -177,7 +181,11 @@
                     if (user != null)
                     {
                         userEmail = user.Email;
-                    }
+                    }                 
+                }
+                if(user.IsDeleted == true)
+                {
+                    throw new UserValidationException("Этот аккаунт был удалён", "");
                 }
                 return userEmail;
             }

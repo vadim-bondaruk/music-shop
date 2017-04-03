@@ -65,13 +65,16 @@
                 {
                     throw new UserValidationException("Не подтвержден email", "");
                 }
-
+                if(user.IsDeleted == true)
+                {
+                    throw new UserValidationException("Этот аккаунт был удален", "Useridentity");
+                }
                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
 
             }
             else
             {
-                throw new UserValidationException("Не верный логи", "Useridentity");
+                throw new UserValidationException("Не верный логин", "Useridentity");
             }
             //return new CurrentUser(user);
         }
