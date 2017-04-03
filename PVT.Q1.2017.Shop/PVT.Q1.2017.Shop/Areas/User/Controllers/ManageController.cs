@@ -139,7 +139,8 @@
                 {
                     if (_userService.UpdatePassword(this.CurrentUser.Id, model.Password, model.OldPassword))
                     {
-                        return this.RedirectToAction("ChangePasswordSuccess");
+                        TempData["message"] = "Пароль успешно изменён";
+                        return this.RedirectToAction("ChangeAccepted");
                     }
                 }
                 catch (UserValidationException ex)
@@ -148,15 +149,6 @@
                     return View();
                 }
             }
-            return View();
-        }
-
-        /// <summary>
-        /// GET: User/Manage/ChangePasswordSuccess 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult ChangePasswordSuccess()
-        {
             return View();
         }
 
@@ -192,26 +184,17 @@
                     {
                         ModelState.AddModelError("", "Ошибка отправки");
                         return View();
-                    }                    
-                    return this.RedirectToAction("ChangeLoginSuccess");
+                    }
+                    TempData["message"] = "Логин успешно изменен";
+                    return this.RedirectToAction("ChangeAccepted");
                 }
             }
             return View();
         }
 
         /// <summary>
-        /// GET: User/Manage/ChangeLoginSuccess 
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public ActionResult ChangeLoginSuccess()
-        {
-            ViewBag.Message = "Операция выполнена успешно!!!";
-            return View();         
-        }
-
         /// <summary>
-        /// GET: User/Manage/ChangeLoginSuccess 
+        /// GET: User/Manage/Delete 
         /// </summary>
         /// <returns></returns>
         public ActionResult Delete()
@@ -220,7 +203,7 @@
         }
 
         /// <summary>
-        /// POST: User/Manage/ChangeLoginSuccess 
+        /// POST: User/Manage/Delete 
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -243,6 +226,17 @@
                 throw; 
             }               
             return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+        }
+
+        /// <summary>
+        /// Unified action, displays messages about account changes
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangeAccepted()
+        {
+            ViewBag.Message = TempData["message"];
+
+            return this.View();
         }
     }
 }

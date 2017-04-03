@@ -1,9 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "ChangePasswordSuccess";
+    ViewBag.Title = "Изменения в аккаунт";
 }
 
-<h2>Пароль успешно изменён</h2>
+<h4>Данные аккаунта изменены</h4>
+
+<h5>@ViewBag.Message</h5>
 
 @Html.ActionLink("Редактировать личные данные", "UpdatePersonal", "Manage") | @Html.ActionLink("Изменить пароль", "ChangePassword", "Manage") | @Html.ActionLink("Изменить логин", "ChangeLogin", "Manage")
 | @Html.ActionLink("Удалить аккаунт", "Delete", "Manage")

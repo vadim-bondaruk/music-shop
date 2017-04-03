@@ -182,9 +182,7 @@
     <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
     <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Areas\User\Views\Manage\ChangePasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangeLogin.cshtml" />
-    <Content Include="Areas\User\Views\Manage\ChangeLoginSuccess.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Index.cshtml" />
@@ -228,6 +226,7 @@
     <Content Include="Areas\User\Views\Account\Confirm.cshtml" />
     <Content Include="Areas\User\Views\Account\Siterules.cshtml" />
     <Content Include="Areas\User\Views\Manage\Delete.cshtml" />
+    <Content Include="Areas\User\Views\Manage\ChangeAccepted.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -329,9 +328,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Content\Views\Album\" />
-    <Folder Include="Areas\Content\Views\Artist\" />
-    <Folder Include="Areas\Content\Views\Track\" />
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />

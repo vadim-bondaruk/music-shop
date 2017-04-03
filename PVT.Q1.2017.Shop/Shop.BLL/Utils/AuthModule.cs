@@ -46,42 +46,42 @@
                 throw new ArgumentException("password");
             }
 
-            User user = this.GetUser(useridentity);            
- 
-                if (user != null)
-                {
-                    if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
-                    {
-                        throw new UserValidationException("Не верный пароль", "Password");
-                    }
+            User user = this.GetUser(useridentity);
 
-                    UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
-                    {
-                        Id = user.Id,
-                        Login = user.Login,
-                        Email = user.Email
-                    };
-                 
-                    if (!user.ConfirmedEmail)
-                    {
-                        throw new UserValidationException("Не подтвержден email", "");
-                    }
-
-                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
-            }
-                else
+            if (user != null)
+            {
+                if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new UserValidationException("User not found", "Useridentity");
+                    throw new UserValidationException("Не верный пароль", "Password");
                 }
+
+                UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Email = user.Email
+                };
+                if(!user.ConfirmedEmail)
+                {
+                    throw new UserValidationException("Не подтвержден email", "");
+                }
+
+                context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
+
+            }
+            else
+            {
+                throw new UserValidationException("Не верный логи", "Useridentity");
+            }
             //return new CurrentUser(user);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         public void LogOut()
         {
-            FormsAuthentication.SignOut();            
+            FormsAuthentication.SignOut();
         }
 
         /// <summary>
@@ -90,7 +90,7 @@
         /// <param name="user"></param>
         /// <param name="isPersistent"></param>
         /// <param name="expires"></param>
-        public HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent, int expires = 20)
+        private HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent, int expires = 1440)
         {
             if (user == null)
             {
@@ -102,16 +102,23 @@
             string cookiesData = serializer.Serialize(user);
 
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
-                    1, 
-                    user.Login, 
-                    DateTime.Now, 
-                    DateTime.Now.AddMinutes(expires), 
-                    isPersistent, 
-                    cookiesData);
+                    1,
+                    user.Login,
+                    DateTime.Now,
+                    DateTime.Now.AddMinutes(expires),
+                    isPersistent,
+                    cookiesData,
+                    FormsAuthentication.FormsCookiePath);
 
             string encTicket = FormsAuthentication.Encrypt(ticket);
+            var cookies = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
 
-            return new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);             
+            if (ticket.IsPersistent)
+            {
+                cookies.Expires = ticket.Expiration;
+            }
+                
+            return cookies;
         }
 
         /// <summary>
@@ -135,7 +142,7 @@
                     {
                         user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
                     }
-                } 
+                }
             }
 
             return user;
