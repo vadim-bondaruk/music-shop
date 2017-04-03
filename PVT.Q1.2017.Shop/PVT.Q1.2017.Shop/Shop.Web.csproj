@@ -280,6 +280,7 @@
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
     <Compile Include="Areas\User\Helpers\UserMapper.cs" />
+    <Compile Include="Controllers\AdminTest2Controller.cs" />
     <Compile Include="Controllers\AdminTestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -318,6 +319,7 @@
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\AdminTest\Index.cshtml" />
     <Content Include="Views\AdminTest\IndexAdmin.cshtml" />
+    <Content Include="Views\AdminTest2\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
