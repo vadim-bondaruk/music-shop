@@ -35,11 +35,6 @@
                 track.ArtistId = track.Artist.Id;
             }
 
-            if (track.GenreId <= 0 && track.Genre != null)
-            {
-                track.GenreId = track.Genre.Id;
-            }
-
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The TrackBaseRepository should be SOLID, should only add information about track! Not about artist, album or genre!
             this.DetachNavigationProperty(track.Artist, out artistEntryState);
