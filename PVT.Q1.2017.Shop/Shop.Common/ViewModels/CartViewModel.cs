@@ -32,5 +32,10 @@
         /// Get currency short name
         /// </summary>
         public string CurrencyShortName { get; set; }
+
+        /// <summary>
+        /// Cart is empty or not
+        /// </summary>
+        public bool IsEmpty { get; set; }
     }
 }
