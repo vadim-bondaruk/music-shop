@@ -147,7 +147,7 @@
         public void GetGenreViewModelTest()
         {
             var genreDto = this.CreateGenre();
-            var genre = ModelsMapper.GetGenreViewModel(genreDto);
+            var genre = ModelsMapper.GetGenreDetailsViewModel(genreDto);
 
             Assert.IsNotNull(genre);
             Assert.IsTrue(genre.Id == genreDto.Id);
@@ -276,11 +276,10 @@
             Assert.IsTrue(track.Duration == trackDto.Duration);
             Assert.IsTrue(track.ReleaseDate == trackDto.ReleaseDate);
 
-            Assert.IsNotNull(track.Artist);
-            Assert.IsTrue(track.Artist.Id == trackDto.ArtistId);
+            Assert.AreNotEqual(track.ArtistName, string.Empty);
+            Assert.AreNotEqual(track.GenreName, string.Empty);
+            Assert.AreNotEqual(track.AlbumName, string.Empty);
 
-            Assert.IsNotNull(track.Genre.Id);
-            Assert.IsTrue(track.Genre.Id == trackDto.GenreId);
         }
 
         /// <summary>
@@ -368,7 +367,6 @@
                            Artist = artist,
                            ArtistId = artist.Id,
                            Genre = genre,
-                           GenreId = genre.Id,
                            Duration = new TimeSpan(0, 3, 57),
                            ReleaseDate = new DateTime(2014, 9, 5)
                        };
