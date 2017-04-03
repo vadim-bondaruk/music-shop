@@ -12,6 +12,8 @@
     <title>Корзина</title>
 </head>
 <body>
+    @if (!Model.IsEmpty)
+    {
     <form action="/Cart/DeleteTrack" method="post">
         @Html.Hidden("currentUserId", @Model.CurrentUserId)
         <br />
@@ -58,7 +60,7 @@
             </thead>
             <tbody>
                 @foreach (var anyAlbum in Model.Albums)
-            {
+                {
                     <tr>
                         <td>@anyAlbum.Artist.Name</td>
                         <td>@anyAlbum.Name</td>
@@ -77,5 +79,12 @@
             @Html.Hidden("currentUserId", @Model.CurrentUserId)
             <button type="submit" name="TotalPrice" value=@Model.TotalPrice>Оплатить</button>
         </form>
+    }
+    else
+    {
+        <p>
+            <b>Ваша корзина пуста.</b>
+        </p>
+    }
 </body>
 </html>
