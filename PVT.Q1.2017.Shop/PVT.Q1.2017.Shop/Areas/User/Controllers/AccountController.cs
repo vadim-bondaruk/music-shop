@@ -52,6 +52,7 @@
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsLoginUnique(string login)
         {
             var isUnique = !this._userService.IsUserExist(login);
@@ -66,6 +67,7 @@
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsEmailUnique(string email)
         {
             var isUnique = !this._userService.IsUserExist(email);
