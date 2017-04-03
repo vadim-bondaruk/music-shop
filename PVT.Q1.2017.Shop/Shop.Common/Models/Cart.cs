@@ -8,6 +8,18 @@
     /// </summary>
     public class Cart : BaseEntity
     {
+        public Cart()
+        {
+            this.Tracks = new List<OrderTrack>();
+            this.Albums = new List<OrderAlbum>();
+        }
+
+        public Cart(int userId)
+        {
+            this.UserId = userId;
+            this.Tracks = new List<OrderTrack>();
+            this.Albums = new List<OrderAlbum>();
+        }
         /// <summary>
         /// Current User
         /// </summary>

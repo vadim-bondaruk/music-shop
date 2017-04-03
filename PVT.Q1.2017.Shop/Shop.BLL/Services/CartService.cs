@@ -33,7 +33,7 @@
                 var cart = cartRepository.GetByUserId(userId);
                 if (cart == null)
                 {
-                    cart = new Cart { UserId = userId, Tracks = new List<OrderTrack>() };
+                    cart = new Cart(userId);
                     cartRepository.AddOrUpdate(cart);
                 }
 
@@ -143,7 +143,7 @@
                 var cart = cartRepository.GetByUserId(userId);
                 if (cart == null)
                 {
-                    cart = new Cart { UserId = userId, Albums = new List<OrderAlbum>() };
+                    cart = new Cart(userId);
                     cartRepository.AddOrUpdate(cart);
                 }
 
@@ -273,7 +273,7 @@
                 var cart = cartRepository.GetByUserId(userId);
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
-                    returnResult.AddRange(cart.Tracks.Select(o => trackRepository.GetById(o.TrackId)));
+                    returnResult.AddRange(cart.Tracks.Select(orderTrack => trackRepository.GetById(orderTrack.TrackId)));
                 }
             }
             return returnResult;

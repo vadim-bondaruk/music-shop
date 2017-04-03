@@ -50,9 +50,15 @@
         /// </param>
         [HttpGet]
         [Authorize]
-        public ViewResult Index(int currentUserId = 0)
+        //TODO: проверить ввод ID юзера, иначе автоматом идет ноль
+        public ViewResult Index(int currentUserId = 1)
         {
-            var cart = this._cartRepository.FirstOrDefault(c => c.UserId == currentUserId);
+            if (_cartRepository.GetByUserId(currentUserId) == null)
+            {
+                _cartRepository.AddOrUpdate(new Cart(currentUserId));
+                _cartRepository.SaveChanges();
+            }
+            var cart = this._cartRepository.GetByUserId(currentUserId);
             this._viewModel.Tracks = _cartService.GetOrderTracks(currentUserId);
             this._viewModel.Albums = _cartService.GetOrderAlbums(currentUserId);
             this._viewModel.CurrentUserId = currentUserId;
