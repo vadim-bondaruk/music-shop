@@ -182,9 +182,7 @@
     <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
     <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Areas\User\Views\Manage\ChangePasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangeLogin.cshtml" />
-    <Content Include="Areas\User\Views\Manage\ChangeLoginSuccess.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Index.cshtml" />

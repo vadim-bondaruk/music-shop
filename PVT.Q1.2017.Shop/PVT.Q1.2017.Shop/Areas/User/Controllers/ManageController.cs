@@ -153,15 +153,6 @@
         }
 
         /// <summary>
-        /// GET: User/Manage/ChangePasswordSuccess 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult ChangePasswordSuccess()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// GET: User/Manage/ChangeLogin  
         /// </summary>
         /// <returns></returns>
@@ -202,18 +193,8 @@
         }
 
         /// <summary>
-        /// GET: User/Manage/ChangeLoginSuccess 
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public ActionResult ChangeLoginSuccess()
-        {
-            ViewBag.Message = "Операция выполнена успешно!!!";
-            return View();         
-        }
-
         /// <summary>
-        /// GET: User/Manage/ChangeLoginSuccess 
+        /// GET: User/Manage/Delete 
         /// </summary>
         /// <returns></returns>
         public ActionResult Delete()
@@ -222,7 +203,7 @@
         }
 
         /// <summary>
-        /// POST: User/Manage/ChangeLoginSuccess 
+        /// POST: User/Manage/Delete 
         /// </summary>
         /// <returns></returns>
         [HttpPost]
