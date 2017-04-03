@@ -1,19 +1,20 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
-    using System;
+    using System.Web;
     using System.Web.Mvc;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
+    using global::Shop.BLL.Utils.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using global::Shop.Infrastructure.Security;
     using Helpers;
-    using App_Start;
-    using global::Shop.Infrastructure.Enums;
     using ViewModels;
-    using global::Shop.BLL.Utils;
     using Shop.Controllers;
+    using global::Shop.BLL.Utils;
+    using System;
+
+
+
 
     /// <summary>
     /// 
@@ -114,7 +115,7 @@
             {
                 try
                 {
-                    this._authModule.LogIn(model.UserIdentity, model.Password, model.RememberMe);
+                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current, model.RememberMe);
                     return this.RedirectToAction("Index", "Home", new { area = string.Empty });
                 }
                 catch (UserValidationException ex)
@@ -190,7 +191,7 @@
             }           
             return this.View(user);
 
-        }
+                }
 
         /// <summary>
         /// GET: User/Account/Siterules
@@ -198,9 +199,9 @@
         /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Siterules()
-        {
+                {
             return View();
-        }
+                }
 
 
         /// <summary>
@@ -217,7 +218,7 @@
                     "инструкции по завершению регистрации";
             }           
             return this.View();
-        }
+            }
 
         /// <summary>
         /// GET: User/Account/ConfirmEmail
@@ -296,9 +297,9 @@
                 }
             }
             else
-            {
+        {
                 return this.View();
-            }
+        }
             return this.View();
         }
 

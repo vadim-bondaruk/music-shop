@@ -7,7 +7,6 @@
     using global::Shop.Common.Models;
     using global::Shop.Common.Utils;
     using global::Shop.DAL.Infrastruture;
-    using global::Shop.Infrastructure.Security;
     using ViewModels;
     using System.Linq;
     using System.Web.Security;
@@ -17,6 +16,8 @@
     using App_Start;
     using global::Shop.Infrastructure.Enums;
     using Helpers;
+    using global::Shop.BLL.Utils.Infrastructure;
+    using System.Web;
 
     /// <summary>
     /// 
@@ -179,7 +180,7 @@
             if (ModelState.IsValid)
             {                               
                 if (_userService.UpdateLogin(User.Identity.Name, user.Login))
-                {
+                {                   
                     if (!User.Identity.Name.Contains("@"))
                     {                         
                         FormsAuthentication.RedirectFromLoginPage(user.Login, false);

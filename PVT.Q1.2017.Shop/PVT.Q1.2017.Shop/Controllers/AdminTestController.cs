@@ -17,5 +17,12 @@ namespace PVT.Q1._2017.Shop.Controllers
             ViewBag.UserID = this.CurrentUser.Id;
             return View();
         }
+
+        [ShopAuthorize(UserRoles.Admin)]
+        public ActionResult IndexAdmin()
+        {
+            ViewBag.UserID = this.CurrentUser.Id;
+            return View();
+        }
     }
 }

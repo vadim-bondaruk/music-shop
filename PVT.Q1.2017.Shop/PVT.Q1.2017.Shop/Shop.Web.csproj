@@ -105,6 +105,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\T4MVCExtensions.4.0.0\lib\net45\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
@@ -281,8 +282,6 @@
     <Compile Include="Areas\User\Helpers\UserMapper.cs" />
     <Compile Include="Controllers\AdminTestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\UserIdentity.cs" />
-    <Compile Include="Controllers\CurrentUser.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Areas\User\Controllers\AccountController.cs" />
     <Compile Include="Areas\User\Controllers\ManageController.cs" />
@@ -318,6 +317,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\AdminTest\Index.cshtml" />
+    <Content Include="Views\AdminTest\IndexAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
