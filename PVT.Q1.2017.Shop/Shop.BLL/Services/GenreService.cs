@@ -1,9 +1,12 @@
 ﻿namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
 
+    using Shop.BLL.Helpers;
     using Shop.BLL.Services.Infrastructure;
     using Shop.Common.Models;
+    using Shop.Common.Models.ViewModels;
     using Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -12,10 +15,10 @@
     public class GenreService : BaseService, IGenreService
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenreService"/> class.
+        ///     Initializes a new instance of the <see cref="GenreService" /> class.
         /// </summary>
         /// <param name="factory">
-        /// The factory.
+        ///     The factory.
         /// </param>
         public GenreService(IRepositoryFactory factory)
             : base(factory)
@@ -24,8 +27,23 @@
 
         /// <summary>
         /// </summary>
+        /// <returns>
+        /// </returns>
+        public ICollection<GenreDetailsViewModel> GetAllViewModels()
+        {
+            ICollection<Genre> genres;
+            using (var repository = this.Factory.GetGenreRepository())
+            {
+                genres = repository.GetAll();
+            }
+
+            return genres.Select(ModelsMapper.GetGenreDetailsViewModel).ToList();
+        }
+
+        /// <summary>
+        /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
@@ -36,6 +54,22 @@
                 return null;
 
                 // repository.GetById(id, t => t.Artist, t => t.Genre);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public GenreDetailsViewModel GetGenreDetailsViewModel(int id)
+        {
+            using (var repository = this.Factory.GetGenreRepository())
+            {
+                var genre = repository.GetById(id);
+                return ModelsMapper.GetGenreDetailsViewModel(genre);
             }
         }
 

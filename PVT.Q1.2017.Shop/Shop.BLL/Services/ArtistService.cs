@@ -50,7 +50,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public ArtistDetailsViewModel GetArtistDetails(int id)
+        public ArtistDetailsViewModel GetArtistDetailsViewModel(int id)
         {
             using (var repository = this.Factory.GetArtistRepository())
             {

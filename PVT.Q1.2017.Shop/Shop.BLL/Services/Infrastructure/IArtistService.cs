@@ -24,6 +24,6 @@
         /// <returns>
         ///     The Artist with the specified <paramref name="id" /> or <b>null</b> if Artist doesn't exist.
         /// </returns>
-        ArtistDetailsViewModel GetArtistDetails(int id);
+        ArtistDetailsViewModel GetArtistDetailsViewModel(int id);
     }
 }

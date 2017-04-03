@@ -141,9 +141,9 @@
         /// <returns>
         /// A new <see cref="GenreViewModel"/> model.
         /// </returns>
-        public static GenreViewModel GetGenreViewModel(Genre genre)
+        public static GenreDetailsViewModel GetGenreDetailsViewModel(Genre genre)
         {
-            return CommonMapper.Map<GenreViewModel>(genre);
+            return CommonMapper.Map<GenreDetailsViewModel>(genre);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@
 
                 cfg.CreateMap<Artist, ArtistDetailsViewModel>();
 
-                cfg.CreateMap<Genre, GenreViewModel>();
+                cfg.CreateMap<Genre, GenreDetailsViewModel>();
 
                 cfg.CreateMap<Currency, CurrencyViewModel>();
 
@@ -287,7 +287,7 @@
         {
             var detailsMapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Genre, GenreViewModel>();
+                cfg.CreateMap<Genre, GenreDetailsViewModel>();
 
                 cfg.CreateMap<Artist, ArtistViewModel>();
 
@@ -301,8 +301,8 @@
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist));
 
                 cfg.CreateMap<Track, TrackDetailsViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
-                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre));
+                   .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(t => t.Artist.Name))
+                   .ForMember(dest => dest.GenreName, opt => opt.MapFrom(t => t.Genre.Name));
             });
 
             return detailsMapperConfiguration.CreateMapper();
