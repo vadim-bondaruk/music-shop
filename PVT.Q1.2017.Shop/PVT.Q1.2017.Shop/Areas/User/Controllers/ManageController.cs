@@ -76,7 +76,6 @@
                 return this.View();
             }
             int id = this.CurrentUser.Id;            
-            //int id = _userService.GetIdOflogin(User.Identity.Name);
             User userDB = null;
             using (var userRepository = this.Factory.GetUserRepository())
             {
@@ -99,7 +98,6 @@
             bool result = false;            
             if (ModelState.IsValid)
             {
-                //int id = _userService.GetIdOflogin(User.Identity.Name);
                 AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserPersonalViewModel, User>());
                 var userDB = AutoMapper.Mapper.Map<User>(user);
                 //var userDB = UserMapper.GetUserModel(user);
@@ -134,7 +132,6 @@
         {
             if (ModelState.IsValid)
             {
-                //int id = _userService.GetIdOflogin(User.Identity.Name);
                 try
                 {
                     if (_userService.UpdatePassword(this.CurrentUser.Id, model.Password, model.OldPassword))
@@ -173,10 +170,6 @@
             {                               
                 if (_userService.UpdateLogin(User.Identity.Name, user.Login))
                 {                   
-                    if (!User.Identity.Name.Contains("@"))
-                    {                         
-                        FormsAuthentication.RedirectFromLoginPage(user.Login, false);
-                    }
                     string subject = "Ваш Логин был изменен";
                     string body = "Новый логин: " + user.Login;
                     string usetEmail = _userService.GetEmailByUserIdentity(user.Login);
@@ -185,8 +178,9 @@
                         ModelState.AddModelError("", "Ошибка отправки");
                         return View();
                     }
-                    TempData["message"] = "Логин успешно изменен";
-                    return this.RedirectToAction("ChangeAccepted");
+                    this.HttpContext.Session.Abandon();
+                    this._authModule.LogOut();
+                    return this.RedirectToAction("Login", "Account", new { area = "User" });
                 }
             }
             return View();
@@ -214,8 +208,9 @@
             {
                 using (var userRepository = this.Factory.GetUserRepository())
                 {
-                    userRepository.Delete(this.CurrentUser.Id);
-                    userRepository.SaveChanges();
+                    //userRepository.Delete(this.CurrentUser.Id);
+                    //userRepository.SaveChanges();
+                    _userService.SoftDelete(this.CurrentUser.Id);
                     this.HttpContext.Session.Abandon();
                     this._authModule.LogOut();
                 }

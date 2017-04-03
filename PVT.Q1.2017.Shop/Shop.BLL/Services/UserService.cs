@@ -315,5 +315,34 @@
             return false;
         }
 
+        /// <summary>
+        /// Changes the "IsDeleted" to "true"
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool SoftDelete (int id)
+        {
+            if (id == 0)
+            {
+                throw new ArgumentException("id");
+            }
+            try
+            {
+                using (var userRepository = Factory.GetUserRepository())
+                {
+                    var user = userRepository.GetById(id);
+                    user.IsDeleted = true;
+                    userRepository.AddOrUpdate(user);
+                    userRepository.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: write data to log             
+                throw;
+            }           
+        }
+
     }
 }

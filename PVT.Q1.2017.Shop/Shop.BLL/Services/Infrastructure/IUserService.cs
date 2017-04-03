@@ -74,5 +74,12 @@
         /// <param name="email"></param>
         /// <returns></returns>
         bool UpdateConfirmEmail(string id, string email);
+
+        /// <summary>
+        /// Changes the "IsDeleted" to "true"
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool SoftDelete(int id);
     }
 }
