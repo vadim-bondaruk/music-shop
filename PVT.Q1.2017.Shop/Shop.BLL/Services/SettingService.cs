@@ -1,13 +1,13 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System.Collections.Generic;
     using System.Linq;
+
+    using Common.Models;
+    using Common.ViewModels;
+
     using DAL.Infrastruture;
+
     using Infrastructure;
-    using Shop.Common.Models;
-    using Shop.Common.ViewModels;
-    using Helpers;
-    using System;
 
     /// <summary>
     /// </summary>
@@ -35,13 +35,8 @@
             CurrencyService currencyService = new CurrencyService(this.Factory);
             settingViewModel.DefaultCurrencyViewModelList = currencyService.GetCurrenciesList();
 
-            using (var repository = this.Factory.GetPriceLevelRepository())
-            {
-                // settingViewModel.DefaultPriceLevelViewModelList = repository.GetAll();   // TODO get ICollection<DefaultPriceLevelViewModel>
-            }
-
             // if setting exists in db
-            Setting setting = null;
+            Setting setting;
             using (var repository = this.Factory.GetSettingRepository())
             {
                 setting = repository.GetAll().FirstOrDefault();
@@ -49,14 +44,8 @@
 
             if (setting != null)
             {
-                // set selected value  // TODO best way to show drop down list?
+                // set selected value 
                 settingViewModel.DefaultCurrencyId = setting.DefaultCurrencyId;
-                settingViewModel.DefaultPriceLevelId = setting.DefaultPriceLevelId;
-                settingViewModel.DefaultCurrencyFullName = settingViewModel.DefaultCurrencyViewModelList
-                    .FirstOrDefault(x => x.Id == settingViewModel.DefaultCurrencyId).FullName;  // TODO add checking
-
-                settingViewModel.DefaultPriceLevelName = settingViewModel.DefaultPriceLevelViewModelList
-                    .FirstOrDefault(x => x.Id == settingViewModel.DefaultPriceLevelId).Name;  // TODO add checking
             }
 
             return settingViewModel;
@@ -71,8 +60,7 @@
         {
             var setting = new Setting
             {
-                DefaultCurrencyId = settingViewModel.DefaultCurrencyId,
-                DefaultPriceLevelId = settingViewModel.DefaultPriceLevelId
+                DefaultCurrencyId = settingViewModel.DefaultCurrencyId
             };
 
             using (var repository = this.Factory.GetSettingRepository())

@@ -1,8 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
+    using System.Web.Mvc;
+
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
-    using System.Web.Mvc;
 
     /// <summary>
     /// 
@@ -23,19 +24,29 @@
             this._settingService = settingService;
         }
 
-        // GET: Admin/Setting
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         [HttpGet]
         public ActionResult Index()
         {
-            var setting = _settingService.GetSettingViewModel();
+            var setting = this._settingService.GetSettingViewModel();
             return this.View(setting);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <returns>
+        /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Index(SettingViewModel model)
         {
-            var setting = _settingService.GetSettingViewModel();
-            return View(setting);
+            this._settingService.SaveSettingViewModel(model);
+            return this.View("Index");
         }
     }
 }
