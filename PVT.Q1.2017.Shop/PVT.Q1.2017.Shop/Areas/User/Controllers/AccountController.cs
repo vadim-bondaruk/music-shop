@@ -2,19 +2,18 @@
 {
     using System.Web;
     using System.Web.Mvc;
+    using App_Start;
+    using Helpers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.BLL.Utils.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using Helpers;
-    using ViewModels;
+    using global::Shop.Infrastructure.Enums;
     using Shop.Controllers;
+    using ViewModels;
     using global::Shop.BLL.Utils;
     using System;
-
-
-
 
     /// <summary>
     /// 
@@ -56,7 +55,7 @@
         [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsLoginUnique(string login)
         {
-            var isUnique = !_userService.IsUserExist(login);
+            var isUnique = !this._userService.IsUserExist(login);
 
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
@@ -71,7 +70,7 @@
         [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsEmailUnique(string email)
         {
-            var isUnique = !_userService.IsUserExist(email);
+            var isUnique = !this._userService.IsUserExist(email);
 
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
@@ -85,7 +84,7 @@
         [HttpGet]
         public ActionResult IsUserNotExist(string userIdentity)
         {
-            var isUnique = _userService.IsUserExist(userIdentity);
+            var isUnique = this._userService.IsUserExist(userIdentity);
 
             return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
@@ -116,16 +115,23 @@
             if (ModelState.IsValid)
             {
                 try
+                {   
+                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current,  model.RememberMe);
+
+                    var returnUrl = HttpContext.Request.QueryString["ReturnUrl"];
+
+                    if (!string.IsNullOrEmpty(returnUrl))
                 {
-                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current, model.RememberMe);
-                    return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+                        return this.Redirect(returnUrl);
+                    }
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
             }
-            return View();
+
+            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
         }
 
         /// <summary>
@@ -163,12 +169,12 @@
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-            // TODO: Add insert logic here
+           
             if (ModelState.IsValid)
             {
                 try
-                {
-                    var userDB = UserMapper.GetUserModel(user);                    
+                {                   
+                    var userDB = UserMapper.GetUserModel(user);
                     result = this._userService.RegisterUser(userDB);
                     if (result)
                     {
@@ -311,7 +317,7 @@
         /// <returns></returns>
         public ActionResult ForgotPasswordSuccess()
         {
-            return this.View();
+                return this.View();
         }
 
         /// <summary>
@@ -322,6 +328,11 @@
         public ActionResult Success()
         {
             return this.View();
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
     }
 }

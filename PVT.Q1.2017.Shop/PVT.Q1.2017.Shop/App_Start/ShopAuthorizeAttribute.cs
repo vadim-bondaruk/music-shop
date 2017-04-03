@@ -8,6 +8,7 @@
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Enums;
     using global::Shop.DAL.Infrastruture;
+    using System.Web.Routing;
 
     /// <summary>
     /// 
@@ -62,10 +63,6 @@
                 {
                     return false;
                 }
-                //else
-                //{
-                //    httpContext.User = new CurrentUser(userDB);
-                //}
             }
 
             return base.AuthorizeCore(httpContext);

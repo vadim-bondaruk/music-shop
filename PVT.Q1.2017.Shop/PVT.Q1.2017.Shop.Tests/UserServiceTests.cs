@@ -9,6 +9,7 @@
     using global::Shop.DAL.Infrastruture;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
+    using System.Linq.Expressions;
 
     [TestClass]
     public class UserServiceTests
@@ -71,6 +72,50 @@
 
             Assert.IsFalse(resultNull);
             Assert.IsFalse(resultEmpty);
+        }
+
+        [TestMethod]
+        public void IsUserUnique_EmailExist_ReturnTrue()
+        {
+            string email = "test@gmail.com";
+            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Email = email});
+
+            UserService service = new UserService(_factory);
+
+            var result = service.IsUserExist(email);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsUserUnique_LoginExist_ReturnTrue()
+        {
+            string login = "Test";
+            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Login = login});
+
+            UserService service = new UserService(_factory);
+
+            var result = service.IsUserExist(login);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsUserUnique_EmailAndLoginNotExist_ReturnFalse()
+        {
+            string email = "test@gmail.com";
+            string login = "Test";   
+
+            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns((User)null);
+           
+            UserService service = new UserService(_factory);
+
+            var resultEmail = service.IsUserExist(email);
+            var resultLogin = service.IsUserExist(login);
+
+            Assert.IsFalse(resultEmail);
+            Assert.IsFalse(resultLogin);
+        
         }
     }
 }

@@ -1,15 +1,13 @@
 ﻿namespace Shop.BLL.Utils
 {
     using System;
+    using System.Web;
+    using System.Web.Script.Serialization;
     using System.Web.Security;
     using Common.Models;
     using DAL.Infrastruture;
     using Exceptions;
-    using System.Web;
     using Infrastructure;
-    using PVT.Q1._2017.BLL.Utils;
-    using System.Security.Principal;
-    using System.Web.Script.Serialization;
 
     /// <summary>
     /// Authentification module
@@ -36,7 +34,7 @@
         /// <param name="useridentity">User login or email</param>
         /// <param name="password"></param>
         /// <param name="redirect"></param>
-        public void LogIn(string useridentity, string password, HttpContext context, bool redirec)
+        public void LogIn(string useridentity, string password, HttpContext context, bool redirect)
         {
             if (useridentity == null)
             {
@@ -48,8 +46,8 @@
                 throw new ArgumentException("password");
             }
 
-            User user = GetUser(useridentity);            
-            
+            User user = this.GetUser(useridentity);            
+ 
                 if (user != null)
                 {
                     if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
@@ -69,22 +67,13 @@
                         throw new UserValidationException("Не подтвержден email", "");
                     }
 
-                    context.Response.Cookies.Add(GetAuthCookies(userPrincipal, redirec));                
-
-                    //if (redirect)
-                    //{
-                    //    FormsAuthentication.RedirectFromLoginPage(useridentity, true);
-                    //}
-                    //else
-                    //{
-                    //    FormsAuthentication.SetAuthCookie(useridentity, true);
-                    //}
+                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
             }
                 else
                 {
-                    throw new UserValidationException("Такой пользователь не зарегистрирован", "Useridentity");
+                    throw new UserValidationException("User not found", "Useridentity");
                 }
-                    //return new CurrentUser(user);
+            //return new CurrentUser(user);
         }
         
         /// <summary>
@@ -96,7 +85,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Get HttpCookies for authentication
         /// </summary>
         /// <param name="user"></param>
         /// <param name="isPersistent"></param>
@@ -122,11 +111,11 @@
 
             string encTicket = FormsAuthentication.Encrypt(ticket);
 
-            return new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);       
+            return new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);             
         }
 
         /// <summary>
-        /// 
+        /// Get user from repository
         /// </summary>
         /// <param name="useridentity"></param>
         /// <returns></returns>
