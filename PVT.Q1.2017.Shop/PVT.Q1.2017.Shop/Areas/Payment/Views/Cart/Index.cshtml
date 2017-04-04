@@ -71,14 +71,6 @@
             </tbody>
         </table>
     </form>
-    <br />
-        <form action="/Cart/Pay" method="post">
-            Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
-            <br />
-            <br />
-            @Html.Hidden("currentUserId", @Model.CurrentUserId)
-            <button type="submit" name="TotalPrice" value=@Model.TotalPrice>Оплатить</button>
-        </form>
     }
     else
     {
@@ -86,6 +78,14 @@
             <br/>
             <b>Ваша корзина пуста.</b>
         </p>
+        <br />
+        <form action="/Cart/Pay" method="post">
+            Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
+            <br />
+            <br />
+            @Html.Hidden("currentUserId", @Model.CurrentUserId)
+            <button type="submit" name="TotalPrice" value=@Model.TotalPrice>Оплатить</button>
+        </form>
     }
 </body>
 </html>
