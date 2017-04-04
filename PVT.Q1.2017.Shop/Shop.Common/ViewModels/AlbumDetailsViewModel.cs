@@ -41,5 +41,10 @@
         /// The number of the tracks from the album.
         /// </summary>
         public int TracksCount { get; set; }
+
+        /// <summary>
+        /// The album owner id.
+        /// </summary>
+        public int OwnerId { get; set; }
     }
 }
