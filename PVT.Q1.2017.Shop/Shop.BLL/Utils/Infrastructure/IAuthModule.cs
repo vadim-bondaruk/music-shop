@@ -1,5 +1,8 @@
-﻿namespace Shop.Infrastructure.Security
+﻿namespace Shop.BLL.Utils.Infrastructure
 {
+    using System.Security.Principal;
+    using System.Web;
+
     /// <summary>
     /// Module for authentication
     /// </summary>
@@ -11,7 +14,7 @@
         /// <param name="useridentity">User login or email</param>
         /// <param name="password">Password</param>
         /// <param name="redirect"></param>       
-        void LogIn(string useridentity, string password, bool redirect = true);
+        void LogIn(string useridentity, string password, HttpContext context, bool redirect = true);
         
         /// <summary>
         /// User logout

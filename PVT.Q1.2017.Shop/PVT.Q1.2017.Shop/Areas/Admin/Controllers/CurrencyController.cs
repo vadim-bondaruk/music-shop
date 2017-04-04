@@ -128,8 +128,12 @@
             catch
             {
                 this.ModelState.AddModelError("Name", "Unable to save changes. Try again, and if the problem persists see your system administrator");
+
+
+                return this.RedirectToAction("Create", model);
             }
-            return this.RedirectToAction("Create", model);
+
+            return null;
         }
     }
 }

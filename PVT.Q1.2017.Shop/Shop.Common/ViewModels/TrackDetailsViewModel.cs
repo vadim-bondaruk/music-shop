@@ -61,5 +61,10 @@
         /// The number of albums where the current track exist.
         /// </summary>
         public int AlbumsCount { get; set; }
+
+        /// <summary>
+        /// The track owner id.
+        /// </summary>
+        public int OwnerId { get; set; }
     }
 }
