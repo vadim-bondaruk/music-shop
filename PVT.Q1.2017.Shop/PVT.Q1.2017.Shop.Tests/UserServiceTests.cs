@@ -10,6 +10,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using System.Linq.Expressions;
+    using global::Shop.BLL.Exceptions;
 
     [TestClass]
     public class UserServiceTests
@@ -106,7 +107,8 @@
             string email = "test@gmail.com";
             string login = "Test";   
 
-            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns((User)null);
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns((User)null);
            
             UserService service = new UserService(_factory);
 
@@ -116,6 +118,15 @@
             Assert.IsFalse(resultEmail);
             Assert.IsFalse(resultLogin);
         
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void GetEmailByUserIdentity_NullInput()
+        {
+            UserService service = new UserService(_factory);
+
+            service.GetEmailByUserIdentity(null);
         }
     }
 }

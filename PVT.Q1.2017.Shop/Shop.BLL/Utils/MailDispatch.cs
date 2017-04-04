@@ -41,29 +41,29 @@
         /// <summary>
         /// Sends a message to the address usetEmail
         /// </summary>
-        /// <param name="usetEmail">Recipient's email</param>
+        /// <param name="userEmail">Recipient's email</param>
         /// <param name="subject">Subject</param>
         /// <param name="body">Body</param>
         /// <returns></returns>
-        public static bool SendingMail (string usetEmail, string subject, string body)
+        public static bool SendingMail (string userEmail, string subject, string body)
         {
-            if (usetEmail == null)
+            if (userEmail == null)
             {
-                throw new Exception();
+                throw new ArgumentException("userEmail");
             }
             if (subject == null)
             {
-                throw new Exception();
+                throw new ArgumentException("subject");
             }
             if (body == null)
             {
-                throw new Exception();
+                throw new ArgumentException("body");
             }
             try
             {
                 MailAddress from = new MailAddress( _emailOfSendr, _nameOfSendr);
             
-                MailAddress to = new MailAddress(usetEmail);
+                MailAddress to = new MailAddress(userEmail);
            
                 MailMessage message = new MailMessage(from, to);
             

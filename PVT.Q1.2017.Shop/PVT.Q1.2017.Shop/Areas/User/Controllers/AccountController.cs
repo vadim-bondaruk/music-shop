@@ -115,13 +115,13 @@
             if (ModelState.IsValid)
             {
                 try
-                {   
-                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current,  model.RememberMe);
+                {
+                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current, model.RememberMe);
 
                     var returnUrl = HttpContext.Request.QueryString["ReturnUrl"];
 
                     if (!string.IsNullOrEmpty(returnUrl))
-                {
+                    {
                         return this.Redirect(returnUrl);
                     }
                 }
@@ -132,7 +132,7 @@
                 }
             }
 
-            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
+            return this.RedirectToRoute(new { controller = "Home", action = "Index", area = string.Empty });
         }
 
         /// <summary>
@@ -170,11 +170,11 @@
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-           
+
             if (ModelState.IsValid)
             {
                 try
-                {                   
+                {
                     var userDB = UserMapper.GetUserModel(user);
                     result = this._userService.RegisterUser(userDB);
                     if (result)
@@ -190,17 +190,17 @@
                         else
                         {
                             ModelState.AddModelError("", "Ошибка отправки сообщения");
-                        }                       
+                        }
                     }
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
-                }               
-            }           
+                }
+            }
             return this.View(user);
 
-                }
+        }
 
         /// <summary>
         /// GET: User/Account/Siterules
@@ -208,9 +208,9 @@
         /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Siterules()
-                {
+        {
             return View();
-                }
+        }
 
 
         /// <summary>
@@ -225,9 +225,9 @@
             {
                 ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие" +
                     "инструкции по завершению регистрации";
-            }           
-            return this.View();
             }
+            return this.View();
+        }
 
         /// <summary>
         /// GET: User/Account/ConfirmEmail
@@ -240,18 +240,18 @@
         {
             if (token == null)
             {
-                throw new ArgumentException ("Token");
+                throw new ArgumentException("Token");
             }
             if (token == null)
             {
                 throw new ArgumentException("Email");
             }
-            if(_userService.UpdateConfirmEmail(token, email))
+            if (_userService.UpdateConfirmEmail(token, email))
             {
                 return RedirectToAction("Success", "Account", new { area = "User" });
             }
 
-            return RedirectToAction("Confirm", "Account", new { Email = "" });            
+            return RedirectToAction("Confirm", "Account", new { Email = "" });
         }
 
         /// <summary>
@@ -297,7 +297,7 @@
                         {
                             ModelState.AddModelError("", "Ошибка отправки");
                         }
-                    }                                     
+                    }
                 }
                 catch (UserValidationException ex)
                 {
@@ -306,9 +306,9 @@
                 }
             }
             else
-        {
+            {
                 return this.View();
-        }
+            }
             return this.View();
         }
 
@@ -318,7 +318,7 @@
         /// <returns></returns>
         public ActionResult ForgotPasswordSuccess()
         {
-                return this.View();
+            return this.View();
         }
 
         /// <summary>

@@ -3,12 +3,11 @@
     using System;
     using Common.Models;
     using DAL.Infrastruture;
+    using Exceptions;
     using Helpers;
     using Infrastructure;
     using Shop.Infrastructure.Enums;
     using Utils;
-    using System.Linq;
-    using Exceptions;
 
     /// <summary>
     /// The user service
@@ -32,19 +31,23 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity)
         {
+            User user = this.GetUserByUserIdentity(userIdentity);
 
-                User user = null;
-
-                if (!string.IsNullOrEmpty(userIdentity))
-                {
-                    using (var userRepository = this.Factory.GetUserRepository())
-                    {
-                        user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
-                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);                        
-                    } 
-                }
             //return user != null || user.IsDeleted.Equals(false);
             return user != null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public bool IsUserExist(string userIdentity, out User user)
+        {
+            user = this.GetUserByUserIdentity(userIdentity);
+
+            return user != null && user.IsDeleted.Equals(false);
         }
 
         /// <summary>
@@ -58,7 +61,6 @@
             {
                 throw new ArgumentNullException(nameof(user));
             }
-
 
             user.Password = PasswordEncryptor.GetHashString(user.Password);
             user.UserRoles = this.GetDefaultUserRoles();
@@ -91,15 +93,6 @@
                 // TODO: write data to log
                 return false;
             }
-        }            
-
-        /// <summary>
-        /// Getting default user role
-        /// </summary>
-        /// <returns></returns>
-        private UserRoles GetDefaultUserRoles()
-        {
-            return UserRoles.User;
         }
 
         /// <summary>
@@ -111,22 +104,15 @@
         {
             User user = null;
 
-            if (IsUserExist(userIdentity))
+            if (this.IsUserExist(userIdentity, out user))
             {
-                using (var userRepository = this.Factory.GetUserRepository())
-                {
-                    user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
-                                                      : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
-                }
+                return user.Id;
             }
             else
             {
-                throw new UserValidationException("Вы ввели неправеьный ник или email", "");
+                throw new UserValidationException("Вы ввели неправеьный ник или email", string.Empty);
             }
-
-            return user.Id;
         }
-
 
         /// <summary>
         /// Updates user model data by Id
@@ -142,6 +128,7 @@
             {
                 throw new ArgumentException("user");
             }
+
             using (var userRepository = this.Factory.GetUserRepository())
             {
                 var userUpdate = userRepository.GetById(id);
@@ -152,12 +139,18 @@
                 userUpdate.Country = user.Country;
                 userUpdate.PhoneNumber = user.PhoneNumber;
 
-                userRepository.AddOrUpdate(userUpdate);
-                userRepository.SaveChanges();
-
+                try
+                {
+                    userRepository.AddOrUpdate(userUpdate);
+                    userRepository.SaveChanges();
+                    update = true;
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Write Data to log
+                    throw;
+                }
             }
-                update = true;
-
 
             return update;
         }
@@ -169,29 +162,22 @@
         /// <returns></returns>
         public string GetEmailByUserIdentity(string userIdentity)
         {
-            if (IsUserExist(userIdentity))
-            {
-                User user = null;
-                string userEmail = string.Empty;
-                int id = GetIdOflogin(userIdentity);
+            User user = null;
 
-                using (var userRepository = this.Factory.GetUserRepository())
+            if (this.IsUserExist(userIdentity, out user))
+            {
+                string userEmail = user.Email;
+
+                if (user.IsDeleted == true)
                 {
-                    user = userRepository.GetById(id);
-                    if (user != null)
-                    {
-                        userEmail = user.Email;
-                    }                 
+                    throw new UserValidationException("Этот аккаунт был удалён", string.Empty);
                 }
-                if(user.IsDeleted == true)
-                {
-                    throw new UserValidationException("Этот аккаунт был удалён", "");
-                }
+
                 return userEmail;
             }
             else
             {
-                throw new UserValidationException("Вы ввели неправеьный ник или email", "");
+                throw new UserValidationException("Вы ввели неправеьный ник или email", string.Empty);
             }
         }
 
@@ -209,10 +195,11 @@
                 using (var userRepository = Factory.GetUserRepository())
                 {
                     var userDB = userRepository.GetById(id);
-                    userDB.Password = PasswordEncryptor.GetHashString(newPassword);                  
+                    userDB.Password = PasswordEncryptor.GetHashString(newPassword);
                     userRepository.AddOrUpdate(userDB);
                     userRepository.SaveChanges();
                 }
+
                 update = true;
             }
             catch (Exception ex)
@@ -220,6 +207,7 @@
                 // TODO: write data to log
                 throw;
             }
+
             return update;
         }
 
@@ -233,29 +221,32 @@
         public bool UpdatePassword(int id, string newPassword, string oldPassword)
         {
             var update = false;
-            try
+
+            using (var userRepository = Factory.GetUserRepository())
             {
-                using (var userRepository = Factory.GetUserRepository())
+                var userUpdate = userRepository.GetById(id);
+                if (userUpdate.Password.Equals(PasswordEncryptor.GetHashString(oldPassword)))
                 {
-                    var userUpdate = userRepository.GetById(id);
-                    if (userUpdate.Password.Equals(PasswordEncryptor.GetHashString(oldPassword)))
-                    {
-                        userUpdate.Password = PasswordEncryptor.GetHashString(newPassword);
-                    }
-                    else
-                    {
-                        throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
-                    }
+                    userUpdate.Password = PasswordEncryptor.GetHashString(newPassword);
+                }
+                else
+                {
+                    throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
+                }
+
+                try
+                {
                     userRepository.AddOrUpdate(userUpdate);
                     userRepository.SaveChanges();
+                    update = true;
                 }
-                update = true;
+                catch (Exception ex)
+                {
+                    //TODO: Write data to log
+                    throw;
+                }
             }
-            catch (Exception ex)
-            {
-                // TODO: write data to log             
-                throw;
-            }
+
             return update;
         }
 
@@ -265,28 +256,31 @@
         /// <param name="userIdentity"></param>
         /// <param name="newLogin"></param>
         /// <returns></returns>
-        public bool UpdateLogin (string userIdentity, string newLogin)
+        public bool UpdateLogin(string userIdentity, string newLogin)
         {
             if (!string.IsNullOrEmpty(userIdentity))
             {
-                try
+                using (var userRepository = this.Factory.GetUserRepository())
                 {
-                    using (var userRepository = this.Factory.GetUserRepository())
+                    var user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                                                      : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                    if (user != null)
                     {
-                        var user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
-                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
-                        user.Login = newLogin;
-                        userRepository.AddOrUpdate(user);
-                        userRepository.SaveChanges();
-                        return user != null;
+                        try
+                        {
+                            user.Login = newLogin;
+                            userRepository.AddOrUpdate(user);
+                            userRepository.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            //TODO: write dala to log
+                            throw;
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    // TODO: write data to log             
-                    throw;
-                }
             }
+
             return false;
         }
 
@@ -296,30 +290,31 @@
         /// <param name="token"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public bool UpdateConfirmEmail (string token, string email)
+        public bool UpdateConfirmEmail(string token, string email)
         {
-            try
+            using (var userRepository = this.Factory.GetUserRepository())
             {
-                using (var userRepository = this.Factory.GetUserRepository())
-                {                   
-                    var user = userRepository.GetById(Int32.Parse(token));
-                    if (user != null)
+                var user = userRepository.GetById(Int32.Parse(token));
+                if (user != null)
+                {
+                    if (user.Email == email)
                     {
-                        if (user.Email == email)
+                        user.ConfirmedEmail = true;
+                        try
                         {
-                            user.ConfirmedEmail = true;
                             userRepository.AddOrUpdate(user);
                             userRepository.SaveChanges();
-                            return true;                        
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            //TODO: write data to log
+                            throw;
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                // TODO: write data to log             
-                throw;
-            }
+
             return false;
         }
 
@@ -328,29 +323,66 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool SoftDelete (int id)
+        public bool SoftDelete(int id)
         {
+            bool deleted = false;
+
             if (id == 0)
             {
                 throw new ArgumentException("id");
             }
-            try
+
+            using (var userRepository = Factory.GetUserRepository())
             {
-                using (var userRepository = Factory.GetUserRepository())
+                var user = userRepository.GetById(id);
+                if (user != null)
                 {
-                    var user = userRepository.GetById(id);
                     user.IsDeleted = true;
-                    userRepository.AddOrUpdate(user);
-                    userRepository.SaveChanges();
-                    return true;
+                    try
+                    {
+                        userRepository.AddOrUpdate(user);
+                        userRepository.SaveChanges();
+                        deleted = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: write data to log
+                        throw;
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                // TODO: write data to log             
-                throw;
-            }           
+
+            return deleted;
         }
 
+        /// <summary>
+        /// Get user by login or email
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
+        private User GetUserByUserIdentity(string userIdentity)
+        {
+            User user = null;
+
+            if (!string.IsNullOrEmpty(userIdentity))
+            {
+                using (var userRepository = this.Factory.GetUserRepository())
+                {
+                    user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                                                      : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                }
+            }
+
+            return user;
+        }
+
+        /// <summary>
+        /// Getting default user role
+        /// </summary>
+        /// <returns></returns>
+        private UserRoles GetDefaultUserRoles()
+        {
+            return UserRoles.User;
+        }
     }
 }
