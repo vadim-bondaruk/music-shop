@@ -5,7 +5,6 @@
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.Common.Utils;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Security;

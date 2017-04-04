@@ -118,10 +118,8 @@
                 genres = repo.GetAll();
             }
 
-            this.ViewBag.Genres = genres;
-
             var artist = this.artistService.GetArtist(id);
-            return this.View(new TrackManagementViewModel { Artist = artist });
+            return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
         }
 
         /// <summary>
@@ -143,16 +141,16 @@
                 repository.SaveChanges();
             }
 
-            return this.View("New");
+            return this.RedirectToAction("List");
         }
 
         /// <summary>
         /// </summary>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Edit()
+        public virtual ActionResult Edit(int id)
         {
-            return this.View();
+            return this.View(this.trackService.GetTrackDetails(id));
         }
 
         /// <summary>
@@ -161,7 +159,7 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(int id)
+        public virtual ActionResult Edit(TrackManagementViewModel trackManagementViewModel)
         {
             return this.View();
         }

@@ -5,7 +5,6 @@
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
-    using global::Shop.Common.Models.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>

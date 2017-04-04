@@ -278,6 +278,7 @@
     <Content Include="obj\Debug\Shop.Web.csprojResolveAssemblyReference.cache" />
     <Content Include="bin\PVT.Q1.2017.Shop.dll.config" />
     <Content Include="Areas\Management\Views\Genres\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-ru.js" />
     <Content Include="Scripts\del-artist.js" />
@@ -336,11 +337,7 @@
     <Compile Include="Areas\Management\Helpers\ManagementMapper.cs" />
     <Compile Include="Areas\Management\Validators\AlbumManagementValidator.cs" />
     <Compile Include="Areas\Management\Validators\TrackManagementValidator.cs" />
-    <Compile Include="Areas\Management\ViewModels\AlbumManagementViewModel.cs" />
-    <Compile Include="Areas\Management\ViewModels\ArtistManagementViewModel.cs" />
-    <Compile Include="Areas\Management\ViewModels\GenreManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
-    <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
@@ -379,7 +376,6 @@
     <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
-    <Content Include="Views\Shared\AlbumsListDropDown.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

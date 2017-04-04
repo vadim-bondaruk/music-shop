@@ -6,7 +6,6 @@
     using Shop.BLL.Helpers;
     using Shop.BLL.Services.Infrastructure;
     using Shop.Common.Models;
-    using Shop.Common.Models.ViewModels;
     using Shop.DAL.Infrastruture;
 
     /// <summary>

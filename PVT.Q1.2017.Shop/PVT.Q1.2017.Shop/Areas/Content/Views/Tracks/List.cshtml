@@ -1,58 +1,42 @@
-﻿@model IEnumerable<Shop.Common.Models.Track>
+﻿@model ICollection<Shop.Common.Models.TrackDetailsViewModel>
+<title class="title">Все треки</title>
 
-@{
-    ViewBag.Title = "Tracks";
+
+<div class="main-track-list">
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item" onclick="itemClick(@item.Id)">
+                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(item.Image)" onerror="this.src = '/img/defuserpic.png'" />
+                <div style="display: block">
+                    <div style="display: inline-block; margin: 0 0 0 15px">
+                        <h4 style="font-size: 10px; margin: 0">Исполнитель</h4>
+                        <h3 style="-webkit-margin-before:0">@Html.DisplayFor(modelItem => item.ArtistName)</h3>
+                        <h4 style="font-size: 10px; margin: 0">Название</h4>
+                        <p>@Html.DisplayFor(modelItem => item.Name)</p>
+                    </div>
+                   
+                    <div style="display: inline-block; margin: 0 0 0 15px">
+                        <h4 style="font-size: 10px; margin: 0">Продолжительность</h4>
+                        <p>@Html.DisplayFor(modelItem => item.Duration)</p>
+                        <h4 style="font-size: 10px; margin: 0">Жанр</h4>
+                        <p>@Html.DisplayFor(modelItem => item.GenreName)</p>
+                        <h4 style="font-size: 10px; margin: 0">Дата выпуска</h4>
+                        <p>@Html.ValueFor(modelItem => item.ReleaseDate, "{0:dd MMMM yyyy} г.")</p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<script>
+    function itemClick(id) {
+        var url = '@Url.Action("Details", "Tracks", new { id = "*"})';
+        window.location.href = url.replace('*', encodeURIComponent(id));
+    }
+</script>
+
+@section cssStyles{
+    <link href="~/Styles/tracks.css" rel="stylesheet" />
 }
-
-<h2>Tracks</h2>
-
-<p>
-    @Html.ActionLink("New Track", "AddOrUpdate", "Track", new { area = "Management" }, null)
-</p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArtistId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GenreId)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReleaseDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArtistId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GenreId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "AddOrUpdate", "Track", new { id = item.Id, area = "Management" }, null) |
-            @Html.ActionLink("Delete", "Delete", "Track", new { id = item.Id, area = "Management" }, null) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id })
-        </td>
-    </tr>
-}
-
-</table>

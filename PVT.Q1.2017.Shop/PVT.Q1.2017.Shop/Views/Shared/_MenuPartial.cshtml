@@ -19,7 +19,7 @@
             </li>
             <li role="separator" class="divider"></li>
             <li>
-                <a href="#">Треки</a>
+                <a href="@Url.Action("List","Tracks", new {area="Content"})">Треки</a>
             </li>
             <li>
                 <a href="@Url.Action("List","Artists", new {area="Content"})">Исполнители</a>
@@ -29,11 +29,6 @@
             </li>
             <li>
                 <a href="@Url.Action("List","Genres", new {area="Content"})">Жанры</a>
-            </li>
-           
-           
-            <li>
-                <a href="#">Separated link</a>
             </li>
         </ul>
     </div>

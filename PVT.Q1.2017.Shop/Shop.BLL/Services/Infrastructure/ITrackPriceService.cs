@@ -1,7 +1,8 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
-    using Common.Models.ViewModels;
+
+    using Shop.Common.Models;
 
     /// <summary>
     /// The track price service.

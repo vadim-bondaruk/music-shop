@@ -3,7 +3,7 @@
     using System;
     using FluentValidation;
 
-    using Shop.Common.Models.ViewModels;
+    using Shop.Common.Models;
 
     /// <summary>
     /// Defines rules for user registration

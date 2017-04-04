@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Shop.Common.Models;
-    using Shop.Common.Models.ViewModels;
 
     /// <summary>
     ///     The Artist service.

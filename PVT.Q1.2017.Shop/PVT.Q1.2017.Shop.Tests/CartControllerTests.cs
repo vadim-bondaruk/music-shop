@@ -8,7 +8,7 @@ using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Linq;
-using Shop.Common.Models.ViewModels;
+
 using Shop.BLL.Services.Infrastructure;
 using System.Collections;
 

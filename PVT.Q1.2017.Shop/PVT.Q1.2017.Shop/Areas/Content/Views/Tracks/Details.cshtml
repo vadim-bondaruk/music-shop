@@ -1,33 +1,49 @@
-﻿@model Shop.Common.Models.ViewModels.TrackDetailsViewModel
+﻿@model Shop.Common.Models.TrackDetailsViewModel
 
-@{
-    ViewBag.Title = "Details";
+<body>
+<h2 class="title" style="margin-top: 15px; position: initial">Информация о треке</h2>
+<div style="width: 100%; display: block">
+    <div style="text-align: -webkit-center">
+        <div style="display: block">
+            <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" class="img-thumbnail" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)"/>
+            <ul class="list-group">
+                <li>
+                    <p class="list-group-item">@Html.DisplayNameFor(m => m.Name)</p>
+                    @Html.DisplayTextFor(m => m.Name)
+                </li>
+                <li>
+                    <p class="list-group-item">@Html.DisplayNameFor(m => m.ArtistName)</p>
+                    @Html.DisplayTextFor(m => m.ArtistName)
+                </li>
+                <li>
+                    <p class="list-group-item">@Html.DisplayNameFor(m => m.ReleaseDate)</p>
+                    @Html.DisplayTextFor(m => m.ReleaseDate)
+                </li>
+                <li>
+                    <p class="list-group-item">@Html.DisplayNameFor(m => m.GenreName)</p>
+                    @Html.DisplayTextFor(m => m.GenreName)
+                </li>
+                <li>
+                    <p class="list-group-item">@Html.DisplayNameFor(m => m.Duration)</p>
+                    @Html.DisplayTextFor(m => m.Duration)
+                </li>
+                <li>
+                    <p class="list-group-item">@Html.DisplayNameFor(m => m.Price)</p>
+                    @Html.DisplayTextFor(m => m.Price)
+                </li>
+            </ul>
+            <div style="margin-top: 15px; width: 500px; text-align: right">
+                <a href="JavaScript:window.history.back(1)" class="btn btn-primary">Назад</a>
+                <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary">Правка</a>
+                <a href="@Url.Action("List", "Tracks", new { Area = "Content" })" class="btn btn-primary">Все треки</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+
+@section cssStyles
+{
+    <link href="~/Styles/tracks.css" rel="stylesheet"/>
 }
-
-<h2>Details</h2>
-<ul style="width: 40%; display: inline-table; vertical-align: middle">
-    <li>
-        @Html.DisplayNameFor(m => m.Name)
-        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
-    </li>
-    <li>
-        @Html.DisplayNameFor(m => m.ArtistName)
-        @Html.TextBoxFor(m => m.Artist.Name, new { PlaceHolder = "Исполнитель", @class = "form-control", ReadOnly = "true" })
-    </li>
-    <li>
-        @Html.DisplayNameFor(m => m.ReleaseDate)
-        @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { placeholder = "Дата выхода", type = "text", @class = "form-control" } })
-    </li>
-    <li>
-        @Html.DisplayNameFor(m => m.GenreId)
-        @Html.DropDownListFor(model => model.GenreId, new SelectList(ViewBag.Genres, "Id", "Name"), new { htmlAttributes = new { @class = "form-control" } })
-    </li>
-    <li>
-        @Html.DisplayNameFor(m => m.Duration)
-        @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Продолжительность", type = "text", @class = "form-control" } })
-    </li>
-    <li>
-        @Html.DisplayNameFor(m => m.PostedTrackFile)
-        <input placeholder="Файл" type="text" class="form-control" id="file-path" onclick="document.formreg.PostedTrackFile.click()" />
-    </li>
-</ul>

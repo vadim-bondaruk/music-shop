@@ -1,4 +1,4 @@
-﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.TrackManagementViewModel
+﻿@model Shop.Common.Models.TrackManagementViewModel
 <body>
 <h2 class="title" style="margin-top: 15px; position: initial">Регистрация нового трека</h2>
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
@@ -27,7 +27,7 @@
             </li>
             <li>
                 @Html.DisplayNameFor(m => m.GenreId)
-                @Html.DropDownListFor(model => model.GenreId, new SelectList(ViewBag.Genres, "Id", "Name"), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.GenreId, new SelectList(Model.Genres, "Id", "Name"), new {  @class = "form-control" })
             </li>
             <li>
                 @Html.DisplayNameFor(m => m.Duration)

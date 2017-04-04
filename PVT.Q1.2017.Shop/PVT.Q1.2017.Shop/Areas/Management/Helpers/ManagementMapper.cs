@@ -5,7 +5,6 @@
     using AutoMapper;
 
     using global::Shop.Common.Models;
-    using global::Shop.Common.Models.ViewModels;
 
     using PVT.Q1._2017.Shop.Areas.Management.Extensions;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;

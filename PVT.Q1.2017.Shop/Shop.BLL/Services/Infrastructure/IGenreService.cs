@@ -3,7 +3,6 @@
     using System.Collections.Generic;
 
     using Shop.Common.Models;
-    using Shop.Common.Models.ViewModels;
 
     /// <summary>
     ///     The Genre service

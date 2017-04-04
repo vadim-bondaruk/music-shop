@@ -2,7 +2,7 @@
 {
     using FluentValidation;
 
-    using global::Shop.Common.Models.ViewModels;
+    using global::Shop.Common.Models;
 
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
 

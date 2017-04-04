@@ -46,6 +46,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ManagementMapper.cs" />
     <Compile Include="Helpers\ModelsMapper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Helpers\ServiceHelper.cs" />

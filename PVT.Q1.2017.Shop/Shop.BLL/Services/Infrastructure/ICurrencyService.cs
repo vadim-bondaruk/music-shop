@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Common.Models;
-    using Common.Models.ViewModels;
 
     /// <summary>
     /// The currency service.

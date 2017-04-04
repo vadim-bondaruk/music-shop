@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
-    using Common.Models.ViewModels;
 
     /// <summary>
     /// Cart View Model service

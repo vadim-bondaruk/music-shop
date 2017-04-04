@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Shop.Common.Models.ViewModels;
+    using Shop.Common.Models;
 
     /// <summary>
     ///     The album service.

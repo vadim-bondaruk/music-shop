@@ -1,11 +1,12 @@
-﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
+﻿@model Shop.Common.Models.ArtistManagementViewModel
 
 <body>
-<h2 class="title" style="position: initial; margin-top: 15px">Редактирование информации об исполнителе</h2>
+<h2 class="title" style="margin-top: 15px; position: initial;">Редактирование информации об исполнителе</h2>
 @using (Html.BeginForm("Edit", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg", @class = "edit-form" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
+
+@*@Html.HiddenFor(m => m.Id)*@
     @Html.HiddenFor(m => m.Photo)
 
     <div class="main-center">
@@ -28,15 +29,13 @@
                     </ul>
                 </div>
                 <div>
-                    <a class="btn btn-primary" id="add-track" aria-label="Left Align" href="@Url.Action("New", "Tracks", new { area = "Management", id= Model.Id })">+ Трек</a>
-                    <a class="btn btn-primary" id="add-album" aria-label="Left Align" href=@Url.Action("New", "Albums", new { area = "Management", id= Model.Id })>+ Альбом</a>
+                    <a class="btn btn-primary" id="add-track" aria-label="Left Align" href="@Url.Action("New", "Tracks", new { area = "Management", id = Model.Id })">+ Трек</a>
+                    <a class="btn btn-primary" id="add-album" aria-label="Left Align" href=@Url.Action("New", "Albums", new { area = "Management", id = Model.Id })>+ Альбом</a>
                     <button type="submit" class="btn btn-primary" id="btn-save" aria-label="Left Align">Сохранить</button>
                 </div>
             </div>
         </div>
     </div>
-
-    
 
     <input type="file" id="file" name="PostedPhoto" style="display: none" value=@Model.Photo/>
 }
