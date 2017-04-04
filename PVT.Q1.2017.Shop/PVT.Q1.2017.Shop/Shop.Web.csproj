@@ -205,9 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\CustomDependencyResolver.cs" />
-    <Compile Include="App_Start\CustomValidatorFactory.cs" />
-    <Compile Include="App_Start\FluentValidationHelper.cs" />
-    <Compile Include="App_Start\FluentValidationNinjectModule.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ShopAuthorizeAttribute.cs" />

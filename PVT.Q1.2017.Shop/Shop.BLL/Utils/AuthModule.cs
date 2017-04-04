@@ -63,8 +63,6 @@
                 };
 
                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, isPersistent));
-
-                //context.Response.Redirect(FormsAuthentication.GetRedirectUrl(user.Login, isPersistent));
             }
             else
             {
