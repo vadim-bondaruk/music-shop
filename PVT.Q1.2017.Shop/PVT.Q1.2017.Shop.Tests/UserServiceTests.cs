@@ -20,7 +20,7 @@
         public UserServiceTests()
         {
             _factory = new RepositoryFactoryMoq();
-
+            
             using (var repository = this._factory.GetCurrencyRepository())
             {
                 repository.AddOrUpdate(new Currency { Id = 1, ShortName = "USD", Code = 840 });
@@ -127,6 +127,73 @@
             UserService service = new UserService(_factory);
 
             service.GetEmailByUserIdentity(null);
+        }
+
+        [TestMethod]
+        public void GetEmailByUserIdentity_RealInput()
+        {
+            string email = "test@gmail.com";
+            string login = "test";
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(new User {Email = email, Login = login });
+
+            UserService service = new UserService(_factory);
+
+            var resultEmail = service.GetEmailByUserIdentity(email);
+            var resultLogin = service.GetEmailByUserIdentity(login);
+
+            Assert.IsTrue(resultEmail.Equals(email, StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(resultLogin.Equals(email, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void GetIdOfLogin_NullInput()
+        {
+            IUserService service = new UserService(_factory);
+
+            service.GetIdOflogin(null);
+        }
+
+        [TestMethod]
+        public void GetIdOfLogin_RealInput()
+        {
+            string email = "test@gmail.com";
+            string login = "test";
+            int id = 1;
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(new User { Email = email, Login = login, Id=id });
+
+            IUserService service = new UserService(_factory);
+
+            var loginId = service.GetIdOflogin(login);
+            var emailId = service.GetIdOflogin(email);
+
+            Assert.IsTrue(id == loginId);
+            Assert.IsTrue(id == emailId);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void GetIdOfLogin_LoginAndEmailNotExist()
+        {
+            string email = "test@gmail.com";
+            string login = "test";
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns((User)null);
+
+            IUserService service = new UserService(_factory);
+
+            var loginId = service.GetIdOflogin(login);
+            var emailId = service.GetIdOflogin(email);
+
         }
     }
 }
