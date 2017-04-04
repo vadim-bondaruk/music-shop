@@ -189,6 +189,11 @@
         /// <returns></returns>
         public bool UpdatePassword(int id, string newPassword)
         {
+            if (string.IsNullOrEmpty(newPassword))
+            {
+                return false;
+            }
+
             var update = false;
             try
             {
@@ -220,6 +225,11 @@
         /// <returns></returns>
         public bool UpdatePassword(int id, string newPassword, string oldPassword)
         {
+            if(string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(oldPassword))
+            {
+                return false;
+            }
+
             var update = false;
 
             using (var userRepository = Factory.GetUserRepository())
@@ -258,7 +268,7 @@
         /// <returns></returns>
         public bool UpdateLogin(string userIdentity, string newLogin)
         {
-            if (!string.IsNullOrEmpty(userIdentity))
+            if (!string.IsNullOrEmpty(userIdentity) && !string.IsNullOrEmpty(newLogin))
             {
                 using (var userRepository = this.Factory.GetUserRepository())
                 {
@@ -271,6 +281,7 @@
                             user.Login = newLogin;
                             userRepository.AddOrUpdate(user);
                             userRepository.SaveChanges();
+                            return true;
                         }
                         catch (Exception ex)
                         {
