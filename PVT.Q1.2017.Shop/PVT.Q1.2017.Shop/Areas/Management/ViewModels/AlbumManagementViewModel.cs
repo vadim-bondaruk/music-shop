@@ -23,9 +23,14 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// Posted album cover.
+        /// </summary>
+        public HttpPostedFileBase PostedCover { get; set; }
+
+        /// <summary>
         /// Album cover.
         /// </summary>
-        public HttpPostedFileBase Cover { get; set; }
+        public byte[] Cover { get; set; }
 
         /// <summary>
         /// Album release date.

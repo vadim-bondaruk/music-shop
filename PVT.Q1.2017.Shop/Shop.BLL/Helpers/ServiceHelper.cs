@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Helpers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
@@ -75,7 +74,6 @@
                                           p => p.TrackId == trackId &&
                                                p.PriceLevelId == priceLevelId &&
                                                p.Currency.Code == currencyCode,
-                                          p => p.Track,
                                           p => p.Currency,
                                           p => p.PriceLevel);
 
@@ -158,6 +156,14 @@
                         albumViewModel.Price = GetAlbumPrice(repository, albumViewModel.Id, currencyCode.Value, priceLevel.Value);
                         albumViewModels.Add(albumViewModel);
                     }
+                }
+            }
+
+            using (var repository = factory.GetAlbumTrackRelationRepository())
+            {
+                foreach (var albumViewModel in albumViewModels)
+                {
+                    albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
                 }
             }
 

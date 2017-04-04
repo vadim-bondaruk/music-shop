@@ -31,6 +31,7 @@
         /// </summary>
         protected virtual void BindServices()
         {
+            Bind<IArtistService>().To<ArtistService>();
             Bind<ITrackService>().To<TrackService>();
             Bind<IAlbumService>().To<AlbumService>();
 

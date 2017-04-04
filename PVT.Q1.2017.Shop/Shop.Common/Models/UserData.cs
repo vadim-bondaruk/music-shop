@@ -14,7 +14,7 @@
         /// <summary>
         /// Additional discount
         /// </summary>
-        public double? Dicount { get; set; }
+        public double? Discount { get; set; }
 
         /// <summary>
         /// User currency id

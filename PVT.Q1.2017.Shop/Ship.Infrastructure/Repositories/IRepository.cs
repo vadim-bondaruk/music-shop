@@ -47,6 +47,17 @@
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
+        /// Gets the number of entities contained in the repository.
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// The number of entities contained in the repository.
+        /// </returns>
+        int Count(Expression<Func<TEntity, bool>> filter = null);
+
+        /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.
         /// </summary>
         /// <param name="model">A model to add or update.</param>

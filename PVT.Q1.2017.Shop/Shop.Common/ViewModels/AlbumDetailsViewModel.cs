@@ -36,5 +36,10 @@
         /// Album price.
         /// </summary>
         public PriceViewModel Price { get; set; }
+
+        /// <summary>
+        /// The number of the tracks from the album.
+        /// </summary>
+        public int TracksCount { get; set; }
     }
 }

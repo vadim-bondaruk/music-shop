@@ -23,14 +23,19 @@
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the image.
+        /// The track image. Optional.
         /// </summary>
         public byte[] Image { get; set; }
 
         /// <summary>
-        /// Gets or sets the track file.
+        /// The track file. Required. We are selling it!
         /// </summary>
         public byte[] TrackFile { get; set; }
+
+        /// <summary>
+        /// The track sample. Optional.
+        /// </summary>
+        public byte[] TrackSample { get; set; }
 
         /// <summary>
         /// Gets or sets the track duration.
@@ -48,6 +53,11 @@
         public int GenreId { get; set; }
 
         /// <summary>
+        /// The owner id.
+        /// </summary>
+        public int? OwnerId { get; set; }
+
+        /// <summary>
         /// Gets or sets the artist.
         /// </summary>
         public virtual Artist Artist { get; set; }
@@ -56,6 +66,11 @@
         /// Gets or sets the genre.
         /// </summary>
         public virtual Genre Genre { get; set; }
+
+        /// <summary>
+        /// The owner of the track.
+        /// </summary>
+        public virtual User Owner { get; set; }
 
         /// <summary>
         /// Gets or sets the albums which contain the current track.

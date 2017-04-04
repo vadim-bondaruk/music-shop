@@ -1,27 +1,24 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
     using System.Web.Mvc;
-    using global::Shop.DAL.Infrastruture;
+    using global::Shop.BLL.Services.Infrastructure;
 
     /// <summary>
     /// The artist controller.
     /// </summary>
     public class ArtistController : Controller
     {
-        /// <summary>
-        /// The repository factory.
-        /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IArtistService _artistService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArtistController"/> class.
         /// </summary>
-        /// <param name="repositoryFactory">
-        /// The repository factory.
+        /// <param name="artistService">
+        /// The artist service.
         /// </param>
-        public ArtistController(IRepositoryFactory repositoryFactory)
+        public ArtistController(IArtistService artistService)
         {
-            this._repositoryFactory = repositoryFactory;
+            _artistService = artistService;
         }
 
         /// <summary>
@@ -30,12 +27,9 @@
         /// <returns>
         /// All artists view.
         /// </returns>
-        public ActionResult Index()
+        public ActionResult List()
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
-            {
-                return this.View(repository.GetAll());
-            }
+            return this.View(_artistService.GetArtistsList());
         }
 
         /// <summary>
@@ -45,14 +39,22 @@
         /// The artist id.
         /// </param>
         /// <returns>
-        /// Artist info view.
+        /// Artist view.
         /// </returns>
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            using (var repository = this._repositoryFactory.GetArtistRepository())
+            if (id == null)
             {
-                return this.View(repository.GetById(id));
+                return this.RedirectToAction("List");
             }
+
+            var artistViewModel = _artistService.GetArtistDetails(id.Value);
+            if (artistViewModel == null)
+            {
+                return HttpNotFound($"Артист с id = { id.Value } не найден");
+            }
+
+            return this.View(artistViewModel);
         }
 
         /// <summary>
@@ -64,12 +66,21 @@
         /// <returns>
         /// All artist albums view.
         /// </returns>
-        public ActionResult AlbumsList(int id)
+        public ActionResult AlbumsList(int? id)
         {
-            using (var repository = this._repositoryFactory.GetAlbumRepository())
+            if (id == null)
             {
-                return this.View(repository.GetAll(a => a.ArtistId == id));
+                return this.RedirectToAction("List");
             }
+
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value);
+            if (artistAlbumsViewModel == null)
+            {
+                return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
+            }
+
+            return this.View(artistAlbumsViewModel);
         }
 
         /// <summary>
@@ -81,12 +92,21 @@
         /// <returns>
         /// All artist tracks view.
         /// </returns>
-        public ActionResult TracksList(int id)
+        public ActionResult TracksList(int? id)
         {
-            using (var repository = this._repositoryFactory.GetTrackRepository())
+            if (id == null)
             {
-                return this.View(repository.GetAll(t => t.ArtistId == id));
+                return this.RedirectToAction("List");
             }
+
+            // TODO: передавать currency и price level из UserData текущего пользователя
+            var artistTracksViewModel = _artistService.GetTracksList(id.Value);
+            if (artistTracksViewModel == null)
+            {
+                return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
+            }
+
+            return this.View(artistTracksViewModel);
         }
     }
 }

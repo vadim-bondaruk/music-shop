@@ -6,12 +6,8 @@
     <title>@ViewBag.Title - Music Shop</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    @RenderSection("cssStyles", required: false)
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    @RenderSection("TrackList", false)
-    @RenderSection("TrackDetails", false)
-    @RenderSection("AddNewTrack", false)
-    @RenderSection("AddToCartButton", false)
-    @RenderSection("ListSplitters", false)
     <meta name="description" content="The description of my page" />
 </head>
 <body>

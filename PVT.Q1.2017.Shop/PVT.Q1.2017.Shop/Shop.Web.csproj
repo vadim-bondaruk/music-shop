@@ -141,7 +141,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ratingStars.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\ratingStars.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\arrow.png" />
@@ -171,8 +173,6 @@
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithCreditCard.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Index.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\List.cshtml" />
-    <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Index.cshtml" />
@@ -181,6 +181,38 @@
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
+    <Content Include="Areas\Content\Views\Artist\List.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\CreateArtistButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\EditArtistButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\DeleteArtistButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\NewArtistTrackButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Artist\TracksList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\EditTrackButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\DeleteTrackButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\TracksListPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\AlbumsListPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Artist\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\NewArtistAlbumButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Album\List.cshtml" />
+    <Content Include="Areas\Content\Views\Album\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\CreateAlbumButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\EditAlbumButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\DeleteAlbumButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\NewAlbumTrackButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\RatingPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Track\List.cshtml" />
+    <Content Include="Areas\Content\Views\Track\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\BuyTrackButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\BuyAlbumButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\AddTrackPriceButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\EditTrackPriceButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\AddAlbumPriceButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\EditAlbumPriceButtonPartialView.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -280,7 +312,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Content\Views\Track\" />
     <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />

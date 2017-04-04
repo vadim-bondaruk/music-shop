@@ -5,7 +5,6 @@
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
-    using Exceptions;
     using Helpers;
     using Infrastructure;
 
@@ -62,6 +61,11 @@
                 albumViewModel.Price = ServiceHelper.GetAlbumPrice(repository, id, currencyCode.Value, priceLevelId.Value);
             }
 
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
+            {
+               albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
+            }
+
             return albumViewModel;
         }
 
@@ -85,7 +89,7 @@
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track).Select(r => r.Track).ToList();
+                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track, r => r.Track.Artist).Select(r => r.Track).ToList();
             }
 
             albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
@@ -219,15 +223,12 @@
         /// <returns>
         /// A new instance of the <see cref="AlbumTracksListViewModel"/> type
         /// </returns>
-        /// <exception cref="EntityNotFoundException{T}">
-        /// When an album with the specified id doesn't exist.
-        /// </exception>
         private AlbumTracksListViewModel CreateAlbumTracksListViewModel(int albumId)
         {
             Album album;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                album = repository.GetById(albumId);
+                album = repository.GetById(albumId, a => a.Artist);
             }
 
             return ModelsMapper.GetAlbumTracksListViewModel(album);

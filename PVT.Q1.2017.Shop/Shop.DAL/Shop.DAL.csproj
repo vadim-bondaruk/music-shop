@@ -94,6 +94,22 @@
     <Compile Include="Migrations\201703262002034_FixUserAndUserDataRelations.Designer.cs">
       <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704012052497_AddedTrackSample.cs" />
+    <Compile Include="Migrations\201704012052497_AddedTrackSample.Designer.cs">
+      <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704032220261_AddedTrackOwnerRelationship.cs" />
+    <Compile Include="Migrations\201704032220261_AddedTrackOwnerRelationship.Designer.cs">
+      <DependentUpon>201704032220261_AddedTrackOwnerRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704032227588_AddedAlbumOwnerRelationship.cs" />
+    <Compile Include="Migrations\201704032227588_AddedAlbumOwnerRelationship.Designer.cs">
+      <DependentUpon>201704032227588_AddedAlbumOwnerRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704032338545_FixedDiscountMistake.cs" />
+    <Compile Include="Migrations\201704032338545_FixedDiscountMistake.Designer.cs">
+      <DependentUpon>201704032338545_FixedDiscountMistake.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -182,6 +198,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703262002034_FixUserAndUserDataRelations.resx">
       <DependentUpon>201703262002034_FixUserAndUserDataRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704012052497_AddedTrackSample.resx">
+      <DependentUpon>201704012052497_AddedTrackSample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704032220261_AddedTrackOwnerRelationship.resx">
+      <DependentUpon>201704032220261_AddedTrackOwnerRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704032227588_AddedAlbumOwnerRelationship.resx">
+      <DependentUpon>201704032227588_AddedAlbumOwnerRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704032338545_FixedDiscountMistake.resx">
+      <DependentUpon>201704032338545_FixedDiscountMistake.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
