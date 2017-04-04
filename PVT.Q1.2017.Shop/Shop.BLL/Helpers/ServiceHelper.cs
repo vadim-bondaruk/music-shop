@@ -74,7 +74,6 @@
                                           p => p.TrackId == trackId &&
                                                p.PriceLevelId == priceLevelId &&
                                                p.Currency.Code == currencyCode,
-                                          p => p.Track,
                                           p => p.Currency,
                                           p => p.PriceLevel);
 

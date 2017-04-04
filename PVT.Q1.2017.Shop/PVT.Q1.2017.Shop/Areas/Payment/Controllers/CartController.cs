@@ -1,18 +1,18 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using Shop.Controllers;
 
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         /// <summary>
         /// Репозиторий для хранения корзины
@@ -39,7 +39,7 @@
         {
             this._cartRepository = repositoryFactory.GetCartRepository();
             this._cartService = cartService;
-            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>() };
+            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>(), IsEmpty = true };
         }
 
         /// <summary>
@@ -50,9 +50,10 @@
         /// </param>
         [HttpGet]
         [Authorize]
-        //TODO: проверить ввод ID юзера, иначе автоматом идет ноль
-        public ViewResult Index(int currentUserId = 1)
+        //TODO: отлавливать в параметре контроллера статус оплаты.
+        public ViewResult Index(int currentUserId = 0)
         {
+            currentUserId = CurrentUser.Id;
             if (_cartRepository.GetByUserId(currentUserId) == null)
             {
                 _cartRepository.AddOrUpdate(new Cart(currentUserId));

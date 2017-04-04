@@ -1,23 +1,25 @@
 ﻿namespace Shop.Common.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
-
+    using System.Web.Mvc;
+    using Validators;
+    using ViewModels;
     /// <summary>
     /// 
     /// </summary>
+    [FluentValidation.Attributes.Validator(typeof(LoginViewValidator))]
     public class LoginViewModel
     {
         /// <summary>
         /// 
         /// </summary>
-        [Required]
         [Display(Name = "Электронная почта или логин")]
+        [Remote("IsUserNotExist", "Account", "User", ErrorMessage = "Такого пользователя не существует")]
         public string UserIdentity { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }

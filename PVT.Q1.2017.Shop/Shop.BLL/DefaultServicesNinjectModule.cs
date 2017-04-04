@@ -1,12 +1,12 @@
 ﻿namespace Shop.BLL
 {
     using DAL;
-    using Infrastructure.Security;
     using Ninject;
     using Ninject.Modules;
     using Services;
     using Services.Infrastructure;
     using Utils;
+    using Utils.Infrastructure;
 
     /// <summary>
     /// Default cofiguration module.

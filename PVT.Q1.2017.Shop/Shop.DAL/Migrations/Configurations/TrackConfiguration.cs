@@ -24,6 +24,8 @@
             this.HasRequired(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
             this.HasRequired(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
 
+            HasOptional(t => t.Owner).WithMany().HasForeignKey(t => t.OwnerId).WillCascadeOnDelete(false);
+
             this.ToTable("Tracks");
         }
     }

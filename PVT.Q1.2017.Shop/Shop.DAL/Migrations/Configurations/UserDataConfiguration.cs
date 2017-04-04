@@ -16,7 +16,7 @@
         {
             HasKey(u => u.Id);
             Property(u => u.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(u => u.Dicount).IsOptional();
+            Property(u => u.Discount).IsOptional();
             HasRequired(u => u.UserCurrency).WithMany(c => c.Users).HasForeignKey(u => u.CurrencyId).WillCascadeOnDelete(false);
 
             HasRequired(ud => ud.User).WithMany().HasForeignKey(ud => ud.UserId);
