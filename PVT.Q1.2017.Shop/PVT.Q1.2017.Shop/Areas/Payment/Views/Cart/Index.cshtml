@@ -79,7 +79,7 @@
             <b>Ваша корзина пуста.</b>
         </p>
         <br />
-        <form action="/Cart/Pay" method="post">
+        <form action="../Payment/Paypal" method="post">
             Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
             <br />
             <br />
