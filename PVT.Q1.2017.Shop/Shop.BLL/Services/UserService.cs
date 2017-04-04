@@ -26,6 +26,28 @@
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
+        public bool IsUserExist(string userIdentity)
+            {
+
+                User user = null;
+
+                if (!string.IsNullOrEmpty(userIdentity))
+                {
+                    using (var userRepository = this.Factory.GetUserRepository())
+                    {
+                        user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
+                                                          : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
+                    } 
+                }
+
+                return user != null;
+            }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         public bool RegisterUser(User user)

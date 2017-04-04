@@ -20,6 +20,7 @@
             Property(a => a.ReleaseDate).IsOptional();
 
             HasOptional(a => a.Artist).WithMany(a => a.Albums).HasForeignKey(a => a.ArtistId).WillCascadeOnDelete(false);
+            HasOptional(a => a.Owner).WithMany().HasForeignKey(a => a.OwnerId).WillCascadeOnDelete(false);
 
             ToTable("Albums");
         }
