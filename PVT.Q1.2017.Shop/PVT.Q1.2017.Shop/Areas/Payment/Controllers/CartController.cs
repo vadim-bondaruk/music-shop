@@ -7,11 +7,12 @@
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using Shop.Controllers;
 
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         /// <summary>
         /// Репозиторий для хранения корзины
@@ -49,9 +50,10 @@
         /// </param>
         [HttpGet]
         [Authorize]
-        //TODO: реализовать передачу текущего id пользователя из главного меню
-        public ViewResult Index(int currentUserId = 1)
+        //TODO: отлавливать в параметре контроллера статус оплаты.
+        public ViewResult Index(int currentUserId = 0)
         {
+            currentUserId = CurrentUser.Id;
             if (_cartRepository.GetByUserId(currentUserId) == null)
             {
                 _cartRepository.AddOrUpdate(new Cart(currentUserId));
