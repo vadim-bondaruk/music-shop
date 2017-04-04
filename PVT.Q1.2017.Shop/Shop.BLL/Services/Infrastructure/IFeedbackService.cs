@@ -1,8 +1,7 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
-
-    using Shop.Common.Models;
+    using Common.ViewModels;
 
     /// <summary>
     /// The feedback service.

@@ -2,23 +2,39 @@
 {
     using System;
     using FluentValidation;
-
-    using Shop.Common.Models;
+    using ViewModels;
 
     /// <summary>
     /// Defines rules for user registration
     /// </summary>
     public class UserRegistrationValidator : AbstractValidator<UserViewModel>
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        //private readonly IUserService _userService;
+
         /// <summary>
         /// 
         /// </summary>
         public UserRegistrationValidator()
         {
+           // this._userService = new UserService();
+
+            RuleFor(u => u.FirstName).NotEmpty()
+                .WithMessage("Поле обязательно должно быть заполнено");
+
+            RuleFor(u => u.LastName).NotEmpty()
+                .WithMessage("Поле обязательно должно быть заполнено");
+
             RuleFor(u => u.Login).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.Login).Matches("^[a-zA-Z0-9_.-]*$")
                 .WithMessage("Только буквы латинского алфавита, цифры и знак подчеркивания");
+            //RuleFor(u => u.Login)
+            //    .Must(login => !_userService.IsUserExist(login));
+                //SetValidator(new UniqueUserIdentityValidator(this._userRepository, "Пользователь с таким логином уже существует"));
 
             RuleFor(u => u.Password).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
@@ -36,6 +52,9 @@
                 .WithMessage("Адрес введен некорректно");
             RuleFor(u => u.Email).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
+            //RuleFor(u => u.Email)
+            //    .Must(email => !_userService.IsUserExist(email));
+                //.SetValidator(new UniqueUserIdentityValidator(this._userRepository, "Пользователь с таким адресом электронной почты уже существует"));
 
             RuleFor(u => u.BirthDate).InclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today)
                 .WithMessage("Дата рождения выбрана неверно");

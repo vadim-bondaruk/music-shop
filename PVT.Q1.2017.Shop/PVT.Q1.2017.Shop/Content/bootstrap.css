@@ -580,12 +580,12 @@ ol ol {
   list-style: none;
 }
 
-.inline {
+.list-inline {
   padding-left: 0;
   list-style: none;
 }
 
-.inline > li {
+.list-inline > li {
   display: inline-block;
   padding-right: 5px;
   padding-left: 5px;

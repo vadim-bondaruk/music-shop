@@ -76,15 +76,15 @@
                                      It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()), Times.Once);
         }
 
-        //[TestMethod]
-        //public void GetAlbumInfoTest()
-        //{
-        //    AddAlbumTest();
-        //    Assert.IsNotNull(_albumService.GetAlbumDetails(1));
+        [TestMethod]
+        public void GetAlbumInfoTest()
+        {
+            AddAlbumTest();
+            Assert.IsNotNull(_albumService.GetAlbumDetails(1));
 
-        //    Mock.Get(_factory.GetAlbumRepository())
-        //        .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
-        //}
+            Mock.Get(_factory.GetAlbumRepository())
+                .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
+        }
 
         [TestMethod]
         public void GetAlbumsWithPriceConfiguredTest()

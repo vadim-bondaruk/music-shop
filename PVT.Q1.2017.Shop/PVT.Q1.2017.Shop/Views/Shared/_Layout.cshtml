@@ -1,68 +1,67 @@
 ﻿<!DOCTYPE html>
-<html style="height: 100%">
+<html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusicShop</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <title>@ViewBag.Title - Music Shop</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    @RenderSection("cssStyles", required: false)
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
-
-    @RenderSection("cssStyles", false)
-    @RenderSection("AddToCartButton", false)
-
+    <meta name="description" content="The description of my page" />
 </head>
-
-<body style="height: 100%">
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand", style = "height: 35px" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                @Html.Partial("_MenuPartial")
-            </ul>
-
-            @if (Request.IsAuthenticated)
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @Html.Partial("_MenuPartial")
+                </ul>
+                @if (Request.IsAuthenticated)
             {
                 using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { area = "User", id = "logoutForm", @class = "navbar-right" }))
                 {
-                    @Html.AntiForgeryToken()
+                        @Html.AntiForgeryToken()
 
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", new { area = "User", controller = "Manage" }, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", new { area = "User", controller = "Manage" }, htmlAttributes: new { title = "Manage" })
-                        </li>
-                        <li>
-                            <a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a>
-                        </li>
+                        <li>@Html.ActionLink("Регистрация", "Register", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Войти", "Login", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "loginLink" })</li>
                     </ul>
                 }
-            }
-            else
-            {
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Регистрация", "Register", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Войти", "Login", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "loginLink" })</li>
-                </ul>
-            }
+            </div>
         </div>
     </div>
-</div>
 
-<div style="height: 100%">
-    @RenderBody()
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Music Shop</p>
+        </footer>
+    </div>
 
-    <footer>
-        <p class="copyright">&copy; @DateTime.Now.Year - PVT.Q1.2017</p>
-    </footer>
-</div>
-
-<script src="~/Scripts/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/Styles/Main.css">
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

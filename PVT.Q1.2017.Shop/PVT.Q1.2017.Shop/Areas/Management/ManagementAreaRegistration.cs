@@ -26,7 +26,7 @@
             context.MapRoute(
                 name: "Management_default",
                 url: "Management/{controller}/{action}/{id}",
-                defaults: new { controller = "Tracks", action = "List", id = UrlParameter.Optional });
+                defaults: new { controller = "Track", action = "AddOrUpdate", id = UrlParameter.Optional });
         }
     }
 }

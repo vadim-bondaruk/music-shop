@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Models;
-
+    using Common.ViewModels;
     using DAL.Infrastruture;
     using Helpers;
     using Infrastructure;
@@ -44,7 +44,7 @@
             Currency currency;
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                currency = repositry.GetAll(c => c.Code == code).FirstOrDefault();
+                currency = repositry.FirstOrDefault(c => c.Code == code);
             }
 
             return ModelsMapper.GetCurrencyViewModel(currency);
@@ -64,7 +64,7 @@
             Currency currency;
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                currency = repositry.GetAll(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                currency = repositry.FirstOrDefault(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase));
             }
 
             return ModelsMapper.GetCurrencyViewModel(currency);
@@ -101,7 +101,7 @@
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
+                return repositry.FirstOrDefault(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)) != null;
             }
         }
 
@@ -119,7 +119,7 @@
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll(c => c.Code == code).Any();
+                return repositry.FirstOrDefault(c => c.Code == code) != null;
             }
         }
 
@@ -142,8 +142,8 @@
 
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.GetAll(c => c.Code == currency.Code ||
-                                             c.ShortName.Equals(currency.ShortName.Trim(), StringComparison.OrdinalIgnoreCase)).Any();
+                return repositry.FirstOrDefault(c => c.Code == currency.Code ||
+                                                     c.ShortName.Equals(currency.ShortName.Trim(), StringComparison.OrdinalIgnoreCase)) != null;
             }
         }
 

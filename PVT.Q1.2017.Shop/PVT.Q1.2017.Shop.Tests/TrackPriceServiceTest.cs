@@ -10,6 +10,7 @@ namespace PVT.Q1._2017.Shop.Tests
     using global::Shop.Infrastructure;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
+    using Ninject;
 
     [TestClass]
     public class TrackPriceServiceTest

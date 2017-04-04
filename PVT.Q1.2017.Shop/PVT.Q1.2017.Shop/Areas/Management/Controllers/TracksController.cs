@@ -118,7 +118,7 @@
                 genres = repo.GetAll();
             }
 
-            var artist = this.artistService.GetArtist(id);
+            var artist = this.artistRepository.GetById(id);
             return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
         }
 

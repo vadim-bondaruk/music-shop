@@ -1,11 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop.BLL.Services;
 using Shop.Common.Models;
-
 using System.Collections.Generic;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
+    using global::Shop.Common.ViewModels;
+
     [TestClass]
     public class CartViewModelServiceTests
     {

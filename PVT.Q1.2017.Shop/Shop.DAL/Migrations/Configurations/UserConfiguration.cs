@@ -15,7 +15,7 @@
         public UserConfiguration()
         {
             HasKey(t => t.Id);
-            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(p => p.BirthDate).IsOptional();
             Property(p => p.Country).IsOptional().HasMaxLength(15);
             Property(p => p.Email).IsRequired().HasMaxLength(40);

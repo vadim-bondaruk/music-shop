@@ -7,6 +7,7 @@
     using Shop.BLL.Helpers;
     using Shop.BLL.Services.Infrastructure;
     using Shop.Common.Models;
+    using Shop.Common.ViewModels;
     using Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -15,7 +16,6 @@
     public class TrackService : BaseService, ITrackService
     {
         /// <summary>
-        ///     Gets or sets the artist repository.
         /// </summary>
         private readonly IArtistRepository artistRepository;
 
@@ -25,7 +25,6 @@
         /// <param name="factory">
         ///     The  repositories factory.
         /// </param>
-        /// <param name="artistRepository"></param>
         public TrackService(IRepositoryFactory factory, IArtistRepository artistRepository)
             : base(factory)
         {
@@ -52,7 +51,9 @@
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id));
+                albums = repository.GetAll(
+                    a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id),
+                    a => a.Artist);
             }
 
             trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(
@@ -107,16 +108,21 @@
 
             trackViewModel.Rating = ServiceHelper.CalculateTrackRating(this.Factory, id);
 
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            {
+                trackViewModel.AlbumsCount = repository.Count(r => r.TrackId == id);
+            }
+
             return trackViewModel;
         }
 
         /// <summary>
         /// </summary>
         /// <param name="currencyCode">
-        ///     The currency code.
+        /// The currency code.
         /// </param>
         /// <param name="priceLevelId">
-        ///     The price level id.
+        /// The price level id.
         /// </param>
         /// <returns>
         /// </returns>
@@ -161,56 +167,6 @@
             }
 
             return viewModelsCollection;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code.
-        /// </param>
-        /// <param name="priceLevelId">
-        /// The price level id.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public TrackManagementViewModel GetTrackManagementViewModel(
-            int id,
-            int? currencyCode = null,
-            int? priceLevelId = null)
-        {
-            Track track;
-            using (var repository = this.Factory.GetTrackRepository())
-            {
-                track = repository.GetById(id, t => t.Artist, t => t.Genre);
-            }
-
-            var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
-
-            if (currencyCode == null)
-            {
-                currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
-            }
-
-            if (priceLevelId == null)
-            {
-                priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
-            }
-
-            //using (var repository = this.Factory.GetTrackPriceRepository())
-            //{
-            //    trackManagementViewModel.Price = ServiceHelper.GetTrackPrice(
-            //        repository,
-            //        id,
-            //        currencyCode.Value,
-            //        priceLevelId.Value);
-            //}
-
-            trackManagementViewModel.Rating = ServiceHelper.CalculateTrackRating(this.Factory, id);
-
-            return trackManagementViewModel;
         }
 
         /// <summary>
@@ -293,7 +249,7 @@
             Track track;
             using (var repository = this.Factory.GetTrackRepository())
             {
-                track = repository.GetById(trackId);
+                track = repository.GetById(trackId, t => t.Artist);
             }
 
             return ModelsMapper.GetTrackAlbumsListViewModel(track);

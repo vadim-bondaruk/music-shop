@@ -1,13 +1,14 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
-    using System;
     using System.Web.Mvc;
+    using App_Start;
+    using Helpers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
-    using global::Shop.Common.Utils;
+    using global::Shop.BLL.Utils.Infrastructure;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using global::Shop.Infrastructure.Security;
+    using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
@@ -27,16 +28,16 @@
         /// <summary>
         /// 
         /// </summary>
-        private IUserRepository _userRepository;
+        private IRepositoryFactory _factory;
 
         /// <summary>
         /// 
         /// </summary>
-        public AccountController(IUserService userService, IAuthModule authModule, IUserRepository _userRepository)
+        public AccountController(IUserService userService, IAuthModule authModule, IRepositoryFactory factory)
         {
             this._userService = userService;
             this._authModule = authModule;
-            this._userRepository = _userRepository;
+            this._factory = factory;
         }
 
         /// <summary>
@@ -48,10 +49,9 @@
         [HttpGet]
         public ActionResult IsLoginUnique(string login)
         {
-            var a = !(this._userRepository
-                .GetAll(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase))
-                .IsAny());
-            return this.Json(a, JsonRequestBehavior.AllowGet);
+            var isUnique = !this._userService.IsUserExist(login);
+
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -63,10 +63,23 @@
         [HttpGet]
         public ActionResult IsEmailUnique(string email)
         {
-            var a = !(this._userRepository
-                .GetAll(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase))
-                .IsAny());
-            return this.Json(a, JsonRequestBehavior.AllowGet);
+            var isUnique = !this._userService.IsUserExist(email);
+
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult IsUserNotExist(string userIdentity)
+        {
+            var isUnique = this._userService.IsUserExist(userIdentity);
+
+            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -92,16 +105,26 @@
         [ValidateAntiForgeryToken]
         public ActionResult Login([Bind(Include = "UserIdentity, Password, RememberMe")] LoginViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                this._authModule.LogIn(model.UserIdentity, model.Password);
-            }
-            catch (UserValidationException ex)
-            {
-                ModelState.AddModelError(ex.UserProperty, ex.Message);
+                try
+                {   
+                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current);
+
+                    var returnUrl = HttpContext.Request.QueryString["ReturnUrl"];
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return this.Redirect(returnUrl);
+                    }
+                }
+                catch (UserValidationException ex)
+                {
+                    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                }
             }
 
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            return this.RedirectToAction("Index", "Home", new {area = string.Empty });
         }
 
         /// <summary>
@@ -112,7 +135,9 @@
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
+            this.HttpContext.Session.Abandon();
             this._authModule.LogOut();
+
             return this.RedirectToAction("Login", "Account", new { area = "User" });
         }
 
@@ -137,25 +162,26 @@
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-            /// TODO: Add insert logic here
+           
             if (ModelState.IsValid)
             {
                 try
-                {
-                    AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserViewModel, User>());
-                    var userDB = AutoMapper.Mapper.Map<User>(user);
+                {                   
+                    var userDB = UserMapper.GetUserModel(user);
                     result = this._userService.RegisterUser(userDB);
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
-
+               
                 if (result)
                 {
                     return this.RedirectToAction("Success");
                 }
             }
+
+            ModelState.AddModelError(string.Empty, "Возникла ошибка при сохранении данных");
 
             return this.View(user);
         }
@@ -190,6 +216,7 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ShopAuthorize(UserRoles.User)]
         public ActionResult Success()
         {
             return this.View();

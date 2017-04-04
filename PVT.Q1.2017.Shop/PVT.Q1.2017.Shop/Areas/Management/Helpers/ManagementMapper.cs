@@ -1,10 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Helpers
 {
-    using System.Web;
-
     using AutoMapper;
 
     using global::Shop.Common.Models;
+    using global::Shop.Common.ViewModels;
 
     using PVT.Q1._2017.Shop.Areas.Management.Extensions;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
@@ -17,14 +16,29 @@
         /// <summary>
         ///     The mapper for models with detailed information.
         /// </summary>
-        private static readonly IMapper ManagementModelsMapper;
+        private static readonly IMapper _managementModelsMapper;
 
         /// <summary>
         ///     Initializes static members of the <see cref="ManagementMapper" /> class.
         /// </summary>
         static ManagementMapper()
         {
-            ManagementModelsMapper = CreateManagementMapper();
+            _managementModelsMapper = CreateManagementMapper();
+        }
+
+        /// <summary>
+        ///     Executes a mapping from the <see cref="AlbumDetailsViewModel" /> model to a new
+        ///     <see cref="AlbumManagementViewModel" /> model.
+        /// </summary>
+        /// <param name="album">
+        ///     The album domain model.
+        /// </param>
+        /// <returns>
+        ///     A new <see cref="AlbumManagementViewModel" /> model.
+        /// </returns>
+        public static AlbumManagementViewModel GetAlbumManagementViewModel(AlbumDetailsViewModel album)
+        {
+            return _managementModelsMapper.Map<AlbumManagementViewModel>(album);
         }
 
         /// <summary>
@@ -36,7 +50,7 @@
         /// </returns>
         public static AlbumManagementViewModel GetAlbumManagementViewModel(Album album)
         {
-            return ManagementModelsMapper.Map<AlbumManagementViewModel>(album);
+            return _managementModelsMapper.Map<AlbumManagementViewModel>(album);
         }
 
         /// <summary>
@@ -45,26 +59,24 @@
         /// <param name="album">
         ///     The album management view model.
         /// </param>
-        /// <param name="viewModel"></param>
         /// <returns>
         ///     A new <see cref="Album" /> DTO model.
         /// </returns>
-        public static Album GetAlbumModel(AlbumManagementViewModel viewModel)
+        public static Album GetAlbumModel(AlbumManagementViewModel album)
         {
-            return ManagementModelsMapper.Map<Album>(viewModel);
+            return _managementModelsMapper.Map<Album>(album);
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="album">
-        ///     The album.
+        /// <param name="viewModel">
+        ///     The view model.
         /// </param>
-        /// <param name="viewModel"></param>
         /// <returns>
         /// </returns>
-        public static ArtistManagementViewModel GetArtistManagementViewModel(ArtistDetailsViewModel viewModel)
+        public static object GetArtistManagementViewModel(ArtistDetailsViewModel viewModel)
         {
-            return ManagementModelsMapper.Map<ArtistManagementViewModel>(viewModel);
+            return _managementModelsMapper.Map<ArtistManagementViewModel>(viewModel);
         }
 
         /// <summary>
@@ -76,19 +88,19 @@
         /// </returns>
         public static Artist GetArtistModel(ArtistManagementViewModel viewModel)
         {
-            return ManagementModelsMapper.Map<Artist>(viewModel);
+            return _managementModelsMapper.Map<Artist>(viewModel);
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="genre">
-        ///     The genre.
+        /// <param name="viewModel">
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        public static GenreManagementViewModel GetGenreManagementViewModel(GenreDetailsViewModel genre)
+        public static object GetGenreManagementViewModel(GenreDetailsViewModel viewModel)
         {
-            return ManagementModelsMapper.Map<GenreManagementViewModel>(genre);
+            return _managementModelsMapper.Map<GenreManagementViewModel>(viewModel);
         }
 
         /// <summary>
@@ -100,7 +112,7 @@
         /// </returns>
         public static Genre GetGenreModel(GenreManagementViewModel viewModel)
         {
-            return ManagementModelsMapper.Map<Genre>(viewModel);
+            return _managementModelsMapper.Map<Genre>(viewModel);
         }
 
         /// <summary>
@@ -115,21 +127,21 @@
         /// </returns>
         public static TrackManagementViewModel GetTrackManagementViewModel(TrackDetailsViewModel track)
         {
-            return ManagementModelsMapper.Map<TrackManagementViewModel>(track);
+            return _managementModelsMapper.Map<TrackManagementViewModel>(track);
         }
 
         /// <summary>
         ///     Executes a mapping from the <see cref="TrackManagementViewModel" /> model to a new <see cref="Track" /> model.
         /// </summary>
-        /// <param name="trackManagementViewModel">
+        /// <param name="track">
         ///     The track management view model.
         /// </param>
         /// <returns>
         ///     A new <see cref="Track" /> DTO model.
         /// </returns>
-        public static Track GetTrackModel(TrackManagementViewModel trackManagementViewModel)
+        public static Track GetTrackModel(TrackManagementViewModel track)
         {
-            return ManagementModelsMapper.Map<Track>(trackManagementViewModel);
+            return _managementModelsMapper.Map<Track>(track);
         }
 
         /// <summary>
@@ -143,49 +155,30 @@
             var managementConfiguration = new MapperConfiguration(
                 cfg =>
                     {
-                        cfg.CreateMap<GenreManagementViewModel, Genre>().ReverseMap();
-                        cfg.CreateMap<GenreDetailsViewModel, GenreManagementViewModel>().ReverseMap();
+                        cfg.CreateMap<ArtistViewModel, Artist>();
+                        cfg.CreateMap<ArtistManagementViewModel, Artist>();
+                        cfg.CreateMap<GenreViewModel, Genre>();
 
-                        cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
-                            .ForMember(dest => dest.Image, opt => opt.UseValue<HttpPostedFileBase>(null))
-                            .ForMember(dest => dest.TrackFile, opt => opt.UseValue<HttpPostedFileBase>(null));
+                        cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>();
 
                         cfg.CreateMap<TrackManagementViewModel, Track>()
+                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
+                            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
                             .ForMember(
                                 dest => dest.TrackFile,
-                                opt =>
-                                    opt.MapFrom(
-                                        src =>
-                                            src.PostedTrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
+                                opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
                             .ForMember(
-                                dest => dest.Image,
-                                opt =>
-                                    opt.MapFrom(src => src.PostedImage != null ? src.PostedImage.ToBytes() : src.Image));
+                                dest => dest.TrackSample,
+                                opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
+                            .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.PostedImage.ToBytes()));
 
-                        cfg.CreateMap<AlbumDetailsViewModel, Album>()
-                            .ForMember(dest => dest.Cover, opt => opt.MapFrom(src => src.Cover));
+                        cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
 
-                        cfg.CreateMap<Album, AlbumDetailsViewModel>()
-                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.Cover));
-
-                        cfg.CreateMap<Album, AlbumManagementViewModel>()
-                            .ForMember(dest => dest.Cover, opt => opt.MapFrom(src => src.Cover))
-                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist));
+                        cfg.CreateMap<Album, AlbumManagementViewModel>();
 
                         cfg.CreateMap<AlbumManagementViewModel, Album>()
-                            .ForMember(
-                                dest => dest.Cover,
-                                opt =>
-                                    opt.MapFrom(src => src.PostedCover != null ? src.PostedCover.ToBytes() : src.Cover));
-
-                        cfg.CreateMap<ArtistManagementViewModel, Artist>()
-                            .ForMember(
-                                dest => dest.Photo,
-                                opt =>
-                                    opt.MapFrom(src => src.PostedPhoto != null ? src.PostedPhoto.ToBytes() : src.Photo));
-
-                        cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
-                            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
+                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
+                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.PostedCover.ToBytes()));
                     });
 
             return managementConfiguration.CreateMapper();

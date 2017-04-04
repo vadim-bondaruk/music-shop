@@ -9,6 +9,7 @@
     /// <summary>
     /// The album.
     /// </summary>
+    [Validator(typeof(AlbumValidator))]
     public class Album : BaseEntity
     {
         /// <summary>
@@ -32,9 +33,19 @@
         public int? ArtistId { get; set; }
 
         /// <summary>
+        /// Owner id.
+        /// </summary>
+        public int? OwnerId { get; set; }
+
+        /// <summary>
         /// Artist.
         /// </summary>
         public virtual Artist Artist { get; set; }
+
+        /// <summary>
+        /// Album owner.
+        /// </summary>
+        public virtual User Owner { get; set; }
 
         /// <summary>
         /// All tracks from the album.

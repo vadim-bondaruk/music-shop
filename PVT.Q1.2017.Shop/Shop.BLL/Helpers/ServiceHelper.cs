@@ -1,9 +1,8 @@
 ﻿namespace Shop.BLL.Helpers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Common.Models;
-
+    using Common.ViewModels;
     using DAL.Infrastruture;
 
     /// <summary>
@@ -71,13 +70,12 @@
         /// </returns>
         internal static PriceViewModel GetTrackPrice(ITrackPriceRepository repository, int trackId, int currencyCode, int priceLevelId)
         {
-            var price = repository.GetAll(
+            var price = repository.FirstOrDefault(
                                           p => p.TrackId == trackId &&
                                                p.PriceLevelId == priceLevelId &&
                                                p.Currency.Code == currencyCode,
-                                          p => p.Track,
                                           p => p.Currency,
-                                          p => p.PriceLevel).FirstOrDefault();
+                                          p => p.PriceLevel);
 
             return ModelsMapper.GetPriceViewModel(price);
         }
@@ -102,13 +100,13 @@
         /// </returns>
         internal static PriceViewModel GetAlbumPrice(IAlbumPriceRepository repository, int albumId, int currencyCode, int priceLevelId)
         {
-            var price = repository.GetAll(
+            var price = repository.FirstOrDefault(
                                           p => p.AlbumId == albumId &&
                                                p.PriceLevelId == priceLevelId &&
                                                p.Currency.Code == currencyCode,
                                           p => p.Album,
                                           p => p.Currency,
-                                          p => p.PriceLevel).FirstOrDefault();
+                                          p => p.PriceLevel);
 
             return ModelsMapper.GetPriceViewModel(price);
         }
@@ -158,6 +156,14 @@
                         albumViewModel.Price = GetAlbumPrice(repository, albumViewModel.Id, currencyCode.Value, priceLevel.Value);
                         albumViewModels.Add(albumViewModel);
                     }
+                }
+            }
+
+            using (var repository = factory.GetAlbumTrackRelationRepository())
+            {
+                foreach (var albumViewModel in albumViewModels)
+                {
+                    albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
                 }
             }
 

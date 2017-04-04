@@ -2,47 +2,50 @@
 {
     using System;
     using System.Collections.Generic;
-
     using FluentValidation.Attributes;
-
-    using Shop.Common.Validators;
-    using Shop.Infrastructure.Models;
+    using Infrastructure.Models;
+    using Validators;
 
     /// <summary>
-    ///     The track.
+    /// The track.
     /// </summary>
     [Validator(typeof(TrackValidator))]
     public class Track : BaseEntity
     {
         /// <summary>
-        ///     Gets or sets the albums which contain the current track.
+        /// Gets or sets the name.
         /// </summary>
-        public virtual ICollection<AlbumTrackRelation> Albums { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        ///     Gets or sets the artist.
+        /// Gets or sets the track release date.
         /// </summary>
-        public virtual Artist Artist { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        ///     Gets or sets the artist id.
+        /// The track image. Optional.
         /// </summary>
-        public int ArtistId { get; set; }
+        public byte[] Image { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track duration.
+        /// The track file. Required. We are selling it!
+        /// </summary>
+        public byte[] TrackFile { get; set; }
+
+        /// <summary>
+        /// The track sample. Optional.
+        /// </summary>
+        public byte[] TrackSample { get; set; }
+
+        /// <summary>
+        /// Gets or sets the track duration.
         /// </summary>
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
-        ///     Gets or sets all user feedbacks the current track.
+        /// Gets or sets the artist id.
         /// </summary>
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the genre.
-        /// </summary>
-        public virtual Genre Genre { get; set; }
+        public int ArtistId { get; set; }
 
         /// <summary>
         /// Gets or sets the genre id.
@@ -50,33 +53,43 @@
         public int GenreId { get; set; }
 
         /// <summary>
-        ///     Gets or sets the image.
+        /// The owner id.
         /// </summary>
-        public byte[] Image { get; set; }
+        public int? OwnerId { get; set; }
 
         /// <summary>
-        ///     Gets or sets the name.
+        /// Gets or sets the artist.
         /// </summary>
-        public string Name { get; set; }
+        public virtual Artist Artist { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track release date.
+        /// Gets or sets the genre.
         /// </summary>
-        public DateTime? ReleaseDate { get; set; }
+        public virtual Genre Genre { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track file.
+        /// The owner of the track.
         /// </summary>
-        public byte[] TrackFile { get; set; }
+        public virtual User Owner { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track prices.
+        /// Gets or sets the albums which contain the current track.
+        /// </summary>
+        public virtual ICollection<AlbumTrackRelation> Albums { get; set; }
+
+        /// <summary>
+        /// Gets or sets the track prices.
         /// </summary>
         public virtual ICollection<TrackPrice> TrackPrices { get; set; }
 
         /// <summary>
-        ///     Gets or sets all user votes for the current track.
+        /// Gets or sets all user votes for the current track.
         /// </summary>
         public virtual ICollection<Vote> Votes { get; set; }
+
+        /// <summary>
+        /// Gets or sets all user feedbacks the current track.
+        /// </summary>
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

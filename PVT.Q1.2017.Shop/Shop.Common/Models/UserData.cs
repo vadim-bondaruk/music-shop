@@ -14,7 +14,7 @@
         /// <summary>
         /// Additional discount
         /// </summary>
-        public double? Dicount { get; set; }
+        public double? Discount { get; set; }
 
         /// <summary>
         /// User currency id
@@ -25,6 +25,11 @@
         /// ID for relation with <see cref="PriceLevel"/> 
         /// </summary>
         public int PriceLevelId { get; set; }
+
+        /// <summary>
+        /// The user id.
+        /// </summary>
+        public int UserId { get; set; }
 
         /// <summary>
         /// User currency
@@ -45,5 +50,10 @@
         /// All votes
         /// </summary>
         public virtual ICollection<Vote> Votes { get; set; }
+
+        /// <summary>
+        /// The user.
+        /// </summary>
+        public virtual User User { get; set; }
     }
 }

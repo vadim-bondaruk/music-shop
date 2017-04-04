@@ -2,7 +2,6 @@
 {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.ModelConfiguration;
     using System.Linq;
     using System.Reflection;
@@ -19,7 +18,6 @@
         /// </summary>
         public ShopContext() : this("ShopConnection")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
 
         /// <summary>

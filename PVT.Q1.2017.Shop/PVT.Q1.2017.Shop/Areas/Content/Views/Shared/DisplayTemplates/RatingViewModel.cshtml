@@ -1,0 +1,18 @@
+﻿@model Shop.Common.ViewModels.RatingViewModel
+
+<div>
+    @if (Model != null)
+    {
+        @Html.Partial("RatingPartialView", Model.Rating)
+        if (Model.VotesCount > 0 || Model.CommentsCount > 0)
+        {
+            @:&nbsp;
+            @Model.Rating
+            @:(@Model.VotesCount оценок, @Model.CommentsCount комментариев)
+        }
+    }
+    else
+    {
+        <div class="zero-stars"></div>
+    }
+</div>

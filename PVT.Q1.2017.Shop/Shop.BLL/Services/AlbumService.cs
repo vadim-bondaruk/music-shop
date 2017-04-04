@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Shop.BLL.Exceptions;
     using Shop.BLL.Helpers;
     using Shop.BLL.Services.Infrastructure;
     using Shop.Common.Models;
+    using Shop.Common.ViewModels;
     using Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -65,6 +65,11 @@
                     id,
                     currencyCode.Value,
                     priceLevelId.Value);
+            }
+
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            {
+                albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
             }
 
             return albumViewModel;
@@ -137,7 +142,7 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public ICollection<AlbumDetailsViewModel> GetAllViewModels()
+        public IEnumerable<AlbumDetailsViewModel> GetAllViewModels()
         {
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
@@ -168,7 +173,10 @@
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track).Select(r => r.Track).ToList();
+                tracks =
+                    repository.GetAll(r => r.AlbumId == albumId, r => r.Track, r => r.Track.Artist)
+                        .Select(r => r.Track)
+                        .ToList();
             }
 
             albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(
@@ -250,15 +258,12 @@
         /// <returns>
         ///     A new instance of the <see cref="AlbumTracksListViewModel" /> type
         /// </returns>
-        /// <exception cref="EntityNotFoundException{T}">
-        ///     When an album with the specified id doesn't exist.
-        /// </exception>
         private AlbumTracksListViewModel CreateAlbumTracksListViewModel(int albumId)
         {
             Album album;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                album = repository.GetById(albumId);
+                album = repository.GetById(albumId, a => a.Artist);
             }
 
             return ModelsMapper.GetAlbumTracksListViewModel(album);

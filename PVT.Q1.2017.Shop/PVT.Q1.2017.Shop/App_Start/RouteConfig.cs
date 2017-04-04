@@ -4,12 +4,12 @@
     using System.Web.Routing;
 
     /// <summary>
-    ///     Global filters of route table
+    /// Global filters of route table
     /// </summary>
     public class RouteConfig
     {
         /// <summary>
-        ///     Set default <paramref name="routes" />
+        /// Set default routes
         /// </summary>
         /// <param name="routes">Collection of routes</param>
         public static void RegisterRoutes(RouteCollection routes)

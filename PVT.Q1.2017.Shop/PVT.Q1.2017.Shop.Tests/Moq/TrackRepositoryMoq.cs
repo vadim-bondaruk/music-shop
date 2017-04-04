@@ -32,6 +32,15 @@
                                      It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
                  .Returns(_tracks);
 
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Track, bool>>>()))
+                 .Returns(() => _tracks.FirstOrDefault());
+
+            _mock.Setup(
+                        m =>
+                            m.FirstOrDefault(It.IsAny<Expression<Func<Track, bool>>>(),
+                                             It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
+                 .Returns(() => _tracks.FirstOrDefault());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _tracks.FirstOrDefault(t => t.Id > 0));
 

@@ -173,7 +173,7 @@
         /// </returns>
         public virtual ActionResult New(int id)
         {
-            var artist = this.artistService.GetArtist(id);
+            var artist = this.artistRepository.GetById(id);
             return this.View(new AlbumManagementViewModel { Artist = artist });
         }
 
@@ -192,7 +192,7 @@
             Album album;
             using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
             {
-                var artist = this.artistService.GetArtist(viewModel.Artist.Id);
+                var artist = this.artistRepository.GetById(viewModel.Artist.Id);
 
 
                 if (artist != null)

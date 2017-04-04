@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Shop.Common.Models;
+    using Shop.Common.ViewModels;
 
     /// <summary>
     ///     The track service
@@ -41,6 +41,12 @@
 
         /// <summary>
         /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code.
+        /// </param>
+        /// <param name="priceLevelId">
+        /// The price level id.
+        /// </param>
         /// <returns>
         /// </returns>
         ICollection<TrackDetailsViewModel> GetTrackDetailsViewModels(int? currencyCode = null, int? priceLevelId = null);
