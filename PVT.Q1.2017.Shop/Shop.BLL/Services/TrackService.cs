@@ -59,7 +59,11 @@
 
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
-                trackViewModel.Price = ServiceHelper.GetTrackPrice(repository, id, currencyCode.Value, priceLevelId.Value);
+                using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
+                {
+                    trackViewModel.Price =
+                        PriceHelper.GetTrackPrice(repository, currencyRatesrepository, id, currencyCode.Value, priceLevelId.Value);
+                }
             }
 
             trackViewModel.Rating = ServiceHelper.CalculateTrackRating(this.Factory, id);

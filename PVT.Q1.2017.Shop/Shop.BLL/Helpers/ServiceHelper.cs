@@ -51,67 +51,6 @@
         }
 
         /// <summary>
-        /// Returns the track price in the specified currency and price level.
-        /// </summary>
-        /// <param name="repository">
-        /// The repository.
-        /// </param>
-        /// <param name="trackId">
-        /// The track id.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code.
-        /// </param>
-        /// <param name="priceLevelId">
-        /// The price level id.
-        /// </param>
-        /// <returns>
-        /// The track price in the specified <paramref name="currencyCode"/> for the specified  <paramref name="priceLevelId"/> or <b>null</b>.
-        /// </returns>
-        internal static PriceViewModel GetTrackPrice(ITrackPriceRepository repository, int trackId, int currencyCode, int priceLevelId)
-        {
-            var price = repository.FirstOrDefault(
-                                          p => p.TrackId == trackId &&
-                                               p.PriceLevelId == priceLevelId &&
-                                               p.Currency.Code == currencyCode,
-                                          p => p.Currency,
-                                          p => p.PriceLevel);
-
-            return ModelsMapper.GetPriceViewModel(price);
-        }
-
-        /// <summary>
-        /// Returns the album price in the specified currency and price level.
-        /// </summary>
-        /// <param name="repository">
-        /// The repository.
-        /// </param>
-        /// <param name="albumId">
-        /// The album id.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code.
-        /// </param>
-        /// <param name="priceLevelId">
-        /// The price level id.
-        /// </param>
-        /// <returns>
-        /// The album price in the specified currency and price level or <b>null</b>.
-        /// </returns>
-        internal static PriceViewModel GetAlbumPrice(IAlbumPriceRepository repository, int albumId, int currencyCode, int priceLevelId)
-        {
-            var price = repository.FirstOrDefault(
-                                          p => p.AlbumId == albumId &&
-                                               p.PriceLevelId == priceLevelId &&
-                                               p.Currency.Code == currencyCode,
-                                          p => p.Album,
-                                          p => p.Currency,
-                                          p => p.PriceLevel);
-
-            return ModelsMapper.GetPriceViewModel(price);
-        }
-
-        /// <summary>
         /// Converts each album to <see cref="AlbumViewModel"/>.
         /// </summary>
         /// <param name="factory">
@@ -148,13 +87,18 @@
             List<AlbumViewModel> albumViewModels = new List<AlbumViewModel>();
             using (var repository = factory.GetAlbumPriceRepository())
             {
-                foreach (var album in albums)
+                using (var currencyRatesrepository = factory.GetCurrencyRateRepository())
                 {
-                    var albumViewModel = ModelsMapper.GetAlbumViewModel(album);
-                    if (albumViewModel != null)
+                    foreach (var album in albums)
                     {
-                        albumViewModel.Price = GetAlbumPrice(repository, albumViewModel.Id, currencyCode.Value, priceLevel.Value);
-                        albumViewModels.Add(albumViewModel);
+                        var albumViewModel = ModelsMapper.GetAlbumViewModel(album);
+                        if (albumViewModel != null)
+                        {
+                            albumViewModel.Price =
+                                PriceHelper.GetAlbumPrice(
+                                    repository, currencyRatesrepository, albumViewModel.Id, currencyCode.Value, priceLevel.Value);
+                            albumViewModels.Add(albumViewModel);
+                        }
                     }
                 }
             }
@@ -208,13 +152,18 @@
 
             using (var repository = factory.GetTrackPriceRepository())
             {
-                foreach (var track in tracks)
+                using (var currencyRatesrepository = factory.GetCurrencyRateRepository())
                 {
-                    var trackViewModel = ModelsMapper.GetTrackViewModel(track);
-                    if (trackViewModel != null)
+                    foreach (var track in tracks)
                     {
-                        trackViewModel.Price = GetTrackPrice(repository, trackViewModel.Id, currencyCode.Value, priceLevel.Value);
-                        trackViewModels.Add(trackViewModel);
+                        var trackViewModel = ModelsMapper.GetTrackViewModel(track);
+                        if (trackViewModel != null)
+                        {
+                            trackViewModel.Price =
+                                PriceHelper.GetTrackPrice(
+                                    repository, currencyRatesrepository, trackViewModel.Id, currencyCode.Value, priceLevel.Value);
+                            trackViewModels.Add(trackViewModel);
+                        }
                     }
                 }
             }
