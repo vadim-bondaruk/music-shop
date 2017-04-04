@@ -302,12 +302,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\openfile.dialog.js" />
     <Content Include="Scripts\buttons.js" />
-    <Content Include="Styles\add-btn.css" />
     <Content Include="Styles\Main.css" />
-    <Content Include="Styles\edit-btn.css" />
-    <Content Include="Styles\back-btn.css" />
-    <Content Include="Styles\save-btn.css" />
-    <Content Include="Styles\remove-btn.css" />
     <Content Include="Styles\tracks.css" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
