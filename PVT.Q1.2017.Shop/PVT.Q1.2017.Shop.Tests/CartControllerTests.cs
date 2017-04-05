@@ -13,6 +13,9 @@ using System.Collections;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
+    using BLL.Utils;
+    using Controllers;
+    using global::Shop.BLL.Exceptions;
     using global::Shop.Common.ViewModels;
 
     [TestClass]
@@ -35,8 +38,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
-            var Result = cartController.Index(1);
-            Assert.IsInstanceOfType(Result, typeof(ViewResult));
+            var result = cartController.Index();
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         [TestMethod]
@@ -62,30 +65,20 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<ICartService> moqCartService = new Mock<ICartService>();
             moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Tracks.Add(addedOrderTrack));
             moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 0), It.IsAny<int>()));
-            moqCartService.Setup(m => m.AddTrack(It.IsAny<int>(), It.Is<int>(t => t == 0)));
+            moqCartService.Setup(m => m.AddTrack(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>();
 
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
 
-            RedirectToRouteResult result = cartController.AddTrack(0, 3);
+            var result = (RedirectToRouteResult)cartController.AddTrack(3);
             Assert.IsFalse(result.Permanent);
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(0, result.RouteValues["currentUserId"]);
-
-            result = cartController.AddTrack(1, 0);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
-
-            result = cartController.AddTrack(1, 3);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
+            
+            var result1 = cartController.AddTrack(0);
+            Assert.IsInstanceOfType(result1, typeof(HttpNotFoundResult));
         }
 
         [TestMethod]
@@ -111,30 +104,20 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<ICartService> moqCartService = new Mock<ICartService>();
             moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Albums.Add(addedOrderAlbum));
             moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 0), It.IsAny<int>()));
-            moqCartService.Setup(m => m.AddAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0)));
+            moqCartService.Setup(m => m.AddAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>(); 
 
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
 
-            RedirectToRouteResult result = cartController.AddAlbum(0, 3);
+            var result = (RedirectToRouteResult)cartController.AddAlbum(3);
             Assert.IsFalse(result.Permanent);
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(0, result.RouteValues["currentUserId"]);
 
-            result = cartController.AddAlbum(1, 0);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
-
-            result = cartController.AddAlbum(1, 3);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
+            var result1 = cartController.AddAlbum(0);
+            Assert.IsInstanceOfType(result1, typeof(HttpNotFoundResult));
         }
 
         [TestMethod]
@@ -158,30 +141,20 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<ICartService> moqCartService = new Mock<ICartService>();
             moqCartService.Setup(m => m.RemoveTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 2))).Callback(() => cart.Tracks.Remove(deletedTrack));
             moqCartService.Setup(m => m.RemoveTrack(It.Is<int>(u => u == 0), It.IsAny<int>()));
-            moqCartService.Setup(m => m.RemoveTrack(It.IsAny<int>(), It.Is<int>(t => t == 0)));
+            moqCartService.Setup(m => m.RemoveTrack(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>(); 
 
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
 
-            RedirectToRouteResult result = cartController.DeleteTrack(0, 3);
+            var result = (RedirectToRouteResult)cartController.DeleteTrack(3);
             Assert.IsFalse(result.Permanent);
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(0, result.RouteValues["currentUserId"]);
 
-            result = cartController.DeleteTrack(1, 0);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
-
-            result = cartController.DeleteTrack(1, 2);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
+            var result1 = cartController.DeleteTrack(0);
+            Assert.IsInstanceOfType(result1, typeof(HttpNotFoundResult));
         }
 
         [TestMethod]
@@ -205,30 +178,20 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<ICartService> moqCartService = new Mock<ICartService>();
             moqCartService.Setup(m => m.RemoveAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 2))).Callback(() => cart.Albums.Remove(deletedAlbum));
             moqCartService.Setup(m => m.RemoveAlbum(It.Is<int>(u => u == 0), It.IsAny<int>()));
-            moqCartService.Setup(m => m.RemoveAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0)));
+            moqCartService.Setup(m => m.RemoveAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>();
 
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
 
-            RedirectToRouteResult result = cartController.DeleteAlbum(0, 3);
+            var result = (RedirectToRouteResult)cartController.DeleteAlbum(3);
             Assert.IsFalse(result.Permanent);
             Assert.AreEqual("Cart", result.RouteValues["controller"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(0, result.RouteValues["currentUserId"]);
 
-            result = cartController.DeleteAlbum(1, 0);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
-
-            result = cartController.DeleteAlbum(1, 2);
-            Assert.IsFalse(result.Permanent);
-            Assert.AreEqual("Cart", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual(1, result.RouteValues["currentUserId"]);
+            var result1 = cartController.DeleteAlbum(0);
+            Assert.IsInstanceOfType(result1, typeof(HttpNotFoundResult));
         }
     }
 }
