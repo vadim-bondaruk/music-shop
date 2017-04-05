@@ -75,6 +75,10 @@
                 .To<UserPaymentMethodRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
 
+            Bind<IPaymentTransactionRepository>()
+                .To<PaymentTransactionRepository>()
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPaymentTransaactionRepository());
+
             Bind<IUserRepository>()
                 .To<UserRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserRepository());
