@@ -1,5 +1,6 @@
 ﻿namespace Shop.BLL
 {
+    using Common.Validators.Infrastructure;
     using DAL;
     using Ninject;
     using Ninject.Modules;
@@ -50,6 +51,7 @@
             Bind<ICartService>().To<CartService>();
             Bind<IAuthModule>().To<AuthModule>();
             Bind<IUserService>().To<UserService>();
+            Bind<IUserValidator>().To<UserService>();
         }
     }
 }
