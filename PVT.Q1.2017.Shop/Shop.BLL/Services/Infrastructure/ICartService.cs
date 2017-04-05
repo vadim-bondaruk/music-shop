@@ -1,4 +1,6 @@
-﻿namespace Shop.BLL.Services.Infrastructure
+﻿using Shop.Common.Models;
+
+namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
 
@@ -62,5 +64,33 @@
         /// <param name="userId">User's ID</param>
         /// <param name="albumIds">Removed Albums IDs</param>
         void RemoveAlbum(int userId, IEnumerable<int> albumIds);
+
+        /// <summary>
+        /// Get chosen to purchase Track's IDs
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns Array of IDs</returns>
+        IEnumerable<int> GetOrderTracksIds(int userId);
+
+        /// <summary>
+        /// Get collection of chosen to purchase Tracks
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns List of Tracks</returns>
+        ICollection<Track> GetOrderTracks(int userId);
+
+        /// <summary>
+        /// Get chosen to purchase Album's IDs
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns Array of IDs</returns>
+        IEnumerable<int> GetOrderAlbumsIds(int userId);
+
+        /// <summary>
+        /// Get collection of chosen to purchase Albums
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>Returns List of Albums</returns>
+        ICollection<Album> GetOrderAlbums(int userId);
     }
 }
