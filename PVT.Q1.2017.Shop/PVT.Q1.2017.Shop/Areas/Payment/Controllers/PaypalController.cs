@@ -25,17 +25,20 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Success()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult Failure()
         {
             return View();
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult PaymentWithCreditCard()
         {
             var viewName = _paymentService.CreatePaymentWithCreditCard();
@@ -43,6 +46,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult PaymentWithPaypalDemo()
         {
             var status = _paymentService.PaymentWithPaypalDemo(this.Request, this.Session);
@@ -62,6 +66,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult PaymentWithPaypal(CartViewModel cart)
         {
             if (cart == null)

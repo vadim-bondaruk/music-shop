@@ -10,6 +10,8 @@
     public class PaymentTransactionController : BaseController
     {
         // GET: Payment/PaymentTransaction
+        [AcceptVerbs(HttpVerbs.Get|HttpVerbs.Post)]
+        [Authorize]
         public ActionResult Index()
         {
             if (CurrentUser != null && CurrentUser.Identity.IsAuthenticated)
@@ -20,10 +22,6 @@
             {
                 return HttpNotFound();
             }
-
-            
         }
-
-
     }
 }
