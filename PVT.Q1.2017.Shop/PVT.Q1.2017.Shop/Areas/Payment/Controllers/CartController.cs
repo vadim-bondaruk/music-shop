@@ -176,5 +176,14 @@
 
             return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _cartRepository.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
