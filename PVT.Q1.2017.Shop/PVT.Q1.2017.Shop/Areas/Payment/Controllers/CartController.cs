@@ -8,7 +8,8 @@
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
-
+    using global::Shop.BLL.Exceptions;
+    using BLL.Utils;
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
@@ -29,6 +30,11 @@
         /// </summary>
         private CartViewModel _viewModel;
 
+        /// <summary>
+        /// id текущего юзера 
+        /// </summary>
+        private int _currentUserId;
+
         /// <param name="cartService">
         /// Сервис для работы с данными в корзине
         /// </param>
@@ -40,29 +46,33 @@
             this._cartRepository = repositoryFactory.GetCartRepository();
             this._cartService = cartService;
             this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>(), IsEmpty = true };
+            try
+            {
+                _currentUserId = CurrentUser.Id;
+            }
+            catch
+            {
+                _currentUserId = 0;
+            }
         }
 
         /// <summary>
         /// Действие для отображения корзины
         /// </summary>
-        /// <param name="currentUserId">
-        /// Id текущего пользователя
-        /// </param>
         [HttpGet]
         [Authorize]
         //TODO: отлавливать в параметре контроллера статус оплаты.
-        public ViewResult Index(int currentUserId = 0)
+        public ViewResult Index()
         {
-            currentUserId = CurrentUser.Id;
-            if (_cartRepository.GetByUserId(currentUserId) == null)
+            if (_cartRepository.GetByUserId(_currentUserId) == null)
             {
-                _cartRepository.AddOrUpdate(new Cart(currentUserId));
+                _cartRepository.AddOrUpdate(new Cart(_currentUserId));
                 _cartRepository.SaveChanges();
             }
-            var cart = this._cartRepository.GetByUserId(currentUserId);
-            this._viewModel.Tracks = _cartService.GetOrderTracks(currentUserId);
-            this._viewModel.Albums = _cartService.GetOrderAlbums(currentUserId);
-            this._viewModel.CurrentUserId = currentUserId;
+            var cart = this._cartRepository.GetByUserId(_currentUserId);
+            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId);
+            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId);
+            this._viewModel.CurrentUserId = _currentUserId;
 
             /// <summary>
             /// Временные данные: пользователь выбрал отображение в долларах
@@ -79,68 +89,92 @@
         /// <summary>
         /// Добавление альбома в корзину и перенаправление на действие отображения корзины
         /// </summary>
-        /// <param name="currentUserId">
-        /// Id текущего пользователя
-        /// </param>
         /// <param name="albumId">
         /// Id добавляемого альбома
         /// </param>
         [HttpPost]
         [Authorize]
-        public RedirectToRouteResult AddAlbum(int currentUserId = 0, int albumId = 0)
+        public ActionResult AddAlbum(int albumId = 0)
         {
-            this._cartService.AddAlbum(currentUserId, albumId);
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+            try
+            {
+                this._cartService.AddAlbum(_currentUserId, albumId);
+            }
+            catch (InvalidTrackIdException ex)
+            {
+                //Logger.Log("Error : " + ex.Message);
+                return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
+            }
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
         }
 
         /// <summary>
         /// Удаление альбома из корзины и перенаправление на действие отображения корзины
         /// </summary>
-        /// <param name="currentUserId">
-        /// Id текущего пользователя
-        /// </param>
         /// <param name="albumId">
         /// Id удаляемого альбома
         /// </param>
         [HttpPost]
-        public RedirectToRouteResult DeleteAlbum(int currentUserId = 0, int albumId = 0)
+        [Authorize]
+        public ActionResult DeleteAlbum(int albumId = 0)
         {
-            this._cartService.RemoveAlbum(currentUserId, albumId);
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+            try
+            {
+                this._cartService.RemoveAlbum(_currentUserId, albumId);
+            }
+            catch (InvalidTrackIdException ex)
+            {
+                //Logger.Log("Error : " + ex.Message);
+                return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
+            }
+
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
         }
 
         /// <summary>
         /// Добавление трэка в корзину и перенаправление на действие отображения корзины
         /// </summary>
-        /// <param name="currentUserId">
-        /// Id текущего пользователя
-        /// </param>
         /// <param name="trackId">
         /// Id добавляемого трэка
         /// </param>
         [HttpPost]
         [Authorize]
-        public RedirectToRouteResult AddTrack(int currentUserId = 0, int trackId = 0)
+        public ActionResult AddTrack(int trackId = 0)
         {
-            this._cartService.AddTrack(currentUserId, trackId);
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+            try
+            {
+                this._cartService.AddTrack(_currentUserId, trackId);
+            }
+            catch (InvalidTrackIdException ex)
+            {
+                //Logger.Log("Error : " + ex.Message);
+                return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
+            }
+
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
         }
 
         /// <summary>
         /// Удаление трэка из корзины и перенаправление на действие отображения корзины
         /// </summary>
-        /// <param name="currentUserId">
-        /// Id текущего пользователя
-        /// </param>
         /// <param name="trackId">
         /// Id удаляемого трэка
         /// </param>
         [HttpPost]
         [Authorize]
-        public RedirectToRouteResult DeleteTrack(int currentUserId = 0, int trackId = 0)
+        public ActionResult DeleteTrack(int trackId = 0)
         {
-            this._cartService.RemoveTrack(currentUserId, trackId);
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index", currentUserId = currentUserId });
+            try
+            {
+                this._cartService.RemoveTrack(_currentUserId, trackId);
+            }
+            catch (InvalidTrackIdException ex)
+            {
+                //Logger.Log("Error : " + ex.Message);
+                return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
+            }
+
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
         }
     }
 }
