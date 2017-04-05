@@ -6,10 +6,11 @@ using System.Web.Mvc;
 using Shop.BLL.Services;
 using Shop.BLL.Services.Infrastructure;
 using Shop.Common.ViewModels;
+using PVT.Q1._2017.Shop.Controllers;
 
 namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
-    public class PaypalController : Controller
+    public class PaypalController : BaseController
     {
         private readonly IPaymentService _paymentService;
 
