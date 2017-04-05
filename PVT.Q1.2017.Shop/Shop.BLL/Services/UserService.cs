@@ -110,7 +110,7 @@
             }
             else
             {
-                throw new UserValidationException("Вы ввели неправеьный ник или email", string.Empty);
+                throw new UserValidationException("Вы ввели неправильный ник или email", string.Empty);
             }
         }
 

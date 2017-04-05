@@ -9,7 +9,6 @@
     using global::Shop.BLL.Utils.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using global::Shop.Infrastructure.Enums;
     using Shop.Controllers;
     using ViewModels;
     using global::Shop.BLL.Utils;
@@ -223,7 +222,7 @@
         {
             if (Email != null)
             {
-                ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие" +
+                ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие " +
                     "инструкции по завершению регистрации";
             }
             return this.View();
@@ -329,11 +328,6 @@
         public ActionResult Success()
         {
             return this.View();
-        }
-
-        public ActionResult Error()
-        {
-            return View();
         }
     }
 }

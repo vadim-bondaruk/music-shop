@@ -1,7 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
     using System;
-    using System.Collections.Generic;
     using global::Moq;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
