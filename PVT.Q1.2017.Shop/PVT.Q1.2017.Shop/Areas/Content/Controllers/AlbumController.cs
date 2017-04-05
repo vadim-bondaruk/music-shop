@@ -2,11 +2,13 @@
 {
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.ViewModels;
+    using Shop.Controllers;
 
     /// <summary>
     /// The album controller.
     /// </summary>
-    public class AlbumController : Controller
+    public class AlbumController : BaseController
     {
         /// <summary>
         /// The album service.
@@ -32,7 +34,13 @@
         /// </returns>
         public ActionResult List()
         {
-            // TODO: передавать currency и price level из UserData текущего пользователя
+            var currency = GetCurrentUserCurrency();
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                return this.View(this._albumService.GetAlbumsList(currency.Code, priceLevel));
+            }
+
             return this.View(this._albumService.GetAlbumsList());
         }
 
@@ -50,8 +58,19 @@
                 return this.RedirectToAction("List");
             }
 
-            // TODO: передавать currency и price level из UserData текущего пользователя
-            var albumViewModel = _albumService.GetAlbumDetails(id.Value);
+            var currency = GetCurrentUserCurrency();
+            AlbumDetailsViewModel albumViewModel;
+
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                albumViewModel = _albumService.GetAlbumDetails(id.Value, currency.Code, priceLevel);
+            }
+            else
+            {
+                albumViewModel = _albumService.GetAlbumDetails(id.Value);
+            }
+
             if (albumViewModel == null)
             {
                 return HttpNotFound($"Альбом с id = { id.Value } не найден");
@@ -74,8 +93,19 @@
                 return this.RedirectToAction("List");
             }
 
-            // TODO: передавать currency и price level из UserData текущего пользователя
-            var albumTracksViewModel = _albumService.GetTracksList(id.Value);
+            var currency = GetCurrentUserCurrency();
+            AlbumTracksListViewModel albumTracksViewModel;
+
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                albumTracksViewModel = _albumService.GetTracksList(id.Value, currency.Code, priceLevel);
+            }
+            else
+            {
+                albumTracksViewModel = _albumService.GetTracksList(id.Value);
+            }
+
             if (albumTracksViewModel == null)
             {
                 return HttpNotFound($"Альбом с id = { id.Value } не найден");

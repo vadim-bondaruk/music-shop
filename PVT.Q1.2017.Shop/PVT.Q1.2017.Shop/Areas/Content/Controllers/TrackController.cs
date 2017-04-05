@@ -2,11 +2,13 @@
 {
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.ViewModels;
+    using Shop.Controllers;
 
     /// <summary>
     /// The track controller
     /// </summary>
-    public class TrackController : Controller
+    public class TrackController : BaseController
     {
         /// <summary>
         /// The track service.
@@ -32,7 +34,14 @@
         /// </returns>
         public ActionResult List()
         {
-            // TODO: передавать currency и price level из UserData текущего пользователя
+            var currency = GetCurrentUserCurrency();
+
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                return this.View(this._trackService.GetTracksList(currency.Code, priceLevel));
+            }
+
             return this.View(this._trackService.GetTracksList());
         }
 
@@ -50,8 +59,19 @@
                 return this.RedirectToAction("List");
             }
 
-            // TODO: передавать currency и price level из UserData текущего пользователя
-            var trackViewModel = _trackService.GetTrackDetails(id.Value);
+            var currency = GetCurrentUserCurrency();
+            TrackDetailsViewModel trackViewModel;
+
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel);
+            }
+            else
+            {
+                trackViewModel = _trackService.GetTrackDetails(id.Value);
+            }
+
             if (trackViewModel == null)
             {
                 return HttpNotFound($"Трек с id = { id.Value } не найден");
@@ -74,8 +94,19 @@
                 return this.RedirectToAction("List");
             }
 
-            // TODO: передавать currency и price level из UserData текущего пользователя
-            var trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
+            var currency = GetCurrentUserCurrency();
+            TrackAlbumsListViewModel trackAlbumsViewModel;
+
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel);
+            }
+            else
+            {
+                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
+            }
+
             if (trackAlbumsViewModel == null)
             {
                 return HttpNotFound($"Трек с id = { id.Value } не найден");
@@ -84,6 +115,15 @@
             return this.View(trackAlbumsViewModel);
         }
 
+        /// <summary>
+        /// Loads the sample of the specified track.
+        /// </summary>
+        /// <param name="id">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// The track sample file.
+        /// </returns>
         public ActionResult LoadSample(int? id)
         {
             if (id == null)
