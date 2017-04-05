@@ -221,6 +221,7 @@
     <Content Include="Areas\Content\Views\Shared\EditTrackPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\AddAlbumPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditAlbumPriceButtonPartialView.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -265,6 +266,7 @@
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
+    <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
