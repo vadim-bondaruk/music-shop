@@ -2,15 +2,11 @@
 {
     using System.Web.Mvc;
 
-    using AutoMapper;
-
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
 
-    using Helpers;
-
-    using ViewModels;
+    using PVT.Q1._2017.Shop.Areas.Management.Helpers;
+    using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
 
     /// <summary>
     ///     The artist controller.
@@ -18,13 +14,13 @@
     public class ArtistsController : Controller
     {
         /// <summary>
+        /// </summary>
+        private readonly IArtistService artistService;
+
+        /// <summary>
         ///     The repository factory.
         /// </summary>
         private readonly IRepositoryFactory repositoryFactory;
-
-        /// <summary>
-        /// </summary>
-        private readonly IArtistService artistService;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
@@ -57,7 +53,7 @@
                 repo.SaveChanges();
             }
 
-            return this.RedirectToAction("New");
+            return this.RedirectToAction("List", "Artists", new { area = "Content" });
         }
 
         /// <summary>

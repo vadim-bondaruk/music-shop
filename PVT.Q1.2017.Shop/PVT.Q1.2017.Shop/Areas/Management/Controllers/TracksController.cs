@@ -7,6 +7,7 @@
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
@@ -150,7 +151,11 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            return this.View(this.trackService.GetTrackDetails(id));
+            var trackManagementViewModel =
+                ManagementMapper.GetTrackManagementViewModel(this.trackService.GetTrackDetails(id));
+            var genres = this.genreRepository.GetAll();
+            trackManagementViewModel.Genres = genres;
+            return this.View(trackManagementViewModel);
         }
 
         /// <summary>
@@ -159,7 +164,7 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(TrackManagementViewModel trackManagementViewModel)
+        public virtual ActionResult Edit(TrackDetailsViewModel trackDetailsViewModel)
         {
             return this.View();
         }

@@ -142,7 +142,7 @@
                 repository.SaveChanges();
             }
 
-            return this.RedirectToAction("Details", new { id = viewModel.Id, area = "Content" });
+            return this.RedirectToAction("Details", "Genres", new { area = "Content", id = genre.Id });
         }
     }
 }

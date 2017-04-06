@@ -3,11 +3,8 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
 
-    using AutoMapper;
-
     using Castle.Core.Internal;
 
-    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
@@ -21,41 +18,29 @@
     {
         /// <summary>
         /// </summary>
-        private readonly IAlbumRepository albumRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly IAlbumService albumService;
-
-        /// <summary>
-        /// </summary>
         private readonly IArtistRepository artistRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly IArtistService artistService;
 
         /// <summary>
         /// </summary>
         private readonly IRepositoryFactory repositoryFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumsController"/> class.
+        ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        /// The repository factory.
+        ///     The repository factory.
         /// </param>
         /// <param name="albumService">
-        /// The album service.
+        ///     The album service.
         /// </param>
         /// <param name="artistService">
-        /// The artist service.
+        ///     The artist service.
         /// </param>
         /// <param name="albumRepository">
-        /// The album repository.
+        ///     The album repository.
         /// </param>
         /// <param name="artistRepository">
-        /// The artist repository.
+        ///     The artist repository.
         /// </param>
         public AlbumsController(
             IRepositoryFactory repositoryFactory,
@@ -65,31 +50,25 @@
             IArtistRepository artistRepository)
         {
             this.repositoryFactory = repositoryFactory;
-            this.albumService = albumService;
-            this.artistService = artistService;
-            this.albumRepository = albumRepository;
             this.artistRepository = artistRepository;
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="viewModel">
-        ///     The view model.
-        /// </param>
+        /// <param name="id"></param>
         /// <returns>
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(AlbumManagementViewModel viewModel)
+        public virtual ActionResult Delete(int id)
         {
-            var albumModel = ManagementMapper.GetAlbumModel(viewModel);
             using (var repository = this.repositoryFactory.GetAlbumRepository())
             {
-                repository.Delete(albumModel);
+                repository.Delete(id);
                 repository.SaveChanges();
             }
 
-            return this.RedirectToAction("List");
+            return this.RedirectToAction("List", "Albums", new { area = "Content" });
         }
 
         /// <summary>
@@ -150,16 +129,18 @@
 
                         if (artist.Albums.IsNullOrEmpty())
                         {
-                            artist.Albums = new List<Album>() { album };
+                            artist.Albums = new List<Album> { album };
                         }
                         else
                         {
                             artist.Albums.Add(album);
                         }
+
                         artistRepo.AddOrUpdate(artist);
                         artistRepo.SaveChanges();
                     }
                 }
+
                 return this.RedirectToAction("Details", new { id = album.Id, area = "Content", Controller = "Albums" });
             }
         }
@@ -189,33 +170,10 @@
         public virtual ActionResult New(
             [Bind(Include = "Artist, Name, ReleaseDate, Cover, PostedCover")] AlbumManagementViewModel viewModel)
         {
-            Album album;
+            var album = ManagementMapper.GetAlbumModel(viewModel);
             using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
             {
-                var artist = this.artistRepository.GetById(viewModel.Artist.Id);
-
-
-                if (artist != null)
-                {
-                    viewModel.Artist = artist;
-                    var albumItem = ManagementMapper.GetAlbumModel(viewModel);
-                    if (artist.Albums.IsNullOrEmpty())
-                    {
-                        artist.Albums = new List<Album>() { albumItem };
-                    }
-                    else
-                    {
-                        artist.Albums.Add(albumItem);
-                    }
-                }
-
-                album = ManagementMapper.GetAlbumModel(viewModel);
                 albumRepo.AddOrUpdate(album);
-                using (var artistRepo = this.repositoryFactory.GetArtistRepository())
-                {
-                    artistRepo.AddOrUpdate(artist);
-                    artistRepo.SaveChanges();
-                }
                 albumRepo.SaveChanges();
             }
 
