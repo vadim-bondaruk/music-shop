@@ -74,9 +74,7 @@
             this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId);
             this._viewModel.CurrentUserId = _currentUserId;
 
-            /// <summary>
-            /// Временные данные: пользователь выбрал отображение в долларах
-            /// </summary>
+            //// Установка текущей валюты пользователя и пересчёт суммы к оплате
 
             var userCurrency = this.GetCurrentUserCurrency();
             this._viewModel.CurrencyShortName = userCurrency.ShortName;
