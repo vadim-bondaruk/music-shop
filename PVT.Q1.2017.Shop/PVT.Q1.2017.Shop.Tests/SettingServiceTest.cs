@@ -31,14 +31,16 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void AddSettingTest()
         {
+            //arrange
             int currencyId = 1;
-            int priceLevelId = 1;
 
             using (var repository = this._factory.GetSettingRepository())
             {
-                repository.AddOrUpdate(new Setting { DefaultCurrencyId = currencyId, DefaultPriceLevelId = priceLevelId });
+                //act
+                repository.AddOrUpdate(new Setting { DefaultCurrencyId = currencyId});
                 repository.SaveChanges();
 
+                //assert
                 Assert.IsTrue(repository.GetAll().Any());
             }
         }
@@ -46,17 +48,37 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void GetSettingViewModelTest()
         {
-            this.AddSettingTest();
+            //act
+            var target = _settingService.GetSettingViewModel();
 
+            //assert
+            Assert.IsInstanceOfType(target, typeof(SettingViewModel));
+            Assert.IsNotInstanceOfType(target, typeof(Setting));
         }
 
 
         [TestMethod]
-        public void TestMethod1()
+        public void Check_SettingViewModel_IsNotNull()
         {
-            //
-            // TODO: Add test logic here
-            //
+            AddSettingTest();
+
+            //act
+            var result = _settingService.GetSettingViewModel();
+
+            //assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void Check_DefaultCurrencyViewModelList_Count()
+        {
+            AddSettingTest();
+
+            //act
+            var result = _settingService.GetSettingViewModel();
+            
+            //assert
+            Assert.IsTrue(result.DefaultCurrencyViewModelList.Count == 2);
         }
     }
 }

@@ -19,7 +19,6 @@
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             HasRequired(x => x.DefaultCurrency).WithMany().HasForeignKey(x => x.DefaultCurrencyId).WillCascadeOnDelete(false);
-            HasRequired(x => x.DefaultPriceLevel).WithMany().HasForeignKey(x => x.DefaultPriceLevelId).WillCascadeOnDelete(true);
 
             ToTable("Settings");
         }
