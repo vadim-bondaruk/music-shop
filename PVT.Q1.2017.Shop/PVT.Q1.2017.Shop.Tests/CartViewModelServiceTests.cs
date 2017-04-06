@@ -14,7 +14,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public void SetTotalPrice_noTracksInCart_0()
         {
             //// Set Currency
-            var userCurrency = new Currency();
+            var userCurrency = new CurrencyViewModel();
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Create and set CartView model
@@ -27,12 +27,12 @@ namespace PVT.Q1._2017.Shop.Tests
         public void SetTotalPrice_120and120_240()
         {
             //// Set Currency
-            var userCurrency = new Currency();
+            var userCurrency = new CurrencyViewModel();
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Set TrackPrices
             var priceTrack = new TrackPrice();
-            priceTrack.Currency = userCurrency;
+            priceTrack.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
             priceTrack.Price = 120;
             var pricesTrack = new List<TrackPrice>();
             pricesTrack.Add(priceTrack);
@@ -59,12 +59,12 @@ namespace PVT.Q1._2017.Shop.Tests
         public void SetTotalPriceWithAlbum_emptyAlbum_120()
         {
             //// Set Currency
-            var userCurrency = new Currency();
+            var userCurrency = new CurrencyViewModel();
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Set TrackPrices
             var priceTrack = new TrackPrice();
-            priceTrack.Currency = userCurrency;
+            priceTrack.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
             priceTrack.Price = 120;
             var pricesTrack = new List<TrackPrice>();
             pricesTrack.Add(priceTrack);
@@ -88,12 +88,12 @@ namespace PVT.Q1._2017.Shop.Tests
         public void SetTotalPriceWithAlbum_150and240_390()
         {
             //// Set Currency
-            var userCurrency = new Currency();
+            var userCurrency = new CurrencyViewModel();
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Set TrackPrices
             var priceTrack = new TrackPrice();
-            priceTrack.Currency = userCurrency;
+            priceTrack.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
             priceTrack.Price = 120;
             var pricesTrack = new List<TrackPrice>();
             pricesTrack.Add(priceTrack);
@@ -110,7 +110,7 @@ namespace PVT.Q1._2017.Shop.Tests
             };
             //// Set AlbumPrices
             var priceAlbum = new AlbumPrice();
-            priceAlbum.Currency = userCurrency;
+            priceAlbum.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
             priceAlbum.Price = 150;
             var pricesAlbum = new List<AlbumPrice>();
             pricesAlbum.Add(priceAlbum);
