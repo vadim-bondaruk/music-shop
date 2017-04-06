@@ -188,5 +188,36 @@
 
             return ModelsMapper.GetTrackAlbumsListViewModel(track);
         }
+
+        public ICollection<TrackDetailsViewModel> GetTrackDetailsViewModels(int? currencyCode = null, int? priceLevelId = null)
+        {
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetTrackRepository())
+            {
+                tracks = repository.GetAll(t => t.Artist, t => t.Genre);
+            }
+
+            var viewModelsCollection = new List<TrackDetailsViewModel>();
+
+            foreach (var track in tracks)
+            {
+                var trackViewModel = ModelsMapper.GetTrackDetailsViewModel(track);
+                trackViewModel.ArtistName = track.Artist.Name;
+                if (currencyCode == null)
+                {
+                    currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
+                }
+
+                if (priceLevelId == null)
+                {
+                    priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
+                }
+
+                trackViewModel.Rating = ServiceHelper.CalculateTrackRating(this.Factory, trackViewModel.Id);
+                viewModelsCollection.Add(trackViewModel);
+            }
+
+            return viewModelsCollection;
+        }
     }
 }

@@ -77,7 +77,9 @@
     <Compile Include="Services\CartViewModelService.cs" />
     <Compile Include="Services\CurrencyRateService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\Infrastructure\IArtistService.cs" />
+    <Compile Include="Services\Infrastructure\IGenreService.cs" />
     <Compile Include="Services\Infrastructure\IUserService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />

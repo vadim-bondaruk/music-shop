@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
 
-    using Castle.Core.Internal;
-
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
@@ -126,16 +124,6 @@
                         album.Artist = artist;
                         albumRepo.AddOrUpdate(album);
                         albumRepo.SaveChanges();
-
-                        if (artist.Albums.IsNullOrEmpty())
-                        {
-                            artist.Albums = new List<Album> { album };
-                        }
-                        else
-                        {
-                            artist.Albums.Add(album);
-                        }
-
                         artistRepo.AddOrUpdate(artist);
                         artistRepo.SaveChanges();
                     }
