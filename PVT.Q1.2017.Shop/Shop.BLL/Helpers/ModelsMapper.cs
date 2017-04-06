@@ -273,6 +273,7 @@
                             .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
                         cfg.CreateMap<Genre, GenreViewModel>();
+                        cfg.CreateMap<Genre, GenreDetailsViewModel>();
 
                         cfg.CreateMap<Currency, CurrencyViewModel>();
 

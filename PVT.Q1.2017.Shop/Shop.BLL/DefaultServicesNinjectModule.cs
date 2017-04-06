@@ -34,6 +34,7 @@
             Bind<IArtistService>().To<ArtistService>();
             Bind<ITrackService>().To<TrackService>();
             Bind<IAlbumService>().To<AlbumService>();
+            Bind<IGenreService>().To<GenreService>();
 
             Bind<IFeedbackService>().To<FeedbackService>();
 
