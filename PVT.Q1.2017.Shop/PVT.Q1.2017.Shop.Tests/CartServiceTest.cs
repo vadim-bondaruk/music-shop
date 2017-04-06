@@ -28,7 +28,7 @@ namespace PVT.Q1._2017.Shop.Tests
 		{
             using (var repo = this._factory.GetCartRepository())
 			{
-				repo.AddOrUpdate(new Cart { UserId = 1});
+				repo.AddOrUpdate(new Cart(1) {Id = 1});
 				repo.SaveChanges();
 
 				Assert.IsTrue(repo.GetAll().Any());
@@ -40,15 +40,15 @@ namespace PVT.Q1._2017.Shop.Tests
 		{
             using (var repo = _factory.GetTrackRepository())
 			{
-				repo.AddOrUpdate(new Track { Id = 1 });
+				repo.AddOrUpdate(new Track { Id = 1, Name = "Track1"});
 				repo.SaveChanges();
             }
             AddCartTest();
             _cartService.AddTrack(1, 1);
             using (var repo = _factory.GetCartRepository())
             {
-                var result = repo.GetAll(c => c.UserId == 1).FirstOrDefault();
-                Assert.IsTrue(result != null && result.Tracks.Any(t => t.Id == 1));
+                var result = repo.GetById(1);
+                Assert.IsTrue(result.Tracks.Any());
             }
         }
 
@@ -67,8 +67,8 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddTrack(1, trackIds);
             using (var repo = _factory.GetCartRepository())
             {
-                var result = repo.GetAll(c => c.UserId == 1).FirstOrDefault();
-                Assert.IsTrue(result != null && result.Tracks.Count == 3);
+                var result = repo.GetById(1);
+                Assert.IsTrue(result.Tracks.Any());
             }
         }
 
@@ -84,8 +84,8 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddAlbum(1, 1);
             using (var repo = _factory.GetCartRepository())
             {
-                var result = repo.GetAll(c => c.UserId == 1).FirstOrDefault();
-                Assert.IsTrue(result != null && result.Albums.Any(a => a.Id == 1));
+                var result = repo.GetById(1);
+                Assert.IsTrue(result.Albums.Any());
             }
         }
 
@@ -104,8 +104,8 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddAlbum(1, albumIds);
             using (var repo = _factory.GetCartRepository())
             {
-                var result = repo.GetAll(c => c.UserId == 1).FirstOrDefault();
-                Assert.IsTrue(result != null && result.Albums.Count == 3);
+                var result = repo.GetById(1);
+                Assert.IsTrue(result.Albums.Any());
             }
         }
 

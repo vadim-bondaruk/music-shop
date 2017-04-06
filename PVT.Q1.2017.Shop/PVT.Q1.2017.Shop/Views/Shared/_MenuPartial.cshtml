@@ -2,6 +2,7 @@
 @if (Request.IsAuthenticated)
 {
     <li>@Html.ActionLink("Мой аккаунт", "Index", new { area = "User", controller = "Manage" })</li>
+    <li>@Html.ActionLink("Корзина", "Index", new { area = "Payment", controller = "Cart" })</li>
 }
 <li>@Html.ActionLink("Исполнители", "List", "Artist", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Альбомы", "List", "Album", new { area = "Content" }, null)</li>

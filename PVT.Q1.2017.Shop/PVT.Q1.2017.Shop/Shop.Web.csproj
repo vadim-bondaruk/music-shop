@@ -145,6 +145,8 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="img\failure.png" />
+    <Content Include="img\success.png" />
     <Content Include="Content\ratingStars.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\ratingStars.css" />
@@ -191,6 +193,8 @@
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\Paypal\Success.cshtml" />
+    <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
     <Content Include="Areas\Content\Views\Artist\List.cshtml" />
     <Content Include="Areas\Content\Views\Shared\CreateArtistButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
@@ -311,6 +315,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
+    <Content Include="Views\AdminTest\UserTest.cshtml" />
+    <Content Include="Views\AdminTest\AdminTest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

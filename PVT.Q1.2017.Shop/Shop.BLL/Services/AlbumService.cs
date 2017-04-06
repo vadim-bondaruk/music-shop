@@ -58,7 +58,11 @@
 
             using (var repository = Factory.GetAlbumPriceRepository())
             {
-                albumViewModel.Price = ServiceHelper.GetAlbumPrice(repository, id, currencyCode.Value, priceLevelId.Value);
+                using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
+                {
+                    albumViewModel.Price =
+                        PriceHelper.GetAlbumPrice(repository, currencyRatesrepository, id, currencyCode.Value, priceLevelId.Value);
+                }
             }
 
             using (var repository = Factory.GetAlbumTrackRelationRepository())
@@ -89,7 +93,7 @@
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
             {
-                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track).Select(r => r.Track).ToList();
+                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track, r => r.Track.Artist).Select(r => r.Track).ToList();
             }
 
             albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);

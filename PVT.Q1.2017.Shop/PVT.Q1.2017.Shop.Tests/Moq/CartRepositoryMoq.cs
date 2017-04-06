@@ -48,9 +48,13 @@
                                        It.IsAny<Expression<Func<Cart, BaseEntity>>[]>()))
                  .Returns(() => _carts.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.GetByUserId(It.IsAny<int>()))
+                .Returns(() => _carts.FirstOrDefault(c => c.UserId > 0));
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Cart>())).Callback(() => _carts.Add(new Cart
             {
-                Id = _carts.Count + 1
+                Id = _carts.Count + 1,
+                UserId = _carts.Count + 1
             }));
 
             _mock.Setup(m => m.Delete(It.IsNotNull<Cart>())).Callback(() =>

@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Web;
+    using Common.ViewModels;
 
     /// <summary>
     /// The payment service interface
@@ -15,7 +16,9 @@
 
         string CreatePaymentWithCreditCard();
 
-        string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session);
+        string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session, CartViewModel cart);
+
+        string PaymentWithPaypalDemo(HttpRequestBase Request, HttpSessionStateBase Session);
 
     }
 }

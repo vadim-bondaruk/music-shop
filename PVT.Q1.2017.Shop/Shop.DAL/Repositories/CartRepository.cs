@@ -19,5 +19,15 @@
         public CartRepository(DbContext dbContext) : base(dbContext)
         {
         }
+
+        /// <summary>
+        /// Tries to find a Cart by UserID
+        /// </summary>
+        /// <param name="userId">UserID</param>
+        /// <returns>User's Cart</returns>
+        public Cart GetByUserId(int userId)
+        {
+            return FirstOrDefault(x => x.UserId == userId);
+        }
     }
 }

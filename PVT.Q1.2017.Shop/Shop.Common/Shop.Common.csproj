@@ -51,6 +51,8 @@
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Validators\ChangeLoginValidator.cs" />
+    <Compile Include="Models\OrderAlbum.cs" />
+    <Compile Include="Models\OrderTrack.cs" />
     <Compile Include="Models\UserPrincipalSerializeModel.cs" />
     <Compile Include="Validators\Infrastructure\IUserValidator.cs" />
     <Compile Include="Validators\LoginViewValidator.cs" />
