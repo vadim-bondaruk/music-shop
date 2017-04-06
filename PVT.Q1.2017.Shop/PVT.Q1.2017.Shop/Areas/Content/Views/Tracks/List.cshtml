@@ -1,0 +1,29 @@
+﻿@model ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
+<title class="title" style="position: initial; margin-top: 0">Все треки</title>
+
+
+<div class="main-track-list">
+    <ul class="list-group" style="width: 100%">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item" onclick="itemClick(@item.Id)">
+                <div style="display: inline-block">
+                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(item.Image)" onerror="this.src = '/img/defuserpic.png'" />
+                    <p>@Html.DisplayFor(modelItem => item.Name)</p>
+                    <a style="font-size: 24px" href="@Url.Action("Details", "Artists", new { area = "Content", id = item.Id })">@Html.DisplayFor(i => item.ArtistName)</a>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<script>
+    function itemClick(id) {
+        var url = '@Url.Action("Details", "Tracks", new { id = "*" })';
+        window.location.href = url.replace('*', encodeURIComponent(id));
+    }
+</script>
+
+@section cssStyles{
+    <link href="~/Styles/tracks.css" rel="stylesheet"/>
+}
