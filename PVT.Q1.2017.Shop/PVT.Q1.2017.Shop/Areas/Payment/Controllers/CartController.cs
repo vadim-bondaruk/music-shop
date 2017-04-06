@@ -100,7 +100,7 @@
             {
                 this._cartService.AddAlbum(_currentUserId, albumId);
             }
-            catch (InvalidTrackIdException ex)
+            catch (InvalidAlbumIdException ex)
             {
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
@@ -122,7 +122,7 @@
             {
                 this._cartService.RemoveAlbum(_currentUserId, albumId);
             }
-            catch (InvalidTrackIdException ex)
+            catch (InvalidAlbumIdException ex)
             {
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");

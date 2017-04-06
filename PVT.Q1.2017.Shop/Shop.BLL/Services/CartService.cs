@@ -89,7 +89,7 @@
             using (var cartRepository = Factory.GetCartRepository())
             {
                 var cart = cartRepository.GetByUserId(userId);
-                if (cart == null || trackId == 0)
+                if (cart == null)
                 {
                     return;
                 }
@@ -199,7 +199,7 @@
             using (var cartRepository = Factory.GetCartRepository())
             {
                 var cart = cartRepository.GetByUserId(userId);
-                if (cart == null || albumId == 0)
+                if (cart == null)
                 {
                     return;
                 }
