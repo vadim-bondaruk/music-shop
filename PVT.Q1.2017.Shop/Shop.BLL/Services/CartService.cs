@@ -6,6 +6,7 @@
     using DAL.Infrastruture;
     using Infrastructure;
     using Exceptions;
+    using Common.ViewModels;
 
 
     /// <summary>
@@ -265,18 +266,27 @@
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Tracks</returns>
-        public ICollection<Track> GetOrderTracks(int userId)
+        public ICollection<TrackDetailsViewModel> GetOrderTracks(int userId)
         {
             var returnResult = new List<Track>();
+            var resultViewTracks = new List<TrackDetailsViewModel>();
+            /// Вытягиваем Cart
             using (var cartRepository = Factory.GetCartRepository())
             {
                 var cart = cartRepository.GetByUserId(userId);
+                /// Вытягиваем Tracks
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
                     returnResult.AddRange(cart.Tracks.Select(orderTrack => trackRepository.GetById(orderTrack.TrackId)));
+                    /// Конвертируем Tracks in TracksDetailsViewModel
+                    var trackService = new TrackService(Factory);
+                    foreach(Track anyTrack in returnResult)
+                    {
+                        resultViewTracks.Add(trackService.GetTrackDetails(anyTrack.Id));
+                    }
                 }
             }
-            return returnResult;
+            return resultViewTracks;
         }
 
         /// <summary>

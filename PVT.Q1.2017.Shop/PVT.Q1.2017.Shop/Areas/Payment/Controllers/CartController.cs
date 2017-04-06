@@ -45,7 +45,7 @@
         {
             this._cartRepository = repositoryFactory.GetCartRepository();
             this._cartService = cartService;
-            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>(), IsEmpty = true };
+            this._viewModel = new CartViewModel { Tracks = new List<TrackDetailsViewModel>(), Albums = new List<Album>(), IsEmpty = true };
         }
 
         /// <summary>

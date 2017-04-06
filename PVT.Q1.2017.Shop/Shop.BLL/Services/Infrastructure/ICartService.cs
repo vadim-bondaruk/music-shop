@@ -2,6 +2,7 @@
 
 namespace Shop.BLL.Services.Infrastructure
 {
+    using Common.ViewModels;
     using System.Collections.Generic;
 
     /// <summary>
@@ -77,7 +78,7 @@ namespace Shop.BLL.Services.Infrastructure
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Tracks</returns>
-        ICollection<Track> GetOrderTracks(int userId);
+        ICollection<TrackDetailsViewModel> GetOrderTracks(int userId);
 
         /// <summary>
         /// Get chosen to purchase Album's IDs

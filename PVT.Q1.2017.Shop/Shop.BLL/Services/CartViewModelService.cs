@@ -26,16 +26,16 @@
 
             userCart = CheckNull(userCart);
 
-            foreach (Track anyTrack in userCart.Tracks)
+            foreach (TrackDetailsViewModel anyTrack in userCart.Tracks)
             {
-                if (anyTrack.TrackPrices == null)
+                if (anyTrack.Price == null)
                 {
                     return false;
                 }
 
-                userCart.TotalPrice += anyTrack.TrackPrices.FirstOrDefault(p => p.Currency.Code == userCurrency.Code).Price;
+                userCart.TotalPrice += anyTrack.Price.Amount;
             }
-            
+
             foreach (Album anyAlbum in userCart.Albums)
             {
                 if (anyAlbum.AlbumPrices == null)
@@ -58,7 +58,7 @@
         {
             if (userCart.Tracks == null)
             {
-                userCart.Tracks = new List<Track>();
+                userCart.Tracks = new List<TrackDetailsViewModel>();
                 userCart.IsEmpty = true;
             }
 
