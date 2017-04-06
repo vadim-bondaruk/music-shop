@@ -17,7 +17,7 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="settingViewModel"></param>
-        void SaveSettingViewModel(SettingViewModel settingViewModel);
+        /// <param name="defaultCurrencyId"></param>
+        void SaveSettingViewModel(int defaultCurrencyId);
     }
 }

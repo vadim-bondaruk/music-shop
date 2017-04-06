@@ -53,14 +53,12 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="settingViewModel">
-        /// The setting view model.
-        /// </param>
-        public void SaveSettingViewModel(SettingViewModel settingViewModel)
+        /// <param name="defaultCurrencyId"></param>
+        public void SaveSettingViewModel(int defaultCurrencyId)
         {
             var setting = new Setting
             {
-                DefaultCurrencyId = settingViewModel.DefaultCurrencyId
+                DefaultCurrencyId = defaultCurrencyId
             };
 
             using (var repository = this.Factory.GetSettingRepository())

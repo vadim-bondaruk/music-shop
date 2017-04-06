@@ -40,13 +40,14 @@
         /// <param name="model">
         /// The model.
         /// </param>
+        /// <param name="defaultCurrencyId"></param>
         /// <returns>
         /// </returns>
-        [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Index(SettingViewModel model)
+        [HttpGet]
+        public JsonResult Save(int defaultCurrencyId)
         {
-            this._settingService.SaveSettingViewModel(model);
-            return this.View("Index");
+            this._settingService.SaveSettingViewModel(defaultCurrencyId);
+            return this.Json("Saved", JsonRequestBehavior.AllowGet);
         }
     }
 }
