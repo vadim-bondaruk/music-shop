@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Shop.Common.Models.GenreDetailsViewModel>
+
+@{
+    ViewBag.Title = "Все жанры";
+}
+
+<title class="title" id="genres-title">Все жанры</title>
+
+
+<div class="genres-list">
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item" onclick="itemClick(@item.Id)">
+                <div>
+                    <p>@Html.DisplayFor(modelItem => item.Name)</p>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<script>
+    function itemClick(id) {
+        var url = '@Url.Action("Details", "Genres", new { id = "*"})';
+        window.location.href = url.replace('*', encodeURIComponent(id));
+    }
+</script>
+
+@section cssStyles{
+    <link href="~/Styles/tracks.css" rel="stylesheet" />
+}
+

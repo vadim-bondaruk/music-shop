@@ -1,0 +1,28 @@
+﻿@model Shop.Common.Models.GenreDetailsViewModel
+<head>
+    @*<script src="~/Scripts/buttons.js"></script>*@
+</head>
+@Html.AntiForgeryToken()
+<body>
+<div id="genreDetails" style="display: block; text-align: center;">
+    <div style="display: inline-block; width: 70%">
+        <h1 style="margin-top: 50px; font-size: 2.5em">
+            @Html.DisplayTextFor(m => m.Name)
+        </h1>
+        <p style="font-size: 1.5em; text-align: initial">
+            @Html.DisplayTextFor(m => m.Description)
+        </p>
+        <div class="btn-group">
+            <a class="btn btn-primary" href="javascript:window.history.back(1)">Назад</a>
+            <a class="btn btn-primary" href="@Url.Action("List", "Genres")">Все жанры</a>
+            <a class="btn btn-primary" href="@Url.Action("Edit", "Genres", new { Area = "Management", id = Model.Id })">Правка</a>
+        </div>
+    </div>
+</div>
+</body>
+
+
+@section cssStyles{
+
+    <link href="~/Styles/tracks.css" rel="stylesheet"/>
+}

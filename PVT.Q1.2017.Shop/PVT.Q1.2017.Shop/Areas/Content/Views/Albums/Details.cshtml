@@ -1,0 +1,29 @@
+﻿@model Shop.Common.ViewModels.AlbumDetailsViewModel
+
+@Html.AntiForgeryToken()
+<body>
+<h2 class="title" style="position: initial; margin-top: 0">Информация об альбоме</h2>
+
+<div class="main-center">
+    <div style="width: 500px; display: inline-block">
+        <div style="text-align: left; width: 500px">
+            <h1 style="margin-top: 0">Исполнитель: @Html.ActionLink(Model.ArtistName, "Details", "Artists", new { area = "Content", id = Model.Artist.Id }, null)</h1>
+            <h2>Альбом: @Html.DisplayTextFor(model => model.Name)</h2>
+            <h3>Дата выхода: @Html.ValueFor(model => model.ReleaseDate, "{0:dd MMMM yyyy} г.")</h3>
+        </div>
+        <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Cover)" onerror="this.src = '/img/defuserpic.png'" />
+        <div style="width: 500px; margin-top: 15px">
+            <div class="btn-group">
+
+                <a href="@Url.Action("List", "Albums", new { Area = "Content" })" class="btn btn-primary">Отмена</a>
+                <a class="btn btn-primary" href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.Id })">Правка</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="/Scripts/del-artist.js" type="text/javascript"></script>
+@section cssStyles{
+    <link href="~/Styles/tracks.css" rel="stylesheet"/>
+}

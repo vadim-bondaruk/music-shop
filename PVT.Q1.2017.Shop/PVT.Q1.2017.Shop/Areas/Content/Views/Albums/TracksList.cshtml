@@ -1,0 +1,48 @@
+﻿@model Shop.Common.ViewModels.AlbumTracksListViewModel
+
+@{
+    ViewBag.Title = "Список треков из альбома";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    @if (Model.Artist != null)
+    {
+        <h5>@Model.Artist.Name</h5>
+    }
+    <hr />
+
+    <p>
+        <a class="btn btn-sm btn-primary" href="@Url.Action("AddTracks", "Album", new { Id = Model.Id, area = "Management" })">
+            <span class="glyphicon glyphicon-plus"></span> Добавить треки
+        </a>
+
+        @if (Model.Artist != null)
+        {
+            <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
+               title="Нажмите, чтобы увидеть информацию об исполнителе">
+                Информация об исполнителе
+            </a>
+        }
+
+        @Html.ActionLink("Информация об альбоме", "Details", "Album", new
+        {
+            id = Model.Id,
+            area = "Content"
+        }, new
+        {
+            @class = "btn btn-sm btn-success",
+            title = "Нажмите, чтобы перейти к информации об альбоме"
+        })
+    </p>
+    
+    @Html.Partial("TracksListPartialView", Model.Tracks)
+    
+</div>
+
+@section cssStyles
+{
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
+}

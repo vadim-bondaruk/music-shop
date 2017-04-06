@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Shop.Common.ViewModels.AlbumDetailsViewModel>
+
+@{
+    ViewBag.Title = "Все альбомы";
+}
+
+<title class="title">Все альбомы</title>
+
+
+    <div class="albums-list">
+        <ul class="list-group" style="width: 100%">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item" id="albums-item" onclick="itemClick(@item.Id)" style="height: 200px; margin-top: 0">
+                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(item.Cover)" onerror="this.src = '/img/defuserpic.png'" style="width: 200px; height: 200px; display: inline-table; margin-left: 15px; vertical-align: top"/>
+                    <div>
+                        <h2>@Html.DisplayFor(modelItem => item.Artist.Name)</h2>
+                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                        <p>@Html.DisplayFor(modelItem => item.ReleaseDate)</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+
+
+<script>
+    function itemClick(id) {
+        window.open("Albums/Details/" + id, "_self");
+    }
+</script>
+
+@section cssStyles{
+    <link href="~/Styles/tracks.css" rel="stylesheet"/>
+}
