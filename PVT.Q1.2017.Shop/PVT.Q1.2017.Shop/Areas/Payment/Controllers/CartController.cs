@@ -68,10 +68,12 @@
             this._viewModel.CurrentUserId = _currentUserId;
 
             //// Установка текущей валюты пользователя и пересчёт суммы к оплате
-
-            var userCurrency = this.GetCurrentUserCurrency();
-            this._viewModel.CurrencyShortName = userCurrency.ShortName;
-            CartViewModelService.SetTotalPrice(this._viewModel, userCurrency);
+            if (_currentUserId > 0)
+            {
+                var userCurrency = this.GetCurrentUserCurrency();
+                this._viewModel.CurrencyShortName = userCurrency.ShortName;
+                CartViewModelService.SetTotalPrice(this._viewModel, userCurrency);
+            }
 
             return this.View(this._viewModel);
         }
