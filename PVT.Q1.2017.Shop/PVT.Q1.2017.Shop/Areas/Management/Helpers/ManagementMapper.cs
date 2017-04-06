@@ -155,30 +155,39 @@
             var managementConfiguration = new MapperConfiguration(
                 cfg =>
                     {
+                        cfg.CreateMap<GenreManagementViewModel, Genre>();
                         cfg.CreateMap<ArtistViewModel, Artist>();
-                        cfg.CreateMap<ArtistManagementViewModel, Artist>();
+                        cfg.CreateMap<ArtistManagementViewModel, Artist>()
+                            .ForMember(
+                                dest => dest.Photo,
+                                opt =>
+                                    opt.MapFrom(src => src.PostedPhoto != null ? src.PostedPhoto.ToBytes() : src.Photo));
                         cfg.CreateMap<GenreViewModel, Genre>();
 
-                        cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>();
+                        cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
+                            .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.Price.Amount));
 
                         cfg.CreateMap<TrackManagementViewModel, Track>()
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
                             .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
                             .ForMember(
                                 dest => dest.TrackFile,
-                                opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
+                                opt => opt.MapFrom(src => src.TrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
                             .ForMember(
                                 dest => dest.TrackSample,
-                                opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
-                            .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.PostedImage.ToBytes()));
+                                opt => opt.MapFrom(src => src.TrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
+                            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.PostedImage != null ? src.PostedImage.ToBytes() : src.Image));
 
-                        cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
+                        cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
+                            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
 
                         cfg.CreateMap<Album, AlbumManagementViewModel>();
 
                         cfg.CreateMap<AlbumManagementViewModel, Album>()
-                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                            .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.PostedCover.ToBytes()));
+                            .ForMember(
+                                dest => dest.Cover,
+                                opt =>
+                                    opt.MapFrom(src => src.PostedCover != null ? src.PostedCover.ToBytes() : src.Cover));
                     });
 
             return managementConfiguration.CreateMapper();

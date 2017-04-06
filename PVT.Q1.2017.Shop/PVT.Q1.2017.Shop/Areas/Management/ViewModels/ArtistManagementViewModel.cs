@@ -16,8 +16,8 @@
         /// <summary>
         ///     Gets or sets the birthday.
         /// </summary>
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { get; set; }
 
         /// <summary>

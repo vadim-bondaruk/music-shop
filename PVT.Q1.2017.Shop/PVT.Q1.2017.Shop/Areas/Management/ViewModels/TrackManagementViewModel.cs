@@ -38,6 +38,7 @@
         /// <summary>
         ///     Gets or sets the genre id.
         /// </summary>
+        [DisplayName("Жанр")]
         public int GenreId { get; set; }
 
         /// <summary>
@@ -87,7 +88,7 @@
         ///     Gets or sets the release date.
         /// </summary>
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy} г.", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Дата выхода")]
         public DateTime? ReleaseDate { get; set; }
 
