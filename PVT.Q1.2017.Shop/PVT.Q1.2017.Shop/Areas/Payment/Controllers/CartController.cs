@@ -174,6 +174,22 @@
         }
 
         /// <summary>
+        /// Возвращает количество заказов покупателя в корзине
+        /// </summary>
+        [HttpPost, HttpGet]
+        public JsonResult GetCountOrders()
+        {
+            SetCurrentUser();
+            int count = 0;
+            if (_cartRepository.GetByUserId(_currentUserId) != null)
+            {
+                count = +_cartRepository.GetByUserId(_currentUserId).Tracks.Count;
+                count = +_cartRepository.GetByUserId(_currentUserId).Albums.Count;
+            }
+            return Json(new { Count = count}, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Set current user from base controller
         /// </summary>
         private void SetCurrentUser()
