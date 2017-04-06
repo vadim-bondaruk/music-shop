@@ -17,7 +17,7 @@
         /// Валюта, которую выбрал пользователь.
         /// </param>
         /// <returns> Успешно ли прошла операция подсчёта</returns>
-        public static bool SetTotalPrice(CartViewModel userCart, Currency userCurrency)
+        public static bool SetTotalPrice(CartViewModel userCart, CurrencyViewModel userCurrency)
         {
             if (userCart == null || userCurrency == null)
             {

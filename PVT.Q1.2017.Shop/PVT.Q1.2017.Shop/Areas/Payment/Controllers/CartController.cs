@@ -77,9 +77,8 @@
             /// <summary>
             /// Временные данные: пользователь выбрал отображение в долларах
             /// </summary>
-            var userCurrency = new Currency();
-            userCurrency.Code = 840;
-            userCurrency.ShortName = "USD";
+
+            var userCurrency = this.GetCurrentUserCurrency();
             this._viewModel.CurrencyShortName = userCurrency.ShortName;
             CartViewModelService.SetTotalPrice(this._viewModel, userCurrency);
 
