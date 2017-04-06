@@ -88,6 +88,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.22\lib\net45\MvcSiteMapProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.22\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -115,7 +123,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -143,6 +151,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Shop.mdf" />
+    <Content Include="App_Data\Shop_log.ldf">
+      <DependentUpon>Shop.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ratingStars.png" />
@@ -151,7 +163,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\arrow.png" />
-    <Content Include="img\bg.png" />
+    <Content Include="img\defuserpic.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -185,47 +197,53 @@
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\List.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\List.cshtml" />
     <Content Include="Areas\Content\Views\Shared\CreateArtistButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditArtistButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DeleteArtistButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\NewArtistTrackButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\TracksList.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DeleteTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\TracksListPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\AlbumsListPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\NewArtistAlbumButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Album\List.cshtml" />
-    <Content Include="Areas\Content\Views\Album\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\List.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\CreateAlbumButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditAlbumButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DeleteAlbumButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\NewAlbumTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Track\List.cshtml" />
-    <Content Include="Areas\Content\Views\Track\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
     <Content Include="Areas\Content\Views\Shared\BuyTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\BuyAlbumButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\AddTrackPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditTrackPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\AddAlbumPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditAlbumPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
-    <Content Include="Areas\Management\Views\Album\Edit.cshtml" />
-    <Content Include="Areas\Management\Views\Album\New.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\New.cshtml" />
     <Content Include="Areas\Management\Views\Genres\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Genres\New.cshtml" />
     <Content Include="Areas\Management\Views\Artists\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Artists\New.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\List.cshtml" />
+    <Content Include="Mvc.sitemap" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-ru.js" />
     <Content Include="Scripts\del-artist.js" />
@@ -233,6 +251,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-3.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -247,6 +266,10 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\openfile.dialog.js" />
     <Content Include="Styles\tracks.css" />
     <Content Include="Web.config">
@@ -328,6 +351,14 @@
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\AdminTest\UserTest.cshtml" />
     <Content Include="Views\AdminTest\AdminTest.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -336,9 +367,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
