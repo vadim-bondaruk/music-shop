@@ -14,15 +14,19 @@
     /// </summary>
     public class AlbumService : BaseService, IAlbumService
     {
+        private IArtistRepository artistRepository;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="AlbumService" /> class.
         /// </summary>
         /// <param name="factory">
         ///     The repository factory.
         /// </param>
-        public AlbumService(IRepositoryFactory factory)
+        /// <param name="artistRepository"></param>
+        public AlbumService(IRepositoryFactory factory, IArtistRepository artistRepository)
             : base(factory)
         {
+            this.artistRepository = artistRepository;
         }
 
         /// <summary>
@@ -148,8 +152,12 @@
             using (var repository = this.Factory.GetAlbumRepository())
             {
                 albums = repository.GetAll();
+                foreach (var album in albums)
+                {
+                    album.Artist = this.artistRepository.GetById(album.Artist.Id);
+                }
             }
-
+           
             return albums.Select(ModelsMapper.GetAlbumDetailsViewModel).ToList();
         }
 

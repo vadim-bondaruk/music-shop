@@ -18,6 +18,7 @@
         /// <summary>
         /// </summary>
         private readonly IArtistRepository artistRepository;
+        private readonly IGenreRepository genreRepository;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TrackService" /> class.
@@ -25,10 +26,11 @@
         /// <param name="factory">
         ///     The  repositories factory.
         /// </param>
-        public TrackService(IRepositoryFactory factory, IArtistRepository artistRepository)
+        public TrackService(IRepositoryFactory factory, IArtistRepository artistRepository, IGenreRepository genreRepository)
             : base(factory)
         {
             this.artistRepository = artistRepository;
+            this.genreRepository = genreRepository;
         }
 
         /// <summary>
@@ -133,7 +135,7 @@
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetTrackRepository())
             {
-                tracks = repository.GetAll();
+                tracks = repository.GetAll(t => t.Artist, t => t.Genre);
             }
 
             var viewModelsCollection = new List<TrackDetailsViewModel>();
