@@ -5,6 +5,9 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
+    using FluentValidation.Attributes;
+    using global::Shop.Common.ViewModels;
+    using Validators;
 
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;

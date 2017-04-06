@@ -20,6 +20,26 @@
         }
 
         /// <summary>
+        /// Deletes a track with the specified <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The track id.</param>
+        public override void Delete(int id)
+        {
+            MarkAsDeleted(id);
+        }
+
+        /// <summary>
+        /// Deletes the <paramref name="track"/> from the repository.
+        /// </summary>
+        /// <param name="track">
+        /// The track to remove.
+        /// </param>
+        public override void Delete(Track track)
+        {
+            MarkAsDeleted(track);
+        }
+
+        /// <summary>
         /// Adds the specified <paramref name="track"/> into Db.
         /// </summary>
         /// <param name="track">

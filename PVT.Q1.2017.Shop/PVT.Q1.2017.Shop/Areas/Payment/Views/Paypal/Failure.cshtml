@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Failure";
+}
+
+<h2>Что-то пошло не так....</h2>
+
+<div>
+    <img src="~/img/failure.png" />
+    <p>Вы будете перенаправлены назад в корзину через 5 секунд....</p>
+    <p>В случае если этого не произошло нажмите @Html.ActionLink("эту ссылку", "Index", new { Controller = "Cart" })</p>
+</div>
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+    function back2cart(){
+        var url = "/Payment/Cart/Index";
+        $(location).attr('href', url);
+    }
+
+    $(document).ready(
+        setTimeout(back2cart, 5000)
+       )
+</script>

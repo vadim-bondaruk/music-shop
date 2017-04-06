@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201704032338545_FixedDiscountMistake.Designer.cs">
       <DependentUpon>201704032338545_FixedDiscountMistake.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.cs" />
+    <Compile Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.Designer.cs">
+      <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -210,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704032338545_FixedDiscountMistake.resx">
       <DependentUpon>201704032338545_FixedDiscountMistake.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.resx">
+      <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

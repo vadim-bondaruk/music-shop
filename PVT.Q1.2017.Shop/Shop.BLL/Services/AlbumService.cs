@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
-    using Shop.BLL.Helpers;
-    using Shop.BLL.Services.Infrastructure;
-    using Shop.Common.Models;
-    using Shop.Common.ViewModels;
-    using Shop.DAL.Infrastruture;
+    using Common.Models;
+    using Common.ViewModels;
+    using DAL.Infrastruture;
+    using Helpers;
+    using Infrastructure;
 
     /// <summary>
     ///     The album service.
@@ -64,11 +63,16 @@
 
             using (var repository = this.Factory.GetAlbumPriceRepository())
             {
-                albumViewModel.Price = ServiceHelper.GetAlbumPrice(
-                    repository,
-                    id,
-                    currencyCode.Value,
-                    priceLevelId.Value);
+                using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
+                {
+                    albumViewModel.Price =
+                        PriceHelper.GetAlbumPrice(repository, currencyRatesrepository, id, currencyCode.Value, priceLevelId.Value);
+                }
+            }
+
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
+            {
+               albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
             }
 
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
@@ -96,7 +100,7 @@
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
             {
-                albums = repository.GetAll(a => a.Artist);
+                tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track, r => r.Track.Artist).Select(r => r.Track).ToList();
             }
 
             return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel);

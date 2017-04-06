@@ -59,8 +59,11 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\InvalidAlbumIdException.cs" />
+    <Compile Include="Exceptions\InvalidTrackIdException.cs" />
     <Compile Include="Helpers\ModelsMapper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="Helpers\PriceHelper.cs" />
     <Compile Include="Helpers\ServiceHelper.cs" />
     <Compile Include="Helpers\PayPalCommon.cs" />
     <Compile Include="Helpers\PayPalConfiguration.cs" />
@@ -74,9 +77,7 @@
     <Compile Include="Services\CartViewModelService.cs" />
     <Compile Include="Services\CurrencyRateService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
-    <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\Infrastructure\IArtistService.cs" />
-    <Compile Include="Services\Infrastructure\IGenreService.cs" />
     <Compile Include="Services\Infrastructure\IUserService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />

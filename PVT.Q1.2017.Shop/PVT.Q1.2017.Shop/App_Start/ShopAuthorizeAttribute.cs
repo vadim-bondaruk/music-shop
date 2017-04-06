@@ -1,17 +1,19 @@
-﻿namespace PVT.Q1._2017.Shop
+﻿namespace PVT.Q1._2017.Shop.App_Start
 {
     using System;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-
-    using global::Shop.DAL.Infrastruture;
+    using PVT.Q1._2017.Shop.Controllers;
+    using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Enums;
+    using global::Shop.DAL.Infrastruture;
+    using System.Web.Routing;
 
     /// <summary>
     /// 
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    [AttributeUsageAttribute(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class ShopAuthorizeAttribute : AuthorizeAttribute
     {
         /// <summary>

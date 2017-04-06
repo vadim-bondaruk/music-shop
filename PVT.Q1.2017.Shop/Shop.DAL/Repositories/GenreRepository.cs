@@ -30,5 +30,25 @@
         {
             return CurrentDbSet.FirstOrDefault();
         }
+
+        /// <summary>
+        /// Deletes an genre with the specified <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The genre id.</param>
+        public override void Delete(int id)
+        {
+            MarkAsDeleted(id);
+        }
+
+        /// <summary>
+        /// Deletes the <paramref name="genre"/> from the repository.
+        /// </summary>
+        /// <param name="genre">
+        /// The genre to remove.
+        /// </param>
+        public override void Delete(Genre genre)
+        {
+            MarkAsDeleted(genre);
+        }
     }
 }
