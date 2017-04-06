@@ -1,7 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Helpers
 {
-    using System;
-
     using AutoMapper;
 
     using global::Shop.Common.Models;
@@ -59,16 +57,14 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="getArtistDetailsViewModel">
-        ///     The get artist details view model.
+        /// <param name="viewModel">
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        public static object GetArtistManagementViewModel(ArtistDetailsViewModel getArtistDetailsViewModel)
+        public static object GetArtistManagementViewModel(ArtistDetailsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            return _managementModelsMapper.Map<ArtistManagementViewModel>(viewModel);
         }
 
         /// <summary>
@@ -78,17 +74,15 @@
         /// </param>
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         public static Artist GetArtistModel(ArtistManagementViewModel viewModel)
         {
-            throw new NotImplementedException();
+            return _managementModelsMapper.Map<Artist>(viewModel);
         }
 
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
-        /// The view model.
+        ///     The view model.
         /// </param>
         /// <returns>
         /// </returns>
@@ -100,15 +94,13 @@
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
-        ///     The view model.
+        /// The view model.
         /// </param>
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         public static Genre GetGenreModel(GenreManagementViewModel viewModel)
         {
-            throw new NotImplementedException();
+            return _managementModelsMapper.Map<Genre>(viewModel);
         }
 
         /// <summary>
@@ -147,11 +139,9 @@
         /// </param>
         /// <returns>
         /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
         internal static AlbumManagementViewModel GetAlbumManagementViewModel(Album album)
         {
-            throw new NotImplementedException();
+            return _managementModelsMapper.Map<AlbumManagementViewModel>(album);
         }
 
         /// <summary>
@@ -171,13 +161,18 @@
                         cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>();
 
                         cfg.CreateMap<TrackManagementViewModel, Track>()
-                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                            .ForMember(
-                                dest => dest.TrackFile,
-                                opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
-                            .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.PostedImage.ToBytes()));
+                          .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
+                          .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
+                          .ForMember(
+                              dest => dest.TrackFile,
+                              opt => opt.MapFrom(src => src.TrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
+                          .ForMember(
+                              dest => dest.TrackSample,
+                              opt => opt.MapFrom(src => src.TrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
+                          .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.PostedImage != null ? src.PostedImage.ToBytes() : src.Image));
 
+                        cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
+                            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
                         cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
 
                         cfg.CreateMap<AlbumManagementViewModel, Album>()
