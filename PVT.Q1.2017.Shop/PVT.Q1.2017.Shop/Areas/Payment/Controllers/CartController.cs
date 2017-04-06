@@ -46,14 +46,6 @@
             this._cartRepository = repositoryFactory.GetCartRepository();
             this._cartService = cartService;
             this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>(), IsEmpty = true };
-            try
-            {
-                _currentUserId = CurrentUser.Id;
-            }
-            catch
-            {
-                _currentUserId = 0;
-            }
         }
 
         /// <summary>
@@ -64,6 +56,7 @@
         //TODO: отлавливать в параметре контроллера статус оплаты.
         public ViewResult Index()
         {
+            SetCurrentUser();
             if (_cartRepository.GetByUserId(_currentUserId) == null)
             {
                 _cartRepository.AddOrUpdate(new Cart(_currentUserId));
@@ -93,6 +86,7 @@
         [Authorize]
         public ActionResult AddAlbum(int albumId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.AddAlbum(_currentUserId, albumId);
@@ -115,6 +109,7 @@
         [Authorize]
         public ActionResult DeleteAlbum(int albumId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.RemoveAlbum(_currentUserId, albumId);
@@ -138,6 +133,7 @@
         [Authorize]
         public ActionResult AddTrack(int trackId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.AddTrack(_currentUserId, trackId);
@@ -161,6 +157,7 @@
         [Authorize]
         public ActionResult DeleteTrack(int trackId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.RemoveTrack(_currentUserId, trackId);
@@ -172,6 +169,21 @@
             }
 
             return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+        }
+
+        /// <summary>
+        /// Set current user from base controller
+        /// </summary>
+        private void SetCurrentUser()
+        {
+            try
+            {
+                _currentUserId = CurrentUser.Id;
+            }
+            catch
+            {
+                _currentUserId = 0;
+            }
         }
 
         protected override void Dispose(bool disposing)
