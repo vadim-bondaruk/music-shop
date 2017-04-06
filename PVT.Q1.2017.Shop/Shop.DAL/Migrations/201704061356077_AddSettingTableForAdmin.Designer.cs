@@ -13,7 +13,7 @@ namespace Shop.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201704041755500_AddSettingTableForAdmin"; }
+            get { return "201704061356077_AddSettingTableForAdmin"; }
         }
         
         string IMigrationMetadata.Source
