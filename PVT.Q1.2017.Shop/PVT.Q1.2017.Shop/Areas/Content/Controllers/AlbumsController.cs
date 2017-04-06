@@ -21,6 +21,10 @@
 
         /// <summary>
         /// </summary>
+        private readonly IArtistRepository artistRepository;
+
+        /// <summary>
+        /// </summary>
         private readonly IRepositoryFactory repositoryFactory;
 
         /// <summary>
@@ -32,10 +36,15 @@
         /// <param name="repositoryFactory">
         ///     The repository factory.
         /// </param>
-        public AlbumsController(IAlbumService albumService, IRepositoryFactory repositoryFactory)
+        /// <param name="artistRepository"></param>
+        public AlbumsController(
+            IAlbumService albumService,
+            IRepositoryFactory repositoryFactory,
+            IArtistRepository artistRepository)
         {
             this.albumService = albumService;
             this.repositoryFactory = repositoryFactory;
+            this.artistRepository = artistRepository;
         }
 
         /// <summary>
@@ -50,7 +59,7 @@
             Album album;
             using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
             {
-                album = albumRepo.GetById(id);
+                album = albumRepo.GetById(id, m => m.Artist);
             }
 
             var viewModel = ModelsMapper.GetAlbumDetailsViewModel(album);
@@ -64,11 +73,13 @@
 
                 var artistId = album.ArtistId ?? default(int);
                 var artist = artistRepo.GetById(artistId);
-                if (artist != null)
+                if (artist == null)
                 {
-                    viewModel.ArtistName = artist.Name;
-                    viewModel.Artist = artist;
+                    return this.View(viewModel);
                 }
+
+                viewModel.ArtistName = artist.Name;
+                viewModel.Artist = artist;
             }
 
             return this.View(viewModel);

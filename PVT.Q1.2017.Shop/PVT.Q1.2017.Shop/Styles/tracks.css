@@ -7,13 +7,14 @@
 
 .title {
     background: #ffffff;
+    text-align: center;
     display: block;
     margin-top: -80px;
     margin-bottom: 20px;
     font-size: 3em;
     position: fixed;
     z-index: 101;
-    width: 100%;
+    width: 1140px;
     color: transparent;
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -57,41 +58,43 @@ body {
 }
 
 .col-1 {
-    display: inline-block;
-    width: 85%;
-}
-
-.col-2 {
     display: block;
+    margin-top: 25px;
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
-.image-block {
-    vertical-align: middle;
+.col-1 img {
     display: inline-block;
-    margin: 0 0 0 50px;
     width: 500px;
     height: 500px;
-    overflow: hidden;
 }
 
-.img-container {
-    width: 100%;
-    display: block;
-    text-align: center;
-}
-
-.details {
+.col-1 > .details {
     display: inline-block;
-    width: 65%;
-    margin-top: 10px;
+    vertical-align: top;
+    height: 500px;
+    width: 600px;
 }
 
 .details > ul {
     -webkit-padding-start: 0;
     display: inline-block;
     width: 95%;
+}
+
+.details > ul > li > textarea { height: 353px; }
+
+.col-1 .buttons {
+    display: block;
+    text-align: right;
+    padding: 15px 38px;
+}
+
+#artist-img {
+    width: 500px;
+    height: 500px;
+    display: inline-block;
 }
 
 #new-artist-details {
@@ -102,9 +105,12 @@ body {
 ul { list-style-type: none; }
 
 input:hover, textarea:hover {
-    border-style: dashed;
-    color: rgba(0, 0, 0, .6);
-    background-color: #f5fffa;
+    transform: scale(1.005);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
 }
 
 .image {
@@ -130,131 +136,75 @@ img {
     color: red;
 }
 
+.new-artist-buttons {
+    display: block;
+    width: 100%;
+    text-align: right;
+    margin-top: 15px;
+}
+
+.artists-list .list-group { width: 100%; }
+
+.artists-list .list-group .list-group-item {
+    height: 200px;
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+
+.artists-list .list-group .artists-list-image {
+    display: inline-block;
+    width: 150px;
+}
+
+.artists-list .list-group .list-group-item img {
+    vertical-align: middle;
+    margin-top: 15px;
+    width: 150px;
+    height: 150px;
+}
+
+.artists-list .list-group .list-group-item .text-box {
+    margin: 15px 0 0 20px;
+    vertical-align: top;
+    display: inline-block;
+    height: 220px;
+    overflow: hidden;
+}
+
+.artists-list .list-group .list-group-item .info {
+    width: 900px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5; /* number of lines to show */
+    line-height: 1.22; /* fallback */
+    max-height: 120px; /* fallback */
+}
+
+.artist-details .title {
+    margin-top: -53px;
+    width: 1140px;
+}
+
+.artist-details img {
+    margin: 0 20px 20px 0;
+    float: left;
+    display: initial;
+}
+
+.artist-details .inner { margin-top: 55px; }
+
 li > input { width: 100% }
 
-.bio {
-    vertical-align: middle;
-    display: inline-block;
-    font-size: 1.3em;
-    margin: 0 0 0 50px;
-    width: 65%;
-}
 
-#item-bio, .bio-area > textarea {
-    display: inline-block;
-    font-size: 1.0em;
-    height: 300px;
-    min-height: 200px;
-    max-height: 350px;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-}
-
-#ro-textarea {
-    display: inline-block;
-    text-align: left;
-    width: 100%;
-    max-width: 100%;
-    height: 350px;
-}
-
-#ro-textarea:hover {
-    text-decoration: none;
-    border-style: none;
-    color: #000000;
-    background-color: #ffffff;
-    text-shadow: 0;
-}
-
-@font-face {
-    font-weight: normal;
-    font-style: normal;
-}
-
-.btndef {
-    text-align: center;
-    vertical-align: middle;
-    border: none;
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-    background: none;
-    cursor: pointer;
-    display: inline-block;
-    margin: 15px 30px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    outline: none;
-    position: relative;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
-.btndef:after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
-.btndef {
-    width: 110px;
-    height: 35px;
-    border: 3px solid black;
-    color: black;
-}
-
-.btndef { overflow: hidden; }
-
-.btndef:after {
-    width: 0;
-    height: 103%;
-    top: 50%;
-    left: 50%;
-    background: #000000;
-    opacity: 0;
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    -moz-transform: translateX(-50%) translateY(-50%);
-    -ms-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
-}
-
-.btndef:hover,
-.btndef:active {
-    color: white;
-    opacity: 5%;
-}
-
-.btndef:hover:after {
-    width: 90%;
-    opacity: 1;
-}
-
-.btndef:active:after {
-    width: 101%;
-    opacity: 1;
-}
-
-.btn:hover {
-    border: solid;
-    border-width: .2px;
-    border-color: red;
-}
-
-.button-group {
-    display: inline-block;
-    margin-top: 150px;
-    width: 90%;
-}
+.btn-group { display: inline-block; }
 
 #notfound { color: black; }
 
-.list {
+.albums-list {
     text-align: center;
     height: 85%;
     width: 100%;
@@ -263,34 +213,33 @@ li > input { width: 100% }
 }
 
 
-.list > ul {
+.albums-list > ul {
     display: inline-block;
     width: 90%;
     -webkit-padding-start: 0;
     list-style-type: none;
 }
 
-.list > ul > li > div {
+.albums-list > ul > li > div {
     display: inline-block;
     margin-left: 10px;
-    width: 80%;
 }
 
-.list > ul > li > div > h3 {
+.albums-list > ul > li > div > h3 {
     width: 200px;
     font: bold 15px/1.5 Helvetica, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.list > ul > li img {
+.albums-list > ul > li img {
     margin: 0 15px 90px 65px;
     max-height: 180px;
     width: 200px;
     overflow: auto;
 }
 
-.list > ul > li > div > p {
+.albums-list > ul > li > div > p {
     font: 200 14px/1.5 Georgia, Times New Roman, serif;
     margin: 0 auto;
     line-height: 1.4;
@@ -302,7 +251,7 @@ li > input { width: 100% }
     width: 100%;
 }
 
-.list > ul > li {
+.albums-list > ul > li {
     display: block;
     text-align: left;
     width: 100%;
@@ -312,9 +261,46 @@ li > input { width: 100% }
     overflow: hidden;
 }
 
-.list > ul > li:hover {
+.albums-list > ul > li:hover {
     background: #eee;
     cursor: pointer;
+}
+
+.albums-list > ul > li:hover {
+    border-radius: 15px;
+    transform: scale(1.007);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+}
+
+#genres-title { margin-top: 1px; }
+
+.genres-list { margin-top: 80px; }
+
+.genres-list .list-group { width: 100% }
+
+.genres-list .list-group .list-group-item {
+    height: 48px;
+    padding: 0;
+    margin-top: 3px;
+}
+
+.genres-list .list-group .list-group-item div {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.genres-list ul li:hover {
+    border-radius: 5px;
+    transform: scaleY(1.1);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
 }
 
 .vertical {
@@ -366,26 +352,129 @@ li > input { width: 100% }
 }
 
 .img-thumbnail {
-    width: 500px;
     max-width: 500px;
     max-height: 500px;
     overflow: hidden;
 }
 
-.main-track-list { }
-
-.main-track-list>ul {display: inline-block; width: 90%; }
-.main-track-list>ul>li {display: -webkit-box;  height: 100px;text-align: left}
-.main-track-list>ul>li:hover{ opacity: 0.5;}
-.main-track-list>ul>li>img { height: 80px;width: 80px; vertical-align: middle}
-.main-track-list>ul>li>div>h3{display: inline-block}
-.main-track-list>ul>li>div>p{display: inline-block}
-
-#albums-item:hover {
-    border: solid;
-    border-width: 0.4px;
-    border-color: skyblue
+.artists-list ul li:hover {
+    border-radius: 15px;
+    transform: scale(1.007);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
 }
+
+
+.main-track-list > ul {
+    display: inline-block;
+    width: 90%;
+}
+
+.main-track-list > ul > li {
+    margin-top: 3px;
+    display: table;
+    height: 110px;
+    width: 100%;
+    padding: 5px;
+    text-align: left
+}
+
+.main-track-list > ul > li:hover {
+    border-radius: 10px;
+    transform: scale(1.009);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+}
+
+.main-track-list > ul > li > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.main-track-list > ul > li > div > img {
+    height: 100px;
+    width: 100px;
+}
+
+.main-track-list > ul > li p {
+    display: inline-block;
+    font-size: 24px;
+}
+
+.main-track-list > ul > li h4 {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.main-track-list > ul > li > div > h3 { display: inline-block }
+
+.main-track-list > ul > li > div > p { display: inline-block }
+
+.track-details {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.track-details .common {
+    display: inline-block;
+    width: 1020px;
+}
+
+.track-details .panel {
+    display: inline-block;
+    text-align: center;
+    width: 500px;
+    height: 498px;
+    margin: 1px 0 0 15px;
+    border: none;
+}
+
+.track-details img {
+    float: left;
+    display: initial;
+}
+
+.track-details .panel .panel-body {
+
+    text-align: center;
+    padding-top: 80px;
+}
+
+.track-details .panel .panel-body .center {
+    display: inline-block;
+    width: 370px;
+    text-align: left;
+    font-size: 22px;
+}
+
+.track-details .btn-group {
+    margin-top: 55px;
+    text-align: right;
+}
+
+.track-edit { text-align: center; }
+
+.track-edit ul { height: 500px; }
+
+.track-edit div { display: inline-block; }
+
+.track-edit ul li { height: 84.22px; }
+
+.track-edit .btn-group { margin-top: 55px; }
+
+.new-track > .list-group {
+    height: 500px;
+    overflow: hidden;
+}
+
+.new-track > .list-group > .list-group-item { height: 84px; }
 
 
 
