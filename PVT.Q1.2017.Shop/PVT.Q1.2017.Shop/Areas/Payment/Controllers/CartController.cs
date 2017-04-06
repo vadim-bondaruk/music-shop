@@ -183,8 +183,8 @@
             int count = 0;
             if (_cartRepository.GetByUserId(_currentUserId) != null)
             {
-                count = +_cartRepository.GetByUserId(_currentUserId).Tracks.Count;
-                count = +_cartRepository.GetByUserId(_currentUserId).Albums.Count;
+                count += _cartRepository.GetByUserId(_currentUserId).Tracks.Count;
+                count += _cartRepository.GetByUserId(_currentUserId).Albums.Count;
             }
             return Json(new { Count = count}, JsonRequestBehavior.AllowGet);
         }
