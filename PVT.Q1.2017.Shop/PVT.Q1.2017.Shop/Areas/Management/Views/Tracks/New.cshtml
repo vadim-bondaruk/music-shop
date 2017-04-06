@@ -6,41 +6,41 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Artist.Id)
 
-    <div style="display: block; text-align: left">
-        
-        <div class="image-block" style="margin-top: 50px">
-            <img id="artist-img" onclick="document.formreg.PostedImage.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
-        </div>
+    <div class="new-track" style="display: block; text-align: left">
 
-        <ul style="width: 40%; display: inline-table; vertical-align: middle">
-            <li>
+        <img class="img-thumbnail" id="artist-img" onclick="document.formreg.PostedImage.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
+
+        <ul class="list-group" style="width: 635px; height: 100%;display: inline-block; vertical-align: top">
+            <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Name)
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
             </li>
-            <li>
+            <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Artist)
                 @Html.TextBoxFor(m => m.Artist.Name, new { PlaceHolder = "Исполнитель", @class = "form-control", ReadOnly = "true" })
             </li>
-            <li>
+            <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.ReleaseDate)
                 @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { placeholder = "Дата выхода", type = "text", @class = "form-control" } })
             </li>
-            <li>
+            <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.GenreId)
-                @Html.DropDownListFor(model => model.GenreId, new SelectList(Model.Genres, "Id", "Name"), new {  @class = "form-control" })
+                @Html.DropDownListFor(model => model.GenreId, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
             </li>
-            <li>
+            <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Duration)
                 @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Продолжительность", type = "text", @class = "form-control" } })
             </li>
-            <li>
+            <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.PostedTrackFile)
                 <input placeholder="Файл" type="text" class="form-control" id="file-path" onclick="document.formreg.PostedTrackFile.click()"/>
             </li>
         </ul>
     </div>
 
-    <button type="submit" class="btn btn-default" id="btn-save">Сохранить</button>
+    <div class="new-artist-buttons">
+        <button type="submit" class="btn btn-primary" id="btn-save">Сохранить</button>
+    </div>
     <input type="file" id="file" name="PostedImage" style="display: none"/>
     <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
 }

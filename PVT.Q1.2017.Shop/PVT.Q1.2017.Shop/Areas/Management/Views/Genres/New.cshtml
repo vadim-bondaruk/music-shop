@@ -6,16 +6,16 @@
 {
     @Html.AntiForgeryToken()
     <div style="display: block; width: 100%; text-align: center">
-        <ul style="width: 60%; display: inline-block">
-            <li>
+        <ul class="list-group" style="width: 60%; display: inline-block">
+            <li class="list-group-item">
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Имя", @class="form-control" } })
             </li>
-            <li>
+            <li class="list-group-item">
                 @Html.EditorFor(m => m.Description, new { htmlAttributes = new { placeholder = "Описание", @class = "form-control" } })
             </li>
         </ul>
     </div>
-    <button type="submit" class="btn btn-default" id="btn-save" style="display: inline-block">Сохранить</button>
+    <button type="submit" class="btn btn-primary" id="btn-save" style="display: inline-block; margin-top: 15px">Сохранить</button>
     }
 </body>
 @section cssStyles{

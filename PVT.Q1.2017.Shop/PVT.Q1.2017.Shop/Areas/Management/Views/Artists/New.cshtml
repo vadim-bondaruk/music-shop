@@ -1,37 +1,30 @@
-п»ї@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
+@using MvcSiteMapProvider.Web.Html
+@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
 <body>
 <div class="main-center">
-    <h2 class="title">Р РµРіРёСЃС‚СЂР°С†РёСЏ РЅРѕРІРѕРіРѕ РёСЃРїРѕР»РЅРёС‚РµР»СЏ</h2>
+    <h2 class="title" style="position: initial; margin-top: -30px;">Регистрация нового исполнителя</h2>
+    
     @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
     {
         @Html.AntiForgeryToken()
         <div class="main-center">
-
-            <div class="col-1">
-                <div class="col-2">
-                    <div class="row">
-                        <div class="image-block" style="display: inline-block; vertical-align: top; width: 30%;">
-                            <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
-                        </div>
-                        <div class="details" id="new-artist-details">
-                            <ul>
-                                <li>
-                                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "РСЃРїРѕР»РЅРёС‚РµР»СЊ", style = "max-width: 100%; margin-top: 0;" } })
-                                </li>
-                                <li>
-                                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control mr-sm-2 mr", placeholder = "Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ", type = "text", id = "item-birthday", style = "max-width: 100%" } })
-                                </li>
-                                <li>
-                                    @Html.TextAreaFor(m => m.Biography, new { @class = "form-control", placeholder = "Р‘РёРѕРіСЂР°С„РёСЏ", id = "item-bio", style = "heigth: 200px" })
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn" id="btn-save">РЎРѕС…СЂР°РЅРёС‚СЊ</button>
-                </div>
-            </div>
+            <img class="img-thumbnail" id="artist-img" style="width: 500px; height: 500px;"onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
+        </div>
+        <div class="details" id="new-artist-details" style="margin-top: 15px">
+            <ul class="list-group" style="width: 500px">
+                <li class="list-group-item">
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель", style = "max-width: 100%; margin-top: 0;" } })
+                </li>
+                <li class="list-group-item">
+                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата рождения", type = "text", id = "item-birthday", style = "max-width: 100%" } })
+                </li>
+                <li class="list-group-item">
+                    @Html.TextAreaFor(m => m.Biography, new { @class = "form-control", placeholder = "Биография", id = "item-bio", style = "heigth: 200px" })
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 15px">Сохранить</button>
         </div>
         <input type="file" id="file" name="PostedPhoto" style="display: none"/>
     }

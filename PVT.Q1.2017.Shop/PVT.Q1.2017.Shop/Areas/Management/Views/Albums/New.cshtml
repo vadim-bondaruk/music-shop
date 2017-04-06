@@ -1,0 +1,45 @@
+﻿@using Shop.Common.Models
+@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.AlbumManagementViewModel
+<head>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/openfile.dialog.js" type="text/javascript"></script>
+    <script src="/Scripts/file-change.js" type="text/javascript"></script>
+</head>
+<h2 class="title" style="position: initial; margin-top: 0">Регистрация нового альбома</h2>
+<body>
+
+@using (Html.BeginForm("New", "Albums", FormMethod.Post, new { name = "formreg", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="@Html.NameFor(m => m.Artist.Id)" value="@Model.Artist.Id"/>
+
+    <img class="img-thumbnail" id="artist-img" onclick="document.formreg.PostedCover.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
+    
+    <div class="details" style="margin-top: 15px">
+        <ul class="list-group">
+            <li id="first" class="list-group-item">
+                <input type="text" class="form-control" value=@Model.Artist.Name readonly="readonly"/>
+            </li>
+            <li class="list-group-item">
+                @Html.EditorFor(m => Model.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
+            </li>
+            <li class="list-group-item">
+                @Html.EditorFor(m => Model.ReleaseDate, new { htmlAttributes = new { id = "datep", placeholder = "Дата релиза", type = "text", @class = "form-control" } })
+            </li>
+        </ul>
+    </div>
+    <input type="file" id="file" name="PostedCover" style="display: none" />
+    <div class="btn-group" style="margin-top: 15px">
+        <a class="btn btn-primary" href="JavaScript:window.history.back(1)">Назад</a>
+        <button type="submit" class="btn btn-success" id="btn-save">Сохранить</button>
+    </div>
+    
+}
+
+
+</body>
+
+
+@section cssStyles{
+    <link href="/Styles/tracks.css" rel="stylesheet" type="text/css"/>
+}
