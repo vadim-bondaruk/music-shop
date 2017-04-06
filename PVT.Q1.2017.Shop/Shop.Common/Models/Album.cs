@@ -33,9 +33,19 @@
         public int? ArtistId { get; set; }
 
         /// <summary>
+        /// Owner id.
+        /// </summary>
+        public int? OwnerId { get; set; }
+
+        /// <summary>
         /// Artist.
         /// </summary>
         public virtual Artist Artist { get; set; }
+
+        /// <summary>
+        /// Album owner.
+        /// </summary>
+        public virtual User Owner { get; set; }
 
         /// <summary>
         /// All tracks from the album.
@@ -46,5 +56,10 @@
         /// Album prices.
         /// </summary>
         public virtual ICollection<AlbumPrice> AlbumPrices { get; set; }
+
+        /// <summary>
+        /// Carts with this Album
+        /// </summary>
+        public virtual ICollection<OrderAlbum> Carts { get; set; }
     }
 }

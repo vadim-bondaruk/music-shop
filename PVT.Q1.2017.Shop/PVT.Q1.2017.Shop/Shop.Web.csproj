@@ -105,6 +105,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\T4MVCExtensions.4.0.0\lib\net45\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
@@ -144,6 +145,8 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="img\failure.png" />
+    <Content Include="img\success.png" />
     <Content Include="Content\ratingStars.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\ratingStars.css" />
@@ -183,6 +186,8 @@
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\Paypal\Success.cshtml" />
+    <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
     <Content Include="Areas\Content\Views\Artist\List.cshtml" />
     <Content Include="Areas\Content\Views\Shared\CreateArtistButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
@@ -242,6 +247,7 @@
     <Compile Include="App_Start\CustomDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\ShopAuthorizeAttribute.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
@@ -264,6 +270,9 @@
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
+    <Compile Include="Areas\User\Helpers\UserMapper.cs" />
+    <Compile Include="Controllers\AdminTestController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Areas\User\Controllers\AccountController.cs" />
     <Compile Include="Areas\User\Controllers\ManageController.cs" />
@@ -298,6 +307,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
+    <Content Include="Views\AdminTest\UserTest.cshtml" />
+    <Content Include="Views\AdminTest\AdminTest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -313,7 +324,7 @@
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
-    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +352,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -358,6 +372,9 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:4912/" workingDir="" />
+          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

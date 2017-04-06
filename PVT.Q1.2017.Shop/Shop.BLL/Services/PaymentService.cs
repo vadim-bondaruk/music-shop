@@ -11,12 +11,16 @@
     using System.Web.Configuration;
     using System.Web;
     using Shop.BLL.Helpers;
+    using Common.ViewModels;
 
     /// <summary>
     /// The payment service class
     /// </summary>
     public class PaymentService : BaseService, IPaymentService
     {
+        /// <summary>
+        /// PayPal payment
+        /// </summary>
         private PayPal.Api.Payment payment;
 
         /// <summary>
@@ -34,7 +38,6 @@
         /// </summary>
         public string CreatePaymentWithCreditCard()
         {
-
             var rnd = new Random();
             //create and item for which you are taking payment
             //if you need to add more items in the list
@@ -144,7 +147,10 @@
                 var approvalUrl = createdPayment.GetApprovalUrl();
 
                 //if the createdPayment.state is "approved" it means the payment was successful else not
-
+                if (createdPayment.state.ToLower() == "created")
+                {
+                    return "created";
+                }
                 if (createdPayment.state.ToLower() != "approved")
                 {
                     return "Failure";
@@ -160,9 +166,9 @@
         }
 
         /// <summary>
-        /// Create PayPal payment with PayPal account
+        /// Create PayPal DEMO payment with PayPal account
         /// </summary>
-        public string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session)
+        public string PaymentWithPaypalDemo(HttpRequestBase Request, HttpSessionStateBase Session)
         {
             //getting the apiContext as earlier
             APIContext apiContext = Configuration.GetAPIContext();
@@ -180,7 +186,7 @@
                     // baseURL is the url on which paypal sendsback the data.
                     // So we have provided URL of this controller only
                     string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority +
-                                "/Paypal/PaymentWithPayPal?";
+                                "/Paypal/PaymentWithPayPalDemo?";
 
                     //guid we are generating for storing the paymentID received in session
                     //after calling the create function and it is used in the payment execution
@@ -190,7 +196,7 @@
                     //CreatePayment function gives us the payment approval url
                     //on which payer is redirected for paypal account payment
 
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+                    var createdPayment = this.CreatePaymentDemo(apiContext, baseURI + "guid=" + guid);
 
                     //get links returned from paypal in response to Create function call
 
@@ -225,7 +231,91 @@
 
                     var guid = Request.Params["guid"];
 
-                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+                    var executedPayment = ExecutePaymentDemo(apiContext, payerId, Session[guid] as string);
+
+                    if (executedPayment.state.ToLower() != "approved")
+                    {
+                        return "Failure";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: LOGGER
+                // Logger.log("Error " + ex.Message);
+                return "Failure";
+            }
+
+            return "Success";
+        }
+
+        /// <summary>
+        /// Create PayPal payment with PayPal account
+        /// </summary>
+        public string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session, CartViewModel cart)
+        {
+            //getting the apiContext as earlier
+            APIContext apiContext = Configuration.GetAPIContext();
+            
+            try
+            {
+                string payerId = Request.Params["PayerID"];
+
+                if (string.IsNullOrEmpty(payerId))
+                {
+                    //this section will be executed first because PayerID doesn't exist
+                    //it is returned by the create function call of the payment class
+
+                    // Creating a payment
+                    // baseURL is the url on which paypal sendsback the data.
+                    // So we have provided URL of this controller only
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority +
+                                "/Paypal/PaymentWithPayPal?";
+
+                    //guid we are generating for storing the paymentID received in session
+                    //after calling the create function and it is used in the payment execution
+
+                    var guid = Convert.ToString(cart.CurrentUserId + " " + DateTime.Now.ToShortTimeString());
+
+                    //CreatePayment function gives us the payment approval url
+                    //on which payer is redirected for paypal account payment
+
+                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid, cart);
+
+                    //get links returned from paypal in response to Create function call
+
+                    var links = createdPayment.links.GetEnumerator();
+
+                    string paypalRedirectUrl = null;
+
+                    while (links.MoveNext())
+                    {
+                        Links lnk = links.Current;
+
+                        if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            //saving the payapalredirect URL to which user will be redirected for payment
+                            paypalRedirectUrl = lnk.href;
+                        }
+                    }
+
+                    // saving the paymentID in the key guid
+                    Session.Add(guid, createdPayment.id);
+
+                    //return Redirect(paypalRedirectUrl);
+                    return paypalRedirectUrl;
+                }
+                else
+                {
+                    // This section is executed when we have received all the payments parameters
+
+                    // from the previous call to the function Create
+
+                    // Executing a payment
+
+                    var guid = Request.Params["guid"];
+
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string, cart);
 
                     if (executedPayment.state.ToLower() != "approved")
                     {
@@ -243,7 +333,13 @@
             return "SuccessView";
         }
 
-        private Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        /// <summary>
+        /// Creates demo payment 
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="redirectUrl">URL for redirecting after cancel of return from PayPal payment page</param>
+        /// <returns></returns>
+        private Payment CreatePaymentDemo(APIContext apiContext, string redirectUrl)
         {
 
             //similar to credit card create itemlist and add item objects to it
@@ -305,7 +401,104 @@
             return this.payment.Create(apiContext);
         }
 
-        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        /// <summary>
+        /// Executes payment info by payerId and paymentId
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="payerId">Payer id</param>
+        /// <param name="paymentId">Payment id</param>
+        /// <returns></returns>
+        private Payment ExecutePaymentDemo(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExecution = new PaymentExecution() { payer_id = payerId };
+            this.payment = new Payment() { id = paymentId };
+            return this.payment.Execute(apiContext, paymentExecution);
+        }
+
+        /// <summary>
+        /// Creates PayPal payment 
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="redirectUrl">URL for redirecting after cancel of return from PayPal payment page</param>
+        /// <returns></returns>
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl, CartViewModel cart)
+        {
+            // TODO: получить валюту корзины в человеческом виде
+            
+            //similar to credit card create itemlist and add item objects to it
+            var itemList = new ItemList() { items = new List<Item>() };
+
+            foreach (var track in cart.Tracks)
+            {
+                var item = new Item();
+                item.currency = cart.CurrencyShortName;
+                item.name = track.Name;
+                // item.price = track.TrackPrices.FirstOrDefault(p => p.Currency.Code == userCurrency.Code).Price;
+                item.price = track.TrackPrices.FirstOrDefault(p => p.Currency.Code == 840).Price.ToString();
+                item.quantity = "1";
+
+                itemList.items.Add(item);
+            }
+
+            var payer = new Payer()
+            {
+                payment_method = "paypal"                
+            };
+
+            // Configure Redirect Urls here with RedirectUrls object
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirectUrl,
+                return_url = redirectUrl
+            };
+
+            // similar as we did for credit card, do here and create details object
+            var details = new Details()
+            {
+                tax = "0",
+                shipping = "0",
+                subtotal = cart.TotalPrice.ToString()
+            };
+
+            // similar as we did for credit card, do here and create amount object
+            var amount = new Amount()
+            {
+                currency = cart.CurrencyShortName,
+                total = cart.TotalPrice.ToString(), // Total must be equal to sum of shipping, tax and subtotal.
+                details = details
+            };
+
+            var transactionList = new List<Transaction>();
+
+            transactionList.Add(new Transaction()
+            {
+                description = "Transaction description.",
+                invoice_number = (new Random()).Next(1000000).ToString(), // "your invoice number",
+                amount = amount,
+                item_list = itemList
+            });
+
+            this.payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls
+            };
+
+            // Create a payment using a APIContext
+            return this.payment.Create(apiContext);
+        }
+
+        /// <summary>
+        /// Executes payment info by payerId and paymentId
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="payerId">Payer id</param>
+        /// <param name="paymentId">Payment id</param>
+        /// /// <param name="cart">cart with tracks</param>
+        /// <returns></returns>
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId, CartViewModel cart)
         {
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
             this.payment = new Payment() { id = paymentId };

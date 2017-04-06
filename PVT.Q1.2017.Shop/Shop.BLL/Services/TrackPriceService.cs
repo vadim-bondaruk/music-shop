@@ -52,7 +52,10 @@
 
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
-                return ServiceHelper.GetTrackPrice(repository, trackId, currencyCode.Value, priceLevelId.Value);
+                using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
+                {
+                    return PriceHelper.GetTrackPrice(repository, currencyRatesrepository, trackId, currencyCode.Value, priceLevelId.Value);
+                }
             }
         }
 

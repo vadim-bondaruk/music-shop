@@ -90,6 +90,16 @@
         /// Carts
         /// </summary>
         public DbSet<Cart> Carts { get; set; }
+
+        /// <summary>
+        /// Ordered Tracks
+        /// </summary>
+        public DbSet<OrderTrack> OrderTracks { get; set; }
+
+        /// <summary>
+        /// Ordered Albums
+        /// </summary>
+        public DbSet<OrderAlbum> OrderAlbums { get; set; }
         
         /// <summary>
         /// Gets or sets the users.

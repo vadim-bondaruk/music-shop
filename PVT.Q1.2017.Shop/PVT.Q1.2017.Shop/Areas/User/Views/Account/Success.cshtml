@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Success";
+    ViewBag.Title = "Регистрация пройдена";
 }
 
 <h2>Поздравляем! Вы успешно зарегистрировались в нашем магазине.</h2>
@@ -8,5 +8,5 @@
 <h4>Деньги держите наготове</h4>
 
 <div>
-    @Html.ActionLink("Пойти за треками", "Index", new { area = "", controller = "Home" })
+    @Html.ActionLink("Пойти за треками", "List", new { area = "Content", controller = "Track" })
 </div>

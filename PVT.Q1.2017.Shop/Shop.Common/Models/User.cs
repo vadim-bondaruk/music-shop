@@ -58,5 +58,6 @@
         /// The phone number
         /// </summary>
         public string PhoneNumber { get; set; }
+        public object UserRole { get; set; }
     }
 }
