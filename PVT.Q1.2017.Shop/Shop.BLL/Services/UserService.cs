@@ -8,11 +8,12 @@
     using Infrastructure;
     using Shop.Infrastructure.Enums;
     using Utils;
+    using Common.Validators.Infrastructure;
 
     /// <summary>
     /// The user service
     /// </summary>
-    public class UserService : BaseService, IUserService
+    public class UserService : BaseService, IUserService, IUserValidator
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
@@ -110,7 +111,7 @@
             }
             else
             {
-                throw new UserValidationException("Вы ввели неправеьный ник или email", string.Empty);
+                throw new UserValidationException("Вы ввели неправильный ник или email", string.Empty);
             }
         }
 

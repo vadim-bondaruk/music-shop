@@ -52,7 +52,10 @@
 
             using (var repository = this.Factory.GetAlbumPriceRepository())
             {
-                return ServiceHelper.GetAlbumPrice(repository, albumId, currencyCode.Value, priceLevelId.Value);
+                using (var currencyRatesrepository = this.Factory.GetCurrencyRateRepository())
+                {
+                    return PriceHelper.GetAlbumPrice(repository, currencyRatesrepository, albumId, currencyCode.Value, priceLevelId.Value);
+                }
             }
         }
 

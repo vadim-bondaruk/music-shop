@@ -1,9 +1,9 @@
 ﻿namespace Shop.Common.Validators
 {
     using System;
+    using System.Web.Mvc;
     using FluentValidation;
-    using Infrastructure.Repositories;
-    using Models;
+    using Infrastructure;
     using ViewModels;
 
     /// <summary>
@@ -14,14 +14,9 @@
         /// <summary>
         /// 
         /// </summary>
-        //private readonly IRepository<User> _userRepository;
-
-        /// <summary>
-        /// 
-        /// </summary>
         public UserRegistrationValidator()
         {
-            //this._userRepository = userRepository;
+            var validator = DependencyResolver.Current.GetService<IUserValidator>();
 
             RuleFor(u => u.FirstName).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
@@ -37,8 +32,8 @@
                 .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.Login).Matches("^[a-zA-Z0-9_.-]*$")
                 .WithMessage("Только буквы латинского алфавита, цифры и знак подчеркивания");
-            //RuleFor(u => u.Login)
-            //    .SetValidator(new UniqueUserIdentityValidator(this._userRepository, "Пользователь с таким логином уже существует"));
+            RuleFor(u => u.Login).Must(login => !validator.IsUserExist(login))
+                .WithMessage("Пользователь с таким логином уже существует");
 
             RuleFor(u => u.Password).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
@@ -56,8 +51,8 @@
                 .WithMessage("Адрес введен некорректно");
             RuleFor(u => u.Email).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
-            //RuleFor(u => u.Email)
-            //    .SetValidator(new UniqueUserIdentityValidator(this._userRepository, "Пользователь с таким адресом электронной почты уже существует"));
+            RuleFor(u => u.Email).Must(email => !validator.IsUserExist(email))
+                .WithMessage("Пользователь с таким адресом электронной почты уже существект");
 
             RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today.AddYears(-5))
                 .WithMessage("Дата рождения выбрана некорректно");

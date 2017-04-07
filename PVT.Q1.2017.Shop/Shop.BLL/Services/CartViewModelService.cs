@@ -59,13 +59,19 @@
             if (userCart.Tracks == null)
             {
                 userCart.Tracks = new List<Track>();
+                userCart.IsEmpty = true;
             }
 
             if (userCart.Albums == null)
             {
                 userCart.Albums = new List<Album>();
+                userCart.IsEmpty = true;
             }
 
+            if (userCart.Tracks.Count > 0 || userCart.Albums.Count > 0)
+            {
+                userCart.IsEmpty = false;
+            }
             return userCart;
         }
     }

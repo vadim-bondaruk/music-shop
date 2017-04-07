@@ -12,6 +12,7 @@
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
 
@@ -118,7 +119,8 @@
             Assert.IsTrue(_trackService.GetAlbumsList(track.Id, 840, 1).Albums.Any());
 
             Mock.Get(_factory.GetAlbumRepository())
-                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Album, bool>>>()), Times.Once);
+                .Verify(m => m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),
+                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
         }
     }
 }

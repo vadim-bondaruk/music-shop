@@ -1,9 +1,6 @@
 ﻿namespace Shop.Common.Validators
 {
-    using System;
     using FluentValidation;
-    using Infrastructure.Repositories;
-    using Models;
     using PVT.Q1._2017.Shop.ViewModels;
 
     /// <summary>
@@ -11,7 +8,6 @@
     /// </summary>
     public class ChangePasswordValidator : AbstractValidator<ChangePasswordViewModel>
     {
-
         /// <summary>
         /// 
         /// </summary>

@@ -29,6 +29,7 @@
         {
             EntityState artistEntryState;
             EntityState genreEntryState;
+            EntityState ownerEntryState;
 
             if (track.ArtistId <= 0 && track.Artist != null)
             {
@@ -40,13 +41,20 @@
                 track.GenreId = track.Genre.Id;
             }
 
+            if (track.OwnerId == null && track.Owner != null)
+            {
+                track.OwnerId = track.Owner.Id;
+            }
+
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The TrackBaseRepository should be SOLID, should only add information about track! Not about artist, album or genre!
             this.DetachNavigationProperty(track.Artist, out artistEntryState);
             this.DetachNavigationProperty(track.Genre, out genreEntryState);
+            this.DetachNavigationProperty(track.Owner, out ownerEntryState);
 
             track.Artist = null;
             track.Genre = null;
+            track.Owner = null;
 
             // adding the track into Db
             base.Add(track);
