@@ -40,6 +40,10 @@
         private readonly ITrackService trackService;
 
         /// <summary>
+        /// </summary>
+        private readonly ITrackRepository tracksRepo;
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="TracksController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
@@ -55,18 +59,21 @@
         ///     The genre repository.
         /// </param>
         /// <param name="albumRepository"></param>
+        /// <param name="trackRepository"></param>
         public TracksController(
             IRepositoryFactory repositoryFactory,
             IArtistService artistService,
             IArtistRepository artistRepository,
             IGenreRepository genreRepository,
-            IAlbumRepository albumRepository)
+            IAlbumRepository albumRepository,
+            ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
             this.artistService = artistService;
             this.artistRepository = artistRepository;
             this.genreRepository = genreRepository;
             this.albumRepository = albumRepository;
+            this.tracksRepo = trackRepository;
         }
 
         /// <summary>
@@ -106,25 +113,6 @@
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult New(int id)
-        {
-            ICollection<Genre> genres;
-            using (var repo = this.genreRepository)
-            {
-                genres = repo.GetAll();
-            }
-
-            var artist = this.artistRepository.GetById(id);
-            return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
-        }
-
-        /// <summary>
-        /// </summary>
         /// <param name="trackId">
         ///     The track id.
         /// </param>
@@ -142,7 +130,7 @@
                 repository.SaveChanges();
             }
 
-            return this.RedirectToAction("List");
+            return this.RedirectToAction("List", "Tracks", new { area = "Content" });
         }
 
         /// <summary>
@@ -167,6 +155,25 @@
         public virtual ActionResult Edit(TrackDetailsViewModel trackDetailsViewModel)
         {
             return this.View();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult New(int id)
+        {
+            ICollection<Genre> genres;
+            using (var repo = this.genreRepository)
+            {
+                genres = repo.GetAll();
+            }
+
+            var artist = this.artistRepository.GetById(id);
+            return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
         }
 
         /// <summary>
