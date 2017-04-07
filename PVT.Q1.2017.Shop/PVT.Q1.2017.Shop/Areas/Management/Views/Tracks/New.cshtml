@@ -1,4 +1,8 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.TrackManagementViewModel
+<head>
+    <script src="/Scripts/jquery-3.2.0.min.js"></script>
+    <script src="/Scripts/file-change.js" type="text/javascript"></script>
+</head>
 <body>
 <h2 class="title" style="margin-top: 15px; position: initial">Регистрация нового трека</h2>
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
@@ -10,7 +14,7 @@
 
         <img class="img-thumbnail" id="artist-img" onclick="document.formreg.PostedImage.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
 
-        <ul class="list-group" style="width: 635px; height: 100%;display: inline-block; vertical-align: top">
+        <ul class="list-group" style="width: 635px; height: 100%; display: inline-block; vertical-align: top">
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Name)
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
@@ -36,6 +40,9 @@
                 <input placeholder="Файл" type="text" class="form-control" id="file-path" onclick="document.formreg.PostedTrackFile.click()"/>
             </li>
         </ul>
+        <audio controls>
+            <source src="/Controller/Audio/@Model.TrackFile" type="audio/mp3"/>
+        </audio>
     </div>
 
     <div class="new-artist-buttons">
@@ -44,9 +51,7 @@
     <input type="file" id="file" name="PostedImage" style="display: none"/>
     <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
 }
-<script src="/Scripts/jquery-3.2.0.min.js"></script>
-<script src="/Scripts/openfile.dialog.js" type="text/javascript"></script>
-<script src="/Scripts/file-change.js" type="text/javascript"></script>
+
 </body>
 
 @section cssStyles
