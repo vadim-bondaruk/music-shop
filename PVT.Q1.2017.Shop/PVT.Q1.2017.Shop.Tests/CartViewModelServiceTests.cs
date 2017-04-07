@@ -18,7 +18,7 @@ namespace PVT.Q1._2017.Shop.Tests
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Create and set CartView model
-            var myCartView = new CartViewModel() { Tracks = new List<Track>() };
+            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>() };
             CartViewModelService.SetTotalPrice(myCartView, userCurrency);
             Assert.IsTrue(myCartView.TotalPrice == 0);
         }
@@ -31,24 +31,22 @@ namespace PVT.Q1._2017.Shop.Tests
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Set TrackPrices
-            var priceTrack = new TrackPrice();
-            priceTrack.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
-            priceTrack.Price = 120;
-            var pricesTrack = new List<TrackPrice>();
-            pricesTrack.Add(priceTrack);
+            var priceTrack = new PriceViewModel();
+            priceTrack.Currency = userCurrency;
+            priceTrack.Amount = 120;
             //// Create two tracks
-            var track1 = new Track()
+            var track1 = new TrackDetailsViewModel()
             {
                 Name = "SuperTrack",
-                TrackPrices = pricesTrack
+                Price = priceTrack
             };
-            var track2 = new Track()
+            var track2 = new TrackDetailsViewModel()
             {
                 Name = "SuperTrack",
-                TrackPrices = pricesTrack
+                Price = priceTrack
             };
             //// Create and set CartView model
-            var myCartView = new CartViewModel() { Tracks = new List<Track>() };
+            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>() };
             myCartView.Tracks.Add(track1);
             myCartView.Tracks.Add(track2);
             CartViewModelService.SetTotalPrice(myCartView, userCurrency);
@@ -63,21 +61,19 @@ namespace PVT.Q1._2017.Shop.Tests
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Set TrackPrices
-            var priceTrack = new TrackPrice();
-            priceTrack.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
-            priceTrack.Price = 120;
-            var pricesTrack = new List<TrackPrice>();
-            pricesTrack.Add(priceTrack);
+            var priceTrack = new PriceViewModel();
+            priceTrack.Currency = userCurrency;
+            priceTrack.Amount = 120;
             //// Create track with price = 120
-            var track1 = new Track()
+            var track1 = new TrackDetailsViewModel()
             {
                 Name = "SuperTrack",
-                TrackPrices = pricesTrack
+                Price = priceTrack
             };
             //// Create empty album
             var album1 = new Album();
             //// Create and set CartView model
-            var myCartView = new CartViewModel() { Tracks = new List<Track>(), Albums = new List<Album>() };
+            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>(), Albums = new List<Album>() };
             myCartView.Tracks.Add(track1);
             myCartView.Albums.Add(album1);
             CartViewModelService.SetTotalPrice(myCartView, userCurrency);
@@ -92,21 +88,19 @@ namespace PVT.Q1._2017.Shop.Tests
             userCurrency.Code = 840;
             userCurrency.ShortName = "USD";
             //// Set TrackPrices
-            var priceTrack = new TrackPrice();
-            priceTrack.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
-            priceTrack.Price = 120;
-            var pricesTrack = new List<TrackPrice>();
-            pricesTrack.Add(priceTrack);
+            var priceTrack = new PriceViewModel();
+            priceTrack.Currency = userCurrency;
+            priceTrack.Amount = 120;
             //// Create two tracks with total price = 240
-            var track1 = new Track()
+            var track1 = new TrackDetailsViewModel()
             {
                 Name = "SuperTrack1",
-                TrackPrices = pricesTrack
+                Price = priceTrack
             };
-            var track2 = new Track()
+            var track2 = new TrackDetailsViewModel()
             {
                 Name = "SuperTrack2",
-                TrackPrices = pricesTrack
+                Price = priceTrack
             };
             //// Set AlbumPrices
             var priceAlbum = new AlbumPrice();
@@ -121,7 +115,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 AlbumPrices = pricesAlbum
             };
             //// Create and set CartView model
-            var myCartView = new CartViewModel() { Tracks = new List<Track>(), Albums = new List<Album>() };
+            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>(), Albums = new List<Album>() };
             myCartView.Tracks.Add(track1);
             myCartView.Tracks.Add(track2);
             myCartView.Albums.Add(album1);
