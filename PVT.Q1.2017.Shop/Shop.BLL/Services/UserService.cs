@@ -64,7 +64,7 @@
             }
 
             user.Password = PasswordEncryptor.GetHashString(user.Password);
-            user.UserRoles = this.GetDefaultUserRoles();
+            user.UserRole = this.GetDefaultUserRoles();
 
             try
             {

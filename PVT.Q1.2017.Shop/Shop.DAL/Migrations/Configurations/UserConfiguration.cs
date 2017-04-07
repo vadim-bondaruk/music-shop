@@ -25,7 +25,7 @@
             Property(p => p.Password).IsRequired().HasMaxLength(50);
             Property(p => p.PhoneNumber).IsOptional().HasMaxLength(30);
             Property(p => p.Sex).IsRequired();
-            Property(p => p.UserRoles).IsRequired();
+            Property(p => p.UserRole).IsRequired();
             Property(p => p.ConfirmedEmail).IsRequired();
 
             ToTable("Users");

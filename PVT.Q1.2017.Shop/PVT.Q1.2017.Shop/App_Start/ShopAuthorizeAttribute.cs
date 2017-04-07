@@ -59,7 +59,7 @@
 
             if (user != null && this._userRoles.Length > 0)
             {
-                if (!this._userRoles.ToList().Contains(userDB.UserRoles))
+                if (!this._userRoles.ToList().Contains(userDB.UserRole))
                 {
                     return false;
                 }

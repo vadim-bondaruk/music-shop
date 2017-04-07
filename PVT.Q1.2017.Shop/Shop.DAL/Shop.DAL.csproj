@@ -102,6 +102,10 @@
     <Compile Include="Migrations\201704021715282_FixUser.Designer.cs">
       <DependentUpon>201704021715282_FixUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704071955169_ModifyUserRole.cs" />
+    <Compile Include="Migrations\201704071955169_ModifyUserRole.Designer.cs">
+      <DependentUpon>201704071955169_ModifyUserRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -196,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704021715282_FixUser.resx">
       <DependentUpon>201704021715282_FixUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704071955169_ModifyUserRole.resx">
+      <DependentUpon>201704071955169_ModifyUserRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
