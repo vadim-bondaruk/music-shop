@@ -1,10 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
-    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -15,7 +15,7 @@
         /// <summary>
         ///     The track service.
         /// </summary>
-        private ITrackRepository trackRepository;
+        private readonly ITrackRepository trackRepository;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TracksController" /> class.
@@ -31,7 +31,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the _track service.
+        ///     Gets or sets the _track service.
         /// </summary>
         public ITrackService TrackService { get; set; }
 
@@ -67,6 +67,44 @@
             }
 
             return this.View(this.TrackService.GetTrackDetails(id.Value));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public FileResult Download(int id)
+        {
+            string mp3Url = null;
+
+            // string mp3Url = Track.GetMp3UrlByID(id);
+            var track = this.trackRepository.GetById(id);
+            var urlGrabber = new WebClient();
+            var data = urlGrabber.DownloadData(mp3Url);
+            var fileStream = new FileStream(string.Format("{0} - {1}.mp3", track.Artist, track.Name), FileMode.Open);
+
+            fileStream.Write(data, 0, data.Length);
+            fileStream.Seek(0, SeekOrigin.Begin);
+
+            return new FileStreamResult(fileStream, "audio/mpeg");
+
+            // return (new FileContentResult(data, "audio/mpeg"));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public FileResult Stream(int id)
+        {
+            var trackFile = this.trackRepository.GetById(id).TrackFile;
+            return this.File(trackFile, "audio/mpeg", "test.mp3");
         }
 
         /// <summary>
