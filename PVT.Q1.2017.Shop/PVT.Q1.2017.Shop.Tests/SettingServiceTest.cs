@@ -31,16 +31,16 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void AddSettingTest()
         {
-            //arrange
+            //Arrange
             int currencyId = 1;
 
             using (var repository = this._factory.GetSettingRepository())
             {
-                //act
+                //Act
                 repository.AddOrUpdate(new Setting { DefaultCurrencyId = currencyId});
                 repository.SaveChanges();
 
-                //assert
+                //Assert
                 Assert.IsTrue(repository.GetAll().Any());
             }
         }
@@ -48,37 +48,45 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void GetSettingViewModelTest()
         {
-            //act
+            //Act
             var target = _settingService.GetSettingViewModel();
 
-            //assert
+            //Assert
             Assert.IsInstanceOfType(target, typeof(SettingViewModel));
             Assert.IsNotInstanceOfType(target, typeof(Setting));
         }
 
 
         [TestMethod]
-        public void Check_SettingViewModel_IsNotNull()
+        public void Check_SettingViewModel_IsNotNullTest()
         {
             AddSettingTest();
 
-            //act
+            //Act
             var result = _settingService.GetSettingViewModel();
 
-            //assert
+            //Assert
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void Check_DefaultCurrencyViewModelList_Count()
+        public void Check_DefaultCurrencyViewModelList_CountTest()
         {
             AddSettingTest();
 
-            //act
+            //Act
             var result = _settingService.GetSettingViewModel();
             
-            //assert
+            //Assert
             Assert.IsTrue(result.DefaultCurrencyViewModelList.Count == 2);
+        }
+
+        [TestMethod]
+        public void SaveSettingViewModelTest()
+        {
+            AddSettingTest();
+
+            Mock.Get(_factory.GetSettingRepository()).Verify(m => m.SaveChanges(), Times.Once);
         }
     }
 }
