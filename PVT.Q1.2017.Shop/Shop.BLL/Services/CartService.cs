@@ -113,6 +113,8 @@
                             orderTrack = track.Carts.FirstOrDefault(c => c.CartId == cart.Id);
                         }
                     }
+
+                    trackRepository.AddOrUpdate(track);
                 }
 
                 cartRepository.AddOrUpdate(cart);
@@ -223,6 +225,8 @@
                             orderAlbum = album.Carts.FirstOrDefault(c => c.CartId == cart.Id);
                         }
                     }
+
+                    albumRepository.AddOrUpdate(album);
                 }
 
                 cartRepository.AddOrUpdate(cart);
@@ -336,6 +340,139 @@
                 }
             }
             return resultViewAlbums;
+        }
+
+        /// <summary>
+        /// Accept Payment of All User's Cart
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        public void AcceptPayment(int userId)
+        {
+            var trackIds = this.GetOrderTracksIds(userId);
+            if (trackIds != null && trackIds.Any())
+            {
+                foreach (var trackId in trackIds)
+                {
+                    this.AcceptPaymentForTrack(userId, trackId);
+                }
+            }
+
+            var albumIds = this.GetOrderAlbumsIds(userId);
+            if (albumIds != null && albumIds.Any())
+            {
+                foreach (var albumId in albumIds)
+                {
+                    this.AcceptPaymentForAlbum(userId, albumId);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Accept Payment of selected items
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <param name="ids">IDs of payment items</param>
+        /// <param name="isTracks">If paid items is tracks, then True
+        /// If paid items is albums, then False</param>
+        public void AcceptPayment(int userId, IEnumerable<int> ids, bool isTracks)
+        {
+            if (ids == null || !ids.Any()) return;
+            if (isTracks)
+            {
+                foreach (var trackId in ids)
+                {
+                    this.AcceptPaymentForTrack(userId, trackId);
+                }
+            }
+            else
+            {
+                foreach (var albumId in ids)
+                {
+                    this.AcceptPaymentForAlbum(userId, albumId);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Accept Track's Payment
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <param name="trackId">Track ID</param>
+        private void AcceptPaymentForTrack(int userId, int trackId)
+        {
+            using (var trackRepository = Factory.GetTrackRepository())
+            {
+                var track = trackRepository.GetById(trackId);
+                this.RemoveTrack(userId, trackId);
+                using (var userDataRepository = Factory.GetUserDataRepository())
+                {
+                    UserData user = userDataRepository.GetAll(u => u.UserId == userId).FirstOrDefault();
+                    if (user == null)
+                    {
+                        throw new InvalidUserIdException($"Пользователь с ID={userId} не найден");
+                    }
+
+                    var purchasedTrack = new PurchasedTrack()
+                    {
+                        UserId = userId, User = user, TrackId = trackId, Track = track
+                    };
+                    if (track.Users == null)
+                    {
+                        track.Users = new List<PurchasedTrack>();
+                    }
+
+                    track.Users.Add(purchasedTrack);
+                    if (user.Tracks == null)
+                    {
+                        user.Tracks = new List<PurchasedTrack>();
+                    }
+
+                    user.Tracks.Add(purchasedTrack);
+                    userDataRepository.AddOrUpdate(user);
+                }
+                trackRepository.AddOrUpdate(track);
+            }
+        }
+
+        /// <summary>
+        /// Accept Album's Payment
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <param name="albumId">Album ID</param>
+        private void AcceptPaymentForAlbum(int userId, int albumId)
+        {
+            using (var albumRepository = Factory.GetAlbumRepository())
+            {
+                var album = albumRepository.GetById(albumId);
+                this.RemoveAlbum(userId, albumId);
+                using (var userDataRepository = Factory.GetUserDataRepository())
+                {
+                    UserData user = userDataRepository.GetAll(u => u.UserId == userId).FirstOrDefault();
+                    if (user == null)
+                    {
+                        throw new InvalidUserIdException($"Пользователь с ID={userId} не найден");
+                    }
+
+                    var purchasedAlbum = new PurchasedAlbum()
+                    {
+                        UserId = userId, User = user, AlbumId = albumId, Album = album
+                    };
+                    if (album.Users == null)
+                    {
+                        album.Users = new List<PurchasedAlbum>();
+                    }
+
+                    album.Users.Add(purchasedAlbum);
+                    if (user.Albums == null)
+                    {
+                        user.Albums = new List<PurchasedAlbum>();
+                    }
+
+                    user.Albums.Add(purchasedAlbum);
+                    userDataRepository.AddOrUpdate(user);
+                }
+                albumRepository.AddOrUpdate(album);
+            }
         }
     }
 }
