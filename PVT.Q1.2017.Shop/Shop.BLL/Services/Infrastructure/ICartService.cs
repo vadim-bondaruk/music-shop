@@ -92,6 +92,6 @@ namespace Shop.BLL.Services.Infrastructure
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Albums</returns>
-        ICollection<Album> GetOrderAlbums(int userId);
+        ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId);
     }
 }

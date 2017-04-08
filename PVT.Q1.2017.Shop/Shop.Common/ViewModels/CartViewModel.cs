@@ -21,7 +21,7 @@
         /// <summary>
         /// Gets or sets a Collection of Albums for View
         /// </summary>
-        public ICollection<Album> Albums { get; set; }
+        public ICollection<AlbumDetailsViewModel> Albums { get; set; }
 
         /// <summary>
         /// Get total price of cart

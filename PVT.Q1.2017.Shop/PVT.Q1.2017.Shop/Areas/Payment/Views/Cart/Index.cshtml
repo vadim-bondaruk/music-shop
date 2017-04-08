@@ -65,7 +65,7 @@
                     <tr>
                         <td>@anyAlbum.Artist.Name</td>
                         <td>@anyAlbum.Name</td>
-                        <td>@anyAlbum.AlbumPrices.FirstOrDefault(a => a.Currency.ShortName == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
+                        <td>@anyAlbum.Price.Amount @Model.CurrencyShortName</td>
                         <td><button type="submit" name="albumId" value=@anyAlbum.Id>Удалить</button></td>
                     </tr>
                 }
