@@ -61,5 +61,10 @@
         /// Carts with this Album
         /// </summary>
         public virtual ICollection<OrderAlbum> Carts { get; set; }
+
+        /// <summary>
+        /// Users who purchased album
+        /// </summary>
+        public virtual ICollection<PurchasedAlbum> Users { get; set; }
     }
 }

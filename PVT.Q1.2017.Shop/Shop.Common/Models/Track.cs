@@ -96,5 +96,10 @@
         /// Carts with this Track
         /// </summary>
         public virtual ICollection<OrderTrack> Carts { get; set; }
+
+        /// <summary>
+        /// Users who purchased track
+        /// </summary>
+        public virtual ICollection<PurchasedTrack> Users { get; set; }
     }
 }
