@@ -47,7 +47,7 @@
         /// <summary>
         /// Users role in this shop
         /// </summary>
-        public UserRoles UserRoles { get; set; }
+        public UserRoles UserRole { get; set; }
 
         /// <summary>
         /// Users country
@@ -62,7 +62,7 @@
         /// <summary>
         /// User role
         /// </summary>
-        public object UserRole { get; set; }
+        //public object UserRole { get; set; }
 
         /// <summary>
         /// Verification of email confirmation

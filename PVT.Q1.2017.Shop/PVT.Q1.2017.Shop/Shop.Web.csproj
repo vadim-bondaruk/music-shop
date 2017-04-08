@@ -196,32 +196,21 @@
     <Content Include="Areas\Payment\Views\Paypal\Success.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
     <Content Include="Areas\Content\Views\Artist\List.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\CreateArtistButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\EditArtistButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\DeleteArtistButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\NewArtistTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Artist\TracksList.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\EditTrackButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\DeleteTrackButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\TracksListPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\AlbumsListPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_TracksList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Artist\AlbumsList.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\NewArtistAlbumButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\Content\Views\Album\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\CreateAlbumButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\EditAlbumButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\DeleteAlbumButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\NewAlbumTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\RatingPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_Rating.cshtml" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\BuyTrackButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\BuyAlbumButtonPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_BuyTrackButton.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_BuyAlbumButton.cshtml" />
     <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\AddTrackPriceButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\EditTrackPriceButtonPartialView.cshtml" />
@@ -262,7 +251,12 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
+    <Compile Include="Areas\Content\Extentions\ButtonsHelper.cs" />
+    <Compile Include="Areas\Content\Extentions\ManagementButtonsHelper.cs" />
+    <Compile Include="Areas\Content\Extentions\PriceButtonHelper.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
+    <Compile Include="Areas\Management\Controllers\AlbumPriceController.cs" />
+    <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
@@ -280,6 +274,8 @@
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
     <Compile Include="Areas\User\Helpers\UserMapper.cs" />
+    <Compile Include="Controllers\AdminTestController.cs" />
+    <Compile Include="Areas\Management\Controllers\TrackPriceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Areas\User\Controllers\AccountController.cs" />
@@ -325,8 +321,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Management\Views\Album\" />
+    <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />

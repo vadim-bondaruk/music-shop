@@ -2,7 +2,6 @@
 {
     using System.Web.Mvc;
     using BLL.Utils;
-
     using global::Shop.BLL.Helpers;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
