@@ -3,7 +3,7 @@
 <div>
     @if (Model != null)
     {
-        @Html.Partial("RatingPartialView", Model.Rating)
+        @Html.Partial("_Rating", Model.Rating)
         if (Model.VotesCount > 0 || Model.CommentsCount > 0)
         {
             @:&nbsp;

@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.TrackDetailsViewModel
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.TrackDetailsViewModel
 
 @{
     ViewBag.Title = "Информация о треке";
@@ -87,17 +88,9 @@
         </dl>
 
         <p>
-            @Html.Partial("EditTrackButtonPartialView", Model.Id)
-            @Html.Partial("DeleteTrackButtonPartialView", Model.Id)
-            
-            @if (Model.Price != null)
-            {
-                @Html.Partial("EditTrackPriceButtonPartialView", Model.Id)
-            }
-            else
-            {
-                @Html.Partial("AddTrackPriceButtonPartialView", Model.Id)
-            }
+            @Html.BtnEditTrack(Model.Id)
+            @Html.BtnDeleteTrack(Model.Id)
+            @(Model.Price != null ? Html.BtnEditTrackPrice(Model.Id) : Html.BtnCreateTrackPrice(Model.Id))
         </p>
     </div>
 </div>
@@ -105,7 +98,7 @@
 <p>
     @if (Model.Price != null)
     {
-        @Html.Partial("BuyTrackButtonPartialView", Model.Id)
+        @Html.Partial("_BuyTrackButton", Model.Id)
     }
 
     @Html.ActionLink("Cписок треков", "List", "Track", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })

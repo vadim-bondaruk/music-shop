@@ -82,6 +82,16 @@
             return this.View(album);
         }
 
+        public ActionResult Create(int? artistid)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Deletes the album with the specified <paramref name="id"/> from the system.
         /// </summary>
@@ -125,6 +135,20 @@
             }
 
             return this.RedirectToAction("List", "Album", new { area = "Content" });
+        }
+
+        /// <summary>
+        /// Renders a page for adding tracks to the album.
+        /// </summary>
+        /// <param name="id">
+        /// The album id.
+        /// </param>
+        /// <returns>
+        /// The view for adding tracks to the album.
+        /// </returns>
+        public ActionResult AddTracks(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
