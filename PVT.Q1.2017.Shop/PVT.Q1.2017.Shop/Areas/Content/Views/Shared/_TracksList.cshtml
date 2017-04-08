@@ -1,0 +1,49 @@
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model ICollection<Shop.Common.ViewModels.TrackViewModel>
+
+<table class="table table-hover table-responsive">
+    @foreach (var track in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(track.Name, "Details", "Track", new
+                {
+                    id = track.Id,
+                    area = "Content"
+                }, new
+                {
+                    @class = "btn btn-link",
+                    title = "Нажмите, чтобы посмотреть подробную информацию о треке"
+                })
+            </td>
+            <td>
+                @Html.ActionLink(track.Artist.Name, "Details", "Artist", new
+                {
+                    id = track.Artist.Id,
+                    area = "Content"
+                }, new
+                {
+                    @class = "btn btn-link",
+                    title = "Нажмите, чтобы перейти к информации об исполнителе"
+                })
+            </td>
+            <td>
+                @Html.Partial("_Rating", track.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(m => track.Price)
+            </td>
+            <td>
+                @Html.BtnEditTrack(track.Id)
+                @Html.BtnDeleteTrack(track.Id)
+                @(track.Price != null ? Html.BtnEditTrackPrice(track.Id) : Html.BtnCreateTrackPrice(track.Id))
+            </td>
+            @if (track.Price != null)
+            {
+                <td>
+                    @Html.Partial("_BuyTrackButton", track.Id)
+                </td>
+            }
+        </tr>
+    }
+</table>

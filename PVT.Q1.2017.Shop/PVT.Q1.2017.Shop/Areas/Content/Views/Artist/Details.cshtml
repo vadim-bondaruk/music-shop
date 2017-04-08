@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.ArtistDetailsViewModel
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.ArtistDetailsViewModel
 
 @{
     ViewBag.Title = "Информация об исполнителе";
@@ -53,14 +54,13 @@
         </dl>
 
         <p>
-            @Html.Partial("EditArtistButtonPartialView", Model.Id)
-            @Html.Partial("DeleteArtistButtonPartialView", Model.Id)
+            @Html.BtnEditArtist(Model.Id)
+            @Html.BtnDeleteArtist(Model.Id)
         </p>
     </div>
 </div>
 
 <p>
-    @Html.Partial("CreateArtistButtonPartialView")
-
+    @Html.BtnCreateArtist()
     @Html.ActionLink("Cписок исполнителей", "List", "Artist", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })
 </p>
