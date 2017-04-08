@@ -264,6 +264,7 @@
     <Compile Include="Controllers\AdminTestController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackPriceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Areas\User\Controllers\AccountController.cs" />
     <Compile Include="Areas\User\Controllers\ManageController.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\AdminTest\UserTest.cshtml" />
     <Content Include="Views\AdminTest\AdminTest.cshtml" />
+    <Content Include="Views\Shared\_AllCurrencies.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -314,6 +316,7 @@
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
+    <Folder Include="Views\Currency\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
