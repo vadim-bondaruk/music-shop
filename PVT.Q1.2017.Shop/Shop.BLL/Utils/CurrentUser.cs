@@ -70,12 +70,12 @@
                 return false;
             }
 
-            if (this._user.UserRole.ToString().Equals(role, StringComparison.OrdinalIgnoreCase))
+            if (this._user.UserRoles.ToString().Equals(role, StringComparison.OrdinalIgnoreCase))
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }
