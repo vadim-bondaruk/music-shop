@@ -1,4 +1,5 @@
-﻿@model ICollection<Shop.Common.ViewModels.AlbumViewModel>
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model ICollection<Shop.Common.ViewModels.AlbumViewModel>
 
 @{
     ViewBag.Title = "Список альбомов";
@@ -7,8 +8,8 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.Partial("CreateAlbumButtonPartialView")
+    @Html.BtnCreateAlbum()
 </p>
         
-@Html.Partial("AlbumsListPartialView", Model)
+@Html.Partial("_AlbumsList", Model)
 

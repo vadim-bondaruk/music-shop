@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Shop.Common.ViewModels.ArtistViewModel>
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model IEnumerable<Shop.Common.ViewModels.ArtistViewModel>
 
 @{
     ViewBag.Title = "Список исполнителей";
@@ -7,7 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.Partial("CreateArtistButtonPartialView")
+    @Html.BtnCreateArtist()
 </p>
 
 <table class="table table-hover table-responsive">
@@ -32,11 +33,9 @@
                 </a>
             </td>
             <td>
-                @Html.Partial("EditArtistButtonPartialView", artist.Id)
-
-                @Html.Partial("DeleteArtistButtonPartialView", artist.Id)
+                @Html.BtnEditArtist(artist.Id)
+                @Html.BtnDeleteArtist(artist.Id)
             </td>
         </tr>
     }
-
 </table>
