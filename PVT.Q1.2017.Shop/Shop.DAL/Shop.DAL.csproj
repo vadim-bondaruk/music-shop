@@ -118,9 +118,9 @@
     <Compile Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.Designer.cs">
       <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704052240072_FixUser2.cs" />
-    <Compile Include="Migrations\201704052240072_FixUser2.Designer.cs">
-      <DependentUpon>201704052240072_FixUser2.cs</DependentUpon>
+    <Compile Include="Migrations\201704072143511_FixUser2.cs" />
+    <Compile Include="Migrations\201704072143511_FixUser2.Designer.cs">
+      <DependentUpon>201704072143511_FixUser2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -229,8 +229,8 @@
     <EmbeddedResource Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.resx">
       <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704052240072_FixUser2.resx">
-      <DependentUpon>201704052240072_FixUser2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704072143511_FixUser2.resx">
+      <DependentUpon>201704072143511_FixUser2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
