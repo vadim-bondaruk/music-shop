@@ -63,7 +63,8 @@
                 {
                     var album = new AlbumManagementViewModel
                     {
-                        Artist = artist
+                        ArtistId = artist.Id,
+                        ArtistName = artist.Name
                     };
 
                     return this.View(album);
@@ -75,7 +76,7 @@
 
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "Id,Name,ReleaseDate,Artist.Id,Cover")]
+            [Bind(Include = "Id,Name,ReleaseDate,ArtistId,PostedCover")]
             AlbumManagementViewModel model)
         {
             if (model != null && ModelState.IsValid)
@@ -108,7 +109,7 @@
             var album = ManagementMapper.GetAlbumManagementViewModel(this._albumService.GetAlbumDetails(id.Value));
             if (album == null)
             {
-                return HttpNotFound("Альбок с указанным id не найден");
+                return HttpNotFound("Альбом с указанным id не найден");
             }
 
             return this.View(album);
@@ -116,14 +117,24 @@
 
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Edit(
-            [Bind(Include = "Id,Name,ReleaseDate,Artist.Id,Cover")]
+            [Bind(Include = "Id,Name,ReleaseDate,ArtistId,PostedCover")]
             AlbumManagementViewModel album)
         {
             if (album != null && ModelState.IsValid)
             {
                 using (var repository = this._repositoryFactory.GetAlbumRepository())
                 {
-                    repository.AddOrUpdate(ManagementMapper.GetAlbumModel(album));
+                    var currentAlbum = repository.GetById(album.Id);
+                    if (currentAlbum == null)
+                    {
+                        return HttpNotFound($"Альбом с id = { album.Id } не найден.");
+                    }
+
+                    int? ownerId = currentAlbum.OwnerId;
+                    var albumDto = ManagementMapper.GetAlbumModel(album);
+                    albumDto.OwnerId = ownerId;
+
+                    repository.AddOrUpdate(albumDto);
                     repository.SaveChanges();
                 }
 
