@@ -53,6 +53,11 @@
         public int GenreId { get; set; }
 
         /// <summary>
+        /// The owner id.
+        /// </summary>
+        public int? OwnerId { get; set; }
+
+        /// <summary>
         /// Gets or sets the artist.
         /// </summary>
         public virtual Artist Artist { get; set; }
@@ -61,6 +66,11 @@
         /// Gets or sets the genre.
         /// </summary>
         public virtual Genre Genre { get; set; }
+
+        /// <summary>
+        /// The owner of the track.
+        /// </summary>
+        public virtual User Owner { get; set; }
 
         /// <summary>
         /// Gets or sets the albums which contain the current track.
@@ -81,5 +91,10 @@
         /// Gets or sets all user feedbacks the current track.
         /// </summary>
         public virtual ICollection<Feedback> Feedbacks { get; set; }
+
+        /// <summary>
+        /// Carts with this Track
+        /// </summary>
+        public virtual ICollection<OrderTrack> Carts { get; set; }
     }
 }

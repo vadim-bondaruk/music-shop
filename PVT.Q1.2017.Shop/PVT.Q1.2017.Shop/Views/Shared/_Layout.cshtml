@@ -8,6 +8,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     @RenderSection("cssStyles", required: false)
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <meta name="description" content="The description of my page" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,9 +26,9 @@
                     @Html.Partial("_MenuPartial")
                 </ul>
                 @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { area = "User", id = "logoutForm", @class = "navbar-right" }))
                 {
-                    using (Html.BeginForm("LogOut", "Account", new { area = "User"}, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                    {
                         @Html.AntiForgeryToken()
 
                         <ul class="nav navbar-nav navbar-right">

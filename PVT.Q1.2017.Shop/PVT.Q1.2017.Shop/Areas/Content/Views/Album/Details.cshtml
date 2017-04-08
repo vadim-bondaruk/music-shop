@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.AlbumDetailsViewModel
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.AlbumDetailsViewModel
 
 @{
     ViewBag.Title = "Информация об альбоме";
@@ -21,11 +22,13 @@
         }
 
         <div>
+            @Html.BtnAddTracksToAlbum(Model.Id)
+
             <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Album", new { id = Model.Id, area = "Content" })"
                title="Нажмите, чтобы увидеть все треки альбома">
                 Треки <span class="badge">@Model.TracksCount</span>
             </a>
-            
+
             @if (Model.Artist != null)
             {
                 <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
@@ -61,28 +64,20 @@
         </dl>
 
         <p>
-            @Html.Partial("EditAlbumButtonPartialView", Model.Id)
-            @Html.Partial("DeleteAlbumButtonPartialView", Model.Id)
-            
-            @if (Model.Price != null)
-            {
-                @Html.Partial("EditAlbumPriceButtonPartialView", Model.Id)
-            }
-            else
-            {
-                @Html.Partial("AddAlbumPriceButtonPartialView", Model.Id)
-            }
+            @Html.BtnEditAlbum(Model.Id)
+            @Html.BtnDeleteAlbum(Model.Id)
+            @(Model.Price != null ? Html.BtnEditAlbumPrice(Model.Id) : Html.BtnCreateAlbumPrice(Model.Id))
         </p>
     </div>
 </div>
 
 <p>
-    @Html.Partial("CreateAlbumButtonPartialView")
+    @Html.BtnCreateAlbum()
     
     @if (Model.Price != null)
     {
-        @Html.Partial("BuyAlbumButtonPartialView", Model.Id)
+        @Html.Partial("_BuyAlbumButton", Model.Id)
     }
-
+    
     @Html.ActionLink("Cписок альбомов", "List", "Album", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })
 </p>

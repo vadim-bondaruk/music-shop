@@ -4,6 +4,7 @@ namespace Shop.DAL.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Common.Models;
+    using Context;
     using Infrastructure.Enums;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Shop.DAL.Context.ShopContext>
@@ -20,6 +21,81 @@ namespace Shop.DAL.Migrations
             AddDefaultGenres(context);
             AddDefaultPriceLevels(context);
             AddDefaultUsers(context);
+
+#if DEBUG
+            AddDefaultArtistsAndTracks(context);
+#endif
+        }
+
+        private void AddDefaultAlbums(ShopContext context)
+        {
+            if (!context.Set<Album>().Any())
+            {
+                context.Set<Album>().AddOrUpdate(new[] {
+                    new Album { ArtistId = 1, Name = "Крыша дома твоего" }
+                });
+                context.SaveChanges();
+
+                context.Set<AlbumTrackRelation>().AddOrUpdate(new[]
+                {
+                    new AlbumTrackRelation { TrackId = 1, AlbumId = 1 },
+                    new AlbumTrackRelation { TrackId = 2, AlbumId = 1 }
+                });
+                context.SaveChanges();
+            }
+        }
+
+        private void AddDefaultTracks(ShopContext context)
+        {
+            if (!context.Set<Track>().Any())
+            {
+                context.Set<Track>().AddOrUpdate(new[] {
+                    new Track { ArtistId = 1, Name = "Море", GenreId = 9 },
+                    new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 9 }
+                });
+                context.SaveChanges();
+            }
+        }
+
+        private void AddDefaultTracksPrices(ShopContext context)
+        {
+            if (!context.Set<TrackPrice>().Any())
+            {
+                context.Set<TrackPrice>().AddOrUpdate(new[] {
+                    new TrackPrice { TrackId = 1, CurrencyId = 1, Price = 4.99m, PriceLevelId = 1 },
+                    new TrackPrice { TrackId = 2, CurrencyId = 1, Price = 4.98m, PriceLevelId = 1 }
+                });
+                context.SaveChanges();
+            }
+        }
+
+        private void AddDefaultAlbumsPrices(ShopContext context)
+        {
+            if (!context.Set<AlbumPrice>().Any())
+            {
+                context.Set<AlbumPrice>().AddOrUpdate(new[] {
+                    new AlbumPrice { AlbumId = 1, CurrencyId = 1, Price = 14.99m, PriceLevelId = 1 }
+                });
+                context.SaveChanges();
+            }
+        }
+
+        private void AddDefaultArtistsAndTracks(ShopContext context)
+        {
+            if (!context.Set<Artist>().Any())
+            {
+                context.Set<Artist>().AddOrUpdate(new[] {
+                    new Artist { Name = "Ю.Антонов" },
+                    new Artist { Name = "И.Кабзон" }
+                });
+
+                context.SaveChanges();
+
+                AddDefaultTracks(context);
+                AddDefaultAlbums(context);
+                AddDefaultTracksPrices(context);
+                AddDefaultAlbumsPrices(context);
+            }
         }
 
         private void AddDefaultCurrencies(Context.ShopContext context)

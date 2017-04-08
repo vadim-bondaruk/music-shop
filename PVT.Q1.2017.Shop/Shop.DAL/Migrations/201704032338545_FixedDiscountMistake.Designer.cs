@@ -7,13 +7,13 @@ namespace Shop.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ModifyUserRole : IMigrationMetadata
+    public sealed partial class FixedDiscountMistake : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ModifyUserRole));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FixedDiscountMistake));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704071955169_ModifyUserRole"; }
+            get { return "201704032338545_FixedDiscountMistake"; }
         }
         
         string IMigrationMetadata.Source

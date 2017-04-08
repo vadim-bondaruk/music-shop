@@ -94,7 +94,7 @@
         /// </returns>
         public virtual ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet, includes);
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(x => !x.IsDeleted), includes);
             return query.ToList();
         }
 
@@ -106,7 +106,7 @@
         /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
         public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter), includes);
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
             return query.ToList();
         }
 
@@ -123,7 +123,7 @@
                 return this._currentDbSet.FirstOrDefault(filter);
             }
 
-            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter), includes);
+            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
             return query.FirstOrDefault();
         }
 
@@ -140,10 +140,10 @@
         {
             if (filter == null)
             {
-                return this._currentDbSet.Count();
+                return this._currentDbSet.Count(x => !x.IsDeleted);
             }
 
-            return this._currentDbSet.Count(filter);
+            return this._currentDbSet.Where(x => !x.IsDeleted).Count(filter);
         }
 
         /// <summary>
@@ -317,6 +317,50 @@
             {
                 previousEntityState = EntityState.Detached;
             }
+        }
+
+        /// <summary>
+        /// Sets the current state to changed mode.
+        /// </summary>
+        protected void SetStateChanged()
+        {
+            _stateChanged = true;
+        }
+
+        /// <summary>
+        /// Marks the entity with the specified <paramref name="id"/> as deleted.
+        /// </summary>
+        /// <param name="id">
+        /// The entity id.
+        /// </param>
+        /// <remarks>
+        /// After calling this method the entity with the specified <paramref name="id"/> will not removed from Db. 
+        /// </remarks>
+        protected virtual void MarkAsDeleted(int id)
+        {
+            var entity = GetById(id);
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                _stateChanged = true;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the <paramref name="model"/> from the repository.
+        /// </summary>
+        /// <param name="model">
+        /// The model to remove.
+        /// </param>
+        protected virtual void MarkAsDeleted(TEntity model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            MarkAsDeleted(model.Id);
         }
     }
 }

@@ -13,6 +13,7 @@
     using ViewModels;
     using global::Shop.BLL.Utils;
     using System;
+    using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
@@ -131,7 +132,7 @@
                 }
             }
 
-            return this.RedirectToRoute(new { controller = "Home", action = "Index", area = string.Empty });
+            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
         }
 
         /// <summary>
@@ -221,12 +222,12 @@
         public ActionResult Confirm(string Email)
         {
             if (Email != null)
-            {
+                {
                 ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие " +
                     "инструкции по завершению регистрации";
-            }
+                }
             return this.View();
-        }
+            }
 
         /// <summary>
         /// GET: User/Account/ConfirmEmail
@@ -305,9 +306,9 @@
                 }
             }
             else
-            {
+        {
                 return this.View();
-            }
+        }
             return this.View();
         }
 
@@ -320,14 +321,9 @@
             return this.View();
         }
 
-        /// <summary>
-        /// GET: User/Account/Success
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>       
-        public ActionResult Success()
+        public ActionResult Error()
         {
-            return this.View();
+            return View();
         }
     }
 }

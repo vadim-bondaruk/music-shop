@@ -80,6 +80,16 @@
             return this.View(track);
         }
 
+        public ActionResult Create(int? artistid)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Deletes the track with the specified <paramref name="id"/> from the system.
         /// </summary>
