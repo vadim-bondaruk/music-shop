@@ -71,9 +71,10 @@ namespace PVT.Q1._2017.Shop.Tests
                 Price = priceTrack
             };
             //// Create empty album
-            var album1 = new Album();
+            var album1 = new AlbumDetailsViewModel();
             //// Create and set CartView model
-            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>(), Albums = new List<Album>() };
+            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>(),
+                Albums = new List<AlbumDetailsViewModel>() };
             myCartView.Tracks.Add(track1);
             myCartView.Albums.Add(album1);
             CartViewModelService.SetTotalPrice(myCartView, userCurrency);
@@ -102,20 +103,19 @@ namespace PVT.Q1._2017.Shop.Tests
                 Name = "SuperTrack2",
                 Price = priceTrack
             };
-            //// Set AlbumPrices
-            var priceAlbum = new AlbumPrice();
-            priceAlbum.Currency = new Currency { Code = userCurrency.Code, ShortName = userCurrency.ShortName };
-            priceAlbum.Price = 150;
-            var pricesAlbum = new List<AlbumPrice>();
-            pricesAlbum.Add(priceAlbum);
+            //// Set TrackPrices
+            var priceAlbum = new PriceViewModel();
+            priceAlbum.Currency = userCurrency;
+            priceAlbum.Amount = 150;
             //// Create album with price = 150
-            var album1 = new Album()
+            var album1 = new AlbumDetailsViewModel()
             {
                 Name = "MyAlbum",
-                AlbumPrices = pricesAlbum
+                Price = priceAlbum
             };
             //// Create and set CartView model
-            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>(), Albums = new List<Album>() };
+            var myCartView = new CartViewModel() { Tracks = new List<TrackDetailsViewModel>(),
+                Albums = new List<AlbumDetailsViewModel>() };
             myCartView.Tracks.Add(track1);
             myCartView.Tracks.Add(track2);
             myCartView.Albums.Add(album1);
