@@ -36,14 +36,14 @@
                 userCart.TotalPrice += anyTrack.Price.Amount;
             }
 
-            foreach (Album anyAlbum in userCart.Albums)
+            foreach (AlbumDetailsViewModel anyAlbum in userCart.Albums)
             {
-                if (anyAlbum.AlbumPrices == null)
+                if (anyAlbum.Price == null)
                 {
                     return false;
                 }
 
-                userCart.TotalPrice += anyAlbum.AlbumPrices.FirstOrDefault(a => a.Currency.Code == userCurrency.Code).Price;
+                userCart.TotalPrice += anyAlbum.Price.Amount;
             }
 
             return true;
@@ -64,7 +64,7 @@
 
             if (userCart.Albums == null)
             {
-                userCart.Albums = new List<Album>();
+                userCart.Albums = new List<AlbumDetailsViewModel>();
                 userCart.IsEmpty = true;
             }
 

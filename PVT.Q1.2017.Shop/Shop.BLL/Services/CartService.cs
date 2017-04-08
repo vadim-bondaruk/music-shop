@@ -270,11 +270,11 @@
         {
             var returnResult = new List<Track>();
             var resultViewTracks = new List<TrackDetailsViewModel>();
-            /// Вытягиваем Cart
+            /// Вытягиваем Cart из базы
             using (var cartRepository = Factory.GetCartRepository())
             {
                 var cart = cartRepository.GetByUserId(userId);
-                /// Вытягиваем Tracks
+                /// Вытягиваем Tracks из базы
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
                     returnResult.AddRange(cart.Tracks.Select(orderTrack => trackRepository.GetById(orderTrack.TrackId)));
@@ -282,6 +282,7 @@
                     var trackService = new TrackService(Factory);
                     foreach(Track anyTrack in returnResult)
                     {
+                        // TODO: Сделать передачу валюты пользователя в метод GetTrackDetails()
                         resultViewTracks.Add(trackService.GetTrackDetails(anyTrack.Id));
                     }
                 }
@@ -313,18 +314,28 @@
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Albums</returns>
-        public ICollection<Album> GetOrderAlbums(int userId)
+        public ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId)
         {
             var returnResult = new List<Album>();
+            var resultViewAlbums = new List<AlbumDetailsViewModel>();
+            /// Вытягиваем Cart из базы
             using (var cartRepository = Factory.GetCartRepository())
             {
                 var cart = cartRepository.GetByUserId(userId);
+                /// Вытягиваем Albums из базы
                 using (var albumsRepository = Factory.GetAlbumRepository())
                 {
                     returnResult.AddRange(cart.Albums.Select(o => albumsRepository.GetById(o.AlbumId)));
+                    /// Конвертируем Album in AlbumDetailsViewModel
+                    var albumService = new AlbumService(Factory);
+                    foreach (Album anyAlbum in returnResult)
+                    {
+                        // TODO: Сделать передачу валюты пользователя в метод GetAlbumDetails()
+                        resultViewAlbums.Add(albumService.GetAlbumDetails(anyAlbum.Id));
+                    }
                 }
             }
-            return returnResult;
+            return resultViewAlbums;
         }
     }
 }
