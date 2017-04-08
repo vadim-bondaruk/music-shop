@@ -1,15 +1,20 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
     using System.Web.Mvc;
-    using Helpers;
+    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
+    using Helpers;
+    using Shop.Controllers;
     using ViewModels;
 
     /// <summary>
     /// The album controller.
     /// </summary>
-    public class AlbumController : Controller
+    public class AlbumController : BaseController
     {
         /// <summary>
         /// The album  service.
@@ -37,34 +42,80 @@
         }
 
         /// <summary>
-        /// Displays the page for adding and editing albums.
+        /// Creates a new album in the system.
         /// </summary>
+        /// <param name="artistId">
+        /// The artist for which a new album will be created.
+        /// </param>
         /// <returns>
-        /// The view which generates page for adding and editing albums.
+        /// The view which renders a page for adding new albums.
         /// </returns>
-        public ActionResult AddOrUpdate(int? id)
+        public ActionResult Create(int? artistId)
+        {
+            if (artistId != null)
+            {
+                ArtistViewModel artist;
+                using (var repository = _repositoryFactory.GetArtistRepository())
+                {
+                    artist = ModelsMapper.GetArtistViewModel(repository.GetById(artistId.Value));
+                }
+                if (artist != null)
+                {
+                    var album = new AlbumManagementViewModel
+                    {
+                        Artist = artist
+                    };
+
+                    return this.View(album);
+                }
+            }
+
+            return this.View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Create(
+            [Bind(Include = "Id,Name,ReleaseDate,Artist.Id,Cover")]
+            AlbumManagementViewModel model)
+        {
+            if (model != null && ModelState.IsValid)
+            {
+                var album = ManagementMapper.GetAlbumModel(model);
+                using (var repository = this._repositoryFactory.GetAlbumRepository())
+                {
+                    if (CurrentUser != null && !CurrentUser.IsInRole(UserRoles.Admin.ToString()))
+                    {
+                        album.OwnerId = CurrentUser.Id;
+                    }
+
+                    repository.AddOrUpdate(album);
+                    repository.SaveChanges();
+                }
+
+                return this.RedirectToAction("Details", "Album", new { id = album.Id, area = "Content" });
+            }
+
+            return this.View(model);
+        }
+
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return this.View();
+                return RedirectToAction("List", "Album", new { area = "Content" });
             }
 
             var album = ManagementMapper.GetAlbumManagementViewModel(this._albumService.GetAlbumDetails(id.Value));
+            if (album == null)
+            {
+                return HttpNotFound("Альбок с указанным id не найден");
+            }
+
             return this.View(album);
         }
 
-        /// <summary>
-        /// Adds the new album in the system or edit existing album.
-        /// </summary>
-        /// <param name="album">
-        /// The album to add or edit.
-        /// </param>
-        /// <returns>
-        /// Redirects to view which displays album details in case if success;
-        /// otherwise returns the view whitch displays the currnet album with error.
-        /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate(
+        public ActionResult Edit(
             [Bind(Include = "Id,Name,ReleaseDate,Artist.Id,Cover")]
             AlbumManagementViewModel album)
         {
@@ -80,16 +131,6 @@
             }
 
             return this.View(album);
-        }
-
-        public ActionResult Create(int? artistid)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public ActionResult Edit(int? id)
-        {
-            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -123,7 +164,7 @@
         /// Redirects to the view which generates page with albums list.
         /// </returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete([Bind(Include = "Id")] AlbumManagementViewModel album)
+        public ActionResult Delete([Bind(Include = "Id,Name")] AlbumManagementViewModel album)
         {
             if (album != null && ModelState.IsValid)
             {
@@ -146,9 +187,64 @@
         /// <returns>
         /// The view for adding tracks to the album.
         /// </returns>
-        public ActionResult AddTracks(int id)
+        public ActionResult AddTracks(int? id)
         {
-            throw new System.NotImplementedException();
+            if (id == null)
+            {
+                return this.RedirectToAction("List", "Track", new { area = "Content" });
+            }
+
+            var currency = GetCurrentUserCurrency();
+            AlbumTracksListViewModel albumTracksViewModel;
+
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                albumTracksViewModel = _albumService.GetTracksToAdd(id.Value, currency.Code, priceLevel);
+            }
+            else
+            {
+                albumTracksViewModel = _albumService.GetTracksToAdd(id.Value);
+            }
+
+            if (albumTracksViewModel == null)
+            {
+                return HttpNotFound($"Альбом с id = { id.Value } не найден");
+            }
+
+            return this.View(albumTracksViewModel);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult AddTrack(int id, int trackId)
+        {
+            using (var repository = _repositoryFactory.GetAlbumTrackRelationRepository())
+            {
+                repository.AddOrUpdate(new AlbumTrackRelation
+                {
+                    AlbumId = id,
+                    TrackId = trackId
+                });
+                repository.SaveChanges();
+            }
+
+            return RedirectToAction("AddTracks", "Album", new { id = id, area = "Management" });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult RemoveTrack(int id, int trackId)
+        {
+            using (var repository = _repositoryFactory.GetAlbumTrackRelationRepository())
+            {
+                var albumTrackRelation = repository.FirstOrDefault(r => r.AlbumId == id && r.TrackId == trackId);
+                if (albumTrackRelation != null)
+                {
+                    repository.Delete(albumTrackRelation);
+                    repository.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("TracksList", "Album", new { id = id, area = "Content" });
         }
     }
 }

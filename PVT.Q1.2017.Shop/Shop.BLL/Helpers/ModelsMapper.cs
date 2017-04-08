@@ -267,7 +267,8 @@
                    .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Track, TrackViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.AlbumId, opt => opt.Ignore());
 
                 cfg.CreateMap<TrackPrice, PriceViewModel>()
                    .ForMember(dest => dest.Amount, opt => opt.ResolveUsing(p => p.Price))
@@ -304,7 +305,8 @@
 
                 cfg.CreateMap<Album, AlbumTracksListViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
-                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore())
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Artist, ArtistTracksListViewModel>()
                    .ForMember(dest => dest.Tracks, opt => opt.Ignore());
