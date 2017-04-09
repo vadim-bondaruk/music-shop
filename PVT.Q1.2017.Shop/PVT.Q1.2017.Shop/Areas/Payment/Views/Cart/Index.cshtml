@@ -14,8 +14,7 @@
 <body>
     @if (!Model.IsEmpty)
     {
-    <form action="/Cart/DeleteTrack" method="post">
-        @Html.Hidden("currentUserId", @Model.CurrentUserId)
+    <form action="../Payment/Cart/DeleteTrack" method="post">
         <br />
         <br />
         <b>Tracks</b>
@@ -47,8 +46,7 @@
         </table>
         </form>
         <br />
-    <form action="/Cart/DeleteAlbum" method="post">
-        @Html.Hidden("currentUserId", @Model.CurrentUserId)
+    <form action="../Payment/Cart/DeleteAlbum" method="post">
         <b>Albums</b>
         <br />
         <table border="1" cellpadding="3">
@@ -73,12 +71,11 @@
         </table>
     </form>
     <br />
-    <form action="../Payment/Paypal" method="post">
+    <form action="../Payment/Paypal/PaymentWithPaypal" method="post">
         Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
         <br />
         <br />
-        @Html.Hidden("currentUserId", @Model.CurrentUserId)
-        <button type="submit" name="TotalPrice" value=@Model.TotalPrice>Оплатить</button>
+        <button type="submit" name="cart" value=@Model>Оплатить</button>
     </form>
     }
     else
