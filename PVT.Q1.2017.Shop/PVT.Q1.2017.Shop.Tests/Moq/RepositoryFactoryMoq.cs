@@ -90,6 +90,11 @@
         {
             throw new NotImplementedException();
         }
+        
+        public IPaymentTransactionRepository GetPaymentTransactionRepository()
+        {
+            throw new NotImplementedException();
+        }
 
         public ICartRepository GetCartRepository()
         {
