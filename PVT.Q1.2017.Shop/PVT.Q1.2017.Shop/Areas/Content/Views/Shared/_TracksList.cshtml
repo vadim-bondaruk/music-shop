@@ -38,6 +38,18 @@
                 @Html.BtnDeleteTrack(track.Id)
                 @(track.Price != null ? Html.BtnEditTrackPrice(track.Id) : Html.BtnCreateTrackPrice(track.Id))
             </td>
+            @if (track.AlbumId > 0)
+            {
+                <td>
+                    @using (Html.BeginForm("RemoveTrack", "Album", new { area = "Management" }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@track.AlbumId" name="id" />
+                        <input type="hidden" value="@track.Id" name="trackId" />
+                        <input type="submit" value="Удалить из альбома" class = "btn btn-sm btn-primary" />
+                    }
+                </td>
+            }
             @if (track.Price != null)
             {
                 <td>

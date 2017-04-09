@@ -199,7 +199,12 @@
     <Content Include="Areas\Content\Views\Album\Details.cshtml" />
     <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_Rating.cshtml" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Views\Shared\_Rating.cshtml" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
@@ -207,12 +212,13 @@
     <Content Include="Areas\Content\Views\Shared\_BuyAlbumButton.cshtml" />
     <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
+    <Content Include="Areas\Management\Views\Album\AddTracks.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -265,6 +271,7 @@
     <Compile Include="Controllers\AdminTestController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackPriceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Areas\User\Controllers\AccountController.cs" />
     <Compile Include="Areas\User\Controllers\ManageController.cs" />
@@ -294,13 +301,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\AdminTest\UserTest.cshtml" />
     <Content Include="Views\AdminTest\AdminTest.cshtml" />
+    <Content Include="Views\Shared\_UserCurrency.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -310,13 +317,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Management\Views\Album\" />
     <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
-    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Currency\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
