@@ -21,6 +21,9 @@
         private readonly AlbumTrackRelationRepositoryMoq _albumTrackRelationRepositoryMoq = new AlbumTrackRelationRepositoryMoq();
         private readonly UserRepositoryMoq _userRepositoryMoq = new UserRepositoryMoq();
 
+        private readonly PaymentTransactionRepositoryMoq _paymentTransactionRepositoryMoq = new PaymentTransactionRepositoryMoq();
+        private readonly UserPaymentMethodRepositoryMoq _userPaymentMethodRepositoryMoq = new UserPaymentMethodRepositoryMoq();
+
         public IAlbumRepository GetAlbumRepository()
         {
             return _albumRepositoryMoq.Repository;
@@ -88,12 +91,12 @@
 
         public IUserPaymentMethodRepository GetUserPaymentMethodRepository()
         {
-            throw new NotImplementedException();
+            return _userPaymentMethodRepositoryMoq.Repository;
         }
         
         public IPaymentTransactionRepository GetPaymentTransactionRepository()
         {
-            throw new NotImplementedException();
+            return _paymentTransactionRepositoryMoq.Repository;
         }
 
         public ICartRepository GetCartRepository()
