@@ -1,4 +1,5 @@
-п»ї@model ICollection<Shop.Common.ViewModels.AlbumViewModel>
+@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model ICollection<Shop.Common.ViewModels.AlbumViewModel>
 
 <table class="table table-hover table-responsive">
     @foreach (var album in Model)
@@ -12,7 +13,7 @@
                 }, new
                 {
                     @class = "btn btn-link",
-                    title = "РќР°Р¶РјРёС‚Рµ, С‡С‚РѕР±С‹ РїРѕСЃРјРѕС‚СЂРµС‚СЊ РїРѕРґСЂРѕР±РЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°Р»СЊР±РѕРјРµ"
+                    title = "Нажмите, чтобы посмотреть подробную информацию об альбоме"
                 })
             </td>
             <td>
@@ -25,37 +26,28 @@
                     }, new
                     {
                         @class = "btn btn-link",
-                        title = "РќР°Р¶РјРёС‚Рµ, С‡С‚РѕР±С‹ РїРµСЂРµР№С‚Рё Рє РёРЅС„РѕСЂРјР°С†РёРё РѕР± РёСЃРїРѕР»РЅРёС‚РµР»Рµ"
+                        title = "Нажмите, чтобы перейти к информации об исполнителе"
                     })
                 }
             </td>
             <td>
                 <a class="btn btn-link" href="@Url.Action("TracksList", "Album", new { id = album.Id, area = "Content" })"
-                   title="РќР°Р¶РјРёС‚Рµ, С‡С‚РѕР±С‹ СѓРІРёРґРµС‚СЊ РІСЃРµ С‚СЂРµРєРё РёР· Р°Р»СЊР±РѕРјР°">
-                    РўСЂРµРєРё <span class="badge">@album.TracksCount</span>
+                   title="Нажмите, чтобы увидеть все треки из альбома">
+                    Треки <span class="badge">@album.TracksCount</span>
                 </a>
             </td>
             <td>
                 @Html.DisplayFor(m => album.Price)
             </td>
             <td>
-                @Html.Partial("EditAlbumButtonPartialView", album.Id)
-
-                @Html.Partial("DeleteAlbumButtonPartialView", album.Id)
-
-                @if (album.Price != null)
-                {
-                    @Html.Partial("EditAlbumPriceButtonPartialView", album.Id)
-                }
-                else
-                {
-                    @Html.Partial("AddAlbumPriceButtonPartialView", album.Id)
-                }
+                @Html.BtnEditAlbum(album.Id)
+                @Html.BtnDeleteAlbum(album.Id)
+                @(album.Price != null ? Html.BtnEditAlbumPrice(album.Id) : Html.BtnCreateAlbumPrice(album.Id))
             </td>
             @if (album.Price != null)
             {
                 <td>
-                    @Html.Partial("BuyAlbumButtonPartialView", album.Id)
+                    @Html.Partial("_BuyAlbumButton", album.Id)
                 </td>
             }
         </tr>

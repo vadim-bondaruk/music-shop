@@ -3,7 +3,6 @@
     using System;
     using System.Web;
     using FluentValidation.Attributes;
-    using global::Shop.Common.ViewModels;
     using Validators;
 
     /// <summary>
@@ -38,8 +37,13 @@
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        /// The Artist. Optional.
+        /// The artist id. Optional.
         /// </summary>
-        public ArtistViewModel Artist { get; set; }
+        public int? ArtistId { get; set; }
+
+        /// <summary>
+        /// The artist name. Optional.
+        /// </summary>
+        public string ArtistName { get; set; }
     }
 }

@@ -19,7 +19,7 @@
         /// </returns>
         public static byte[] ToBytes(this HttpPostedFileBase postedFile)
         {
-            if (postedFile.InputStream == null)
+            if (postedFile == null || postedFile.InputStream == null)
             {
                 return null;
             }

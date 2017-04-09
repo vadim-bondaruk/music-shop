@@ -29,5 +29,10 @@
         /// The track price.
         /// </summary>
         public PriceViewModel Price { get; set; }
+
+        /// <summary>
+        /// The track album id.
+        /// </summary>
+        public int AlbumId { get; set; }
     }
 }

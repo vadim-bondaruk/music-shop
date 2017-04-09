@@ -1,4 +1,5 @@
-﻿@model ICollection<Shop.Common.ViewModels.TrackViewModel>
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model ICollection<Shop.Common.ViewModels.TrackViewModel>
 
 <table class="table table-hover table-responsive">
     @foreach (var track in Model)
@@ -27,29 +28,32 @@
                 })
             </td>
             <td>
-                @Html.Partial("RatingPartialView", track.Rating)
+                @Html.Partial("_Rating", track.Rating)
             </td>
             <td>
                 @Html.DisplayFor(m => track.Price)
             </td>
             <td>
-                @Html.Partial("EditTrackButtonPartialView", track.Id)
-
-                @Html.Partial("DeleteTrackButtonPartialView", track.Id)
-                
-                @if (track.Price != null)
-                {
-                    @Html.Partial("EditTrackPriceButtonPartialView", track.Id)
-                }
-                else
-                {
-                    @Html.Partial("AddTrackPriceButtonPartialView", track.Id)
-                }
+                @Html.BtnEditTrack(track.Id)
+                @Html.BtnDeleteTrack(track.Id)
+                @(track.Price != null ? Html.BtnEditTrackPrice(track.Id) : Html.BtnCreateTrackPrice(track.Id))
             </td>
+            @if (track.AlbumId > 0)
+            {
+                <td>
+                    @using (Html.BeginForm("RemoveTrack", "Album", new { area = "Management" }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@track.AlbumId" name="id" />
+                        <input type="hidden" value="@track.Id" name="trackId" />
+                        <input type="submit" value="Удалить из альбома" class = "btn btn-sm btn-primary" />
+                    }
+                </td>
+            }
             @if (track.Price != null)
             {
                 <td>
-                    @Html.Partial("BuyTrackButtonPartialView", track.Id)
+                    @Html.Partial("_BuyTrackButton", track.Id)
                 </td>
             }
         </tr>
