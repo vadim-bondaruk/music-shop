@@ -270,7 +270,7 @@
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Tracks</returns>
-        public ICollection<TrackDetailsViewModel> GetOrderTracks(int userId)
+        public ICollection<TrackDetailsViewModel> GetOrderTracks(int userId, int? currencyCode = null)
         {
             var returnResult = new List<Track>();
             var resultViewTracks = new List<TrackDetailsViewModel>();
@@ -287,7 +287,7 @@
                     foreach(Track anyTrack in returnResult)
                     {
                         // TODO: Сделать передачу валюты пользователя в метод GetTrackDetails()
-                        resultViewTracks.Add(trackService.GetTrackDetails(anyTrack.Id));
+                        resultViewTracks.Add(trackService.GetTrackDetails(anyTrack.Id, currencyCode));
                     }
                 }
             }
@@ -318,7 +318,7 @@
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Albums</returns>
-        public ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId)
+        public ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId, int? currencyCode = null)
         {
             var returnResult = new List<Album>();
             var resultViewAlbums = new List<AlbumDetailsViewModel>();
@@ -335,7 +335,7 @@
                     foreach (Album anyAlbum in returnResult)
                     {
                         // TODO: Сделать передачу валюты пользователя в метод GetAlbumDetails()
-                        resultViewAlbums.Add(albumService.GetAlbumDetails(anyAlbum.Id));
+                        resultViewAlbums.Add(albumService.GetAlbumDetails(anyAlbum.Id, currencyCode));
                     }
                 }
             }

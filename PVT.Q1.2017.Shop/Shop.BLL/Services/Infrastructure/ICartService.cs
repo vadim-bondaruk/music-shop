@@ -78,7 +78,7 @@ namespace Shop.BLL.Services.Infrastructure
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Tracks</returns>
-        ICollection<TrackDetailsViewModel> GetOrderTracks(int userId);
+        ICollection<TrackDetailsViewModel> GetOrderTracks(int userId, int? currencyCode = null);
 
         /// <summary>
         /// Get chosen to purchase Album's IDs
@@ -92,7 +92,7 @@ namespace Shop.BLL.Services.Infrastructure
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Albums</returns>
-        ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId);
+        ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId, int? currencyCode = null);
 
         /// <summary>
         /// Accept Payment of All User's Cart

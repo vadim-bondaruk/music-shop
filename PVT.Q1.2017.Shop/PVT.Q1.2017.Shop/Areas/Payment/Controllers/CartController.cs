@@ -35,6 +35,11 @@
         /// </summary>
         private int _currentUserId;
 
+        /// <summary>
+        /// валюта текущего пользователя
+        /// </summary>
+        private CurrencyViewModel _userCurrency;
+
         /// <param name="cartService">
         /// Сервис для работы с данными в корзине
         /// </param>
@@ -65,16 +70,15 @@
                 _cartRepository.SaveChanges();
             }
             var cart = this._cartRepository.GetByUserId(_currentUserId);
-            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId);
-            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId);
+            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId, _userCurrency.Code);
+            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId, _userCurrency.Code);
             this._viewModel.CurrentUserId = _currentUserId;
 
             //// Установка текущей валюты пользователя и пересчёт суммы к оплате
             if (_currentUserId > 0)
             {
-                var userCurrency = this.GetCurrentUserCurrency();
-                this._viewModel.CurrencyShortName = userCurrency.ShortName;
-                CartViewModelService.SetTotalPrice(this._viewModel, userCurrency);
+                this._viewModel.CurrencyShortName = _userCurrency.ShortName;
+                CartViewModelService.SetTotalPrice(this._viewModel, _userCurrency);
             }
 
             return this.View(this._viewModel);
@@ -203,6 +207,13 @@
             catch
             {
                 _currentUserId = 0;
+            }
+
+            _userCurrency = this.GetCurrentUserCurrency();
+            if (_userCurrency == null)
+            {
+                _userCurrency = new CurrencyViewModel()
+                { FullName = "EURO", ShortName = "EUR", Code = 978 };
             }
         }
 
