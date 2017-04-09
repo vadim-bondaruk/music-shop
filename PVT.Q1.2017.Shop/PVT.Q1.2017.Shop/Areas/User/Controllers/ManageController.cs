@@ -233,5 +233,12 @@
 
             return this.View();
         }
+
+        public ActionResult UsersEdit(int id = 1)
+        {
+            var list = _userService.GetDataPerPage(id, 10);
+            var result = list.Select(u => UserMapper.GetUserEditView(u));
+            return View(result);
+        }
     }
 }

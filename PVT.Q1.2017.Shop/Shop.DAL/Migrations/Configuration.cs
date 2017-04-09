@@ -175,8 +175,10 @@ namespace Shop.DAL.Migrations
 
         private void AddDefaultUsers(Context.ShopContext context)
         {
-            context.Set<User>().AddOrUpdate(
-                new User[]{
+            if (!context.Set<User>().Any())
+            {
+                context.Set<User>().AddOrUpdate(
+                        new User[]{
 new User{FirstName = "Lucy", LastName = "Newman", Email = "Lucy.NEWM7632@mail2web.com", Login = "lunewman7617", Password = "9D40E02DF18047E7E2E939D41F115538618DABA3", Sex = "M", Country = "France", PhoneNumber = "(559) 302-5126", IsDeleted = false, UserRole = 0, ConfirmedEmail = true, BirthDate= DateTime.Parse("21.7.1997", new System.Globalization.CultureInfo("ru-ru", true))},
 new User{FirstName = "Amy", LastName = "Rivas", Email = "A.RIV3294@hushmail.com", Login = "amri6192", Password = "462156D34A58FEFFA2E7898D2E957F4829958CCF", Sex = "F", Country = "Germany", PhoneNumber = "(872) 543-1897", IsDeleted = false, UserRole = 0, ConfirmedEmail = true, BirthDate= DateTime.Parse("10.9.1972", new System.Globalization.CultureInfo("ru-ru", true))},
 new User{FirstName = "Randall", LastName = "Bridges", Email = "Randa.BRI6673@gmail.com", Login = "randallbri8552", Password = "D8685BAE08FAE44674398F1295E2B6DD1000ED2C", Sex = "F", Country = "France", PhoneNumber = "(229) 646-9680", IsDeleted = false, UserRole = 0, ConfirmedEmail = true, BirthDate= DateTime.Parse("14.10.1973", new System.Globalization.CultureInfo("ru-ru", true))},
@@ -279,9 +281,8 @@ new User{FirstName = "Jazlynn", LastName = "Albert", Email = "Jazly.ALBER7602@hu
 new User{FirstName = "Omar", LastName = "Carroll", Email = "Oma.CARROLL6931@mail2web.com", Login = "omarcarro5105", Password = "2C3EFA2549824661B1EC83B299275193C68D3ED7", Sex = "M", Country = "England", PhoneNumber = "(646) 476-8357", IsDeleted = false, UserRole = 0, ConfirmedEmail = true, BirthDate= DateTime.Parse("2.9.1997", new System.Globalization.CultureInfo("ru-ru", true))},
 new User{FirstName = "test_user", LastName = "test_user", Email = "test_user@gmail.com", Login = "test_user", Password = "DCF05BF73C524F3E32C08ACF55BE3EC4170FFED5", Sex = "M", Country = "Belarus", PhoneNumber = "(29) 227 02 83", IsDeleted = false, UserRole = UserRoles.User, ConfirmedEmail = true},
 new User{FirstName = "test_admin", LastName = "test_admin", Email = "test_admin@gmail.com", Login = "test_admin", Password = "AA7130C1A9D96562ADE20DC00E38360B1C402975", Sex = "M", Country = "Belarus", PhoneNumber = "(29) 227 02 83", IsDeleted = false, UserRole = UserRoles.Admin, ConfirmedEmail = true}
-}
-
-            );
+        }); 
+            }
 
             context.SaveChanges();
         }

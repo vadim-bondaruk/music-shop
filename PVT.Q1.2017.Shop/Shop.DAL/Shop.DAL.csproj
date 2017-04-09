@@ -114,9 +114,9 @@
     <Compile Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.Designer.cs">
       <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704081202304_UserRoleFixing.cs" />
-    <Compile Include="Migrations\201704081202304_UserRoleFixing.Designer.cs">
-      <DependentUpon>201704081202304_UserRoleFixing.cs</DependentUpon>
+    <Compile Include="Migrations\201704091405491_ChangeUserModel.cs" />
+    <Compile Include="Migrations\201704091405491_ChangeUserModel.Designer.cs">
+      <DependentUpon>201704091405491_ChangeUserModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -222,8 +222,8 @@
     <EmbeddedResource Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.resx">
       <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704081202304_UserRoleFixing.resx">
-      <DependentUpon>201704081202304_UserRoleFixing.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704091405491_ChangeUserModel.resx">
+      <DependentUpon>201704091405491_ChangeUserModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -1,7 +1,8 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Shop.Common.Models;
-    
+    using System.Collections.Generic;
+
     /// <summary>
     /// The user service
     /// </summary>
@@ -81,5 +82,13 @@
         /// <param name="id"></param>
         /// <returns></returns>
         bool SoftDelete(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        int GetUsersCount();
+
+        ICollection<User> GetDataPerPage(int pageNumber, int count);
     }
 }

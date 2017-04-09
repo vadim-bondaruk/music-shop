@@ -13,14 +13,14 @@
         /// <summary>
         /// 
         /// </summary>
-        private static readonly IMapper ManagementModelsMapper;
+        private static readonly IMapper UserModelsMapper;
 
         /// <summary>
         /// Initializes static members of the <see cref="UserMapper"/> class.
         /// </summary>
         static UserMapper()
         {
-            ManagementModelsMapper = CreateMapper();
+            UserModelsMapper = CreateMapper();
         }
 
         /// <summary>
@@ -30,9 +30,13 @@
         /// <returns></returns>
         public static User GetUserModel(UserViewModel userView)
         {
-            return ManagementModelsMapper.Map<User>(userView);
+            return UserModelsMapper.Map<User>(userView);
         }
 
+        public static UserEditView GetUserEditView(User user)
+        {
+            return UserModelsMapper.Map<UserEditView>(user);
+        }
 
         /// <summary>
         /// Configures and returns a new instance of the mapper for models which have a list of other models.
@@ -42,7 +46,7 @@
         /// </returns>
         private static IMapper CreateMapper()
         {
-            MapperConfiguration managementConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<UserViewModel, User>());
+            MapperConfiguration managementConfiguration = new MapperConfiguration(cfg => { cfg.CreateMap<UserViewModel, User>(); cfg.CreateMap<User, UserEditView>(); });
   
             return managementConfiguration.CreateMapper();
         }

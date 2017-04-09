@@ -9,6 +9,9 @@
     using Shop.Infrastructure.Enums;
     using Utils;
     using Common.Validators.Infrastructure;
+    using System.Linq;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// The user service
@@ -367,6 +370,14 @@
             return deleted;
         }
 
+        public ICollection<User> GetDataPerPage(int pageNumber = 1, int count = 10)
+        {
+            return Factory.GetUserRepository().GetAll().Skip((pageNumber - 1) * count).Take(count).ToList();
+        }
+        public int GetUsersCount()
+        {
+            return Factory.GetUserRepository().Count();
+        }
         /// <summary>
         /// Get user by login or email
         /// </summary>
