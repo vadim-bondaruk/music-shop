@@ -202,14 +202,15 @@
         {
             try
             {
+                _userCurrency = this.GetCurrentUserCurrency();
                 _currentUserId = CurrentUser.Id;
             }
             catch
             {
                 _currentUserId = 0;
+                _userCurrency = null;
             }
 
-            _userCurrency = this.GetCurrentUserCurrency();
             if (_userCurrency == null)
             {
                 _userCurrency = new CurrencyViewModel()
