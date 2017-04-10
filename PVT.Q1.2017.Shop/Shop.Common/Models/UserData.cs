@@ -59,11 +59,11 @@
         /// <summary>
         /// Purchased Tracks
         /// </summary>
-        public virtual ICollection<PurchasedTrack> Tracks { get; set; }
+        public virtual ICollection<PurchasedTrack> PurchasedTracks { get; set; }
 
         /// <summary>
         /// Purchased Albums
         /// </summary>
-        public virtual ICollection<PurchasedAlbum> Albums { get; set; }
+        public virtual ICollection<PurchasedAlbum> PurchasedAlbums { get; set; }
     }
 }

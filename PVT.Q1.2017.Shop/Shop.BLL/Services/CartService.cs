@@ -54,12 +54,12 @@
                     var orderTrack = new OrderTrack() {CartId = cart.Id, Track = track, TrackId = trackId};
                     cart.Tracks.Add(orderTrack);
 
-                    if (track.Carts == null)
+                    if (track.OrderTracks == null)
                     {
-                        track.Carts = new List<OrderTrack>();
+                        track.OrderTracks = new List<OrderTrack>();
                     }
 
-                    track.Carts.Add(orderTrack);
+                    track.OrderTracks.Add(orderTrack);
                     trackRepository.AddOrUpdate(track);
                 }
 
@@ -105,12 +105,12 @@
 
                     if (cart.Albums != null)
                     {
-                        var orderTrack = track.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                        var orderTrack = track.OrderTracks.FirstOrDefault(c => c.CartId == cart.Id);
                         while (orderTrack != null)
                         {
-                            track.Carts.Remove(orderTrack);
+                            track.OrderTracks.Remove(orderTrack);
                             cart.Tracks.Remove(orderTrack);
-                            orderTrack = track.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                            orderTrack = track.OrderTracks.FirstOrDefault(c => c.CartId == cart.Id);
                         }
                     }
 
@@ -166,12 +166,12 @@
                     var orderAlbum = new OrderAlbum() { CartId = cart.Id, Album = album, AlbumId = albumId };
                     cart.Albums.Add(orderAlbum);
                     
-                    if (album.Carts == null)
+                    if (album.OrderAlbums == null)
                     {
-                        album.Carts = new List<OrderAlbum>();
+                        album.OrderAlbums = new List<OrderAlbum>();
                     }
 
-                    album.Carts.Add(orderAlbum);
+                    album.OrderAlbums.Add(orderAlbum);
                     albumRepository.AddOrUpdate(album);
                 }
                 
@@ -217,12 +217,12 @@
 
                     if (cart.Albums != null)
                     {
-                        var orderAlbum = album.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                        var orderAlbum = album.OrderAlbums.FirstOrDefault(c => c.CartId == cart.Id);
                         while (orderAlbum != null)
                         {
-                            album.Carts.Remove(orderAlbum);
+                            album.OrderAlbums.Remove(orderAlbum);
                             cart.Albums.Remove(orderAlbum);
-                            orderAlbum = album.Carts.FirstOrDefault(c => c.CartId == cart.Id);
+                            orderAlbum = album.OrderAlbums.FirstOrDefault(c => c.CartId == cart.Id);
                         }
                     }
 
@@ -416,18 +416,18 @@
                     {
                         UserId = userId, User = user, TrackId = trackId, Track = track
                     };
-                    if (track.Users == null)
+                    if (track.PurchasedTracks == null)
                     {
-                        track.Users = new List<PurchasedTrack>();
+                        track.PurchasedTracks = new List<PurchasedTrack>();
                     }
 
-                    track.Users.Add(purchasedTrack);
-                    if (user.Tracks == null)
+                    track.PurchasedTracks.Add(purchasedTrack);
+                    if (user.PurchasedTracks == null)
                     {
-                        user.Tracks = new List<PurchasedTrack>();
+                        user.PurchasedTracks = new List<PurchasedTrack>();
                     }
 
-                    user.Tracks.Add(purchasedTrack);
+                    user.PurchasedTracks.Add(purchasedTrack);
                     userDataRepository.AddOrUpdate(user);
                 }
                 trackRepository.AddOrUpdate(track);
@@ -457,18 +457,18 @@
                     {
                         UserId = userId, User = user, AlbumId = albumId, Album = album
                     };
-                    if (album.Users == null)
+                    if (album.PurchasedAlbums == null)
                     {
-                        album.Users = new List<PurchasedAlbum>();
+                        album.PurchasedAlbums = new List<PurchasedAlbum>();
                     }
 
-                    album.Users.Add(purchasedAlbum);
-                    if (user.Albums == null)
+                    album.PurchasedAlbums.Add(purchasedAlbum);
+                    if (user.PurchasedAlbums == null)
                     {
-                        user.Albums = new List<PurchasedAlbum>();
+                        user.PurchasedAlbums = new List<PurchasedAlbum>();
                     }
 
-                    user.Albums.Add(purchasedAlbum);
+                    user.PurchasedAlbums.Add(purchasedAlbum);
                     userDataRepository.AddOrUpdate(user);
                 }
                 albumRepository.AddOrUpdate(album);
