@@ -323,6 +323,19 @@
             return this.View();
         }
 
+        /// <summary>
+        /// GET: User/Account/Success
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Success()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Error()
         {
             return View();
