@@ -96,16 +96,17 @@
                 cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>();
 
                 cfg.CreateMap<TrackManagementViewModel, Track>()
-                                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                                            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                                            .ForMember(dest => dest.TrackFile, opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
-                                            .ForMember(dest => dest.TrackSample, opt => opt.ResolveUsing(src => src.PostedTrackSample.ToBytes()))
-                                            .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.PostedImage.ToBytes()));
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
+                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
+                   .ForMember(dest => dest.TrackFile, opt => opt.ResolveUsing(src => src.PostedTrackFile.ToBytes()))
+                   .ForMember(dest => dest.TrackSample, opt => opt.ResolveUsing(src => src.PostedTrackSample.ToBytes()))
+                   .ForMember(dest => dest.Image, opt => opt.ResolveUsing(src => src.PostedImage.ToBytes()));
 
-                cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
+                cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>()
+                   .ForMember(dest => dest.ArtistId, opt => opt.MapFrom(src => src.Artist.Id))
+                   .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.Name));
 
                 cfg.CreateMap<AlbumManagementViewModel, Album>()
-                                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
                                             .ForMember(dest => dest.Cover, opt => opt.ResolveUsing(src => src.PostedCover.ToBytes()));
             });
 
