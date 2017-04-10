@@ -50,6 +50,8 @@
             Bind<ICartService>().To<CartService>();
             Bind<IAuthModule>().To<AuthModule>();
             Bind<IUserService>().To<UserService>();
+
+            Bind<ISettingService>().To<SettingService>();
         }
     }
 }
