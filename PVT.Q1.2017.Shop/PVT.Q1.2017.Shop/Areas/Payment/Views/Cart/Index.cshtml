@@ -85,5 +85,24 @@
             <b>Ваша корзина пуста.</b>
         </p>
     }
+    <br />
+    <br />
+    <b>Buttons for tests</b>
+    <br />
+    <br />
+    <form action="../Payment/Cart/AddTrack" method="post">
+        @Html.Hidden("trackId", 1)
+        <button type="submit">Добавить track 1</button>
+    </form>
+    <br />
+    <form action="../Payment/Cart/AddTrack" method="post">
+        @Html.Hidden("trackId", 2)
+        <button type="submit">Добавить track 2</button>
+    </form>
+    <br />
+    <form action="../Payment/Cart/AddAlbum" method="post">
+        @Html.Hidden("albumId", 1)
+        <button type="submit">Добавить алюбом Ю. Антонова</button>
+    </form>
 </body>
 </html>
