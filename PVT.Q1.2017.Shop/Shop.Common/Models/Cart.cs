@@ -10,15 +10,15 @@
     {
         public Cart()
         {
-            this.Tracks = new List<OrderTrack>();
-            this.Albums = new List<OrderAlbum>();
+            this.OrderTracks = new List<OrderTrack>();
+            this.OrderAlbums = new List<OrderAlbum>();
         }
 
         public Cart(int userId)
         {
             this.UserId = userId;
-            this.Tracks = new List<OrderTrack>();
-            this.Albums = new List<OrderAlbum>();
+            this.OrderTracks = new List<OrderTrack>();
+            this.OrderAlbums = new List<OrderAlbum>();
         }
         /// <summary>
         /// Current User
@@ -28,11 +28,11 @@
         /// <summary>
         /// Collection of tracks for purchase
         /// </summary>
-        public virtual ICollection<OrderTrack> Tracks { get; set; }
+        public virtual ICollection<OrderTrack> OrderTracks { get; set; }
 
         /// <summary>
         /// Collection of albums for purchase
         /// </summary>
-        public virtual ICollection<OrderAlbum> Albums { get; set; }
+        public virtual ICollection<OrderAlbum> OrderAlbums { get; set; }
     }
 }

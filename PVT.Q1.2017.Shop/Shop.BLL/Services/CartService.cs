@@ -46,13 +46,13 @@
                         throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
                     }
 
-                    if (cart.Tracks == null)
+                    if (cart.OrderTracks == null)
                     {
-                        cart.Tracks = new List<OrderTrack>();
+                        cart.OrderTracks = new List<OrderTrack>();
                     }
 
                     var orderTrack = new OrderTrack() {CartId = cart.Id, Track = track, TrackId = trackId};
-                    cart.Tracks.Add(orderTrack);
+                    cart.OrderTracks.Add(orderTrack);
 
                     if (track.OrderTracks == null)
                     {
@@ -103,13 +103,13 @@
                         throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
                     }
 
-                    if (cart.Albums != null)
+                    if (cart.OrderAlbums != null)
                     {
                         var orderTrack = track.OrderTracks.FirstOrDefault(c => c.CartId == cart.Id);
                         while (orderTrack != null)
                         {
                             track.OrderTracks.Remove(orderTrack);
-                            cart.Tracks.Remove(orderTrack);
+                            cart.OrderTracks.Remove(orderTrack);
                             orderTrack = track.OrderTracks.FirstOrDefault(c => c.CartId == cart.Id);
                         }
                     }
@@ -158,13 +158,13 @@
                         throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
                     }
 
-                    if (cart.Albums == null)
+                    if (cart.OrderAlbums == null)
                     {
-                        cart.Albums = new List<OrderAlbum>();
+                        cart.OrderAlbums = new List<OrderAlbum>();
                     }
 
                     var orderAlbum = new OrderAlbum() { CartId = cart.Id, Album = album, AlbumId = albumId };
-                    cart.Albums.Add(orderAlbum);
+                    cart.OrderAlbums.Add(orderAlbum);
                     
                     if (album.OrderAlbums == null)
                     {
@@ -215,13 +215,13 @@
                         throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
                     }
 
-                    if (cart.Albums != null)
+                    if (cart.OrderAlbums != null)
                     {
                         var orderAlbum = album.OrderAlbums.FirstOrDefault(c => c.CartId == cart.Id);
                         while (orderAlbum != null)
                         {
                             album.OrderAlbums.Remove(orderAlbum);
-                            cart.Albums.Remove(orderAlbum);
+                            cart.OrderAlbums.Remove(orderAlbum);
                             orderAlbum = album.OrderAlbums.FirstOrDefault(c => c.CartId == cart.Id);
                         }
                     }
@@ -257,7 +257,7 @@
             using (var cartRepository = Factory.GetCartRepository())
             {
                 var cart = cartRepository.GetByUserId(userId);
-                foreach (var orderTrack in cart.Tracks)
+                foreach (var orderTrack in cart.OrderTracks)
                 {
                     returnResult.Push(orderTrack.TrackId);
                 }
@@ -281,7 +281,7 @@
                 /// Вытягиваем Tracks из базы
                 using (var trackRepository = Factory.GetTrackRepository())
                 {
-                    returnResult.AddRange(cart.Tracks.Select(orderTrack => trackRepository.GetById(orderTrack.TrackId)));
+                    returnResult.AddRange(cart.OrderTracks.Select(orderTrack => trackRepository.GetById(orderTrack.TrackId)));
                     /// Конвертируем Tracks in TracksDetailsViewModel
                     var trackService = new TrackService(Factory);
                     foreach(Track anyTrack in returnResult)
@@ -305,7 +305,7 @@
             using (var cartRepository = Factory.GetCartRepository())
             {
                 var cart = cartRepository.GetByUserId(userId);
-                foreach (var orderAlbum in cart.Albums)
+                foreach (var orderAlbum in cart.OrderAlbums)
                 {
                     returnResult.Push(orderAlbum.AlbumId);
                 }
@@ -329,7 +329,7 @@
                 /// Вытягиваем Albums из базы
                 using (var albumsRepository = Factory.GetAlbumRepository())
                 {
-                    returnResult.AddRange(cart.Albums.Select(o => albumsRepository.GetById(o.AlbumId)));
+                    returnResult.AddRange(cart.OrderAlbums.Select(o => albumsRepository.GetById(o.AlbumId)));
                     /// Конвертируем Album in AlbumDetailsViewModel
                     var albumService = new AlbumService(Factory);
                     foreach (Album anyAlbum in returnResult)
