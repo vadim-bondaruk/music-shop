@@ -5,9 +5,6 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
-    using FluentValidation.Attributes;
-    using global::Shop.Common.ViewModels;
-    using Validators;
 
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
@@ -29,7 +26,12 @@
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
-        /// Gets or sets the genre.
+        /// Gets or sets the file name.
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the genre.
         /// </summary>
         public Genre Genre { get; set; }
 
