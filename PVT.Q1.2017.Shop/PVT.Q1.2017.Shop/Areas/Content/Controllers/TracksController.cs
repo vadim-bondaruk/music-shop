@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
+    using System;
     using System.IO;
     using System.Net;
     using System.Web.Mvc;
@@ -72,7 +73,7 @@
         /// <summary>
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
@@ -97,14 +98,55 @@
         /// <summary>
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
-        public FileResult Stream(int id)
+        public ActionResult GetAudio(int id)
         {
-            var trackFile = this.trackRepository.GetById(id).TrackFile;
-            return this.File(trackFile, "audio/mpeg", "test.mp3");
+            var audioBytes = this.trackRepository.GetById(id).TrackFile;
+            return this.File(audioBytes, "audio/mp3");
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public FileStreamResult GetTrackAsStream(int id)
+        {
+            var track = this.trackRepository.GetById(id, p => p.Artist);
+            var song = track.TrackFile;
+            long fSize = song.Length;
+            long startbyte = 0;
+            var endbyte = fSize - 1;
+            var statusCode = 200;
+            if (this.Request.Headers["Range"] != null)
+            {
+                var range = this.Request.Headers["Range"].Split('=', '-');
+                startbyte = Convert.ToInt64(range[1]);
+                if (range.Length > 2 && range[2] != string.Empty)
+                {
+                    endbyte = Convert.ToInt64(range[2]);
+                }
+
+                if (startbyte != 0 || endbyte != fSize - 1 || range.Length > 2 && range[2] == string.Empty)
+                {
+                    statusCode = 206;
+                }
+            }
+
+            var desSize = endbyte - startbyte + 1;
+            this.Response.StatusCode = statusCode;
+            this.Response.AddHeader("TrackArtist", track.Artist.Name);
+            this.Response.AddHeader("TrackTitle", track.Name);
+            this.Response.AddHeader("Content-Accept", this.Response.ContentType);
+            this.Response.AddHeader("Content-Length", desSize.ToString());
+            this.Response.AddHeader("Content-Range", string.Format("bytes {0}-{1}/{2}", startbyte, endbyte, fSize));
+            var stream = new MemoryStream(song, (int)startbyte, (int)desSize);
+            return new FileStreamResult(stream, this.Response.ContentType);
         }
 
         /// <summary>
@@ -117,6 +159,29 @@
         {
             var tracks = this.TrackService.GetTrackDetailsViewModels();
             return this.View(tracks);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public ActionResult TrackList(int id)
+        {
+            var tracks = this.TrackService.GetArtistTracksList(id);
+            return this.View("List", tracks);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public FileResult Stream(int id)
+        {
+            var trackFile = this.trackRepository.GetById(id).TrackFile;
+            return this.File(trackFile, "audio/mpeg", "test.mp3");
         }
     }
 }
