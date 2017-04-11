@@ -25,6 +25,20 @@
         TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null);
 
         /// <summary>
+        ///     Returns all registered tracks using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="currencyCode">
+        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        ///     The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <returns>
+        ///     All registered tracks.
+        /// </returns>
+        ICollection<TrackDetailsViewModel> GetArtistTracksList(int id);
+
+        /// <summary>
         ///     Returns the track details using the specified currency and price level for track price.
         /// </summary>
         /// <param name="currencyCode">
@@ -42,26 +56,24 @@
         /// <summary>
         /// </summary>
         /// <param name="currencyCode">
-        /// The currency code.
+        ///     The currency code.
         /// </param>
         /// <param name="priceLevelId">
-        /// The price level id.
+        ///     The price level id.
         /// </param>
         /// <returns>
         /// </returns>
         ICollection<TrackDetailsViewModel> GetTrackDetailsViewModels(int? currencyCode = null, int? priceLevelId = null);
 
         /// <summary>
-        ///     Returns all registered tracks using the specified currency and price level for track price.
         /// </summary>
         /// <param name="currencyCode">
-        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// The currency code.
         /// </param>
         /// <param name="priceLevel">
-        ///     The price level for track price. If it doesn't specified than default price level is used.
+        /// The price level.
         /// </param>
         /// <returns>
-        ///     All registered tracks.
         /// </returns>
         ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null);
 
