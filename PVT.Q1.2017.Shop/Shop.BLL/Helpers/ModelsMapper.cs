@@ -294,9 +294,9 @@
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
                             .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
-                cfg.CreateMap<Track, TrackViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
-                   .ForMember(dest => dest.AlbumId, opt => opt.Ignore());
+                        cfg.CreateMap<Track, TrackViewModel>()
+                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                            .ForMember(dest => dest.AlbumId, opt => opt.Ignore());
 
                         cfg.CreateMap<TrackPrice, PriceViewModel>()
                             .ForMember(dest => dest.Amount, opt => opt.ResolveUsing(p => p.Price))
@@ -306,11 +306,11 @@
                             .ForMember(dest => dest.Amount, opt => opt.ResolveUsing(p => p.Price))
                             .ForMember(dest => dest.Currency, opt => opt.MapFrom(p => p.Currency));
 
-                cfg.CreateMap<Feedback, FeedbackViewModel>()
-                   .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
+                        cfg.CreateMap<Feedback, FeedbackViewModel>()
+                            .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
 
-                cfg.CreateMap<Setting, SettingViewModel>();
-            });
+                        cfg.CreateMap<Setting, SettingViewModel>();
+                    });
 
             return commonMapperConfiguration.CreateMapper();
         }
@@ -342,17 +342,16 @@
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
                             .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
-                cfg.CreateMap<Album, AlbumTracksListViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
-                   .ForMember(dest => dest.Tracks, opt => opt.Ignore())
-                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
+                        cfg.CreateMap<Album, AlbumTracksListViewModel>()
+                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                            .ForMember(dest => dest.Tracks, opt => opt.Ignore())
+                            .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
-                cfg.CreateMap<Artist, ArtistTracksListViewModel>()
-                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
+                        cfg.CreateMap<Artist, ArtistTracksListViewModel>()
+                            .ForMember(dest => dest.Tracks, opt => opt.Ignore());
 
-                cfg.CreateMap<Artist, ArtistAlbumsListViewModel>()
-                   .ForMember(dest => dest.Albums, opt => opt.Ignore());
-            });
+                        cfg.CreateMap<Artist, ArtistAlbumsListViewModel>()
+                            .ForMember(dest => dest.Albums, opt => opt.Ignore());
                         cfg.CreateMap<Track, TrackDetailsViewModel>()
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
                             .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre))

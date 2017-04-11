@@ -80,54 +80,7 @@
         }
 
         /// <summary>
-        /// Returns all tracks whitch could be added to the specified album using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="albumId">
-        /// The album id.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code for album price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for album price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null)
-        {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
-
-            using (var repository = Factory.GetAlbumTrackRelationRepository())
-            {
-                albumTracksListViewModel.TracksCount = repository.Count(r => r.AlbumId == albumId);
-            }
-
-            ICollection<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
-            {
-                if (albumTracksListViewModel.Artist == null)
-                {
-                    tracks = repository.GetAll(
-                                               t => (t.OwnerId == null || t.OwnerId == albumTracksListViewModel.OwnerId) &&
-                                                    (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
-                                               t => t.Artist);
-                }
-                else
-                {
-                    tracks = repository.GetAll(
-                                               t => t.ArtistId == albumTracksListViewModel.Artist.Id &&
-                                                    (t.OwnerId == null || t.OwnerId == albumTracksListViewModel.OwnerId) &&
-                                                    (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
-                                               t => t.Artist);
-                }
-            }
-
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
-            return albumTracksListViewModel;
-        }
-
-        /// <summary>
-        /// Returns all registered tracks for the specified album using the specified currency and price level for track price.
+        ///     Returns all registered albums using the specified currency and price level for album price.
         /// </summary>
         /// <param name="currencyCode">
         ///     The currency code for album price. If it doesn't specified than default currency is used.
@@ -146,13 +99,7 @@
                 albums = repository.GetAll(a => a.Artist);
             }
 
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
-            foreach (var trackViewModel in albumTracksListViewModel.Tracks)
-            {
-                trackViewModel.AlbumId = albumId;
-            }
-
-            return albumTracksListViewModel;
+            return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel);
         }
 
         /// <summary>
@@ -170,16 +117,6 @@
             }
 
             return albums.Select(ModelsMapper.GetAlbumViewModel).ToList();
-            albumTracksListViewModel.Tracks = albumTrackRelations.Select(r => ModelsMapper.GetTrackViewModel(r.Track)).ToList();
-            foreach (var trackViewModel in albumTracksListViewModel.Tracks)
-            {
-                if (trackViewModel != null)
-                {
-                    trackViewModel.AlbumId = albumId;
-                }
-            }
-
-            return albumTracksListViewModel;
         }
 
         /// <summary>
@@ -209,7 +146,7 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public IEnumerable<AlbumDetailsViewModel> GetAllViewModels()
+        public ICollection<AlbumDetailsViewModel> GetAllViewModels()
         {
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
@@ -218,13 +155,6 @@
             }
 
             return albums.Select(ModelsMapper.GetAlbumDetailsViewModel).ToList();
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
-            foreach (var trackViewModel in albumTracksListViewModel.Tracks)
-            {
-                trackViewModel.AlbumId = albumId;
-            }
-
-            return albumTracksListViewModel;
         }
 
         /// <summary>
@@ -258,6 +188,67 @@
                 tracks,
                 currencyCode,
                 priceLevel);
+            foreach (var trackViewModel in albumTracksListViewModel.Tracks)
+            {
+                trackViewModel.AlbumId = albumId;
+            }
+
+            return albumTracksListViewModel;
+        }
+
+        /// <summary>
+        ///     Returns all tracks whitch could be added to the specified album using the specified currency and price level for
+        ///     track price.
+        /// </summary>
+        /// <param name="albumId">
+        ///     The album id.
+        /// </param>
+        /// <param name="currencyCode">
+        ///     The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        ///     The price level for album price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null)
+        {
+            var albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+
+            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            {
+                albumTracksListViewModel.TracksCount = repository.Count(r => r.AlbumId == albumId);
+            }
+
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetTrackRepository())
+            {
+                if (albumTracksListViewModel.Artist == null)
+                {
+                    tracks =
+                        repository.GetAll(
+                            t =>
+                                (t.OwnerId == null || t.OwnerId == albumTracksListViewModel.OwnerId)
+                                && (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
+                            t => t.Artist);
+                }
+                else
+                {
+                    tracks =
+                        repository.GetAll(
+                            t =>
+                                t.ArtistId == albumTracksListViewModel.Artist.Id
+                                && (t.OwnerId == null || t.OwnerId == albumTracksListViewModel.OwnerId)
+                                && (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
+                            t => t.Artist);
+                }
+            }
+
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(
+                this.Factory,
+                tracks,
+                currencyCode,
+                priceLevel);
             return albumTracksListViewModel;
         }
 
@@ -282,6 +273,14 @@
 
             albumTracksListViewModel.Tracks =
                 albumTrackRelations.Select(r => ModelsMapper.GetTrackViewModel(r.Track)).ToList();
+            foreach (var trackViewModel in albumTracksListViewModel.Tracks)
+            {
+                if (trackViewModel != null)
+                {
+                    trackViewModel.AlbumId = albumId;
+                }
+            }
+
             return albumTracksListViewModel;
         }
 
@@ -320,6 +319,11 @@
                 tracks,
                 currencyCode,
                 priceLevel);
+            foreach (var trackViewModel in albumTracksListViewModel.Tracks)
+            {
+                trackViewModel.AlbumId = albumId;
+            }
+
             return albumTracksListViewModel;
         }
 
