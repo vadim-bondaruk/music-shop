@@ -12,9 +12,9 @@
 </div>
 
 <div style="margin: 15px 38px; text-align: right">
-    <div class="btn-group" style="margin: 0; width: initial">
-        @Html.ActionLink("Слушать", "#", new { id = Model.Id, area = "Content" }, new { @class = "btn btn-primary", id = "btn-listen" })
-        @Html.ActionLink("Правка", "Edit", new { id = Model.Id, area = "Management" }, new { @class = "btn btn-primary", id = "btn-edit" })
+    <div style="margin: 0; width: initial">
+        <a class="btn btn-primary" href="@Url.Action("TrackList", "Tracks", new { Area = "Content", id = Model.Id })"><span class="glyphicon glyphicon-list-alt"> Слушать</span></a>
+        <a class="btn btn-primary" href="@Url.Action("Edit", "Artists", new { Area = "Management", id = Model.Id })"><span class="glyphicon glyphicon-pencil"> Правка</span></a>
     </div>
 </div>
 

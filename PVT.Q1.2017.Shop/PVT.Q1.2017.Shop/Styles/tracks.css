@@ -104,7 +104,7 @@ body {
 
 ul { list-style-type: none; }
 
-input:hover, textarea:hover {
+input:hover, textarea:hover, select:hover {
     transform: scale(1.005);
     transition: all .2s ease-in-out;
     -webkit-transition: all 0.2s ease-in-out;
@@ -131,16 +131,22 @@ img {
     width: 100%;
 }
 
-.new-artist-items > li {
-    width: 800px;
-    color: red;
+.artist-new .inner { display: inline-block; }
+
+.artist-new img { float: left; }
+
+.artist-new ul {
+    display: inline-block;
+    height: 500px;
 }
 
-.new-artist-buttons {
-    display: block;
-    width: 100%;
-    text-align: right;
-    margin-top: 15px;
+.artist-new ul textarea {
+    height: 358px;
+    max-height: 358px;        
+}
+
+.artist-new .buttons {
+    margin-top: 25px
 }
 
 .artists-list .list-group { width: 100%; }
@@ -417,6 +423,11 @@ li > input { width: 100% }
 
 .main-track-list > ul > li > div > p { display: inline-block }
 
+.main-track-list audio {
+    
+    vertical-align: middle;
+}
+
 .track-details {
     text-align: center;
     margin-top: 15px;
@@ -465,9 +476,20 @@ li > input { width: 100% }
 
 .track-edit div { display: inline-block; }
 
-.track-edit ul li { height: 84.22px; }
+.track-edit ul li, select {
+    height: 67.6px;
+    padding: 2px 5px 2px 5px;
+}
+
+.track-edit ul li input, select { height: 30px; }
+
+.track-edit audio {
+    width: 100%;
+}
 
 .track-edit .btn-group { margin-top: 55px; }
+
+
 
 .new-track > .list-group {
     height: 500px;

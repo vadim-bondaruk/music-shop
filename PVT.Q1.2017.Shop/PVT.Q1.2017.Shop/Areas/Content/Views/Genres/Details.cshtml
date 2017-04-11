@@ -12,7 +12,7 @@
         <p style="font-size: 1.5em; text-align: initial">
             @Html.DisplayTextFor(m => m.Description)
         </p>
-        <div class="btn-group">
+        <div>
             <a class="btn btn-primary" href="javascript:window.history.back(1)">Назад</a>
             <a class="btn btn-primary" href="@Url.Action("List", "Genres")">Все жанры</a>
             <a class="btn btn-primary" href="@Url.Action("Edit", "Genres", new { Area = "Management", id = Model.Id })">Правка</a>
