@@ -25,6 +25,9 @@
         /// <param name="href">
         /// The url to a page.
         /// </param>
+        /// <param name="onclick">
+        /// On client click function. Optional.
+        /// </param>
         /// <returns>
         /// The button html.
         /// </returns>
@@ -33,11 +36,16 @@
             string @class,
             string iconClass,
             string text,
-            string href)
+            string href,
+            string onclick = null)
         {
             var builder = new TagBuilder("a");
             builder.Attributes["class"] = @class;
             builder.Attributes["href"] = href;
+            if (!string.IsNullOrWhiteSpace(onclick))
+            {
+                builder.Attributes["onclick"] = onclick;
+            }
             builder.InnerHtml = $"<span class=\"{ iconClass }\"></span> { text }";
             return MvcHtmlString.Create(builder.ToString());
         }
