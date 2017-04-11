@@ -1,23 +1,18 @@
 ﻿@model IEnumerable<Shop.Common.ViewModels.CurrencyViewModel>
 
-<select onchange="updateUserCurrency(this.options[this.selectedIndex].value);">
-    @foreach (var currency in Model)
-    {
-        if (currency.Code == ViewBag.SelectedCurrency)
+@if (Model != null)
+{
+    <select onchange="updateUserCurrency(this.options[this.selectedIndex].value);">
+        @foreach (var currency in Model)
         {
-            <option value="@currency.Code" selected="selected">@currency.ShortName</option>
+            if (currency.Code == ViewBag.SelectedCurrency)
+            {
+                <option value="@currency.Code" selected="selected">@currency.ShortName</option>
+            }
+            else
+            {
+                <option value="@currency.Code">@currency.ShortName</option>
+            }
         }
-        else
-        {
-            <option value="@currency.Code">@currency.ShortName</option>
-        }
-    }
-</select>
-
-<script language="javascript">
-    function updateUserCurrency(currencyCode) {
-        $.post('@Url.Action("UpdateUserCurrency", "Currency",new { area = "" })', { currencyCode: currencyCode }, function () {
-            location.reload();
-        });
-    }
-</script>
+    </select>
+}

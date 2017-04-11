@@ -182,17 +182,19 @@
         /// <summary>
         /// Возвращает количество заказов покупателя в корзине
         /// </summary>
-        [HttpPost, HttpGet]
-        public JsonResult GetCountOrders()
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public JsonResult GetOrdersCount()
         {
             SetCurrentUser();
             int count = 0;
-            if (_cartRepository.GetByUserId(_currentUserId) != null)
+
+            var cart = _cartRepository.GetByUserId(_currentUserId);
+            if (cart != null)
             {
-                count += _cartRepository.GetByUserId(_currentUserId).OrderTracks.Count;
-                count += _cartRepository.GetByUserId(_currentUserId).OrderAlbums.Count;
+                count += cart.OrderTracks.Count;
+                count += cart.OrderAlbums.Count;
             }
-            return Json(new { Count = count}, JsonRequestBehavior.AllowGet);
+            return Json(new { Count = count }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
