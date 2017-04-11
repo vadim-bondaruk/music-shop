@@ -79,6 +79,7 @@
             {
                 this._viewModel.CurrencyShortName = _userCurrency.ShortName;
                 CartViewModelService.SetTotalPrice(this._viewModel, _userCurrency);
+                TempData["cart"] = _viewModel;
             }
 
             return this.View(this._viewModel);
