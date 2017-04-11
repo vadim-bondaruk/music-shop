@@ -46,5 +46,15 @@
         /// The album owner id.
         /// </summary>
         public int OwnerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the album is ordered.
+        /// </summary>
+        public bool IsOrdered { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the album is purchased.
+        /// </summary>
+        public bool IsPurchased { get; set; }
     }
 }

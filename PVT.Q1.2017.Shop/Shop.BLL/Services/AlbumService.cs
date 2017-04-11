@@ -33,10 +33,13 @@
         /// <param name="priceLevelId">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// The information about album with the specified <paramref name="id"/> or <b>null</b> if album doesn't exist.
         /// </returns>
-        public AlbumDetailsViewModel GetAlbumDetails(int id, int? currencyCode = null, int? priceLevelId = null)
+        public AlbumDetailsViewModel GetAlbumDetails(int id, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
             Album album;
             using (var repository = this.Factory.GetAlbumRepository())
@@ -70,6 +73,21 @@
                albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
             }
 
+            if (userId != null)
+            {
+                using (var repository = Factory.GetOrderAlbumRepository())
+                {
+                    albumViewModel.IsOrdered =
+                            repository.FirstOrDefault(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id) != null;
+                }
+
+                using (var repository = Factory.GetPurchasedAlbumRepository())
+                {
+                    albumViewModel.IsPurchased =
+                            repository.FirstOrDefault(p => p.UserId == userId && p.AlbumId == albumViewModel.Id) != null;
+                }
+            }
+
             return albumViewModel;
         }
 
@@ -85,9 +103,12 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// </returns>
-        public AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null)
+        public AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
 
@@ -116,7 +137,7 @@
                 }
             }
 
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
             return albumTracksListViewModel;
         }
 
@@ -130,10 +151,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All registered tracks with price for the specified album.
         /// </returns>
-        public AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null)
+        public AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
 
@@ -143,7 +167,7 @@
                 tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track, r => r.Track.Artist).Select(r => r.Track).ToList();
             }
 
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
             foreach (var trackViewModel in albumTracksListViewModel.Tracks)
             {
                 trackViewModel.AlbumId = albumId;
@@ -194,10 +218,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All tracks for the specified album without price specified.
         /// </returns>
-        public AlbumTracksListViewModel GetTracksWithPrice(int albumId, int? currencyCode = null, int? priceLevel = null)
+        public AlbumTracksListViewModel GetTracksWithPrice(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
 
@@ -211,7 +238,7 @@
                                    .Select(r => r.Track).ToList();
             }
 
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
             foreach (var trackViewModel in albumTracksListViewModel.Tracks)
             {
                 trackViewModel.AlbumId = albumId;
@@ -229,10 +256,13 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All registered albums.
         /// </returns>
-        public ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null)
+        public ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
@@ -240,7 +270,7 @@
                 albums = repository.GetAll(a => a.Artist);
             }
 
-            return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel);
+            return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
         }
 
         /// <summary>
@@ -269,10 +299,13 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All albums with price specified.
         /// </returns>
-        public ICollection<AlbumViewModel> GetAlbumsWithPrice(int? currencyCode = null, int? priceLevel = null)
+        public ICollection<AlbumViewModel> GetAlbumsWithPrice(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
@@ -280,7 +313,7 @@
                 albums = repository.GetAll(a => a.AlbumPrices.Any(), a => a.Artist);
             }
 
-            return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel);
+            return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
         }
 
         /// <summary>

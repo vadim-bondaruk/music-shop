@@ -18,10 +18,13 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// The information about album with the specified <paramref name="id"/> or <b>null</b> if album doesn't exist.
         /// </returns>
-        AlbumDetailsViewModel GetAlbumDetails(int id, int? currencyCode = null, int? priceLevel = null);
+        AlbumDetailsViewModel GetAlbumDetails(int id, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all tracks whitch could be added to the specified album using the specified currency and price level for track price.
@@ -35,9 +38,13 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
+        /// All tracks whitch could be added to the specified album using the specified currency and price level for track price.
         /// </returns>
-        AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null);
+        AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered tracks for the specified album using the specified currency and price level for track price.
@@ -49,10 +56,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All registered tracks with price for the specified album.
         /// </returns>
-        AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null);
+        AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all tracks for the specified album without price.
@@ -73,10 +83,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
-        /// All tracks for the specified album without price specified.
+        /// All tracks for the specified album with price specified.
         /// </returns>
-        AlbumTracksListViewModel GetTracksWithPrice(int albumId, int? currencyCode = null, int? priceLevel = null);
+        AlbumTracksListViewModel GetTracksWithPrice(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered albums using the specified currency and price level for album price.
@@ -87,10 +100,13 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All registered albums.
         /// </returns>
-        ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null);
+        ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all albums without price configured.
@@ -109,9 +125,12 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All albums with price specified.
         /// </returns>
-        ICollection<AlbumViewModel> GetAlbumsWithPrice(int? currencyCode = null, int? priceLevel = null);
+        ICollection<AlbumViewModel> GetAlbumsWithPrice(int? currencyCode = null, int? priceLevel = null, int? userId = null);
     }
 }
