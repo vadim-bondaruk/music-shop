@@ -95,6 +95,11 @@
         /// <summary>
         /// Carts with this Track
         /// </summary>
-        public virtual ICollection<OrderTrack> Carts { get; set; }
+        public virtual ICollection<OrderTrack> OrderTracks { get; set; }
+
+        /// <summary>
+        /// Users who purchased track
+        /// </summary>
+        public virtual ICollection<PurchasedTrack> PurchasedTracks { get; set; }
     }
 }

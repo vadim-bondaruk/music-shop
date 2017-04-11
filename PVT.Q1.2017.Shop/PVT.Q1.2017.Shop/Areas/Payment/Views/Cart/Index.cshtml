@@ -14,8 +14,7 @@
 <body>
     @if (!Model.IsEmpty)
     {
-    <form action="/Cart/DeleteTrack" method="post">
-        @Html.Hidden("currentUserId", @Model.CurrentUserId)
+    <form action="../Payment/Cart/DeleteTrack" method="post">
         <br />
         <br />
         <b>Tracks</b>
@@ -24,7 +23,7 @@
             <thead>
                 <tr>
                     <th><font color="blue">Исполнитель</font></th>
-                    <th style="text-align:center;"><font color="blue">Альбом</font></th>
+                    <th style="text-align:center;"><font color="blue">Оценка</font></th>
                     <th><font color="blue">Название песни</font></th>
                     <th><font color="blue">Продолжительность</font></th>
                     <th><font color="blue">Цена</font></th>
@@ -34,11 +33,12 @@
                 @foreach (var anyTrack in Model.Tracks)
                 {
                     <tr>
-                        <td>@anyTrack.Artist</td>
-                        <td width="200">@anyTrack.Albums.First().Album.Name</td>
+                        <td>@anyTrack.Artist.Name</td>
+                        <td width="150">@anyTrack.Rating.VotesCount</td>
                         <td>@anyTrack.Name</td>
                         <td>@anyTrack.Duration</td>
-                        <td>@anyTrack.TrackPrices.First(p => p.Currency.ShortName == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
+                        <td>@anyTrack.Price.Amount @Model.CurrencyShortName</td>
+                        <td></td>
                         <td><button type="submit" name="trackId" value=@anyTrack.Id>Удалить</button></td>
                     </tr>
                 }
@@ -46,8 +46,7 @@
         </table>
         </form>
         <br />
-    <form action="/Cart/DeleteAlbum" method="post">
-        @Html.Hidden("currentUserId", @Model.CurrentUserId)
+    <form action="../Payment/Cart/DeleteAlbum" method="post">
         <b>Albums</b>
         <br />
         <table border="1" cellpadding="3">
@@ -64,12 +63,19 @@
                     <tr>
                         <td>@anyAlbum.Artist.Name</td>
                         <td>@anyAlbum.Name</td>
-                        <td>@anyAlbum.AlbumPrices.FirstOrDefault(a => a.Currency.ShortName == Model.CurrencyShortName).Price @Model.CurrencyShortName</td>
+                        <td>@anyAlbum.Price.Amount @Model.CurrencyShortName</td>
                         <td><button type="submit" name="albumId" value=@anyAlbum.Id>Удалить</button></td>
                     </tr>
                 }
             </tbody>
         </table>
+    </form>
+    <br />
+    <form action="../Payment/Paypal/PaymentWithPaypal" method="post">
+        Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
+        <br />
+        <br />
+        <button type="submit" name="cart" value=@Model>Оплатить</button>
     </form>
     }
     else
@@ -78,14 +84,6 @@
             <br/>
             <b>Ваша корзина пуста.</b>
         </p>
-        <br />
-        <form action="../Payment/Paypal" method="post">
-            Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
-            <br />
-            <br />
-            @Html.Hidden("currentUserId", @Model.CurrentUserId)
-            <button type="submit" name="TotalPrice" value=@Model.TotalPrice>Оплатить</button>
-        </form>
     }
 </body>
 </html>

@@ -434,7 +434,7 @@
                 item.currency = cart.CurrencyShortName;
                 item.name = track.Name;
                 // item.price = track.TrackPrices.FirstOrDefault(p => p.Currency.Code == userCurrency.Code).Price;
-                item.price = track.TrackPrices.FirstOrDefault(p => p.Currency.Code == 840).Price.ToString();
+                item.price = track.Price.ToString();
                 item.quantity = "1";
 
                 itemList.items.Add(item);

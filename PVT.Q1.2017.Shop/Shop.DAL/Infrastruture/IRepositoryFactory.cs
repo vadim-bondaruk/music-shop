@@ -143,5 +143,11 @@ namespace Shop.DAL.Infrastruture
         /// The user repository.
         /// </returns>
         IUserRepository GetUserRepository();
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        ISettingRepository GetSettingRepository();
     }
 }

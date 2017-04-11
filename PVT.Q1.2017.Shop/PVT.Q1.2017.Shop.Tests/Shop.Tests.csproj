@@ -121,7 +121,9 @@
     <Compile Include="Moq\PriceLevelRepositoryMoq.cs" />
     <Compile Include="Moq\RepositoryFactoryMoq.cs" />
     <Compile Include="Moq\UserPaymentMethodRepositoryMoq.cs" />
+    <Compile Include="Moq\SettingRepositoryMoq.cs" />
     <Compile Include="Moq\UserRepositoryMoq.cs" />
+    <Compile Include="SettingServiceTest.cs" />
     <Compile Include="UserServiceTests.cs" />
     <Compile Include="FeedbackServiceTest.cs" />
     <Compile Include="BllServiceTests\CurrencyRateServiceTest.cs" />
