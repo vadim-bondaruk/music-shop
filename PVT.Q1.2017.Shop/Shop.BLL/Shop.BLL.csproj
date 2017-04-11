@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\InvalidAlbumIdException.cs" />
+    <Compile Include="Exceptions\InvalidPaymentOperation.cs" />
     <Compile Include="Exceptions\InvalidTrackIdException.cs" />
     <Compile Include="Exceptions\InvalidUserIdException.cs" />
     <Compile Include="Helpers\ModelsMapper.cs" />

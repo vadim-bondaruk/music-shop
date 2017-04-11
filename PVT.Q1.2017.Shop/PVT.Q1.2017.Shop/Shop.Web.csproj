@@ -228,6 +228,13 @@
     <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\NewAlbumTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Views\Shared\_Rating.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
@@ -411,6 +418,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />

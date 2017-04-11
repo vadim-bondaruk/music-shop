@@ -64,6 +64,8 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         [HttpPost]
         public ActionResult PaymentWithPaypal(CartViewModel cart)
         {
+            cart = (CartViewModel)TempData["cart"];
+
             if (cart == null)
             {
                 return RedirectToAction("Failure");

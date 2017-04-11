@@ -29,41 +29,42 @@
         /// <param name="trackId">Added Track ID</param> 
         public void AddTrack(int userId, int trackId)
         {
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
+                cart = cartRepository.GetByUserId(userId);
                 if (cart == null)
                 {
                     cart = new Cart(userId);
                     cartRepository.AddOrUpdate(cart);
+                    cartRepository.SaveChanges();
                 }
+            }
 
-                using (var trackRepository = Factory.GetTrackRepository())
+            Track track;
+            using (var trackRepository = Factory.GetTrackRepository())
+            {
+                track = trackRepository.GetById(trackId);
+                if (track == null || trackId == 0)
                 {
-                    var track = trackRepository.GetById(trackId);
-                    if (track == null || trackId == 0)
-                    {
-                        throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
-                    }
+                    throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
+                }
+            }
 
-                    if (cart.OrderTracks == null)
-                    {
-                        cart.OrderTracks = new List<OrderTrack>();
-                    }
-
-                    var orderTrack = new OrderTrack() {CartId = cart.Id, Track = track, TrackId = trackId};
-                    cart.OrderTracks.Add(orderTrack);
-
-                    if (track.OrderTracks == null)
-                    {
-                        track.OrderTracks = new List<OrderTrack>();
-                    }
-
-                    track.OrderTracks.Add(orderTrack);
-                    trackRepository.AddOrUpdate(track);
+            using (var orderTrackRepository = Factory.GetOrderTrackRepository())
+            {
+                var orderTrack =
+                    orderTrackRepository.FirstOrDefault(o => 
+                    o.CartId == cart.Id 
+                    && o.TrackId == track.Id);
+                if (orderTrack != null)
+                {
+                    return;
                 }
 
-                cartRepository.AddOrUpdate(cart);
+                orderTrack = new OrderTrack() { CartId = cart.Id, TrackId = track.Id };
+                orderTrackRepository.AddOrUpdate(orderTrack);
+                orderTrackRepository.SaveChanges();
             }
         }
 
@@ -87,37 +88,38 @@
         /// <param name="trackId">Removed Track ID</param> 
         public void RemoveTrack(int userId, int trackId)
         {
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
+                cart = cartRepository.GetByUserId(userId);
                 if (cart == null)
                 {
                     return;
                 }
+            }
 
-                using (var trackRepository = Factory.GetTrackRepository())
+            Track track;
+            using (var trackRepository = Factory.GetTrackRepository())
+            {
+                track = trackRepository.GetById(trackId);
+                if (track == null || trackId == 0)
                 {
-                    var track = trackRepository.GetById(trackId);
-                    if (track == null || trackId == 0)
-                    {
-                        throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
-                    }
+                    throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
+                }
+            }
 
-                    if (cart.OrderAlbums != null)
-                    {
-                        var orderTrack = track.OrderTracks.FirstOrDefault(c => c.CartId == cart.Id);
-                        while (orderTrack != null)
-                        {
-                            track.OrderTracks.Remove(orderTrack);
-                            cart.OrderTracks.Remove(orderTrack);
-                            orderTrack = track.OrderTracks.FirstOrDefault(c => c.CartId == cart.Id);
-                        }
-                    }
-
-                    trackRepository.AddOrUpdate(track);
+            using (var orderTrackRepository = Factory.GetOrderTrackRepository())
+            {
+                var orderTrack = orderTrackRepository.FirstOrDefault(o =>
+                    o.CartId == cart.Id
+                    && o.TrackId == track.Id);
+                if (orderTrack == null)
+                {
+                    return;
                 }
 
-                cartRepository.AddOrUpdate(cart);
+                orderTrackRepository.Delete(orderTrack);
+                orderTrackRepository.SaveChanges();
             }
         }
 
@@ -141,41 +143,42 @@
         /// <param name="albumId">Added Album ID</param>
         public void AddAlbum(int userId, int albumId)
         {
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
+                cart = cartRepository.GetByUserId(userId);
                 if (cart == null)
                 {
                     cart = new Cart(userId);
                     cartRepository.AddOrUpdate(cart);
+                    cartRepository.SaveChanges();
                 }
+            }
 
-                using (var albumRepository = Factory.GetAlbumRepository())
+            Album album;
+            using (var albumRepository = Factory.GetAlbumRepository())
+            {
+                album = albumRepository.GetById(albumId);
+                if (album == null || albumId == 0)
                 {
-                    var album = albumRepository.GetById(albumId);
-                    if (album == null || albumId == 0)
-                    {
-                        throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
-                    }
-
-                    if (cart.OrderAlbums == null)
-                    {
-                        cart.OrderAlbums = new List<OrderAlbum>();
-                    }
-
-                    var orderAlbum = new OrderAlbum() { CartId = cart.Id, Album = album, AlbumId = albumId };
-                    cart.OrderAlbums.Add(orderAlbum);
-                    
-                    if (album.OrderAlbums == null)
-                    {
-                        album.OrderAlbums = new List<OrderAlbum>();
-                    }
-
-                    album.OrderAlbums.Add(orderAlbum);
-                    albumRepository.AddOrUpdate(album);
+                    throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
                 }
-                
-                cartRepository.AddOrUpdate(cart);
+            }
+
+            using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
+            {
+                var orderAlbum =
+                    orderAlbumRepository.FirstOrDefault(o =>
+                    o.CartId == cart.Id
+                    && o.AlbumId == album.Id);
+                if (orderAlbum != null)
+                {
+                    return;
+                }
+
+                orderAlbum = new OrderAlbum() { CartId = cart.Id, AlbumId = album.Id };
+                orderAlbumRepository.AddOrUpdate(orderAlbum);
+                orderAlbumRepository.SaveChanges();
             }
         }
 
@@ -199,37 +202,38 @@
         /// <param name="albumId">Removed Album ID</param>
         public void RemoveAlbum(int userId, int albumId)
         {
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
+                cart = cartRepository.GetByUserId(userId);
                 if (cart == null)
                 {
                     return;
                 }
+            }
 
-                using (var albumRepository = Factory.GetAlbumRepository())
+            Album album;
+            using (var albumRepository = Factory.GetAlbumRepository())
+            {
+                album = albumRepository.GetById(albumId);
+                if (album == null || albumId == 0)
                 {
-                    var album = albumRepository.GetById(albumId);
-                    if (album == null || albumId == 0)
-                    {
-                        throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
-                    }
+                    throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
+                }
+            }
 
-                    if (cart.OrderAlbums != null)
-                    {
-                        var orderAlbum = album.OrderAlbums.FirstOrDefault(c => c.CartId == cart.Id);
-                        while (orderAlbum != null)
-                        {
-                            album.OrderAlbums.Remove(orderAlbum);
-                            cart.OrderAlbums.Remove(orderAlbum);
-                            orderAlbum = album.OrderAlbums.FirstOrDefault(c => c.CartId == cart.Id);
-                        }
-                    }
-
-                    albumRepository.AddOrUpdate(album);
+            using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
+            {
+                var orderAlbum = orderAlbumRepository.FirstOrDefault(o =>
+                    o.CartId == cart.Id
+                    && o.AlbumId == album.Id);
+                if (orderAlbum == null)
+                {
+                    return;
                 }
 
-                cartRepository.AddOrUpdate(cart);
+                orderAlbumRepository.Delete(orderAlbum);
+                orderAlbumRepository.SaveChanges();
             }
         }
 
@@ -254,14 +258,25 @@
         public IEnumerable<int> GetOrderTracksIds(int userId)
         {
             var returnResult = new Stack<int>();
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
-                foreach (var orderTrack in cart.OrderTracks)
+                cart = cartRepository.GetByUserId(userId);
+                if (cart == null)
+                {
+                    return returnResult;
+                }
+            }
+
+            using (var orderTrackRepository = Factory.GetOrderTrackRepository())
+            {
+                var orderTracks = orderTrackRepository.GetAll(o => o.CartId == cart.Id);
+                foreach (var orderTrack in orderTracks)
                 {
                     returnResult.Push(orderTrack.TrackId);
                 }
             }
+
             return returnResult.ToArray();
         }
 
@@ -272,26 +287,31 @@
         /// <returns>Returns List of Tracks</returns>
         public ICollection<TrackDetailsViewModel> GetOrderTracks(int userId, int? currencyCode = null)
         {
-            var returnResult = new List<Track>();
-            var resultViewTracks = new List<TrackDetailsViewModel>();
+            var result = new List<TrackDetailsViewModel>();
             /// Вытягиваем Cart из базы
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
-                /// Вытягиваем Tracks из базы
-                using (var trackRepository = Factory.GetTrackRepository())
+                cart = cartRepository.GetByUserId(userId);
+                if (cart == null)
                 {
-                    returnResult.AddRange(cart.OrderTracks.Select(orderTrack => trackRepository.GetById(orderTrack.TrackId)));
-                    /// Конвертируем Tracks in TracksDetailsViewModel
-                    var trackService = new TrackService(Factory);
-                    foreach(Track anyTrack in returnResult)
-                    {
-                        // TODO: Сделать передачу валюты пользователя в метод GetTrackDetails()
-                        resultViewTracks.Add(trackService.GetTrackDetails(anyTrack.Id, currencyCode));
-                    }
+                    return result;
                 }
             }
-            return resultViewTracks;
+
+            var tracks = new List<Track>();
+            /// Вытягиваем Tracks из базы
+            using (var trackRepository = Factory.GetTrackRepository())
+            {
+                var tracksIds = this.GetOrderTracksIds(userId);
+                tracks.AddRange(tracksIds.Select(trackId => trackRepository.GetById(trackId)));
+                /// Конвертируем Tracks in TracksDetailsViewModel
+                var trackService = new TrackService(Factory);
+                // TODO: Сделать передачу валюты пользователя в метод GetTrackDetails()
+                result.AddRange(tracks.Select(anyTrack => trackService.GetTrackDetails(anyTrack.Id, currencyCode)));
+            }
+            
+            return result;
         }
 
         /// <summary>
@@ -302,14 +322,25 @@
         public IEnumerable<int> GetOrderAlbumsIds(int userId)
         {
             var returnResult = new Stack<int>();
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
-                foreach (var orderAlbum in cart.OrderAlbums)
+                cart = cartRepository.GetByUserId(userId);
+                if (cart == null)
+                {
+                    return returnResult;
+                }
+            }
+
+            using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
+            {
+                var orderAlbums = orderAlbumRepository.GetAll(o => o.CartId == cart.Id);
+                foreach (var orderAlbum in orderAlbums)
                 {
                     returnResult.Push(orderAlbum.AlbumId);
                 }
             }
+
             return returnResult.ToArray();
         }
 
@@ -320,26 +351,30 @@
         /// <returns>Returns List of Albums</returns>
         public ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId, int? currencyCode = null)
         {
-            var returnResult = new List<Album>();
-            var resultViewAlbums = new List<AlbumDetailsViewModel>();
+            var result = new List<AlbumDetailsViewModel>();
             /// Вытягиваем Cart из базы
+            Cart cart;
             using (var cartRepository = Factory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(userId);
-                /// Вытягиваем Albums из базы
-                using (var albumsRepository = Factory.GetAlbumRepository())
+                cart = cartRepository.GetByUserId(userId);
+                if (cart == null)
                 {
-                    returnResult.AddRange(cart.OrderAlbums.Select(o => albumsRepository.GetById(o.AlbumId)));
-                    /// Конвертируем Album in AlbumDetailsViewModel
-                    var albumService = new AlbumService(Factory);
-                    foreach (Album anyAlbum in returnResult)
-                    {
-                        // TODO: Сделать передачу валюты пользователя в метод GetAlbumDetails()
-                        resultViewAlbums.Add(albumService.GetAlbumDetails(anyAlbum.Id, currencyCode));
-                    }
+                    return result;
                 }
             }
-            return resultViewAlbums;
+            /// Вытягиваем Albums из базы
+            var albums = new List<Album>();
+            using (var albumRepository = Factory.GetAlbumRepository())
+            {
+                var albumsIds = this.GetOrderAlbumsIds(userId);
+                albums.AddRange(albumsIds.Select(albumId => albumRepository.GetById(albumId)));
+                /// Конвертируем Album in AlbumDetailsViewModel
+                var albumService = new AlbumService(Factory);
+                // TODO: Сделать передачу валюты пользователя в метод GetAlbumDetails()
+                result.AddRange(albums.Select(anyAlbum => albumService.GetAlbumDetails(anyAlbum.Id, currencyCode)));
+            }
+            
+            return result;
         }
 
         /// <summary>
@@ -348,8 +383,8 @@
         /// <param name="userId">User's ID</param>
         public void AcceptPayment(int userId)
         {
-            var trackIds = this.GetOrderTracksIds(userId);
-            if (trackIds != null && trackIds.Any())
+            var trackIds = this.GetOrderTracksIds(userId).ToArray();
+            if (trackIds.Length > 0)
             {
                 foreach (var trackId in trackIds)
                 {
@@ -357,8 +392,8 @@
                 }
             }
 
-            var albumIds = this.GetOrderAlbumsIds(userId);
-            if (albumIds != null && albumIds.Any())
+            var albumIds = this.GetOrderAlbumsIds(userId).ToArray();
+            if (albumIds.Length > 0)
             {
                 foreach (var albumId in albumIds)
                 {
@@ -376,17 +411,18 @@
         /// If paid items is albums, then False</param>
         public void AcceptPayment(int userId, IEnumerable<int> ids, bool isTracks)
         {
-            if (ids == null || !ids.Any()) return;
+            var idArray = ids.ToArray();
+            if (idArray.Length == 0) return;
             if (isTracks)
             {
-                foreach (var trackId in ids)
+                foreach (var trackId in idArray)
                 {
                     this.AcceptPaymentForTrack(userId, trackId);
                 }
             }
             else
             {
-                foreach (var albumId in ids)
+                foreach (var albumId in idArray)
                 {
                     this.AcceptPaymentForAlbum(userId, albumId);
                 }
@@ -400,37 +436,31 @@
         /// <param name="trackId">Track ID</param>
         private void AcceptPaymentForTrack(int userId, int trackId)
         {
-            using (var trackRepository = Factory.GetTrackRepository())
+            UserData user;
+            using (var userDataRepository = Factory.GetUserDataRepository())
             {
-                var track = trackRepository.GetById(trackId);
-                this.RemoveTrack(userId, trackId);
-                using (var userDataRepository = Factory.GetUserDataRepository())
+                user = userDataRepository.FirstOrDefault(u => u.UserId == userId);
+                if (user == null)
                 {
-                    UserData user = userDataRepository.GetAll(u => u.UserId == userId).FirstOrDefault();
-                    if (user == null)
-                    {
-                        throw new InvalidUserIdException($"Пользователь с ID={userId} не найден");
-                    }
-
-                    var purchasedTrack = new PurchasedTrack()
-                    {
-                        UserId = userId, User = user, TrackId = trackId, Track = track
-                    };
-                    if (track.PurchasedTracks == null)
-                    {
-                        track.PurchasedTracks = new List<PurchasedTrack>();
-                    }
-
-                    track.PurchasedTracks.Add(purchasedTrack);
-                    if (user.PurchasedTracks == null)
-                    {
-                        user.PurchasedTracks = new List<PurchasedTrack>();
-                    }
-
-                    user.PurchasedTracks.Add(purchasedTrack);
-                    userDataRepository.AddOrUpdate(user);
+                    throw new InvalidUserIdException($"Пользователь с ID={userId} не найден");
                 }
-                trackRepository.AddOrUpdate(track);
+            }
+
+            using (var purchasedTrackRepository = Factory.GetPurchasedTrackRepository())
+            {
+                var purchasedTrack = purchasedTrackRepository.FirstOrDefault(p =>
+                    p.UserId == userId
+                    && p.TrackId == trackId);
+                if (purchasedTrack != null)
+                {
+                    throw new InvalidPaymentOperation(
+                        $"Трек ID={trackId} пользователем ID={userId} уже был куплен ранее. Необходимо вернуть деньги!");
+                }
+
+                this.RemoveTrack(userId, trackId);
+                purchasedTrack = new PurchasedTrack() { UserId = userId, TrackId = trackId };
+                purchasedTrackRepository.AddOrUpdate(purchasedTrack);
+                purchasedTrackRepository.SaveChanges();
             }
         }
 
@@ -441,37 +471,31 @@
         /// <param name="albumId">Album ID</param>
         private void AcceptPaymentForAlbum(int userId, int albumId)
         {
-            using (var albumRepository = Factory.GetAlbumRepository())
+            UserData user;
+            using (var userDataRepository = Factory.GetUserDataRepository())
             {
-                var album = albumRepository.GetById(albumId);
-                this.RemoveAlbum(userId, albumId);
-                using (var userDataRepository = Factory.GetUserDataRepository())
+                user = userDataRepository.FirstOrDefault(u => u.UserId == userId);
+                if (user == null)
                 {
-                    UserData user = userDataRepository.GetAll(u => u.UserId == userId).FirstOrDefault();
-                    if (user == null)
-                    {
-                        throw new InvalidUserIdException($"Пользователь с ID={userId} не найден");
-                    }
-
-                    var purchasedAlbum = new PurchasedAlbum()
-                    {
-                        UserId = userId, User = user, AlbumId = albumId, Album = album
-                    };
-                    if (album.PurchasedAlbums == null)
-                    {
-                        album.PurchasedAlbums = new List<PurchasedAlbum>();
-                    }
-
-                    album.PurchasedAlbums.Add(purchasedAlbum);
-                    if (user.PurchasedAlbums == null)
-                    {
-                        user.PurchasedAlbums = new List<PurchasedAlbum>();
-                    }
-
-                    user.PurchasedAlbums.Add(purchasedAlbum);
-                    userDataRepository.AddOrUpdate(user);
+                    throw new InvalidUserIdException($"Пользователь с ID={userId} не найден");
                 }
-                albumRepository.AddOrUpdate(album);
+            }
+
+            using (var purchasedAlbumRepository = Factory.GetPurchasedAlbumRepository())
+            {
+                var purchasedAlbum = purchasedAlbumRepository.FirstOrDefault(p =>
+                    p.UserId == userId
+                    && p.AlbumId == albumId);
+                if (purchasedAlbum != null)
+                {
+                    throw new InvalidPaymentOperation(
+                        $"Альбом ID={albumId} пользователем ID={userId} уже был куплен ранее. Необходимо вернуть деньги!");
+                }
+
+                this.RemoveAlbum(userId, albumId);
+                purchasedAlbum = new PurchasedAlbum() { UserId = userId, AlbumId = albumId };
+                purchasedAlbumRepository.AddOrUpdate(purchasedAlbum);
+                purchasedAlbumRepository.SaveChanges();
             }
         }
     }
