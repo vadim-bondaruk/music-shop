@@ -2,6 +2,7 @@
 
 namespace Shop.BLL.Services.Infrastructure
 {
+    using Common.ViewModels;
     using System.Collections.Generic;
 
     /// <summary>
@@ -77,7 +78,7 @@ namespace Shop.BLL.Services.Infrastructure
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Tracks</returns>
-        ICollection<Track> GetOrderTracks(int userId);
+        ICollection<TrackDetailsViewModel> GetOrderTracks(int userId, int? currencyCode = null);
 
         /// <summary>
         /// Get chosen to purchase Album's IDs
@@ -91,6 +92,21 @@ namespace Shop.BLL.Services.Infrastructure
         /// </summary>
         /// <param name="userId">User's ID</param>
         /// <returns>Returns List of Albums</returns>
-        ICollection<Album> GetOrderAlbums(int userId);
+        ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId, int? currencyCode = null);
+
+        /// <summary>
+        /// Accept Payment of All User's Cart
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        void AcceptPayment(int userId);
+
+        /// <summary>
+        /// Accept Payment of selected items
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <param name="ids">IDs of payment items</param>
+        /// <param name="isTracks">If paid items is tracks, then True
+        /// If paid items is albums, then False</param>
+        void AcceptPayment(int userId, IEnumerable<int> ids, bool isTracks);
     }
 }

@@ -13,57 +13,56 @@
     <meta name="description" content="The description of my page"/>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    @Html.MvcSiteMap().SiteMapPath()
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                @Html.Partial("_MenuPartial")
-            </ul>
-            @if (Request.IsAuthenticated)
-            {
-                using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { area = "User", id = "logoutForm", @class = "navbar-right" }))
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @Html.Partial("_MenuPartial")
+                </ul>
+                @if (Request.IsAuthenticated)
                 {
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a></li>
+                    </ul>
+                    using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { area = "User", id = "logoutForm", @class = "navbar-right" }))
+                    {
                         @Html.AntiForgeryToken()
 
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", new { area = "User", controller = "Manage" }, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li>@Html.ActionLink("Корзина", "Index", new { area = "Payment", controller = "Cart" })</li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", new { area = "User", controller = "Manage" }, htmlAttributes: new { title = "Manage" })
-                        </li>
-                        <li>
-                            <a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a>
-                        </li>
+                        <li>@Html.ActionLink("Регистрация", "Register", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Войти", "Login", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "loginLink" })</li>
                     </ul>
                 }
-            }
-            else
-            {
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Регистрация", "Register", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Войти", "Login", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "loginLink" })</li>
-                </ul>
-            }
+            </div>
         </div>
     </div>
-</div>
 
 <div class="container body-content">
-
-    @RenderBody()
-    <hr/>
-    <footer>
-
-        <p>&copy; @DateTime.Now.Year - Music Shop</p>
-    </footer>
-</div>
+        @RenderBody()
+        <hr/>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Music Shop</p>
+        </footer>
+    </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

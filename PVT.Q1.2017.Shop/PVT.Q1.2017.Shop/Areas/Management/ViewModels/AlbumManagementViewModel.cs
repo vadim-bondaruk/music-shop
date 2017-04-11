@@ -3,6 +3,8 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
+    using FluentValidation.Attributes;
+    using Validators;
 
     using global::Shop.Common.Models;
 

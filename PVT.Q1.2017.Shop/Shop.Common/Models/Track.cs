@@ -102,6 +102,12 @@
         /// <summary>
         ///     Gets or sets all user votes for the current track.
         /// </summary>
+        public virtual ICollection<OrderTrack> OrderTracks { get; set; }
+
+        /// <summary>
+        /// Users who purchased track
+        /// </summary>
+        public virtual ICollection<PurchasedTrack> PurchasedTracks { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

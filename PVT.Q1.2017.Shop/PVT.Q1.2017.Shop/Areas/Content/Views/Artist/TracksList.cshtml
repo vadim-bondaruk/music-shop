@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.ArtistTracksListViewModel
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.ArtistTracksListViewModel
 
 @{
     ViewBag.Title = "Список треков исполнителя";
@@ -11,7 +12,7 @@
     <hr />
 
     <p>
-        @Html.Partial("NewArtistTrackButtonPartialView", Model.Id)
+        @Html.BtnCreateTrack(Model.Id)
         
         @Html.ActionLink("Информация об исполнителе", "Details", "Artist", new
         {
@@ -24,7 +25,7 @@
         })
     </p>
     
-    @Html.Partial("TracksListPartialView", Model.Tracks)
+    @Html.Partial("_TracksList", Model.Tracks)
     
 </div>
 

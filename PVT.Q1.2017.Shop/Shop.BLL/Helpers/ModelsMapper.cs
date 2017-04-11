@@ -258,7 +258,21 @@
         }
 
         /// <summary>
-        ///     Configures and returns a new instance of the common mapper.
+        /// Executes a mapping from the <see cref="Setting"/> model to a new <see cref="SettingViewModel"/> model.
+        /// </summary>
+        /// <param name="setting">
+        /// The setting DTO model
+        /// </param>
+        /// <returns>
+        /// A new <see cref="SettingViewModel"/> model
+        /// </returns>
+        public static SettingViewModel GetSettingViewModel(Setting setting)
+        {
+            return _specialListMapper.Map<SettingViewModel>(setting);
+        }
+
+        /// <summary>
+        /// Configures and returns a new instance of the common mapper.
         /// </summary>
         /// <returns>
         ///     A new instance of the common mapper.
@@ -280,8 +294,9 @@
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
                             .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
-                        cfg.CreateMap<Track, TrackViewModel>()
-                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
+                cfg.CreateMap<Track, TrackViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.AlbumId, opt => opt.Ignore());
 
                         cfg.CreateMap<TrackPrice, PriceViewModel>()
                             .ForMember(dest => dest.Amount, opt => opt.ResolveUsing(p => p.Price))
@@ -291,9 +306,11 @@
                             .ForMember(dest => dest.Amount, opt => opt.ResolveUsing(p => p.Price))
                             .ForMember(dest => dest.Currency, opt => opt.MapFrom(p => p.Currency));
 
-                        cfg.CreateMap<Feedback, FeedbackViewModel>()
-                            .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
-                    });
+                cfg.CreateMap<Feedback, FeedbackViewModel>()
+                   .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
+
+                cfg.CreateMap<Setting, SettingViewModel>();
+            });
 
             return commonMapperConfiguration.CreateMapper();
         }
@@ -325,6 +342,17 @@
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
                             .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
+                cfg.CreateMap<Album, AlbumTracksListViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore())
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
+
+                cfg.CreateMap<Artist, ArtistTracksListViewModel>()
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
+
+                cfg.CreateMap<Artist, ArtistAlbumsListViewModel>()
+                   .ForMember(dest => dest.Albums, opt => opt.Ignore());
+            });
                         cfg.CreateMap<Track, TrackDetailsViewModel>()
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
                             .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre))

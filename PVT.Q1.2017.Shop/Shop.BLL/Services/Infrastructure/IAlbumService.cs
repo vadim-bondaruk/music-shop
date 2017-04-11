@@ -25,7 +25,23 @@
         AlbumDetailsViewModel GetAlbumDetails(int id, int? currencyCode = null, int? priceLevel = null);
 
         /// <summary>
-        ///     Returns all registered albums using the specified currency and price level for album price.
+        /// Returns all tracks whitch could be added to the specified album using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="albumId">
+        /// The album id.
+        /// </param>
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for album price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null);
+
+        /// <summary>
+        /// Returns all registered tracks for the specified album using the specified currency and price level for track price.
         /// </summary>
         /// <param name="currencyCode">
         ///     The currency code for album price. If it doesn't specified than default currency is used.

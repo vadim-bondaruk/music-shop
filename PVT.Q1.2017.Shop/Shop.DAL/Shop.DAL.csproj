@@ -64,6 +64,7 @@
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IBaseAddressRepository.cs" />
     <Compile Include="Infrastruture\IPaymentCardRepository.cs" />
+    <Compile Include="Infrastruture\ISettingRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Infrastruture\IUserRepository.cs" />
     <Compile Include="Migrations\201703141950344_Init.cs" />
@@ -114,6 +115,14 @@
     <Compile Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.Designer.cs">
       <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704081859579_AddedRelationshipsBtwPurchasedItemsAndUsers.cs" />
+    <Compile Include="Migrations\201704081859579_AddedRelationshipsBtwPurchasedItemsAndUsers.Designer.cs">
+      <DependentUpon>201704081859579_AddedRelationshipsBtwPurchasedItemsAndUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704101650192_AddSettingTableForAdmin.cs" />
+    <Compile Include="Migrations\201704101650192_AddSettingTableForAdmin.Designer.cs">
+      <DependentUpon>201704101650192_AddSettingTableForAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201704101303272_TrackFileName.cs" />
     <Compile Include="Migrations\201704101303272_TrackFileName.Designer.cs">
       <DependentUpon>201704101303272_TrackFileName.cs</DependentUpon>
@@ -122,6 +131,7 @@
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\SettingConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\Configurations\UserDataConfiguration.cs" />
@@ -158,6 +168,7 @@
     <Compile Include="Infrastruture\ICartRepository.cs" />
     <Compile Include="Repositories\PaymentCardRepository.cs" />
     <Compile Include="Repositories\PriceLevelRepository.cs" />
+    <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Repositories\TrackPriceRepository.cs" />
     <Compile Include="Repositories\UserDataRepository.cs" />
     <Compile Include="Repositories\UserPaymentMethodRepository.cs" />
@@ -221,6 +232,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704041338001_UpdateRelationshipsBtwCartAndTracks.resx">
       <DependentUpon>201704041338001_UpdateRelationshipsBtwCartAndTracks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704081859579_AddedRelationshipsBtwPurchasedItemsAndUsers.resx">
+      <DependentUpon>201704081859579_AddedRelationshipsBtwPurchasedItemsAndUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704101650192_AddSettingTableForAdmin.resx">
+      <DependentUpon>201704101650192_AddSettingTableForAdmin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704101303272_TrackFileName.resx">
       <DependentUpon>201704101303272_TrackFileName.cs</DependentUpon>

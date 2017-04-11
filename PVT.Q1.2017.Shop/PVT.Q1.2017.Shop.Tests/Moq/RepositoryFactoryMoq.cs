@@ -20,6 +20,7 @@
         private readonly CartRepositoryMoq _cartRepositoryMoq = new CartRepositoryMoq();
         private readonly AlbumTrackRelationRepositoryMoq _albumTrackRelationRepositoryMoq = new AlbumTrackRelationRepositoryMoq();
         private readonly UserRepositoryMoq _userRepositoryMoq = new UserRepositoryMoq();
+        private readonly SettingRepositoryMoq _settingRepositoryMoq = new SettingRepositoryMoq();
 
         public IAlbumRepository GetAlbumRepository()
         {
@@ -99,6 +100,11 @@
         public IUserRepository GetUserRepository()
         {
             return _userRepositoryMoq.Repository;
+        }
+
+        public ISettingRepository GetSettingRepository()
+        {
+            return _settingRepositoryMoq.Repository;
         }
     }
 }

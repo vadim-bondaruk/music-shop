@@ -37,10 +37,14 @@
             }
 
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
-            Currency currency;
+            Currency currency = null;
             using (var repository = factory.GetUserDataRepository())
             {
-                currency = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id, u => u.UserCurrency).UserCurrency;
+                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id, u => u.UserCurrency);
+                if (userData != null)
+                {
+                    currency = userData.UserCurrency;
+                }  
             }
 
             return ModelsMapper.GetCurrencyViewModel(currency);

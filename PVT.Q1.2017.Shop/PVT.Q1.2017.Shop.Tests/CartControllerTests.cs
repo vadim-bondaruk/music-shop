@@ -54,7 +54,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 new OrderTrack { CartId = 1, Track = new Track { Id = 1, Name = "Be mine" } },
             };
 
-            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks, Albums = new List<OrderAlbum>() };
+            var cart = new Cart { Id = 1, UserId = 1, OrderTracks = tracks, OrderAlbums = new List<OrderAlbum>() };
 
             ICollection<Cart> carts = new List<Cart>() { cart };
 
@@ -63,7 +63,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
-            moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Tracks.Add(addedOrderTrack));
+            moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.OrderTracks.Add(addedOrderTrack));
             moqCartService.Setup(m => m.AddTrack(It.Is<int>(u => u == 0), It.IsAny<int>()));
             moqCartService.Setup(m => m.AddTrack(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>();
 
@@ -93,7 +93,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 new OrderAlbum { CartId=1, Album  = new Album { Id =2, Name = "Platinum" } },
             };
 
-            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<OrderTrack>(), Albums = albums };
+            Cart cart = new Cart { Id = 1, UserId = 1, OrderTracks = new List<OrderTrack>(), OrderAlbums = albums };
 
             ICollection<Cart> carts = new List<Cart> { cart };
 
@@ -102,9 +102,9 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
-            moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.Albums.Add(addedOrderAlbum));
+            moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 3))).Callback(() => cart.OrderAlbums.Add(addedOrderAlbum));
             moqCartService.Setup(m => m.AddAlbum(It.Is<int>(u => u == 0), It.IsAny<int>()));
-            moqCartService.Setup(m => m.AddAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>(); 
+            moqCartService.Setup(m => m.AddAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidAlbumIdException>(); 
 
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
@@ -129,7 +129,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 new OrderTrack { CartId = 1, Track = new Track { Id = 1, Name = "Be mine" } },
             };
 
-            var cart = new Cart { Id = 1, UserId = 1, Tracks = tracks, Albums = new List<OrderAlbum>() };
+            var cart = new Cart { Id = 1, UserId = 1, OrderTracks = tracks, OrderAlbums = new List<OrderAlbum>() };
             var deletedTrack = tracks[1];
 
             ICollection<Cart> carts = new List<Cart>() { cart };
@@ -139,7 +139,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
-            moqCartService.Setup(m => m.RemoveTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 2))).Callback(() => cart.Tracks.Remove(deletedTrack));
+            moqCartService.Setup(m => m.RemoveTrack(It.Is<int>(u => u == 1), It.Is<int>(t => t == 2))).Callback(() => cart.OrderTracks.Remove(deletedTrack));
             moqCartService.Setup(m => m.RemoveTrack(It.Is<int>(u => u == 0), It.IsAny<int>()));
             moqCartService.Setup(m => m.RemoveTrack(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>(); 
 
@@ -166,7 +166,7 @@ namespace PVT.Q1._2017.Shop.Tests
                 new OrderAlbum { CartId=1, Album  = new Album { Id =2, Name = "Platinum" } },
             };
 
-            Cart cart = new Cart { Id = 1, UserId = 1, Tracks = new List<OrderTrack>(), Albums = albums };
+            Cart cart = new Cart { Id = 1, UserId = 1, OrderTracks = new List<OrderTrack>(), OrderAlbums = albums };
             var deletedAlbum = albums[1];
 
             ICollection<Cart> carts = new List<Cart>() { cart };
@@ -176,9 +176,9 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetById(It.Is<int>(t => t == 1))).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
-            moqCartService.Setup(m => m.RemoveAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 2))).Callback(() => cart.Albums.Remove(deletedAlbum));
+            moqCartService.Setup(m => m.RemoveAlbum(It.Is<int>(u => u == 1), It.Is<int>(t => t == 2))).Callback(() => cart.OrderAlbums.Remove(deletedAlbum));
             moqCartService.Setup(m => m.RemoveAlbum(It.Is<int>(u => u == 0), It.IsAny<int>()));
-            moqCartService.Setup(m => m.RemoveAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidTrackIdException>();
+            moqCartService.Setup(m => m.RemoveAlbum(It.IsAny<int>(), It.Is<int>(t => t == 0))).Throws<InvalidAlbumIdException>();
 
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
