@@ -144,9 +144,15 @@
 
         /// <summary>
         /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level.
+        /// </param>
         /// <returns>
         /// </returns>
-        public ICollection<AlbumDetailsViewModel> GetAllViewModels()
+        public ICollection<AlbumDetailsViewModel> GetAllViewModels(int? currencyCode = null, int? priceLevel = null)
         {
             ICollection<Album> albums;
             using (var repository = this.Factory.GetAlbumRepository())
@@ -154,7 +160,7 @@
                 albums = repository.GetAll(a => a.Artist);
             }
 
-            return albums.Select(ModelsMapper.GetAlbumDetailsViewModel).ToList();
+            return ServiceHelper.ConvertToAlbumDetailsViewModels(this.Factory, albums, currencyCode, priceLevel);
         }
 
         /// <summary>
