@@ -170,7 +170,7 @@
         /// </returns>
         public static GenreDetailsViewModel GetGenreDetailsViewModel(Genre genre)
         {
-            return _commonMapper.Map<GenreDetailsViewModel>(genre);
+            return _modelDetailsMapper.Map<GenreDetailsViewModel>(genre);
         }
 
         /// <summary>
@@ -310,6 +310,8 @@
                 cfg =>
                     {
                         cfg.CreateMap<Genre, GenreViewModel>();
+
+                        cfg.CreateMap<Genre, GenreDetailsViewModel>();
 
                         cfg.CreateMap<Artist, ArtistViewModel>()
                             .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))
