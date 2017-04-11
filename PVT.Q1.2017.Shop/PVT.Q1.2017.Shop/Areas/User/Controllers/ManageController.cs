@@ -19,7 +19,7 @@
     /// <summary>
     /// 
     /// </summary>
-    [ShopAuthorize(UserRoles.User, UserRoles.Admin)]
+    [ShopAuthorize(UserRoles.Customer, UserRoles.Admin)]
     public class ManageController : BaseController
     {
         /// <summary>

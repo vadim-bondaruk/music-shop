@@ -13,7 +13,7 @@
         /// Only for user
         /// </summary>
         /// <returns></returns>
-        [ShopAuthorize(UserRoles.User)]
+        [ShopAuthorize(UserRoles.Customer)]
         public ActionResult UserTest()
         {
             ViewBag.Id = this.CurrentUser.Id;

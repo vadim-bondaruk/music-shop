@@ -412,7 +412,7 @@
         /// <returns></returns>
         private UserRoles GetDefaultUserRoles()
         {
-            return UserRoles.User;
+            return UserRoles.Customer;
         }
 
     }
