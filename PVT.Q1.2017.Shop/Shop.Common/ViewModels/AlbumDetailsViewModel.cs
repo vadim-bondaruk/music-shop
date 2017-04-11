@@ -1,6 +1,7 @@
 ﻿namespace Shop.Common.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Shop.Common.Models;
@@ -16,7 +17,7 @@
         public Artist Artist { get; set; }
 
         /// <summary>
-        /// Gets or sets the artist name.
+        ///     Gets or sets the artist name.
         /// </summary>
         public string ArtistName { get; set; }
 
@@ -47,6 +48,14 @@
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}г.", ApplyFormatInEditMode = true)]
         public DateTime? ReleaseDate { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the tracks.
+        /// </summary>
+        public ICollection<Track> Tracks { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the tracks count.
+        /// </summary>
         public int TracksCount { get; set; }
     }
 }
