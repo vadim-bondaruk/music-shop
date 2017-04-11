@@ -1,5 +1,7 @@
 ﻿namespace Shop.BLL.Helpers
 {
+    using System.Collections.Generic;
+
     using AutoMapper;
 
     using Shop.Common.Models;
@@ -340,6 +342,7 @@
 
                         cfg.CreateMap<Album, AlbumDetailsViewModel>()
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
+                            .ForMember(dest => dest.Tracks, opt => opt.UseValue(new List<Track>()))
                             .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
                         cfg.CreateMap<Album, AlbumTracksListViewModel>()
