@@ -38,6 +38,14 @@ body {
     background-color: #dadada;
 }
 
+.buttons {
+    margin-top: 25px;
+}
+
+.glyphicon {
+
+}
+
 .row {
     width: 100%;
     margin: 0;
@@ -498,6 +506,25 @@ li > input { width: 100% }
 
 .new-track > .list-group > .list-group-item { height: 84px; }
 
+
+ #aPlayer > audio { width: 100% }
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm) {
+     #aPlayer {
+           overflow: hidden;width: 390px; 
+        }
+
+    #aPlayer > audio { width: 420px; }
+}
+
+@media screen and(-webkit-min-device-pixel-ratio:0) {
+    
+      #aPlayer {
+           overflow: hidden;width: 390px; 
+        }
+
+    #aPlayer > audio { width: 420px; }
+}
 
 
 .copyright { display: none; }
