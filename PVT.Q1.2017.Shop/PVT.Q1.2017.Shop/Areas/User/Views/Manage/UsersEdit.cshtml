@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Shop.Common.ViewModels.UserEditView>
+@using PVT.Q1._2017.Shop.Helpers
+@using Shop.Common.Models
 
 @{
     ViewBag.Title = "UsersEdit";
@@ -6,4 +8,6 @@
 
 <h2>UsersEdit</h2>
 
-@Html.Partial("_UsersEdit", Model);
+@Html.Partial("_UsersEdit", Model)
+
+@Html.PageLinks(ViewBag.PageInfo as PageInfo, i => Url.Action("UsersEdit", new { id = i, controller = "Manage", area = "User" }))

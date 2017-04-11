@@ -52,6 +52,7 @@
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\OrderAlbum.cs" />
     <Compile Include="Models\OrderTrack.cs" />
+    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Validators\ChangeLoginValidator.cs" />
     <Compile Include="Models\UserPrincipalSerializeModel.cs" />
     <Compile Include="Validators\Infrastructure\IUserValidator.cs" />
@@ -115,9 +116,7 @@
     <Compile Include="Validators\VoteValidator.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{C0E3B0F8-3FD8-4D53-B3B1-B98BDF5DA9CF}</Project>

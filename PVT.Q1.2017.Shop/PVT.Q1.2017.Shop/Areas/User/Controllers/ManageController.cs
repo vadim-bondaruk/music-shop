@@ -236,7 +236,9 @@
 
         public ActionResult UsersEdit(int id = 1)
         {
-            var list = _userService.GetDataPerPage(id, 10);
+            int countPerPage = 10;
+            ViewBag.PageInfo = new PageInfo { PageNumber = id, PageSize = countPerPage, TotalItems = _userService.GetUsersCount() };
+            var list = _userService.GetDataPerPage(id, countPerPage);
             var result = list.Select(u => UserMapper.GetUserEditView(u));
             return View(result);
         }
