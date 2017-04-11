@@ -260,6 +260,7 @@
     <Content Include="Mvc.sitemap" />
     <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\PlayButtonPartial.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\AudioSection.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -310,9 +311,6 @@
     <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Content\Controllers\GenresController.cs" />
     <Compile Include="Areas\Content\Controllers\TracksController.cs" />
-    <Compile Include="Areas\Helpers\BitReader.cs" />
-    <Compile Include="Areas\Helpers\ID3v2.cs" />
-    <Compile Include="Areas\Helpers\id3v2Frame.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
