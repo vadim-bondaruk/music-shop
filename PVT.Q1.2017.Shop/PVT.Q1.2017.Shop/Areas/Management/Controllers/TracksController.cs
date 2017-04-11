@@ -7,7 +7,6 @@
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
@@ -41,25 +40,29 @@
 
         /// <summary>
         /// </summary>
-        private readonly ITrackRepository tracksRepo;
+        private ITrackRepository TrackRepository;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        /// Initializes a new instance of the <see cref="TracksController"/> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        ///     The repository factory.
+        /// The repository factory.
         /// </param>
         /// <param name="artistService">
-        ///     The artist service.
+        /// The artist service.
         /// </param>
         /// <param name="artistRepository">
-        ///     The artist repository.
+        /// The artist repository.
         /// </param>
         /// <param name="genreRepository">
-        ///     The genre repository.
+        /// The genre repository.
         /// </param>
-        /// <param name="albumRepository"></param>
-        /// <param name="trackRepository"></param>
+        /// <param name="albumRepository">
+        /// The album repository.
+        /// </param>
+        /// <param name="trackRepository">
+        /// The track repository.
+        /// </param>
         public TracksController(
             IRepositoryFactory repositoryFactory,
             IArtistService artistService,
@@ -73,29 +76,41 @@
             this.artistRepository = artistRepository;
             this.genreRepository = genreRepository;
             this.albumRepository = albumRepository;
-            this.tracksRepo = trackRepository;
+            this.TrackRepository = trackRepository;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        /// Initializes a new instance of the <see cref="TracksController"/> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        ///     The repository factory.
+        /// The repository factory.
         /// </param>
         /// <param name="trackService">
-        ///     The track service.
+        /// The track service.
         /// </param>
-        /// <param name="artistService"></param>
-        /// <param name="artistRepository"></param>
-        /// <param name="genreRepository"></param>
-        /// <param name="albumRepository"></param>
+        /// <param name="artistService">
+        /// The artist service.
+        /// </param>
+        /// <param name="artistRepository">
+        /// The artist repository.
+        /// </param>
+        /// <param name="genreRepository">
+        /// The genre repository.
+        /// </param>
+        /// <param name="albumRepository">
+        /// The album repository.
+        /// </param>
+        /// <param name="trackRepository">
+        /// The track repository.
+        /// </param>
         public TracksController(
             IRepositoryFactory repositoryFactory,
             ITrackService trackService,
             IArtistService artistService,
             IArtistRepository artistRepository,
             IGenreRepository genreRepository,
-            IAlbumRepository albumRepository)
+            IAlbumRepository albumRepository,
+            ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
             this.trackService = trackService;
@@ -103,6 +118,7 @@
             this.artistRepository = artistRepository;
             this.genreRepository = genreRepository;
             this.albumRepository = albumRepository;
+            this.TrackRepository = trackRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
@@ -139,22 +155,11 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var trackManagementViewModel =
-                ManagementMapper.GetTrackManagementViewModel(this.trackService.GetTrackDetails(id));
+            var track = this.TrackRepository.GetById(id);
+            var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
             var genres = this.genreRepository.GetAll();
             trackManagementViewModel.Genres = genres;
             return this.View(trackManagementViewModel);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(TrackDetailsViewModel trackDetailsViewModel)
-        {
-            return this.View();
         }
 
         /// <summary>
