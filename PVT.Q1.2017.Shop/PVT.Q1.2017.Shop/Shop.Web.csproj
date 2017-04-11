@@ -122,6 +122,10 @@
       <HintPath>..\packages\T4MVCExtensions.4.0.0\lib\net45\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TagLib.Portable, Version=2.2.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\TagLib.Portable.1.0.4\lib\portable-net45+win+wpa81+wp8+MonoAndroid10+xamarinios10+MonoTouch10\TagLib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
@@ -253,6 +257,12 @@
     <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Content\Views\Albums\List.cshtml" />
     <Content Include="Areas\Content\Views\Albums\TracksList.cshtml" />
+    <Content Include="Mvc.sitemap" />
+    <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\PlayButtonPartial.cshtml" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datepicker-ru.js" />
     <Content Include="Scripts\del-artist.js" />
@@ -280,6 +290,8 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\openfile.dialog.js" />
+    <Content Include="Scripts\SSUhtml5Audio.js" />
+    <Content Include="Styles\SSUhtml5audio.css" />
     <Content Include="Styles\tracks.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -298,6 +310,9 @@
     <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Content\Controllers\GenresController.cs" />
     <Compile Include="Areas\Content\Controllers\TracksController.cs" />
+    <Compile Include="Areas\Helpers\BitReader.cs" />
+    <Compile Include="Areas\Helpers\ID3v2.cs" />
+    <Compile Include="Areas\Helpers\id3v2Frame.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
@@ -370,6 +385,7 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\AdminTest\UserTest.cshtml" />
     <Content Include="Views\AdminTest\AdminTest.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\PlayerPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
