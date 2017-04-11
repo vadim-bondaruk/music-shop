@@ -63,7 +63,11 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IBaseAddressRepository.cs" />
+    <Compile Include="Infrastruture\IOrderAlbumRepository.cs" />
+    <Compile Include="Infrastruture\IOrderTrackRepository.cs" />
     <Compile Include="Infrastruture\IPaymentCardRepository.cs" />
+    <Compile Include="Infrastruture\IPurchasedAlbumRepository.cs" />
+    <Compile Include="Infrastruture\IPurchasedTrackRepository.cs" />
     <Compile Include="Infrastruture\ISettingRepository.cs" />
     <Compile Include="Infrastruture\IUserPaymentMethodRepository.cs" />
     <Compile Include="Infrastruture\IUserRepository.cs" />
@@ -162,8 +166,12 @@
     <Compile Include="Infrastruture\IRepositoryFactory.cs" />
     <Compile Include="Infrastruture\IUserDataRepository.cs" />
     <Compile Include="Infrastruture\ICartRepository.cs" />
+    <Compile Include="Repositories\OrderAlbumRepository.cs" />
+    <Compile Include="Repositories\OrderTrackRepository.cs" />
     <Compile Include="Repositories\PaymentCardRepository.cs" />
     <Compile Include="Repositories\PriceLevelRepository.cs" />
+    <Compile Include="Repositories\PurchasedAlbumRepository.cs" />
+    <Compile Include="Repositories\PurchasedTrackRepository.cs" />
     <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Repositories\TrackPriceRepository.cs" />
     <Compile Include="Repositories\UserDataRepository.cs" />

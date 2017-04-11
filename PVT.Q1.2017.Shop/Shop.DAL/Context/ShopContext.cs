@@ -100,6 +100,16 @@
         /// Ordered Albums
         /// </summary>
         public DbSet<OrderAlbum> OrderAlbums { get; set; }
+
+        /// <summary>
+        /// Purchased Tracks
+        /// </summary>
+        public DbSet<PurchasedTrack> PurchasedTracks { get; set; }
+
+        /// <summary>
+        /// Purchased Albums
+        /// </summary>
+        public DbSet<PurchasedAlbum> PurchasedAlbums { get; set; }
         
         /// <summary>
         /// Gets or sets the users.
