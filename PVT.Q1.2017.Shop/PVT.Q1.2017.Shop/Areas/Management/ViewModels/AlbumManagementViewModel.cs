@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
 
@@ -15,6 +16,7 @@
         /// <summary>
         ///     Gets or sets the artist.
         /// </summary>
+        [DisplayName("Исполнитель")]
         public Artist Artist { get; set; }
 
         /// <summary>
@@ -40,6 +42,7 @@
         /// <summary>
         ///     Gets or sets the album name.
         /// </summary>
+        [DisplayName("Название")]
         public string Name { get; set; }
 
         /// <summary>
@@ -50,6 +53,7 @@
         /// <summary>
         ///     Gets or sets the album release date.
         /// </summary>
+        [DisplayName("Дата релиза")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ReleaseDate { get; set; }
@@ -57,6 +61,6 @@
         /// <summary>
         /// Gets or sets the tracks.
         /// </summary>
-        public ICollection<AlbumTrackRelation> Tracks { get; set; }
+        public ICollection<Track> Tracks { get; set; }
     }
 }
