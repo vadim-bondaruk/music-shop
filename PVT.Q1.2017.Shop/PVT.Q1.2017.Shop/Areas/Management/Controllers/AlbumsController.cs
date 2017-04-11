@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
 
@@ -21,6 +22,14 @@
         /// <summary>
         /// </summary>
         private readonly IRepositoryFactory repositoryFactory;
+
+        /// <summary>
+        /// </summary>
+        private readonly IAlbumTrackRelationRepository albumTrackRelationRepository;
+
+        /// <summary>
+        /// </summary>
+        private readonly ITrackRepository trackRepository;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
@@ -45,10 +54,14 @@
             IAlbumService albumService,
             IArtistService artistService,
             IAlbumRepository albumRepository,
-            IArtistRepository artistRepository)
+            IArtistRepository artistRepository,
+            IAlbumTrackRelationRepository albumTrackRelationRepository,
+            ITrackRepository trackRepository)
         {
             this.repositoryFactory = repositoryFactory;
             this.artistRepository = artistRepository;
+            this.albumTrackRelationRepository = albumTrackRelationRepository;
+            this.trackRepository = trackRepository;
         }
 
         /// <summary>
@@ -78,6 +91,7 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
+            var tracks = new List<Track>();
             using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
             {
                 var album = albumRepo.GetById(id, a => a.Artist);
@@ -87,6 +101,25 @@
                     if (album.Artist != null)
                     {
                         viewModel.ArtistName = album.Artist.Name;
+                    }
+
+                    using (var realtionsRepo = this.albumTrackRelationRepository)
+                    {
+                        var relations = realtionsRepo.GetAll(t => t.AlbumId == id);
+
+                        using (var tracksRepo = this.trackRepository)
+                        {
+                            foreach (var relation in relations)
+                            {
+                                var track = tracksRepo.GetById(relation.TrackId);
+                                if (track != null)
+                                {
+                                    tracks.Add(track);
+                                }
+                            }
+                        }
+
+                        viewModel.Tracks = tracks;
                     }
 
                     return this.View(viewModel);
