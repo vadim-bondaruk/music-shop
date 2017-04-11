@@ -64,7 +64,7 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        ICollection<AlbumDetailsViewModel> GetAllViewModels();
+        ICollection<AlbumDetailsViewModel> GetAllViewModels(int? currencyCode = null, int? priceLevel = null);
 
         /// <summary>
         ///     Returns all registered tracks for the specified album using the specified currency and price level for track price.
