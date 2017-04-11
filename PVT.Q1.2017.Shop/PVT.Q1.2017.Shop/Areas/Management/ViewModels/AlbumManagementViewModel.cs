@@ -1,10 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
-    using FluentValidation.Attributes;
-    using Validators;
 
     using global::Shop.Common.Models;
 
@@ -19,7 +18,12 @@
         public Artist Artist { get; set; }
 
         /// <summary>
-        /// Gets or sets the artst name.
+        ///     Gets or sets the artist id.
+        /// </summary>
+        public int ArtistId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the artst name.
         /// </summary>
         public string ArtistName { get; set; }
 
@@ -51,8 +55,8 @@
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the artist id.
+        /// Gets or sets the tracks.
         /// </summary>
-        public int ArtistId { get; set; }
+        public ICollection<AlbumTrackRelation> Tracks { get; set; }
     }
 }
