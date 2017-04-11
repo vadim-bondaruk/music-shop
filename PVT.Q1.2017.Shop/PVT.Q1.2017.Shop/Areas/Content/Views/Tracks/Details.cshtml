@@ -34,10 +34,10 @@
                 </div>
             </div>
         </div>
-        <div>
-            <a href="JavaScript:window.history.back(1)" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"> Назад</span></a>
-            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"> Правка</span></a>
-            <a href="@Url.Action("List", "Tracks", new { Area = "Content" })" class="btn btn-primary"> <span class="glyphicon glyphicon-list-alt"> Все треки</span></a>
+        <div class="buttons">
+            <a href="JavaScript:window.history.back(1)" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Назад</a>
+            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Правка</a>
+            <a href="@Url.Action("List", "Tracks", new { Area = "Content" })" class="btn btn-primary"> <span class="glyphicon glyphicon-list-alt"></span> Список</a>
         </div>
     </div>
 </div>

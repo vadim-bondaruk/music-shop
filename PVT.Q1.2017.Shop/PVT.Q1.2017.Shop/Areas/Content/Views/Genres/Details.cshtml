@@ -13,9 +13,9 @@
             @Html.DisplayTextFor(m => m.Description)
         </p>
         <div>
-            <a class="btn btn-primary" href="javascript:window.history.back(1)">Назад</a>
-            <a class="btn btn-primary" href="@Url.Action("List", "Genres")">Все жанры</a>
-            <a class="btn btn-primary" href="@Url.Action("Edit", "Genres", new { Area = "Management", id = Model.Id })">Правка</a>
+            <a class="btn btn-primary" href="javascript:window.history.back(1)"><span class="glyphicon glyphicon-backward"></span> Назад</a>
+            <a class="btn btn-primary" href="@Url.Action("List", "Genres")"><span class="glyphicon glyphicon-list-alt"></span> Все жанры</a>
+            <a class="btn btn-primary" href="@Url.Action("Edit", "Genres", new { Area = "Management", id = Model.Id })"><span class="glyphicon glyphicon-pencil"></span> Правка</a>
         </div>
     </div>
 </div>
