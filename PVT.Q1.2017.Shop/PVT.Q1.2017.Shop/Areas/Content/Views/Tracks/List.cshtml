@@ -8,12 +8,14 @@
         @foreach (var item in Model)
         {
             <li class="list-group-item">
-                <div style="display: inline-block; width: 100%" onclick="itemClick(@item.Id)">
+                @*onclick="itemClick(@item.Id)*@
+                <div style="display: inline-block; width: 100%">
                     <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(item.Image)" onerror="this.src = '/img/defuserpic.png'"/>
-                    <p>@Html.DisplayFor(modelItem => item.Name)</p>
+                    <a style="font-size: 24px" href="@Url.Action("Details", "Tracks", new { area = "Content", id = item.Id })">@Html.DisplayFor(i => item.Name)</a>
                     <a style="font-size: 24px" href="@Url.Action("Details", "Artists", new { area = "Content", id = item.Id })">@Html.DisplayFor(i => item.ArtistName)</a>
+                    @Html.Partial("_Stars")
                 </div>
-                    @Html.Partial("Audio/AudioSection", @Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = item.Id }))
+                @Html.Partial("Audio/AudioSection", @Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = item.Id }))
             </li>
         }
     </ul>
@@ -31,6 +33,6 @@
 </script>
 <script src="d:\dropbox\git\ms\pvt.q1.2017.shop\shop.common\helpers\audio\js\ssuhtml5audio.js"></script>
 @section cssStyles{
-    <link href="~/Styles/tracks.css" rel="stylesheet"/>
+    <link href="~/Content/tracks.css" rel="stylesheet" /> 
     <link href="d:\dropbox\git\ms\pvt.q1.2017.shop\shop.common\helpers\audio\css\ssuhtml5audio.css" rel="stylesheet"/>
 }
