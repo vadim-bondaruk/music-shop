@@ -1,5 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Helpers
 {
+    using System.Collections.Generic;
+
     using AutoMapper;
 
     using global::Shop.Common.Models;
@@ -194,7 +196,8 @@
                         cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
                             .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
 
-                        cfg.CreateMap<Album, AlbumManagementViewModel>();
+                        cfg.CreateMap<Album, AlbumManagementViewModel>()
+                            .ForMember(dst => dst.Tracks, opt => opt.UseValue(new List<Track>()));
 
                         cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
 
