@@ -1,8 +1,4 @@
 @using PVT.Q1._2017.Shop.Areas.Content.Extentions
 @model int
 
-@Html.ButtonWithIcon("btn btn-sm btn-success", "glyphicon glyphicon-shopping-cart", "Купить", Url.Action("AddAlbum", "Cart", new
-{
-    albumId = Model,
-    area = "Payment"
-}))
+@Html.ButtonWithIcon("btn btn-sm btn-success", "glyphicon glyphicon-shopping-cart", "Купить", "javascript:addAlbumToCart(" + Model + ")")
