@@ -74,9 +74,14 @@
 <p>
     @Html.BtnCreateAlbum()
     
-    @if (Model.Price != null)
+    @if (Model.IsPurchased)
     {
-        @Html.Partial("_BuyAlbumButton", Model.Id)
+        @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
+                                Url.Action("PurchasedTracks", "Track", new { area = "Content", id = Model.Id }))
+    }
+    else if (Model.Price != null)
+    {
+        @Html.BtnBuyTrack(Model.Id, Model.IsOrdered)
     }
     
     @Html.ActionLink("Cписок альбомов", "List", "Album", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })

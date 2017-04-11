@@ -1,9 +1,9 @@
 ﻿namespace Shop.Common.ViewModels
 {
     /// <summary>
-    /// The track view model.
+    /// The purchased track view model.
     /// </summary>
-    public class TrackViewModel
+    public class PurchasedTrackViewModel
     {
         /// <summary>
         /// Track id.
@@ -28,21 +28,6 @@
         /// <summary>
         /// The track price.
         /// </summary>
-        public PriceViewModel Price { get; set; }
-
-        /// <summary>
-        /// The track album id.
-        /// </summary>
-        public int AlbumId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the track is ordered.
-        /// </summary>
-        public bool IsOrdered { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the track is purchased.
-        /// </summary>
-        public bool IsPurchased { get; set; }
+        public byte[] TrackFile { get; set; }
     }
 }

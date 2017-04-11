@@ -259,6 +259,20 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Track"/> model to a new <see cref="PurchasedTrackViewModel"/> model.
+        /// </summary>
+        /// <param name="track">
+        /// The track DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="PurchasedTrackViewModel"/> model.
+        /// </returns>
+        public static PurchasedTrackViewModel GetPurchasedTrackViewModel(Track track)
+        {
+            return _commonMapper.Map<PurchasedTrackViewModel>(track);
+        }
+
+        /// <summary>
         /// Configures and returns a new instance of the common mapper.
         /// </summary>
         /// <returns>
@@ -296,6 +310,9 @@
                    .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
 
                 cfg.CreateMap<Setting, SettingViewModel>();
+
+                cfg.CreateMap<Track, PurchasedTrackViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
             });
 
             return commonMapperConfiguration.CreateMapper();

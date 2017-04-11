@@ -30,7 +30,9 @@ function updateUserCurrency(currencyCode) {
 function updateOrdersCount() {
     var root = getCurrentLocationRoot();
     $.get(root + "/Payment/Cart/GetOrdersCount", function (data) {
-        $("#cart-itemsCount").html(data.Count);
+        if (data.Count) {
+            $("#cart-itemsCount").html(data.Count);
+        }
     });
 }
 
