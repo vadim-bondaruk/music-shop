@@ -101,10 +101,15 @@
                 {
                     using (var albumTrackRepo = this.albumTrackRelationRepository)
                     {
-                        var albumTrackRelation = albumTrackRepo.GetAll(t => t.Track.Id == id).First();
-                        if (albumTrackRelation != null)
+                        var albumTrackRelations = albumTrackRepo.GetAll(t => t.AlbumId == id);
+                        if (albumTrackRelations == null)
                         {
-                            viewModel.Tracks.Add(trackRepo.GetById(albumTrackRelation.TrackId));
+                            return this.View(viewModel);
+                        }
+
+                        foreach (var relation in albumTrackRelations)
+                        {
+                            viewModel.Tracks.Add(trackRepo.GetById(relation.TrackId));
                         }
                     }
                 }
