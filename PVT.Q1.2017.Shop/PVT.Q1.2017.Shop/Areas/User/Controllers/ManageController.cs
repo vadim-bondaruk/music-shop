@@ -5,11 +5,9 @@
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Utils;
     using global::Shop.DAL.Infrastruture;
     using ViewModels;
     using System.Linq;
-    using System.Web.Security;
     using global::Shop.Common.ViewModels;
     using global::Shop.BLL.Utils;
     using Shop.Controllers;
@@ -17,7 +15,6 @@
     using global::Shop.Infrastructure.Enums;
     using Helpers;
     using global::Shop.BLL.Utils.Infrastructure;
-    using System.Web;
 
     /// <summary>
     /// 
@@ -241,6 +238,12 @@
             var list = _userService.GetDataPerPage(id, countPerPage);
             var result = list.Select(u => UserMapper.GetUserEditView(u));
             return View(result);
+        }
+
+        public ActionResult GetMatchingData(string term)
+        {
+            var list = _userService.GetMatchingData(term);
+            return  this.Json(list, JsonRequestBehavior.AllowGet);
         }
     }
 }

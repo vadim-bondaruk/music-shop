@@ -374,9 +374,16 @@
         {
             return Factory.GetUserRepository().GetAll().Skip((pageNumber - 1) * count).Take(count).ToList();
         }
+
         public int GetUsersCount()
         {
             return Factory.GetUserRepository().Count();
+        }
+
+
+        public ICollection<User> GetMatchingData(string pattern)
+        {
+            return Factory.GetUserRepository().GetAll().Where(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         }
         /// <summary>
         /// Get user by login or email
@@ -407,5 +414,6 @@
         {
             return UserRoles.User;
         }
+
     }
 }

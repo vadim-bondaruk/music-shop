@@ -89,6 +89,19 @@
         /// <returns></returns>
         int GetUsersCount();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         ICollection<User> GetDataPerPage(int pageNumber, int count);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        ICollection<User> GetMatchingData(string pattern);
     }
 }
