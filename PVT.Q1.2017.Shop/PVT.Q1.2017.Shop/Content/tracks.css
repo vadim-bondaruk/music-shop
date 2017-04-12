@@ -1,8 +1,16 @@
-﻿.main-center {
+﻿.artist-edit {
     display: block;
     position: relative;
     height: 100%;
     width: 100%;
+    margin-top: 30px;
+    display: block;
+    text-align: center;
+}
+
+.artist-edit img {
+    float: left;
+    height: 500px;
 }
 
 .title {
@@ -27,11 +35,7 @@
     margin-bottom: 25px;
 }
 
-.main-center {
-    margin-top: 30px;
-    display: block;
-    text-align: center;
-}
+
 
 .dropdown-item:hover, .dropdown-toggle:hover {
     text-decoration: #f5fffa;
@@ -84,6 +88,30 @@ body {
     vertical-align: top;
     height: 500px;
     width: 600px;
+}
+
+.album-new .list-back {
+    height: 299px;
+    background: #ffffff;
+}
+.album-new .center {
+    display: inline-block;
+}
+.album-new img {
+    float: left;
+    height: 300px;
+}
+.album-new .buttons {
+    text-align: center;
+}
+
+.album-new .top {
+    text-align: center;
+    height: 300px;
+}
+.album-new .details {
+    display: inline-block;
+    width: 500px;
 }
 
 .details > ul {
@@ -289,10 +317,6 @@ li > input { width: 100% }
     box-shadow: 0 0 5px orange;
 }
 
-input[readonly] {
-     cursor: pointer;
-}
-
 .album-edit {
     text-align: left;
 }
@@ -460,6 +484,21 @@ input[readonly] {
 .main-track-list > ul {
     display: inline-block;
     width: 90%;
+}
+
+.main-track-list img {
+    display: inline-block;
+}
+
+.main-track-list .details {
+    display: inline-block;
+    vertical-align: middle;
+    width: 300px;
+    margin-top: 5px;
+}
+
+.main-track-list div a {
+    color: black;
 }
 
 .main-track-list > ul > li {

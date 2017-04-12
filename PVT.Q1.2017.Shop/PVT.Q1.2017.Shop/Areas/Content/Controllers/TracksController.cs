@@ -145,6 +145,7 @@
             this.Response.AddHeader("Content-Accept", this.Response.ContentType);
             this.Response.AddHeader("Content-Length", desSize.ToString());
             this.Response.AddHeader("Content-Range", string.Format("bytes {0}-{1}/{2}", startbyte, endbyte, fSize));
+
             var stream = new MemoryStream(song, (int)startbyte, (int)desSize);
             return new FileStreamResult(stream, this.Response.ContentType);
         }

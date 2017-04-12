@@ -155,10 +155,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Shop.mdf" />
-    <Content Include="App_Data\Shop_log.ldf">
-      <DependentUpon>Shop.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapStars.css" />
@@ -228,6 +224,8 @@
     <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\NewAlbumTrackButtonPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\TrackListItem.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -417,6 +415,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />

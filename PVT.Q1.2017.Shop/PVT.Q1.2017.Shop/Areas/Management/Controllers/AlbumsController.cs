@@ -148,7 +148,7 @@
 
                 using (var artistRepo = this.artistRepository)
                 {
-                    var artist = artistRepo.GetById(viewModel.Artist.Id);
+                    var artist = artistRepo.GetById(viewModel.ArtistId);
                     if (artist != null)
                     {
                         artist.Name = viewModel.ArtistName;
