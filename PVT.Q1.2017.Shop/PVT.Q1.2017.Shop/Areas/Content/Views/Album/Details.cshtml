@@ -73,7 +73,7 @@
 
 <p>
     @Html.BtnCreateAlbum()
-    
+
     @if (Model.IsPurchased)
     {
         @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
@@ -81,8 +81,8 @@
     }
     else if (Model.Price != null)
     {
-        @Html.BtnBuyTrack(Model.Id, Model.IsOrdered)
+        @Html.BtnBuyAlbum(Model.Id, Model.IsOrdered)
     }
-    
+
     @Html.ActionLink("Cписок альбомов", "List", "Album", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })
 </p>
