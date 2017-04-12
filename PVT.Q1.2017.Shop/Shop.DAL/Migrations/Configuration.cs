@@ -20,10 +20,10 @@ namespace Shop.DAL.Migrations
             AddDefaultCurrencyRates(context);
             AddDefaultGenres(context);
             AddDefaultPriceLevels(context);
-            AddDefaultUsers(context);
 
 #if DEBUG
             AddDefaultArtistsAndTracks(context);
+            AddDefaultUsers(context);
 #endif
         }
 

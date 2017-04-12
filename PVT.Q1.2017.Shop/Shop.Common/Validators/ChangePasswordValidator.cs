@@ -21,8 +21,8 @@
             RuleFor(u => u.Password)
                 .Matches(@"^(?=.*\w)(?=.*\d)(?=.*[!-*]).[^\s]*$")
                 .WithMessage("Пароль должен содержать символы латинского алфавита, цифры и спецсимволы");
-            RuleFor(u => u.Password).Length(7, 50)
-                .WithMessage("Пароль должен содержать не менее 7 символов");
+            RuleFor(u => u.Password).Length(4, 50)
+                .WithMessage("Пароль должен содержать не менее 4 символов");
             RuleFor(u => u.Password)
                 .NotEqual(u => u.OldPassword)
                 .WithMessage("Новый пароль не должен совпадать со старым");
