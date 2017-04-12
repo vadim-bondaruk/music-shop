@@ -44,12 +44,17 @@
                 @Html.BtnDeleteAlbum(album.Id)
                 @(album.Price != null ? Html.BtnEditAlbumPrice(album.Id) : Html.BtnCreateAlbumPrice(album.Id))
             </td>
-            @if (album.Price != null)
-            {
-                <td>
-                    @Html.Partial("_BuyAlbumButton", album.Id)
-                </td>
-            }
+            <td>
+                @if (album.IsPurchased)
+                {
+                    @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
+                                         Url.Action("PurchasedTracks", "Track", new { area = "Content", albumId = album.Id }))
+                }
+                else if (album.Price != null)
+                {
+                    @Html.BtnBuyAlbum(album.Id, album.IsOrdered)
+                }
+            </td>
         </tr>
     }
 </table>

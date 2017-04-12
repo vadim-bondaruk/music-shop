@@ -34,5 +34,15 @@
         /// The track album id.
         /// </summary>
         public int AlbumId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the track is ordered.
+        /// </summary>
+        public bool IsOrdered { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the track is purchased.
+        /// </summary>
+        public bool IsPurchased { get; set; }
     }
 }

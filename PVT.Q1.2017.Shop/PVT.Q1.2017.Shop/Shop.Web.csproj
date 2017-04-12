@@ -209,9 +209,8 @@
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_BuyTrackButton.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_BuyAlbumButton.cshtml" />
     <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
     <Content Include="Areas\Management\Views\Album\AddTracks.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -247,6 +246,7 @@
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Extentions\ButtonsHelper.cs" />
+    <Compile Include="Areas\Content\Extentions\BuyButtonHelper.cs" />
     <Compile Include="Areas\Content\Extentions\ManagementButtonsHelper.cs" />
     <Compile Include="Areas\Content\Extentions\PriceButtonHelper.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
@@ -264,6 +264,7 @@
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
+    <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />

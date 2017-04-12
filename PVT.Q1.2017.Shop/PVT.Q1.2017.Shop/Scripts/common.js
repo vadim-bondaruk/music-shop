@@ -1,14 +1,22 @@
-﻿function addAlbumToCart(albumId) {
+﻿function addAlbumToCart(sender, albumId) {
+    $(sender).addClass('disabled');
     var root = getCurrentLocationRoot();
     $.post(root + "/Payment/Cart/AddAlbum", { albumId: albumId }, function () {
         updateOrdersCount();
+    }).fail(function () {
+        $(sender).removeClass('disabled');
+        alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
     });
 }
 
-function addTrackToCart(trackId) {
+function addTrackToCart(sender, trackId) {
+    $(sender).addClass('disabled');
     var root = getCurrentLocationRoot();
     $.post(root + "/Payment/Cart/AddTrack", { trackId: trackId }, function () {
         updateOrdersCount();
+    }).fail(function () {
+        $(sender).removeClass('disabled');
+        alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
     });
 }
 
