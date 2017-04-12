@@ -194,8 +194,10 @@
             {
                 count += cart.OrderTracks.Count;
                 count += cart.OrderAlbums.Count;
-
-                Session["OrdersCount"] = count;
+                if (Session != null)
+                {
+                    Session["OrdersCount"] = count;
+                }
             }
 
             return Json(new { Count = count }, JsonRequestBehavior.AllowGet);
