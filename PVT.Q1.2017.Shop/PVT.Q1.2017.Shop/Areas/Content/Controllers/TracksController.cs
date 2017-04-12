@@ -54,6 +54,18 @@
         }
 
         /// <summary>
+        ///     Shows all tracks.
+        /// </summary>
+        /// <returns>
+        ///     All tracks view.
+        /// </returns>
+        public ActionResult List()
+        {
+            var tracks = this.TrackService.GetTrackDetailsViewModels();
+            return this.View(tracks);
+        }
+
+        /// <summary>
         ///     Shows track info.
         /// </summary>
         /// <param name="id">The track id.</param>
@@ -91,8 +103,6 @@
             fileStream.Seek(0, SeekOrigin.Begin);
 
             return new FileStreamResult(fileStream, "audio/mpeg");
-
-            // return (new FileContentResult(data, "audio/mpeg"));
         }
 
         /// <summary>
@@ -119,6 +129,11 @@
         {
             var track = this.trackRepository.GetById(id, p => p.Artist);
             var song = track.TrackFile;
+            if (song == null)
+            {
+                return null;
+            }
+
             long fSize = song.Length;
             long startbyte = 0;
             var endbyte = fSize - 1;
@@ -148,18 +163,6 @@
 
             var stream = new MemoryStream(song, (int)startbyte, (int)desSize);
             return new FileStreamResult(stream, this.Response.ContentType);
-        }
-
-        /// <summary>
-        ///     Shows all tracks.
-        /// </summary>
-        /// <returns>
-        ///     All tracks view.
-        /// </returns>
-        public ActionResult List()
-        {
-            var tracks = this.TrackService.GetTrackDetailsViewModels();
-            return this.View(tracks);
         }
 
         /// <summary>
