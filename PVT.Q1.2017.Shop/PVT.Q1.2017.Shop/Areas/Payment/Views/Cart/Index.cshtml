@@ -17,28 +17,28 @@
     <form action="../Payment/Cart/DeleteTrack" method="post">
         <br />
         <br />
-        <b>Tracks</b>
+        <b>Композиции</b>
+        <br />
         <br />
         <table border="1" cellpadding="3">
             <thead>
                 <tr>
-                    <th><font color="blue">Исполнитель</font></th>
+                    <th style="text-align:center;"><font color="blue">Исполнитель</font></th>
                     <th style="text-align:center;"><font color="blue">Оценка</font></th>
-                    <th><font color="blue">Название песни</font></th>
-                    <th><font color="blue">Продолжительность</font></th>
-                    <th><font color="blue">Цена</font></th>
+                    <th style="text-align:center;"><font color="blue">Название композиции</font></th>
+                    <th style="text-align:center;"><font color="blue">Жанр</font></th>
+                    <th style="text-align:center;"><font color="blue">Цена</font></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var anyTrack in Model.Tracks)
                 {
                     <tr>
-                        <td>@anyTrack.Artist.Name</td>
-                        <td width="150">@anyTrack.Rating.VotesCount</td>
-                        <td>@anyTrack.Name</td>
-                        <td>@anyTrack.Duration</td>
-                        <td>@anyTrack.Price.Amount @Model.CurrencyShortName</td>
-                        <td></td>
+                        <td width="128" align="center">@anyTrack.Artist.Name</td>
+                        <td width="128">@Html.Partial("_Rating", anyTrack.Rating.Rating)</td>
+                        <td width="256" align="center">@anyTrack.Name</td>
+                        <td width="64" align="center">@anyTrack.Genre.Name</td>
+                        <td width="96" align="center">@anyTrack.Price.Amount @Model.CurrencyShortName</td>
                         <td><button type="submit" name="trackId" value=@anyTrack.Id>Удалить</button></td>
                     </tr>
                 }
@@ -47,23 +47,26 @@
         </form>
         <br />
     <form action="../Payment/Cart/DeleteAlbum" method="post">
-        <b>Albums</b>
+        <b>Альбомы</b>
+        <br />
         <br />
         <table border="1" cellpadding="3">
             <thead>
                 <tr>
-                    <th><font color="blue">Исполнитель</font></th>
-                    <th><font color="blue">Название альбома</font></th>
-                    <th><font color="blue">Цена</font></th>
+                    <th style="text-align:center;"><font color="blue">Исполнитель</font></th>
+                    <th style="text-align:center;"><font color="blue">Название альбома</font></th>
+                    <th style="text-align:center;"><font color="blue">Количество композиций</font></th>
+                    <th style="text-align:center;"><font color="blue">Цена</font></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var anyAlbum in Model.Albums)
                 {
                     <tr>
-                        <td>@anyAlbum.Artist.Name</td>
-                        <td>@anyAlbum.Name</td>
-                        <td>@anyAlbum.Price.Amount @Model.CurrencyShortName</td>
+                        <td width="128" align="center">@anyAlbum.Artist.Name</td>
+                        <td width="256" align="center">@anyAlbum.Name</td>
+                        <td width="192" align="center">@anyAlbum.TracksCount</td>
+                        <td width="96" align="center">@anyAlbum.Price.Amount @Model.CurrencyShortName</td>
                         <td><button type="submit" name="albumId" value=@anyAlbum.Id>Удалить</button></td>
                     </tr>
                 }
@@ -87,3 +90,8 @@
     }
 </body>
 </html>
+
+@section cssStyles
+{
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
+}
