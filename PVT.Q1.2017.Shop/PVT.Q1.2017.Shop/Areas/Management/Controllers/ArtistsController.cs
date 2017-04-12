@@ -65,7 +65,7 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var artist = ManagementMapper.GetArtistManagementViewModel(this.artistService.GetArtistDetailsViewModel(id));
+            var artist = ManagementMapper.GetArtistManagementViewModel(this.artistService.GetArtistDetails(id));
             return this.View(artist);
         }
 

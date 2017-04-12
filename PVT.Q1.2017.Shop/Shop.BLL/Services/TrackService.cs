@@ -2,148 +2,45 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
-    using Shop.BLL.Exceptions;
-    using Shop.BLL.Helpers;
-    using Shop.BLL.Services.Infrastructure;
-    using Shop.Common.Models;
-    using Shop.Common.ViewModels;
-    using Shop.DAL.Infrastruture;
+    using Common.Models;
+    using Common.ViewModels;
+    using DAL.Infrastruture;
+    using Exceptions;
+    using Helpers;
+    using Infrastructure;
 
     /// <summary>
-    ///     The track service
+    /// The track service
     /// </summary>
     public class TrackService : BaseService, ITrackService
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TrackService" /> class.
+        /// Initializes a new instance of the <see cref="TrackService"/> class.
         /// </summary>
         /// <param name="factory">
-        ///     The  repositories factory.
+        /// The  repositories factory.
         /// </param>
-        public TrackService(IRepositoryFactory factory)
-            : base(factory)
+        public TrackService(IRepositoryFactory factory) : base(factory)
         {
         }
 
         /// <summary>
-        ///     Returns all albums which contain the specified track using the specified currency and price level.
-        /// </summary>
-        /// <param name="trackId">The track id.</param>
-        /// <param name="currencyCode">
-        ///     The currency code for album price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevelId">
-        ///     The price level for album price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        ///     The current user id.
-        /// </param>
-        /// <returns>
-        ///     All albums which contain the specified track.
-        /// </returns>
-        public TrackAlbumsListViewModel GetAlbumsList(
-            int trackId,
-            int? currencyCode = null,
-            int? priceLevelId = null,
-            int? userId = null)
-        {
-            var trackAlbumsListViewModel = this.CreateTrackAlbumsListViewModel(trackId);
-
-            ICollection<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
-            {
-                albums = repository.GetAll(
-                    a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id),
-                    a => a.Artist);
-            }
-
-            trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(
-                this.Factory,
-                albums,
-                currencyCode,
-                priceLevelId,
-                userId);
-            return trackAlbumsListViewModel;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public ICollection<TrackDetailsViewModel> GetArtistTracksList(int id)
-        {
-            var trackDetailsViewModelList = new List<TrackDetailsViewModel>();
-            using (var repository = this.Factory.GetTrackRepository())
-            {
-                var tracks = repository.GetAll(t => t.Artist.Id == id, t => t.Artist);
-                trackDetailsViewModelList.AddRange(tracks.Select(ModelsMapper.GetTrackDetailsViewModel));
-            }
-
-            return trackDetailsViewModelList;
-        }
-
-        /// <summary>
-        ///     Return all tracks that the specified user have bought.
-        /// </summary>
-        /// <param name="userId">
-        ///     The user id.
-        /// </param>
-        /// <returns>
-        ///     All tracks that the specified user have bought.
-        /// </returns>
-        public ICollection<PurchasedTrackViewModel> GetPurchasedTracks(int userId)
-        {
-            ICollection<Track> tracks;
-            using (var repository = this.Factory.GetPurchasedTrackRepository())
-            {
-                tracks =
-                    repository.GetAll(p => p.UserId == userId, p => p.Track, p => p.Track.Artist)
-                        .Select(p => p.Track)
-                        .ToList();
-            }
-
-            var trackViewModels = new List<PurchasedTrackViewModel>();
-            using (var repository = this.Factory.GetVoteRepository())
-            {
-                foreach (var track in tracks)
-                {
-                    var trackViewModel = ModelsMapper.GetPurchasedTrackViewModel(track);
-                    if (trackViewModel != null)
-                    {
-                        trackViewModel.Rating = repository.GetAverageMark(track.Id);
-                        trackViewModels.Add(trackViewModel);
-                    }
-                }
-            }
-
-            return trackViewModels;
-        }
-
-        /// <summary>
-        ///     Returns the track details using the specified currency and price level for track price.
+        /// Returns the track details using the specified currency and price level for track price.
         /// </summary>
         /// <param name="currencyCode">
-        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// The currency code for track price. If it doesn't specified than default currency is used.
         /// </param>
         /// <param name="priceLevelId">
-        ///     The price level for track price. If it doesn't specified than default price level is used.
+        /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <param name="id">The track id.</param>
         /// <param name="userId">
-        ///     The current user id.
+        /// The current user id.
         /// </param>
         /// <returns>
-        ///     The information about track with the specified <paramref name="id" /> or <b>null</b> if track doesn't exist.
+        /// The information about track with the specified <paramref name="id"/> or <b>null</b> if track doesn't exist.
         /// </returns>
-        public TrackDetailsViewModel GetTrackDetails(
-            int id,
-            int? currencyCode = null,
-            int? priceLevelId = null,
-            int? userId = null)
+        public TrackDetailsViewModel GetTrackDetails(int id, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
             Track track;
             using (var repository = this.Factory.GetTrackRepository())
@@ -165,14 +62,10 @@
 
             using (var repository = this.Factory.GetTrackPriceRepository())
             {
-                using (var currencyRatesrepository = this.Factory.GetCurrencyRateRepository())
+                using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
                 {
-                    trackViewModel.Price = PriceHelper.GetTrackPrice(
-                        repository,
-                        currencyRatesrepository,
-                        id,
-                        currencyCode.Value,
-                        priceLevelId.Value);
+                    trackViewModel.Price =
+                        PriceHelper.GetTrackPrice(repository, currencyRatesrepository, id, currencyCode.Value, priceLevelId.Value);
                 }
             }
 
@@ -185,86 +78,38 @@
 
             if (userId != null)
             {
-                using (var repository = this.Factory.GetOrderTrackRepository())
+                using (var repository = Factory.GetOrderTrackRepository())
                 {
                     trackViewModel.IsOrdered =
-                        repository.FirstOrDefault(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id)
-                        != null;
+                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
                 }
 
-                using (var repository = this.Factory.GetPurchasedTrackRepository())
+                using (var repository = Factory.GetPurchasedTrackRepository())
                 {
                     trackViewModel.IsPurchased =
-                        repository.FirstOrDefault(p => p.UserId == userId && p.TrackId == trackViewModel.Id) != null;
+                            repository.Exist(p => p.UserId == userId && p.TrackId == trackViewModel.Id);
                 }
             }
 
             return trackViewModel;
         }
 
-
         /// <summary>
+        /// Returns all registered tracks using the specified currency and price level for track price.
         /// </summary>
         /// <param name="currencyCode">
-        ///     The currency code.
-        /// </param>
-        /// <param name="priceLevelId">
-        ///     The price level id.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public ICollection<TrackDetailsViewModel> GetTrackDetailsViewModels(
-            int? currencyCode = null,
-            int? priceLevelId = null)
-        {
-            ICollection<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(t => t.Artist, t => t.Genre);
-            }
-
-            var viewModelsCollection = new List<TrackDetailsViewModel>();
-
-            foreach (var track in tracks)
-            {
-                var trackViewModel = ModelsMapper.GetTrackDetailsViewModel(track);
-                trackViewModel.ArtistName = track.Artist.Name;
-                if (currencyCode == null)
-                {
-                    currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
-                }
-
-                if (priceLevelId == null)
-                {
-                    priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
-                }
-
-                trackViewModel.Rating = ServiceHelper.CalculateTrackRating(this.Factory, trackViewModel.Id);
-                viewModelsCollection.Add(trackViewModel);
-            }
-
-            return viewModelsCollection;
-        }
-
-        /// <summary>
-        ///     Returns all registered tracks using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="currencyCode">
-        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// The currency code for track price. If it doesn't specified than default currency is used.
         /// </param>
         /// <param name="priceLevel">
-        ///     The price level for track price. If it doesn't specified than default price level is used.
+        /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <param name="userId">
-        ///     The current user id.
+        /// The current user id.
         /// </param>
         /// <returns>
-        ///     All registered tracks.
+        /// All registered tracks.
         /// </returns>
-        public ICollection<TrackViewModel> GetTracksList(
-            int? currencyCode = null,
-            int? priceLevel = null,
-            int? userId = null)
+        public ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetTrackRepository())
@@ -276,10 +121,10 @@
         }
 
         /// <summary>
-        ///     Returns all tracks which don't have price.
+        /// Returns all tracks which don't have price.
         /// </summary>
         /// <returns>
-        ///     All tracks without price configured.
+        /// All tracks without price configured.
         /// </returns>
         public ICollection<TrackViewModel> GetTracksWithoutPrice()
         {
@@ -293,24 +138,21 @@
         }
 
         /// <summary>
-        ///     Returns all tracks with price specified using the specified currency and price level for track price.
+        /// Returns all tracks with price specified using the specified currency and price level for track price.
         /// </summary>
         /// <param name="currencyCode">
-        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// The currency code for track price. If it doesn't specified than default currency is used.
         /// </param>
         /// <param name="priceLevel">
-        ///     The price level for track price. If it doesn't specified than default price level is used.
+        /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <param name="userId">
-        ///     The current user id.
+        /// The current user id.
         /// </param>
         /// <returns>
-        ///     All tracks with price specified.
+        /// All tracks with price specified.
         /// </returns>
-        public ICollection<TrackViewModel> GetTracksWithPrice(
-            int? currencyCode = null,
-            int? priceLevel = null,
-            int? userId = null)
+        public ICollection<TrackViewModel> GetTracksWithPrice(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetTrackRepository())
@@ -322,16 +164,80 @@
         }
 
         /// <summary>
-        ///     Creates a new instance of the <see cref="TrackAlbumsListViewModel" /> type.
+        /// Returns all albums which contain the specified track using the specified currency and price level.
         /// </summary>
-        /// <param name="trackId">
-        ///     The track id.
+        /// <param name="trackId">The track id.</param>
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevelId">
+        /// The price level for album price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
         /// </param>
         /// <returns>
-        ///     A new instance of the <see cref="TrackAlbumsListViewModel" /> type.
+        /// All albums which contain the specified track.
+        /// </returns>
+        public TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
+        {
+            TrackAlbumsListViewModel trackAlbumsListViewModel = this.CreateTrackAlbumsListViewModel(trackId);
+
+            ICollection<Album> albums;
+            using (var repository = this.Factory.GetAlbumRepository())
+            {
+                albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id), a => a.Artist);
+            }
+
+            trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId, userId);
+            return trackAlbumsListViewModel;
+        }
+
+        /// <summary>
+        /// Return all tracks that the specified user have bought.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// All tracks that the specified user have bought.
+        /// </returns>
+        public ICollection<PurchasedTrackViewModel> GetPurchasedTracks(int userId)
+        {
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetPurchasedTrackRepository())
+            {
+                tracks = repository.GetAll(p => p.UserId == userId, p => p.Track, p => p.Track.Artist).Select(p => p.Track).ToList();
+            }
+
+            var trackViewModels = new List<PurchasedTrackViewModel>();
+            using (var repository = Factory.GetVoteRepository())
+            {
+                foreach (var track in tracks)
+                {
+                    var trackViewModel = ModelsMapper.GetPurchasedTrackViewModel(track);
+                    if (trackViewModel != null)
+                    {
+                        trackViewModel.Rating = repository.GetAverageMark(track.Id);
+                        trackViewModels.Add(trackViewModel);
+                    }
+                }
+            }
+
+            return trackViewModels;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="TrackAlbumsListViewModel"/> type.
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// A new instance of the <see cref="TrackAlbumsListViewModel"/> type.
         /// </returns>
         /// <exception cref="EntityNotFoundException{T}">
-        ///     When a track with the specified id doesn't exist.
+        /// When a track with the specified id doesn't exist.
         /// </exception>
         private TrackAlbumsListViewModel CreateTrackAlbumsListViewModel(int trackId)
         {

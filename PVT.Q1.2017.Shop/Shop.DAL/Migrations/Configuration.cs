@@ -116,6 +116,11 @@ namespace Shop.DAL.Migrations
                 }});
             }
 
+            if (!context.Set<Setting>().Any())
+            {
+                context.Set<Setting>().AddOrUpdate(new[] { new Setting { DefaultCurrencyId = 1 }});
+            }
+
             context.SaveChanges();
         }
 

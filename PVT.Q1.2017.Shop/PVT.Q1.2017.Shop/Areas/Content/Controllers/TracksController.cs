@@ -61,8 +61,8 @@
         /// </returns>
         public ActionResult List()
         {
-            var tracks = this.TrackService.GetTrackDetailsViewModels();
-            return this.View(tracks);
+            // var tracks = this.TrackService.GetTrackDetailsViewModels();
+            return this.View(/*tracks*/);
         }
 
         /// <summary>
@@ -171,8 +171,9 @@
         /// </returns>
         public ActionResult TrackList(int id)
         {
-            var tracks = this.TrackService.GetArtistTracksList(id);
-            return this.View("List", tracks);
+            /*var tracks = this.TrackService.GetArtistTracksList(id);
+            return this.View("List", tracks);*/
+            return View();
         }
 
         /// <summary>

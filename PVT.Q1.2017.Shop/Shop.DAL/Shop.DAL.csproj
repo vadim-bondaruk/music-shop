@@ -128,13 +128,9 @@
     <Compile Include="Migrations\201704101650192_AddSettingTableForAdmin.Designer.cs">
       <DependentUpon>201704101650192_AddSettingTableForAdmin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704101303272_TrackFileName.cs" />
-    <Compile Include="Migrations\201704101303272_TrackFileName.Designer.cs">
-      <DependentUpon>201704101303272_TrackFileName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704111202179_merge 11.04.cs" />
-    <Compile Include="Migrations\201704111202179_merge 11.04.Designer.cs">
-      <DependentUpon>201704111202179_merge 11.04.cs</DependentUpon>
+    <Compile Include="Migrations\201704122317446_TrackFileName.cs" />
+    <Compile Include="Migrations\201704122317446_TrackFileName.Designer.cs">
+      <DependentUpon>201704122317446_TrackFileName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -253,11 +249,8 @@
     <EmbeddedResource Include="Migrations\201704101650192_AddSettingTableForAdmin.resx">
       <DependentUpon>201704101650192_AddSettingTableForAdmin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704101303272_TrackFileName.resx">
-      <DependentUpon>201704101303272_TrackFileName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704111202179_merge 11.04.resx">
-      <DependentUpon>201704111202179_merge 11.04.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704122317446_TrackFileName.resx">
+      <DependentUpon>201704122317446_TrackFileName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
