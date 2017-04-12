@@ -9,12 +9,10 @@
 <div>
     <img src="~/img/success.png" />
     <p>Вы будете перенаправлены на главную страницу через 5 секунд....</p>
-    <p>В случае если этого не произошло нажмите @Html.ActionLink("эту ссылку", "Index", new { Controller = "Home" })</p>
+    <p>В случае если этого не произошло нажмите @Html.ActionLink("эту ссылку", "Index", new { Controller = "Home" , Area = "" })</p>
 </div>
 
-
-
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 
     function back2main(){

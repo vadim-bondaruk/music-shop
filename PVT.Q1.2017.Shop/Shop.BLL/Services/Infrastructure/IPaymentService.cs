@@ -16,7 +16,7 @@
 
         string CreatePaymentWithCreditCard();
 
-        string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session, CartViewModel cart);
+        string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session, CartViewModel cart = null);
 
         string PaymentWithPaypalDemo(HttpRequestBase Request, HttpSessionStateBase Session);
 

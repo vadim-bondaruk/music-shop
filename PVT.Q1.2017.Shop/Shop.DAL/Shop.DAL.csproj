@@ -66,6 +66,7 @@
     <Compile Include="Infrastruture\IOrderAlbumRepository.cs" />
     <Compile Include="Infrastruture\IOrderTrackRepository.cs" />
     <Compile Include="Infrastruture\IPaymentCardRepository.cs" />
+    <Compile Include="Infrastruture\IPaymentTransactionRepository.cs" />
     <Compile Include="Infrastruture\IPurchasedAlbumRepository.cs" />
     <Compile Include="Infrastruture\IPurchasedTrackRepository.cs" />
     <Compile Include="Infrastruture\ISettingRepository.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Repositories\OrderAlbumRepository.cs" />
     <Compile Include="Repositories\OrderTrackRepository.cs" />
     <Compile Include="Repositories\PaymentCardRepository.cs" />
+    <Compile Include="Repositories\PaymentTransactionRepository.cs" />
     <Compile Include="Repositories\PriceLevelRepository.cs" />
     <Compile Include="Repositories\PurchasedAlbumRepository.cs" />
     <Compile Include="Repositories\PurchasedTrackRepository.cs" />

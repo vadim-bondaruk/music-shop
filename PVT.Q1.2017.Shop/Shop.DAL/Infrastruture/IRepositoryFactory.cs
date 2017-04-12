@@ -129,6 +129,14 @@ namespace Shop.DAL.Infrastruture
         IUserPaymentMethodRepository GetUserPaymentMethodRepository();
 
         /// <summary>
+        /// Returns the payment transaction repository.
+        /// </summary>
+        /// <returns>
+        /// The payment transaction repository.
+        /// </returns>
+        IPaymentTransactionRepository GetPaymentTransactionRepository();
+
+        /// <summary>
         /// Returns the user repository.
         /// </summary>
         /// <returns>

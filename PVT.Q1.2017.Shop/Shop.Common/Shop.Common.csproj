@@ -52,6 +52,7 @@
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\OrderAlbum.cs" />
     <Compile Include="Models\OrderTrack.cs" />
+    <Compile Include="Models\PaymentTransaction.cs" />
     <Compile Include="Models\PurchasedAlbum.cs" />
     <Compile Include="Models\PurchasedTrack.cs" />
     <Compile Include="Models\UserPrincipalSerializeModel.cs" />
