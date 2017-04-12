@@ -1,45 +1,48 @@
 ﻿namespace Shop.Common.ViewModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web;
 
     /// <summary>
-    /// The artist details view model.
+    ///     The artist details view model.
     /// </summary>
     public class ArtistDetailsViewModel
     {
         /// <summary>
-        /// Artist id.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Artist name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Artist biography.
+        ///     Artist biography.
         /// </summary>
         public string Biography { get; set; }
 
         /// <summary>
-        /// Artist birthday.
+        ///     Artist birthday.
         /// </summary>
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}г.", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { get; set; }
 
         /// <summary>
-        /// Artist photo.
+        ///     Artist id.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        ///     Artist name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the photo.
         /// </summary>
         public byte[] Photo { get; set; }
 
         /// <summary>
-        /// The number of the artist tracks.
+        /// Gets or sets the posted photo.
         /// </summary>
+        public HttpPostedFileBase PostedPhoto { get; set; }
+
         public int TracksCount { get; set; }
 
-        /// <summary>
-        /// The number of the artist albums.
-        /// </summary>
         public int AlbumsCount { get; set; }
     }
 }

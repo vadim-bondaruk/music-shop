@@ -138,6 +138,6 @@
             }
 
             return File(trackViewModel.TrackSample, "audio/mp3");
-        } 
+        }
     }
 }

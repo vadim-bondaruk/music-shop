@@ -3,4 +3,31 @@
 <li>@Html.ActionLink("Альбомы", "List", "Album", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Треки", "List", "Track", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
+<li class="dropdown-item" style="height: 50px; display: inline-block">
+    <div class="dropdown" id="purple-dropdown" style="padding: 15px 15px 15px 15px">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="color: #999; background-color: #222222; text-decoration: none">Меню<b class="caret" style="border-color: #222222"></b></a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li>
+                <a href="@Url.Action("New","Artists", new {area="Management"})">Новый исполнитель</a>
+            </li>
+            <li>
+                <a href="@Url.Action("New","Genres", new {area="Management"})">Новый жанр</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="@Url.Action("List","Tracks", new {area="Content"})">Треки</a>
+            </li>
+            <li>
+                <a href="@Url.Action("List","Artists", new {area="Content"})">Исполнители</a>
+            </li> 
+            <li>
+                <a href="@Url.Action("List","Albums", new {area="Content"})">Альбомы</a>
+            </li>
+            <li>
+                <a href="@Url.Action("List","Genres", new {area="Content"})">Жанры</a>
+            </li>
+        </ul>
+    </div>
+</li>
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
