@@ -14,6 +14,8 @@
 <body>
     @if (!Model.IsEmpty)
     {
+        if (Model.Tracks.Count > 0)
+        {
     <form action="../Payment/Cart/DeleteTrack" method="post">
         <br />
         <br />
@@ -45,7 +47,10 @@
             </tbody>
         </table>
         </form>
+        }
         <br />
+        if (Model.Albums.Count > 0)
+        {
     <form action="../Payment/Cart/DeleteAlbum" method="post">
         <b>Альбомы</b>
         <br />
@@ -73,6 +78,7 @@
             </tbody>
         </table>
     </form>
+        }
     <br />
     <form action="../Payment/Paypal/PaymentWithPaypal" method="post">
         Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
