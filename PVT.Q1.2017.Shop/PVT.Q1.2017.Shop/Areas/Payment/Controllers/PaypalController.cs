@@ -90,5 +90,21 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
                 return RedirectToAction("Failure", "Paypal", new { Area = "Payment" });
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult PaymentWithPaypal()
+        {
+            var status = _paymentService.PaymentWithPaypal(this.Request, this.Session);
+
+            if (status.StartsWith("http"))
+            {
+                return Redirect(status);
+            }
+            else
+            {
+                return RedirectToAction(status, "Paypal", new { Area = "Payment" });
+            }
+        }
     }
 }
