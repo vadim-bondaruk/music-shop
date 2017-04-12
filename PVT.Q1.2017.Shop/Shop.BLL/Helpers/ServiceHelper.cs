@@ -22,9 +22,9 @@
         internal static CurrencyViewModel GetDefaultCurrency(IRepositoryFactory repositoryFactory)
         {
             Currency currencyDto;
-            using (var repository = repositoryFactory.GetCurrencyRepository())
+            using (var repository = repositoryFactory.GetSettingRepository())
             {
-                currencyDto = repository.GetDefaultCurrency();
+                currencyDto = repository.FirstOrDefault(s => !s.IsDeleted)?.DefaultCurrency;
             }
 
             return ModelsMapper.GetCurrencyViewModel(currencyDto);

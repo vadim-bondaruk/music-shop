@@ -16,6 +16,8 @@
 
         public SettingRepositoryMoq()
         {
+            _setting.Add(new Setting { DefaultCurrencyId = 1, DefaultCurrency = new Currency { Code = 840, ShortName = "USD", FullName = "US Dollar"} });
+
             _mock = new Mock<ISettingRepository>();
 
             _mock.Setup(m => m.GetAll()).Returns(_setting);
