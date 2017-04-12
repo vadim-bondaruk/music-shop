@@ -147,6 +147,26 @@
         }
 
         /// <summary>
+        /// Determines whether items which correspond with the specified <paramref name="filter"/> exist in the repository.
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if items which correspond with the specified <paramref name="filter"/> exist in the repository;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool Exist(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter == null)
+            {
+                return this._currentDbSet.Any(x => !x.IsDeleted);
+            }
+
+            return this._currentDbSet.Where(x => !x.IsDeleted).Any(filter);
+        }
+
+        /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.
         /// </summary>
         /// <param name="model">

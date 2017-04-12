@@ -58,6 +58,18 @@
         int Count(Expression<Func<TEntity, bool>> filter = null);
 
         /// <summary>
+        /// Determines whether items which correspond with the specified <paramref name="filter"/> exist in the repository.
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if items which correspond with the specified <paramref name="filter"/> exist in the repository;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        bool Exist(Expression<Func<TEntity, bool>> filter = null);
+
+        /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.
         /// </summary>
         /// <param name="model">A model to add or update.</param>
