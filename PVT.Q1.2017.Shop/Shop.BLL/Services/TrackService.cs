@@ -34,10 +34,13 @@
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <param name="id">The track id.</param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// The information about track with the specified <paramref name="id"/> or <b>null</b> if track doesn't exist.
         /// </returns>
-        public TrackDetailsViewModel GetTrackDetails(int id, int? currencyCode = null, int? priceLevelId = null)
+        public TrackDetailsViewModel GetTrackDetails(int id, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
             Track track;
             using (var repository = this.Factory.GetTrackRepository())
@@ -73,6 +76,21 @@
                 trackViewModel.AlbumsCount = repository.Count(r => r.TrackId == id);
             }
 
+            if (userId != null)
+            {
+                using (var repository = Factory.GetOrderTrackRepository())
+                {
+                    trackViewModel.IsOrdered =
+                            repository.FirstOrDefault(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id) != null;
+                }
+
+                using (var repository = Factory.GetPurchasedTrackRepository())
+                {
+                    trackViewModel.IsPurchased =
+                            repository.FirstOrDefault(p => p.UserId == userId && p.TrackId == trackViewModel.Id) != null;
+                }
+            }
+
             return trackViewModel;
         }
 
@@ -85,10 +103,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        public ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null)
+        public ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetTrackRepository())
@@ -96,7 +117,7 @@
                 tracks = repository.GetAll(t => t.Artist, t => t.Genre);
             }
 
-            return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
+            return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
         }
 
         /// <summary>
@@ -125,10 +146,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All tracks with price specified.
         /// </returns>
-        public ICollection<TrackViewModel> GetTracksWithPrice(int? currencyCode = null, int? priceLevel = null)
+        public ICollection<TrackViewModel> GetTracksWithPrice(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetTrackRepository())
@@ -136,7 +160,7 @@
                 tracks = repository.GetAll(t => t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
 
-            return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel);
+            return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
         }
 
         /// <summary>
@@ -149,10 +173,13 @@
         /// <param name="priceLevelId">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All albums which contain the specified track.
         /// </returns>
-        public TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null)
+        public TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
             TrackAlbumsListViewModel trackAlbumsListViewModel = this.CreateTrackAlbumsListViewModel(trackId);
 
@@ -162,8 +189,42 @@
                 albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id), a => a.Artist);
             }
 
-            trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId);
+            trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId, userId);
             return trackAlbumsListViewModel;
+        }
+
+        /// <summary>
+        /// Return all tracks that the specified user have bought.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// All tracks that the specified user have bought.
+        /// </returns>
+        public ICollection<PurchasedTrackViewModel> GetPurchasedTracks(int userId)
+        {
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetPurchasedTrackRepository())
+            {
+                tracks = repository.GetAll(p => p.UserId == userId, p => p.Track, p => p.Track.Artist).Select(p => p.Track).ToList();
+            }
+
+            var trackViewModels = new List<PurchasedTrackViewModel>();
+            using (var repository = Factory.GetVoteRepository())
+            {
+                foreach (var track in tracks)
+                {
+                    var trackViewModel = ModelsMapper.GetPurchasedTrackViewModel(track);
+                    if (trackViewModel != null)
+                    {
+                        trackViewModel.Rating = repository.GetAverageMark(track.Id);
+                        trackViewModels.Add(trackViewModel);
+                    }
+                }
+            }
+
+            return trackViewModels;
         }
 
         /// <summary>

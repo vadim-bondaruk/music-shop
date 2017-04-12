@@ -70,11 +70,9 @@
             Bind<IAlbumTrackRelationRepository>()
                 .To<AlbumTrackRelationRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetAlbumTrackRelationRepository());
-
             Bind<IUserPaymentMethodRepository>()
                 .To<UserPaymentMethodRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserPaymentMethodRepository());
-
             Bind<IPaymentTransactionRepository>()
                 .To<PaymentTransactionRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPaymentTransactionRepository());
@@ -82,10 +80,21 @@
             Bind<IUserRepository>()
                 .To<UserRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetUserRepository());
-
             Bind<ISettingRepository>()
                 .To<SettingRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetSettingRepository());
+            Bind<IOrderTrackRepository>()
+                .To<OrderTrackRepository>()
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetOrderTrackRepository());
+            Bind<IOrderAlbumRepository>()
+                .To<OrderAlbumRepository>()
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetOrderAlbumRepository());
+            Bind<IPurchasedTrackRepository>()
+                .To<PurchasedTrackRepository>()
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPurchasedTrackRepository());
+            Bind<IPurchasedAlbumRepository>()
+                .To<PurchasedAlbumRepository>()
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPurchasedAlbumRepository());
 
             Bind<IRepositoryFactory>().ToFactory();
 

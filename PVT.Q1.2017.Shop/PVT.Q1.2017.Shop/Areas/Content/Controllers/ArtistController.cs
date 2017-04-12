@@ -2,11 +2,13 @@
 {
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.ViewModels;
+    using Shop.Controllers;
 
     /// <summary>
     /// The artist controller.
     /// </summary>
-    public class ArtistController : Controller
+    public class ArtistController : BaseController
     {
         private readonly IArtistService _artistService;
 
@@ -73,8 +75,19 @@
                 return this.RedirectToAction("List");
             }
 
-            // TODO: передавать currency и price level из UserData текущего пользователя
-            var artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value);
+            var currency = GetCurrentUserCurrency();
+            ArtistAlbumsListViewModel artistAlbumsViewModel;
+
+            if (currency != null && CurrentUser != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
+            }
+            else
+            {
+                artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value);
+            }
+
             if (artistAlbumsViewModel == null)
             {
                 return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
@@ -99,8 +112,19 @@
                 return this.RedirectToAction("List");
             }
 
-            // TODO: передавать currency и price level из UserData текущего пользователя
-            var artistTracksViewModel = _artistService.GetTracksList(id.Value);
+            var currency = GetCurrentUserCurrency();
+            ArtistTracksListViewModel artistTracksViewModel;
+
+            if (currency != null && CurrentUser != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                artistTracksViewModel = _artistService.GetTracksList(id.Value, currency.Code, priceLevel, GetUserDataId());
+            }
+            else
+            {
+                artistTracksViewModel = _artistService.GetTracksList(id.Value);
+            }
+
             if (artistTracksViewModel == null)
             {
                 return HttpNotFound($"Исполнитель с id = { id.Value } не найден");

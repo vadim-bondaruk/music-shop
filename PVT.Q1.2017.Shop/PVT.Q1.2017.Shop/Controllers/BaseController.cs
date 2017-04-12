@@ -29,7 +29,7 @@
         /// <returns>
         /// The current user currency or <b>null</b> if the there is an ananimous user.
         /// </returns>
-        public CurrencyViewModel GetCurrentUserCurrency()
+        protected CurrencyViewModel GetCurrentUserCurrency()
         {
             if (CurrentUser == null)
             {
@@ -54,7 +54,7 @@
         /// Returns the current user price level.
         /// </summary>
         /// <returns></returns>
-        public int? GetCurrentUserPriceLevel()
+        protected int? GetCurrentUserPriceLevel()
         {
             if (CurrentUser == null)
             {
@@ -66,6 +66,26 @@
             {
                 return repository.FirstOrDefault(u => u.UserId == CurrentUser.Id).PriceLevelId;
             }
+        }
+
+        protected int? GetUserDataId()
+        {
+            if (CurrentUser == null)
+            {
+                return null;
+            }
+
+            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
+            using (var repository = factory.GetUserDataRepository())
+            {
+                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
+                if (userData != null)
+                {
+                    return userData.Id;
+                }
+            }
+
+            return null;
         }
     }
 }

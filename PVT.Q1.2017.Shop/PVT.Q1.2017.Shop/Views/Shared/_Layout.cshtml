@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,31 +31,37 @@
                     <ul class="nav navbar-nav">
                         <li><a href="#">@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a></li>
                     </ul>
-                    using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { area = "User", id = "logoutForm", @class = "navbar-right" }))
+                    using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                     {
                         @Html.AntiForgeryToken()
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", new { area = "User", controller = "Manage" }, htmlAttributes: new { title = "Manage" })
+                                <a class="btn btn-sm btn-default" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
+                                   title="Нажмите, чтобы перейти в Вашу корзину">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
+                                </a>
                             </li>
-                            <li>@Html.ActionLink("Корзина", "Index", new { area = "Payment", controller = "Cart" })</li>
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+                            <li>
+                                @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", "Manage", new { area = "User" }, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li><a href="#" title="Нажмите, чтобы выйти" onclick="$('#logoutForm').submit();">Выйти</a></li>
                         </ul>
                     }
                 }
                 else
                 {
                     <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("Регистрация", "Register", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "registerLink" })</li>
-                        <li>@Html.ActionLink("Войти", "Login", new { area = "User", controller = "Account" }, htmlAttributes: new { id = "loginLink" })</li>
+                        <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, htmlAttributes: new { id = "loginLink" })</li>
                     </ul>
                 }
             </div>
         </div>
     </div>
 
-<div class="container body-content">
+    <div class="container body-content">
         @RenderBody()
         <hr/>
         <footer>
@@ -66,6 +73,7 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/common.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

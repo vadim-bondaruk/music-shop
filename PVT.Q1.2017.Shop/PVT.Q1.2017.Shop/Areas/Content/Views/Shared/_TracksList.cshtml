@@ -50,12 +50,17 @@
                     }
                 </td>
             }
-            @if (track.Price != null)
-            {
-                <td>
-                    @Html.Partial("_BuyTrackButton", track.Id)
-                </td>
-            }
+            <td>
+                @if (track.IsPurchased)
+                {
+                    @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
+                                            Url.Action("PurchasedTracks", "Track", new { area = "Content", id = track.Id }))
+                }
+                else if (track.Price != null)
+                {
+                    @Html.BtnBuyTrack(track.Id, track.IsOrdered)
+                }
+            </td>
         </tr>
     }
 </table>

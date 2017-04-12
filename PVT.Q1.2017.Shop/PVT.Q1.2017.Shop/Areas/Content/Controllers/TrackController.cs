@@ -39,7 +39,7 @@
             if (currency != null)
             {
                 var priceLevel = GetCurrentUserPriceLevel();
-                return this.View(this._trackService.GetTracksList(currency.Code, priceLevel));
+                return this.View(this._trackService.GetTracksList(currency.Code, priceLevel, GetUserDataId()));
             }
 
             return this.View(this._trackService.GetTracksList());
@@ -65,7 +65,7 @@
             if (currency != null)
             {
                 var priceLevel = GetCurrentUserPriceLevel();
-                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel);
+                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel, GetUserDataId());
             }
             else
             {
@@ -100,7 +100,7 @@
             if (currency != null)
             {
                 var priceLevel = GetCurrentUserPriceLevel();
-                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel);
+                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
             }
             else
             {

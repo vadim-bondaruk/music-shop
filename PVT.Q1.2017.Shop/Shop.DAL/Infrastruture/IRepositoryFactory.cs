@@ -149,5 +149,37 @@ namespace Shop.DAL.Infrastruture
         /// <returns>
         /// </returns>
         ISettingRepository GetSettingRepository();
+
+        /// <summary>
+        /// Returns the Order Track repository.
+        /// </summary>
+        /// <returns>
+        /// The Order Track repository.
+        /// </returns>
+        IOrderTrackRepository GetOrderTrackRepository();
+
+        /// <summary>
+        /// Returns the Order Album repository.
+        /// </summary>
+        /// <returns>
+        /// The Order Album repository.
+        /// </returns>
+        IOrderAlbumRepository GetOrderAlbumRepository();
+
+        /// <summary>
+        /// Returns the Purchased Track repository.
+        /// </summary>
+        /// <returns>
+        /// The Purchased Track repository.
+        /// </returns>
+        IPurchasedTrackRepository GetPurchasedTrackRepository();
+
+        /// <summary>
+        /// Returns the Purchased Album repository.
+        /// </summary>
+        /// <returns>
+        /// The Purchased Album repository.
+        /// </returns>
+        IPurchasedAlbumRepository GetPurchasedAlbumRepository();
     }
 }
