@@ -48,6 +48,9 @@
                                       It.IsAny<Expression<Func<UserPaymentMethod, BaseEntity>>[]>()))
                 .Returns(() => _userPaymentMethods.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<UserPaymentMethod, bool>>>()))
+                 .Returns(() => _userPaymentMethods.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<UserPaymentMethod>())).Callback(() => _userPaymentMethods.Add(new UserPaymentMethod
             {
                 Id = _userPaymentMethods.Count + 1

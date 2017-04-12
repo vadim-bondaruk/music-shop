@@ -53,16 +53,12 @@
 
             using (var orderTrackRepository = Factory.GetOrderTrackRepository())
             {
-                var orderTrack =
-                    orderTrackRepository.FirstOrDefault(o => 
-                    o.CartId == cart.Id 
-                    && o.TrackId == track.Id);
-                if (orderTrack != null)
+                if (orderTrackRepository.Exist(o => o.CartId == cart.Id && o.TrackId == track.Id))
                 {
                     return;
                 }
 
-                orderTrack = new OrderTrack() { CartId = cart.Id, TrackId = track.Id };
+                var orderTrack = new OrderTrack() { CartId = cart.Id, TrackId = track.Id };
                 orderTrackRepository.AddOrUpdate(orderTrack);
                 orderTrackRepository.SaveChanges();
             }
@@ -167,16 +163,12 @@
 
             using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
             {
-                var orderAlbum =
-                    orderAlbumRepository.FirstOrDefault(o =>
-                    o.CartId == cart.Id
-                    && o.AlbumId == album.Id);
-                if (orderAlbum != null)
+                if (orderAlbumRepository.Exist(o => o.CartId == cart.Id && o.AlbumId == album.Id))
                 {
                     return;
                 }
 
-                orderAlbum = new OrderAlbum() { CartId = cart.Id, AlbumId = album.Id };
+                var orderAlbum = new OrderAlbum() { CartId = cart.Id, AlbumId = album.Id };
                 orderAlbumRepository.AddOrUpdate(orderAlbum);
                 orderAlbumRepository.SaveChanges();
             }

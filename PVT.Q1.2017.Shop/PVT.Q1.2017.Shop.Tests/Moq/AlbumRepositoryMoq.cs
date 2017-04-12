@@ -41,6 +41,9 @@
                                              It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
                  .Returns(() => _albums.FirstOrDefault());
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Album, bool>>>()))
+                 .Returns(() => _albums.Any());
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _albums.FirstOrDefault());
 

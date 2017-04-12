@@ -48,6 +48,9 @@
                                        It.IsAny<Expression<Func<PurchasedTrack, BaseEntity>>[]>()))
                  .Returns(() => _purchasedTrack.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedTrack, bool>>>()))
+                 .Returns(() => _purchasedTrack.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedTrack>())).Callback(() => _purchasedTrack.Add(new PurchasedTrack
             {
                 Id = _purchasedTrack.Count + 1

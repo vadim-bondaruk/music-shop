@@ -78,13 +78,13 @@
                 using (var repository = Factory.GetOrderAlbumRepository())
                 {
                     albumViewModel.IsOrdered =
-                            repository.FirstOrDefault(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id) != null;
+                            repository.Exist(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id);
                 }
 
                 using (var repository = Factory.GetPurchasedAlbumRepository())
                 {
                     albumViewModel.IsPurchased =
-                            repository.FirstOrDefault(p => p.UserId == userId && p.AlbumId == albumViewModel.Id) != null;
+                            repository.Exist(p => p.UserId == userId && p.AlbumId == albumViewModel.Id);
                 }
             }
 

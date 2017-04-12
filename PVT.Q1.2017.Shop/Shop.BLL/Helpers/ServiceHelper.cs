@@ -122,7 +122,7 @@
                     foreach (var albumViewModel in albumViewModels)
                     {
                         albumViewModel.IsOrdered =
-                            repository.FirstOrDefault(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id) != null;
+                            repository.Exist(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id);
                     }
                 }
 
@@ -131,7 +131,7 @@
                     foreach (var albumViewModel in albumViewModels)
                     {
                         albumViewModel.IsPurchased =
-                            repository.FirstOrDefault(p => p.UserId == userId && p.AlbumId == albumViewModel.Id) != null;
+                            repository.Exist(p => p.UserId == userId && p.AlbumId == albumViewModel.Id);
                     }
                 }
             }
@@ -209,7 +209,7 @@
                     foreach (var trackViewModel in trackViewModels)
                     {
                         trackViewModel.IsOrdered =
-                            repository.FirstOrDefault(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id) != null;
+                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
                     }
                 }
 
@@ -218,7 +218,7 @@
                     foreach (var trackViewModel in trackViewModels)
                     {
                         trackViewModel.IsPurchased =
-                            repository.FirstOrDefault(p => p.UserId == userId && p.TrackId == trackViewModel.Id) != null;
+                            repository.Exist(p => p.UserId == userId && p.TrackId == trackViewModel.Id);
                     }
                 }
             }

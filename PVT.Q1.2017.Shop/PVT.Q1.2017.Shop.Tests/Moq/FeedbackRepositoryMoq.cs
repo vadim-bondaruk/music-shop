@@ -48,6 +48,9 @@
                                        It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()))
                  .Returns(() => _feedbacks.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Feedback, bool>>>()))
+                 .Returns(() => _feedbacks.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Feedback>())).Callback(() => _feedbacks.Add(new Feedback
             {
                 Id = _feedbacks.Count + 1,

@@ -81,13 +81,13 @@
                 using (var repository = Factory.GetOrderTrackRepository())
                 {
                     trackViewModel.IsOrdered =
-                            repository.FirstOrDefault(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id) != null;
+                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
                 }
 
                 using (var repository = Factory.GetPurchasedTrackRepository())
                 {
                     trackViewModel.IsPurchased =
-                            repository.FirstOrDefault(p => p.UserId == userId && p.TrackId == trackViewModel.Id) != null;
+                            repository.Exist(p => p.UserId == userId && p.TrackId == trackViewModel.Id);
                 }
             }
 
