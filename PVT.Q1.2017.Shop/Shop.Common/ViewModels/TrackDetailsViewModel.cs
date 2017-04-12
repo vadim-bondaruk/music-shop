@@ -1,90 +1,80 @@
 ﻿namespace Shop.Common.ViewModels
 {
     using System;
-    using System.ComponentModel;
-
-    using Shop.Common.Models;
 
     /// <summary>
-    ///     The track view model.
+    /// The track view model.
     /// </summary>
     public class TrackDetailsViewModel
     {
         /// <summary>
-        ///     Gets or sets the album name.
-        /// </summary>
-        [DisplayName("Альбом")]
-        public string AlbumName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the albums count.
-        /// </summary>
-        public int AlbumsCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets the artist.
-        /// </summary>
-        public Artist Artist { get; set; }
-
-        /// <summary>
-        ///     The track artist.
-        /// </summary>
-        [DisplayName("Исполнитель")]
-        public string ArtistName { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the track duration.
-        /// </summary>
-        [DisplayName("Продолжительность")]
-        public TimeSpan? Duration { get; set; }
-
-        /// <summary>
-        /// Gets or sets the genre.
-        /// </summary>
-        public Genre Genre { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the genre name.
-        /// </summary>
-        [DisplayName("Жанр")]
-        public string GenreName { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the track id.
+        /// Gets or sets the track id.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track image.
+        /// Gets or sets the track name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the track release date.
+        /// </summary>
+        public DateTime? ReleaseDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the track image.
         /// </summary>
         public byte[] Image { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track name.
+        /// Gets or sets the track file.
         /// </summary>
-        [DisplayName("Название")]
-        public string Name { get; set; }
+        public byte[] TrackSample { get; set; }
 
         /// <summary>
-        ///     The track genre.
+        /// Gets or sets the track duration.
         /// </summary>
-        [DisplayName("Цена")]
+        public TimeSpan? Duration { get; set; }
+
+        /// <summary>
+        /// The track artist.
+        /// </summary>
+        public ArtistViewModel Artist { get; set; }
+
+        /// <summary>
+        /// The track genre.
+        /// </summary>
+        public GenreViewModel Genre { get; set; }
+
+        /// <summary>
+        /// Gets or sets the price.
+        /// </summary>
         public PriceViewModel Price { get; set; }
 
         /// <summary>
-        ///     Track rating.
+        /// Track rating.
         /// </summary>
         public RatingViewModel Rating { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track release date.
+        /// The number of albums where the current track exist.
         /// </summary>
-        [DisplayName("Дата выхода")]
-        public DateTime? ReleaseDate { get; set; }
+        public int AlbumsCount { get; set; }
 
         /// <summary>
-        ///     Gets or sets the track file.
+        /// The track owner id.
         /// </summary>
-        public byte[] TrackFile { get; set; }
+        public int OwnerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the track is ordered.
+        /// </summary>
+        public bool IsOrdered { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the track is purchased.
+        /// </summary>
+        public bool IsPurchased { get; set; }
     }
 }

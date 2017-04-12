@@ -40,14 +40,14 @@
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", "Manage", new { area = "User" }, htmlAttributes: new { title = "Manage" })
-                            </li>
-                            <li>
                                 <a class="btn btn-sm btn-default" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
                                    title="Нажмите, чтобы перейти в Вашу корзину">
                                     <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    <span id="cart-itemsCount" class="badge">0</span>
+                                    <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
                                 </a>
+                            </li>
+                            <li>
+                                @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", "Manage", new { area = "User" }, htmlAttributes: new { title = "Manage" })
                             </li>
                             <li><a href="#" title="Нажмите, чтобы выйти" onclick="$('#logoutForm').submit();">Выйти</a></li>
                         </ul>

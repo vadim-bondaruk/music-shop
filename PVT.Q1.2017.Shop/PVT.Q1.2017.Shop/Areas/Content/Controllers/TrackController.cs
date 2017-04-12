@@ -47,8 +47,8 @@
 
             if (currency != null)
             {
-                var priceLevel = this.GetCurrentUserPriceLevel();
-                trackAlbumsViewModel = this._trackService.GetAlbumsList(id.Value, currency.Code, priceLevel);
+                var priceLevel = GetCurrentUserPriceLevel();
+                return this.View(this._trackService.GetTracksList(currency.Code, priceLevel, GetUserDataId()));
             }
             else
             {
@@ -82,8 +82,8 @@
 
             if (currency != null)
             {
-                var priceLevel = this.GetCurrentUserPriceLevel();
-                trackViewModel = this._trackService.GetTrackDetails(id.Value, currency.Code, priceLevel);
+                var priceLevel = GetCurrentUserPriceLevel();
+                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel, GetUserDataId());
             }
             else
             {
@@ -110,8 +110,17 @@
 
             if (currency != null)
             {
-                var priceLevel = this.GetCurrentUserPriceLevel();
-                return this.View(this._trackService.GetTracksList(currency.Code, priceLevel));
+                var priceLevel = GetCurrentUserPriceLevel();
+                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
+            }
+            else
+            {
+                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
+            }
+
+            if (trackAlbumsViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
             }
 
             return this.View(this._trackService.GetTracksList());
