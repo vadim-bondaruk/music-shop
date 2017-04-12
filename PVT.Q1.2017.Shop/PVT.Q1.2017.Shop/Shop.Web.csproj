@@ -259,6 +259,7 @@
     <Content Include="Areas\User\Views\Manage\ChangeAccepted.cshtml" />
     <Content Include="Areas\User\Views\Manage\_UsersEdit.cshtml" />
     <Content Include="Areas\User\Views\Manage\UsersEdit.cshtml" />
+    <Content Include="Areas\User\Views\Manage\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

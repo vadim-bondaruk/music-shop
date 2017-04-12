@@ -9,7 +9,7 @@
 <h2>UsersEdit</h2>
 
 <div class="ui-widget">
-    <label for="lastName">Last Name: </label>
+    <label for="lastName">Last Name Search: </label>
     <input id="lastName">
 </div>
 
@@ -19,7 +19,9 @@
 
 @section scripts
 {
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+ 
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
     <script>
         $(function () {
             $("#lastName").autocomplete(
@@ -47,7 +49,8 @@
                             });
                     },
                     select: function (event, ui) {
-                        alert(ui.item.Id);
+                        var link = '@Url.Action("Edit", "Manage", new { area = "User", Id = "id_holder" }, Request.Url.Scheme)';
+                        document.location.href = link.replace("id_holder", ui.item.Id);
                         return false;
                     }
                 });

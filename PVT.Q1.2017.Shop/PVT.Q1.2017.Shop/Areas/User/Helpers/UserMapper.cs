@@ -38,6 +38,10 @@
             return UserModelsMapper.Map<UserEditView>(user);
         }
 
+        public static User GetUserByUserEditView(UserEditView user)
+        {
+            return UserModelsMapper.Map<User>(user);
+        }
         /// <summary>
         /// Configures and returns a new instance of the mapper for models which have a list of other models.
         /// </summary>
@@ -46,7 +50,7 @@
         /// </returns>
         private static IMapper CreateMapper()
         {
-            MapperConfiguration managementConfiguration = new MapperConfiguration(cfg => { cfg.CreateMap<UserViewModel, User>(); cfg.CreateMap<User, UserEditView>(); });
+            MapperConfiguration managementConfiguration = new MapperConfiguration(cfg => { cfg.CreateMap<UserViewModel, User>(); cfg.CreateMap<User, UserEditView>(); cfg.CreateMap<UserEditView, User>(); });
   
             return managementConfiguration.CreateMapper();
         }

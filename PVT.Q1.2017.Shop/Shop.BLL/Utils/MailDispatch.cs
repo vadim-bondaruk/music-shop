@@ -2,10 +2,6 @@
 {
     using System;
     using System.Net.Mail;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Class for sending mail
@@ -37,7 +33,6 @@
         /// </summary>
         private static int _smtpPort = 587;
 
-
         /// <summary>
         /// Sends a message to the address usetEmail
         /// </summary>
@@ -45,23 +40,26 @@
         /// <param name="subject">Subject</param>
         /// <param name="body">Body</param>
         /// <returns></returns>
-        public static bool SendingMail (string userEmail, string subject, string body)
+        public static bool SendingMail(string userEmail, string subject, string body)
         {
             if (userEmail == null)
             {
                 throw new ArgumentException("userEmail");
             }
+
             if (subject == null)
             {
                 throw new ArgumentException("subject");
             }
+
             if (body == null)
             {
                 throw new ArgumentException("body");
             }
+
             try
             {
-                MailAddress from = new MailAddress( _emailOfSendr, _nameOfSendr);
+                MailAddress from = new MailAddress(_emailOfSendr, _nameOfSendr);
             
                 MailAddress to = new MailAddress(userEmail);
            
@@ -83,9 +81,7 @@
             {
                 // TODO: write data to log
                 return false;
-            }
-            
+            }            
         }
-
     }
 }

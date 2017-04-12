@@ -21,6 +21,11 @@ namespace Shop.Common.ViewModels
         public string LastName { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
         /// Users login (nickname)
         /// </summary>
         public string Login { get; set; }
