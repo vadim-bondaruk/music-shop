@@ -43,7 +43,7 @@
         /// <param name="defaultCurrencyId"></param>
         /// <returns>
         /// </returns>
-        [HttpGet]
+        [HttpPost]
         public JsonResult Save(int defaultCurrencyId)
         {
             this._settingService.SaveSettingViewModel(defaultCurrencyId);
