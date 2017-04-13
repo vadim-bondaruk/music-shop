@@ -148,13 +148,14 @@
 
                 using (var artistRepo = this.artistRepository)
                 {
-                    var artist = artistRepo.GetById(viewModel.ArtistId);
+                    var artist = artistRepo.GetById(viewModel.Artist.Id);
                     if (artist != null)
                     {
                         artist.Name = viewModel.ArtistName;
                         artistRepo.AddOrUpdate(artist);
                         artistRepo.SaveChanges();
                         album.Artist = artist;
+                        album.ArtistId = artist.Id;
                         albumRepo.AddOrUpdate(album);
                         albumRepo.SaveChanges();
                         artistRepo.AddOrUpdate(artist);
