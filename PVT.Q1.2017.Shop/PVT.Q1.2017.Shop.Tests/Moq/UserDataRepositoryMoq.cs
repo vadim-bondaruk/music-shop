@@ -48,6 +48,9 @@
                                       It.IsAny<Expression<Func<UserData, BaseEntity>>[]>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<UserData, bool>>>()))
+                 .Returns(() => _users.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<UserData>())).Callback(() => _users.Add(new UserData
             {
                 Id = _users.Count + 1

@@ -48,6 +48,9 @@
                                        It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
                  .Returns(() => _orderAlbum.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<OrderAlbum, bool>>>()))
+                 .Returns(() => _orderAlbum.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderAlbum>())).Callback(() => _orderAlbum.Add(new OrderAlbum
             {
                 Id = _orderAlbum.Count + 1
