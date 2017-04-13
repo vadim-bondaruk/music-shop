@@ -1,12 +1,13 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
-    using global::Shop.Common.Utils;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     using PVT.Q1._2017.Shop.Controllers;
@@ -37,6 +38,8 @@
         /// </summary>
         private readonly ITrackRepository trackRepository;
 
+        private IAlbumRepository albumRepository;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
         /// </summary>
@@ -54,13 +57,15 @@
             IRepositoryFactory repositoryFactory,
             IArtistRepository artistRepository,
             ITrackRepository trackRepository,
-            IAlbumTrackRelationRepository albumTrackRelationRepository)
+            IAlbumTrackRelationRepository albumTrackRelationRepository,
+            IAlbumRepository albumRepository)
         {
             this.albumService = albumService;
             this.repositoryFactory = repositoryFactory;
             this.artistRepository = artistRepository;
             this.trackRepository = trackRepository;
             this.albumTrackRelationRepository = albumTrackRelationRepository;
+            this.albumRepository = albumRepository;
         }
 
         /// <summary>
@@ -94,9 +99,6 @@
                     return this.View(viewModel);
                 }
 
-                /*viewModel.ArtistName = artist.Name;
-                viewModel.Artist = artist;*/
-
                 using (var trackRepo = this.trackRepository)
                 {
                     using (var albumTrackRepo = this.albumTrackRelationRepository)
@@ -107,10 +109,9 @@
                             return this.View(viewModel);
                         }
 
-                        foreach (var relation in albumTrackRelations)
-                        {
-                            //viewModel.Tracks.Add(trackRepo.GetById(relation.TrackId));
-                        }
+                        var tracks = albumTrackRelations.Select(relation => trackRepo.GetById(relation.TrackId)).ToList();
+
+                        this.ViewBag.Tracks = tracks;
                     }
                 }
             }
@@ -126,14 +127,10 @@
         /// </returns>
         public ActionResult List()
         {
-            var currency = this.GetCurrentUserCurrency();
-            if (currency != null)
-            {
-                var priceLevel = this.GetCurrentUserPriceLevel();
-                return this.View(/*this.albumService.GetAlbumsList(currency.Code, priceLevel)*/);
-            }
-
-            return this.View(/*this.albumService.GetAllViewModels()*/);
+            var albumDetailsViewModels = new List<AlbumDetailsViewModel>();
+            var albums = this.albumRepository.GetAll();
+            albumDetailsViewModels.AddRange(albums.Select(ModelsMapper.GetAlbumDetailsViewModel));
+            return this.View(albumDetailsViewModels);
         }
 
         /// <summary>

@@ -1,11 +1,15 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Web.Mvc;
 
+    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -28,13 +32,7 @@
         public TracksController(ITrackService trackService, ITrackRepository trackRepository)
         {
             this.trackRepository = trackRepository;
-            this.TrackService = trackService;
         }
-
-        /// <summary>
-        ///     Gets or sets the _track service.
-        /// </summary>
-        public ITrackService TrackService { get; set; }
 
         /// <summary>
         ///     Shows all albums where the specified track is exist.
@@ -61,8 +59,9 @@
         /// </returns>
         public ActionResult List()
         {
-            // var tracks = this.TrackService.GetTrackDetailsViewModels();
-            return this.View(/*tracks*/);
+            var tracks = this.trackRepository.GetAll();
+            var trackDetailsViewModels = tracks.Select(ModelsMapper.GetTrackDetailsViewModel).ToList();
+            return this.View(trackDetailsViewModels);
         }
 
         /// <summary>
@@ -79,7 +78,8 @@
                 return this.RedirectToAction("List");
             }
 
-            return this.View(this.TrackService.GetTrackDetails(id.Value));
+            var track = this.trackRepository.GetById((int)id);
+            return this.View(ModelsMapper.GetTrackDetailsViewModel(track));
         }
 
         /// <summary>

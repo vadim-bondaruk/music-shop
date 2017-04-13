@@ -1,4 +1,6 @@
-﻿@model ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
+﻿
+@using System.Security.Policy
+@model System.Collections.Generic.ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
 
 <title class="title" style="margin: 0">Все треки</title>
 
@@ -7,7 +9,8 @@
     <ul class="list-group" style="width: 100%">
         @foreach (var item in Model)
         {
-            @Html.Partial("TrackListItem", item);
+            @Html.Partial("TrackListItem", item)
+            
         }
     </ul>
 </div>
@@ -24,5 +27,5 @@
 </script>
 <script src="d:\dropbox\git\ms\pvt.q1.2017.shop\shop.common\helpers\audio\js\ssuhtml5audio.js"></script>
 @section cssStyles{
-    <link href="~/Content/tracks.css" rel="stylesheet" />
+    <link href="~/Content/tracks.css" rel="stylesheet"/>
 }

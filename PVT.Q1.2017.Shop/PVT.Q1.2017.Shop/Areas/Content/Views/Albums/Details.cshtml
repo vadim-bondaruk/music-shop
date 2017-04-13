@@ -1,4 +1,6 @@
-﻿@model Shop.Common.ViewModels.AlbumDetailsViewModel
+﻿@using System.Collections
+@using Shop.Common.Models
+@model Shop.Common.ViewModels.AlbumDetailsViewModel
 
 @Html.AntiForgeryToken()
 <body>
@@ -16,7 +18,7 @@
                 </div>
                 <div class="panel-body">
                     <ol>
-                        @foreach (var track in Model.Tracks)
+                        @foreach (var track in (ICollection<Track>)ViewBag.Tracks)
                         {
                             <li>@track.Name</li>
                         }

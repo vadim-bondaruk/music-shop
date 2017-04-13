@@ -119,7 +119,7 @@
                             }
                         }
 
-                        viewModel.Tracks = tracks;
+                        this.ViewBag.Tracks = tracks;
                     }
 
                     return this.View(viewModel);

@@ -27,11 +27,10 @@ namespace Shop.DAL.Migrations
         {
             this.AddDefaultCurrencies(context);
             this.AddDefaultCurrencyRates(context);
-            this.AddDefaultArtistsAndTracks(context);
-            this.AddDefaultTracks(context);
             this.AddDefaultGenres(context);
-            this.AddDefaultAlbums(context);
             this.AddDefaultPriceLevels(context);
+            this.AddDefaultArtistsAndTracks(context);
+            
         }
 
         /// <summary>
@@ -296,10 +295,10 @@ namespace Shop.DAL.Migrations
             {
                 context.Set<Track>()
                     .AddOrUpdate(
-                        new Track { ArtistId = 1, Name = "Море", GenreId = 9 },
-                        new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 9 },
-                        new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 1 },
-                          new Track { Name = "Just be", ArtistId = 1, GenreId = 24 },
+                        new Track { ArtistId = 1, Name = "Море", GenreId = 10 },
+                        new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 10 },
+                        new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 10 },
+                          new Track { Name = "Just be", ArtistId = 5, GenreId = 24 },
                             new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24 },
                             new Track { Name = "Traffic", ArtistId = 5, GenreId = 24 },
                             new Track { Name = "Fligth 643", ArtistId = 5, GenreId = 24 },

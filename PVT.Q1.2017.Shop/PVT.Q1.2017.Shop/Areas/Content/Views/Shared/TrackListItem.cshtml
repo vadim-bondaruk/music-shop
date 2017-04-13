@@ -6,7 +6,7 @@
         <div class="details">
             <div>
                 <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Name)</a>
-                <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.ArtistName)</a>
+                <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Artist.Name)</a>
             </div>
             @Html.Partial("_Stars", Model.Id)
         </div>

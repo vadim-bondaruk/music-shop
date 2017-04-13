@@ -13,16 +13,13 @@
                     <div class="panel-body">
                         <div class="center">
                             <p>
-                                <strong>@Html.DisplayNameFor(m => m.ArtistName):</strong> @Html.DisplayTextFor(m => m.ArtistName)
-                            </p>
-                            <p>
-                                <strong>@Html.DisplayNameFor(m => m.AlbumName):</strong> @Html.DisplayTextFor(m => m.AlbumName)
+                                <strong>@Html.DisplayNameFor(m => m.Artist):</strong> @Html.DisplayTextFor(m => m.Artist.Name)
                             </p>
                             <p>
                                 <strong>@Html.DisplayNameFor(m => m.ReleaseDate):</strong> @Html.ValueFor(m => m.ReleaseDate, "{0:dd MMMM yyyy} г.")
                             </p>
                             <p>
-                                <strong>@Html.DisplayNameFor(m => m.GenreName):</strong> @Html.DisplayTextFor(m => m.GenreName)
+                                <strong>@Html.DisplayNameFor(m => m.Genre):</strong> @Html.DisplayTextFor(m => m.Genre.Name)
                             </p>
                             <p>
                                 <strong>@Html.DisplayNameFor(m => m.Duration):</strong> @Html.DisplayTextFor(m => m.Duration)

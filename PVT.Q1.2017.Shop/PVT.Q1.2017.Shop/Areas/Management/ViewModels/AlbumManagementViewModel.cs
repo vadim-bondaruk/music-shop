@@ -57,10 +57,5 @@
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ReleaseDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tracks.
-        /// </summary>
-        public ICollection<Track> Tracks { get; set; }
     }
 }
