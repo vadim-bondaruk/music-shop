@@ -196,6 +196,11 @@ namespace Shop.DAL.Migrations
                     .AddOrUpdate(new Currency { ShortName = "USD", Code = 840, FullName = "US Dollar" });
             }
 
+            if (!context.Set<Setting>().Any())
+            {
+                context.Set<Setting>().AddOrUpdate(new[] { new Setting { DefaultCurrencyId = 1 }});
+            }
+
             context.SaveChanges();
         }
 

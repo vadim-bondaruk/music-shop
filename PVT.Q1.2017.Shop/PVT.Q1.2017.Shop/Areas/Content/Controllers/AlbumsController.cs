@@ -94,8 +94,8 @@
                     return this.View(viewModel);
                 }
 
-                viewModel.ArtistName = artist.Name;
-                viewModel.Artist = artist;
+                /*viewModel.ArtistName = artist.Name;
+                viewModel.Artist = artist;*/
 
                 using (var trackRepo = this.trackRepository)
                 {
@@ -109,7 +109,7 @@
 
                         foreach (var relation in albumTrackRelations)
                         {
-                            viewModel.Tracks.Add(trackRepo.GetById(relation.TrackId));
+                            //viewModel.Tracks.Add(trackRepo.GetById(relation.TrackId));
                         }
                     }
                 }
@@ -130,10 +130,10 @@
             if (currency != null)
             {
                 var priceLevel = this.GetCurrentUserPriceLevel();
-                return this.View(this.albumService.GetAlbumsList(currency.Code, priceLevel));
+                return this.View(/*this.albumService.GetAlbumsList(currency.Code, priceLevel)*/);
             }
 
-            return this.View(this.albumService.GetAllViewModels());
+            return this.View(/*this.albumService.GetAllViewModels()*/);
         }
 
         /// <summary>
