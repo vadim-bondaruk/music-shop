@@ -51,6 +51,10 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -84,6 +88,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.22\lib\net45\MvcSiteMapProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.22\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -110,8 +122,12 @@
       <HintPath>..\packages\T4MVCExtensions.4.0.0\lib\net45\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TagLib.Portable, Version=2.2.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\TagLib.Portable.1.0.4\lib\portable-net45+win+wpa81+wp8+MonoAndroid10+xamarinios10+MonoTouch10\TagLib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -145,6 +161,8 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrapStars.css" />
+    <Content Include="Content\tracks.css" />
     <Content Include="img\failure.png" />
     <Content Include="img\success.png" />
     <Content Include="Content\ratingStars.png" />
@@ -153,7 +171,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\arrow.png" />
-    <Content Include="img\bg.png" />
+    <Content Include="img\defuserpic.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -192,13 +210,13 @@
     <Content Include="Areas\Content\Views\Artist\List.cshtml" />
     <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
     <Content Include="Areas\Content\Views\Artist\TracksList.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_TracksList.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Artist\AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\Content\Views\Album\Details.cshtml" />
     <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\TrackListItem.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -210,15 +228,54 @@
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
     <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\New.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\New.cshtml" />
+    <Content Include="Areas\Management\Views\Genres\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Genres\New.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\List.cshtml" />
+    <Content Include="Areas\Content\Views\Artists\TracksList.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Genres\List.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\List.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\TracksList.cshtml" />
+    <Content Include="Mvc.sitemap" />
+    <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\PlayButtonPartial.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\AudioSection.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
     <Content Include="Areas\Management\Views\Album\AddTracks.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_TracksList.cshtml" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\datepicker-ru.js" />
+    <Content Include="Scripts\del-artist.js" />
+    <Content Include="Scripts\file-change.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -231,6 +288,11 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\openfile.dialog.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -243,23 +305,33 @@
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
-    <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
+    <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
+    <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
+    <Compile Include="Areas\Content\Controllers\GenresController.cs" />
+    <Compile Include="Areas\Content\Controllers\TracksController.cs" />
     <Compile Include="Areas\Content\Extentions\ButtonsHelper.cs" />
     <Compile Include="Areas\Content\Extentions\BuyButtonHelper.cs" />
     <Compile Include="Areas\Content\Extentions\ManagementButtonsHelper.cs" />
     <Compile Include="Areas\Content\Extentions\PriceButtonHelper.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumPriceController.cs" />
+    <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
+    <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
+    <Compile Include="Areas\Management\Controllers\GenresController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
+    <Compile Include="Areas\Management\Controllers\TrackPriceController.cs" />
+    <Compile Include="Areas\Management\Controllers\TracksController.cs" />
     <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Management\Helpers\ManagementMapper.cs" />
     <Compile Include="Areas\Management\Validators\AlbumManagementValidator.cs" />
     <Compile Include="Areas\Management\Validators\TrackManagementValidator.cs" />
     <Compile Include="Areas\Management\ViewModels\AlbumManagementViewModel.cs" />
+    <Compile Include="Areas\Management\ViewModels\ArtistManagementViewModel.cs" />
+    <Compile Include="Areas\Management\ViewModels\GenreManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
@@ -271,7 +343,6 @@
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
     <Compile Include="Areas\User\Helpers\UserMapper.cs" />
     <Compile Include="Controllers\AdminTestController.cs" />
-    <Compile Include="Areas\Management\Controllers\TrackPriceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -309,7 +380,20 @@
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\AdminTest\UserTest.cshtml" />
     <Content Include="Views\AdminTest\AdminTest.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+    <Content Include="Views\AdminTest\UserTest.cshtml" />
+    <Content Include="Views\AdminTest\AdminTest.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\PlayerPartial.cshtml" />
+    <Content Include="Views\Shared\_Rating.cshtml" />
     <Content Include="Views\Shared\_UserCurrency.cshtml" />
+    <Content Include="Views\Shared\_Stars.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -324,7 +408,7 @@
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
-    <Folder Include="Views\Currency\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

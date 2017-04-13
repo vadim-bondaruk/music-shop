@@ -1,0 +1,55 @@
+﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.GenreManagementViewModel
+<head>
+    <script src="~/Scripts/buttons.js"></script>
+</head>
+<title class="title" style="position: initial; margin-top: 0">Редактирование записи о жанре</title>
+<div class="artist-edit" style="position: initial">
+
+    @using (Html.BeginForm("Edit", "Genres", FormMethod.Post, new { enctype = "multipart/form-data", style = "width: 100%" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="ul-inline" style="width: 80%">
+            <li>
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Имя", @class = "form-control" } })
+            </li>
+            <li style="margin-top: 10px; display: block; text-align: right; width: 100%">
+                @Html.TextAreaFor(m => m.Description, new { htmlAttributes = new { placeholder = "Описание", @class = "form-control", rows = "5" } })
+                    <div style="display: block; width: 100%; text-align: right">
+                        <div style="display: inline-block; width: 320px; height: 50px">
+                            @*save-btn*@
+                            <a class="button1" href="javascript:setTimeout('document.forms[0].submit()', 700)" role="button" style="margin: 10px 0 0 165px">
+                                <span>сохранить</span>
+                                <div class="icon1">
+                                    <i class="fa fa-save"></i>
+                                    <i class="fa fa-success"></i>
+                                </div>
+                            </a>
+
+                            @*delete-btn*@
+                            <a class="button2" href="javascript:setTimeout('document.forms[1].submit()'), 700" role="button" style="margin-top: 10px">
+                                <span>удалить</span>
+                                <div class="icon2">
+                                    <i class="fa fa-remove"></i>
+                                    <i class="fa fa-check"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+            </li>
+        </ul>
+    }
+    @using (Html.BeginForm("Delete", "Genres", new { area = "Management" }, FormMethod.Post, new { enctype = "multipart/form-data", name = "formdel" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+    }
+
+</div>
+
+
+@section cssStyles{
+    <link href="/Styles/tracks.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Styles/save-btn.css" rel="stylesheet"/>
+    <link href="~/Styles/remove-btn.css" rel="stylesheet"/>
+}

@@ -120,18 +120,19 @@
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetTrackRepository())
             {
-                if (albumTracksListViewModel.Artist == null)
+                decimal ownerId = albumTracksListViewModel.AlbumDetails.OwnerId;
+                if (albumTracksListViewModel.AlbumDetails.Artist == null)
                 {
                     tracks = repository.GetAll(
-                                               t => (t.OwnerId == null || t.OwnerId == albumTracksListViewModel.OwnerId) &&
+                                               t => (t.OwnerId == null || t.OwnerId == ownerId) &&
                                                     (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
                                                t => t.Artist);
                 }
                 else
                 {
                     tracks = repository.GetAll(
-                                               t => t.ArtistId == albumTracksListViewModel.Artist.Id &&
-                                                    (t.OwnerId == null || t.OwnerId == albumTracksListViewModel.OwnerId) &&
+                                               t => t.ArtistId == albumTracksListViewModel.AlbumDetails.Artist.Id &&
+                                                    (t.OwnerId == null || t.OwnerId == ownerId) &&
                                                     (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
                                                t => t.Artist);
                 }
@@ -271,6 +272,38 @@
             }
 
             return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
+        }
+
+        /// <summary>
+        /// Returns all registered albums detailed information using the specified currency and price level for album price.
+        /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for album price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered albums detailed information.
+        /// </returns>
+        public ICollection<AlbumDetailsViewModel> GetDetailedAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        {
+            ICollection<Album> albums;
+            using (var repository = this.Factory.GetAlbumRepository())
+            {
+                albums = repository.GetAll();
+            }
+
+            List<AlbumDetailsViewModel> detailedList = new List<AlbumDetailsViewModel>();
+            foreach (var album in albums)
+            {
+                detailedList.Add(GetAlbumDetails(album.Id, currencyCode, priceLevel, userId));
+            }
+
+            return detailedList;
         }
 
         /// <summary>

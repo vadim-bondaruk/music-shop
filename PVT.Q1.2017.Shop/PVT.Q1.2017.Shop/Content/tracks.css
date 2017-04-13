@@ -1,0 +1,645 @@
+﻿.artist-edit {
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    display: block;
+    text-align: center;
+}
+
+.artist-edit img {
+    float: left;
+    height: 500px;
+}
+
+.title {
+    background: #ffffff;
+    text-align: center;
+    display: block;
+    margin-top: -80px;
+    margin-bottom: 20px;
+    font-size: 3em;
+    position: fixed;
+    z-index: 101;
+    width: 1140px;
+    color: transparent;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.page-title {
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+
+
+.dropdown-item:hover, .dropdown-toggle:hover {
+    text-decoration: #f5fffa;
+    color: #ffffff;
+}
+
+body {
+    display: block;
+    text-align: center;
+    color: black;
+    background-color: #dadada;
+}
+
+.buttons { margin-top: 25px; }
+
+.row {
+    width: 100%;
+    margin: 0;
+}
+
+.row-el {
+    margin-top: -30px;
+    display: block;
+    text-align: left;
+    height: 800px;
+}
+
+.form-control {
+    mso-border-shadow: yes;
+    border-color: black;
+    margin-top: 5px;
+    max-width: 100%;
+}
+
+.col-1 {
+    display: block;
+    margin-top: 25px;
+    width: 100%;
+    text-align: left;
+}
+
+.col-1 img {
+    display: inline-block;
+    width: 500px;
+    height: 500px;
+}
+
+.col-1 > .details {
+    display: inline-block;
+    vertical-align: top;
+    height: 500px;
+    width: 600px;
+}
+
+.album-new .list-back {
+    height: 299px;
+    background: #ffffff;
+}
+.album-new .center {
+    display: inline-block;
+}
+.album-new img {
+    float: left;
+    height: 300px;
+}
+.album-new .buttons {
+    text-align: center;
+}
+
+.album-new .top {
+    text-align: center;
+    height: 300px;
+}
+.album-new .details {
+    display: inline-block;
+    width: 500px;
+}
+
+.details > ul {
+    -webkit-padding-start: 0;
+    display: inline-block;
+    width: 95%;
+}
+
+.details > ul > li > textarea { height: 353px; }
+
+.col-1 .buttons {
+    display: block;
+    text-align: right;
+    padding: 15px 38px;
+}
+
+#artist-img {
+    width: 500px;
+    height: 500px;
+    display: inline-block;
+}
+
+#new-artist-details {
+    vertical-align: middle;
+    margin-top: 0;
+}
+
+ul { list-style-type: none; }
+
+input:hover, textarea:hover, select:hover {
+    transform: scale(1.005);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+}
+
+.image {
+    display: inline-block;
+    margin-left: 50px;
+    width: 35%;
+}
+
+img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-block > .links {
+    display: inline-block;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.artist-new .inner { display: inline-block; }
+
+.artist-new img { float: left; }
+
+.artist-new ul {
+    display: inline-block;
+    height: 500px;
+}
+
+.artist-new ul textarea {
+    height: 358px;
+    max-height: 358px;
+}
+
+.artist-new .buttons { margin-top: 25px }
+
+.artists-list .list-group { width: 100%; }
+
+.artists-list .list-group .list-group-item {
+    height: 200px;
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+
+.artists-list .list-group .artists-list-image {
+    display: inline-block;
+    width: 150px;
+}
+
+.artists-list .list-group .list-group-item img {
+    vertical-align: middle;
+    margin-top: 15px;
+    width: 150px;
+    height: 150px;
+}
+
+.artists-list .list-group .list-group-item .text-box {
+    margin: 15px 0 0 20px;
+    vertical-align: top;
+    display: inline-block;
+    height: 220px;
+    overflow: hidden;
+}
+
+.artists-list .list-group .list-group-item .info {
+    width: 900px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6; /* number of lines to show */
+    line-height: 1.21; /* fallback */
+    max-height: 125px; /* fallback */
+}
+
+.artist-details .title {
+    margin-top: -53px;
+    width: 1140px;
+}
+
+.artist-details img {
+    margin: 0 20px 20px 0;
+    float: left;
+    display: initial;
+}
+
+.artist-details .inner { margin-top: 55px; }
+
+li > input { width: 100% }
+
+
+.btn-group { display: inline-block; }
+
+#notfound { color: black; }
+
+.albums-list {
+    text-align: center;
+    height: 85%;
+    width: 100%;
+    margin: 80px 0 20px 0;
+    padding: 0;
+}
+
+
+.albums-list > ul {
+    display: inline-block;
+    width: 90%;
+    -webkit-padding-start: 0;
+    list-style-type: none;
+}
+
+.albums-list > ul > li > div {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.albums-list > ul > li > div > h3 {
+    width: 200px;
+    font: bold 15px/1.5 Helvetica, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.albums-list > ul > li img {
+    margin: 0 15px 90px 65px;
+    max-height: 180px;
+    width: 200px;
+    overflow: auto;
+}
+
+.albums-list > ul > li > div > p {
+    font: 200 14px/1.5 Georgia, Times New Roman, serif;
+    margin: 0 auto;
+    line-height: 1.4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 20px;
+    width: 100%;
+}
+
+.albums-list > ul > li {
+    display: block;
+    text-align: left;
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.albums-list > ul > li:hover {
+    background: #eee;
+    cursor: pointer;
+}
+
+.albums-list > ul > li:hover {
+    border-radius: 15px;
+    transform: scale(1.007);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+}
+
+.album-edit {
+    text-align: left;
+}
+.album-edit img {
+    width: 300px;
+}
+
+.album-edit .left {
+    width: 300px;
+    display: inline-block;
+}
+.album-edit .right {
+    display: inline-block;
+    vertical-align: top;
+    width: 600px;
+}
+
+.album-edit .list-group {
+    width: 100%;
+}
+
+.album-edit input{
+    cursor: default;
+}
+
+.album-details {
+    text-align: left;
+}
+
+.album-details .details {
+    display: inline-block;
+}
+
+.album-details h1, h2, h3 {
+    margin-top: 0;
+    font-size: 18px
+}
+
+.album-details img {
+    width: 400px;
+    height: 400px;
+    float: left;  
+}
+
+.album-details .left {
+    display: inline-block;
+    width: 400px;
+}
+
+.album-details .right {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 2px;
+    width: 720px;
+    height: 400px;
+}
+
+.album-details .tracklist-header {
+    text-align: center;
+    font-weight: bold;
+}
+
+.album-details .panel {
+    font-size: 18px;
+    height: 397px;
+    width: 100%;
+}
+
+.album-details .buttons {
+    text-align: center;
+}
+
+#genres-title { margin-top: 1px; }
+
+.genres-list { margin-top: 80px; }
+
+.genres-list .list-group { width: 100% }
+
+.genres-list .list-group .list-group-item {
+    height: 48px;
+    padding: 0;
+    margin-top: 3px;
+}
+
+.genres-list .list-group .list-group-item div {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.genres-list ul li:hover {
+    border-radius: 5px;
+    transform: scaleY(1.1);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+}
+
+.vertical {
+    display: inline-block;
+    width: 600px;
+}
+
+
+.vertical .details {
+    display: block;
+    width: 100%;
+}
+
+.vertical .image-block {
+    display: block;
+    max-height: 500px;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+.ul-inline {
+    display: inline-block;
+    width: 40%;
+    margin: 0;
+    -webkit-padding-start: 0;
+}
+
+.ul-inline > li > textarea {
+    max-width: 100%;
+    max-height: 600px;
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+    border: solid;
+    border-width: 0.5px;
+    padding: 10px;
+}
+
+.list-group {
+    margin: 0;
+    width: 500px;
+    vertical-align: middle;
+}
+
+.input-header {
+    width: 100%;
+    margin: 0;
+    font-weight: bold;
+}
+
+.img-thumbnail {
+    max-width: 500px;
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.artists-list ul li:hover {
+    border-radius: 15px;
+    transform: scale(1.007);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+}
+
+
+.main-track-list > ul {
+    display: inline-block;
+    width: 90%;
+}
+
+.main-track-list img {
+    display: inline-block;
+}
+
+.main-track-list .details {
+    display: inline-block;
+    vertical-align: middle;
+    width: 300px;
+    margin-top: 5px;
+}
+
+.main-track-list div a {
+    color: black;
+}
+
+.main-track-list > ul > li {
+    margin-top: 3px;
+    display: table;
+    height: 110px;
+    width: 100%;
+    padding: 5px;
+    text-align: left
+}
+
+.main-track-list > ul > li:hover {
+    border-radius: 10px;
+    transform: scale(1.009);
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+}
+
+.main-track-list > ul > li > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.main-track-list > ul > li > div > img {
+    height: 100px;
+    width: 100px;
+}
+
+.main-track-list > ul > li > div > a {
+    color: black;
+}
+
+.main-track-list > ul > li p {
+    display: inline-block;
+    font-size: 24px;
+}
+
+.main-track-list > ul > li h4 {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.main-track-list > ul > li > div > h3 { display: inline-block }
+
+.main-track-list > ul > li > div > p { display: inline-block }
+
+.main-track-list audio { vertical-align: middle; }
+
+.track-details {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.track-details .common {
+    display: inline-block;
+    width: 1020px;
+}
+
+.track-details .panel {
+    display: inline-block;
+    text-align: center;
+    width: 500px;
+    height: 498px;
+    margin: 1px 0 0 15px;
+    border: none;
+}
+
+.track-details img {
+    float: left;
+    display: initial;
+}
+
+.track-details .panel .panel-body {
+
+    text-align: center;
+    padding-top: 80px;
+}
+
+.track-details .panel .panel-body .center {
+    display: inline-block;
+    width: 370px;
+    text-align: left;
+    font-size: 22px;
+}
+
+.track-details .btn-group {
+    margin-top: 55px;
+    text-align: right;
+}
+
+.track-edit { text-align: center; }
+
+.track-edit ul { height: 500px; }
+
+.track-edit div { display: inline-block; }
+
+.track-edit ul li, select {
+    height: 67.6px;
+    padding: 2px 5px 2px 5px;
+}
+
+.track-edit ul li input, select { height: 30px; }
+
+.track-edit audio { width: 100%; }
+
+.track-edit .btn-group { margin-top: 55px; }
+
+
+
+.new-track > .list-group {
+    height: 500px;
+    overflow: hidden;
+}
+
+.new-track > .list-group > .list-group-item { height: 84px; }
+
+
+#aPlayer > audio { width: 100% }
+
+@media screen and (-webkit-min-device-pixel-ratio: 0)
+  and (min-resolution: .001dpcm) {
+    #aPlayer {
+        overflow: hidden;
+        width: 390px;
+    }
+
+    #aPlayer > audio { width: 420px; }
+}
+
+@media screen and(-webkit-min-device-pixel-ratio: 0) {    
+    #aPlayer {
+        overflow: hidden;
+        width: 390px;
+    }
+
+    #aPlayer > audio { width: 420px; }
+}
+
+
+.copyright { display: none; }

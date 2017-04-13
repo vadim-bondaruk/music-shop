@@ -101,5 +101,10 @@
         /// Users who purchased track
         /// </summary>
         public virtual ICollection<PurchasedTrack> PurchasedTracks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file name.
+        /// </summary>
+        public string FileName { get; set; }
     }
 }

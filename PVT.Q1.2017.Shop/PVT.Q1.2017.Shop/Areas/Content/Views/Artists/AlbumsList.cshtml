@@ -1,0 +1,29 @@
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.ArtistAlbumsListViewModel
+
+@{
+    ViewBag.Title = "Список альбомов исполнителя";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+
+    <p>
+        @Html.BtnCreateAlbum(Model.Id)
+        
+        @Html.ActionLink("Информация об исполнителе", "Details", "Artist", new
+        {
+            id = Model.Id,
+            area = "Content"
+        }, new
+        {
+            @class = "btn btn-sm btn-success",
+            title = "Нажмите, чтобы перейти к информации об исполнителе"
+        })
+    </p>
+
+    @Html.Partial("_AlbumsList", Model.Albums)
+</div>
