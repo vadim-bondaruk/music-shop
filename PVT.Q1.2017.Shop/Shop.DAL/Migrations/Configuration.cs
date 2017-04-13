@@ -5,14 +5,14 @@ namespace Shop.DAL.Migrations
     using Common.Models;
     using Context;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Shop.DAL.Context.ShopContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ShopContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Context.ShopContext context)
+        protected override void Seed(ShopContext context)
         {
             AddDefaultCurrencies(context);
             AddDefaultCurrencyRates(context);
@@ -96,7 +96,7 @@ namespace Shop.DAL.Migrations
             }
         }
 
-        private void AddDefaultCurrencies(Context.ShopContext context)
+        private void AddDefaultCurrencies(ShopContext context)
         {
             if (!context.Set<Currency>().Any(c => c.ShortName == "EUR"))
             {
@@ -116,10 +116,15 @@ namespace Shop.DAL.Migrations
                 }});
             }
 
+            if (!context.Set<Setting>().Any())
+            {
+                context.Set<Setting>().AddOrUpdate(new[] { new Setting { DefaultCurrencyId = 1 }});
+            }
+
             context.SaveChanges();
         }
 
-        private void AddDefaultCurrencyRates(Context.ShopContext context)
+        private void AddDefaultCurrencyRates(ShopContext context)
         {
             if (!context.Set<CurrencyRate>().Any())
             {
@@ -139,7 +144,7 @@ namespace Shop.DAL.Migrations
             context.SaveChanges();
         }
 
-        private void AddDefaultGenres(Context.ShopContext context)
+        private void AddDefaultGenres(ShopContext context)
         {
             if (!context.Set<Genre>().Any())
             {
@@ -162,7 +167,7 @@ namespace Shop.DAL.Migrations
             }
         }
 
-        private void AddDefaultPriceLevels(Context.ShopContext context)
+        private void AddDefaultPriceLevels(ShopContext context)
         {
             if (!context.Set<PriceLevel>().Any())
             {
