@@ -1,18 +1,21 @@
-﻿@model IEnumerable<Shop.Common.ViewModels.AlbumDetailsViewModel>
+﻿@model ICollection<Shop.Common.ViewModels.AlbumDetailsViewModel>
 
 @{
     ViewBag.Title = "Все альбомы";
 }
 
-<title class="title">Все альбомы</title>
+<h2 class="title">@ViewBag.Title</h2>
 
 
     <div class="albums-list">
         <ul class="list-group" style="width: 100%">
             @foreach (var album in Model)
             {
-                <li class="list-group-item" id="albums-item" onclick="itemClick(@album.Id)" style="height: 200px; margin-top: 0">
-                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="this.src = '/img/defuserpic.png'" style="width: 200px; height: 200px; display: inline-table; margin-left: 15px; vertical-align: top"/>
+                <li class="list-group-item" id="albums-item"
+                    onclick="window.open('@Url.Action("Details", "Albums", new { id = @album.Id, area = "Content" })', '_self')"
+                    style="height: 200px; margin-top: 0">
+                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)"
+                         onerror="this.src = '/img/defuserpic.png'" style="width: 200px; height: 200px; display: inline-table; margin-left: 15px; vertical-align: top"/>
                     <div>
                         <h2>@Html.DisplayFor(modelItem => album.Artist.Name)</h2>
                         <h3>@Html.DisplayFor(modelItem => album.Name)</h3>
@@ -23,13 +26,6 @@
             }
         </ul>
     </div>
-
-
-<script>
-    function itemClick(id) {
-        window.open("Albums/Details/" + id, "_self");
-    }
-</script>
 
 @section cssStyles{
    <link href="~/Content/tracks.css" rel="stylesheet" /> 
