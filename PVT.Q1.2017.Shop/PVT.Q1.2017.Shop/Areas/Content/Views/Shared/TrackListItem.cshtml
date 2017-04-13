@@ -5,10 +5,10 @@
         <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Image)" onerror="this.src = '/img/defuserpic.png'" />
         <div class="details">
             <div>
-                <a style="font-size: 24px" href="@Url.Action("Details", "Tracks", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Name)</a>
-                <a style="font-size: 24px" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.ArtistName)</a>
+                <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Name)</a>
+                <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.ArtistName)</a>
             </div>
-            @Html.Partial("_Stars")
+            @Html.Partial("_Stars", Model.Id)
         </div>
     </div>
     @Html.Partial("Audio/AudioSection", @Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id }))
