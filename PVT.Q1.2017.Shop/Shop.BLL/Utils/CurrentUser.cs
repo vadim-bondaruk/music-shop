@@ -1,8 +1,9 @@
-﻿namespace PVT.Q1._2017.BLL.Utils
+﻿namespace Shop.BLL.Utils
 {
     using System;
     using System.Security.Principal;
     using global::Shop.Common.Models;
+    using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
@@ -72,10 +73,15 @@
 
             if (this._user.UserRole.ToString().Equals(role, StringComparison.OrdinalIgnoreCase))
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
+        }
+
+        public bool IsInRole(UserRoles role)
+        {
+            return this._user.UserRole.Equals(role); 
         }
     }
 }

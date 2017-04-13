@@ -214,7 +214,7 @@
                     this._authModule.LogOut();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO 
                 throw;
@@ -256,7 +256,7 @@
         /// <returns></returns>
         public ActionResult GetMatchingData(string term)
         {
-            var list = this._userService.GetMatchingData(term);
+            var list = this._userService.GetLastNameMatchingData(term);
             return this.Json(list);
         }
 
@@ -302,7 +302,7 @@
                             repository.AddOrUpdate(userDB);
                             repository.SaveChanges();
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             //TODO: Write to log
                             throw;

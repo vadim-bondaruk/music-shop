@@ -380,7 +380,14 @@
         /// <returns></returns>
         public ICollection<User> GetDataPerPage(int pageNumber = 1, int count = 10)
         {
-            return Factory.GetUserRepository().GetAll().Skip((pageNumber - 1) * count).Take(count).ToList();
+            var users = Factory.GetUserRepository().GetAll();
+
+            if (users == null || users.Count<1)
+            {
+                return null;
+            }
+
+            return users.Skip((pageNumber - 1) * count).Take(count).ToList();
         }
 
         /// <summary>
@@ -397,8 +404,13 @@
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        public ICollection<User> GetMatchingData(string pattern)
+        public ICollection<User> GetLastNameMatchingData(string pattern)
         {
+            if (string.IsNullOrEmpty(pattern))
+            {
+                return null;
+            }
+
             return Factory.GetUserRepository().GetAll().Where(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         }
 

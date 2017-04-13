@@ -102,6 +102,6 @@
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        ICollection<User> GetMatchingData(string pattern);
+        ICollection<User> GetLastNameMatchingData(string pattern);
     }
 }

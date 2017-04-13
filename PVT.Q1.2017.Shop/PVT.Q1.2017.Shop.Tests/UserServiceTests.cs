@@ -10,6 +10,7 @@
     using Moq;
     using System.Linq.Expressions;
     using global::Shop.BLL.Exceptions;
+    using System.Collections.Generic;
 
     [TestClass]
     public class UserServiceTests
@@ -402,6 +403,147 @@
             var result = service.SoftDelete(1);
 
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GetLastNameMatchingData_NullOrEmptyInput()
+        {
+            var usersList = new List<User> {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"} };
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.GetAll())
+                .Returns(usersList);
+
+            IUserService service = new UserService(_factory);
+
+            var nullResult = service.GetLastNameMatchingData(null);
+            var emptyResult = service.GetLastNameMatchingData(string.Empty);
+
+            Assert.IsNull(nullResult);
+            Assert.IsNull(emptyResult);
+        }
+
+        [TestMethod]
+        public void GetLastNameMatchingData_RealInput()
+        {
+            var usersList = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"}
+            };
+
+            var expected = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"}
+
+            };
+
+            string pattern = "sta";
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.GetAll())
+                .Returns(usersList);
+
+            IUserService service = new UserService(_factory);
+
+            var result = service.GetLastNameMatchingData(pattern);
+
+            CollectionAssert.Equals(result, expected);
+        }
+
+        [TestMethod]
+        public void GetUsersCount_RealCountExpected()
+        {
+            int count = 5;
+            Mock.Get(_factory.GetUserRepository())
+              .Setup(m => m.Count(null))
+              .Returns(count);
+
+            IUserService service = new UserService(_factory);
+
+            var result = service.GetUsersCount();
+
+            Assert.IsTrue(result.Equals(count));
+
+        }
+
+        [TestMethod]
+        public void GetDataPerPage_RealInput_CountEquals()
+        {
+            var usersList = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"},
+                new User { LastName = "Smith"},
+                new User { LastName = "Williams"},
+                new User { LastName = "Brown"},
+                new User { LastName = "Davis"},
+                new User { LastName = "Miller" },
+                new User { LastName = "Wilson"},
+                new User { LastName = "Moore"}
+            };
+
+            int page = 2, count = 4;
+
+            Mock.Get(_factory.GetUserRepository())
+             .Setup(m => m.GetAll())
+             .Returns(usersList);
+
+            IUserService service = new UserService(_factory);
+
+            var result = service.GetDataPerPage(page, count);
+
+            Assert.IsTrue(result.Count.Equals(count));
+
+        }
+
+        [TestMethod]
+        public void GetDataPerPage_RealInput_CollectionEquals()
+        {
+            var usersList = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"},
+                new User { LastName = "Smith"},
+                new User { LastName = "Williams"},
+                new User { LastName = "Brown"},
+                new User { LastName = "Davis"},
+                new User { LastName = "Miller" },
+                new User { LastName = "Wilson"},
+                new User { LastName = "Moore"}
+            };
+
+            int page = 2, count = 4;
+
+            var expected = new List<User>
+            {
+                 new User { LastName = "Smith"},
+                new User { LastName = "Williams"},
+                new User { LastName = "Brown"},
+                new User { LastName = "Davis"}
+            };
+
+            Mock.Get(_factory.GetUserRepository())
+             .Setup(m => m.GetAll())
+             .Returns(usersList);
+
+            IUserService service = new UserService(_factory);
+
+            var result = service.GetDataPerPage(page, count);
+
+            CollectionAssert.Equals(result, expected);
+
         }
     }
 }

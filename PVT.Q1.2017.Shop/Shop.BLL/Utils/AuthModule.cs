@@ -59,7 +59,8 @@
                 {
                     Id = user.Id,
                     Login = user.Login,
-                    Email = user.Email
+                    Email = user.Email,
+                    UserRole = user.UserRole
                 };
                 if(!user.ConfirmedEmail)
                 {

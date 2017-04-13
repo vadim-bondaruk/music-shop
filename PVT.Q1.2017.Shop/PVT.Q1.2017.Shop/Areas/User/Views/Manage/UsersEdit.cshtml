@@ -30,7 +30,7 @@
                     source: function (request, response) {
                         $.ajax(
                             {
-                                url: "@Url.Action("GetMatchingData",new { controller = "Manage", area = "User"})",
+                                url: "@Url.Action("GetLastNameMatchingData",new { controller = "Manage", area = "User"})",
                                 type: "POST",
                                 data: {
                                     term: request.term

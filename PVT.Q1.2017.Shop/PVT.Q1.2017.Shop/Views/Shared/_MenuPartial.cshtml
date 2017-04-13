@@ -1,4 +1,5 @@
-﻿<li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
+﻿@{ var user = Request.RequestContext.HttpContext.User as Shop.BLL.Utils.CurrentUser;}
+<li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
 @if (Request.IsAuthenticated)
 {
     <li>@Html.ActionLink("Мой аккаунт", "Index", new { area = "User", controller = "Manage" })</li>
@@ -8,7 +9,7 @@
 <li>@Html.ActionLink("Альбомы", "List", "Album", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Треки", "List", "Track", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
-@if (Request.IsAuthenticated)
+@if (Request.IsAuthenticated && user.IsInRole(Shop.Infrastructure.Enums.UserRoles.Admin))
 {
     <li>@Html.ActionLink("Администрирование", "Index", new { area = "Admin", controller = "Currency" })</li>
 }

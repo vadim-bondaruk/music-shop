@@ -1,4 +1,4 @@
-﻿namespace PVT.Q1._2017.BLL.Utils
+﻿namespace Shop.BLL.Utils
 {
     using System.Security.Principal;
     using global::Shop.Common.Models;

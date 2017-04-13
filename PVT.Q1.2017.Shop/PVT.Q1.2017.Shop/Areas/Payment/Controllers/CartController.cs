@@ -9,7 +9,6 @@
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
-    using BLL.Utils;
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
