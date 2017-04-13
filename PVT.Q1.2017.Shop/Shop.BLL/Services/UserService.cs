@@ -1,17 +1,16 @@
 ﻿namespace Shop.BLL.Services
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Common.Models;
+    using Common.Validators.Infrastructure;
     using DAL.Infrastruture;
     using Exceptions;
     using Helpers;
     using Infrastructure;
     using Shop.Infrastructure.Enums;
     using Utils;
-    using Common.Validators.Infrastructure;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
 
     /// <summary>
     /// The user service
@@ -92,7 +91,7 @@
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // TODO: write data to log
                 return false;
@@ -149,7 +148,7 @@
                     userRepository.SaveChanges();
                     update = true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //TODO: Write Data to log
                     throw;
@@ -211,7 +210,7 @@
 
                 update = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // TODO: write data to log
                 throw;
@@ -229,7 +228,7 @@
         /// <returns></returns>
         public bool UpdatePassword(int id, string newPassword, string oldPassword)
         {
-            if(string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(oldPassword))
+            if (string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(oldPassword))
             {
                 return false;
             }
@@ -239,25 +238,28 @@
             using (var userRepository = Factory.GetUserRepository())
             {
                 var userUpdate = userRepository.GetById(id);
-                if (userUpdate.Password.Equals(PasswordEncryptor.GetHashString(oldPassword)))
+                if (userUpdate != null)
                 {
-                    userUpdate.Password = PasswordEncryptor.GetHashString(newPassword);
-                }
-                else
-                {
-                    throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
-                }
+                    if (userUpdate.Password.Equals(PasswordEncryptor.GetHashString(oldPassword)))
+                    {
+                        userUpdate.Password = PasswordEncryptor.GetHashString(newPassword);
+                    }
+                    else
+                    {
+                        throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
+                    }
 
-                try
-                {
-                    userRepository.AddOrUpdate(userUpdate);
-                    userRepository.SaveChanges();
-                    update = true;
-                }
-                catch (Exception ex)
-                {
-                    //TODO: Write data to log
-                    throw;
+                    try
+                    {
+                        userRepository.AddOrUpdate(userUpdate);
+                        userRepository.SaveChanges();
+                        update = true;
+                    }
+                    catch (Exception)
+                    {
+                        //TODO: Write data to log
+                        throw;
+                    } 
                 }
             }
 
@@ -287,7 +289,7 @@
                             userRepository.SaveChanges();
                             return true;
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             //TODO: write dala to log
                             throw;
@@ -321,7 +323,7 @@
                             userRepository.SaveChanges();
                             return true;
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             //TODO: write data to log
                             throw;
@@ -359,7 +361,7 @@
                         userRepository.SaveChanges();
                         deleted = true;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         //TODO: write data to log
                         throw;
@@ -370,21 +372,36 @@
             return deleted;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public ICollection<User> GetDataPerPage(int pageNumber = 1, int count = 10)
         {
             return Factory.GetUserRepository().GetAll().Skip((pageNumber - 1) * count).Take(count).ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int GetUsersCount()
         {
             return Factory.GetUserRepository().Count();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
         public ICollection<User> GetMatchingData(string pattern)
         {
             return Factory.GetUserRepository().GetAll().Where(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         }
+
         /// <summary>
         /// Get user by login or email
         /// </summary>
@@ -414,6 +431,5 @@
         {
             return UserRoles.Customer;
         }
-
     }
 }

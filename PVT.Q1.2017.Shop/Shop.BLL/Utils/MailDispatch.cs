@@ -77,7 +77,7 @@
                 smtp.Send(message);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // TODO: write data to log
                 return false;
