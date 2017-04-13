@@ -14,13 +14,22 @@
     public class SettingService : BaseService, ISettingService
     {
         /// <summary>
+        /// The ICurrencyService
+        /// </summary>
+        ICurrencyService _currencyService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SettingService"/> class.
         /// </summary>
         /// <param name="factory">
         /// The factory.
         /// </param>
-        public SettingService(IRepositoryFactory factory) : base(factory)
+        /// <param name="currencyService">
+        /// The currencyService.
+        /// </param>
+        public SettingService(IRepositoryFactory factory, CurrencyService currencyService) : base(factory)
         {
+            this._currencyService = currencyService;
         }
 
         /// <summary>
@@ -29,11 +38,11 @@
         /// </returns>
         public SettingViewModel GetSettingViewModel()
         {
-            var settingViewModel = new SettingViewModel();
-
-            // fill drop down lists
-            CurrencyService currencyService = new CurrencyService(this.Factory);
-            settingViewModel.DefaultCurrencyViewModelList = currencyService.GetCurrenciesList();
+            var settingViewModel = new SettingViewModel()
+            {
+                // fill drop down lists
+                DefaultCurrencyViewModelList = _currencyService.GetCurrenciesList()
+            };
 
             // if setting exists in db
             Setting setting;
