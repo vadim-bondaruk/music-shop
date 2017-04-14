@@ -11,7 +11,7 @@ namespace Shop.DAL.Migrations
     internal sealed class Configuration : DbMigrationsConfiguration<ShopContext>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Configuration"/> class.
+        ///     Initializes a new instance of the <see cref="Configuration" /> class.
         /// </summary>
         public Configuration()
         {
@@ -30,13 +30,12 @@ namespace Shop.DAL.Migrations
             this.AddDefaultGenres(context);
             this.AddDefaultPriceLevels(context);
             this.AddDefaultArtistsAndTracks(context);
-            
         }
 
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultAlbums(ShopContext context)
         {
@@ -93,7 +92,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultAlbumsPrices(ShopContext context)
         {
@@ -101,6 +100,50 @@ namespace Shop.DAL.Migrations
             {
                 context.Set<AlbumPrice>()
                     .AddOrUpdate(new AlbumPrice { AlbumId = 1, CurrencyId = 1, Price = 14.99m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 2, CurrencyId = 1, Price = 12.58m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 3, CurrencyId = 1, Price = 11.44m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 4, CurrencyId = 1, Price = 10.99m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 5, CurrencyId = 1, Price = 10.12m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 6, CurrencyId = 1, Price = 14.22m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 7, CurrencyId = 1, Price = 9.54m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 8, CurrencyId = 1, Price = 12.32m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 9, CurrencyId = 1, Price = 5.45m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 10, CurrencyId = 1, Price = 7.88m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 11, CurrencyId = 1, Price = 9.29m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 12, CurrencyId = 1, Price = 11.46m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 13, CurrencyId = 1, Price = 10.28m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 14, CurrencyId = 1, Price = 9.45m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 15, CurrencyId = 1, Price = 7.24m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 16, CurrencyId = 1, Price = 7.41m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 17, CurrencyId = 1, Price = 9.22m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 18, CurrencyId = 1, Price = 12.15m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 19, CurrencyId = 1, Price = 10.14m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 20, CurrencyId = 1, Price = 16.40m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 21, CurrencyId = 1, Price = 4.12m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 22, CurrencyId = 1, Price = 6.10m, PriceLevelId = 1 });
+                context.Set<AlbumPrice>()
+                    .AddOrUpdate(new AlbumPrice { AlbumId = 23, CurrencyId = 1, Price = 7.55m, PriceLevelId = 1 });
                 context.SaveChanges();
             }
         }
@@ -108,7 +151,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultArtistsAndTracks(ShopContext context)
         {
@@ -180,7 +223,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultCurrencies(ShopContext context)
         {
@@ -197,7 +240,7 @@ namespace Shop.DAL.Migrations
 
             if (!context.Set<Setting>().Any())
             {
-                context.Set<Setting>().AddOrUpdate(new[] { new Setting { DefaultCurrencyId = 1 }});
+                context.Set<Setting>().AddOrUpdate(new Setting { DefaultCurrencyId = 1 });
             }
 
             context.SaveChanges();
@@ -206,7 +249,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultCurrencyRates(ShopContext context)
         {
@@ -225,7 +268,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultGenres(ShopContext context)
         {
@@ -273,7 +316,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultPriceLevels(ShopContext context)
         {
@@ -287,7 +330,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultTracks(ShopContext context)
         {
@@ -298,46 +341,46 @@ namespace Shop.DAL.Migrations
                         new Track { ArtistId = 1, Name = "Море", GenreId = 10 },
                         new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 10 },
                         new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 10 },
-                          new Track { Name = "Just be", ArtistId = 5, GenreId = 24 },
-                            new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24 },
-                            new Track { Name = "Traffic", ArtistId = 5, GenreId = 24 },
-                            new Track { Name = "Fligth 643", ArtistId = 5, GenreId = 24 },
-                            new Track { Name = "Dance for life", ArtistId = 5, GenreId = 24 },
-                            new Track { Name = "Breda 8pm", ArtistId = 5, GenreId = 24 },
-                            new Track { Name = "Music", ArtistId = 4, GenreId = 10 },
-                            new Track { Name = "Umbrella", ArtistId = 4, GenreId = 10 },
-                            new Track { Name = "Work", ArtistId = 4, GenreId = 10 },
-                            new Track { Name = "Rude boy", ArtistId = 4, GenreId = 10 },
-                            new Track { Name = "S&M", ArtistId = 4, GenreId = 10 },
-                            new Track { Name = "Kiss it better", ArtistId = 4, GenreId = 10 },
-                            new Track { Name = "Disturbia", ArtistId = 4, GenreId = 10 },
-                            new Track { Name = "Love me like you do", ArtistId = 8, GenreId = 10 },
-                            new Track { Name = "Your song", ArtistId = 8, GenreId = 10 },
-                            new Track { Name = "Lights", ArtistId = 8, GenreId = 10 },
-                            new Track { Name = "TKO", ArtistId = 14, GenreId = 10 },
-                            new Track { Name = "Hair up", ArtistId = 14, GenreId = 10 },
-                            new Track { Name = "My love", ArtistId = 14, GenreId = 10 },
-                            new Track { Name = "Mercy", ArtistId = 15, GenreId = 10 },
-                            new Track { Name = "Ruin", ArtistId = 15, GenreId = 10 },
-                            new Track { Name = "Imagination", ArtistId = 15, GenreId = 10 },
-                            new Track { Name = "Alejandro", ArtistId = 16, GenreId = 10 },
-                            new Track { Name = "Paparazzi", ArtistId = 16, GenreId = 10 },
-                            new Track { Name = "Just dance", ArtistId = 16, GenreId = 10 },
-                            new Track { Name = "Shape of my heart", ArtistId = 17, GenreId = 10 },
-                            new Track { Name = "Fields of gold", ArtistId = 17, GenreId = 10 },
-                            new Track { Name = "Fragile", ArtistId = 17, GenreId = 10 },
-                            new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "The unforgiven", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "Fade to black", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "One", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "Hardwired", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "Until it sleeps", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "Mama said", ArtistId = 18, GenreId = 24 },
-                            new Track { Name = "Englishman in New York", ArtistId = 17, GenreId = 10 },
-                            new Track { Name = "Orbion", ArtistId = 19, GenreId = 10 },
-                            new Track { Name = "Intence", ArtistId = 19, GenreId = 10 },
-                            new Track { Name = "Freefall", ArtistId = 19, GenreId = 10 });
+                        new Track { Name = "Just be", ArtistId = 5, GenreId = 24 },
+                        new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24 },
+                        new Track { Name = "Traffic", ArtistId = 5, GenreId = 24 },
+                        new Track { Name = "Fligth 643", ArtistId = 5, GenreId = 24 },
+                        new Track { Name = "Dance for life", ArtistId = 5, GenreId = 24 },
+                        new Track { Name = "Breda 8pm", ArtistId = 5, GenreId = 24 },
+                        new Track { Name = "Music", ArtistId = 4, GenreId = 10 },
+                        new Track { Name = "Umbrella", ArtistId = 4, GenreId = 10 },
+                        new Track { Name = "Work", ArtistId = 4, GenreId = 10 },
+                        new Track { Name = "Rude boy", ArtistId = 4, GenreId = 10 },
+                        new Track { Name = "S&M", ArtistId = 4, GenreId = 10 },
+                        new Track { Name = "Kiss it better", ArtistId = 4, GenreId = 10 },
+                        new Track { Name = "Disturbia", ArtistId = 4, GenreId = 10 },
+                        new Track { Name = "Love me like you do", ArtistId = 8, GenreId = 10 },
+                        new Track { Name = "Your song", ArtistId = 8, GenreId = 10 },
+                        new Track { Name = "Lights", ArtistId = 8, GenreId = 10 },
+                        new Track { Name = "TKO", ArtistId = 14, GenreId = 10 },
+                        new Track { Name = "Hair up", ArtistId = 14, GenreId = 10 },
+                        new Track { Name = "My love", ArtistId = 14, GenreId = 10 },
+                        new Track { Name = "Mercy", ArtistId = 15, GenreId = 10 },
+                        new Track { Name = "Ruin", ArtistId = 15, GenreId = 10 },
+                        new Track { Name = "Imagination", ArtistId = 15, GenreId = 10 },
+                        new Track { Name = "Alejandro", ArtistId = 16, GenreId = 10 },
+                        new Track { Name = "Paparazzi", ArtistId = 16, GenreId = 10 },
+                        new Track { Name = "Just dance", ArtistId = 16, GenreId = 10 },
+                        new Track { Name = "Shape of my heart", ArtistId = 17, GenreId = 10 },
+                        new Track { Name = "Fields of gold", ArtistId = 17, GenreId = 10 },
+                        new Track { Name = "Fragile", ArtistId = 17, GenreId = 10 },
+                        new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "The unforgiven", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "Fade to black", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "One", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "Hardwired", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "Until it sleeps", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "Mama said", ArtistId = 18, GenreId = 24 },
+                        new Track { Name = "Englishman in New York", ArtistId = 17, GenreId = 10 },
+                        new Track { Name = "Orbion", ArtistId = 19, GenreId = 10 },
+                        new Track { Name = "Intence", ArtistId = 19, GenreId = 10 },
+                        new Track { Name = "Freefall", ArtistId = 19, GenreId = 10 });
                 context.SaveChanges();
             }
         }
@@ -345,7 +388,7 @@ namespace Shop.DAL.Migrations
         /// <summary>
         /// </summary>
         /// <param name="context">
-        /// The context.
+        ///     The context.
         /// </param>
         private void AddDefaultTracksPrices(ShopContext context)
         {
