@@ -1,20 +1,21 @@
 ﻿namespace Shop.BLL
 {
-    using DAL;
     using Ninject;
     using Ninject.Modules;
-    using Services;
-    using Services.Infrastructure;
-    using Utils;
-    using Utils.Infrastructure;
+
+    using Shop.BLL.Services;
+    using Shop.BLL.Services.Infrastructure;
+    using Shop.BLL.Utils;
+    using Shop.BLL.Utils.Infrastructure;
+    using Shop.DAL;
 
     /// <summary>
-    /// Default cofiguration module.
+    ///     Default cofiguration module.
     /// </summary>
     public class DefaultServicesNinjectModule : NinjectModule
     {
         /// <summary>
-        /// Loads configuration settings.
+        ///     Loads configuration settings.
         /// </summary>
         public override void Load()
         {
@@ -25,33 +26,26 @@
 
             this.BindServices();
         }
-        
+
         /// <summary>
-        /// Binds services.
+        ///     Binds services.
         /// </summary>
         protected virtual void BindServices()
         {
-            Bind<IArtistService>().To<ArtistService>();
-            Bind<ITrackService>().To<TrackService>();
-            Bind<IAlbumService>().To<AlbumService>();
-
-            Bind<IFeedbackService>().To<FeedbackService>();
-
-            Bind<ITrackPriceService>().To<TrackPriceService>();
-            Bind<IAlbumPriceService>().To<AlbumPriceService>();
-
-            Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
-            Bind<IPaymentService>().To<PaymentService>();
-
-            Bind<ICurrencyService>().To<CurrencyService>();
-
-            Bind<ICurrencyRateService>().To<CurrencyRateService>();
-
-            Bind<ICartService>().To<CartService>();
-            Bind<IAuthModule>().To<AuthModule>();
-            Bind<IUserService>().To<UserService>();
-
-            Bind<ISettingService>().To<SettingService>();
+            this.Bind<IArtistService>().To<ArtistService>();
+            this.Bind<ITrackService>().To<TrackService>();
+            this.Bind<IAlbumService>().To<AlbumService>();
+            this.Bind<IGenreService>().To<GenreService>();
+            this.Bind<IFeedbackService>().To<FeedbackService>();
+            this.Bind<ITrackPriceService>().To<TrackPriceService>();
+            this.Bind<IAlbumPriceService>().To<AlbumPriceService>();
+            this.Bind<IUserPaymentMethodService>().To<UserPaymentMethodService>();
+            this.Bind<IPaymentService>().To<PaymentService>();
+            this.Bind<ICurrencyService>().To<CurrencyService>();
+            this.Bind<ICurrencyRateService>().To<CurrencyRateService>();
+            this.Bind<ICartService>().To<CartService>();
+            this.Bind<IAuthModule>().To<AuthModule>();
+            this.Bind<IUserService>().To<UserService>();
         }
     }
 }

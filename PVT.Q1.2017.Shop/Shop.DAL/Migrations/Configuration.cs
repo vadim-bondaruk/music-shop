@@ -48,7 +48,8 @@ namespace Shop.DAL.Migrations
             {
                 context.Set<Track>().AddOrUpdate(new[] {
                     new Track { ArtistId = 1, Name = "Море", GenreId = 9 },
-                    new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 9 }
+                    new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 9 },
+                    new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 1 }
                 });
                 context.SaveChanges();
             }
@@ -113,6 +114,11 @@ namespace Shop.DAL.Migrations
                     Code = 840,
                     FullName = "US Dollar"
                 }});
+            }
+
+            if (!context.Set<Setting>().Any())
+            {
+                context.Set<Setting>().AddOrUpdate(new[] { new Setting { DefaultCurrencyId = 1 }});
             }
 
             context.SaveChanges();

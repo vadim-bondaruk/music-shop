@@ -1,75 +1,105 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.ViewModels
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Web;
-    using FluentValidation.Attributes;
+
+    using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
-    using Validators;
 
     /// <summary>
-    /// The track management view model.
     /// </summary>
-    [Validator(typeof(TrackManagementValidator))]
     public class TrackManagementViewModel
     {
         /// <summary>
-        /// Track id.
+        ///     Gets or sets the artist.
+        /// </summary>
+        [DisplayName("Исполнитель")]
+        public Artist Artist { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the duration.
+        /// </summary>
+        [DisplayName("Продолжительность")]
+        public TimeSpan? Duration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file name.
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the genre.
+        /// </summary>
+        public Genre Genre { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the genre.
+        /// </summary>
+        /*public Genre Genre { get; set; }*/
+
+        /// <summary>
+        ///     Gets or sets the genre id.
+        /// </summary>
+        [DisplayName("Жанр")]
+        public int GenreId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the genres.
+        /// </summary>
+        public ICollection<Genre> Genres { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the id.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Track name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Track release date.
-        /// </summary>
-        public DateTime? ReleaseDate { get; set; }
-
-        /// <summary>
-        /// The track image. Optional.
+        ///     Gets or sets the image.
         /// </summary>
         public byte[] Image { get; set; }
 
         /// <summary>
-        /// The track file. Required. We are selling it!
+        ///     Gets or sets the name.
         /// </summary>
-        public byte[] TrackFile { get; set; }
+        [DisplayName("Название")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// The track sample. Optional.
-        /// </summary>
-        public byte[] TrackSample { get; set; }
-
-        /// <summary>
-        /// Posted track image file.
+        ///     Gets or sets the posted image.
         /// </summary>
         public HttpPostedFileBase PostedImage { get; set; }
 
         /// <summary>
-        /// Posted track file.
+        ///     Gets or sets the posted track file.
         /// </summary>
+        [DisplayName("Файл")]
         public HttpPostedFileBase PostedTrackFile { get; set; }
 
         /// <summary>
-        /// Posted track sample file.
+        ///     Gets or sets the price.
         /// </summary>
-        public HttpPostedFileBase PostedTrackSample { get; set; }
+        [DisplayName("Стоимость")]
+        public double Price { get; set; }
 
         /// <summary>
-        /// Track duration.
+        ///     Gets or sets the rating.
         /// </summary>
-        public TimeSpan? Duration { get; set; }
+        public RatingViewModel Rating { get; set; }
 
         /// <summary>
-        /// Track artist.
+        ///     Gets or sets the release date.
         /// </summary>
-        public ArtistViewModel Artist { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayName("Дата выхода")]
+        public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
-        /// Track genre.
+        ///     Gets or sets the track file.
         /// </summary>
-        public GenreViewModel Genre { get; set; }
+        public byte[] TrackFile { get; set; }
     }
 }

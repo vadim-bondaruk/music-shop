@@ -60,7 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\InvalidAlbumIdException.cs" />
+    <Compile Include="Exceptions\InvalidPaymentOperation.cs" />
     <Compile Include="Exceptions\InvalidTrackIdException.cs" />
+    <Compile Include="Exceptions\InvalidUserIdException.cs" />
     <Compile Include="Helpers\ModelsMapper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Helpers\PriceHelper.cs" />
@@ -77,13 +79,18 @@
     <Compile Include="Services\CartViewModelService.cs" />
     <Compile Include="Services\CurrencyRateService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\Infrastructure\IArtistService.cs" />
     <Compile Include="Services\Infrastructure\ISettingService.cs" />
+    <Compile Include="Services\Infrastructure\IGenreService.cs" />
     <Compile Include="Services\Infrastructure\IUserService.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />
     <Compile Include="Utils\CurrentUser.cs" />
+    <Compile Include="Utils\ID3Tag\BitReader.cs" />
+    <Compile Include="Utils\ID3Tag\ID3v2.cs" />
+    <Compile Include="Utils\ID3Tag\id3v2Frame.cs" />
     <Compile Include="Utils\Infrastructure\IAuthModule.cs" />
     <Compile Include="Utils\PasswordEncryptor.cs" />
     <Compile Include="Services\FeedbackService.cs" />

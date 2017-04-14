@@ -117,8 +117,14 @@
     <Compile Include="Moq\CurrencyRepositoryMoq.cs" />
     <Compile Include="Moq\FeedbackRepositoryMoq.cs" />
     <Compile Include="Moq\GenreRepositoryMoq.cs" />
+    <Compile Include="Moq\OrderAlbumRepositoryMoq.cs" />
+    <Compile Include="Moq\PaymentTransactionRepositoryMoq.cs" />
+    <Compile Include="Moq\OrderTrackRepositoryMoq.cs" />
     <Compile Include="Moq\PriceLevelRepositoryMoq.cs" />
+    <Compile Include="Moq\PurchasedAlbumRepositoryMoq.cs" />
+    <Compile Include="Moq\PurchasedTrackRepositoryMoq.cs" />
     <Compile Include="Moq\RepositoryFactoryMoq.cs" />
+    <Compile Include="Moq\UserPaymentMethodRepositoryMoq.cs" />
     <Compile Include="Moq\SettingRepositoryMoq.cs" />
     <Compile Include="Moq\UserRepositoryMoq.cs" />
     <Compile Include="SettingServiceTest.cs" />

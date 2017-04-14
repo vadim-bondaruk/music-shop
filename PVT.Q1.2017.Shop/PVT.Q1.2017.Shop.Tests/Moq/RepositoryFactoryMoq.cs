@@ -21,6 +21,13 @@
         private readonly AlbumTrackRelationRepositoryMoq _albumTrackRelationRepositoryMoq = new AlbumTrackRelationRepositoryMoq();
         private readonly UserRepositoryMoq _userRepositoryMoq = new UserRepositoryMoq();
         private readonly SettingRepositoryMoq _settingRepositoryMoq = new SettingRepositoryMoq();
+        private readonly OrderTrackRepositoryMoq _orderTrackRepositoryMoq = new OrderTrackRepositoryMoq();
+        private readonly OrderAlbumRepositoryMoq _orderAlbumRepositoryMoq = new OrderAlbumRepositoryMoq();
+        private readonly PurchasedTrackRepositoryMoq _purchasedTrackRepositoryMoq = new PurchasedTrackRepositoryMoq();
+        private readonly PurchasedAlbumRepositoryMoq _purchasedAlbumRepositoryMoq = new PurchasedAlbumRepositoryMoq();
+
+        private readonly PaymentTransactionRepositoryMoq _paymentTransactionRepositoryMoq = new PaymentTransactionRepositoryMoq();
+        private readonly UserPaymentMethodRepositoryMoq _userPaymentMethodRepositoryMoq = new UserPaymentMethodRepositoryMoq();
 
         public IAlbumRepository GetAlbumRepository()
         {
@@ -89,7 +96,12 @@
 
         public IUserPaymentMethodRepository GetUserPaymentMethodRepository()
         {
-            throw new NotImplementedException();
+            return _userPaymentMethodRepositoryMoq.Repository;
+        }
+        
+        public IPaymentTransactionRepository GetPaymentTransactionRepository()
+        {
+            return _paymentTransactionRepositoryMoq.Repository;
         }
 
         public ICartRepository GetCartRepository()
@@ -105,6 +117,26 @@
         public ISettingRepository GetSettingRepository()
         {
             return _settingRepositoryMoq.Repository;
+        }
+
+        public IOrderTrackRepository GetOrderTrackRepository()
+        {
+            return _orderTrackRepositoryMoq.Repository;
+        }
+
+        public IOrderAlbumRepository GetOrderAlbumRepository()
+        {
+            return _orderAlbumRepositoryMoq.Repository;
+        }
+
+        public IPurchasedTrackRepository GetPurchasedTrackRepository()
+        {
+            return _purchasedTrackRepositoryMoq.Repository;
+        }
+
+        public IPurchasedAlbumRepository GetPurchasedAlbumRepository()
+        {
+            return _purchasedAlbumRepositoryMoq.Repository;
         }
     }
 }

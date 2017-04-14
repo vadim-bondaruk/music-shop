@@ -147,6 +147,20 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Genre"/> model to a new <see cref="GenreDetailsViewModel"/> model.
+        /// </summary>
+        /// <param name="genre">
+        /// The genre DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="GenreDetailsViewModel"/> model.
+        /// </returns>
+        public static GenreDetailsViewModel GetGenreDetailsViewModel(Genre genre)
+        {
+            return _modelDetailsMapper.Map<GenreDetailsViewModel>(genre);
+        }
+
+        /// <summary>
         /// Executes a mapping from the <see cref="TrackPrice"/> model to a new <see cref="PriceViewModel"/> model.
         /// </summary>
         /// <param name="trackPrice">
@@ -259,6 +273,20 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Track"/> model to a new <see cref="PurchasedTrackViewModel"/> model.
+        /// </summary>
+        /// <param name="track">
+        /// The track DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="PurchasedTrackViewModel"/> model.
+        /// </returns>
+        public static PurchasedTrackViewModel GetPurchasedTrackViewModel(Track track)
+        {
+            return _commonMapper.Map<PurchasedTrackViewModel>(track);
+        }
+
+        /// <summary>
         /// Configures and returns a new instance of the common mapper.
         /// </summary>
         /// <returns>
@@ -296,6 +324,9 @@
                    .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
 
                 cfg.CreateMap<Setting, SettingViewModel>();
+
+                cfg.CreateMap<Track, PurchasedTrackViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
             });
 
             return commonMapperConfiguration.CreateMapper();
@@ -345,6 +376,8 @@
             MapperConfiguration detailsMapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Genre, GenreViewModel>();
+
+                cfg.CreateMap<Genre, GenreDetailsViewModel>();
 
                 cfg.CreateMap<Artist, ArtistViewModel>()
                    .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))

@@ -45,10 +45,10 @@ namespace PVT.Q1._2017.Shop.Tests
             }
             AddCartTest();
             _cartService.AddTrack(1, 1);
-            using (var repo = _factory.GetCartRepository())
+            using (var repo = _factory.GetOrderTrackRepository())
             {
-                var result = repo.GetById(1);
-                Assert.IsTrue(result.Tracks.Any());
+                var result = repo.FirstOrDefault( r => r.CartId == 1);
+                Assert.IsTrue(result != null);
             }
         }
 
@@ -65,10 +65,10 @@ namespace PVT.Q1._2017.Shop.Tests
             AddCartTest();
 	        var trackIds = new int[] {1, 2, 3};
             _cartService.AddTrack(1, trackIds);
-            using (var repo = _factory.GetCartRepository())
+            using (var repo = _factory.GetOrderTrackRepository())
             {
-                var result = repo.GetById(1);
-                Assert.IsTrue(result.Tracks.Any());
+                var result = repo.GetAll(r => r.CartId == 1);
+                Assert.IsTrue(result != null);
             }
         }
 
@@ -82,10 +82,10 @@ namespace PVT.Q1._2017.Shop.Tests
             }
             AddCartTest();
             _cartService.AddAlbum(1, 1);
-            using (var repo = _factory.GetCartRepository())
+            using (var repo = _factory.GetOrderAlbumRepository())
             {
-                var result = repo.GetById(1);
-                Assert.IsTrue(result.Albums.Any());
+                var result = repo.FirstOrDefault(r => r.CartId == 1);
+                Assert.IsTrue(result != null);
             }
         }
 
@@ -102,10 +102,10 @@ namespace PVT.Q1._2017.Shop.Tests
             AddCartTest();
             var albumIds = new int[] { 1, 2, 3 };
             _cartService.AddAlbum(1, albumIds);
-            using (var repo = _factory.GetCartRepository())
+            using (var repo = _factory.GetOrderAlbumRepository())
             {
-                var result = repo.GetById(1);
-                Assert.IsTrue(result.Albums.Any());
+                var result = repo.GetAll(r => r.CartId == 1);
+                Assert.IsTrue(result != null);
             }
         }
 

@@ -17,7 +17,7 @@
         /// Валюта, которую выбрал пользователь.
         /// </param>
         /// <returns> Успешно ли прошла операция подсчёта</returns>
-        public static bool SetTotalPrice(CartViewModel userCart, Currency userCurrency)
+        public static bool SetTotalPrice(CartViewModel userCart, CurrencyViewModel userCurrency)
         {
             if (userCart == null || userCurrency == null)
             {
@@ -26,24 +26,24 @@
 
             userCart = CheckNull(userCart);
 
-            foreach (Track anyTrack in userCart.Tracks)
+            foreach (TrackDetailsViewModel anyTrack in userCart.Tracks)
             {
-                if (anyTrack.TrackPrices == null)
+                if (anyTrack.Price == null)
                 {
                     return false;
                 }
 
-                userCart.TotalPrice += anyTrack.TrackPrices.FirstOrDefault(p => p.Currency.Code == userCurrency.Code).Price;
+                userCart.TotalPrice += anyTrack.Price.Amount;
             }
-            
-            foreach (Album anyAlbum in userCart.Albums)
+
+            foreach (AlbumDetailsViewModel anyAlbum in userCart.Albums)
             {
-                if (anyAlbum.AlbumPrices == null)
+                if (anyAlbum.Price == null)
                 {
                     return false;
                 }
 
-                userCart.TotalPrice += anyAlbum.AlbumPrices.FirstOrDefault(a => a.Currency.Code == userCurrency.Code).Price;
+                userCart.TotalPrice += anyAlbum.Price.Amount;
             }
 
             return true;
@@ -58,13 +58,13 @@
         {
             if (userCart.Tracks == null)
             {
-                userCart.Tracks = new List<Track>();
+                userCart.Tracks = new List<TrackDetailsViewModel>();
                 userCart.IsEmpty = true;
             }
 
             if (userCart.Albums == null)
             {
-                userCart.Albums = new List<Album>();
+                userCart.Albums = new List<AlbumDetailsViewModel>();
                 userCart.IsEmpty = true;
             }
 

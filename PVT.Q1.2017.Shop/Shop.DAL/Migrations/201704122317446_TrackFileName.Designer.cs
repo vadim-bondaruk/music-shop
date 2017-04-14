@@ -7,13 +7,13 @@ namespace Shop.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddSettingTableForAdmin : IMigrationMetadata
+    public sealed partial class TrackFileName : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSettingTableForAdmin));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(TrackFileName));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704061356077_AddSettingTableForAdmin"; }
+            get { return "201704122317446_TrackFileName"; }
         }
         
         string IMigrationMetadata.Source

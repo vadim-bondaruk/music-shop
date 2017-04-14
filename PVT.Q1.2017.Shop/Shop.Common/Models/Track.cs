@@ -95,6 +95,16 @@
         /// <summary>
         /// Carts with this Track
         /// </summary>
-        public virtual ICollection<OrderTrack> Carts { get; set; }
+        public virtual ICollection<OrderTrack> OrderTracks { get; set; }
+
+        /// <summary>
+        /// Users who purchased track
+        /// </summary>
+        public virtual ICollection<PurchasedTrack> PurchasedTracks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file name.
+        /// </summary>
+        public string FileName { get; set; }
     }
 }
