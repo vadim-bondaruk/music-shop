@@ -6,13 +6,8 @@
         $(this).parent().find("#audio").src = fileResult;
     });
 
-    $("#file").change(function(event) {
-        var output = document.getElementById("new-album-img");
-        output.src = URL.createObjectURL(event.target.files[0]);
-    });
-
-    $("#file").change(function(event) {
-        var output = document.getElementById("artist-img");
+    $("#file").change(function (event) {
+        var output = document.getElementById("details-img");
         output.src = URL.createObjectURL(event.target.files[0]);
     });
 });

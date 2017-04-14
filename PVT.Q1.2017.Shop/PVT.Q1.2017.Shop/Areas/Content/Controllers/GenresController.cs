@@ -2,14 +2,9 @@
 {
     using System.Web.Mvc;
 
-    using AutoMapper;
-
     using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
-
-    using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
 
     /// <summary>
     /// </summary>

@@ -1,14 +1,9 @@
 ﻿@model ICollection<Shop.Common.ViewModels.ArtistDetailsViewModel>
 
-@{
-    ViewBag.Title = "Все исполнители";
-}
-
-<h2 class="title">@ViewBag.Title</h2>
-
+@{ViewBag.Title = "Все исполнители";}
 
 <div class="artists-list">
-    <ul class="list-group">
+    <ul class="list-group" id="slist">
         @foreach (var item in Model)
         {
             <li class="list-group-item" onclick="window.location.href = '@Url.Action("Details", "Artists", new { id = item.Id, area = "Content"})'">

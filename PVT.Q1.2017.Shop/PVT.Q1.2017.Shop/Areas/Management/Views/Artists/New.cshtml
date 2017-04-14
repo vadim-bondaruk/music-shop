@@ -1,7 +1,8 @@
 @model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
+@{ ViewBag.Title = "Новый исполнитель";}
 <body>
+
 <div class="artist-new">
-    <h2 class="title" style="position: initial; margin-top: -30px;">Регистрация нового исполнителя</h2>
 
     @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
     {

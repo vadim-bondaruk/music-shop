@@ -178,6 +178,7 @@
                                     opt.MapFrom(src => src.PostedPhoto != null ? src.PostedPhoto.ToBytes() : src.Photo));
 
                         cfg.CreateMap<GenreViewModel, Genre>();
+                        cfg.CreateMap<GenreDetailsViewModel, GenreManagementViewModel>();
 
                         cfg.CreateMap<Track, TrackManagementViewModel>();
 
@@ -196,8 +197,7 @@
                         cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
                             .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
 
-                        cfg.CreateMap<Album, AlbumManagementViewModel>()
-                            .ForMember(dst => dst.Tracks, opt => opt.UseValue(new List<Track>()));
+                        cfg.CreateMap<Album, AlbumManagementViewModel>();
 
                         cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
 

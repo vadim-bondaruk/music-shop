@@ -1,7 +1,6 @@
 ﻿@model Shop.Common.ViewModels.TrackDetailsViewModel
 
 <div style="text-align: initial">
-    <h2 class="title" style="margin-top: 15px; position: initial">Информация о треке</h2>
     <div class="w3-card">
         <div class="track-details">
             <div class="common">
@@ -14,13 +13,13 @@
                     <div class="panel-body">
                         <div class="center">
                             <p>
-                                <strong>@Html.DisplayNameFor(m => m.Artist.Name):</strong> @Html.DisplayTextFor(m => m.Artist.Name)
+                                <strong>@Html.DisplayNameFor(m => m.Artist):</strong> @Html.DisplayTextFor(m => m.Artist.Name)
                             </p>
                             <p>
                                 <strong>@Html.DisplayNameFor(m => m.ReleaseDate):</strong> @Html.ValueFor(m => m.ReleaseDate, "{0:dd MMMM yyyy} г.")
                             </p>
                             <p>
-                                <strong>@Html.DisplayNameFor(m => m.Genre.Name):</strong> @Html.DisplayTextFor(m => m.Genre.Name)
+                                <strong>@Html.DisplayNameFor(m => m.Genre):</strong> @Html.DisplayTextFor(m => m.Genre.Name)
                             </p>
                             <p>
                                 <strong>@Html.DisplayNameFor(m => m.Duration):</strong> @Html.DisplayTextFor(m => m.Duration)
