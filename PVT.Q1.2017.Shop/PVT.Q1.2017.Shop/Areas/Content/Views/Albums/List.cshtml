@@ -1,7 +1,4 @@
-﻿@using System
-@using PVT.Q1._2017.Shop.Areas.Content.Extentions
-@model IEnumerable<Shop.Common.ViewModels.AlbumDetailsViewModel>
-<title class="title" style="margin: 0">Все альбомы</title>
+﻿@model ICollection<Shop.Common.ViewModels.AlbumDetailsViewModel>
 
 <div class="albums-list">
     <ul class="list-group" style="width: 100%">
@@ -32,12 +29,6 @@
         }
     </ul>
 </div>
-
-<script>
-    function itemClick(id) {
-        window.open("Albums/Details/" + id, "_self");
-    }
-</script>
 
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet"/>

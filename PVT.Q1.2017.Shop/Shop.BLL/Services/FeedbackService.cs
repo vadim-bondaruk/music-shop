@@ -100,13 +100,13 @@
             bool feedbackCommentsExist;
             using (var repository = this.Factory.GetFeedbackRepository())
             {
-                feedbackCommentsExist = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == userDataId) != null;
+                feedbackCommentsExist = repository.Exist(f => f.TrackId == trackId && f.UserId == userDataId);
             }
 
             bool voteExists;
             using (var repository = this.Factory.GetVoteRepository())
             {
-                voteExists = repository.FirstOrDefault(v => v.TrackId == trackId && v.UserId == userDataId) != null;
+                voteExists = repository.Exist(v => v.TrackId == trackId && v.UserId == userDataId);
             }
 
             return feedbackCommentsExist || voteExists;

@@ -1,10 +1,7 @@
-﻿@using System.Collections
-@using Shop.Common.Models
+﻿
 @model Shop.Common.ViewModels.AlbumDetailsViewModel
 
-@Html.AntiForgeryToken()
-<body>
-    <h2 class="title" style="position: initial; margin-top: 0">Информация об альбоме</h2>
+<h2 class="title" style="position: initial; margin-top: 0">@ViewBag.Title</h2>
 
     <div class="album-details">
         <header class="page-title">@Html.DisplayTextFor(model => model.Name)</header>
@@ -26,15 +23,17 @@
                 </div>
             </div>
 
-        </div>
-        <div class="buttons">
-            <a href="@Url.Action("List", "Albums", new { Area = "Content" })" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Отмена</a>
-            <a class="btn btn-primary" href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.Id })"><span class="glyphicon glyphicon-pencil"></span> Правка</a>
-        </div>
     </div>
-</body>
+    <div class="buttons">
+        <a href="@Url.Action("List", "Albums", new { Area = "Content" })" class="btn btn-primary">
+            <span class="glyphicon glyphicon-arrow-left"></span> Отмена
+        </a>
+        <a class="btn btn-primary" href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.AlbumDetails.Id })">
+            <span class="glyphicon glyphicon-pencil"></span> Правка
+        </a>
+    </div>
+</div>
 
-<script src="/Scripts/del-artist.js" type="text/javascript"></script>
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet" />
 }

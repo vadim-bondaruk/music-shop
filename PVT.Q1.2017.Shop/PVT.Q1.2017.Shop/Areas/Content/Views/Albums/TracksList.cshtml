@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.AlbumTracksListViewModel
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.AlbumTracksListViewModel
 
 @{
     ViewBag.Title = "Список треков из альбома";
@@ -7,21 +8,20 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>@Model.Name</h4>
-    @if (Model.Artist != null)
+    <h4>@Model.AlbumDetails.Name</h4>
+    @if (Model.AlbumDetails.Artist != null)
     {
-        <h5>@Model.Artist.Name</h5>
+        <h5>@Model.AlbumDetails.Artist.Name</h5>
     }
     <hr />
 
     <p>
-        <a class="btn btn-sm btn-primary" href="@Url.Action("AddTracks", "Album", new { Id = Model.Id, area = "Management" })">
-            <span class="glyphicon glyphicon-plus"></span> Добавить треки
-        </a>
+        @Html.BtnAddTracksToAlbum(Model.AlbumDetails.Id)
 
-        @if (Model.Artist != null)
+        @if (Model.AlbumDetails.Artist != null)
         {
-            <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
+            <a class="btn btn-sm btn-success"
+               href="@Url.Action("Details", "Artist", new { id = Model.AlbumDetails.Artist.Id, area = "Content" })"
                title="Нажмите, чтобы увидеть информацию об исполнителе">
                 Информация об исполнителе
             </a>
@@ -29,7 +29,7 @@
 
         @Html.ActionLink("Информация об альбоме", "Details", "Album", new
         {
-            id = Model.Id,
+            id = Model.AlbumDetails.Id,
             area = "Content"
         }, new
         {
@@ -38,7 +38,7 @@
         })
     </p>
     
-    @Html.Partial("TracksListPartialView", Model.Tracks)
+    @Html.Partial("_TracksList", Model.Tracks)
     
 </div>
 

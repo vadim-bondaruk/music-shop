@@ -11,16 +11,14 @@
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using Shop.Controllers;
 
     /// <summary>
     ///     The track controller
     /// </summary>
-    public class TracksController : Controller
+    public class TracksController : BaseController
     {
-        /// <summary>
-        ///     The track service.
-        /// </summary>
-        private readonly ITrackRepository trackRepository;
+        private readonly ITrackService _trackService;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TracksController" /> class.
@@ -28,10 +26,9 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        /// <param name="trackRepository"></param>
-        public TracksController(ITrackService trackService, ITrackRepository trackRepository)
+        public TracksController(ITrackService trackService)
         {
-            this.trackRepository = trackRepository;
+            _trackService = trackService;
         }
 
         /// <summary>
@@ -48,7 +45,24 @@
                 return this.RedirectToAction("List");
             }
 
-            return null; // this.View(this._trackService.GetAlbumsList(new Track { Id = id }));
+            TrackAlbumsListViewModel trackAlbumsViewModel;
+            if (CurrentUser != null)
+            {
+                var currency = GetCurrentUserCurrency();
+                var priceLevel = GetCurrentUserPriceLevel();
+                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
+            }
+            else
+            {
+                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
+            }
+
+            if (trackAlbumsViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return this.View(trackAlbumsViewModel);
         }
 
         /// <summary>
@@ -59,9 +73,14 @@
         /// </returns>
         public ActionResult List()
         {
-            var tracks = this.trackRepository.GetAll();
-            var trackDetailsViewModels = tracks.Select(ModelsMapper.GetTrackDetailsViewModel).ToList();
-            return this.View(trackDetailsViewModels);
+            if (CurrentUser != null)
+            {
+                var currency = GetCurrentUserCurrency();
+                var priceLevel = GetCurrentUserPriceLevel();
+                return this.View(this._trackService.GetDetailedTracksList(currency.Code, priceLevel, GetUserDataId()));
+            }
+
+            return this.View(this._trackService.GetDetailedTracksList());
         }
 
         /// <summary>
@@ -78,8 +97,24 @@
                 return this.RedirectToAction("List");
             }
 
-            var track = this.trackRepository.GetById((int)id);
-            return this.View(ModelsMapper.GetTrackDetailsViewModel(track));
+            TrackDetailsViewModel trackViewModel;
+            if (CurrentUser != null)
+            {
+                var currency = GetCurrentUserCurrency();
+                var priceLevel = GetCurrentUserPriceLevel();
+                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel, GetUserDataId());
+            }
+            else
+            {
+                trackViewModel = _trackService.GetTrackDetails(id.Value);
+            }
+
+            if (trackViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return this.View(trackViewModel);
         }
 
         /// <summary>
@@ -93,16 +128,28 @@
         {
             string mp3Url = null;
 
-            // string mp3Url = Track.GetMp3UrlByID(id);
-            var track = this.trackRepository.GetById(id);
-            var urlGrabber = new WebClient();
-            var data = urlGrabber.DownloadData(mp3Url);
-            var fileStream = new FileStream(string.Format("{0} - {1}.mp3", track.Artist, track.Name), FileMode.Open);
+            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
+            using (var trackRepository = factory.GetTrackRepository())
+            {
+                // string mp3Url = Track.GetMp3UrlByID(id);
+                var track = trackRepository.GetById(id);
 
-            fileStream.Write(data, 0, data.Length);
-            fileStream.Seek(0, SeekOrigin.Begin);
+                byte[] data;
+                using (var urlGrabber = new WebClient())
+                {
+                    data = urlGrabber.DownloadData(mp3Url);
+                }
 
-            return new FileStreamResult(fileStream, "audio/mpeg");
+                using (var fileStream = new FileStream(string.Format("{0} - {1}.mp3", track.Artist, track.Name),
+                                                       FileMode.Open))
+                {
+
+                    fileStream.Write(data, 0, data.Length);
+                    fileStream.Seek(0, SeekOrigin.Begin);
+
+                    return new FileStreamResult(fileStream, "audio/mpeg");
+                }
+            }
         }
 
         /// <summary>
@@ -114,8 +161,12 @@
         /// </returns>
         public ActionResult GetAudio(int id)
         {
-            var audioBytes = this.trackRepository.GetById(id).TrackFile;
-            return this.File(audioBytes, "audio/mp3");
+            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
+            using (var trackRepository = factory.GetTrackRepository())
+            {
+                var audioBytes = trackRepository.GetById(id).TrackFile;
+                return this.File(audioBytes, "audio/mp3");
+            }
         }
 
         /// <summary>
@@ -127,8 +178,18 @@
         /// </returns>
         public FileStreamResult GetTrackAsStream(int id)
         {
-            var track = this.trackRepository.GetById(id, p => p.Artist);
-            var song = track.TrackFile;
+            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
+            byte[] song;
+            string trackArtistName;
+            string trackName;
+            using (var trackRepository = factory.GetTrackRepository())
+            {
+                var track = trackRepository.GetById(id, p => p.Artist);
+                song = track.TrackFile;
+                trackArtistName = track.Artist.Name;
+                trackName = track.Name;
+            }
+
             if (song == null)
             {
                 return null;
@@ -155,25 +216,14 @@
 
             var desSize = endbyte - startbyte + 1;
             this.Response.StatusCode = statusCode;
-            this.Response.AddHeader("TrackArtist", track.Artist.Name);
-            this.Response.AddHeader("TrackTitle", track.Name);
+            this.Response.AddHeader("TrackArtist", trackArtistName);
+            this.Response.AddHeader("TrackTitle", trackName);
             this.Response.AddHeader("Content-Accept", this.Response.ContentType);
             this.Response.AddHeader("Content-Length", desSize.ToString());
             this.Response.AddHeader("Content-Range", string.Format("bytes {0}-{1}/{2}", startbyte, endbyte, fSize));
 
             var stream = new MemoryStream(song, (int)startbyte, (int)desSize);
             return new FileStreamResult(stream, this.Response.ContentType);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        public ActionResult TrackList(int id)
-        {
-            /*var tracks = this.TrackService.GetArtistTracksList(id);
-            return this.View("List", tracks);*/
-            return View();
         }
 
         /// <summary>
@@ -185,8 +235,12 @@
         /// </returns>
         public FileResult Stream(int id)
         {
-            var trackFile = this.trackRepository.GetById(id).TrackFile;
-            return this.File(trackFile, "audio/mpeg", "test.mp3");
+            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
+            using (var trackRepository = factory.GetTrackRepository())
+            {
+                var trackFile = trackRepository.GetById(id).TrackFile;
+                return this.File(trackFile, "audio/mpeg", "test.mp3");
+            }
         }
     }
 }
