@@ -178,6 +178,23 @@
         }
 
         /// <summary>
+        /// Перемещает товары пользователя в купленные при успешной оплате
+        /// </summary>
+        /// <param name="isAccepted"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public ActionResult AcceptPayment(bool isAccepted)
+        {
+            if (isAccepted)
+            {
+                _cartService.AcceptPayment(_currentUserId);
+                return this.RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index" });
+        }
+
+        /// <summary>
         /// Возвращает количество заказов покупателя в корзине
         /// </summary>
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
