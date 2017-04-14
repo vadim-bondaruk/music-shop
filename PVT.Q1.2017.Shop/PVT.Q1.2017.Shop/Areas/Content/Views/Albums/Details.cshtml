@@ -1,11 +1,11 @@
 ﻿
 @using Shop.Common.Models
-@model Shop.Common.ViewModels.AlbumDetailsViewModel
+@model Shop.Common.ViewModels.AlbumTracksListViewModel
 
     <div class="album-details">
-        <header class="page-title">@Html.DisplayTextFor(model => model.Name)</header>
+        <header class="page-title">@Html.DisplayTextFor(model => model.AlbumDetails.Name)</header>
         <div class="left">
-            <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Cover)" onerror="this.src = '/img/defuserpic.png'" />
+            <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.AlbumDetails.Cover)" onerror="this.src = '/img/defuserpic.png'" />
         </div>
         <div class="right">
             <div class="panel panel-primary">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="panel-body">
                     <ol>
-                        @foreach (var track in (ICollection<Track>)ViewBag.Tracks)
+                        @foreach (var track in Model.Tracks)
                         {
                             <li>@track.Name</li>
                         }
