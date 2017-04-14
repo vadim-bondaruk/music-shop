@@ -25,7 +25,7 @@ namespace PVT.Q1._2017.Shop.Tests
         public SettingServiceTest()
         {
             _factory = new RepositoryFactoryMoq();
-            _settingService = new SettingService(_factory);
+            //_settingService = new SettingService(_factory);
         }
 
         [TestMethod]

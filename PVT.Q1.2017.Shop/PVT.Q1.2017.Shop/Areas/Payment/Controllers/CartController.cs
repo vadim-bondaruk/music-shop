@@ -10,6 +10,8 @@
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
     using BLL.Utils;
+    using System;
+
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
@@ -63,7 +65,6 @@
         //TODO: отлавливать в параметре контроллера статус оплаты.
         public ViewResult Index()
         {
-            SetCurrentUser();
             if (_cartRepository.GetByUserId(_currentUserId) == null)
             {
                 _cartRepository.AddOrUpdate(new Cart(_currentUserId));
@@ -95,7 +96,6 @@
         [Authorize]
         public ActionResult AddAlbum(int albumId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.AddAlbum(_currentUserId, albumId);
@@ -118,7 +118,6 @@
         [Authorize]
         public ActionResult DeleteAlbum(int albumId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.RemoveAlbum(_currentUserId, albumId);
@@ -142,7 +141,6 @@
         [Authorize]
         public ActionResult AddTrack(int trackId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.AddTrack(_currentUserId, trackId);
@@ -166,7 +164,6 @@
         [Authorize]
         public ActionResult DeleteTrack(int trackId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.RemoveTrack(_currentUserId, trackId);
@@ -186,7 +183,6 @@
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public JsonResult GetOrdersCount()
         {
-            SetCurrentUser();
             int count = 0;
 
             var cart = _cartRepository.GetByUserId(_currentUserId);
@@ -206,16 +202,16 @@
         /// <summary>
         /// Set current user from base controller
         /// </summary>
-        private void SetCurrentUser()
+        public void SetCurrentUser()
         {
+            /// TODO: Moq для HttpConext чтобы убрать try-catch
             try
             {
+                _currentUserId = CurrentUser == null ? 0 : CurrentUser.Id;
                 _userCurrency = this.GetCurrentUserCurrency();
-                _currentUserId = CurrentUser.Id;
             }
-            catch
+            catch (NullReferenceException)
             {
-                _currentUserId = 0;
                 _userCurrency = null;
             }
 
@@ -224,6 +220,12 @@
                 _userCurrency = new CurrencyViewModel()
                 { FullName = "EURO", ShortName = "EUR", Code = 978 };
             }
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            SetCurrentUser();
         }
 
         protected override void Dispose(bool disposing)
