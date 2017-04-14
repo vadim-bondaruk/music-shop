@@ -36,7 +36,6 @@
         {
             User user = this.GetUserByUserIdentity(userIdentity);
 
-            //return user != null || user.IsDeleted.Equals(false);
             return user != null;
         }
 

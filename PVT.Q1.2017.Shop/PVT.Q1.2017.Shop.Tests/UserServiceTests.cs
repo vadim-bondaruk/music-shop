@@ -17,9 +17,13 @@
     {
         private readonly IRepositoryFactory _factory;
 
+        private readonly IUserService _service;
+
         public UserServiceTests()
         {
             _factory = new RepositoryFactoryMoq();
+
+            _service = new UserService(_factory);
 
             using (var repository = this._factory.GetCurrencyRepository())
             {
@@ -37,7 +41,6 @@
         [TestMethod]
         public void RegisterUser_UserInput_ReturnTrue()
         {
-            IUserService service = new UserService(_factory);
             User user = new User
             {
                 FirstName = "Abziz",
@@ -51,7 +54,7 @@
                 Country = "Belarus"
             };
 
-            var registered = service.RegisterUser(user);
+            var registered = _service.RegisterUser(user);
             Assert.IsTrue(registered);
         }
 
@@ -59,17 +62,14 @@
         [ExpectedException(typeof(ArgumentException), AllowDerivedTypes = true)]
         public void RegisterUser_NullInput()
         {
-            UserService service = new UserService(_factory);
-            service.RegisterUser(null);
+            _service.RegisterUser(null);
         }
 
         [TestMethod]
         public void IsUserUnique_NullOrEmptyInput()
         {
-            UserService service = new UserService(_factory);
-
-            var resultNull = service.IsUserExist(null);
-            var resultEmpty = service.IsUserExist("");
+            var resultNull = _service.IsUserExist(null);
+            var resultEmpty = _service.IsUserExist("");
 
             Assert.IsFalse(resultNull);
             Assert.IsFalse(resultEmpty);
@@ -81,9 +81,7 @@
             string email = "test@gmail.com";
             Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Email = email });
 
-            UserService service = new UserService(_factory);
-
-            var result = service.IsUserExist(email);
+            var result = _service.IsUserExist(email);
 
             Assert.IsTrue(result);
         }
@@ -94,9 +92,7 @@
             string login = "Test";
             Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Login = login });
 
-            UserService service = new UserService(_factory);
-
-            var result = service.IsUserExist(login);
+            var result = _service.IsUserExist(login);
 
             Assert.IsTrue(result);
         }
@@ -110,10 +106,8 @@
             Mock.Get(_factory.GetUserRepository())
                 .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns((User)null);
 
-            UserService service = new UserService(_factory);
-
-            var resultEmail = service.IsUserExist(email);
-            var resultLogin = service.IsUserExist(login);
+            var resultEmail = _service.IsUserExist(email);
+            var resultLogin = _service.IsUserExist(login);
 
             Assert.IsFalse(resultEmail);
             Assert.IsFalse(resultLogin);
@@ -124,9 +118,7 @@
         [ExpectedException(typeof(UserValidationException))]
         public void GetEmailByUserIdentity_NullInput()
         {
-            UserService service = new UserService(_factory);
-
-            service.GetEmailByUserIdentity(null);
+            _service.GetEmailByUserIdentity(null);
         }
 
         [TestMethod]
@@ -139,10 +131,8 @@
                 .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
                 .Returns(new User { Email = email, Login = login });
 
-            UserService service = new UserService(_factory);
-
-            var resultEmail = service.GetEmailByUserIdentity(email);
-            var resultLogin = service.GetEmailByUserIdentity(login);
+            var resultEmail = _service.GetEmailByUserIdentity(email);
+            var resultLogin = _service.GetEmailByUserIdentity(login);
 
             Assert.IsTrue(resultEmail.Equals(email, StringComparison.OrdinalIgnoreCase));
             Assert.IsTrue(resultLogin.Equals(email, StringComparison.OrdinalIgnoreCase));
@@ -152,9 +142,7 @@
         [ExpectedException(typeof(UserValidationException))]
         public void GetIdOfLogin_NullInput()
         {
-            IUserService service = new UserService(_factory);
-
-            service.GetIdOflogin(null);
+            _service.GetIdOflogin(null);
         }
 
         [TestMethod]
@@ -168,10 +156,8 @@
                 .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
                 .Returns(new User { Email = email, Login = login, Id = id });
 
-            IUserService service = new UserService(_factory);
-
-            var loginId = service.GetIdOflogin(login);
-            var emailId = service.GetIdOflogin(email);
+            var loginId = _service.GetIdOflogin(login);
+            var emailId = _service.GetIdOflogin(email);
 
             Assert.IsTrue(id == loginId);
             Assert.IsTrue(id == emailId);
@@ -189,10 +175,8 @@
                 .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
                 .Returns((User)null);
 
-            IUserService service = new UserService(_factory);
-
-            var loginId = service.GetIdOflogin(login);
-            var emailId = service.GetIdOflogin(email);
+            var loginId = _service.GetIdOflogin(login);
+            var emailId = _service.GetIdOflogin(email);
 
         }
 
@@ -200,9 +184,7 @@
         [ExpectedException(typeof(ArgumentException))]
         public void UpdatePersonal_UserNullInput()
         {
-            IUserService service = new UserService(_factory);
-
-            service.UpdatePersonal(null, 1);
+            _service.UpdatePersonal(null, 1);
         }
 
         [TestMethod]
@@ -232,8 +214,7 @@
                .Setup(m => m.GetById(It.IsAny<int>()))
                .Returns(user);
 
-            IUserService service = new UserService(_factory);
-            var result = service.UpdatePersonal(newUser, 1);
+            var result = _service.UpdatePersonal(newUser, 1);
 
             Assert.IsTrue(result);
         }
@@ -241,10 +222,8 @@
         [TestMethod]
         public void UpdatePassword_NullOrEmpryPassword()
         {
-            IUserService service = new UserService(_factory);
-
-            var nullResult = service.UpdatePassword(1, null);
-            var emptyResult = service.UpdatePassword(1, string.Empty);
+            var nullResult = _service.UpdatePassword(1, null);
+            var emptyResult = _service.UpdatePassword(1, string.Empty);
 
             Assert.IsFalse(nullResult);
             Assert.IsFalse(emptyResult);
@@ -264,9 +243,7 @@
                 .Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns(user);
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.UpdatePassword(1, newPassword);
+            var result = _service.UpdatePassword(1, newPassword);
 
             Assert.IsTrue(result);
 
@@ -275,13 +252,12 @@
         [TestMethod]
         public void UpdatePassword_NewOrOldPasswordIsNullOrEmpty()
         {
-            IUserService service = new UserService(_factory);
             string password = "testpassword1!";
 
-            var reultNewNull = service.UpdatePassword(1, null, password);
-            var resultNewEmpty = service.UpdatePassword(1, string.Empty, password);
-            var resultOldNull = service.UpdatePassword(1, password, null);
-            var resultOldEmpty = service.UpdatePassword(1, password, string.Empty);
+            var reultNewNull = _service.UpdatePassword(1, null, password);
+            var resultNewEmpty = _service.UpdatePassword(1, string.Empty, password);
+            var resultOldNull = _service.UpdatePassword(1, password, null);
+            var resultOldEmpty = _service.UpdatePassword(1, password, string.Empty);
 
             Assert.IsFalse(reultNewNull);
             Assert.IsFalse(resultNewEmpty);
@@ -306,11 +282,7 @@
                .Setup(m => m.GetById(It.IsAny<int>()))
                .Returns(user);
 
-            IUserService service = new UserService(_factory);
-
-            service.UpdatePassword(1, newPassword, oldPassword);
-
-
+            _service.UpdatePassword(1, newPassword, oldPassword);
         }
 
         [TestMethod]
@@ -330,9 +302,7 @@
                .Setup(m => m.GetById(It.IsAny<int>()))
                .Returns(user);
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.UpdatePassword(1, newPassword, oldPassword);
+            var result = _service.UpdatePassword(1, newPassword, oldPassword);
 
             Assert.IsTrue(result);
 
@@ -341,14 +311,13 @@
         [TestMethod]
         public void UpdateLogin_UserIdentityOrNewLoginNullOrEmptyInput()
         {
-            IUserService service = new UserService(_factory);
             string newLogin = "login";
             string userIdentity = "test@mail.com";
 
-            var reultUserNull = service.UpdateLogin(null, newLogin);
-            var resultUserEmpty = service.UpdateLogin(string.Empty, newLogin);
-            var resultLoginNull = service.UpdateLogin(userIdentity, null);
-            var resultLoginEmpty = service.UpdateLogin(userIdentity, string.Empty);
+            var reultUserNull = _service.UpdateLogin(null, newLogin);
+            var resultUserEmpty = _service.UpdateLogin(string.Empty, newLogin);
+            var resultLoginNull = _service.UpdateLogin(userIdentity, null);
+            var resultLoginEmpty = _service.UpdateLogin(userIdentity, string.Empty);
 
             Assert.IsFalse(reultUserNull);
             Assert.IsFalse(resultUserEmpty);
@@ -369,9 +338,8 @@
             Mock.Get(_factory.GetUserRepository())
                  .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
                 .Returns(user);
-            IUserService service = new UserService(_factory);
 
-            var result = service.UpdateLogin(userIdentity, newLogin);
+            var result = _service.UpdateLogin(userIdentity, newLogin);
 
             Assert.IsTrue(result);
 
@@ -384,9 +352,7 @@
             .Setup(m => m.GetById(It.IsAny<int>()))
             .Returns((User)null);
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.SoftDelete(1);
+            var result = _service.SoftDelete(1);
 
             Assert.IsFalse(result);
         }
@@ -398,9 +364,7 @@
                 .Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns(new User());
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.SoftDelete(1);
+            var result = _service.SoftDelete(1);
 
             Assert.IsTrue(result);
         }
@@ -418,10 +382,8 @@
                 .Setup(m => m.GetAll())
                 .Returns(usersList);
 
-            IUserService service = new UserService(_factory);
-
-            var nullResult = service.GetLastNameMatchingData(null);
-            var emptyResult = service.GetLastNameMatchingData(string.Empty);
+            var nullResult = _service.GetLastNameMatchingData(null);
+            var emptyResult = _service.GetLastNameMatchingData(string.Empty);
 
             Assert.IsNull(nullResult);
             Assert.IsNull(emptyResult);
@@ -451,9 +413,7 @@
                 .Setup(m => m.GetAll())
                 .Returns(usersList);
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.GetLastNameMatchingData(pattern);
+            var result = _service.GetLastNameMatchingData(pattern);
 
             CollectionAssert.Equals(result, expected);
         }
@@ -466,12 +426,9 @@
               .Setup(m => m.Count(null))
               .Returns(count);
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.GetUsersCount();
+            var result = _service.GetUsersCount();
 
             Assert.IsTrue(result.Equals(count));
-
         }
 
         [TestMethod]
@@ -498,12 +455,9 @@
              .Setup(m => m.GetAll())
              .Returns(usersList);
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.GetDataPerPage(page, count);
+            var result = _service.GetDataPerPage(page, count);
 
             Assert.IsTrue(result.Count.Equals(count));
-
         }
 
         [TestMethod]
@@ -528,7 +482,7 @@
 
             var expected = new List<User>
             {
-                 new User { LastName = "Smith"},
+                new User { LastName = "Smith"},
                 new User { LastName = "Williams"},
                 new User { LastName = "Brown"},
                 new User { LastName = "Davis"}
@@ -538,12 +492,9 @@
              .Setup(m => m.GetAll())
              .Returns(usersList);
 
-            IUserService service = new UserService(_factory);
-
-            var result = service.GetDataPerPage(page, count);
+            var result = _service.GetDataPerPage(page, count);
 
             CollectionAssert.Equals(result, expected);
-
         }
     }
 }
