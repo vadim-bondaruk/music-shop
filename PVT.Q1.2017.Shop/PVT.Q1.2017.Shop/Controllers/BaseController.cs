@@ -64,8 +64,14 @@
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var repository = factory.GetUserDataRepository())
             {
-                return repository.FirstOrDefault(u => u.UserId == CurrentUser.Id).PriceLevelId;
+                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
+                if (userData != null)
+                {
+                    return userData.PriceLevelId;
+                }
             }
+
+            return null;
         }
 
         protected int? GetUserDataId()

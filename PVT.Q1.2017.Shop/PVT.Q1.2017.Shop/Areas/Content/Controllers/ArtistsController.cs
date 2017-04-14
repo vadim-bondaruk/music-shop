@@ -39,15 +39,19 @@
                 return this.RedirectToAction("List");
             }
 
-            ArtistAlbumsListViewModel artistAlbumsViewModel;
-
+            ArtistAlbumsListViewModel artistAlbumsViewModel = null;
             if (CurrentUser != null)
             {
                 var currency = GetCurrentUserCurrency();
-                var priceLevel = GetCurrentUserPriceLevel();
-                artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
+                if (currency != null)
+                {
+                    var priceLevel = GetCurrentUserPriceLevel();
+                    artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
+                }
             }
-            else
+            
+
+            if (artistAlbumsViewModel == null)
             {
                 artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value);
             }
