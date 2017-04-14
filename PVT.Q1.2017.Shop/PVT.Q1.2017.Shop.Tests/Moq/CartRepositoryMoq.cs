@@ -51,6 +51,9 @@
             _mock.Setup(m => m.GetByUserId(It.IsAny<int>()))
                 .Returns(() => _carts.FirstOrDefault(c => c.UserId > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Cart, bool>>>()))
+                 .Returns(() => _carts.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Cart>())).Callback(() => _carts.Add(new Cart
             {
                 Id = _carts.Count + 1,

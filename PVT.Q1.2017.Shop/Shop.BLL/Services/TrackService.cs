@@ -121,6 +121,38 @@
         }
 
         /// <summary>
+        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered tracks with detailed information.
+        /// </returns>
+        public ICollection<TrackDetailsViewModel> GetDetailedTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        {
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetTrackRepository())
+            {
+                tracks = repository.GetAll(t => t.Artist, t => t.Genre);
+            }
+
+            List<TrackDetailsViewModel> detailedList = new List<TrackDetailsViewModel>();
+            foreach (var track in tracks)
+            {
+                detailedList.Add(GetTrackDetails(track.Id, currencyCode, priceLevel, userId));
+            }
+
+            return detailedList;
+        }
+
+        /// <summary>
         /// Returns all tracks which don't have price.
         /// </summary>
         /// <returns>

@@ -109,6 +109,23 @@
         ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
+        /// Returns all registered albums detailed information using the specified currency and price level for album price.
+        /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for album price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered albums detailed information.
+        /// </returns>
+        ICollection<AlbumDetailsViewModel> GetDetailedAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
         /// Returns all albums without price configured.
         /// </summary>
         /// <returns>

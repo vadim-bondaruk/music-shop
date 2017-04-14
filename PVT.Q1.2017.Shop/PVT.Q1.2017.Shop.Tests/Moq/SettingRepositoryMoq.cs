@@ -16,6 +16,8 @@
 
         public SettingRepositoryMoq()
         {
+            _setting.Add(new Setting { DefaultCurrencyId = 1, DefaultCurrency = new Currency { Code = 840, ShortName = "USD", FullName = "US Dollar"} });
+
             _mock = new Mock<ISettingRepository>();
 
             _mock.Setup(m => m.GetAll()).Returns(_setting);
@@ -40,6 +42,9 @@
                             m.FirstOrDefault(It.IsAny<Expression<Func<Setting, bool>>>(),
                                              It.IsAny<Expression<Func<Setting, BaseEntity>>[]>()))
                  .Returns(() => _setting.FirstOrDefault());
+
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Setting, bool>>>()))
+                 .Returns(() => _setting.Any());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _setting.FirstOrDefault(a => a.Id > 0));

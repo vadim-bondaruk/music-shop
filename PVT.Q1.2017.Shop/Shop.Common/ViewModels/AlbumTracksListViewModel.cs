@@ -18,25 +18,9 @@
         }
 
         /// <summary>
-        /// Album id.
+        /// Gets or sets the album details.
         /// </summary>
-        public int Id
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Album name.
-        /// </summary>
-        public string Name
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// The album artist. Optional.
-        /// </summary>
-        public ArtistViewModel Artist
+        public AlbumDetailsViewModel AlbumDetails
         {
             get; set;
         }
@@ -67,14 +51,6 @@
             {
                 _tracksCount = value;
             }
-        }
-
-        /// <summary>
-        /// The album owner id.
-        /// </summary>
-        public int OwnerId
-        {
-            get; set;
         }
     }
 }

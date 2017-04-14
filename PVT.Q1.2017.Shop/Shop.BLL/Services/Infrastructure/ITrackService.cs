@@ -44,6 +44,23 @@
         ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
+        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered tracks with detailed information.
+        /// </returns>
+        ICollection<TrackDetailsViewModel> GetDetailedTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
         /// Returns all tracks which don't have price.
         /// </summary>
         /// <returns>

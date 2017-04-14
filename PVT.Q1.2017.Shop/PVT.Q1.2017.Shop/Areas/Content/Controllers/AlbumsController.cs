@@ -1,14 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
-    using System.Linq;
     using System.Web.Mvc;
-
-    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
-    using global::Shop.Common.Utils;
-    using global::Shop.DAL.Infrastruture;
-
+    using global::Shop.Common.ViewModels;
     using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
@@ -19,23 +13,7 @@
         /// <summary>
         ///     The album service.
         /// </summary>
-        private readonly IAlbumService albumService;
-
-        /// <summary>
-        /// </summary>
-        private readonly IAlbumTrackRelationRepository albumTrackRelationRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly IArtistRepository artistRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly IRepositoryFactory repositoryFactory;
-
-        /// <summary>
-        /// </summary>
-        private readonly ITrackRepository trackRepository;
+        private readonly IAlbumService _albumService;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
@@ -43,24 +21,9 @@
         /// <param name="albumService">
         ///     The album service.
         /// </param>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        /// <param name="artistRepository"></param>
-        /// <param name="trackRepository"></param>
-        /// <param name="albumTrackRelationRepository"></param>
-        public AlbumsController(
-            IAlbumService albumService,
-            IRepositoryFactory repositoryFactory,
-            IArtistRepository artistRepository,
-            ITrackRepository trackRepository,
-            IAlbumTrackRelationRepository albumTrackRelationRepository)
+        public AlbumsController(IAlbumService albumService)
         {
-            this.albumService = albumService;
-            this.repositoryFactory = repositoryFactory;
-            this.artistRepository = artistRepository;
-            this.trackRepository = trackRepository;
-            this.albumTrackRelationRepository = albumTrackRelationRepository;
+            this._albumService = albumService;
         }
 
         /// <summary>
@@ -70,52 +33,31 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int id)
+        public virtual ActionResult Details(int? id)
         {
-            Album album;
-            using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
+            if (id == null)
             {
-                album = albumRepo.GetById(id, m => m.Artist);
+                return this.RedirectToAction("List");
             }
 
-            var viewModel = ModelsMapper.GetAlbumDetailsViewModel(album);
-
-            using (var artistRepo = this.repositoryFactory.GetArtistRepository())
+            AlbumTracksListViewModel albumTracksViewModel;
+            if (CurrentUser != null)
             {
-                if (album.ArtistId == null)
-                {
-                    return this.View(viewModel);
-                }
-
-                var artistId = album.ArtistId ?? default(int);
-                var artist = artistRepo.GetById(artistId);
-                if (artist == null)
-                {
-                    return this.View(viewModel);
-                }
-
-                /*viewModel.ArtistName = artist.Name;
-                viewModel.Artist = artist;*/
-
-                using (var trackRepo = this.trackRepository)
-                {
-                    using (var albumTrackRepo = this.albumTrackRelationRepository)
-                    {
-                        var albumTrackRelations = albumTrackRepo.GetAll(t => t.AlbumId == id);
-                        if (albumTrackRelations == null)
-                        {
-                            return this.View(viewModel);
-                        }
-
-                        foreach (var relation in albumTrackRelations)
-                        {
-                            //viewModel.Tracks.Add(trackRepo.GetById(relation.TrackId));
-                        }
-                    }
-                }
+                var currency = GetCurrentUserCurrency();
+                var priceLevel = GetCurrentUserPriceLevel();
+                albumTracksViewModel = _albumService.GetTracksList(id.Value, currency.Code, priceLevel, GetUserDataId());
+            }
+            else
+            {
+                albumTracksViewModel = _albumService.GetTracksList(id.Value);
             }
 
-            return this.View(viewModel);
+            if (albumTracksViewModel == null)
+            {
+                return HttpNotFound($"Альбом с id = { id.Value } не найден");
+            }
+
+            return this.View(albumTracksViewModel);
         }
 
         /// <summary>
@@ -126,14 +68,14 @@
         /// </returns>
         public ActionResult List()
         {
-            var currency = this.GetCurrentUserCurrency();
-            if (currency != null)
+            if (CurrentUser != null)
             {
-                var priceLevel = this.GetCurrentUserPriceLevel();
-                return this.View(/*this.albumService.GetAlbumsList(currency.Code, priceLevel)*/);
+                var currency = GetCurrentUserCurrency();
+                var priceLevel = GetCurrentUserPriceLevel();
+                return this.View(this._albumService.GetDetailedAlbumsList(currency.Code, priceLevel, GetUserDataId()));
             }
 
-            return this.View(/*this.albumService.GetAllViewModels()*/);
+            return this.View(this._albumService.GetDetailedAlbumsList());
         }
 
         /// <summary>
@@ -143,12 +85,7 @@
         /// </returns>
         public virtual ActionResult TracksList(int? id)
         {
-            if (id == null)
-            {
-                return this.RedirectToAction("List");
-            }
-
-            return this.View(this.albumService.GetTracksList(id.Value));
+            return Details(id);
         }
     }
 }
