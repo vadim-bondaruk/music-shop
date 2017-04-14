@@ -49,7 +49,8 @@
                     {
                         Id = serializeUser.Id,
                         Login = serializeUser.Login,
-                        Email = serializeUser.Email
+                        Email = serializeUser.Email,
+                        UserRoles = serializeUser.UserRole
                     };
 
                     CurrentUser newUser = new CurrentUser(user);
