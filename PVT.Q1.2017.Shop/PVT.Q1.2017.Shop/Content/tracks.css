@@ -49,9 +49,8 @@ body {
     background-color: #dadada;
 }
 
-li {
-    padding-right: 25px;
-}
+li { padding-right: 25px; }
+
 .buttons { margin-top: 25px; }
 
 .row {
@@ -258,23 +257,24 @@ li > input { width: 100% }
 
 
 .albums-list .details { margin-top: 8px; }
+
 .albums-list .details .album-title {
     width: 500px;
+    height: 18px;
 }
 
-    .albums-list .details .album-title p {
-        display: inline-block;
-    }
-    .albums-list .details .album-name {
-        font-size: 18px;
-        font-weight: bolder;
-        color: black;
-    }   
-    
-     .albums-list .details .artist-name {
-        font-size: 14px;
-        color: black;
-    }
+.albums-list .details .album-title p { display: inline-block; }
+
+.albums-list .details .album-name {
+    font-size: 18px;
+    font-weight: bolder;
+    color: black;
+}
+
+.albums-list .details .artist-name {
+    font-size: 14px;
+    color: black;
+}
 
 .albums-list > ul {
     display: inline-block;
@@ -331,6 +331,11 @@ li > input { width: 100% }
     overflow: hidden;
 }
 
+.albums-list .details .label a {
+    color: white;
+    text-decoration: none;
+}
+
 .albums-list > ul > li:hover {
     background: #eee;
     cursor: pointer;
@@ -344,6 +349,25 @@ li > input { width: 100% }
     -moz-box-shadow: 0 0 5px orange;
     -webkit-box-shadow: 0 0 5px orange;
     box-shadow: 0 0 5px orange;
+}
+
+.albums-list .btn-buy {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%
+}
+.albums-list .btn-align {
+    width: 40%;
+    vertical-align: top;
+    text-align: right;
+}
+.albums-list .btn-align i {
+    margin: 38px 15px;
+    font-size: 24px;
+}
+.albums-list .btn-buy a {
+    display: inline-grid;
+    margin-top: 27px;
 }
 
 .album-edit { text-align: left; }
@@ -487,9 +511,7 @@ li > input { width: 100% }
     overflow: hidden;
 }
 
-.artists-list {
-    margin-top: 68px;
-}
+.artists-list { margin-top: 68px; }
 
 .artists-list li { margin-top: 5px; }
 
@@ -504,9 +526,8 @@ li > input { width: 100% }
 }
 
 
-.tracks-list {
-    margin-top: 60px;
-}
+.tracks-list { margin-top: 60px; }
+
 .tracks-list > ul {
     display: inline-block;
     width: 90%;

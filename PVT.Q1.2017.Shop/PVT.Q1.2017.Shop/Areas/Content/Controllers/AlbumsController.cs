@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.UI.WebControls;
 
     using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
@@ -38,7 +39,9 @@
         /// </summary>
         private readonly ITrackRepository trackRepository;
 
-        private IAlbumRepository albumRepository;
+        /// <summary>
+        /// </summary>
+        private readonly IAlbumRepository albumRepository;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
@@ -89,7 +92,7 @@
             {
                 if (album.ArtistId == null)
                 {
-                    return this.View(viewModel);
+                    return View(viewModel);
                 }
 
                 var artistId = album.ArtistId ?? default(int);
@@ -109,7 +112,8 @@
                             return this.View(viewModel);
                         }
 
-                        var tracks = albumTrackRelations.Select(relation => trackRepo.GetById(relation.TrackId)).ToList();
+                        var tracks =
+                            albumTrackRelations.Select(relation => trackRepo.GetById(relation.TrackId)).ToList();
 
                         this.ViewBag.Tracks = tracks;
                     }

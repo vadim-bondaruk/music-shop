@@ -1,5 +1,6 @@
 ﻿@using System
-@model System.Collections.Generic.IEnumerable<Shop.Common.ViewModels.AlbumDetailsViewModel>
+@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model IEnumerable<Shop.Common.ViewModels.AlbumDetailsViewModel>
 <title class="title" style="margin: 0">Все альбомы</title>
 
 <div class="albums-list">
@@ -10,11 +11,22 @@
                 <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="this.src = '/img/defuserpic.png'"/>
                 <div class="details">
                     <div class="album-title">
-                        <p>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id, area = "Content" }, new {@class="album-name"})</p>
-                        <p>@Html.ActionLink(album.Artist.Name, "Details", "Artists", new { id = album.Artist.Id, area = "Content" }, new { @class = "artist-name" })</p>
+                        <p>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id, area = "Content" }, new { @class = "album-name" })</p>
+                        <p></p>
                     </div>
-                    @Html.Partial("_Stars", album.Id);
-                    <p>Треков: @album.TracksCount</p>
+                    @Html.Partial("_Stars", album.Id)
+                    <p>
+                        Треков <span class="badge">@album.TracksCount</span>
+                    </p>
+                    <span class="label label-primary">@Html.ActionLink(album.Artist.Name, "Details", "Artists", new { id = album.Artist.Id, area = "Content" }, null)</span>
+                    <span class="label label-success">Pop</span>
+                </div>
+                <div class="btn-align">
+                    <i class="fa fa-dollar">1.25</i>
+                    <div class="btn-buy">
+                        <a class="btn btn-warning" style="font-weight: bolder; vertical-align: middle"><span class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
+                    @BuyButtonHelper()
+                    </div>
                 </div>
             </li>
         }
