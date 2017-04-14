@@ -1,5 +1,6 @@
 ﻿@model ICollection<Shop.Common.ViewModels.AlbumDetailsViewModel>
 
+<title class="title" style="margin: 0">Все альбомы</title>
 <div class="albums-list">
     <ul class="list-group" style="width: 100%">
         @foreach (var album in Model)
@@ -9,7 +10,6 @@
                 <div class="details">
                     <div class="album-title">
                         <p>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id, area = "Content" }, new { @class = "album-name" })</p>
-                        <p></p>
                     </div>
                     @Html.Partial("_Stars", album.Id)
                     <p>
@@ -22,7 +22,6 @@
                     <i class="fa fa-dollar">1.25</i>
                     <div class="btn-buy">
                         <a class="btn btn-warning" style="font-weight: bolder; vertical-align: middle"><span class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
-                    @BuyButtonHelper()
                     </div>
                 </div>
             </li>

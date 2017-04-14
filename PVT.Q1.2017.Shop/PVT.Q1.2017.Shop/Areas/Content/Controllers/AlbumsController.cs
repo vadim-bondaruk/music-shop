@@ -1,8 +1,18 @@
-﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
-    
+﻿using System.Web.Mvc;
+
+using PVT.Q1._2017.Shop.Controllers;
+
+using Shop.BLL.Services.Infrastructure;
+using Shop.Common.ViewModels;
+
+namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
+
+{
     using System.Web.Mvc;
+
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+
     using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
@@ -54,7 +64,7 @@
 
             if (albumTracksViewModel == null)
             {
-                return HttpNotFound($"Альбом с id = { id.Value } не найден");
+                return HttpNotFound($"Альбом с id = {id.Value} не найден");
             }
 
             return this.View(albumTracksViewModel);
