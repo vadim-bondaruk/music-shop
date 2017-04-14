@@ -1,13 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Net;
     using System.Web.Mvc;
 
-    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;

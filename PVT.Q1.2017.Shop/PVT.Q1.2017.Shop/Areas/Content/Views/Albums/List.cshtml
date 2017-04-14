@@ -1,8 +1,8 @@
-﻿@model ICollection<Shop.Common.ViewModels.AlbumDetailsViewModel>
-
-<title class="title" style="margin: 0">Все альбомы</title>
+﻿@using MvcSiteMapProvider.Web.Html
+@model ICollection<Shop.Common.ViewModels.AlbumDetailsViewModel>
+@{ViewBag.Title = "Все альбомы";}
 <div class="albums-list">
-    <ul class="list-group" style="width: 100%">
+    <ul class="list-group" id="slist">
         @foreach (var album in Model)
         {
             <li class="list-group-item" id="albums-item">
@@ -19,7 +19,7 @@
                     <span class="label label-success">Pop</span>
                 </div>
                 <div class="btn-align">
-                    <i class="fa fa-dollar">1.25</i>
+                    <i class="fa fa-eur">1.25</i>
                     <div class="btn-buy">
                         <a class="btn btn-warning" style="font-weight: bolder; vertical-align: middle"><span class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
                     </div>

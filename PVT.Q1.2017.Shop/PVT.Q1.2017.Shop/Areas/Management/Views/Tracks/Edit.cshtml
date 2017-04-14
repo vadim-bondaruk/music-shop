@@ -4,9 +4,10 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/file-change.js"></script>
 </head>
+@{ ViewBag.Title = "Правка";}
 
 <body>
-<h2 class="title" style="margin-top: 15px; position: initial">Правка</h2>
+
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formedit" }))
 {
     @Html.AntiForgeryToken()

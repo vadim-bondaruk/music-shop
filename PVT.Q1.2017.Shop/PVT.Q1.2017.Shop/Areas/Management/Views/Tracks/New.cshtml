@@ -3,8 +3,10 @@
     <script src="/Scripts/jquery-3.2.0.min.js"></script>
     <script src="/Scripts/file-change.js" type="text/javascript"></script>
 </head>
+@{
+    ViewBag.Title = "Новый трек";
+}
 <body>
-<h2 class="title" style="margin-top: 15px; position: initial">Регистрация нового трека</h2>
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
 {
     @Html.AntiForgeryToken()

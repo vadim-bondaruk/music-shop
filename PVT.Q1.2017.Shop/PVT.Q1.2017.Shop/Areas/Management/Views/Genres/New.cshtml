@@ -1,6 +1,6 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.GenreManagementViewModel
 
-<h2 class="title" style="margin-top: 15px; position: initial">Регистрация нового жанра</h2>
+@{ ViewBag.Title = "Новый жанр";}
 <body>
     @using (Html.BeginForm("New", "Genres", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

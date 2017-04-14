@@ -1,11 +1,4 @@
-﻿using System.Web.Mvc;
-
-using PVT.Q1._2017.Shop.Controllers;
-
-using Shop.BLL.Services.Infrastructure;
-using Shop.Common.ViewModels;
-
-namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
+﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 
 {
     using System.Web.Mvc;
@@ -51,20 +44,20 @@ namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
             }
 
             AlbumTracksListViewModel albumTracksViewModel;
-            if (CurrentUser != null)
+            if (this.CurrentUser != null)
             {
-                var currency = GetCurrentUserCurrency();
-                var priceLevel = GetCurrentUserPriceLevel();
-                albumTracksViewModel = _albumService.GetTracksList(id.Value, currency.Code, priceLevel, GetUserDataId());
+                var currency = this.GetCurrentUserCurrency();
+                var priceLevel = this.GetCurrentUserPriceLevel();
+                albumTracksViewModel = this._albumService.GetTracksList(id.Value, currency.Code, priceLevel, this.GetUserDataId());
             }
             else
             {
-                albumTracksViewModel = _albumService.GetTracksList(id.Value);
+                albumTracksViewModel = this._albumService.GetTracksList(id.Value);
             }
 
             if (albumTracksViewModel == null)
             {
-                return HttpNotFound($"Альбом с id = {id.Value} не найден");
+                return this.HttpNotFound($"Альбом с id = {id.Value} не найден");
             }
 
             return this.View(albumTracksViewModel);
@@ -78,11 +71,11 @@ namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
         /// </returns>
         public ActionResult List()
         {
-            if (CurrentUser != null)
+            if (this.CurrentUser != null)
             {
-                var currency = GetCurrentUserCurrency();
-                var priceLevel = GetCurrentUserPriceLevel();
-                return this.View(this._albumService.GetDetailedAlbumsList(currency.Code, priceLevel, GetUserDataId()));
+                var currency = this.GetCurrentUserCurrency();
+                var priceLevel = this.GetCurrentUserPriceLevel();
+                return this.View(this._albumService.GetDetailedAlbumsList(currency.Code, priceLevel, this.GetUserDataId()));
             }
 
             return this.View(this._albumService.GetDetailedAlbumsList());
@@ -95,7 +88,7 @@ namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
         /// </returns>
         public virtual ActionResult TracksList(int? id)
         {
-            return Details(id);
+            return this.Details(id);
         }
     }
 }

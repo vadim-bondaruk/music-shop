@@ -3,12 +3,8 @@
 @{
     ViewBag.Title = "Все жанры";
 }
-
-<title class="title" id="genres-title">Все жанры</title>
-
-
 <div class="genres-list">
-    <ul class="list-group">
+    <ul class="list-group" id="slist">
         @foreach (var item in Model)
         {
             <li class="list-group-item" onclick="itemClick(@item.Id)">

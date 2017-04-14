@@ -2,11 +2,9 @@
 @using System.Security.Policy
 @model System.Collections.Generic.ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
 
-<title class="title" style="margin: 0">Все треки</title>
-
-
+@{ ViewBag.Title = "Все треки";}
 <div class="tracks-list">
-    <ul class="list-group" style="width: 100%">
+    <ul class="list-group" id="slist">
         @foreach (var item in Model)
         {
             @Html.Partial("TrackListItem", item)

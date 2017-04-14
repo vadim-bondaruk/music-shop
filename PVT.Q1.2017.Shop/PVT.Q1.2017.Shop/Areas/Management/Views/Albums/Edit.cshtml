@@ -1,7 +1,10 @@
 ﻿@using Shop.Common.Models
 @model PVT.Q1._2017.Shop.Areas.Management.ViewModels.AlbumManagementViewModel
+@{
+    ViewBag.Title = "Правка";
+}
+
 <body>
-<h2 class="title" style="margin-top: 0; position: initial">Редактирование информации об альбоме</h2>
 
 @using (Html.BeginForm("Edit", "Albums", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg", @class = "edit-form" }))
 {
