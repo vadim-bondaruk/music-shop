@@ -81,13 +81,13 @@
                 using (var repository = Factory.GetOrderTrackRepository())
                 {
                     trackViewModel.IsOrdered =
-                            repository.FirstOrDefault(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id) != null;
+                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
                 }
 
                 using (var repository = Factory.GetPurchasedTrackRepository())
                 {
                     trackViewModel.IsPurchased =
-                            repository.FirstOrDefault(p => p.UserId == userId && p.TrackId == trackViewModel.Id) != null;
+                            repository.Exist(p => p.UserId == userId && p.TrackId == trackViewModel.Id);
                 }
             }
 
@@ -118,6 +118,38 @@
             }
 
             return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
+        }
+
+        /// <summary>
+        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered tracks with detailed information.
+        /// </returns>
+        public ICollection<TrackDetailsViewModel> GetDetailedTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        {
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetTrackRepository())
+            {
+                tracks = repository.GetAll(t => t.Artist, t => t.Genre);
+            }
+
+            List<TrackDetailsViewModel> detailedList = new List<TrackDetailsViewModel>();
+            foreach (var track in tracks)
+            {
+                detailedList.Add(GetTrackDetails(track.Id, currencyCode, priceLevel, userId));
+            }
+
+            return detailedList;
         }
 
         /// <summary>

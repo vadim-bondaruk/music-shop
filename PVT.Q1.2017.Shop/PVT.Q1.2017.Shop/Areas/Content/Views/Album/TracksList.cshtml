@@ -8,19 +8,19 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>@Model.Name</h4>
-    @if (Model.Artist != null)
+    <h4>@Model.AlbumDetails.Name</h4>
+    @if (Model.AlbumDetails.Artist != null)
     {
-        <h5>@Model.Artist.Name</h5>
+        <h5>@Model.AlbumDetails.Artist.Name</h5>
     }
     <hr />
 
     <p>
-        @Html.BtnAddTracksToAlbum(Model.Id)
+        @Html.BtnAddTracksToAlbum(Model.AlbumDetails.Id)
 
         @Html.ActionLink("Информация об альбоме", "Details", "Album", new
         {
-            id = Model.Id,
+            id = Model.AlbumDetails.Id,
             area = "Content"
         }, new
         {
@@ -28,9 +28,9 @@
             title = "Нажмите, чтобы перейти к информации об альбоме"
         })
 
-        @if (Model.Artist != null)
+        @if (Model.AlbumDetails.Artist != null)
         {
-            <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
+            <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.AlbumDetails.Artist.Id, area = "Content" })"
                title="Нажмите, чтобы увидеть информацию об исполнителе">
                 Информация об исполнителе
             </a>

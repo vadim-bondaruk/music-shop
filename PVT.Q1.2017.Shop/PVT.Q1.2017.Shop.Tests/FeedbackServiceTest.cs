@@ -55,11 +55,7 @@
             AddFeedbackTest();
             Assert.IsTrue(_feedbackService.FeedbackExists(1, 1));
 
-            Mock.Get(_factory.GetFeedbackRepository())
-                .Verify(
-                        m =>
-                            m.FirstOrDefault(It.IsAny<Expression<Func<Feedback, bool>>>(),
-                                             It.IsAny<Expression<Func<Feedback, BaseEntity>>[]>()), Times.Once);
+            Mock.Get(_factory.GetFeedbackRepository()).Verify(m => m.Exist(It.IsAny<Expression<Func<Feedback, bool>>>()), Times.Once);
         }
 
         [TestMethod]

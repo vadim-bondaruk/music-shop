@@ -114,5 +114,13 @@
         /// All registered artists.
         /// </returns>
         ICollection<ArtistViewModel> GetArtistsList();
+
+        /// <summary>
+        /// Returns all registered artists with detailed information.
+        /// </summary>
+        /// <returns>
+        /// All registered artists with detailed information.
+        /// </returns>
+        ICollection<ArtistDetailsViewModel> GetDetailedArtistsList();
     }
 }

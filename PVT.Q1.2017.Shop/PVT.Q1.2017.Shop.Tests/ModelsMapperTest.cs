@@ -279,11 +279,11 @@
 
             Assert.IsNotNull(albumViewModel);
 
-            Assert.IsTrue(albumViewModel.Id == albumDto.Id);
-            Assert.IsTrue(albumViewModel.Name.Equals(albumDto.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(albumViewModel.AlbumDetails.Id == albumDto.Id);
+            Assert.IsTrue(albumViewModel.AlbumDetails.Name.Equals(albumDto.Name, StringComparison.OrdinalIgnoreCase));
 
-            Assert.IsNotNull(albumViewModel.Artist);
-            Assert.IsTrue(albumViewModel.Artist.Id == albumDto.ArtistId);
+            Assert.IsNotNull(albumViewModel.AlbumDetails.Artist);
+            Assert.IsTrue(albumViewModel.AlbumDetails.Artist.Id == albumDto.ArtistId);
         }
 
         [TestMethod]

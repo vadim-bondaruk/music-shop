@@ -48,6 +48,9 @@
                                        It.IsAny<Expression<Func<PurchasedAlbum, BaseEntity>>[]>()))
                  .Returns(() => _purchasedAlbum.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedAlbum, bool>>>()))
+                 .Returns(() => _purchasedAlbum.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedAlbum>())).Callback(() => _purchasedAlbum.Add(new PurchasedAlbum
             {
                 Id = _purchasedAlbum.Count + 1

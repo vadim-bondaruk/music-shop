@@ -47,10 +47,12 @@
                  .Returns(() => this._currencies.FirstOrDefault());
 
             this._mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => this._currencies.FirstOrDefault(a => a.Id >= 0));
+                 .Returns(() => this._currencies.FirstOrDefault(с => с.Id >= 0));
 
-            this._mock.Setup(m => m.GetById(It.IsAny<int>(),
-                                       It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Currency, bool>>>()))
+                 .Returns(() => _currencies.Any());
+
+            this._mock.Setup(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
                  .Returns(() => this._currencies.FirstOrDefault(a => a.Id >= 0));
 
             this._mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Currency>())).Callback(() => this._currencies.Add(new Currency

@@ -101,7 +101,7 @@
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.FirstOrDefault(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase)) != null;
+                return repositry.Exist(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -119,7 +119,7 @@
         {
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.FirstOrDefault(c => c.Code == code) != null;
+                return repositry.Exist(c => c.Code == code);
             }
         }
 
@@ -142,13 +142,13 @@
 
             using (var repositry = this.Factory.GetCurrencyRepository())
             {
-                return repositry.FirstOrDefault(c => c.Code == currency.Code ||
-                                                     c.ShortName.Equals(currency.ShortName.Trim(), StringComparison.OrdinalIgnoreCase)) != null;
+                return repositry.Exist(c => c.Code == currency.Code ||
+                                            c.ShortName.Equals(currency.ShortName.Trim(), StringComparison.OrdinalIgnoreCase));
             }
         }
 
         /// <summary>
-        /// Returns the currency with the specified <paramref name="id"/>
+        /// Returns the currency with the specified <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The currency id.</param>
         /// <returns>

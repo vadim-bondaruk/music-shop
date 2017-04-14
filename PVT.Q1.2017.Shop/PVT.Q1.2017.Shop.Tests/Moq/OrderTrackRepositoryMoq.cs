@@ -48,6 +48,9 @@
                                        It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
                  .Returns(() => _orderTrack.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<OrderTrack, bool>>>()))
+                 .Returns(() => _orderTrack.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderTrack>())).Callback(() => _orderTrack.Add(new OrderTrack
             {
                 Id = _orderTrack.Count + 1

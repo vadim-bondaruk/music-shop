@@ -255,6 +255,29 @@
         }
 
         /// <summary>
+        /// Returns all registered artists with detailed information.
+        /// </summary>
+        /// <returns>
+        /// All registered artists with detailed information.
+        /// </returns>
+        public ICollection<ArtistDetailsViewModel> GetDetailedArtistsList()
+        {
+            ICollection<Artist> artists;
+            using (var repository = this.Factory.GetArtistRepository())
+            {
+                artists = repository.GetAll();
+            }
+
+            List<ArtistDetailsViewModel> detailedList = new List<ArtistDetailsViewModel>();
+            foreach (var artist in artists)
+            {
+                detailedList.Add(GetArtistDetails(artist.Id));
+            }
+
+            return detailedList;
+        }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="ArtistTracksListViewModel"/> type.
         /// </summary>
         /// <param name="artistId">
