@@ -43,3 +43,11 @@ textarea { max-width: 280px; }
     color: black;
     background: #ffffff;
 }
+
+.no-information {
+    font-style: italic;
+}
+
+dl dd {
+    padding-left: 5px;
+}
