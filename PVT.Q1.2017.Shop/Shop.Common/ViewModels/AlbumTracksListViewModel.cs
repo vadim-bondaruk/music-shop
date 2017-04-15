@@ -7,6 +7,8 @@
     /// </summary>
     public class AlbumTracksListViewModel
     {
+        private int? _tracksCount;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AlbumTracksListViewModel"/> class.
         /// </summary>
@@ -16,25 +18,9 @@
         }
 
         /// <summary>
-        /// Album id.
+        /// Gets or sets the album details.
         /// </summary>
-        public int Id
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Album name.
-        /// </summary>
-        public string Name
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// The album artist. Optional.
-        /// </summary>
-        public ArtistViewModel Artist
+        public AlbumDetailsViewModel AlbumDetails
         {
             get; set;
         }
@@ -45,6 +31,26 @@
         public ICollection<TrackViewModel> Tracks
         {
             get; set;
+        }
+
+        /// <summary>
+        /// The number of the tracks from the album.
+        /// </summary>
+        public int TracksCount  
+        {
+            get
+            {
+                if (Tracks != null)
+                {
+                    return Tracks.Count;
+                }
+
+                return _tracksCount.HasValue ? _tracksCount.Value : 0;
+            }
+            set
+            {
+                _tracksCount = value;
+            }
         }
     }
 }

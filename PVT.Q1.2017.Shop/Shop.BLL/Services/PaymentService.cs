@@ -275,7 +275,7 @@
                     //guid we are generating for storing the paymentID received in session
                     //after calling the create function and it is used in the payment execution
 
-                    var guid = Convert.ToString(cart.CurrentUserId + " " + DateTime.Now.ToShortTimeString());
+                    var guid = Convert.ToString(cart.CurrentUserId);
 
                     //CreatePayment function gives us the payment approval url
                     //on which payer is redirected for paypal account payment
@@ -315,11 +315,11 @@
 
                     var guid = Request.Params["guid"];
 
-                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string, cart);
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
 
                     if (executedPayment.state.ToLower() != "approved")
                     {
-                        return "FailureView";
+                        return "Failure";
                     }
                 }
             }
@@ -327,10 +327,10 @@
             {
                 // TODO: LOGGER
                 // Logger.log("Error " + ex.Message);
-                return "FailureView";
+                return "Failure";
             }
 
-            return "SuccessView";
+            return "Success";
         }
 
         /// <summary>
@@ -433,8 +433,7 @@
                 var item = new Item();
                 item.currency = cart.CurrencyShortName;
                 item.name = track.Name;
-                // item.price = track.TrackPrices.FirstOrDefault(p => p.Currency.Code == userCurrency.Code).Price;
-                item.price = track.TrackPrices.FirstOrDefault(p => p.Currency.Code == 840).Price.ToString();
+                item.price = track.Price.Amount.ToString().Replace(',','.');
                 item.quantity = "1";
 
                 itemList.items.Add(item);
@@ -457,14 +456,14 @@
             {
                 tax = "0",
                 shipping = "0",
-                subtotal = cart.TotalPrice.ToString()
+                subtotal = cart.TotalPrice.ToString().Replace(',', '.')
             };
 
             // similar as we did for credit card, do here and create amount object
             var amount = new Amount()
             {
                 currency = cart.CurrencyShortName,
-                total = cart.TotalPrice.ToString(), // Total must be equal to sum of shipping, tax and subtotal.
+                total = cart.TotalPrice.ToString().Replace(',','.'), // Total must be equal to sum of shipping, tax and subtotal.
                 details = details
             };
 
@@ -498,7 +497,7 @@
         /// <param name="paymentId">Payment id</param>
         /// /// <param name="cart">cart with tracks</param>
         /// <returns></returns>
-        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId, CartViewModel cart)
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
             this.payment = new Payment() { id = paymentId };

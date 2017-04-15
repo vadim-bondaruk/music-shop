@@ -48,6 +48,9 @@
                                        It.IsAny<Expression<Func<PriceLevel, BaseEntity>>[]>()))
                  .Returns(() => _priceLevels.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PriceLevel, bool>>>()))
+                 .Returns(() => _priceLevels.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PriceLevel>())).Callback(() => _priceLevels.Add(new PriceLevel
             {
                 Id = _priceLevels.Count + 1,

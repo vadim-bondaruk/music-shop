@@ -39,6 +39,27 @@
         ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
+        /// Returns all entities from the repository using pagination.
+        /// </summary>
+        /// <param name="page">The page number.</param>
+        /// <param name="pageSize">The number of items to return.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>
+        /// All entities from the repository using pagination.
+        /// </returns>
+        PagedResult<TEntity> GetAll(int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes);
+
+        /// <summary>
+        /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
+        /// </summary> 
+        /// <param name="page">The page number.</param>
+        /// <param name="pageSize">The number of items to return.</param>
+        /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>Entities which correspond to the <paramref name="filter"/> using pagination.</returns>
+        PagedResult<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes);
+
+        /// <summary>
         /// Tries to find an entity from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
@@ -56,6 +77,18 @@
         /// The number of entities contained in the repository.
         /// </returns>
         int Count(Expression<Func<TEntity, bool>> filter = null);
+
+        /// <summary>
+        /// Determines whether items which correspond with the specified <paramref name="filter"/> exist in the repository.
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if items which correspond with the specified <paramref name="filter"/> exist in the repository;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        bool Exist(Expression<Func<TEntity, bool>> filter = null);
 
         /// <summary>
         /// Adds or updates the specified <paramref name="model"/>.

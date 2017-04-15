@@ -48,6 +48,9 @@
                                        It.IsAny<Expression<Func<Genre, BaseEntity>>[]>()))
                  .Returns(() => _genres.FirstOrDefault(a => a.Id > 0));
 
+            _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Genre, bool>>>()))
+                 .Returns(() => _genres.Any());
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Genre>())).Callback(() => _genres.Add(new Genre
             {
                 Id = _genres.Count + 1,

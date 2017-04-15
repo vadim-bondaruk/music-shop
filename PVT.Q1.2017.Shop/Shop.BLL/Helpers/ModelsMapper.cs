@@ -147,6 +147,20 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Genre"/> model to a new <see cref="GenreDetailsViewModel"/> model.
+        /// </summary>
+        /// <param name="genre">
+        /// The genre DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="GenreDetailsViewModel"/> model.
+        /// </returns>
+        public static GenreDetailsViewModel GetGenreDetailsViewModel(Genre genre)
+        {
+            return _modelDetailsMapper.Map<GenreDetailsViewModel>(genre);
+        }
+
+        /// <summary>
         /// Executes a mapping from the <see cref="TrackPrice"/> model to a new <see cref="PriceViewModel"/> model.
         /// </summary>
         /// <param name="trackPrice">
@@ -245,6 +259,34 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Setting"/> model to a new <see cref="SettingViewModel"/> model.
+        /// </summary>
+        /// <param name="setting">
+        /// The setting DTO model
+        /// </param>
+        /// <returns>
+        /// A new <see cref="SettingViewModel"/> model
+        /// </returns>
+        public static SettingViewModel GetSettingViewModel(Setting setting)
+        {
+            return _specialListMapper.Map<SettingViewModel>(setting);
+        }
+
+        /// <summary>
+        /// Executes a mapping from the <see cref="Track"/> model to a new <see cref="PurchasedTrackViewModel"/> model.
+        /// </summary>
+        /// <param name="track">
+        /// The track DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="PurchasedTrackViewModel"/> model.
+        /// </returns>
+        public static PurchasedTrackViewModel GetPurchasedTrackViewModel(Track track)
+        {
+            return _commonMapper.Map<PurchasedTrackViewModel>(track);
+        }
+
+        /// <summary>
         /// Configures and returns a new instance of the common mapper.
         /// </summary>
         /// <returns>
@@ -267,7 +309,8 @@
                    .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Track, TrackViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.AlbumId, opt => opt.Ignore());
 
                 cfg.CreateMap<TrackPrice, PriceViewModel>()
                    .ForMember(dest => dest.Amount, opt => opt.ResolveUsing(p => p.Price))
@@ -279,6 +322,11 @@
 
                 cfg.CreateMap<Feedback, FeedbackViewModel>()
                    .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
+
+                cfg.CreateMap<Setting, SettingViewModel>();
+
+                cfg.CreateMap<Track, PurchasedTrackViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
             });
 
             return commonMapperConfiguration.CreateMapper();
@@ -302,9 +350,14 @@
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
                    .ForMember(dest => dest.Albums, opt => opt.Ignore());
 
+                cfg.CreateMap<Album, AlbumDetailsViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(a => a.Artist))
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
+
                 cfg.CreateMap<Album, AlbumTracksListViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
-                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
+                   .ForMember(dest => dest.AlbumDetails, opt => opt.MapFrom(a => a))
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore())
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
 
                 cfg.CreateMap<Artist, ArtistTracksListViewModel>()
                    .ForMember(dest => dest.Tracks, opt => opt.Ignore());
@@ -327,6 +380,8 @@
             MapperConfiguration detailsMapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Genre, GenreViewModel>();
+
+                cfg.CreateMap<Genre, GenreDetailsViewModel>();
 
                 cfg.CreateMap<Artist, ArtistViewModel>()
                    .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))

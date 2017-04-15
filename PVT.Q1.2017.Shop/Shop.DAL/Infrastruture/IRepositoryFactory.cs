@@ -129,11 +129,57 @@ namespace Shop.DAL.Infrastruture
         IUserPaymentMethodRepository GetUserPaymentMethodRepository();
 
         /// <summary>
+        /// Returns the payment transaction repository.
+        /// </summary>
+        /// <returns>
+        /// The payment transaction repository.
+        /// </returns>
+        IPaymentTransactionRepository GetPaymentTransactionRepository();
+
+        /// <summary>
         /// Returns the user repository.
         /// </summary>
         /// <returns>
         /// The user repository.
         /// </returns>
         IUserRepository GetUserRepository();
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        ISettingRepository GetSettingRepository();
+
+        /// <summary>
+        /// Returns the Order Track repository.
+        /// </summary>
+        /// <returns>
+        /// The Order Track repository.
+        /// </returns>
+        IOrderTrackRepository GetOrderTrackRepository();
+
+        /// <summary>
+        /// Returns the Order Album repository.
+        /// </summary>
+        /// <returns>
+        /// The Order Album repository.
+        /// </returns>
+        IOrderAlbumRepository GetOrderAlbumRepository();
+
+        /// <summary>
+        /// Returns the Purchased Track repository.
+        /// </summary>
+        /// <returns>
+        /// The Purchased Track repository.
+        /// </returns>
+        IPurchasedTrackRepository GetPurchasedTrackRepository();
+
+        /// <summary>
+        /// Returns the Purchased Album repository.
+        /// </summary>
+        /// <returns>
+        /// The Purchased Album repository.
+        /// </returns>
+        IPurchasedAlbumRepository GetPurchasedAlbumRepository();
     }
 }

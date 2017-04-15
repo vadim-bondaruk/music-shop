@@ -94,7 +94,7 @@
         /// </returns>
         public virtual ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(x => !x.IsDeleted), includes);
+            IQueryable<TEntity> query = GetActiveItems(includes);
             return query.ToList();
         }
 
@@ -106,8 +106,37 @@
         /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
         public virtual ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
+            IQueryable<TEntity> query = GetActiveItems(filter, includes);
             return query.ToList();
+        }
+
+        /// <summary>
+        /// Returns all entities from the repository using pagination.
+        /// </summary>
+        /// <param name="page">The page number.</param>
+        /// <param name="pageSize">The number of items to return.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>
+        /// All entities from the repository using pagination.
+        /// </returns>
+        public PagedResult<TEntity> GetAll(int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes)
+        {
+            var query = this.GetActiveItems(includes);
+            return GetPagedResultForQuery(query, page, pageSize);
+        }
+
+        /// <summary>
+        /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
+        /// </summary> 
+        /// <param name="page">The page number.</param>
+        /// <param name="pageSize">The number of items to return.</param>
+        /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>Entities which correspond to the <paramref name="filter"/> using pagination.</returns>
+        public PagedResult<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes)
+        {
+            var query = GetActiveItems(filter, includes);
+            return GetPagedResultForQuery(query, page, pageSize);
         }
 
         /// <summary>
@@ -144,6 +173,26 @@
             }
 
             return this._currentDbSet.Where(x => !x.IsDeleted).Count(filter);
+        }
+
+        /// <summary>
+        /// Determines whether items which correspond with the specified <paramref name="filter"/> exist in the repository.
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if items which correspond with the specified <paramref name="filter"/> exist in the repository;
+        /// otherwise <b>false</b>.
+        /// </returns>
+        public bool Exist(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter == null)
+            {
+                return this._currentDbSet.Any(x => !x.IsDeleted);
+            }
+
+            return this._currentDbSet.Where(x => !x.IsDeleted).Any(filter);
         }
 
         /// <summary>
@@ -361,6 +410,32 @@
             }
 
             MarkAsDeleted(model.Id);
+        }
+
+        protected IQueryable<TEntity> GetActiveItems(params Expression<Func<TEntity, BaseEntity>>[] includes)
+        {
+            return LoadIncludes(this._currentDbSet.Where(x => !x.IsDeleted), includes);
+        }
+
+        protected IQueryable<TEntity> GetActiveItems(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
+        {
+            return LoadIncludes(this._currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
+        }
+
+        protected static PagedResult<TEntity> GetPagedResultForQuery(IQueryable<TEntity> query, int page, int pageSize)
+        {
+            if (pageSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, @"Incorrect page size specified");
+            }
+
+            if (page <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(page), page, @"Incorrect current page value specified");
+            }
+
+            var result = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return new PagedResult<TEntity>(result.ToList(), pageSize, page);
         }
     }
 }

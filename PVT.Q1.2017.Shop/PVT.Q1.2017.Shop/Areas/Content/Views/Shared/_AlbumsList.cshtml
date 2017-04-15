@@ -1,5 +1,23 @@
+@using Shop.BLL.Utils
 @using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@using Shop.Infrastructure.Enums
 @model ICollection<Shop.Common.ViewModels.AlbumViewModel>
+
+@{
+    bool isAuthenticated = Request.IsAuthenticated;
+    int currentUserId = 0;
+    bool isAdmin = false;
+    bool isSeller = false;
+    bool isBuyer = false;
+    if (isAuthenticated)
+    {
+        var currentUser = ((CurrentUser)User);
+        currentUserId = currentUser.Id;
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.User.ToString());
+    }
+}
 
 <table class="table table-hover table-responsive">
     @foreach (var album in Model)
@@ -31,7 +49,7 @@
                 }
             </td>
             <td>
-                <a class="btn btn-link" href="@Url.Action("TracksList", "Album", new { id = album.Id, area = "Content" })"
+                <a class="btn btn-link" href="@Url.Action("Details", "Album", new { id = album.Id, area = "Content" })"
                    title="Нажмите, чтобы увидеть все треки из альбома">
                     Треки <span class="badge">@album.TracksCount</span>
                 </a>
@@ -39,16 +57,30 @@
             <td>
                 @Html.DisplayFor(m => album.Price)
             </td>
-            <td>
-                @Html.BtnEditAlbum(album.Id)
-                @Html.BtnDeleteAlbum(album.Id)
-                @(album.Price != null ? Html.BtnEditAlbumPrice(album.Id) : Html.BtnCreateAlbumPrice(album.Id))
-            </td>
-            @if (album.Price != null)
+            @if (Request.IsAuthenticated)
             {
-                <td>
-                    @Html.Partial("_BuyAlbumButton", album.Id)
-                </td>
+                if (isAdmin || (isSeller && (album.OwnerId <= 0m || album.OwnerId == currentUserId)))
+                {
+                    <td>
+                        @Html.BtnEditAlbum(album.Id)
+                        @Html.BtnDeleteAlbum(album.Id)
+                        @(album.Price != null ? Html.BtnEditAlbumPrice(album.Id) : Html.BtnCreateAlbumPrice(album.Id))
+                    </td>
+                }
+                else if (isBuyer)
+                {
+                    <td>
+                        @if (album.IsPurchased)
+                        {
+                            @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
+                                                 Url.Action("PurchasedTracks", "Track", new { area = "Content", albumId = album.Id }))
+                        }
+                        else if (album.Price != null)
+                        {
+                            @Html.BtnBuyAlbum(album.Id, album.IsOrdered)
+                        }
+                    </td>
+                }
             }
         </tr>
     }

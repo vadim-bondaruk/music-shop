@@ -29,7 +29,7 @@
         /// <returns>
         /// The current user currency or <b>null</b> if the there is an ananimous user.
         /// </returns>
-        public CurrencyViewModel GetCurrentUserCurrency()
+        protected CurrencyViewModel GetCurrentUserCurrency()
         {
             if (CurrentUser == null)
             {
@@ -37,10 +37,14 @@
             }
 
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
-            Currency currency;
+            Currency currency = null;
             using (var repository = factory.GetUserDataRepository())
             {
-                currency = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id, u => u.UserCurrency).UserCurrency;
+                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id, u => u.UserCurrency);
+                if (userData != null)
+                {
+                    currency = userData.UserCurrency;
+                }  
             }
 
             return ModelsMapper.GetCurrencyViewModel(currency);
@@ -50,7 +54,7 @@
         /// Returns the current user price level.
         /// </summary>
         /// <returns></returns>
-        public int? GetCurrentUserPriceLevel()
+        protected int? GetCurrentUserPriceLevel()
         {
             if (CurrentUser == null)
             {
@@ -60,8 +64,34 @@
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var repository = factory.GetUserDataRepository())
             {
-                return repository.FirstOrDefault(u => u.UserId == CurrentUser.Id).PriceLevelId;
+                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
+                if (userData != null)
+                {
+                    return userData.PriceLevelId;
+                }
             }
+
+            return null;
+        }
+
+        protected int? GetUserDataId()
+        {
+            if (CurrentUser == null)
+            {
+                return null;
+            }
+
+            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
+            using (var repository = factory.GetUserDataRepository())
+            {
+                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
+                if (userData != null)
+                {
+                    return userData.Id;
+                }
+            }
+
+            return null;
         }
     }
 }

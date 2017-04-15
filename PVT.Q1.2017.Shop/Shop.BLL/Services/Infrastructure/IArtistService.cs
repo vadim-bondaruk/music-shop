@@ -27,10 +27,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All registered tracks with price for the specified artist.
         /// </returns>
-        ArtistTracksListViewModel GetTracksList(int artistId, int? currencyCode = null, int? priceLevel = null);
+        ArtistTracksListViewModel GetTracksList(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered albums for the specified artist using the specified currency and price level for album price.
@@ -42,10 +45,13 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All registered albums with price for the specified artist.
         /// </returns>
-        ArtistAlbumsListViewModel GetAlbumsList(int artistId, int? currencyCode = null, int? priceLevel = null);
+        ArtistAlbumsListViewModel GetAlbumsList(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all tracks for the specified artist without price.
@@ -66,10 +72,13 @@
         /// <param name="priceLevel">
         /// The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All tracks for the specified artist without price specified.
         /// </returns>
-        ArtistTracksListViewModel GetTracksWithPrice(int artistId, int? currencyCode = null, int? priceLevel = null);
+        ArtistTracksListViewModel GetTracksWithPrice(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all albums for the specified artist without price.
@@ -90,10 +99,13 @@
         /// <param name="priceLevel">
         /// The price level for album price. If it doesn't specified than default price level is used.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// All albums for the specified artist without price specified.
         /// </returns>
-        ArtistAlbumsListViewModel GetAlbumsWithPrice(int artistId, int? currencyCode = null, int? priceLevel = null);
+        ArtistAlbumsListViewModel GetAlbumsWithPrice(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered artists.
@@ -102,5 +114,13 @@
         /// All registered artists.
         /// </returns>
         ICollection<ArtistViewModel> GetArtistsList();
+
+        /// <summary>
+        /// Returns all registered artists with detailed information.
+        /// </summary>
+        /// <returns>
+        /// All registered artists with detailed information.
+        /// </returns>
+        ICollection<ArtistDetailsViewModel> GetDetailedArtistsList();
     }
 }

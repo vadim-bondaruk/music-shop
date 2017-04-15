@@ -38,7 +38,7 @@
             if (currency != null)
             {
                 var priceLevel = GetCurrentUserPriceLevel();
-                return this.View(this._albumService.GetAlbumsList(currency.Code, priceLevel));
+                return this.View(this._albumService.GetAlbumsList(currency.Code, priceLevel, GetUserDataId()));
             }
 
             return this.View(this._albumService.GetAlbumsList());
@@ -59,16 +59,16 @@
             }
 
             var currency = GetCurrentUserCurrency();
-            AlbumDetailsViewModel albumViewModel;
+            AlbumTracksListViewModel albumViewModel;
 
             if (currency != null)
             {
                 var priceLevel = GetCurrentUserPriceLevel();
-                albumViewModel = _albumService.GetAlbumDetails(id.Value, currency.Code, priceLevel);
+                albumViewModel = _albumService.GetTracksList(id.Value, currency.Code, priceLevel, GetUserDataId());
             }
             else
             {
-                albumViewModel = _albumService.GetAlbumDetails(id.Value);
+                albumViewModel = _albumService.GetTracksList(id.Value);
             }
 
             if (albumViewModel == null)
@@ -77,41 +77,6 @@
             }
 
             return this.View(albumViewModel);
-        }
-
-        /// <summary>
-        /// Shows all tracks from the album.
-        /// </summary>
-        /// <param name="id">The album id.</param>
-        /// <returns>
-        /// Album with tracks view.
-        /// </returns>
-        public ActionResult TracksList(int? id)
-        {
-            if (id == null)
-            {
-                return this.RedirectToAction("List");
-            }
-
-            var currency = GetCurrentUserCurrency();
-            AlbumTracksListViewModel albumTracksViewModel;
-
-            if (currency != null)
-            {
-                var priceLevel = GetCurrentUserPriceLevel();
-                albumTracksViewModel = _albumService.GetTracksList(id.Value, currency.Code, priceLevel);
-            }
-            else
-            {
-                albumTracksViewModel = _albumService.GetTracksList(id.Value);
-            }
-
-            if (albumTracksViewModel == null)
-            {
-                return HttpNotFound($"Альбом с id = { id.Value } не найден");
-            }
-
-            return this.View(albumTracksViewModel);
         }
     }
 }

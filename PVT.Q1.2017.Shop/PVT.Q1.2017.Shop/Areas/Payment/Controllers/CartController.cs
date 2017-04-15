@@ -34,6 +34,11 @@
         /// </summary>
         private int _currentUserId;
 
+        /// <summary>
+        /// валюта текущего пользователя
+        /// </summary>
+        private CurrencyViewModel _userCurrency;
+
         /// <param name="cartService">
         /// Сервис для работы с данными в корзине
         /// </param>
@@ -44,15 +49,9 @@
         {
             this._cartRepository = repositoryFactory.GetCartRepository();
             this._cartService = cartService;
-            this._viewModel = new CartViewModel { Tracks = new List<Track>(), Albums = new List<Album>(), IsEmpty = true };
-            try
-            {
-                _currentUserId = CurrentUser.Id;
-            }
-            catch
-            {
-                _currentUserId = 0;
-            }
+            this._viewModel = new CartViewModel { Tracks = new List<TrackDetailsViewModel>(),
+                Albums = new List<AlbumDetailsViewModel>(),
+                IsEmpty = true };
         }
 
         /// <summary>
@@ -63,24 +62,24 @@
         //TODO: отлавливать в параметре контроллера статус оплаты.
         public ViewResult Index()
         {
+            SetCurrentUser();
             if (_cartRepository.GetByUserId(_currentUserId) == null)
             {
                 _cartRepository.AddOrUpdate(new Cart(_currentUserId));
                 _cartRepository.SaveChanges();
             }
             var cart = this._cartRepository.GetByUserId(_currentUserId);
-            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId);
-            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId);
+            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId, _userCurrency.Code);
+            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId, _userCurrency.Code);
             this._viewModel.CurrentUserId = _currentUserId;
 
-            /// <summary>
-            /// Временные данные: пользователь выбрал отображение в долларах
-            /// </summary>
-            var userCurrency = new Currency();
-            userCurrency.Code = 840;
-            userCurrency.ShortName = "USD";
-            this._viewModel.CurrencyShortName = userCurrency.ShortName;
-            CartViewModelService.SetTotalPrice(this._viewModel, userCurrency);
+            //// Установка текущей валюты пользователя и пересчёт суммы к оплате
+            if (_currentUserId > 0)
+            {
+                this._viewModel.CurrencyShortName = _userCurrency.ShortName;
+                CartViewModelService.SetTotalPrice(this._viewModel, _userCurrency);
+                TempData["cart"] = _viewModel;
+            }
 
             return this.View(this._viewModel);
         }
@@ -95,11 +94,12 @@
         [Authorize]
         public ActionResult AddAlbum(int albumId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.AddAlbum(_currentUserId, albumId);
             }
-            catch (InvalidTrackIdException ex)
+            catch (InvalidAlbumIdException ex)
             {
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
@@ -117,11 +117,12 @@
         [Authorize]
         public ActionResult DeleteAlbum(int albumId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.RemoveAlbum(_currentUserId, albumId);
             }
-            catch (InvalidTrackIdException ex)
+            catch (InvalidAlbumIdException ex)
             {
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
@@ -140,6 +141,7 @@
         [Authorize]
         public ActionResult AddTrack(int trackId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.AddTrack(_currentUserId, trackId);
@@ -163,6 +165,7 @@
         [Authorize]
         public ActionResult DeleteTrack(int trackId = 0)
         {
+            SetCurrentUser();
             try
             {
                 this._cartService.RemoveTrack(_currentUserId, trackId);
@@ -174,6 +177,52 @@
             }
 
             return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+        }
+
+        /// <summary>
+        /// Возвращает количество заказов покупателя в корзине
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public JsonResult GetOrdersCount()
+        {
+            SetCurrentUser();
+            int count = 0;
+
+            var cart = _cartRepository.GetByUserId(_currentUserId);
+            if (cart != null)
+            {
+                count += cart.OrderTracks.Count;
+                count += cart.OrderAlbums.Count;
+                if (Session != null)
+                {
+                    Session["OrdersCount"] = count;
+                }
+            }
+
+            return Json(new { Count = count }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Set current user from base controller
+        /// </summary>
+        private void SetCurrentUser()
+        {
+            try
+            {
+                _userCurrency = this.GetCurrentUserCurrency();
+                _currentUserId = CurrentUser.Id;
+            }
+            catch
+            {
+                _currentUserId = 0;
+                _userCurrency = null;
+            }
+
+            if (_userCurrency == null)
+            {
+                _userCurrency = new CurrencyViewModel()
+                { FullName = "EURO", ShortName = "EUR", Code = 978 };
+            }
         }
 
         protected override void Dispose(bool disposing)
