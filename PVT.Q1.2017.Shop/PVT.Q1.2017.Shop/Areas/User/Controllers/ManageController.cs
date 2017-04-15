@@ -6,6 +6,7 @@
     using App_Start;
     using Helpers;
     using global::Shop.BLL.Exceptions;
+    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.BLL.Utils;
     using global::Shop.BLL.Utils.Infrastructure;
@@ -239,12 +240,27 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult UsersEdit(int id = 1)
+        public ActionResult UsersEdit(string sort, int id = 1)
         {
             int countPerPage = 10;
             this.TempData["CurrentPage"] = id;
+            
+            this.Session["sort"] = this.Session["sort"] ?? "LastName";
+            this.Session["ascending"] = this.Session["ascending"] ?? true;
+            var funcHelper = SortFuncHelper.GetUserSortFuncDictionary();
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                if (sort.Equals(this.Session["sort"].ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    this.Session["ascending"] = !(bool)this.Session["ascending"];
+                }
+
+                this.Session["sort"] = sort;
+            }
+            
             ViewBag.PageInfo = new PageInfo { PageNumber = id, PageSize = countPerPage, TotalItems = this._userService.GetUsersCount() };
-            var list = this._userService.GetDataPerPage(id, countPerPage);
+            var list = this._userService.GetDataPerPage(id, countPerPage, funcHelper[Session["sort"].ToString()], (bool)this.Session["ascending"]);
             var result = list.Select(u => UserMapper.GetUserEditView(u));
             return this.View(result);
         }
@@ -254,6 +270,7 @@
         /// </summary>
         /// <param name="term"></param>
         /// <returns></returns>
+        [HttpPost]
         public ActionResult GetMatchingData(string term)
         {
             var list = this._userService.GetLastNameMatchingData(term);

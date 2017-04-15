@@ -155,8 +155,6 @@
         /// <returns></returns>
         public ActionResult Register()
         {
-            var count = _userService.GetUsersCount();
-            var list = _userService.GetDataPerPage(5, 10);
             return this.View();
         }
 

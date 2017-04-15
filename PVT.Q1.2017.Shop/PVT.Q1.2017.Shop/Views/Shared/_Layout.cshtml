@@ -15,7 +15,7 @@
     <meta name="description" content="The description of my page"/>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom:50px;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -74,7 +74,7 @@
         <div class="breadcrumb" id="bc-override">@Html.MvcSiteMap().SiteMapPath()</div>
         @ViewBag.Title
     </div>
-        @RenderBody()
+        <div style="margin-top:110px">@RenderBody()</div>
     <hr/>
         <footer>
             <p>&copy; @DateTime.Now.Year - Music Shop</p>
@@ -84,7 +84,7 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>

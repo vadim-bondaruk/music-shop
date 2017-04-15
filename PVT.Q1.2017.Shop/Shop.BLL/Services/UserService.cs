@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using Common.Models;
     using Common.Validators.Infrastructure;
     using DAL.Infrastruture;
@@ -377,16 +378,23 @@
         /// <param name="pageNumber"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public ICollection<User> GetDataPerPage(int pageNumber = 1, int count = 10)
+        public ICollection<User> GetDataPerPage(int pageNumber, int count, Expression<Func<User, dynamic>> sortFunc, bool ascending = true)
         {
             var users = Factory.GetUserRepository().GetAll();
 
-            if (users == null || users.Count<1)
+            if (users == null || users.Count < 1)
             {
                 return null;
             }
 
-            return users.Skip((pageNumber - 1) * count).Take(count).ToList();
+            if (sortFunc == null)
+            {
+                sortFunc = u => u.LastName;
+            }
+
+            var result = ascending == true ? users.AsQueryable().OrderBy(sortFunc).Skip((pageNumber - 1) * count).Take(count)
+                                           : users.AsQueryable().OrderByDescending(sortFunc).Skip((pageNumber - 1) * count).Take(count);
+            return result.ToList();
         }
 
         /// <summary>

@@ -455,7 +455,7 @@
              .Setup(m => m.GetAll())
              .Returns(usersList);
 
-            var result = _service.GetDataPerPage(page, count);
+            var result = _service.GetDataPerPage(page, count, null);
 
             Assert.IsTrue(result.Count.Equals(count));
         }
@@ -492,7 +492,7 @@
              .Setup(m => m.GetAll())
              .Returns(usersList);
 
-            var result = _service.GetDataPerPage(page, count);
+            var result = _service.GetDataPerPage(page, count, null);
 
             CollectionAssert.Equals(result, expected);
         }
