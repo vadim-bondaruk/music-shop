@@ -135,7 +135,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
-            this.HttpContext.Session.Abandon();
+            this.Session.Abandon();
             this._authModule.LogOut();
 
             return this.RedirectToAction("Login", "Account", new { area = "User" });
