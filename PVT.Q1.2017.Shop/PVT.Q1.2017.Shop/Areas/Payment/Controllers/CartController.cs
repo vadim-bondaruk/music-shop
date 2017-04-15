@@ -178,6 +178,18 @@
         }
 
         /// <summary>
+        /// Очищает всю корзину текущего пользователя
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public ActionResult ClearCart()
+        {
+            this._cartService.RemoveAll(_currentUserId);
+            return this.RedirectToRoute(new { controller = "Cart", action = "Index" });
+        }
+
+        /// <summary>
         /// Перемещает товары пользователя в купленные при успешной оплате
         /// </summary>
         /// <param name="isAccepted"></param>

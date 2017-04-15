@@ -7,6 +7,7 @@
     using Infrastructure;
     using Exceptions;
     using Common.ViewModels;
+    using System.Collections;
 
 
     /// <summary>
@@ -367,6 +368,18 @@
             }
             
             return result;
+        }
+
+        public void RemoveAll(int userId)
+        {
+            // Remove all tracks
+            var trackIds = GetOrderTracksIds(userId);
+            this.RemoveTrack(userId, trackIds);
+
+            // Remove all albums
+
+            var albumIds = GetOrderAlbumsIds(userId);
+            this.RemoveAlbum(userId, albumIds);
         }
 
         /// <summary>
