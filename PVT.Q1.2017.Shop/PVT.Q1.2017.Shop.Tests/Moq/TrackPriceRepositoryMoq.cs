@@ -44,6 +44,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<TrackPrice, bool>>>()))
                  .Returns(() => _trackPrices.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<TrackPrice, bool>>>()))
+                 .Returns(() => _trackPrices.Count);
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _trackPrices.FirstOrDefault(a => a.Id > 0));
 

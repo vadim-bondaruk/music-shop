@@ -54,6 +54,24 @@
         ArtistAlbumsListViewModel GetAlbumsList(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
+        /// Returns all registered tracks and albums for the specified artist using the specified currency and price level for the price.
+        /// </summary>
+        /// <param name="artistId">The artist id.</param>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered tracks and albums with price for the specified artist.
+        /// </returns>
+        ArtistContentViewModel GetContent(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
         /// Returns all tracks for the specified artist without price.
         /// </summary>
         /// <param name="artistId">The artist id.</param>

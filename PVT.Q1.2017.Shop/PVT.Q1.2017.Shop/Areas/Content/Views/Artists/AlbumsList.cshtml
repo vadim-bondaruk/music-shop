@@ -8,15 +8,15 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>@Model.Name</h4>
+    <h4>@Model.ArtistDetails.Name</h4>
     <hr />
 
     <p>
-        @Html.BtnCreateAlbum(Model.Id)
+        @Html.BtnCreateAlbum(Model.ArtistDetails.Id)
         
         @Html.ActionLink("Информация об исполнителе", "Details", "Artist", new
         {
-            id = Model.Id,
+            id = Model.ArtistDetails.Id,
             area = "Content"
         }, new
         {

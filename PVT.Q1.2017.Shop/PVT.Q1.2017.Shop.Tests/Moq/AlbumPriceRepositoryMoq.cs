@@ -38,6 +38,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<AlbumPrice, bool>>>()))
                  .Returns(() => _albumPrices.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<AlbumPrice, bool>>>()))
+                 .Returns(() => _albumPrices.Count);
+
             _mock.Setup(
                         m =>
                             m.FirstOrDefault(It.IsAny<Expression<Func<AlbumPrice, bool>>>(),

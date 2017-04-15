@@ -60,16 +60,16 @@
             }
 
             var currency = GetCurrentUserCurrency();
-            TrackDetailsViewModel trackViewModel;
+            TrackAlbumsListViewModel trackViewModel;
 
             if (currency != null)
             {
                 var priceLevel = GetCurrentUserPriceLevel();
-                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel, GetUserDataId());
+                trackViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
             }
             else
             {
-                trackViewModel = _trackService.GetTrackDetails(id.Value);
+                trackViewModel = _trackService.GetAlbumsList(id.Value);
             }
 
             if (trackViewModel == null)
@@ -78,41 +78,6 @@
             }
 
             return this.View(trackViewModel);
-        }
-
-        /// <summary>
-        /// Shows all albums where the specified track is exist.
-        /// </summary>
-        /// <param name="id">The track id.</param>
-        /// <returns>
-        /// All albums where the specified track is exist.
-        /// </returns>
-        public ActionResult AlbumsList(int? id)
-        {
-            if (id == null)
-            {
-                return this.RedirectToAction("List");
-            }
-
-            var currency = GetCurrentUserCurrency();
-            TrackAlbumsListViewModel trackAlbumsViewModel;
-
-            if (currency != null)
-            {
-                var priceLevel = GetCurrentUserPriceLevel();
-                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
-            }
-            else
-            {
-                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
-            }
-
-            if (trackAlbumsViewModel == null)
-            {
-                return HttpNotFound($"Трек с id = { id.Value } не найден");
-            }
-
-            return this.View(trackAlbumsViewModel);
         }
 
         /// <summary>

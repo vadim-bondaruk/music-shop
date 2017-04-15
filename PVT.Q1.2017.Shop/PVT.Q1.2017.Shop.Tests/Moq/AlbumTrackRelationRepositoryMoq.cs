@@ -44,6 +44,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>()))
                  .Returns(() => _albumTrackRelations.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>()))
+                 .Returns(() => _albumTrackRelations.Count);
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _albumTrackRelations.FirstOrDefault(a => a.Id > 0));
 

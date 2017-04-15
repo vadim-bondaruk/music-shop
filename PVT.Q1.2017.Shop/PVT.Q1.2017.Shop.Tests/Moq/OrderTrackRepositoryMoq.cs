@@ -51,6 +51,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<OrderTrack, bool>>>()))
                  .Returns(() => _orderTrack.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<OrderTrack, bool>>>()))
+                 .Returns(() => _orderTrack.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderTrack>())).Callback(() => _orderTrack.Add(new OrderTrack
             {
                 Id = _orderTrack.Count + 1

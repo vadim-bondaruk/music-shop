@@ -16,19 +16,9 @@
         }
 
         /// <summary>
-        /// Track id.
+        /// The track details.
         /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Track name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The track artist.
-        /// </summary>
-        public ArtistViewModel Artist { get; set; }
+        public TrackDetailsViewModel TrackDetails { get; set; }
 
         /// <summary>
         /// All albums where the track exists.

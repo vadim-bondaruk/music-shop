@@ -2,17 +2,15 @@
 
 @if (Model != null)
 {
-    <p class="text-success">
-        <b>
-            @Model.Amount
-            @if (!string.IsNullOrWhiteSpace(Model.Currency.Symbol))
-            {
-                @Model.Currency.Symbol
-            }
-            else
-            {
-                @Model.Currency.ShortName
-            }
-        </b>
-    </p>
+    <b>
+        @Model.Amount
+        @if (!string.IsNullOrWhiteSpace(Model.Currency.Symbol))
+        {
+            @Model.Currency.Symbol
+        }
+        else
+        {
+            @Model.Currency.ShortName
+        }
+    </b>
 }
