@@ -88,9 +88,6 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />
     <Compile Include="Utils\CurrentUser.cs" />
-    <Compile Include="Utils\ID3Tag\BitReader.cs" />
-    <Compile Include="Utils\ID3Tag\ID3v2.cs" />
-    <Compile Include="Utils\ID3Tag\id3v2Frame.cs" />
     <Compile Include="Utils\Infrastructure\IAuthModule.cs" />
     <Compile Include="Utils\PasswordEncryptor.cs" />
     <Compile Include="Services\FeedbackService.cs" />

@@ -75,13 +75,7 @@
 
             if (artistTracksListViewModel.ArtistDetails.TracksCount > 0)
             {
-                ICollection<Track> tracks;
-                using (var repository = this.Factory.GetTrackRepository())
-                {
-                    tracks = repository.GetAll(t => t.ArtistId == artistId, t => t.Artist);
-                }
-
-                artistTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
+                artistTracksListViewModel.Tracks = GetArtistTracks(artistId, currencyCode, priceLevel, userId);
             }
 
             return artistTracksListViewModel;
@@ -109,16 +103,46 @@
 
             if (artistAlbumsListViewModel.ArtistDetails.AlbumsCount > 0)
             {
-                ICollection<Album> albums;
-                using (var repository = this.Factory.GetAlbumRepository())
-                {
-                    albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId, a => a.Artist);
-                }
-
-                artistAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
+                artistAlbumsListViewModel.Albums = GetArtistAlbums(artistId, currencyCode, priceLevel, userId);
             }
 
             return artistAlbumsListViewModel;
+        }
+
+        /// <summary>
+        /// Returns all registered tracks and albums for the specified artist using the specified currency and price level for the price.
+        /// </summary>
+        /// <param name="artistId">The artist id.</param>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered tracks and albums with price for the specified artist.
+        /// </returns>
+        public ArtistContentViewModel GetContent(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        {
+            ArtistContentViewModel artistContentViewModel = new ArtistContentViewModel
+            {
+                ArtistDetails = GetArtistDetails(artistId)
+            };
+
+            if (artistContentViewModel.ArtistDetails.AlbumsCount > 0)
+            {
+                artistContentViewModel.Albums = GetArtistAlbums(artistId, currencyCode, priceLevel, userId);
+            }
+
+            if (artistContentViewModel.ArtistDetails.TracksCount > 0)
+            {
+                artistContentViewModel.Tracks = GetArtistTracks(artistId, currencyCode, priceLevel, userId);
+            }
+
+            return artistContentViewModel;
         }
 
         /// <summary>
@@ -317,6 +341,28 @@
             {
                 ArtistDetails = GetArtistDetails(artistId)
             };
+        }
+
+        private ICollection<AlbumViewModel> GetArtistAlbums(int artistId, int? currencyCode, int? priceLevel, int? userId)
+        {
+            ICollection<Album> albums;
+            using (var repository = this.Factory.GetAlbumRepository())
+            {
+                albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId, a => a.Artist);
+            }
+
+            return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
+        }
+
+        private ICollection<TrackViewModel> GetArtistTracks(int artistId, int? currencyCode, int? priceLevel, int? userId)
+        {
+            ICollection<Track> tracks;
+            using (var repository = this.Factory.GetTrackRepository())
+            {
+                tracks = repository.GetAll(t => t.ArtistId == artistId, t => t.Artist);
+            }
+
+            return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
         }
     }
 }
