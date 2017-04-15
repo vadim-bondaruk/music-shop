@@ -52,6 +52,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Currency, bool>>>()))
                  .Returns(() => _currencies.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Currency, bool>>>()))
+                 .Returns(() => _currencies.Count);
+
             this._mock.Setup(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
                  .Returns(() => this._currencies.FirstOrDefault(a => a.Id >= 0));
 

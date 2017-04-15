@@ -73,13 +73,17 @@
         {
             ArtistTracksListViewModel artistTracksListViewModel = this.CreateArtistTracksListViewModel(artistId);
 
-            ICollection<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
+            if (artistTracksListViewModel.ArtistDetails.TracksCount > 0)
             {
-                tracks = repository.GetAll(t => t.ArtistId == artistId, t => t.Artist);
+                ICollection<Track> tracks;
+                using (var repository = this.Factory.GetTrackRepository())
+                {
+                    tracks = repository.GetAll(t => t.ArtistId == artistId, t => t.Artist);
+                }
+
+                artistTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
             }
 
-            artistTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
             return artistTracksListViewModel;
         }
 
@@ -103,13 +107,17 @@
         {
             ArtistAlbumsListViewModel artistAlbumsListViewModel = this.CreateArtistAlbumsListViewModel(artistId);
 
-            ICollection<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            if (artistAlbumsListViewModel.ArtistDetails.AlbumsCount > 0)
             {
-                albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId, a => a.Artist);
+                ICollection<Album> albums;
+                using (var repository = this.Factory.GetAlbumRepository())
+                {
+                    albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId, a => a.Artist);
+                }
+
+                artistAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
             }
 
-            artistAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
             return artistAlbumsListViewModel;
         }
 
@@ -288,13 +296,10 @@
         /// </returns>
         private ArtistTracksListViewModel CreateArtistTracksListViewModel(int artistId)
         {
-            Artist artist;
-            using (var repository = this.Factory.GetArtistRepository())
+            return new ArtistTracksListViewModel
             {
-                artist = repository.GetById(artistId);
-            }
-
-            return ModelsMapper.GetArtistTracksListViewModel(artist);
+                ArtistDetails = GetArtistDetails(artistId)
+            };
         }
 
         /// <summary>
@@ -308,13 +313,10 @@
         /// </returns>
         private ArtistAlbumsListViewModel CreateArtistAlbumsListViewModel(int artistId)
         {
-            Artist artist;
-            using (var repository = this.Factory.GetArtistRepository())
+            return new ArtistAlbumsListViewModel
             {
-                artist = repository.GetById(artistId);
-            }
-
-            return ModelsMapper.GetArtistAlbumsListViewModel(artist);
+                ArtistDetails = GetArtistDetails(artistId)
+            };
         }
     }
 }

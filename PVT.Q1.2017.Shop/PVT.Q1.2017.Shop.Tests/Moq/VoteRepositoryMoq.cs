@@ -44,6 +44,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Vote, bool>>>()))
                  .Returns(() => _votes.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Vote, bool>>>()))
+                 .Returns(() => _votes.Count);
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _votes.FirstOrDefault(a => a.Id > 0));
 

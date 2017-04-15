@@ -51,6 +51,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PriceLevel, bool>>>()))
                  .Returns(() => _priceLevels.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<PriceLevel, bool>>>()))
+                 .Returns(() => _priceLevels.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PriceLevel>())).Callback(() => _priceLevels.Add(new PriceLevel
             {
                 Id = _priceLevels.Count + 1,
