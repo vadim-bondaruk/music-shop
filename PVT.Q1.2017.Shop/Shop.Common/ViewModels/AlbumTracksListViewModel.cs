@@ -40,12 +40,12 @@
         {
             get
             {
-                if (_tracksCount == null)
+                if (Tracks != null)
                 {
-                    return Tracks != null ? Tracks.Count : 0;
+                    return Tracks.Count;
                 }
 
-                return _tracksCount.Value;
+                return _tracksCount.HasValue ? _tracksCount.Value : 0;
             }
             set
             {

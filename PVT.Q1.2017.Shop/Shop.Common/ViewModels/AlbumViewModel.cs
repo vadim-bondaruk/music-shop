@@ -31,6 +31,11 @@
         public int TracksCount { get; set; }
 
         /// <summary>
+        /// The album owner id.
+        /// </summary>
+        public int OwnerId { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the album is ordered.
         /// </summary>
         public bool IsOrdered { get; set; }

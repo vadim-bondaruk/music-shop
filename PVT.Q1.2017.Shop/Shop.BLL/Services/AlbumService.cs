@@ -110,7 +110,7 @@
         /// </returns>
         public AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
 
             using (var repository = Factory.GetAlbumTrackRelationRepository())
             {
@@ -160,7 +160,7 @@
         /// </returns>
         public AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
 
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
@@ -227,7 +227,7 @@
         /// </returns>
         public AlbumTracksListViewModel GetTracksWithPrice(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
 
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetAlbumTrackRelationRepository())
@@ -358,15 +358,12 @@
         /// <returns>
         /// A new instance of the <see cref="AlbumTracksListViewModel"/> type
         /// </returns>
-        private AlbumTracksListViewModel CreateAlbumTracksListViewModel(int albumId)
+        private AlbumTracksListViewModel CreateAlbumTracksListViewModel(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
-            Album album;
-            using (var repository = this.Factory.GetAlbumRepository())
+            return new AlbumTracksListViewModel
             {
-                album = repository.GetById(albumId, a => a.Artist);
-            }
-
-            return ModelsMapper.GetAlbumTracksListViewModel(album);
+                AlbumDetails = GetAlbumDetails(albumId, currencyCode, priceLevel, userId)
+            };
         }
     }
 }

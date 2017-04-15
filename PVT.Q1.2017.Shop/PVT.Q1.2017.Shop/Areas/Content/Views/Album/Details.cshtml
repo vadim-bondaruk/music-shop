@@ -1,5 +1,7 @@
-﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
-@model Shop.Common.ViewModels.AlbumDetailsViewModel
+﻿@using PVT.Q1._2017.BLL.Utils
+@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@using Shop.Infrastructure.Enums
+@model Shop.Common.ViewModels.AlbumTracksListViewModel
 
 @{
     ViewBag.Title = "Информация об альбоме";
@@ -7,31 +9,48 @@
 
 <h2>@ViewBag.Title</h2>
 
+@{
+    bool isAuthenticated = Request.IsAuthenticated;
+    int currentUserId = 0;
+    bool isAdmin = false;
+    bool isSeller = false;
+    bool isBuyer = false;
+    if (isAuthenticated)
+    {
+        var currentUser = ((CurrentUser)User);
+        currentUserId = currentUser.Id;
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.User.ToString());
+    }
+}
+
 <div class="panel panel-default">
     <div class="panel-body">
-        <h4>@Model.Name</h4>
-        @if (Model.Artist != null)
+        <h4>@Model.AlbumDetails.Name</h4>
+        @if (Model.AlbumDetails.Artist != null)
         {
-            <h5>@Model.Artist.Name</h5>
+            <h5>@Model.AlbumDetails.Artist.Name</h5>
         }
 
-        @if (Model.Cover != null && Model.Cover.Length > 0)
+        @if (Model.AlbumDetails.Cover != null && Model.AlbumDetails.Cover.Length > 0)
         {
-            <img src="data:image;base64,@Convert.ToBase64String(Model.Cover)" alt="Обложка альбома"
+            <img src="data:image;base64,@Convert.ToBase64String(Model.AlbumDetails.Cover)" alt="Обложка альбома"
                  class="img-thumbnail img-responsive" style="max-width: 300px; max-height: 300px" />
         }
 
         <div>
-            @Html.BtnAddTracksToAlbum(Model.Id)
-
-            <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Album", new { id = Model.Id, area = "Content" })"
-               title="Нажмите, чтобы увидеть все треки альбома">
-                Треки <span class="badge">@Model.TracksCount</span>
-            </a>
-
-            @if (Model.Artist != null)
+            @if (isAuthenticated)
             {
-                <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
+                if (isAdmin || (isSeller && (Model.AlbumDetails.OwnerId <= 0m || Model.AlbumDetails.OwnerId == currentUserId)))
+                {
+                    @Html.BtnAddTracksToAlbum(Model.AlbumDetails.Id)
+                }
+            }
+
+            @if (Model.AlbumDetails.Artist != null)
+            {
+                <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.AlbumDetails.Artist.Id, area = "Content" })"
                    title="Нажмите, чтобы увидеть информацию об исполнителе">
                     Информация об исполнителе
                 </a>
@@ -40,49 +59,65 @@
 
         <hr />
         <dl class="dl-horizontal">
-            @if (Model.ReleaseDate != null)
+            @if (Model.AlbumDetails.ReleaseDate != null)
             {
                 <dt>
                     Дата релиза
                 </dt>
 
                 <dd>
-                    @Model.ReleaseDate.Value.ToShortDateString()
+                    @Model.AlbumDetails.ReleaseDate.Value.ToShortDateString()
                 </dd>
             }
             
-            @if (Model.Price != null)
+            @if (Model.AlbumDetails.Price != null)
             {
                 <dt>
                     Цена
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(m => m.Price)
+                    @Html.DisplayFor(m => m.AlbumDetails.Price)
                 </dd>
             }
         </dl>
-
-        <p>
-            @Html.BtnEditAlbum(Model.Id)
-            @Html.BtnDeleteAlbum(Model.Id)
-            @(Model.Price != null ? Html.BtnEditAlbumPrice(Model.Id) : Html.BtnCreateAlbumPrice(Model.Id))
-        </p>
+        @if (isAuthenticated)
+        {
+            if (isAdmin || (isSeller && (Model.AlbumDetails.OwnerId <= 0m || Model.AlbumDetails.OwnerId == currentUserId)))
+            {
+                <p>
+                    @Html.BtnEditAlbum(Model.AlbumDetails.Id)
+                    @Html.BtnDeleteAlbum(Model.AlbumDetails.Id)
+                    @(Model.AlbumDetails.Price != null ? Html.BtnEditAlbumPrice(Model.AlbumDetails.Id) : Html.BtnCreateAlbumPrice(Model.AlbumDetails.Id))
+                </p>
+            }
+        }
     </div>
 </div>
 
 <p>
-    @Html.BtnCreateAlbum()
-
-    @if (Model.IsPurchased)
+    @if (isAuthenticated)
     {
-        @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
-                                Url.Action("PurchasedTracks", "Track", new { area = "Content", id = Model.Id }))
-    }
-    else if (Model.Price != null)
-    {
-        @Html.BtnBuyAlbum(Model.Id, Model.IsOrdered)
+        if (isAdmin || (isSeller && (Model.AlbumDetails.OwnerId <= 0m || Model.AlbumDetails.OwnerId == currentUserId)))
+        {
+            @Html.BtnCreateAlbum()
+        }
+        else if (isBuyer)
+        {
+            if (Model.AlbumDetails.IsPurchased)
+            {
+                @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
+                                    Url.Action("PurchasedTracks", "Track", new { area = "Content", id = Model.AlbumDetails.Id }))
+            }
+            else if (Model.AlbumDetails.Price != null)
+            {
+                @Html.BtnBuyAlbum(Model.AlbumDetails.Id, Model.AlbumDetails.IsOrdered)
+            }
+        }
     }
 
     @Html.ActionLink("Cписок альбомов", "List", "Album", new { area = "Content" }, new { @class = "btn btn-sm btn-success" })
 </p>
+
+<h2>Треки <span class="badge">@Model.TracksCount</span></h2>
+@Html.Partial("_TracksList", Model.Tracks)
