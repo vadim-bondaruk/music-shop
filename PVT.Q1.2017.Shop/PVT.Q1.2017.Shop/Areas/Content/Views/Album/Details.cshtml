@@ -1,5 +1,5 @@
-﻿@using PVT.Q1._2017.BLL.Utils
-@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@using Shop.BLL.Utils
 @using Shop.Infrastructure.Enums
 @model Shop.Common.ViewModels.AlbumTracksListViewModel
 
@@ -19,7 +19,7 @@
         currentUserId = currentUser.Id;
         isAdmin = User.IsInRole(UserRoles.Admin.ToString());
         isSeller = User.IsInRole(UserRoles.Seller.ToString());
-        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.User.ToString());
+        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString());
     }
 }
 

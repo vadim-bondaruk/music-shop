@@ -240,6 +240,10 @@
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithCreditCard.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Index.cshtml" />
+    <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
+    <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
+    <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Areas\User\Views\Manage\ChangeLogin.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Index.cshtml" />
@@ -259,6 +263,13 @@
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
+    <Content Include="Areas\User\Views\Account\Confirm.cshtml" />
+    <Content Include="Areas\User\Views\Account\Siterules.cshtml" />
+    <Content Include="Areas\User\Views\Manage\Delete.cshtml" />
+    <Content Include="Areas\User\Views\Manage\ChangeAccepted.cshtml" />
+    <Content Include="Areas\User\Views\Manage\_UsersEdit.cshtml" />
+    <Content Include="Areas\User\Views\Manage\UsersEdit.cshtml" />
+    <Content Include="Areas\User\Views\Manage\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Albums\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Albums\New.cshtml" />
     <Content Include="Areas\Management\Views\Artists\Edit.cshtml" />
@@ -358,6 +369,7 @@
     <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
+    <Compile Include="Areas\Management\Controllers\GenresController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackController.cs" />
     <Compile Include="Areas\Management\Controllers\TrackPriceController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
@@ -379,7 +391,6 @@
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
     <Compile Include="Areas\User\Helpers\UserMapper.cs" />
-    <Compile Include="Controllers\AdminTestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -391,6 +402,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PageHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>

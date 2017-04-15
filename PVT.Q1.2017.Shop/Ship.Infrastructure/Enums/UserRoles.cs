@@ -8,19 +8,17 @@
         /// <summary>
         /// Ordinary user
         /// </summary>
-        User,
+        Customer,
 
         /// <summary>
         /// User with huge wallet
         /// </summary>
-        VIPUser,
+        Seller,
 
         /// <summary>
         /// Admin
         /// </summary>
-        Admin,
-
-        Seller,
+        Admin,   
 
         Buyer
     }

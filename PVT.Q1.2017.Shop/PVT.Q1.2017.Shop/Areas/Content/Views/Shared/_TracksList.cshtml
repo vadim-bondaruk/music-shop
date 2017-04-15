@@ -1,4 +1,4 @@
-﻿@using PVT.Q1._2017.BLL.Utils
+﻿@using Shop.BLL.Utils
 @using PVT.Q1._2017.Shop.Areas.Content.Extentions
 @using Shop.Infrastructure.Enums
 @model ICollection<Shop.Common.ViewModels.TrackViewModel>
@@ -15,7 +15,7 @@
         currentUserId = currentUser.Id;
         isAdmin = User.IsInRole(UserRoles.Admin.ToString());
         isSeller = User.IsInRole(UserRoles.Seller.ToString());
-        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.User.ToString());
+        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString());
     }
 }
 

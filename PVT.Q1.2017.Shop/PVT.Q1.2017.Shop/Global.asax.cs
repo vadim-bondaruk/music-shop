@@ -6,8 +6,8 @@
     using System.Web.Routing;
     using System.Web.Script.Serialization;
     using System.Web.Security;
-    using BLL.Utils;
     using FluentValidation.Mvc;
+    using global::Shop.BLL.Utils;
     using global::Shop.Common.Models;
 
     /// <summary>
@@ -50,7 +50,7 @@
                         Id = serializeUser.Id,
                         Login = serializeUser.Login,
                         Email = serializeUser.Email,
-                        UserRoles = serializeUser.UserRole
+                        UserRole = serializeUser.UserRole
                     };
 
                     CurrentUser newUser = new CurrentUser(user);

@@ -43,7 +43,7 @@
                     @Html.AntiForgeryToken()
 
                     <ul class="nav navbar-nav navbar-right">
-                        @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.User.ToString()))
+                        @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString()))
                         {
                             <li>
                                 <a class="btn btn-sm btn-default" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
