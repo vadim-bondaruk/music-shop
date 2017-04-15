@@ -56,7 +56,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Track", new { area = "Content" });
             }
 
             var currency = GetCurrentUserCurrency();

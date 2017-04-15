@@ -39,7 +39,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
             TrackAlbumsListViewModel trackAlbumsViewModel = null;
@@ -98,7 +98,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
             TrackDetailsViewModel trackViewModel = null;
@@ -132,15 +132,25 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public FileResult Download(int id)
+        public ActionResult Download(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             string mp3Url = null;
 
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var trackRepository = factory.GetTrackRepository())
             {
                 // string mp3Url = Track.GetMp3UrlByID(id);
-                var track = trackRepository.GetById(id);
+                var track = trackRepository.GetById(id.Value);
+
+                if (track == null)
+                {
+                    return HttpNotFound($"Трек с id = { id.Value } не найден");
+                }
 
                 byte[] data;
                 using (var urlGrabber = new WebClient())
@@ -148,10 +158,8 @@
                     data = urlGrabber.DownloadData(mp3Url);
                 }
 
-                using (var fileStream = new FileStream(string.Format("{0} - {1}.mp3", track.Artist, track.Name),
-                                                       FileMode.Open))
+                using (var fileStream = new FileStream(string.Format("{0} - {1}.mp3", track.Artist, track.Name), FileMode.Open))
                 {
-
                     fileStream.Write(data, 0, data.Length);
                     fileStream.Seek(0, SeekOrigin.Begin);
 
@@ -167,12 +175,23 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public ActionResult GetAudio(int id)
+        public ActionResult GetAudio(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var trackRepository = factory.GetTrackRepository())
             {
-                var audioBytes = trackRepository.GetById(id).TrackFile;
+                var track = trackRepository.GetById(id.Value);
+                if (track == null)
+                {
+                    return HttpNotFound($"Трек с id = { id.Value } не найден");
+                }
+
+                var audioBytes = track.TrackFile;
                 return this.File(audioBytes, "audio/mp3");
             }
         }
@@ -184,15 +203,25 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public FileStreamResult GetTrackAsStream(int id)
+        public ActionResult GetTrackAsStream(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             byte[] song;
             string trackArtistName;
             string trackName;
             using (var trackRepository = factory.GetTrackRepository())
             {
-                var track = trackRepository.GetById(id, p => p.Artist);
+                var track = trackRepository.GetById(id.Value, p => p.Artist);
+                if (track == null)
+                {
+                    return HttpNotFound($"Трек с id = { id.Value } не найден");
+                }
+
                 song = track.TrackFile;
                 trackArtistName = track.Artist.Name;
                 trackName = track.Name;
@@ -241,12 +270,23 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public FileResult Stream(int id)
+        public ActionResult Stream(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var trackRepository = factory.GetTrackRepository())
             {
-                var trackFile = trackRepository.GetById(id).TrackFile;
+                var track = trackRepository.GetById(id.Value);
+                if (track == null)
+                {
+                    return HttpNotFound($"Трек с id = { id.Value } не найден");
+                }
+
+                var trackFile = track.TrackFile;
                 return this.File(trackFile, "audio/mpeg", "test.mp3");
             }
         }
