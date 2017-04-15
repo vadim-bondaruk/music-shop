@@ -30,7 +30,7 @@
 
         <p>
             @Html.DisplayFor(model => model.TrackDetails.Rating)
-            @Html.ActionLink("оттавить отзыв", "Feedback", "Track", new { area = "Content", trackId = Model.TrackDetails.Id }, new { @class = "btn btn-sm btn-link" })
+            @Html.ActionLink("оттавить отзыв", "List", "Feedbacks", new { area = "Content", trackId = Model.TrackDetails.Id }, new { @class = "btn btn-sm btn-link" })
         </p>
 
         <div>

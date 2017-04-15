@@ -231,6 +231,34 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="FeedbackViewModel"/> model to a new <see cref="Feedback"/> model.
+        /// </summary>
+        /// <param name="feedbackViewModel">
+        /// The feedback view model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="Feedback"/> DTO model.
+        /// </returns>
+        public static Feedback GetFeedback(FeedbackViewModel feedbackViewModel)
+        {
+            return _commonMapper.Map<Feedback>(feedbackViewModel);
+        }
+
+        /// <summary>
+        /// Executes a mapping from the <see cref="FeedbackViewModel"/> model to a new <see cref="Vote"/> model.
+        /// </summary>
+        /// <param name="feedbackViewModel">
+        /// The vote view model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="Vote"/> DTO model.
+        /// </returns>
+        public static Vote GetVote(FeedbackViewModel feedbackViewModel)
+        {
+            return _commonMapper.Map<Vote>(feedbackViewModel);
+        }
+
+        /// <summary>
         /// Executes a mapping from the <see cref="Artist"/> model to a new <see cref="ArtistTracksListViewModel"/> model.
         /// </summary>
         /// <param name="artist">
@@ -321,7 +349,14 @@
                    .ForMember(dest => dest.Currency, opt => opt.MapFrom(p => p.Currency));
 
                 cfg.CreateMap<Feedback, FeedbackViewModel>()
-                   .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
+                   .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId))
+                   .ForMember(dest => dest.UserName, opt => opt.ResolveUsing(f => f.User.User.Login));
+
+                cfg.CreateMap<FeedbackViewModel, Feedback>()
+                   .ForMember(dest => dest.UserId, opt => opt.ResolveUsing(f => f.UserDataId));
+
+                cfg.CreateMap<FeedbackViewModel, Vote>()
+                   .ForMember(dest => dest.UserId, opt => opt.ResolveUsing(f => f.UserDataId));
 
                 cfg.CreateMap<Setting, SettingViewModel>();
 

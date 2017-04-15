@@ -11,13 +11,10 @@
         /// <summary>
         /// Adds a new feedback or updates existent feedback for the specified track.
         /// </summary>
-        /// <param name="trackId">
-        /// The track id.
-        /// </param>
         /// <param name="feedbackViewModel">
         /// The user feedback.
         /// </param>
-        void AddOrUpdateFeedback(int trackId, FeedbackViewModel feedbackViewModel);
+        void AddOrUpdateFeedback(FeedbackViewModel feedbackViewModel);
 
         /// <summary>
         /// Returns the feedback which have made the specified user for the track.

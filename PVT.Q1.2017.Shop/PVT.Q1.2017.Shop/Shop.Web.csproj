@@ -363,6 +363,7 @@
     <Compile Include="Areas\Content\Extentions\BuyButtonHelper.cs" />
     <Compile Include="Areas\Content\Extentions\ManagementButtonsHelper.cs" />
     <Compile Include="Areas\Content\Extentions\PriceButtonHelper.cs" />
+    <Compile Include="Areas\Content\Controllers\FeedbacksController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumPriceController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
@@ -450,6 +451,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Content\Views\Feedbacks\" />
     <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />

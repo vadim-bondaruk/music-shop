@@ -42,7 +42,7 @@
             Feedback feedback;
             using (var repository = this.Factory.GetFeedbackRepository())
             {
-                feedback = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == userDataId);
+                feedback = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == userDataId, f => f.User, f => f.User.User);
             }
 
             Vote vote;
@@ -78,7 +78,6 @@
                 }
             }
 
-            // TODO: fill user name before return track feedback
             return feedbackViewModel;
         }
 
@@ -126,7 +125,7 @@
             ICollection<Feedback> feedbacks;
             using (var repository = Factory.GetFeedbackRepository())
             {
-                feedbacks = repository.GetAll(f => f.TrackId == trackId);
+                feedbacks = repository.GetAll(f => f.TrackId == trackId, f => f.User, f => f.User.User);
             }
 
             ICollection<Vote> votes;
@@ -159,20 +158,16 @@
                 feedbackViewModels.Add(feedbackViewModel);
             }
 
-            // TODO: fill user name before return track feedbacks
             return feedbackViewModels;
         }
 
         /// <summary>
         /// Adds a new feedback or updates existent feedback for the specified track.
         /// </summary>
-        /// <param name="trackId">
-        /// The track id.
-        /// </param>
         /// <param name="feedbackViewModel">
         /// The user feedback.
         /// </param>
-        public void AddOrUpdateFeedback(int trackId, FeedbackViewModel feedbackViewModel)
+        public void AddOrUpdateFeedback(FeedbackViewModel feedbackViewModel)
         {
             if (feedbackViewModel == null)
             {
@@ -183,16 +178,15 @@
             {
                 using (var repository = this.Factory.GetFeedbackRepository())
                 {
-                    var feedback = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == feedbackViewModel.UserDataId);
+                    var feedback = repository.FirstOrDefault(f => f.TrackId == feedbackViewModel.TrackId && f.UserId == feedbackViewModel.UserDataId);
 
                     if (feedback == null)
                     {
-                        feedback = new Feedback
-                        {
-                            Comments = feedbackViewModel.Comments.Trim(),
-                            UserId = feedbackViewModel.UserDataId,
-                            TrackId = trackId
-                        };
+                        feedback = ModelsMapper.GetFeedback(feedbackViewModel);
+                    }
+                    else
+                    {
+                        feedback.Comments = feedbackViewModel.Comments;
                     }
 
                     repository.AddOrUpdate(feedback);
@@ -203,16 +197,15 @@
             {
                 using (var repository = this.Factory.GetVoteRepository())
                 {
-                    var vote = repository.FirstOrDefault(v => v.TrackId == trackId && v.UserId == feedbackViewModel.UserDataId);
+                    var vote = repository.FirstOrDefault(v => v.TrackId == feedbackViewModel.TrackId && v.UserId == feedbackViewModel.UserDataId);
 
                     if (vote == null)
                     {
-                        vote = new Vote
-                        {
-                            Mark = feedbackViewModel.Mark,
-                            UserId = feedbackViewModel.UserDataId,
-                            TrackId = trackId
-                        };
+                        vote = ModelsMapper.GetVote(feedbackViewModel);
+                    }
+                    else
+                    {
+                        vote.Mark = feedbackViewModel.Mark;
                     }
 
                     repository.AddOrUpdate(vote);
