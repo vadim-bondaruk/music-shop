@@ -1988,15 +1988,18 @@ namespace Shop.DAL.Migrations
                                         }
                                     });
 
-                context.Set<UserData>()
-                       .AddOrUpdate(
-                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 1 },
-                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 2 },
-                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 3 },
-                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 4 });
-            }
+                context.SaveChanges();
 
-            context.SaveChanges();
+                var users = context.Set<User>().ToList();
+
+                foreach (var user in users)
+                {
+                    context.Set<UserData>()
+                           .AddOrUpdate(new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = user.Id });
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }
