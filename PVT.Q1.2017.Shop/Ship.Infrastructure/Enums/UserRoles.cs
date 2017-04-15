@@ -18,6 +18,10 @@
         /// <summary>
         /// Admin
         /// </summary>
-        Admin
+        Admin,
+
+        Seller,
+
+        Buyer
     }
 }

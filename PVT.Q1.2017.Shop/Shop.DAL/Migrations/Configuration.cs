@@ -2,7 +2,7 @@ namespace Shop.DAL.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Linq;
-
+    using Infrastructure.Enums;
     using Shop.Common.Models;
     using Shop.DAL.Context;
 
@@ -29,7 +29,68 @@ namespace Shop.DAL.Migrations
             this.AddDefaultCurrencyRates(context);
             this.AddDefaultGenres(context);
             this.AddDefaultPriceLevels(context);
+#if DEBUG
+            this.AddDefaultUsers(context);
             this.AddDefaultArtistsAndTracks(context);
+#endif
+        }
+
+        private void AddDefaultUsers(ShopContext context)
+        {
+            if (!context.Set<User>().Any())
+            {
+                context.Set<User>()
+                       .AddOrUpdate(
+                                    new User
+                                    {
+                                        UserRoles = UserRoles.Admin,
+                                        Login = "admin",
+                                        FirstName = "admin",
+                                        LastName = "admin",
+                                        Email = "admin@shop.com",
+                                        Sex = "M",
+                                        Password = "8D66A53A381493BEC08DA23CEF5A43767F20A42C" // admin123!
+                                    },
+                                    new User
+                                    {
+                                        UserRoles = UserRoles.Seller,
+                                        Login = "seller",
+                                        FirstName = "seller",
+                                        LastName = "seller",
+                                        Email = "seller@shop.com",
+                                        Sex = "M",
+                                        Password = "1C1947F409978BC0A2601027FCCA6290583A60D9" // seller123!
+                                    },
+                                    new User
+                                    {
+                                        UserRoles = UserRoles.Buyer,
+                                        Login = "buyer",
+                                        FirstName = "buyer",
+                                        LastName = "buyer",
+                                        Email = "buyer@shop.com",
+                                        Sex = "M",
+                                        Password = "06490A9E09845EC0AAC622A6C43DAB47A516B096" // buyer123!
+                                    },
+                                    new User
+                                    {
+                                        UserRoles = UserRoles.User,
+                                        Login = "user",
+                                        FirstName = "user",
+                                        LastName = "user",
+                                        Email = "user@shop.com",
+                                        Sex = "M",
+                                        Password = "C0018FDBFC43F406264C2A3D82CAB7373AE090A1" // user123!
+                                    });
+
+                context.Set<UserData>()
+                       .AddOrUpdate(
+                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 1 },
+                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 2 },
+                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 3 },
+                                    new UserData { CurrencyId = 1, PriceLevelId = 1, UserId = 4 });
+
+                context.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -256,10 +317,10 @@ namespace Shop.DAL.Migrations
             if (!context.Set<CurrencyRate>().Any())
             {
                 context.Set<CurrencyRate>()
-                    .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 0.9M });
+                    .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 1.2M });
 
                 context.Set<CurrencyRate>()
-                    .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 1.2M });
+                    .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 0.9M });
             }
 
             context.SaveChanges();

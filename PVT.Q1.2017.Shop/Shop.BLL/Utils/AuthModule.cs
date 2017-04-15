@@ -59,7 +59,8 @@
                 {
                     Id = user.Id,
                     Login = user.Login,
-                    Email = user.Email
+                    Email = user.Email,
+                    UserRole = user.UserRoles
                 };
 
                 context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, isPersistent));
