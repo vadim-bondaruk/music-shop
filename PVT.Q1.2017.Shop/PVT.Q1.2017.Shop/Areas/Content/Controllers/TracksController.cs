@@ -193,7 +193,14 @@
             using (var trackRepository = factory.GetTrackRepository())
             {
                 var track = trackRepository.GetById(id, p => p.Artist);
+
+                if (track == null)
+                {
+                    return null;
+                }
+
                 song = track.TrackFile;
+
                 trackArtistName = track.Artist.Name;
                 trackName = track.Name;
             }

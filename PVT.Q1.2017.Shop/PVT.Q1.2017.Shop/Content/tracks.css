@@ -376,6 +376,7 @@ li > input { width: 100% }
 }
 
 .albums-list .btn-align {
+    height: 100%;
     width: 40%;
     vertical-align: top;
     text-align: right;
@@ -593,13 +594,16 @@ a.tracks-list > ul {
 .order-block {
     display: block;
     text-align: center;
-    padding: 3px;
+    padding-top: 35px;
 }
 
-.order-block .buy-btn a {
+.order-block .buy-btn {
+    height: 100%;
+}
+.order-block .buy-btn button {
     width: 120px;
-    height: 45px;
-    padding-top: 12px;
+    height: 35px;
+    padding-top: 7px;
     background: #ff8c00;
     border-radius: 25px;
     font-size: 15px;
@@ -608,16 +612,16 @@ a.tracks-list > ul {
     color: black;
 }
 
-.order-block .buy-btn a p {
+.order-block .buy-btn button p {
     color: black;
     font-size: 15px;
     font-weight: bold;
     font-family: sans-serif;
 }
 
-.order-block .buy-btn a:hover p { display: none; }
+.order-block .buy-btn button:hover p { display: none; }
 
-.order-block .buy-btn a:hover:before {
+.order-block .buy-btn button:hover:before {
     content: 'В корзину';
 }
 
@@ -783,7 +787,7 @@ a.tracks-list > ul {
 
 #aPlayer > audio { width: 100% }
 
-@media screen and (-webkit-min-device-pixel-ratio: 0)
+/*@media screen and (-webkit-min-device-pixel-ratio: 0)
   and (min-resolution: .001dpcm) {
     #aPlayer {
         overflow: hidden;
@@ -800,7 +804,7 @@ a.tracks-list > ul {
     }
 
     #aPlayer > audio { width: 420px; }
-}
+}*/
 
 
 .buttons {

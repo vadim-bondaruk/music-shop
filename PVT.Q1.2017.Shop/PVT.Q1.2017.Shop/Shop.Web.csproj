@@ -258,7 +258,6 @@
     <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
     <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\Content\Views\Album\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\TrackListItem.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
