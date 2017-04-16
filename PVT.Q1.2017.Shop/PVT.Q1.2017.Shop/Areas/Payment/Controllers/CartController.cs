@@ -201,7 +201,7 @@
             if (isAccepted)
             {
                 _cartService.AcceptPayment(_currentUserId);
-                return this.RedirectToAction("Index", "Home", new { Area = "Payment" });
+                return this.RedirectToAction("Index", "Home", new { Area = string.Empty });
             }
             return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }

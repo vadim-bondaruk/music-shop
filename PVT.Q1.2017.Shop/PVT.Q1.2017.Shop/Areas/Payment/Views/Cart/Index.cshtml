@@ -94,6 +94,14 @@
             <br />
             <button type="submit" name="cart" value=@Model>Оплатить</button>
         }
+    <br />
+    <b>Test button</b>
+    <br />
+        using (Html.BeginForm("AcceptPayment", "Cart", new { area = "Payment" }))
+        {
+            @Html.Hidden("isAccepted", true)
+            <button type="submit">Оплата прошла успешно</button>
+        }
     }
     else
     {
