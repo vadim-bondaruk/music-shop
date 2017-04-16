@@ -1,6 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Helpers
 {
     using System.Collections.Generic;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Security.Cryptography;
 
     using AutoMapper;
 
@@ -180,7 +183,8 @@
                         cfg.CreateMap<GenreViewModel, Genre>();
                         cfg.CreateMap<GenreDetailsViewModel, GenreManagementViewModel>();
 
-                        cfg.CreateMap<Track, TrackManagementViewModel>();
+                        cfg.CreateMap<Track, TrackManagementViewModel>()
+                            .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.TrackPrices.First().Price));
 
                         cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
                             .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.Price.Amount));
@@ -188,7 +192,12 @@
                         cfg.CreateMap<TrackManagementViewModel, Track>()
                             .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
                             .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                            .ForMember(dest => dest.TrackFile, opt => opt.MapFrom(src => src.PostedTrackFile.ToBytes()))
+                            .ForMember(
+                                dest => dest.TrackFile,
+                                opt =>
+                                    opt.MapFrom(
+                                        src =>
+                                            src.PostedTrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
                             .ForMember(
                                 dest => dest.Image,
                                 opt =>
