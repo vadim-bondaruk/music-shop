@@ -105,7 +105,7 @@
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
             }
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -128,7 +128,7 @@
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -151,7 +151,7 @@
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -174,7 +174,7 @@
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -186,7 +186,7 @@
         public ActionResult ClearCart()
         {
             this._cartService.RemoveAll(_currentUserId);
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index" });
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -201,9 +201,9 @@
             if (isAccepted)
             {
                 _cartService.AcceptPayment(_currentUserId);
-                return this.RedirectToRoute(new { controller = "Home", action = "Index" });
+                return this.RedirectToAction("Index", "Home", new { Area = string.Empty });
             }
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index" });
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
