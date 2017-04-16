@@ -4,18 +4,42 @@
 }
 
 /* Set padding to keep content from hitting the edges */
+
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
+
 input,
 select,
-textarea {
-    max-width: 280px;
+textarea { max-width: 280px; }
+
+.btn { margin-bottom: 2px !important; }
+
+.title {
+    text-align: center;
+    background: #ffffff;
+    text-align: center;
+    display: block;
+    font-size: 3em;
+    position: fixed;
+    z-index: 101;
+    width: 1140px;
+    color: transparent;
+    border-bottom-left-radius: 25px; 
+    border-bottom-right-radius: 25px;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.btn {
-    margin-bottom: 2px !important;
+#bc-override {
+    width: 80%;
+    height: 100%;
+    text-align: left;
+    margin: 10px 0 0 15px ;
+    font-size: 15px;
+    color: black;
+    background: #ffffff;
 }

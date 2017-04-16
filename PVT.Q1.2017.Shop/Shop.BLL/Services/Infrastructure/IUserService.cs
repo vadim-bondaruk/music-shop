@@ -1,7 +1,9 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Shop.Common.Models;
+    using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// The user service
@@ -95,7 +97,7 @@
         /// <param name="pageNumber"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        ICollection<User> GetDataPerPage(int pageNumber, int count);
+        ICollection<User> GetDataPerPage(int pageNumber, int count, Expression<Func<User, dynamic>> sortFunc, bool ascending = true);
 
         /// <summary>
         /// 

@@ -1,0 +1,41 @@
+@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.ArtistManagementViewModel
+@{ ViewBag.Title = "Новый исполнитель";}
+<body>
+
+<div class="artist-new">
+
+    @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="inner">
+            <div>
+                <img class="img-thumbnail" id="artist-img" style="width: 500px; height: 500px;"onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
+                <ul class="list-group" style="width: 500px">
+                    <li class="list-group-item">
+                        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель", style = "max-width: 100%; margin-top: 0;" } })
+                    </li>
+                    <li class="list-group-item">
+                        @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата рождения", type = "text", id = "item-birthday", style = "max-width: 100%" } })
+                    </li>
+                    <li class="list-group-item">
+                        @Html.TextAreaFor(m => m.Biography, new { @class = "form-control", placeholder = "Биография", id = "item-bio", style = "heigth: 200px" })
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+                Сохранить</button>
+        </div>
+        <input type="file" id="file" name="PostedPhoto" style="display: none"/>
+    }
+</div>
+<script src="/Scripts/jquery-3.2.0.min.js"></script>
+<script src="/Scripts/openfile.dialog.js" type="text/javascript"></script>
+<script src="/Scripts/file-change.js" type="text/javascript"></script>
+</body>
+
+@section cssStyles{
+    <link href="/Styles/tracks.css" rel="stylesheet" type="text/css"/>
+}

@@ -1,45 +1,61 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.ViewModels
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Web;
-    using FluentValidation.Attributes;
-    using global::Shop.Common.ViewModels;
-    using Validators;
+
+    using global::Shop.Common.Models;
 
     /// <summary>
-    /// The album management view model.
+    ///     The album view model.
     /// </summary>
-    [Validator(typeof(AlbumManagementValidator))]
     public class AlbumManagementViewModel
     {
         /// <summary>
-        /// Album id.
+        ///     Gets or sets the artist.
         /// </summary>
-        public int Id { get; set; }
+        [DisplayName("Исполнитель")]
+        public Artist Artist { get; set; }
 
         /// <summary>
-        /// Album name.
+        ///     Gets or sets the artist id.
         /// </summary>
-        public string Name { get; set; }
+        public int ArtistId { get; set; }
 
         /// <summary>
-        /// Posted album cover.
+        ///     Gets or sets the artst name.
         /// </summary>
-        public HttpPostedFileBase PostedCover { get; set; }
+        public string ArtistName { get; set; }
 
         /// <summary>
-        /// Album cover.
+        ///     Gets or sets the album cover.
         /// </summary>
         public byte[] Cover { get; set; }
 
         /// <summary>
-        /// Album release date.
+        ///     Gets or sets the id id.
         /// </summary>
-        public DateTime? ReleaseDate { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
-        /// The Artist. Optional.
+        ///     Gets or sets the album name.
         /// </summary>
-        public ArtistViewModel Artist { get; set; }
+        [DisplayName("Название")]
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the posted cover.
+        /// </summary>
+        public HttpPostedFileBase PostedCover { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the album release date.
+        /// </summary>
+        [DisplayName("Дата релиза")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? ReleaseDate { get; set; }
     }
 }

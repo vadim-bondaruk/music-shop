@@ -1,6 +1,7 @@
 ﻿namespace Shop.Common.ViewModels
 {
     using System;
+    using System.ComponentModel;
 
     /// <summary>
     /// The track view model.
@@ -15,11 +16,13 @@
         /// <summary>
         /// Gets or sets the track name.
         /// </summary>
+        [DisplayName("Название")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the track release date.
         /// </summary>
+        [DisplayName("Релиз")]
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
@@ -35,21 +38,25 @@
         /// <summary>
         /// Gets or sets the track duration.
         /// </summary>
+        [DisplayName("Продолжительность")]
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
         /// The track artist.
         /// </summary>
+        [DisplayName("Исполнитель")]
         public ArtistViewModel Artist { get; set; }
 
         /// <summary>
         /// The track genre.
         /// </summary>
+        [DisplayName("Жанр")]
         public GenreViewModel Genre { get; set; }
 
         /// <summary>
         /// Gets or sets the price.
         /// </summary>
+        [DisplayName("Стоимость")]
         public PriceViewModel Price { get; set; }
 
         /// <summary>
@@ -66,5 +73,15 @@
         /// The track owner id.
         /// </summary>
         public int OwnerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the track is ordered.
+        /// </summary>
+        public bool IsOrdered { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the track is purchased.
+        /// </summary>
+        public bool IsPurchased { get; set; }
     }
 }

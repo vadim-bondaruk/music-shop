@@ -55,5 +55,15 @@
         /// The user.
         /// </summary>
         public virtual User User { get; set; }
+
+        /// <summary>
+        /// Purchased Tracks
+        /// </summary>
+        public virtual ICollection<PurchasedTrack> PurchasedTracks { get; set; }
+
+        /// <summary>
+        /// Purchased Albums
+        /// </summary>
+        public virtual ICollection<PurchasedAlbum> PurchasedAlbums { get; set; }
     }
 }

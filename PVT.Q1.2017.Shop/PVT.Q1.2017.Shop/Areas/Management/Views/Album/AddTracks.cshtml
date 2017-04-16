@@ -1,0 +1,98 @@
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.AlbumTracksListViewModel
+
+@{
+    ViewBag.Title = "Список треков, которые можно добавить в альбом";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>@Model.AlbumDetails.Name</h4>
+    @if (Model.AlbumDetails.Artist != null)
+    {
+        <h5>@Model.AlbumDetails.Artist.Name</h5>
+    }
+    <hr />
+
+    <p>
+        <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Album", new { id = Model.AlbumDetails.Id, area = "Content" })"
+           title="Нажмите, чтобы увидеть все треки альбома">
+            Треки <span class="badge">@Model.TracksCount</span>
+        </a>
+
+        @Html.ActionLink("Информация об альбоме", "Details", "Album", new
+        {
+            id = Model.AlbumDetails.Id,
+            area = "Content"
+        }, new
+        {
+            @class = "btn btn-sm btn-success",
+            title = "Нажмите, чтобы перейти к информации об альбоме"
+        })
+
+        @if (Model.AlbumDetails.Artist != null)
+        {
+            <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.AlbumDetails.Artist.Id, area = "Content" })"
+               title="Нажмите, чтобы увидеть информацию об исполнителе">
+                Информация об исполнителе
+            </a>
+        }
+    </p>
+    
+    
+    <table class="table table-hover table-responsive">
+        @foreach (var track in Model.Tracks)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(track.Name, "Details", "Track", new
+                    {
+                        id = track.Id,
+                        area = "Content"
+                    }, new
+                    {
+                        @class = "btn btn-link",
+                        title = "Нажмите, чтобы посмотреть подробную информацию о треке"
+                    })
+                </td>
+                <td>
+                    @Html.ActionLink(track.Artist.Name, "Details", "Artist", new
+                    {
+                        id = track.Artist.Id,
+                        area = "Content"
+                    }, new
+                    {
+                        @class = "btn btn-link",
+                        title = "Нажмите, чтобы перейти к информации об исполнителе"
+                    })
+                </td>
+                <td>
+                    @{ Html.RenderPartial("_Rating", track.Rating); }
+                </td>
+                <td>
+                    @Html.DisplayFor(m => track.Price)
+                </td>
+                <td>
+                    @Html.BtnEditTrack(track.Id)
+                    @Html.BtnDeleteTrack(track.Id)
+                    @(track.Price != null ? Html.BtnEditTrackPrice(track.Id) : Html.BtnCreateTrackPrice(track.Id))
+                </td>
+                <td>
+                    @using (Ajax.BeginForm("AddTrack", "Album", new { area = "Management" }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "alert('Success')"}))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@Model.AlbumDetails.Id" name="id" />
+                        <input type="hidden" value="@track.Id" name="trackId" />
+                        <input type="submit" class="btn, btn-sm btn-primary" value="Добавить"/>
+                    }
+                </td>
+            </tr>
+        }
+        </table>
+</div>
+
+@section cssStyles
+{
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
+}

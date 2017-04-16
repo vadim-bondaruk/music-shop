@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+  <mvcSiteMapNode title="Главная" action="Index" controller="Home">
+    <mvcSiteMapNode title="Исполнители" controller="Artists" action="List" area="Content">
+      <mvcSiteMapNode title="Новый исполнитель" action="New" area="Management" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Альбомы" controller="Albums" action="List" area="Content">
+      <mvcSiteMapNode title="Новый альбом" action="New" area="Management" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Треки" controller="Tracks" action="List" area="Content">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Жанры" controller="Genres" action="List" area="Content">
+      <mvcSiteMapNode title="Новый жанр" action="New" area="Management" />
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+</mvcSiteMap>

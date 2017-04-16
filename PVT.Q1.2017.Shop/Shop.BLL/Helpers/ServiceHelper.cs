@@ -22,9 +22,9 @@
         internal static CurrencyViewModel GetDefaultCurrency(IRepositoryFactory repositoryFactory)
         {
             Currency currencyDto;
-            using (var repository = repositoryFactory.GetCurrencyRepository())
+            using (var repository = repositoryFactory.GetSettingRepository())
             {
-                currencyDto = repository.GetDefaultCurrency();
+                currencyDto = repository.FirstOrDefault(s => !s.IsDeleted)?.DefaultCurrency;
             }
 
             return ModelsMapper.GetCurrencyViewModel(currencyDto);
@@ -65,6 +65,9 @@
         /// <param name="priceLevel">
         /// The price level.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// A new collection with <see cref="AlbumViewModel"/> items.
         /// </returns>
@@ -72,7 +75,8 @@
             IRepositoryFactory factory,
             ICollection<Album> albums,
             int? currencyCode,
-            int? priceLevel)
+            int? priceLevel,
+            int? userId)
         {
             if (currencyCode == null)
             {
@@ -111,6 +115,27 @@
                 }
             }
 
+            if (userId != null)
+            {
+                using (var repository = factory.GetOrderAlbumRepository())
+                {
+                    foreach (var albumViewModel in albumViewModels)
+                    {
+                        albumViewModel.IsOrdered =
+                            repository.Exist(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id);
+                    }
+                }
+
+                using (var repository = factory.GetPurchasedAlbumRepository())
+                {
+                    foreach (var albumViewModel in albumViewModels)
+                    {
+                        albumViewModel.IsPurchased =
+                            repository.Exist(p => p.UserId == userId && p.AlbumId == albumViewModel.Id);
+                    }
+                }
+            }
+
             return albumViewModels;
         }
 
@@ -129,6 +154,9 @@
         /// <param name="priceLevel">
         /// The price level.
         /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
         /// <returns>
         /// A new collection with <see cref="TrackViewModel"/> items.
         /// </returns>
@@ -136,7 +164,8 @@
             IRepositoryFactory factory,
             ICollection<Track> tracks,
             int? currencyCode,
-            int? priceLevel)
+            int? priceLevel,
+            int? userId)
         {
             if (currencyCode == null)
             {
@@ -171,6 +200,27 @@
             using (var repository = factory.GetVoteRepository())
             {
                 trackViewModels.ForEach(t => t.Rating = repository.GetAverageMark(t.Id));
+            }
+
+            if (userId != null)
+            {
+                using (var repository = factory.GetOrderTrackRepository())
+                {
+                    foreach (var trackViewModel in trackViewModels)
+                    {
+                        trackViewModel.IsOrdered =
+                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
+                    }
+                }
+
+                using (var repository = factory.GetPurchasedTrackRepository())
+                {
+                    foreach (var trackViewModel in trackViewModels)
+                    {
+                        trackViewModel.IsPurchased =
+                            repository.Exist(p => p.UserId == userId && p.TrackId == trackViewModel.Id);
+                    }
+                }
             }
 
             return trackViewModels;

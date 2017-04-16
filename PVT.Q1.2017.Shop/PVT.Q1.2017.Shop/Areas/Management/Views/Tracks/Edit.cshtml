@@ -1,0 +1,82 @@
+﻿@using System.Web.Mvc.Html
+@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.TrackManagementViewModel
+<head>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/file-change.js"></script>
+</head>
+@{ ViewBag.Title = "Правка";}
+
+<body>
+
+@using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formedit" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Artist.Id)
+
+    <div class="track-edit">
+        <div>
+            <img class="img-thumbnail" id="details-img" onclick="document.formedit.PostedImage.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)"/>
+            <ul class="list-group" style="display: inline-block">
+                
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </li>
+
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(m => m.Artist)
+                    @Html.TextBoxFor(m => m.Artist.Name, new { @class = "form-control" })
+                </li>
+
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(m => m.ReleaseDate)
+                    @Html.TextBoxFor(m => m.ReleaseDate, "{0:dd.MM.yyyy}", new { @class = "form-control" })
+                </li>
+
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(m => m.GenreId)
+                    @Html.DropDownListFor(model => model.GenreId, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
+                </li>
+
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(m => m.Duration)
+                    @Html.TextBoxFor(m => m.Duration, new { @class = "form-control" })
+                </li>
+
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(m => m.Price)
+                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                </li>
+
+                <li class="list-group-item" style="height: 100px">
+                    @Html.DisplayNameFor(m => m.PostedTrackFile)
+                    <input placeholder="Файл" type="text" class="form-control" id="file-path" name="FileName" onclick="document.formedit.PostedTrackFile.click()" value="@Model.FileName"/>
+                    <audio controls>
+                        <source src="@Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id })" type="audio/mp3"/>
+                    </audio>
+                </li>
+                
+            </ul>
+            <div class="buttons">
+                <a href="JavaScript:window.history.back(1)" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Назад</a>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</button>
+                <a href="javascript:document.forms[1].submit()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Удалить</a>
+            </div>
+        </div>
+    </div>
+    <input type="file" id="file" name="PostedImage" style="display: none"/>
+    <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
+}
+
+@using (Html.BeginForm("Delete", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+}
+</body>
+
+@section cssStyles
+{
+    <link href="~/Content/tracks.css" rel="stylesheet" /> 
+}

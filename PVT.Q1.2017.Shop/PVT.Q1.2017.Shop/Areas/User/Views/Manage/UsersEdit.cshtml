@@ -12,6 +12,10 @@
     <label for="lastName">Last Name Search: </label>
     <input id="lastName">
 </div>
+Sort by: @Html.ActionLink("LastName", "UsersEdit", new { controller = "Manage", area = "User", id = ViewBag.PageInfo.PageNumber, sort = "LastName"}) |
+@Html.ActionLink("FirstName", "UsersEdit", new { controller = "Manage", area = "User", id = ViewBag.PageInfo.PageNumber, sort = "FirstName" }) |
+@Html.ActionLink("Login", "UsersEdit", new { controller = "Manage", area = "User", id = ViewBag.PageInfo.PageNumber, sort = "Login" }) |
+@Html.ActionLink("Email", "UsersEdit", new { controller = "Manage", area = "User", id = ViewBag.PageInfo.PageNumber, sort = "Email" })
 
 @Html.Partial("_UsersEdit", Model)
 
@@ -20,7 +24,6 @@
 @section scripts
 {
  
-<script src="~/Scripts/jquery-1.12.4.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
     <script>
         $(function () {
@@ -30,7 +33,7 @@
                     source: function (request, response) {
                         $.ajax(
                             {
-                                url: "@Url.Action("GetLastNameMatchingData",new { controller = "Manage", area = "User"})",
+                                url: "@Url.Action("GetMatchingData",new { controller = "Manage", area = "User"})",
                                 type: "POST",
                                 data: {
                                     term: request.term
