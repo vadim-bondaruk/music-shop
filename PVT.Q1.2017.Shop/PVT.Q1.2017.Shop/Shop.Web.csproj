@@ -215,8 +215,10 @@
     <Content Include="Areas\Content\Views\Album\Details.cshtml" />
     <Content Include="Areas\Content\Views\Album\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\TrackListItem.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_TrackListItem.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -243,9 +245,7 @@
     <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
     <Content Include="Areas\Content\Views\Genres\List.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\AlbumsList.cshtml" />
-    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
-    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Content\Views\Albums\List.cshtml" />
     <Content Include="Areas\Content\Views\Albums\TracksList.cshtml" />
     <Content Include="Mvc.sitemap" />

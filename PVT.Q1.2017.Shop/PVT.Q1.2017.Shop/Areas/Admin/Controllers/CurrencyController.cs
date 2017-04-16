@@ -7,6 +7,8 @@
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
+    using MvcSiteMapProvider;
+
     /// <summary>
     /// The currency controller for admin
     /// </summary>
