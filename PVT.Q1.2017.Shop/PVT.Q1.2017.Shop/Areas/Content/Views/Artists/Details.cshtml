@@ -1,6 +1,7 @@
 ﻿@model Shop.Common.ViewModels.ArtistDetailsViewModel
 
-<div class="artist-details" style="display: block; width: 100%; min-height: 500px; text-align: left">
+@{ ViewBag.Title = Model.Name;}
+<div class="artist-details">
     <div class="inner">
         <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Photo)" style="height: 300px; width: 300px" onerror="this.src = '/img/defuserpic.png'"/>
         <p>@Html.DisplayFor(model => model.Biography, new { @readonly = "readonly", id = "ro-textarea" })</p>

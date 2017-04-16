@@ -1,20 +1,13 @@
 ﻿@model Shop.Common.Models.GenreDetailsViewModel
-<head>
-    @*<script src="~/Scripts/buttons.js"></script>*@
-</head>
+@{ ViewBag.Title = @Model.Name; }
 @Html.AntiForgeryToken()
 <body>
 <div id="genreDetails" style="display: block; text-align: center;">
     <div style="display: inline-block; width: 70%">
-        <h1 style="margin-top: 50px; font-size: 2.5em">
-            @Html.DisplayTextFor(m => m.Name)
-        </h1>
         <p style="font-size: 1.5em; text-align: initial">
             @Html.DisplayTextFor(m => m.Description)
         </p>
         <div>
-            <a class="btn btn-primary" href="javascript:window.history.back(1)"><span class="glyphicon glyphicon-backward"></span> Назад</a>
-            <a class="btn btn-primary" href="@Url.Action("List", "Genres")"><span class="glyphicon glyphicon-list-alt"></span> Все жанры</a>
             <a class="btn btn-primary" href="@Url.Action("Edit", "Genres", new { Area = "Management", id = Model.Id })"><span class="glyphicon glyphicon-pencil"></span> Правка</a>
         </div>
     </div>
@@ -24,5 +17,5 @@
 
 @section cssStyles{
 
-    <link href="~/Content/tracks.css" rel="stylesheet" /> 
+    <link href="~/Content/tracks.css" rel="stylesheet"/>
 }

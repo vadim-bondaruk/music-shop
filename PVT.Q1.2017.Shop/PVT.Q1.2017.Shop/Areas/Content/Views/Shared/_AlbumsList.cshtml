@@ -48,7 +48,7 @@
                 @if (album.IsPurchased)
                 {
                     @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
-                                         Url.Action("PurchasedTracks", "Track", new { area = "Content", albumId = album.Id }))
+                        Url.Action("PurchasedTracks", "Track", new { area = "Content", albumId = album.Id }))
                 }
                 else if (album.Price != null)
                 {

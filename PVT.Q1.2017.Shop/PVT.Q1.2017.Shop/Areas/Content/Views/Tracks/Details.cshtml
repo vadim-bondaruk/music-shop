@@ -1,45 +1,46 @@
 ﻿@model Shop.Common.ViewModels.TrackDetailsViewModel
-
-<div style="text-align: initial">
-    <div class="w3-card">
-        <div class="track-details">
-            <div class="common">
-                <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" class="img-thumbnail"
-                     onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)" />
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">@Html.DisplayTextFor(m => m.Name)</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="center">
-                            <p>
-                                <strong>@Html.DisplayNameFor(m => m.Artist):</strong> @Html.DisplayTextFor(m => m.Artist.Name)
-                            </p>
-                            <p>
-                                <strong>@Html.DisplayNameFor(m => m.ReleaseDate):</strong> @Html.ValueFor(m => m.ReleaseDate, "{0:dd MMMM yyyy} г.")
-                            </p>
-                            <p>
-                                <strong>@Html.DisplayNameFor(m => m.Genre):</strong> @Html.DisplayTextFor(m => m.Genre.Name)
-                            </p>
-                            <p>
-                                <strong>@Html.DisplayNameFor(m => m.Duration):</strong> @Html.DisplayTextFor(m => m.Duration)
-                            </p>
-                            <p>
-                                <strong>@Html.DisplayNameFor(m => m.Price):</strong> @Html.DisplayTextFor(m => m.Price)
-                            </p>
+    @{ViewBag.Title = Model.Name;}
+<body>
+    <div style="text-align: initial">
+        <div>
+            <div class="track-details">
+                <div class="common">
+                    <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" class="img-thumbnail"
+                         onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)"/>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="center">
+                                <p>
+                                    <strong>@Html.DisplayNameFor(m => m.Artist):</strong> @Html.DisplayTextFor(m => m.Artist.Name)
+                                </p>
+                                <p>
+                                    <strong>@Html.DisplayNameFor(m => m.ReleaseDate):</strong> @Html.ValueFor(m => m.ReleaseDate, "{0:dd MMMM yyyy} г.")
+                                </p>
+                                <p>
+                                    <strong>@Html.DisplayNameFor(m => m.Genre):</strong> @Html.DisplayTextFor(m => m.Genre.Name)
+                                </p>
+                                <p>
+                                    <strong>@Html.DisplayNameFor(m => m.Duration):</strong> @Html.DisplayTextFor(m => m.Duration)
+                                </p>
+                                <p>
+                                    <strong>@Html.DisplayNameFor(m => m.Price):</strong> @Html.DisplayTextFor(m => m.Price)
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="buttons">
-                <a href="JavaScript:window.history.back(1)" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Назад</a>
-                <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Правка</a>
-                <a href="@Url.Action("List", "Tracks", new { Area = "Content" })" class="btn btn-primary"> <span class="glyphicon glyphicon-list-alt"></span> Список</a>
+                <div class="buttons">
+                    <a href="JavaScript:window.history.back(1)" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Назад</a>
+                    <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Правка</a>
+                    <a href="@Url.Action("List", "Tracks", new { Area = "Content" })" class="btn btn-primary"> <span class="glyphicon glyphicon-list-alt"></span> Список</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+    </body>
 @section cssStyles
 {
     <link href="~/Content/tracks.css" rel="stylesheet" />

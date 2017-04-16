@@ -13,6 +13,8 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.Artist.Id)
+    @Html.HiddenFor(m => m.Image)
+    @Html.HiddenFor(m => m.TrackFile)
 
     <div class="track-edit">
         <div>
@@ -66,7 +68,7 @@
         </div>
     </div>
     <input type="file" id="file" name="PostedImage" style="display: none"/>
-    <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
+    <input type="file" id="track-file" name="PostedTrackFile" style="display: none" />
 }
 
 @using (Html.BeginForm("Delete", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))

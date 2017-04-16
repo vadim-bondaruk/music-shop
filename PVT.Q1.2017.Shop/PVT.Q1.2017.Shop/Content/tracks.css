@@ -1,17 +1,55 @@
 ﻿.artist-edit {
+    padding: 20px;
     display: block;
     position: relative;
-    height: 100%;
+    height: 650px;
     width: 100%;
     margin-top: 30px;
     display: block;
     text-align: center;
+    background: #ffffff;
+    text-align: left;
 }
 
-.artist-edit img {
-    float: left;
-    height: 500px;
+.artist-edit { margin-bottom: 50px }
+
+.artist-edit img { height: 300px; }
+
+.artist-edit .details {
+    display: inline-block;
+    width: 790px;
 }
+
+.artist-edit #Biography {
+    width: 760px;
+    max-width: 760px;
+    height: 420px;
+    max-height: 500px;
+    padding: 15px;
+}
+
+.artist-edit .buttons { margin-top: 10px; }
+
+.genre-edit { text-align: center; }
+
+.genre-edit input { margin-bottom: 15px; }
+
+.genre-edit textarea {
+    width: 908px;
+    max-width: 908px;
+    height: 250px;
+    max-height: 540px;
+    border-radius: 15px;
+    padding: 20px;
+    font-size: 18px;
+}
+
+.genre-edit .input-container {
+    display: inline-block;
+    width: 80%;
+}
+
+.genre-edit .btn { display: inline-block; }
 
 .page-title {
     width: 100%;
@@ -36,7 +74,6 @@ body {
 
 li { padding-right: 25px; }
 
-.buttons { margin-top: 25px; }
 
 .row {
     width: 100%;
@@ -89,8 +126,6 @@ li { padding-right: 25px; }
     height: 300px;
 }
 
-.album-new .buttons { text-align: center; }
-
 .album-new .top {
     text-align: center;
     height: 300px;
@@ -99,20 +134,6 @@ li { padding-right: 25px; }
 .album-new .details {
     display: inline-block;
     width: 500px;
-}
-
-.details > ul {
-    -webkit-padding-start: 0;
-    display: inline-block;
-    width: 95%;
-}
-
-.details > ul > li > textarea { height: 353px; }
-
-.col-1 .buttons {
-    display: block;
-    text-align: right;
-    padding: 15px 38px;
 }
 
 #artist-img {
@@ -169,8 +190,6 @@ img {
     max-height: 358px;
 }
 
-.artist-new .buttons { margin-top: 25px }
-
 .artists-list .list-group { width: 100%; }
 
 .artists-list .list-group .list-group-item {
@@ -212,6 +231,17 @@ img {
     max-height: 125px; /* fallback */
 }
 
+.artist-details .details ul { width: 650px; }
+
+.artist-details {
+    background: white;
+    border: solid;
+    border-width: 1px;
+    height: 650px;
+    overflow: auto;
+    padding: 25px;
+}
+
 .artist-details .title {
     margin-top: -53px;
     width: 1140px;
@@ -221,9 +251,10 @@ img {
     margin: 0 20px 20px 0;
     float: left;
     display: initial;
+    border: none
 }
 
-.artist-details .inner { margin-top: 55px; }
+.artist-details .inner { margin-top: 15px; }
 
 li > input { width: 100% }
 
@@ -236,7 +267,7 @@ li > input { width: 100% }
     text-align: center;
     height: 85%;
     width: 100%;
-    margin: 58px 0 20px 0;
+    margin: 0 0 20px 0;
     padding: 0;
 }
 
@@ -263,7 +294,7 @@ li > input { width: 100% }
 
 .albums-list > ul {
     display: inline-block;
-    width: 80%;
+    width: 100%;
     -webkit-padding-start: 0;
     list-style-type: none;
 }
@@ -307,6 +338,8 @@ li > input { width: 100% }
 }
 
 .albums-list > ul > li {
+    border: solid;
+    border-width: 1px;
     display: block;
     text-align: left;
     width: 100%;
@@ -341,23 +374,43 @@ li > input { width: 100% }
     vertical-align: top;
     height: 100%
 }
+
 .albums-list .btn-align {
     width: 40%;
     vertical-align: top;
     text-align: right;
 }
+
 .albums-list .btn-align i {
     margin: 38px 15px;
     font-size: 24px;
 }
+
 .albums-list .btn-buy a {
     display: inline-grid;
     margin-top: 27px;
 }
 
-.album-edit { text-align: left; }
+.album-edit {
+    text-align: left;
+    background: white;
+    border: solid;
+    border-width: 1px;
+    height: 650px;
+    margin-bottom: 50px;
+}
 
-.album-edit img { width: 300px; }
+.album-edit img {
+    width: 300px;
+    margin: 15px;
+    border: none;
+}
+
+.album-edit .left .details .list-group, .list-group-item {
+    border: none;
+    margin-left: 7px;
+    width: 100%;
+}
 
 .album-edit .left {
     width: 300px;
@@ -366,15 +419,24 @@ li > input { width: 100% }
 
 .album-edit .right {
     display: inline-block;
+    margin: 20px 20px;
     vertical-align: top;
     width: 600px;
+}
+
+.album-edit .right h2 {
+    font-size: 24px;
+    font-weight: bolder;
 }
 
 .album-edit .list-group { width: 100%; }
 
 .album-edit input { cursor: default; }
 
-.album-details { text-align: left; }
+.album-details {
+    text-align: left;
+    margin-top: 15px;
+}
 
 .album-details .details { display: inline-block; }
 
@@ -413,11 +475,7 @@ li > input { width: 100% }
     width: 100%;
 }
 
-.album-details .buttons { text-align: center; }
-
 #genres-title { margin-top: 1px; }
-
-.genres-list { margin-top: 65px; }
 
 .genres-list .list-group { width: 100% }
 
@@ -425,6 +483,8 @@ li > input { width: 100% }
     height: 48px;
     padding: 0;
     margin-top: 5px;
+    border: solid;
+    border-width: 1px;
 }
 
 .genres-list .list-group .list-group-item div {
@@ -480,7 +540,6 @@ li > input { width: 100% }
 
 .list-group {
     margin: 0;
-    width: 500px;
     vertical-align: middle;
 }
 
@@ -496,9 +555,12 @@ li > input { width: 100% }
     overflow: hidden;
 }
 
-.artists-list { margin-top: 68px; }
 
-.artists-list li { margin-top: 5px; }
+.artists-list li {
+    margin-top: 5px;
+    border: solid;
+    border-width: 1px;
+}
 
 .artists-list ul li:hover {
     border-radius: 15px;
@@ -511,16 +573,62 @@ li > input { width: 100% }
 }
 
 
-.tracks-list { margin-top: 60px; }
-
-.tracks-list > ul {
+a.tracks-list > ul {
     display: inline-block;
-    width: 90%;
+    width: 100%;
 }
 
-.tracks-list li { overflow: hidden; }
+.tracks-list li {
+    font-size: 18px;
+    overflow: hidden;
+    border: solid;
+    border-width: 1px;
+    margin-top: 3px;
+    display: table;
+    height: 60px;
+    width: 100%;
+    text-align: left
+}
 
-.tracks-list li { font-size: 18px; }
+.order-block {
+    display: block;
+    text-align: center;
+    padding: 3px;
+}
+
+.order-block .buy-btn a {
+    width: 120px;
+    height: 45px;
+    padding-top: 12px;
+    background: #ff8c00;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: black;
+}
+
+.order-block .buy-btn a p {
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.order-block .buy-btn a:hover p { display: none; }
+
+.order-block .buy-btn a:hover:before {
+    content: 'В корзину';
+}
+
+.order-block { display: inline-block; }
+
+.tracks-list .left {
+    display: inline-block;
+    width: 88%;
+}
+
+
 
 .tracks-list .track-name {
     font-weight: bold;
@@ -533,21 +641,14 @@ li > input { width: 100% }
 
 .tracks-list .details {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
     width: 500px;
-    margin-top: 5px;
 }
 
 
 .tracks-list div a { color: black; }
 
-.tracks-list > ul > li {
-    margin-top: 3px;
-    display: table;
-    height: 110px;
-    width: 100%;
-    text-align: left
-}
+.tracks-list > ul > li { margin-left: 0; }
 
 .tracks-list > ul > li:hover {
     border-radius: 10px;
@@ -586,7 +687,10 @@ li > input { width: 100% }
 
 .tracks-list > ul > li > div > p { display: inline-block }
 
-.tracks-list audio { vertical-align: middle; }
+.tracks-list audio {
+    vertical-align: bottom;
+    margin-top: 8px;
+}
 
 .track-details {
     text-align: center;
@@ -630,24 +734,44 @@ li > input { width: 100% }
     text-align: right;
 }
 
-.track-edit { text-align: center; }
+.track-edit { text-align: left; }
 
-.track-edit ul { height: 500px; }
+.track-edit img {
+    border: solid;
+    border-width: 1px;
+    margin: 15px;
+    width: 300px;
+    height: 300px;
+    padding: 5px;
+    vertical-align: top;
+}
 
-.track-edit div { display: inline-block; }
+.track-edit ul {
+    height: 500px;
+    width: 68%;
+    margin-left: 10px;
+    border: none
+}
 
-.track-edit ul li, select {
-    height: 67.6px;
+.track-edit div {
+    display: inline-block;
+    width: 100%;
+    background: white;
+    margin-bottom: 50px
+}
+
+.track-edit ul li {
+    border: none;
+    height: 50.6px;
+    margin-top: 15px;
     padding: 2px 5px 2px 5px;
 }
 
-.track-edit ul li input, select { height: 30px; }
+.track-edit ul li input { height: 30px; }
 
 .track-edit audio { width: 100%; }
 
-.track-edit .btn-group { margin-top: 55px; }
-
-
+.track-edit .btn-group { margin: 55px 0 20px 0; }
 
 .new-track > .list-group {
     height: 500px;
@@ -678,6 +802,11 @@ li > input { width: 100% }
     #aPlayer > audio { width: 420px; }
 }
 
-#slist{ width: 98%;}
+
+.buttons {
+    width: 100%;
+    text-align: center;
+    margin: 40px 0 40px 0;
+}
 
 .copyright { display: none; }

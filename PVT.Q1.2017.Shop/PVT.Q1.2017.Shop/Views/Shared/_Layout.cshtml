@@ -18,14 +18,10 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
+
             <ul class="nav navbar-nav">
                 @Html.Partial("_MenuPartial")
             </ul>
@@ -42,14 +38,15 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a class="btn btn-sm btn-default" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
+                            @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", "Manage", new { area = "User" }, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        
+                        <li>
+                            <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
                                title="Нажмите, чтобы перейти в Вашу корзину">
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                                 <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
                             </a>
-                        </li>
-                        <li>
-                            @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", "Manage", new { area = "User" }, htmlAttributes: new { title = "Manage" })
                         </li>
                         <li>
                             <a href="#" title="Нажмите, чтобы выйти" onclick="$('#logoutForm').submit();">Выйти</a>
@@ -69,13 +66,13 @@
 </div>
 
 <div class="container body-content">
-   
-    <div class="title">
-        <div class="breadcrumb" id="bc-override">@Html.MvcSiteMap().SiteMapPath()</div>
-        @ViewBag.Title
-    </div>
+    <div class="main-header">
+        <h1 class="title">@ViewBag.Title</h1>
+    <div id="bc-override">@Html.MvcSiteMap().SiteMapPath()</div>
+</div>
+
     @RenderBody()
-    <hr/>
+
     <footer>
         <p>&copy; @DateTime.Now.Year - Music Shop</p>
     </footer>

@@ -99,7 +99,7 @@
     @if (Model.IsPurchased)
     {
         @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
-                             Url.Action("PurchasedTracks", "Track", new { area = "Content", id = Model.Id }))
+            Url.Action("PurchasedTracks", "Track", new { area = "Content", id = Model.Id }))
     }
     else if (Model.Price != null)
     {
