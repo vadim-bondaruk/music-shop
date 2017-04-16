@@ -5,6 +5,7 @@
     public static class BuyButtonHelper
     {
         private const string DEFAULT_BUY_BUTTON_CSS_CLASS = "btn btn-sm btn-success";
+
         private const string DEFAULT_BUY_BUTTON_ICON_CSS_CLASS = "glyphicon glyphicon-shopping-cart";
 
         /// <summary>
@@ -34,6 +35,7 @@
         /// <param name="onclick">
         /// Client onclick function.
         /// </param>
+        /// <param name="animate"></param>
         /// <returns>
         /// The button html.
         /// </returns>
@@ -45,14 +47,15 @@
             string @class = null,
             string iconClass = null,
             string href = null,
-            string onclick = null)
+            string onclick = null,
+            bool animate = false)
         {
             if (string.IsNullOrWhiteSpace(onclick))
             {
                 onclick = $"addAlbumToCart(this, {albumId})";
             }
 
-            return GenerateBtnBuyItem(helper, disabled, text, @class, iconClass, href, onclick);
+            return GenerateBtnBuyItem(helper, disabled, text, @class, iconClass, href, onclick, animate);
         }
 
         /// <summary>
@@ -82,6 +85,7 @@
         /// <param name="onclick">
         /// Client onclick function.
         /// </param>
+        /// <param name="animate"></param>
         /// <returns>
         /// The button html.
         /// </returns>
@@ -93,16 +97,45 @@
             string @class = null,
             string iconClass = null,
             string href = null,
-            string onclick = null)
+            string onclick = null,
+            bool animate = false)
         {
             if (string.IsNullOrWhiteSpace(onclick))
             {
                 onclick = $"addTrackToCart(this, {trackId})";
             }
 
-            return GenerateBtnBuyItem(helper, disabled, text, @class, iconClass, href, onclick);
+            return GenerateBtnBuyItem(helper, disabled, text, @class, iconClass, href, onclick, animate);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="helper">
+        /// The helper.
+        /// </param>
+        /// <param name="disabled">
+        /// The disabled.
+        /// </param>
+        /// <param name="text">
+        /// The text.
+        /// </param>
+        /// <param name="class">
+        /// The class.
+        /// </param>
+        /// <param name="iconClass">
+        /// The icon class.
+        /// </param>
+        /// <param name="href">
+        /// The href.
+        /// </param>
+        /// <param name="onclick">
+        /// The onclick.
+        /// </param>
+        /// <param name="animate">
+        /// The animate.
+        /// </param>
+        /// <returns>
+        /// </returns>
         private static MvcHtmlString GenerateBtnBuyItem(
             this HtmlHelper helper,
             bool disabled,
@@ -110,7 +143,8 @@
             string @class,
             string iconClass,
             string href,
-            string onclick)
+            string onclick,
+            bool animate)
         {
             if (string.IsNullOrWhiteSpace(@class))
             {
@@ -131,13 +165,13 @@
             {
                 href = "#";
             }
-            
+
             if (string.IsNullOrWhiteSpace(text))
             {
                 text = "Купить";
             }
 
-            return helper.ButtonWithIcon(@class, iconClass, text, href, onclick);
+            return helper.ButtonWithIcon(@class, iconClass, text, href, onclick, animate);
         }
     }
 }
