@@ -12,8 +12,7 @@
             </div>
             <div>
                 @Html.Partial("_Stars", Model.Id)
-           
-                @Html.Partial("Audio/AudioSection", @Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id }))
+                @Html.Partial("Audio/AudioSection", Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id }))
             </div>
         </div>
     </div>
