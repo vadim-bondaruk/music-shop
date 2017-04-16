@@ -46,6 +46,7 @@
             this.Bind<ICartService>().To<CartService>();
             this.Bind<IAuthModule>().To<AuthModule>();
             this.Bind<IUserService>().To<UserService>();
+            this.Bind<ISettingService>().To<SettingService>();
         }
     }
 }
