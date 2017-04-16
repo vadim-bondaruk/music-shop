@@ -1,5 +1,6 @@
 ﻿namespace Shop.BLL
 {
+    using Common.Validators.Infrastructure;
     using Ninject;
     using Ninject.Modules;
 
@@ -10,12 +11,12 @@
     using Shop.DAL;
 
     /// <summary>
-    ///     Default cofiguration module.
+    /// Default cofiguration module.
     /// </summary>
     public class DefaultServicesNinjectModule : NinjectModule
     {
         /// <summary>
-        ///     Loads configuration settings.
+        /// Loads configuration settings.
         /// </summary>
         public override void Load()
         {
@@ -28,7 +29,7 @@
         }
 
         /// <summary>
-        ///     Binds services.
+        /// Binds services.
         /// </summary>
         protected virtual void BindServices()
         {

@@ -42,14 +42,18 @@
                 return this.RedirectToAction("List");
             }
 
-            TrackAlbumsListViewModel trackAlbumsViewModel;
+            TrackAlbumsListViewModel trackAlbumsViewModel = null;
             if (CurrentUser != null)
             {
                 var currency = GetCurrentUserCurrency();
-                var priceLevel = GetCurrentUserPriceLevel();
-                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
+                if (currency == null)
+                {
+                    var priceLevel = GetCurrentUserPriceLevel();
+                    trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
+                }
             }
-            else
+            
+            if (trackAlbumsViewModel == null)
             {
                 trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
             }
@@ -73,8 +77,11 @@
             if (CurrentUser != null)
             {
                 var currency = GetCurrentUserCurrency();
-                var priceLevel = GetCurrentUserPriceLevel();
-                return this.View(this._trackService.GetDetailedTracksList(currency.Code, priceLevel, GetUserDataId()));
+                if (currency != null)
+                {
+                    var priceLevel = GetCurrentUserPriceLevel();
+                    return this.View(this._trackService.GetDetailedTracksList(currency.Code, priceLevel, GetUserDataId()));
+                }
             }
 
             return this.View(this._trackService.GetDetailedTracksList());
@@ -94,14 +101,18 @@
                 return this.RedirectToAction("List");
             }
 
-            TrackDetailsViewModel trackViewModel;
+            TrackDetailsViewModel trackViewModel = null;
             if (CurrentUser != null)
             {
                 var currency = GetCurrentUserCurrency();
-                var priceLevel = GetCurrentUserPriceLevel();
-                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel, GetUserDataId());
+                if (currency != null)
+                {
+                    var priceLevel = GetCurrentUserPriceLevel();
+                    trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel, GetUserDataId());
+                }
             }
-            else
+            
+            if (trackViewModel == null)
             {
                 trackViewModel = _trackService.GetTrackDetails(id.Value);
             }

@@ -1,11 +1,11 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
     using System.Web.Mvc;
-    using BLL.Utils;
     using global::Shop.BLL.Helpers;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.BLL.Utils;
 
     /// <summary>
     /// 
@@ -64,8 +64,14 @@
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var repository = factory.GetUserDataRepository())
             {
-                return repository.FirstOrDefault(u => u.UserId == CurrentUser.Id).PriceLevelId;
+                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
+                if (userData != null)
+                {
+                    return userData.PriceLevelId;
+                }
             }
+
+            return null;
         }
 
         protected int? GetUserDataId()

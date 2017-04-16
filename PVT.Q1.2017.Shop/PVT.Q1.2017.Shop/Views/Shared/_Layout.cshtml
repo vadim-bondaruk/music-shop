@@ -34,7 +34,7 @@
                 </ul>
                 using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                 {
-                    @Html.AntiForgeryToken()
+                        @Html.AntiForgeryToken()
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -50,19 +50,19 @@
                         </li>
                         <li>
                             <a href="#" title="Нажмите, чтобы выйти" onclick="$('#logoutForm').submit();">Выйти</a>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    }
                 }
-            }
-            else
-            {
-                <ul class="nav navbar-nav navbar-right">
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, htmlAttributes: new { id = "registerLink" })</li>
                     <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, htmlAttributes: new { id = "loginLink" })</li>
-                </ul>
-            }
+                    </ul>
+                }
+            </div>
         </div>
-    </div>
 </div>
 
 <div class="container body-content">

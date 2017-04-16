@@ -1,5 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
+    using System.Web;
     using System.Web.Mvc;
     using App_Start;
     using Helpers;
@@ -8,12 +9,16 @@
     using global::Shop.BLL.Utils.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using Shop.Controllers;
+    using ViewModels;
+    using global::Shop.BLL.Utils;
+    using System;
     using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
     /// </summary>
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         /// <summary>
         /// 
@@ -28,7 +33,7 @@
         /// <summary>
         /// 
         /// </summary>
-        private IRepositoryFactory _factory;
+        private IRepositoryFactory Factory;
 
         /// <summary>
         /// 
@@ -37,7 +42,7 @@
         {
             this._userService = userService;
             this._authModule = authModule;
-            this._factory = factory;
+            this.Factory = factory;
         }
 
         /// <summary>
@@ -47,6 +52,7 @@
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsLoginUnique(string login)
         {
             var isUnique = !this._userService.IsUserExist(login);
@@ -61,6 +67,7 @@
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsEmailUnique(string email)
         {
             var isUnique = !this._userService.IsUserExist(email);
@@ -69,7 +76,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Method for remote validation (userIdentity)
         /// </summary>
         /// <param name="userIdentity"></param>
         /// <returns></returns>
@@ -91,7 +98,7 @@
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -108,8 +115,8 @@
             if (ModelState.IsValid)
             {
                 try
-                {   
-                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current);
+                {
+                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current, model.RememberMe);
 
                     var returnUrl = HttpContext.Request.QueryString["ReturnUrl"];
 
@@ -121,10 +128,11 @@
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
+                    return View(model);
                 }
             }
 
-            return this.RedirectToAction("Index", "Home", new {area = string.Empty });
+            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
         }
 
         /// <summary>
@@ -147,6 +155,8 @@
         /// <returns></returns>
         public ActionResult Register()
         {
+            var count = _userService.GetUsersCount();
+            var list = _userService.GetDataPerPage(5, 10);
             return this.View();
         }
 
@@ -162,64 +172,173 @@
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-           
+
             if (ModelState.IsValid)
             {
                 try
-                {                   
+                {
                     var userDB = UserMapper.GetUserModel(user);
                     result = this._userService.RegisterUser(userDB);
+                    if (result)
+                    {
+                        string subject = "Подтверждение регистрации";
+                        string body = string.Format("Для завершения регистрации перейдите по ссылке:" +
+                            "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
+                            Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
+                        if (MailDispatch.SendingMail(userDB.Email, subject, body))
+                        {
+                            return this.RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Ошибка отправки сообщения");
+                        }
+                    }
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
-               
-                if (result)
+            }
+            return this.View(user);
+
+        }
+
+        /// <summary>
+        /// GET: User/Account/Siterules
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Siterules()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// GET: User/Account/Confirm
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Confirm(string Email)
+        {
+            if (Email != null)
                 {
-                    return this.RedirectToAction("Success");
+                ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие " +
+                    "инструкции по завершению регистрации";
                 }
+            return this.View();
             }
 
-            ModelState.AddModelError(string.Empty, "Возникла ошибка при сохранении данных");
+        /// <summary>
+        /// GET: User/Account/ConfirmEmail
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail(string token, string email)
+        {
+            if (token == null)
+            {
+                throw new ArgumentException("Token");
+            }
+            if (token == null)
+            {
+                throw new ArgumentException("Email");
+            }
+            if (_userService.UpdateConfirmEmail(token, email))
+            {
+                return RedirectToAction("Success", "Account", new { area = "User" });
+            }
 
-            return this.View(user);
+            return RedirectToAction("Confirm", "Account", new { Email = "" });
         }
 
         /// <summary>
         /// GET: User/Account/ForgotPassword
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="returnUrl"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult ForgotPassword()
+        public ActionResult ForgotPassword(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return this.View();
         }
+
 
         /// <summary>
         /// POST: User/Account/ForgotPassword
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="model"></param>
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword(FormCollection collection)
+        public ActionResult ForgotPassword([Bind(Include = "UserIdentity")] ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string usetEmail = _userService.GetEmailByUserIdentity(model.UserIdentity);
+                    int id = _userService.GetIdOflogin(usetEmail);
+                    string newPassword = PasswordEncryptor.RendomPassword();
+                    if (_userService.UpdatePassword(id, newPassword))
+                    {
+                        string subject = "Ваш пароль был изменен";
+                        string body = "Новый пароль: " + newPassword;
+                        if (MailDispatch.SendingMail(usetEmail, subject, body))
+                        {
+                            return RedirectToAction("ForgotPasswordSuccess");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Ошибка отправки");
+                        }
+                    }
+                }
+                catch (UserValidationException ex)
+                {
+                    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                    return View();
+                }
+            }
+            else
         {
                 return this.View();
         }
+            return this.View();
+        }
 
         /// <summary>
-        /// User/Account/Success
+        /// GET: User/Account/ForgotPasswordSuccess
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        [ShopAuthorize(UserRoles.User)]
+        public ActionResult ForgotPasswordSuccess()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// GET: User/Account/Success
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Success()
         {
             return this.View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Error()
+        {
+            return View();
         }
     }
 }

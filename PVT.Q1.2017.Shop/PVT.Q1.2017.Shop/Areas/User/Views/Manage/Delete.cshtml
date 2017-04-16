@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Удалить аккаунт";
+}
+
+<h2>Удалить аккаунт</h2>
+
+@Html.ActionLink("Редактировать личные данные", "UpdatePersonal", "Manage") | @Html.ActionLink("Изменить пароль", "ChangePassword", "Manage") | @Html.ActionLink("Изменить логин", "ChangeLogin", "Manage")
+| @Html.ActionLink("Удалить аккаунт", "Delete", "Manage")
+
+<h3>Вы уверены, что хотите удалить аккаунт?</h3>
+<div>
+
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> 
+        </div>
+    }
+</div>

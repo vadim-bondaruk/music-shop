@@ -8,22 +8,22 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>@Model.Name</h4>
-    @if (Model.Artist != null)
+    <h4>@Model.AlbumDetails.Name</h4>
+    @if (Model.AlbumDetails.Artist != null)
     {
-        <h5>@Model.Artist.Name</h5>
+        <h5>@Model.AlbumDetails.Artist.Name</h5>
     }
     <hr />
 
     <p>
-        <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Album", new { id = Model.Id, area = "Content" })"
+        <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Album", new { id = Model.AlbumDetails.Id, area = "Content" })"
            title="Нажмите, чтобы увидеть все треки альбома">
             Треки <span class="badge">@Model.TracksCount</span>
         </a>
 
         @Html.ActionLink("Информация об альбоме", "Details", "Album", new
         {
-            id = Model.Id,
+            id = Model.AlbumDetails.Id,
             area = "Content"
         }, new
         {
@@ -31,9 +31,9 @@
             title = "Нажмите, чтобы перейти к информации об альбоме"
         })
 
-        @if (Model.Artist != null)
+        @if (Model.AlbumDetails.Artist != null)
         {
-            <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
+            <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.AlbumDetails.Artist.Id, area = "Content" })"
                title="Нажмите, чтобы увидеть информацию об исполнителе">
                 Информация об исполнителе
             </a>
@@ -79,10 +79,10 @@
                     @(track.Price != null ? Html.BtnEditTrackPrice(track.Id) : Html.BtnCreateTrackPrice(track.Id))
                 </td>
                 <td>
-                    @using (Html.BeginForm("AddTrack", "Album", new { area = "Management" }, FormMethod.Post))
+                    @using (Ajax.BeginForm("AddTrack", "Album", new { area = "Management" }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "alert('Success')"}))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="hidden" value="@Model.Id" name="id" />
+                        <input type="hidden" value="@Model.AlbumDetails.Id" name="id" />
                         <input type="hidden" value="@track.Id" name="trackId" />
                         <input type="submit" class="btn, btn-sm btn-primary" value="Добавить"/>
                     }

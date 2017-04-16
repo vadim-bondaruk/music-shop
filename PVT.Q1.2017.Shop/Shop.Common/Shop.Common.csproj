@@ -53,10 +53,13 @@
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\OrderAlbum.cs" />
     <Compile Include="Models\OrderTrack.cs" />
+    <Compile Include="Models\PageInfo.cs" />
+    <Compile Include="Validators\ChangeLoginValidator.cs" />
     <Compile Include="Models\PaymentTransaction.cs" />
     <Compile Include="Models\PurchasedAlbum.cs" />
     <Compile Include="Models\PurchasedTrack.cs" />
     <Compile Include="Models\UserPrincipalSerializeModel.cs" />
+    <Compile Include="Validators\Infrastructure\IUserValidator.cs" />
     <Compile Include="Validators\LoginViewValidator.cs" />
     <Compile Include="Validators\UserRegistrationValidator.cs" />
     <Compile Include="ViewModels\AlbumDetailsViewModel.cs" />
@@ -71,6 +74,8 @@
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="ViewModels\ChangeLoginViewModel.cs" />
+    <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ArtistTracksListViewModel.cs" />
     <Compile Include="ViewModels\ArtistViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
@@ -80,6 +85,7 @@
     <Compile Include="Models\PaymentCard.cs" />
     <Compile Include="Models\PriceLevel.cs" />
     <Compile Include="Models\Track.cs" />
+    <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\GenreDetailsViewModel.cs" />
     <Compile Include="ViewModels\GenreViewModel.cs" />
     <Compile Include="ViewModels\PriceViewModel.cs" />
@@ -94,21 +100,26 @@
     <Compile Include="Models\UserPaymentMethod.cs" />
     <Compile Include="ViewModels\PurchasedTrackViewModel.cs" />
     <Compile Include="ViewModels\TrackViewModel.cs" />
+    <Compile Include="ViewModels\UserEditView.cs" />
+    <Compile Include="ViewModels\UserPersonalViewModel.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Validators\AlbumPriceValidator.cs" />
     <Compile Include="Validators\AlbumValidator.cs" />
     <Compile Include="Validators\ArtistValidator.cs" />
+    <Compile Include="Validators\ChangePasswordValidator.cs" />
     <Compile Include="Validators\CurrencyRateValidator.cs" />
     <Compile Include="Validators\CurrencyValidator.cs" />
     <Compile Include="Validators\FeedbackValidator.cs" />
+    <Compile Include="Validators\ForgotPassworValidator.cs" />
     <Compile Include="Validators\GenreValidator.cs" />
     <Compile Include="Validators\PaymentCardValidator.cs" />
     <Compile Include="Validators\PriceLevelValidator.cs" />
     <Compile Include="Validators\TrackPriceValidator.cs" />
     <Compile Include="Validators\TrackValidator.cs" />
     <Compile Include="Validators\UserPaymentMethodValidator.cs" />
+    <Compile Include="Validators\UserPersonalValidator.cs" />
     <Compile Include="Validators\UserDataValidator.cs" />
     <Compile Include="Validators\VoteValidator.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -125,7 +136,6 @@
     </None>
     <None Include="Settings.StyleCop" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

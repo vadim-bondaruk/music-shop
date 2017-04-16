@@ -1,7 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
     using System;
-    using System.Collections.Generic;
     using global::Moq;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
@@ -10,15 +9,21 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using System.Linq.Expressions;
+    using global::Shop.BLL.Exceptions;
+    using System.Collections.Generic;
 
     [TestClass]
     public class UserServiceTests
     {
         private readonly IRepositoryFactory _factory;
 
+        private readonly IUserService _service;
+
         public UserServiceTests()
         {
             _factory = new RepositoryFactoryMoq();
+
+            _service = new UserService(_factory);
 
             using (var repository = this._factory.GetCurrencyRepository())
             {
@@ -36,7 +41,6 @@
         [TestMethod]
         public void RegisterUser_UserInput_ReturnTrue()
         {
-            IUserService service = new UserService(_factory);
             User user = new User
             {
                 FirstName = "Abziz",
@@ -46,11 +50,11 @@
                 Email = "blablabla@gmail.com",
                 Password = "12345",
                 BirthDate = DateTime.Now.AddYears(-30),
-                PhoneNumber="+37529 123-56-78",
-                Country="Belarus"
+                PhoneNumber = "+37529 123-56-78",
+                Country = "Belarus"
             };
 
-            var registered = service.RegisterUser(user);
+            var registered = _service.RegisterUser(user);
             Assert.IsTrue(registered);
         }
 
@@ -58,17 +62,14 @@
         [ExpectedException(typeof(ArgumentException), AllowDerivedTypes = true)]
         public void RegisterUser_NullInput()
         {
-            UserService service = new UserService(_factory);
-            service.RegisterUser(null);
+            _service.RegisterUser(null);
         }
 
         [TestMethod]
         public void IsUserUnique_NullOrEmptyInput()
         {
-            UserService service = new UserService(_factory);
-
-            var resultNull = service.IsUserExist(null);
-            var resultEmpty = service.IsUserExist("");
+            var resultNull = _service.IsUserExist(null);
+            var resultEmpty = _service.IsUserExist("");
 
             Assert.IsFalse(resultNull);
             Assert.IsFalse(resultEmpty);
@@ -78,11 +79,9 @@
         public void IsUserUnique_EmailExist_ReturnTrue()
         {
             string email = "test@gmail.com";
-            Mock.Get(_factory.GetUserRepository()).Setup(m => m.Exist(It.IsAny<Expression<Func<User, bool>>>())).Returns(true);
+            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Email = email });
 
-            UserService service = new UserService(_factory);
-
-            var result = service.IsUserExist(email);
+            var result = _service.IsUserExist(email);
 
             Assert.IsTrue(result);
         }
@@ -91,11 +90,9 @@
         public void IsUserUnique_LoginExist_ReturnTrue()
         {
             string login = "Test";
-            Mock.Get(_factory.GetUserRepository()).Setup(m => m.Exist(It.IsAny<Expression<Func<User, bool>>>())).Returns(true);
+            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Login = login });
 
-            UserService service = new UserService(_factory);
-
-            var result = service.IsUserExist(login);
+            var result = _service.IsUserExist(login);
 
             Assert.IsTrue(result);
         }
@@ -104,18 +101,400 @@
         public void IsUserUnique_EmailAndLoginNotExist_ReturnFalse()
         {
             string email = "test@gmail.com";
-            string login = "Test";   
+            string login = "Test";
 
-            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns((User)null);
-           
-            UserService service = new UserService(_factory);
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns((User)null);
 
-            var resultEmail = service.IsUserExist(email);
-            var resultLogin = service.IsUserExist(login);
+            var resultEmail = _service.IsUserExist(email);
+            var resultLogin = _service.IsUserExist(login);
 
             Assert.IsFalse(resultEmail);
             Assert.IsFalse(resultLogin);
-        
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void GetEmailByUserIdentity_NullInput()
+        {
+            _service.GetEmailByUserIdentity(null);
+        }
+
+        [TestMethod]
+        public void GetEmailByUserIdentity_RealInput()
+        {
+            string email = "test@gmail.com";
+            string login = "test";
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(new User { Email = email, Login = login });
+
+            var resultEmail = _service.GetEmailByUserIdentity(email);
+            var resultLogin = _service.GetEmailByUserIdentity(login);
+
+            Assert.IsTrue(resultEmail.Equals(email, StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(resultLogin.Equals(email, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void GetIdOfLogin_NullInput()
+        {
+            _service.GetIdOflogin(null);
+        }
+
+        [TestMethod]
+        public void GetIdOfLogin_RealInput()
+        {
+            string email = "test@gmail.com";
+            string login = "test";
+            int id = 1;
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(new User { Email = email, Login = login, Id = id });
+
+            var loginId = _service.GetIdOflogin(login);
+            var emailId = _service.GetIdOflogin(email);
+
+            Assert.IsTrue(id == loginId);
+            Assert.IsTrue(id == emailId);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void GetIdOfLogin_LoginAndEmailNotExist()
+        {
+            string email = "test@gmail.com";
+            string login = "test";
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns((User)null);
+
+            var loginId = _service.GetIdOflogin(login);
+            var emailId = _service.GetIdOflogin(email);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdatePersonal_UserNullInput()
+        {
+            _service.UpdatePersonal(null, 1);
+        }
+
+        [TestMethod]
+        public void UpdatePersonal_UserRealInput()
+        {
+            var newUser = new User
+            {
+                FirstName = "Ivan",
+                LastName = "Ivanov",
+                Sex = "M",
+                BirthDate = DateTime.Now,
+                Country = "Belarus",
+                PhoneNumber = "+37529 123-56-78"
+            };
+
+            var user = new User
+            {
+                FirstName = "Abziz",
+                LastName = "Anand",
+                Sex = "W",
+                BirthDate = DateTime.Now.AddYears(-30),
+                PhoneNumber = "+37529 123-56-78",
+                Country = "Belarus"
+            };
+
+            Mock.Get(_factory.GetUserRepository())
+               .Setup(m => m.GetById(It.IsAny<int>()))
+               .Returns(user);
+
+            var result = _service.UpdatePersonal(newUser, 1);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void UpdatePassword_NullOrEmpryPassword()
+        {
+            var nullResult = _service.UpdatePassword(1, null);
+            var emptyResult = _service.UpdatePassword(1, string.Empty);
+
+            Assert.IsFalse(nullResult);
+            Assert.IsFalse(emptyResult);
+        }
+
+        [TestMethod]
+        public void UpdatePassword_RealPasswordInput()
+        {
+            var user = new User
+            {
+                Id=1,
+                Password = "testuser1!",
+            };
+            var newPassword = "1!testuser";
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.GetById(It.IsAny<int>()))
+                .Returns(user);
+
+            var result = _service.UpdatePassword(1, newPassword);
+
+            Assert.IsTrue(result);
+
+        }
+
+        [TestMethod]
+        public void UpdatePassword_NewOrOldPasswordIsNullOrEmpty()
+        {
+            string password = "testpassword1!";
+
+            var reultNewNull = _service.UpdatePassword(1, null, password);
+            var resultNewEmpty = _service.UpdatePassword(1, string.Empty, password);
+            var resultOldNull = _service.UpdatePassword(1, password, null);
+            var resultOldEmpty = _service.UpdatePassword(1, password, string.Empty);
+
+            Assert.IsFalse(reultNewNull);
+            Assert.IsFalse(resultNewEmpty);
+            Assert.IsFalse(resultOldNull);
+            Assert.IsFalse(resultOldEmpty);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void UpdatePassword_PasswordNotConfirm()
+        {
+            var oldPassword = "testpass1!";
+            var newPassword = "1!testpass";
+            var currentPassword = "userpass1!";
+
+            var user = new User
+            {
+                Password = currentPassword
+            };
+
+            Mock.Get(_factory.GetUserRepository())
+               .Setup(m => m.GetById(It.IsAny<int>()))
+               .Returns(user);
+
+            _service.UpdatePassword(1, newPassword, oldPassword);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserValidationException))]
+        public void UpdatePassword_PasswordConfirm()
+        {
+            var oldPassword = "userpass1!";
+            var newPassword = "1!testpass";
+            var currentPassword = "userpass1!";
+
+            var user = new User
+            {
+                Password = currentPassword
+            };
+
+            Mock.Get(_factory.GetUserRepository())
+               .Setup(m => m.GetById(It.IsAny<int>()))
+               .Returns(user);
+
+            var result = _service.UpdatePassword(1, newPassword, oldPassword);
+
+            Assert.IsTrue(result);
+
+        }
+
+        [TestMethod]
+        public void UpdateLogin_UserIdentityOrNewLoginNullOrEmptyInput()
+        {
+            string newLogin = "login";
+            string userIdentity = "test@mail.com";
+
+            var reultUserNull = _service.UpdateLogin(null, newLogin);
+            var resultUserEmpty = _service.UpdateLogin(string.Empty, newLogin);
+            var resultLoginNull = _service.UpdateLogin(userIdentity, null);
+            var resultLoginEmpty = _service.UpdateLogin(userIdentity, string.Empty);
+
+            Assert.IsFalse(reultUserNull);
+            Assert.IsFalse(resultUserEmpty);
+            Assert.IsFalse(resultLoginNull);
+            Assert.IsFalse(resultLoginEmpty);
+        }
+
+        [TestMethod]
+        public void UpdateLogin_RealInput()
+        {
+            string newLogin = "login";
+            string userIdentity = "test@mail.com";
+            var user = new User
+            {
+                Login = "login89"
+            };
+
+            Mock.Get(_factory.GetUserRepository())
+                 .Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(user);
+
+            var result = _service.UpdateLogin(userIdentity, newLogin);
+
+            Assert.IsTrue(result);
+
+        }
+
+        [TestMethod]
+        public void SoftDeleted_UserNotFound()
+        {
+            Mock.Get(_factory.GetUserRepository())
+            .Setup(m => m.GetById(It.IsAny<int>()))
+            .Returns((User)null);
+
+            var result = _service.SoftDelete(1);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void SoftDeleted_UserIsFound()
+        {
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.GetById(It.IsAny<int>()))
+                .Returns(new User());
+
+            var result = _service.SoftDelete(1);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GetLastNameMatchingData_NullOrEmptyInput()
+        {
+            var usersList = new List<User> {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"} };
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.GetAll())
+                .Returns(usersList);
+
+            var nullResult = _service.GetLastNameMatchingData(null);
+            var emptyResult = _service.GetLastNameMatchingData(string.Empty);
+
+            Assert.IsNull(nullResult);
+            Assert.IsNull(emptyResult);
+        }
+
+        [TestMethod]
+        public void GetLastNameMatchingData_RealInput()
+        {
+            var usersList = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"}
+            };
+
+            var expected = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"}
+
+            };
+
+            string pattern = "sta";
+
+            Mock.Get(_factory.GetUserRepository())
+                .Setup(m => m.GetAll())
+                .Returns(usersList);
+
+            var result = _service.GetLastNameMatchingData(pattern);
+
+            CollectionAssert.Equals(result, expected);
+        }
+
+        [TestMethod]
+        public void GetUsersCount_RealCountExpected()
+        {
+            int count = 5;
+            Mock.Get(_factory.GetUserRepository())
+              .Setup(m => m.Count(null))
+              .Returns(count);
+
+            var result = _service.GetUsersCount();
+
+            Assert.IsTrue(result.Equals(count));
+        }
+
+        [TestMethod]
+        public void GetDataPerPage_RealInput_CountEquals()
+        {
+            var usersList = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"},
+                new User { LastName = "Smith"},
+                new User { LastName = "Williams"},
+                new User { LastName = "Brown"},
+                new User { LastName = "Davis"},
+                new User { LastName = "Miller" },
+                new User { LastName = "Wilson"},
+                new User { LastName = "Moore"}
+            };
+
+            int page = 2, count = 4;
+
+            Mock.Get(_factory.GetUserRepository())
+             .Setup(m => m.GetAll())
+             .Returns(usersList);
+
+            var result = _service.GetDataPerPage(page, count);
+
+            Assert.IsTrue(result.Count.Equals(count));
+        }
+
+        [TestMethod]
+        public void GetDataPerPage_RealInput_CollectionEquals()
+        {
+            var usersList = new List<User>
+            {
+                new User { LastName = "Stalone"},
+                new User { LastName = "Statham"},
+                new User { LastName = "Johnson"},
+                new User { LastName = "Nolan"},
+                new User { LastName = "Smith"},
+                new User { LastName = "Williams"},
+                new User { LastName = "Brown"},
+                new User { LastName = "Davis"},
+                new User { LastName = "Miller" },
+                new User { LastName = "Wilson"},
+                new User { LastName = "Moore"}
+            };
+
+            int page = 2, count = 4;
+
+            var expected = new List<User>
+            {
+                new User { LastName = "Smith"},
+                new User { LastName = "Williams"},
+                new User { LastName = "Brown"},
+                new User { LastName = "Davis"}
+            };
+
+            Mock.Get(_factory.GetUserRepository())
+             .Setup(m => m.GetAll())
+             .Returns(usersList);
+
+            var result = _service.GetDataPerPage(page, count);
+
+            CollectionAssert.Equals(result, expected);
         }
     }
 }

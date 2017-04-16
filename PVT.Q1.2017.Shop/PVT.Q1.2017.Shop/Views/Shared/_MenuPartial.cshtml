@@ -1,4 +1,5 @@
-﻿<li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
+﻿@{ var user = Request.RequestContext.HttpContext.User as Shop.BLL.Utils.CurrentUser;}
+<li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
 
 <li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
 <li class="dropdown-item" style="display: inline-block; height: 50px;">
@@ -43,5 +44,9 @@
     </div>
 </li>
 
+@if (Request.IsAuthenticated && user.IsInRole(Shop.Infrastructure.Enums.UserRoles.Admin))
+{
+    <li>@Html.ActionLink("Администрирование", "Index", new { area = "Admin", controller = "Currency" })</li>
+}
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>

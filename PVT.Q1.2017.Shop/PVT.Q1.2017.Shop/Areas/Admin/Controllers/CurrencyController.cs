@@ -6,13 +6,17 @@
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using App_Start;
+    using global::Shop.Infrastructure.Enums;
+    using Shop.Controllers;
 
     using MvcSiteMapProvider;
 
     /// <summary>
     /// The currency controller for admin
     /// </summary>
-    public class CurrencyController : Controller
+    [ShopAuthorize(UserRoles.Admin)]
+    public class CurrencyController : BaseController
     {
         /// <summary>
         /// The repository currency
