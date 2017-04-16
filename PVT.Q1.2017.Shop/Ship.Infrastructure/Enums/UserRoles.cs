@@ -20,8 +20,6 @@
         /// </summary>
         Admin,   
 
-        Buyer,
-
-        User
+        Buyer
     }
 }

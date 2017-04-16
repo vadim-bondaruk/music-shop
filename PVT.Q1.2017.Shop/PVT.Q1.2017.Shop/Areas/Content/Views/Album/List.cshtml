@@ -6,8 +6,6 @@
     ViewBag.Title = "Список альбомов";
 }
 
-<h2>@ViewBag.Title</h2>
-
 @if (Request.IsAuthenticated && (User.IsInRole(UserRoles.Admin.ToString()) || User.IsInRole(UserRoles.Seller.ToString())))
 {
     <p>

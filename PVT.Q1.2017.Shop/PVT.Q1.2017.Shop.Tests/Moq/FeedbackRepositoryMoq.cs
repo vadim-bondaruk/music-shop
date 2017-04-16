@@ -51,6 +51,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Feedback, bool>>>()))
                  .Returns(() => _feedbacks.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Feedback, bool>>>()))
+                 .Returns(() => _feedbacks.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Feedback>())).Callback(() => _feedbacks.Add(new Feedback
             {
                 Id = _feedbacks.Count + 1,

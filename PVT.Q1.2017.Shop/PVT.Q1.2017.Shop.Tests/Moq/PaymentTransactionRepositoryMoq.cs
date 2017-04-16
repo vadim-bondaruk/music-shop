@@ -51,6 +51,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PaymentTransaction, bool>>>()))
                  .Returns(() => _paymentTransactions.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<PaymentTransaction, bool>>>()))
+                 .Returns(() => _paymentTransactions.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PaymentTransaction>())).Callback(() => _paymentTransactions.Add(new PaymentTransaction
             {
                 Id = _paymentTransactions.Count + 1

@@ -1,18 +1,20 @@
-﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+﻿@using Shop.Infrastructure.Enums
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Music Shop</title>
+
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @RenderSection("cssStyles", required: false)
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    <script src="~/Scripts/moment.js"></script>
 
-    <meta name="description" content="The description of my page"/>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <meta name="description" content="PVT.2017.Q1 Music Shop"/>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,12 +31,12 @@
             {
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
+                        <a>@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
                     </li>
                 </ul>
                 using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                 {
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -50,19 +52,19 @@
                         </li>
                         <li>
                             <a href="#" title="Нажмите, чтобы выйти" onclick="$('#logoutForm').submit();">Выйти</a>
-                            </li>
-                        </ul>
-                    }
-                }
-                else
-                {
-                    <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, htmlAttributes: new { id = "loginLink" })</li>
+                        </li>
                     </ul>
                 }
-            </div>
+            }
+            else
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, htmlAttributes: new { id = "registerLink" })</li>
+                    <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, htmlAttributes: new { id = "loginLink" })</li>
+                </ul>
+            }
         </div>
+    </div>
 </div>
 
 <div class="container body-content">

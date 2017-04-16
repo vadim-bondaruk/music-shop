@@ -4,12 +4,10 @@
     @if (Model != null)
     {
         @Html.Partial("_Rating", Model.Rating)
-        if (Model.VotesCount > 0 || Model.CommentsCount > 0)
-        {
-            @:&nbsp;
-            @Model.Rating
-            @:(@Model.VotesCount оценок, @Model.CommentsCount комментариев)
-        }
+        <div style="white-space: nowrap; padding-left: 3px">
+            <strong>@Model.Rating</strong>
+            (@Model.VotesCount оценок, @Model.CommentsCount комментариев)
+        </div>
     }
     else
     {

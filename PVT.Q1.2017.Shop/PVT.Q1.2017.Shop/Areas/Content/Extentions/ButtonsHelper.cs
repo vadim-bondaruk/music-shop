@@ -41,9 +41,18 @@
             string onclick = null,
             bool animate = false)
         {
-            var builder = new TagBuilder("a");
+            TagBuilder builder;
+            if (!string.IsNullOrWhiteSpace(href))
+            {
+                builder = new TagBuilder("a");
+                builder.Attributes["href"] = href;
+            }
+            else
+            {
+                builder = new TagBuilder("button");
+            }
             builder.Attributes["class"] = @class;
-            builder.Attributes["href"] = href;
+
             if (!string.IsNullOrWhiteSpace(onclick))
             {
                 builder.Attributes["onclick"] = onclick;

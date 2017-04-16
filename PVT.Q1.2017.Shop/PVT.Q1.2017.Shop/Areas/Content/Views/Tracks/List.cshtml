@@ -12,17 +12,19 @@
     </ul>
 </div>
 
-<script>
-    function itemClick(id) {
-        var url = '@Url.Action("Details", "Tracks", new { id = "*" })';
-        window.location.href = url.replace('*', encodeURIComponent(id));
-    }
+@section scripts
+{
+    <script>
+        function itemClick(id) {
+            var url = '@Url.Action("Details", "Tracks", new { id = "*" })';
+            window.location.href = url.replace('*', encodeURIComponent(id));
+        }
 
-    function audioClick() {
-        alert("click detected");
-    }
-</script>
-<script src="d:\dropbox\git\ms\pvt.q1.2017.shop\shop.common\helpers\audio\js\ssuhtml5audio.js"></script>
+        function audioClick() {
+            alert("click detected");
+        }
+    </script>
+}
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet"/>
 }

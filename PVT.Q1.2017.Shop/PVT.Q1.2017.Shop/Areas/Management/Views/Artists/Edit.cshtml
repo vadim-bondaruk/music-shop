@@ -17,7 +17,7 @@
                     @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель" }, value = Model.Name })
                 </li>
                 <li class="list-group-item">
-                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата рождения/основания", type = "text", value = Model.Birthday } })
+                    @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control datecontrol", placeholder = "Дата рождения/основания", type = "text", value = Model.Birthday } })
                 </li>
                 <li class="list-group-item">
                     @Html.TextAreaFor(e => e.Biography, new { placeholder = "Биография", value = Model.Biography })

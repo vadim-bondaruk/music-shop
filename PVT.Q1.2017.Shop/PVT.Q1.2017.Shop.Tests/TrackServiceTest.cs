@@ -90,7 +90,7 @@
         }
 
         [TestMethod]
-        public void GetAlbumsList()
+        public void GetAlbumsListTest()
         {
             AddTrackTest();
 

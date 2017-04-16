@@ -5,8 +5,6 @@
     ViewBag.Title = "Список треков, которые можно добавить в альбом";
 }
 
-<h2>@ViewBag.Title</h2>
-
 <div>
     <h4>@Model.AlbumDetails.Name</h4>
     @if (Model.AlbumDetails.Artist != null)
@@ -16,9 +14,9 @@
     <hr />
 
     <p>
-        <a class="btn btn-sm btn-success" href="@Url.Action("TracksList", "Album", new { id = Model.AlbumDetails.Id, area = "Content" })"
+        <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Album", new { id = Model.AlbumDetails.Id, area = "Content" })"
            title="Нажмите, чтобы увидеть все треки альбома">
-            Треки <span class="badge">@Model.TracksCount</span>
+            Треки <span class="badge">@Model.AlbumDetails.TracksCount</span>
         </a>
 
         @Html.ActionLink("Информация об альбоме", "Details", "Album", new

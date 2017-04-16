@@ -7,19 +7,19 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>@Model.Name</h4>
-    <h5>@Model.Artist.Name</h5>
+    <h4>@Model.TrackDetails.Name</h4>
+    <h5>@Model.TrackDetails.Artist.Name</h5>
     <hr />
 
     <p>
-        <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id, area = "Content" })"
+        <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.TrackDetails.Artist.Id, area = "Content" })"
            title="Нажмите, чтобы увидеть информацию об исполнителе">
             Информация об исполнителе
         </a>
 
         @Html.ActionLink("Информация о треке", "Details", "Track", new
         {
-            id = Model.Id,
+            id = Model.TrackDetails.Id,
             area = "Content"
         }, new
         {

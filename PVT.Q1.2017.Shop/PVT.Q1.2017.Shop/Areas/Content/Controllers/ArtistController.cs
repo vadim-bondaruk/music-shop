@@ -50,87 +50,25 @@
                 return this.RedirectToAction("List");
             }
 
-            var artistViewModel = _artistService.GetArtistDetails(id.Value);
+            var currency = GetCurrentUserCurrency();
+            ArtistContentViewModel artistViewModel;
+
+            if (currency != null)
+            {
+                var priceLevel = GetCurrentUserPriceLevel();
+                artistViewModel = _artistService.GetContent(id.Value, currency.Code, priceLevel, GetUserDataId());
+            }
+            else
+            {
+                artistViewModel = _artistService.GetContent(id.Value);
+            }
+
             if (artistViewModel == null)
             {
                 return HttpNotFound($"Артист с id = { id.Value } не найден");
             }
 
             return this.View(artistViewModel);
-        }
-
-        /// <summary>
-        /// Shows all artist albums
-        /// </summary>
-        /// <param name="id">
-        /// The artist id.
-        /// </param>
-        /// <returns>
-        /// All artist albums view.
-        /// </returns>
-        public ActionResult AlbumsList(int? id)
-        {
-            if (id == null)
-            {
-                return this.RedirectToAction("List");
-            }
-
-            var currency = GetCurrentUserCurrency();
-            ArtistAlbumsListViewModel artistAlbumsViewModel;
-
-            if (currency != null && CurrentUser != null)
-            {
-                var priceLevel = GetCurrentUserPriceLevel();
-                artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
-            }
-            else
-            {
-                artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value);
-            }
-
-            if (artistAlbumsViewModel == null)
-            {
-                return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
-            }
-
-            return this.View(artistAlbumsViewModel);
-        }
-
-        /// <summary>
-        /// Shows all artist tracks.
-        /// </summary>
-        /// <param name="id">
-        /// The artist id.
-        /// </param>
-        /// <returns>
-        /// All artist tracks view.
-        /// </returns>
-        public ActionResult TracksList(int? id)
-        {
-            if (id == null)
-            {
-                return this.RedirectToAction("List");
-            }
-
-            var currency = GetCurrentUserCurrency();
-            ArtistTracksListViewModel artistTracksViewModel;
-
-            if (currency != null && CurrentUser != null)
-            {
-                var priceLevel = GetCurrentUserPriceLevel();
-                artistTracksViewModel = _artistService.GetTracksList(id.Value, currency.Code, priceLevel, GetUserDataId());
-            }
-            else
-            {
-                artistTracksViewModel = _artistService.GetTracksList(id.Value);
-            }
-
-            if (artistTracksViewModel == null)
-            {
-                return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
-            }
-
-            return this.View(artistTracksViewModel);
         }
     }
 }

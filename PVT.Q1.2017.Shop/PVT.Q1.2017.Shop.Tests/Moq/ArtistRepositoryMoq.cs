@@ -44,6 +44,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Artist, bool>>>()))
                  .Returns(() => _artists.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Artist, bool>>>()))
+                 .Returns(() => _artists.Count);
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                  .Returns(() => _artists.FirstOrDefault(a => a.Id > 0));
 
