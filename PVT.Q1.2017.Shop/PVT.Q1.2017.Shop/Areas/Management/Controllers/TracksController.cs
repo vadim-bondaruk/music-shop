@@ -40,7 +40,7 @@
 
         /// <summary>
         /// </summary>
-        private ITrackRepository TrackRepository;
+        private readonly ITrackRepository trackRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TracksController"/> class.
@@ -76,7 +76,7 @@
             this.artistRepository = artistRepository;
             this.genreRepository = genreRepository;
             this.albumRepository = albumRepository;
-            this.TrackRepository = trackRepository;
+            this.trackRepository = trackRepository;
         }
 
         /// <summary>
@@ -118,7 +118,7 @@
             this.artistRepository = artistRepository;
             this.genreRepository = genreRepository;
             this.albumRepository = albumRepository;
-            this.TrackRepository = trackRepository;
+            this.trackRepository = trackRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
@@ -155,7 +155,7 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var track = this.TrackRepository.GetById(id);
+            var track = this.trackRepository.GetById(id);
             var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
             var genres = this.genreRepository.GetAll();
             trackManagementViewModel.Genres = genres;
