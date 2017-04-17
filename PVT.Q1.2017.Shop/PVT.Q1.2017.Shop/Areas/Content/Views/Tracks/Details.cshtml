@@ -28,15 +28,15 @@
                                 <p>
                                     <strong>@Html.DisplayNameFor(m => m.Price):</strong> @Html.DisplayTextFor(m => m.Price)
                                 </p>
+                                
                             </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Правка</a>
                         </div>
                     </div>
                 </div>
-                <div class="buttons">
-                    <a href="JavaScript:window.history.back(1)" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Назад</a>
-                    <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Правка</a>
-                    <a href="@Url.Action("List", "Tracks", new { Area = "Content" })" class="btn btn-primary"> <span class="glyphicon glyphicon-list-alt"></span> Список</a>
-                </div>
+                
             </div>
         </div>
     </div>

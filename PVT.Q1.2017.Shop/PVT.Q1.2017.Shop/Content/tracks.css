@@ -704,6 +704,11 @@ a.tracks-list > ul {
 .track-details .common {
     display: inline-block;
     width: 1020px;
+    margin-bottom: 150px;
+}
+
+.track-details .buttons {
+    margin-top: 135px;
 }
 
 .track-details .panel {
