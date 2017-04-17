@@ -45,11 +45,12 @@
                  .Returns(() => _albums.Any());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _albums.FirstOrDefault());
+                 .Returns((int id) => _albums.FirstOrDefault(a => a.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
-                 .Returns(() => _albums.FirstOrDefault());
+                 .Returns((int id, Expression<Func<Album, BaseEntity>>[] exp) =>
+                 _albums.FirstOrDefault(a => a.Id == id));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Album>())).Callback(() => _albums.Add(new Album
             {

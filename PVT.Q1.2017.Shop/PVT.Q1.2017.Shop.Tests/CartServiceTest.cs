@@ -47,8 +47,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddTrack(1, 1);
             using (var repo = _factory.GetOrderTrackRepository())
             {
-                var result = repo.FirstOrDefault( r => r.CartId == 1);
-                Assert.IsTrue(result != null);
+                Assert.IsTrue(repo.Exist(r => r.CartId == 1 && r.TrackId == 1));
             }
         }
 
@@ -68,7 +67,7 @@ namespace PVT.Q1._2017.Shop.Tests
             using (var repo = _factory.GetOrderTrackRepository())
             {
                 var result = repo.GetAll(r => r.CartId == 1);
-                Assert.IsTrue(result != null);
+                Assert.IsTrue(result.Count == 3);
             }
         }
 
@@ -84,8 +83,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddAlbum(1, 1);
             using (var repo = _factory.GetOrderAlbumRepository())
             {
-                var result = repo.FirstOrDefault(r => r.CartId == 1);
-                Assert.IsTrue(result != null);
+                Assert.IsTrue(repo.Exist(r => r.CartId == 1 && r.AlbumId == 1));
             }
         }
 
@@ -105,7 +103,7 @@ namespace PVT.Q1._2017.Shop.Tests
             using (var repo = _factory.GetOrderAlbumRepository())
             {
                 var result = repo.GetAll(r => r.CartId == 1);
-                Assert.IsTrue(result != null);
+                Assert.IsTrue(result.Count == 3);
             }
         }
 

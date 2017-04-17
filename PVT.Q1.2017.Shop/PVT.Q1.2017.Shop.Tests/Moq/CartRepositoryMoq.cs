@@ -33,7 +33,7 @@
                  .Returns(_carts);
 
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Cart, bool>>>()))
-                 .Returns(() => _carts.FirstOrDefault());
+                 .Returns((Func<Cart, bool> exp) => _carts.FirstOrDefault(exp));
 
             _mock.Setup(
                         m =>
@@ -42,29 +42,29 @@
                  .Returns(() => _carts.FirstOrDefault());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _carts.FirstOrDefault(a => a.Id > 0));
+                 .Returns((int id) => _carts.FirstOrDefault(c => c.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Cart, BaseEntity>>[]>()))
-                 .Returns(() => _carts.FirstOrDefault(a => a.Id > 0));
+                 .Returns(() => _carts.FirstOrDefault(c => c.Id > 0));
 
             _mock.Setup(m => m.GetByUserId(It.IsAny<int>()))
-                .Returns(() => _carts.FirstOrDefault(c => c.UserId > 0));
+                .Returns((int id) => _carts.FirstOrDefault(c => c.UserId == id));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Cart, bool>>>()))
-                 .Returns(() => _carts.Any());
+                 .Returns((Func<Cart, bool> exp) => _carts.Any(exp));
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Cart>())).Callback(() => _carts.Add(new Cart
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Cart>())).Callback((Cart cart) =>
             {
-                Id = _carts.Count + 1,
-                UserId = _carts.Count + 1
-            }));
+                cart.Id = _carts.Count + 1;
+                _carts.Add(cart);
+            });
 
-            _mock.Setup(m => m.Delete(It.IsNotNull<Cart>())).Callback(() =>
+            _mock.Setup(m => m.Delete(It.IsNotNull<Cart>())).Callback((Cart cart) =>
             {
-                if (_carts.Any())
+                if (_carts.Any(o => o.Id == cart.Id))
                 {
-                    _carts.RemoveAt(_carts.Count - 1);
+                    _carts.RemoveAt(cart.Id - 1);
                 }
             });
         }

@@ -33,7 +33,7 @@
                  .Returns(_purchasedTrack);
 
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<PurchasedTrack, bool>>>()))
-                 .Returns(() => _purchasedTrack.FirstOrDefault());
+                 .Returns((Func<PurchasedTrack, bool> exp) => _purchasedTrack.FirstOrDefault(exp));
 
             _mock.Setup(
                         m =>
@@ -42,25 +42,26 @@
                  .Returns(() => _purchasedTrack.FirstOrDefault());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _purchasedTrack.FirstOrDefault(a => a.Id > 0));
+                 .Returns((int id) => _purchasedTrack.FirstOrDefault(a => a.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<PurchasedTrack, BaseEntity>>[]>()))
                  .Returns(() => _purchasedTrack.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedTrack, bool>>>()))
-                 .Returns(() => _purchasedTrack.Any());
+                 .Returns((Func<PurchasedTrack, bool> exp) => _purchasedTrack.Any(exp));
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedTrack>())).Callback(() => _purchasedTrack.Add(new PurchasedTrack
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedTrack>())).Callback((PurchasedTrack pTrack) =>
             {
-                Id = _purchasedTrack.Count + 1
-            }));
+                pTrack.Id = _purchasedTrack.Count + 1;
+                _purchasedTrack.Add(pTrack);
+            });
 
-            _mock.Setup(m => m.Delete(It.IsNotNull<PurchasedTrack>())).Callback(() =>
+            _mock.Setup(m => m.Delete(It.IsNotNull<PurchasedTrack>())).Callback((PurchasedTrack pTrack) =>
             {
-                if (_purchasedTrack.Any())
+                if (_purchasedTrack.Any(p => p.Id == pTrack.Id))
                 {
-                    _purchasedTrack.RemoveAt(_purchasedTrack.Count - 1);
+                    _purchasedTrack.RemoveAt(pTrack.Id - 1);
                 }
             });
         }

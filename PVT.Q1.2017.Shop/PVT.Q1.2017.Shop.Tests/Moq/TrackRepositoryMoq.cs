@@ -45,11 +45,12 @@
                  .Returns(() => _tracks.Any());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _tracks.FirstOrDefault(t => t.Id > 0));
+                 .Returns((int id) => _tracks.FirstOrDefault(t => t.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
-                 .Returns(() => _tracks.FirstOrDefault(t => t.Id > 0));
+                 .Returns((int id, Expression<Func<Track, BaseEntity>>[] exp) => 
+                 _tracks.FirstOrDefault(t => t.Id == id));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Track>())).Callback(() => _tracks.Add(new Track
             {
