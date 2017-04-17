@@ -19,23 +19,24 @@
     {
         /// <summary>
         /// </summary>
-        private readonly ITrackService trackService;
+        private readonly ITrackService _trackService;
 
         /// <summary>
         /// </summary>
-        private readonly ITrackRepository trackRepo;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
+        /// Initializes a new instance of the <see cref="TracksController"/> class.
         /// </summary>
-        /// <param name="trackService">
-        ///     The track service.
+        /// <param name="trackServiceo">
+        /// The track serviceo.
         /// </param>
-        /// <param name="trackRepository"></param>
-        public TracksController(ITrackService trackService, ITrackRepository trackRepo)
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        public TracksController(IRepositoryFactory repositoryFactory)
         {
-            this.trackService = trackService;
-            this.trackRepo = trackRepo;
+            this._repositoryFactory = repositoryFactory;
         }
 
         /// <summary>
@@ -59,7 +60,7 @@
                 if (currency == null)
                 {
                     var priceLevel = GetCurrentUserPriceLevel();
-                    trackAlbumsViewModel = this.trackService.GetAlbumsList(
+                    trackAlbumsViewModel = this._trackService.GetAlbumsList(
                         id.Value,
                         currency.Code,
                         priceLevel,
@@ -69,7 +70,7 @@
 
             if (trackAlbumsViewModel == null)
             {
-                trackAlbumsViewModel = this.trackService.GetAlbumsList(id.Value);
+                trackAlbumsViewModel = this._trackService.GetAlbumsList(id.Value);
             }
 
             if (trackAlbumsViewModel == null)
@@ -95,11 +96,11 @@
                 {
                     var priceLevel = GetCurrentUserPriceLevel();
                     return this.View(
-                        this.trackService.GetDetailedTracksList(currency.Code, priceLevel, GetUserDataId()));
+                        this._trackService.GetDetailedTracksList(currency.Code, priceLevel, GetUserDataId()));
                 }
             }
 
-            return this.View(this.trackService.GetDetailedTracksList());
+            return this.View(this._trackService.GetDetailedTracksList());
         }
 
         /// <summary>
@@ -123,7 +124,7 @@
                 if (currency != null)
                 {
                     var priceLevel = GetCurrentUserPriceLevel();
-                    trackViewModel = this.trackService.GetTrackDetails(
+                    trackViewModel = this._trackService.GetTrackDetails(
                         id.Value,
                         currency.Code,
                         priceLevel,
@@ -133,7 +134,7 @@
 
             if (trackViewModel == null)
             {
-                trackViewModel = this.trackService.GetTrackDetails(id.Value);
+                trackViewModel = this._trackService.GetTrackDetails(id.Value);
             }
 
             if (trackViewModel == null)
@@ -171,7 +172,7 @@
         public FileStreamResult GetTrackAsStream(int id)
         {
             MemoryStream stream;
-            using (var repo = this.trackRepo)
+            using (var repo = this._repositoryFactory.GetTrackRepository())
             {
                 var track = repo.GetById(id, p => p.Artist);
 
