@@ -16,7 +16,8 @@
     {
         if (Model.Tracks.Count > 0)
         {
-    <form action="../Payment/Cart/DeleteTrack" method="post">
+            using (Html.BeginForm("DeleteTrack", "Cart", new { area = "Payment" }, FormMethod.Post))
+            {
         <br />
         <br />
         <b>Композиции</b>
@@ -46,12 +47,13 @@
                 }
             </tbody>
         </table>
-        </form>
+            }
         }
         <br />
         if (Model.Albums.Count > 0)
         {
-    <form action="../Payment/Cart/DeleteAlbum" method="post">
+            using (Html.BeginForm("DeleteAlbum", "Cart", new { area = "Payment" }, FormMethod.Post))
+            {
         <b>Альбомы</b>
         <br />
         <br />
@@ -77,15 +79,29 @@
                 }
             </tbody>
         </table>
-    </form>
+            }
         }
     <br />
-    <form action="../Payment/Paypal/PaymentWithPaypal" method="post">
-        Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName
-        <br />
-        <br />
-        <button type="submit" name="cart" value=@Model>Оплатить</button>
-    </form>
+        using (Html.BeginForm("ClearCart", "Cart", new { area = "Payment" }))
+        {
+            <button type="submit">Очистить корзину</button>
+        }
+    <br />
+        using (Html.BeginForm("PaymentWithPaypal", "Paypal", new { area = "Payment" }, FormMethod.Post))
+        {
+            <div>Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName</div>
+            <br />
+            <br />
+            <button type="submit" name="cart" value=@Model>Оплатить</button>
+        }
+    <br />
+    <b>Test button</b>
+    <br />
+        using (Html.BeginForm("AcceptPayment", "Cart", new { area = "Payment" }))
+        {
+            @Html.Hidden("isAccepted", true)
+            <button type="submit">Оплата прошла успешно</button>
+        }
     }
     else
     {

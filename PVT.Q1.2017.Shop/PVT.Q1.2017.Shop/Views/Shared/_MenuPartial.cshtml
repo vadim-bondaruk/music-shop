@@ -33,5 +33,17 @@
 
 @if (Request.IsAuthenticated && user.IsInRole(Shop.Infrastructure.Enums.UserRoles.Admin))
 {
-    <li>@Html.ActionLink("Администрирование", "Index", new { area = "Admin", controller = "Currency" })</li>
+    <li class="dropdown-item" style="height: 50px; display: inline-block">
+        <div class="dropdown" id="purple-dropdown" style="padding: 15px 15px 15px 15px">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="color: #999; background-color: #222222; text-decoration: none">Администрирование<b class="caret" style="border-color: #222222"></b></a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li>
+                    <a href="@Url.Action("Index","Currency", new {area="Admin"})">Настройка валюты</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Setting", new {area="Admin"})">Глобальные настройки</a>
+                </li>
+            </ul>
+        </div>
+    </li>
 }
