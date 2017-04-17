@@ -9,6 +9,7 @@
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
+
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
@@ -62,15 +63,14 @@
         //TODO: отлавливать в параметре контроллера статус оплаты.
         public ViewResult Index()
         {
-            SetCurrentUser();
             if (_cartRepository.GetByUserId(_currentUserId) == null)
             {
                 _cartRepository.AddOrUpdate(new Cart(_currentUserId));
                 _cartRepository.SaveChanges();
             }
             var cart = this._cartRepository.GetByUserId(_currentUserId);
-            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId, _userCurrency.Code);
-            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId, _userCurrency.Code);
+            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId, _userCurrency?.Code);
+            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId, _userCurrency?.Code);
             this._viewModel.CurrentUserId = _currentUserId;
 
             //// Установка текущей валюты пользователя и пересчёт суммы к оплате
@@ -94,7 +94,6 @@
         [Authorize]
         public ActionResult AddAlbum(int albumId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.AddAlbum(_currentUserId, albumId);
@@ -104,7 +103,7 @@
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
             }
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -117,7 +116,6 @@
         [Authorize]
         public ActionResult DeleteAlbum(int albumId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.RemoveAlbum(_currentUserId, albumId);
@@ -128,7 +126,7 @@
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -141,7 +139,6 @@
         [Authorize]
         public ActionResult AddTrack(int trackId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.AddTrack(_currentUserId, trackId);
@@ -152,7 +149,7 @@
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -165,7 +162,6 @@
         [Authorize]
         public ActionResult DeleteTrack(int trackId = 0)
         {
-            SetCurrentUser();
             try
             {
                 this._cartService.RemoveTrack(_currentUserId, trackId);
@@ -176,7 +172,36 @@
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
+        }
+
+        /// <summary>
+        /// Очищает всю корзину текущего пользователя
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public ActionResult ClearCart()
+        {
+            this._cartService.RemoveAll(_currentUserId);
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
+        }
+
+        /// <summary>
+        /// Перемещает товары пользователя в купленные при успешной оплате
+        /// </summary>
+        /// <param name="isAccepted"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public ActionResult AcceptPayment(bool isAccepted)
+        {
+            if (isAccepted)
+            {
+                _cartService.AcceptPayment(_currentUserId);
+                return this.RedirectToAction("Index", "Home", new { Area = string.Empty });
+            }
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -185,7 +210,6 @@
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public JsonResult GetOrdersCount()
         {
-            SetCurrentUser();
             int count = 0;
 
             var cart = _cartRepository.GetByUserId(_currentUserId);
@@ -205,24 +229,21 @@
         /// <summary>
         /// Set current user from base controller
         /// </summary>
-        private void SetCurrentUser()
+        public void SetCurrentUser()
         {
-            try
-            {
-                _userCurrency = this.GetCurrentUserCurrency();
-                _currentUserId = CurrentUser.Id;
-            }
-            catch
-            {
-                _currentUserId = 0;
-                _userCurrency = null;
-            }
-
+            _currentUserId = CurrentUser == null ? 0 : CurrentUser.Id;
+            _userCurrency = this.GetCurrentUserCurrency();
             if (_userCurrency == null)
             {
                 _userCurrency = new CurrencyViewModel()
                 { FullName = "EURO", ShortName = "EUR", Code = 978 };
             }
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            SetCurrentUser();
         }
 
         protected override void Dispose(bool disposing)
