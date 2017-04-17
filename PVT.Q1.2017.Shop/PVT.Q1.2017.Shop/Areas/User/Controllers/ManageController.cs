@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using App_Start;
     using Helpers;
@@ -164,7 +165,7 @@
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangeLogin([Bind(Include = @"Login")] ChangeLoginViewModel user)
+        public async Task<ActionResult> ChangeLogin([Bind(Include = @"Login")] ChangeLoginViewModel user)
         {
             if (ModelState.IsValid)
             {
@@ -172,8 +173,9 @@
                 {
                     string subject = "Ваш Логин был изменен";
                     string body = "Новый логин: " + user.Login;
-                    string usetEmail = this._userService.GetEmailByUserIdentity(user.Login);
-                    if (!MailDispatch.SendingMail(usetEmail, subject, body))
+                    string userEmail = this._userService.GetEmailByUserIdentity(user.Login);
+                    bool isSent = await MailDispatch.SendingMailAsync(userEmail, subject, body);
+                    if (!isSent)
                     {
                         ModelState.AddModelError(string.Empty, "Ошибка отправки");
                         return this.View();
@@ -217,7 +219,7 @@
             }
             catch (Exception)
             {
-                //TODO 
+                // TODO: write to log 
                 throw;
             }
 
@@ -321,7 +323,7 @@
                         }
                         catch (Exception)
                         {
-                            //TODO: Write to log
+                            // TODO: Write to log
                             throw;
                         }
                     }

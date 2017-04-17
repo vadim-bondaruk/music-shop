@@ -1,8 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
-    using System.Web;
     using System.Web.Mvc;
-    using App_Start;
     using Helpers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
@@ -13,7 +11,7 @@
     using ViewModels;
     using global::Shop.BLL.Utils;
     using System;
-    using global::Shop.Infrastructure.Enums;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// 
@@ -132,7 +130,7 @@
                 }
             }
 
-            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
+            return this.RedirectToRoute(new {controller = "Home", action = "Index", area = string.Empty});
         }
 
         /// <summary>
@@ -166,7 +164,7 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
+        public async Task<ActionResult> Register([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
@@ -183,7 +181,7 @@
                         string body = string.Format("Для завершения регистрации перейдите по ссылке:" +
                             "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
                             Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
-                        if (MailDispatch.SendingMail(userDB.Email, subject, body))
+                        if (await MailDispatch.SendingMailAsync(userDB.Email, subject, body))
                         {
                             return this.RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
                         }
@@ -276,7 +274,7 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword([Bind(Include = "UserIdentity")] ForgotPasswordViewModel model)
+        public async  Task<ActionResult> ForgotPassword([Bind(Include = "UserIdentity")] ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -289,7 +287,7 @@
                     {
                         string subject = "Ваш пароль был изменен";
                         string body = "Новый пароль: " + newPassword;
-                        if (MailDispatch.SendingMail(usetEmail, subject, body))
+                        if (await MailDispatch.SendingMailAsync(usetEmail, subject, body))
                         {
                             return RedirectToAction("ForgotPasswordSuccess");
                         }
