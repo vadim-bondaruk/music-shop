@@ -287,68 +287,6 @@
         }
 
         /// <summary>
-        /// Get Cart by User's ID
-        /// </summary>
-        /// <param name="userId">User ID</param>
-        /// <returns>User's Cart</returns>
-        private Cart GetCartByUserId(int userId)
-        {
-            Cart cart;
-            using (var cartRepository = Factory.GetCartRepository())
-            {
-                cart = cartRepository.GetByUserId(userId);
-                if (cart == null)
-                {
-                    cart = new Cart(userId);
-                    cartRepository.AddOrUpdate(cart);
-                    cartRepository.SaveChanges();
-                }
-            }
-
-            return cart;
-        }
-
-        /// <summary>
-        /// Get Track by ID
-        /// </summary>
-        /// <param name="trackId">Track ID</param>
-        /// <returns>Track</returns>
-        private Track GetTrackById(int trackId)
-        {
-            Track track;
-            using (var trackRepository = Factory.GetTrackRepository())
-            {
-                track = trackRepository.GetById(trackId);
-                if (track == null || trackId == 0)
-                {
-                    throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
-                }
-            }
-
-            return track;
-        }
-
-        /// <summary>
-        /// Get Album by ID
-        /// </summary>
-        /// <param name="albumId">Album ID</param>
-        /// <returns>Album</returns>
-        private Album GetAlbumById(int albumId)
-        {
-            Album album;
-            using (var albumRepository = Factory.GetAlbumRepository())
-            {
-                album = albumRepository.GetById(albumId);
-                if (album == null || albumId == 0)
-                {
-                    throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
-                }
-            }
-
-            return album;
-        }
-
-        /// <summary>
         /// Remove All items from User's Cart
         /// </summary>
         /// <param name="userId">User ID</param>
@@ -484,6 +422,68 @@
                 purchasedAlbumRepository.AddOrUpdate(purchasedAlbum);
                 purchasedAlbumRepository.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// Get Cart by User's ID
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <returns>User's Cart</returns>
+        private Cart GetCartByUserId(int userId)
+        {
+            Cart cart;
+            using (var cartRepository = Factory.GetCartRepository())
+            {
+                cart = cartRepository.GetByUserId(userId);
+                if (cart == null)
+                {
+                    cart = new Cart(userId);
+                    cartRepository.AddOrUpdate(cart);
+                    cartRepository.SaveChanges();
+                }
+            }
+
+            return cart;
+        }
+
+        /// <summary>
+        /// Get Track by ID
+        /// </summary>
+        /// <param name="trackId">Track ID</param>
+        /// <returns>Track</returns>
+        private Track GetTrackById(int trackId)
+        {
+            Track track;
+            using (var trackRepository = Factory.GetTrackRepository())
+            {
+                track = trackRepository.GetById(trackId);
+                if (track == null || trackId == 0)
+                {
+                    throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
+                }
+            }
+
+            return track;
+        }
+
+        /// <summary>
+        /// Get Album by ID
+        /// </summary>
+        /// <param name="albumId">Album ID</param>
+        /// <returns>Album</returns>
+        private Album GetAlbumById(int albumId)
+        {
+            Album album;
+            using (var albumRepository = Factory.GetAlbumRepository())
+            {
+                album = albumRepository.GetById(albumId);
+                if (album == null || albumId == 0)
+                {
+                    throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
+                }
+            }
+
+            return album;
         }
     }
 }

@@ -49,7 +49,7 @@
                  .Returns(() => _purchasedTrack.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedTrack, bool>>>()))
-                 .Returns((Func<PurchasedTrack, bool> exp) => _purchasedTrack.Any(exp));
+                 .Returns((Expression<Func<PurchasedTrack, bool>> exp) => _purchasedTrack.Any(exp.Compile()));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedTrack>())).Callback((PurchasedTrack pTrack) =>
             {

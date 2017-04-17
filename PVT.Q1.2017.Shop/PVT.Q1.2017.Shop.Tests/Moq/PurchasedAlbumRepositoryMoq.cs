@@ -49,7 +49,7 @@
                  .Returns(() => _purchasedAlbum.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedAlbum, bool>>>()))
-                 .Returns((Func<PurchasedAlbum, bool> exp) => _purchasedAlbum.Any(exp));
+                 .Returns((Expression<Func<PurchasedAlbum, bool>> exp) => _purchasedAlbum.Any(exp.Compile()));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedAlbum>())).Callback((PurchasedAlbum pAlbum) =>
             {

@@ -39,7 +39,8 @@
                     m =>
                         m.FirstOrDefault(It.IsAny<Expression<Func<OrderTrack, bool>>>(),
                             It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
-                .Returns(() => _orderTrack.FirstOrDefault());
+                .Returns((Expression<Func<OrderTrack, bool>> exp, Expression<Func<OrderTrack, BaseEntity>>[] exp2) => 
+                _orderTrack.FirstOrDefault(exp.Compile()));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns((int id) => _orderTrack.FirstOrDefault(a => a.Id == id));

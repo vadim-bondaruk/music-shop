@@ -39,7 +39,8 @@
                     m =>
                         m.FirstOrDefault(It.IsAny<Expression<Func<OrderAlbum, bool>>>(),
                             It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
-                .Returns(() => _orderAlbum.FirstOrDefault());
+                .Returns((Expression<Func<OrderAlbum, bool>> exp, Expression<Func<OrderAlbum, BaseEntity>>[] exp2) => 
+                _orderAlbum.FirstOrDefault(exp.Compile()));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns((int id) => _orderAlbum.FirstOrDefault(a => a.Id == id));

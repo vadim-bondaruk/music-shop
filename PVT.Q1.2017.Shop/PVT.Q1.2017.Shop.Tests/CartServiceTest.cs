@@ -107,6 +107,178 @@ namespace PVT.Q1._2017.Shop.Tests
             }
         }
 
-	    //TODO: добавить тесты для методов удаления треков/альбомов
+	    [TestMethod]
+	    public void RemoveTrackFromCart_Test()
+	    {
+	        AddTrackToCart_Test();
+            _cartService.RemoveTrack(1, 1);
+	        using (var repo = _factory.GetOrderTrackRepository())
+	        {
+	            Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.TrackId == 1));
+	        }
+	    }
+
+	    [TestMethod]
+	    public void RemoveTrackListFromCart_Test()
+	    {
+	        AddTrackListToCart_Test();
+	        var trackIds = new int[] {1, 2, 3};
+            _cartService.RemoveTrack(1, trackIds);
+	        using (var repo = _factory.GetOrderTrackRepository())
+	        {
+	            var result = repo.GetAll(r => r.CartId == 1);
+	            Assert.IsFalse(result.Any());
+	        }
+	    }
+
+	    [TestMethod]
+	    public void RemoveAlbumFromCart_Test()
+	    {
+	        AddAlbumToCart_Test();
+            _cartService.RemoveAlbum(1, 1);
+	        using (var repo = _factory.GetOrderAlbumRepository())
+	        {
+	            Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.AlbumId == 1));
+	        }
+	    }
+
+	    [TestMethod]
+	    public void RemoveAlbumsListFromCart_Test()
+	    {
+	        AddAlbumListToCart_Test();
+	        var albumIds = new int[] {1, 2, 3};
+            _cartService.RemoveAlbum(1, albumIds);
+	        using (var repo = _factory.GetOrderAlbumRepository())
+	        {
+	            var result = repo.GetAll(r => r.CartId == 1);
+                Assert.IsFalse(result.Any());
+	        }
+	    }
+
+	    [TestMethod]
+	    public void GetOrderTracksIdsInCart_Test()
+	    {
+	        AddTrackListToCart_Test();
+            var result = _cartService.GetOrderTracksIds(1).ToArray();
+	        for (int i = 1; i <= 3; i++)
+	        {
+	            Assert.IsTrue(result[i-1] == i);
+	        }
+	    }
+
+	    [TestMethod]
+	    public void GetOrderAlbumsIdsInCart_Test()
+	    {
+	        AddAlbumListToCart_Test();
+	        var result = _cartService.GetOrderAlbumsIds(1).ToArray();
+	        for (int i = 1; i <= 3; i++)
+	        {
+	            Assert.IsTrue(result[i-1] == i);
+	        }
+	    }
+
+	    [TestMethod]
+	    public void GetOrderTracksInCart_Test()
+	    {
+	        AddTrackListToCart_Test();
+            var result = _cartService.GetOrderTracks(1);
+            Assert.IsTrue(result.Count == 3);
+	    }
+
+	    [TestMethod]
+	    public void GetOrderAlbumsInCart_Test()
+	    {
+	        AddAlbumListToCart_Test();
+            var result = _cartService.GetOrderAlbums(1);
+            Assert.IsTrue(result.Count == 3);
+	    }
+
+	    [TestMethod]
+	    public void RemoveAllInCart_Test()
+	    {
+	        AddTrackListToCart_Test();
+            AddAlbumListToCart_Test();
+            _cartService.RemoveAll(1);
+	        using (var repo = _factory.GetOrderTrackRepository())
+	        {
+	            var result = repo.GetAll(r => r.CartId == 1);
+	            Assert.IsFalse(result.Any());
+	        }
+
+	        using (var repo = _factory.GetOrderAlbumRepository())
+	        {
+	            var result = repo.GetAll(r => r.CartId == 1);
+                Assert.IsFalse(result.Any());
+	        }
+	    }
+
+	    [TestMethod]
+	    public void AcceptPaymentAllItemsInCart_Test()
+	    {
+	        AddTrackToCart_Test();
+            AddAlbumToCart_Test();
+	        using (var repo = _factory.GetUserDataRepository())
+	        {
+	            repo.AddOrUpdate(new UserData() {UserId = 1});
+                repo.SaveChanges();
+	        }
+
+            _cartService.AcceptPayment(1);
+	        using (var repo = _factory.GetPurchasedTrackRepository())
+	        {
+	            Assert.IsTrue(repo.Exist(r => r.UserId == 1 && r.TrackId == 1));
+	        }
+
+	        using (var repo = _factory.GetPurchasedAlbumRepository())
+	        {
+	            Assert.IsTrue(repo.Exist(r => r.UserId == 1 && r.AlbumId == 1));
+	        }
+
+	        using (var repo = _factory.GetOrderTrackRepository())
+	        {
+	            Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.TrackId == 1));
+	        }
+
+	        using (var repo = _factory.GetOrderAlbumRepository())
+	        {
+                Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.AlbumId == 1));
+            }
+	    }
+
+	    [TestMethod]
+	    public void AcceptPaymentSomeItemsInCart_Test()
+	    {
+	        AddTrackListToCart_Test();
+            AddAlbumListToCart_Test();
+	        using (var repo = _factory.GetUserDataRepository())
+	        {
+	            repo.AddOrUpdate(new UserData() {UserId = 1});
+                repo.SaveChanges();
+	        }
+
+	        var id = new int[] {2};
+            _cartService.AcceptPayment(1, id, true);
+            _cartService.AcceptPayment(1, id, false);
+            using (var repo = _factory.GetPurchasedTrackRepository())
+            {
+                Assert.IsTrue(repo.Exist(r => r.UserId == 1 && r.TrackId == 2));
+            }
+
+            using (var repo = _factory.GetPurchasedAlbumRepository())
+            {
+                Assert.IsTrue(repo.Exist(r => r.UserId == 1 && r.AlbumId == 2));
+            }
+
+            using (var repo = _factory.GetOrderTrackRepository())
+            {
+                Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.TrackId == 2));
+            }
+
+            using (var repo = _factory.GetOrderAlbumRepository())
+            {
+                Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.AlbumId == 2));
+            }
+
+        }
     }
 }
