@@ -1,6 +1,5 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
-    using System.Collections.Generic;
     using Common.ViewModels;
 
     /// <summary>
@@ -55,6 +54,6 @@
         /// <returns>
         /// All track feedbacks.
         /// </returns>
-        ICollection<FeedbackViewModel> GetTrackFeedbacks(int trackId);
+        TrackFeedbacksListViewModel GetTrackFeedbacks(int trackId);
     }
 }

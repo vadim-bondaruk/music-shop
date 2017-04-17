@@ -315,6 +315,20 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Track"/> model to a new <see cref="TrackFeedbacksListViewModel"/> model.
+        /// </summary>
+        /// <param name="track">
+        /// The track DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="TrackFeedbacksListViewModel"/> model.
+        /// </returns>
+        public static TrackFeedbacksListViewModel GetTrackFeedbacksListViewModel(Track track)
+        {
+            return _specialListMapper.Map<TrackFeedbacksListViewModel>(track);
+        }
+
+        /// <summary>
         /// Configures and returns a new instance of the common mapper.
         /// </summary>
         /// <returns>
@@ -350,7 +364,7 @@
 
                 cfg.CreateMap<Feedback, FeedbackViewModel>()
                    .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId))
-                   .ForMember(dest => dest.UserName, opt => opt.ResolveUsing(f => f.User.User.Login));
+                   .ForMember(dest => dest.UserName, opt => opt.ResolveUsing(f => f.User != null && f.User.User != null ? f.User.User.Login : string.Empty));
 
                 cfg.CreateMap<FeedbackViewModel, Feedback>()
                    .ForMember(dest => dest.UserId, opt => opt.ResolveUsing(f => f.UserDataId));
@@ -411,6 +425,10 @@
                 cfg.CreateMap<Artist, ArtistAlbumsListViewModel>()
                    .ForMember(dest => dest.ArtistDetails, opt => opt.MapFrom(a => a))
                    .ForMember(dest => dest.Albums, opt => opt.Ignore());
+
+                cfg.CreateMap<Track, TrackFeedbacksListViewModel>()
+                   .ForMember(dest => dest.TrackDetails, opt => opt.MapFrom(t => t))
+                   .ForMember(dest => dest.Feedbacks, opt => opt.Ignore());
             });
 
             return specialListMapperConfiguration.CreateMapper();

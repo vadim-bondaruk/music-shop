@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.TrackDetailsViewModel
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.TrackDetailsViewModel
 
 <div style="text-align: initial">
     <div class="w3-card">
@@ -12,6 +13,19 @@
                     </div>
                     <div class="panel-body">
                         <div class="center">
+                            <p>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => model.Rating)
+                                        </td>
+                                        <td style="vertical-align: top">
+                                            @Html.ButtonWithIcon("btn btn-xs btn-success", "glyphicon glyphicon-comment", "Оставить отзыв",
+                                                                 Url.Action("Details", "Feedbacks", new { area = "Content", trackId = Model.Id }))
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
                             <p>
                                 <strong>@Html.DisplayNameFor(m => m.Artist):</strong> @Html.DisplayTextFor(m => m.Artist.Name)
                             </p>
@@ -43,4 +57,5 @@
 @section cssStyles
 {
     <link href="~/Content/tracks.css" rel="stylesheet" />
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
 }

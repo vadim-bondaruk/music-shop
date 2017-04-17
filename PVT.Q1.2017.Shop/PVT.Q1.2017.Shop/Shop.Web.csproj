@@ -308,6 +308,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Management\Views\Album\Create.cshtml" />
+    <Content Include="Areas\Content\Views\Feedbacks\Details.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -451,7 +452,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Content\Views\Feedbacks\" />
     <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\Payment\Models\" />

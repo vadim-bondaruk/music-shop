@@ -86,3 +86,10 @@
 .zero-stars {
     background-position: 0px -480px;
 }
+
+.empty-star-place {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    cursor: pointer;
+}

@@ -7,6 +7,7 @@
     using global::Shop.Infrastructure.Enums;
     using Shop.Controllers;
 
+    [ShopAuthorize(UserRoles.Buyer, UserRoles.Customer)]
     public class FeedbacksController : BaseController
     {
         private readonly IFeedbackService _feedbackService;
@@ -17,7 +18,7 @@
         }
 
         [HttpGet]
-        public ActionResult List(int? trackid)
+        public ActionResult Details(int? trackid)
         {
             if (trackid == null)
             {
@@ -35,7 +36,6 @@
         }
 
         [HttpPost]
-        [ShopAuthorize(UserRoles.Buyer, UserRoles.Customer)]
         [ValidateAntiForgeryToken]
         public ActionResult New([Bind(Include= "TrackId,Mark,Comments")]FeedbackViewModel feedback)
         {
@@ -51,7 +51,7 @@
                 _feedbackService.AddOrUpdateFeedback(feedback);
             }
 
-            return RedirectToAction("List", "Feedbacks", new { area = "Content" });
+            return RedirectToAction("Details", "Feedbacks", new { area = "Content", trackId = feedback.TrackId });
         }
     }
 }
