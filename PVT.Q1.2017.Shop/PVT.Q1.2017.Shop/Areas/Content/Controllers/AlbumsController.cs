@@ -40,7 +40,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Albums", new { area = "Content" });
             }
 
             AlbumTracksListViewModel albumTracksViewModel = null;
