@@ -21,49 +21,52 @@
             _mock.Setup(m => m.GetAll()).Returns(_orderAlbum);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
-                 .Returns(_orderAlbum);
+                .Returns(_orderAlbum);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<OrderAlbum, bool>>>()))
-                 .Returns(_orderAlbum);
+                .Returns((Expression<Func<OrderAlbum, bool>> exp) => _orderAlbum.Where(exp.Compile()).ToList());
 
             _mock.Setup(
-                        m =>
-                            m.GetAll(It.IsAny<Expression<Func<OrderAlbum, bool>>>(),
-                                     It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
-                 .Returns(_orderAlbum);
+                    m =>
+                        m.GetAll(It.IsAny<Expression<Func<OrderAlbum, bool>>>(),
+                            It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
+                .Returns(_orderAlbum);
 
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<OrderAlbum, bool>>>()))
-                 .Returns(() => _orderAlbum.FirstOrDefault());
+                .Returns((Expression<Func<OrderAlbum, bool>> exp) => _orderAlbum.FirstOrDefault(exp.Compile()));
 
             _mock.Setup(
-                        m =>
-                            m.FirstOrDefault(It.IsAny<Expression<Func<OrderAlbum, bool>>>(),
-                                             It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
-                 .Returns(() => _orderAlbum.FirstOrDefault());
+                    m =>
+                        m.FirstOrDefault(It.IsAny<Expression<Func<OrderAlbum, bool>>>(),
+                            It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
+                .Returns((Expression<Func<OrderAlbum, bool>> exp, Expression<Func<OrderAlbum, BaseEntity>>[] exp2) => 
+                _orderAlbum.FirstOrDefault(exp.Compile()));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _orderAlbum.FirstOrDefault(a => a.Id > 0));
+                .Returns((int id) => _orderAlbum.FirstOrDefault(a => a.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
-                                       It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
-                 .Returns(() => _orderAlbum.FirstOrDefault(a => a.Id > 0));
+                    It.IsAny<Expression<Func<OrderAlbum, BaseEntity>>[]>()))
+                .Returns(() => _orderAlbum.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<OrderAlbum, bool>>>()))
-                 .Returns(() => _orderAlbum.Any());
+                .Returns((Expression<Func<OrderAlbum, bool>> exp) => _orderAlbum.Any(exp.Compile()));
+
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderAlbum>()))
+                .Callback((OrderAlbum orderAlbum) =>
+                {
+                    orderAlbum.Id = _orderAlbum.Count + 1;
+                    _orderAlbum.Add(orderAlbum);
+                });
 
             _mock.Setup(m => m.Count(It.IsAny<Expression<Func<OrderAlbum, bool>>>()))
                  .Returns(() => _orderAlbum.Count);
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderAlbum>())).Callback(() => _orderAlbum.Add(new OrderAlbum
+            _mock.Setup(m => m.Delete(It.IsNotNull<OrderAlbum>())).Callback((OrderAlbum orderAlbum) =>
             {
-                Id = _orderAlbum.Count + 1
-            }));
-
-            _mock.Setup(m => m.Delete(It.IsNotNull<OrderAlbum>())).Callback(() =>
-            {
-                if (_orderAlbum.Any())
+                if (_orderAlbum.Any(o => o.Id == orderAlbum.Id))
                 {
-                    _orderAlbum.RemoveAt(_orderAlbum.Count - 1);
+                    _orderAlbum.Remove(orderAlbum);
                 }
             });
         }

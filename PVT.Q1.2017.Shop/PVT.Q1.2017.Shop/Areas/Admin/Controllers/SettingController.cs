@@ -4,11 +4,16 @@
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+    using global::Shop.Infrastructure.Enums;
+
+    using PVT.Q1._2017.Shop.App_Start;
+    using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
     /// 
     /// </summary>
-    public class SettingController : Controller
+    [ShopAuthorize(UserRoles.Admin)]
+    public class SettingController : BaseController
     {
         /// <summary>
         /// The service setting
