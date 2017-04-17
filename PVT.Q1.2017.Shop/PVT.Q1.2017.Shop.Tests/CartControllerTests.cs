@@ -13,6 +13,7 @@ using Shop.BLL.Services.Infrastructure;
 namespace PVT.Q1._2017.Shop.Tests
 {
     using global::Shop.BLL.Exceptions;
+    using global::Shop.Common.ViewModels;
 
     [TestClass]
     public class CartControllerTests
@@ -29,12 +30,13 @@ namespace PVT.Q1._2017.Shop.Tests
             moqCartRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(cart);
 
             Mock<ICartService> moqCartService = new Mock<ICartService>();
+            moqCartService.Setup(m => m.GetOrderTracks(It.IsAny<int>(), It.IsAny<Nullable<int>>())).Returns(new List<TrackDetailsViewModel>());
+            moqCartService.Setup(m => m.GetOrderAlbums(It.IsAny<int>(), It.IsAny<Nullable<int>>())).Returns(new List<AlbumDetailsViewModel>());
 
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
-            cartController.SetDefaultCurrency();
             var result = cartController.Index();
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }

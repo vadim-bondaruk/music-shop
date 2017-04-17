@@ -9,7 +9,6 @@
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
-    using System;
 
     /// <summary>
     /// Контоллер для корзины покупателя
@@ -70,8 +69,8 @@
                 _cartRepository.SaveChanges();
             }
             var cart = this._cartRepository.GetByUserId(_currentUserId);
-            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId, _userCurrency.Code);
-            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId, _userCurrency.Code);
+            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId, _userCurrency?.Code);
+            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId, _userCurrency?.Code);
             this._viewModel.CurrentUserId = _currentUserId;
 
             //// Установка текущей валюты пользователя и пересчёт суммы к оплате
@@ -236,17 +235,9 @@
             _userCurrency = this.GetCurrentUserCurrency();
             if (_userCurrency == null)
             {
-                this.SetDefaultCurrency();
+                _userCurrency = new CurrencyViewModel()
+                { FullName = "EURO", ShortName = "EUR", Code = 978 };
             }
-        }
-
-        /// <summary>
-        /// Set default currency "EUR"
-        /// </summary>
-        public void SetDefaultCurrency()
-        {
-            _userCurrency = new CurrencyViewModel()
-            { FullName = "EURO", ShortName = "EUR", Code = 978 };
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
