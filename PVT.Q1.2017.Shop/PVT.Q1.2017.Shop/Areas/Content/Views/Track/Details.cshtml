@@ -27,14 +27,14 @@
     <div class="panel-body">
         <h4>@Model.TrackDetails.Name</h4>
         <h5>@Model.TrackDetails.Artist.Name</h5>
-       
+
         <p>
             <table>
                 <tr>
                     <td>
                         @Html.DisplayFor(model => model.TrackDetails.Rating)
                     </td>
-                    <td>
+                    <td style="vertical-align: top">
                         @Html.ButtonWithIcon("btn btn-xs btn-success", "glyphicon glyphicon-comment", "Оставить отзыв",
                                              Url.Action("Details", "Feedbacks", new { area = "Content", trackId = Model.TrackDetails.Id }))
                     </td>

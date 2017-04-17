@@ -8,8 +8,12 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <h4>@Model.TrackDetails.Name</h4>
-        <h5>@Model.TrackDetails.Artist.Name</h5>
+        <h4>
+            @Html.ActionLink(Model.TrackDetails.Name, "Details", "Track", new { area = "Content", id = Model.TrackDetails.Id }, null)
+        </h4>
+        <h5>
+            @Html.ActionLink(@Model.TrackDetails.Artist.Name, "Details", "Artist", new { area = "Content", id = Model.TrackDetails.Artist.Id }, null)
+        </h5>
 
         <p>
             @Html.DisplayFor(model => model.TrackDetails.Rating)
