@@ -9,7 +9,7 @@
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
-
+    
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
@@ -184,6 +184,29 @@
         public ActionResult ClearCart()
         {
             this._cartService.RemoveAll(_currentUserId);
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
+        }
+
+        /// <summary>
+        /// Перемещает товары пользователя в купленные при успешной оплате
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize]
+        public ActionResult AcceptPayment()
+        {
+            var isAccepted = false;
+            if (Session["IsAccepted"] != null)
+            {
+                isAccepted = (bool)Session["IsAccepted"];
+            }
+            
+            if (isAccepted)
+            {
+                Session.Remove("IsAccepted");
+                AcceptPayment(isAccepted);
+            }
+            
             return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
