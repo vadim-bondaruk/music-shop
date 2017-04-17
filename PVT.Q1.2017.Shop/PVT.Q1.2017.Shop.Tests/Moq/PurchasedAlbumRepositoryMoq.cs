@@ -51,6 +51,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedAlbum, bool>>>()))
                  .Returns((Expression<Func<PurchasedAlbum, bool>> exp) => _purchasedAlbum.Any(exp.Compile()));
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<PurchasedAlbum, bool>>>()))
+                 .Returns(() => _purchasedAlbum.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedAlbum>())).Callback((PurchasedAlbum pAlbum) =>
             {
                 pAlbum.Id = _purchasedAlbum.Count + 1;

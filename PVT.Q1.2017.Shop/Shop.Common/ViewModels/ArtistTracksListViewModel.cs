@@ -16,27 +16,13 @@
         }
 
         /// <summary>
-        /// Artist id.
+        /// The artist details.
         /// </summary>
-        public int Id
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Artist name.
-        /// </summary>
-        public string Name
-        {
-            get; set;
-        }
+        public ArtistDetailsViewModel ArtistDetails { get; set; }
 
         /// <summary>
         /// All tracks of the artist.
         /// </summary>
-        public ICollection<TrackViewModel> Tracks
-        {
-            get; set;
-        }
+        public ICollection<TrackViewModel> Tracks { get; set; }
     }
 }

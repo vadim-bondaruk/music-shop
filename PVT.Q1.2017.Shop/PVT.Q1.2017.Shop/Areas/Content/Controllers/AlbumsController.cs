@@ -43,14 +43,18 @@
                 return this.RedirectToAction("List");
             }
 
-            AlbumTracksListViewModel albumTracksViewModel;
+            AlbumTracksListViewModel albumTracksViewModel = null;
             if (this.CurrentUser != null)
             {
                 var currency = this.GetCurrentUserCurrency();
-                var priceLevel = this.GetCurrentUserPriceLevel();
-                albumTracksViewModel = this._albumService.GetTracksList(id.Value, currency.Code, priceLevel, this.GetUserDataId());
+                if (currency != null)
+                {
+                    var priceLevel = this.GetCurrentUserPriceLevel();
+                    albumTracksViewModel = this._albumService.GetTracksList(id.Value, currency.Code, priceLevel, this.GetUserDataId());
+                }
             }
-            else
+            
+            if (albumTracksViewModel == null)
             {
                 albumTracksViewModel = this._albumService.GetTracksList(id.Value);
             }
@@ -74,8 +78,11 @@
             if (this.CurrentUser != null)
             {
                 var currency = this.GetCurrentUserCurrency();
-                var priceLevel = this.GetCurrentUserPriceLevel();
-                return this.View(this._albumService.GetDetailedAlbumsList(currency.Code, priceLevel, this.GetUserDataId()));
+                if (currency != null)
+                {
+                    var priceLevel = this.GetCurrentUserPriceLevel();
+                    return this.View(this._albumService.GetDetailedAlbumsList(currency.Code, priceLevel, this.GetUserDataId()));
+                }
             }
 
             return this.View(this._albumService.GetDetailedAlbumsList());

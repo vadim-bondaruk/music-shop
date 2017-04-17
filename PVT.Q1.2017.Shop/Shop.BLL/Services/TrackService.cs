@@ -213,15 +213,19 @@
         /// </returns>
         public TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
-            TrackAlbumsListViewModel trackAlbumsListViewModel = this.CreateTrackAlbumsListViewModel(trackId);
+            TrackAlbumsListViewModel trackAlbumsListViewModel = this.CreateTrackAlbumsListViewModel(trackId, currencyCode, priceLevelId, userId);
 
-            ICollection<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            if (trackAlbumsListViewModel.TrackDetails.AlbumsCount > 0)
             {
-                albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackAlbumsListViewModel.Id), a => a.Artist);
+                ICollection<Album> albums;
+                using (var repository = this.Factory.GetAlbumRepository())
+                {
+                    albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackId), a => a.Artist);
+                }
+
+                trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId, userId);
             }
 
-            trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId, userId);
             return trackAlbumsListViewModel;
         }
 
@@ -271,15 +275,12 @@
         /// <exception cref="EntityNotFoundException{T}">
         /// When a track with the specified id doesn't exist.
         /// </exception>
-        private TrackAlbumsListViewModel CreateTrackAlbumsListViewModel(int trackId)
+        private TrackAlbumsListViewModel CreateTrackAlbumsListViewModel(int trackId, int? currencyCode, int? priceLevel = null, int? userId = null)
         {
-            Track track;
-            using (var repository = this.Factory.GetTrackRepository())
+            return new TrackAlbumsListViewModel
             {
-                track = repository.GetById(trackId, t => t.Artist);
-            }
-
-            return ModelsMapper.GetTrackAlbumsListViewModel(track);
+                TrackDetails = GetTrackDetails(trackId, currencyCode, priceLevel, userId)
+            };
         }
     }
 }

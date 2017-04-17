@@ -20,7 +20,7 @@
         private readonly IRepositoryFactory _factory;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="AuthModule"/> class.
         /// </summary>
         /// <param name="factory"></param>
         public AuthModule(IRepositoryFactory users)
@@ -34,7 +34,7 @@
         /// <param name="useridentity">User login or email</param>
         /// <param name="password"></param>
         /// <param name="redirect"></param>
-        public void LogIn(string useridentity, string password, HttpContext context, bool isPersistent = true)
+        public void LogIn(string useridentity, string password, HttpContext context, bool redirect)
         {
             if (useridentity == null)
             {
@@ -52,22 +52,32 @@
             {
                 if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new UserValidationException("Pasword not confirm", "Password");
+                    throw new UserValidationException("Не верный пароль", "Password");
                 }
 
                 UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
                 {
                     Id = user.Id,
                     Login = user.Login,
-                    Email = user.Email
+                    Email = user.Email,
+                    UserRole = user.UserRole
                 };
+                if(!user.ConfirmedEmail)
+                {
+                    throw new UserValidationException("Не подтвержден email", "");
+                }
+                if(user.IsDeleted == true)
+                {
+                    throw new UserValidationException("Этот аккаунт был удален", "Useridentity");
+                }
+                context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
 
-                context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, isPersistent));
             }
             else
             {
-                throw new UserValidationException("User not found", "Useridentity");
+                throw new UserValidationException("Не верный логин", "Useridentity");
             }
+            //return new CurrentUser(user);
         }
 
         /// <summary>
@@ -84,7 +94,7 @@
         /// <param name="user"></param>
         /// <param name="isPersistent"></param>
         /// <param name="expires"></param>
-        private HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent = true, int expires = 1440)
+        private HttpCookie GetAuthCookies(UserPrincipalSerializeModel user, bool isPersistent, int expires = 1440)
         {
             if (user == null)
             {

@@ -51,6 +51,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedTrack, bool>>>()))
                  .Returns((Expression<Func<PurchasedTrack, bool>> exp) => _purchasedTrack.Any(exp.Compile()));
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<PurchasedTrack, bool>>>()))
+                 .Returns(() => _purchasedTrack.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedTrack>())).Callback((PurchasedTrack pTrack) =>
             {
                 pTrack.Id = _purchasedTrack.Count + 1;

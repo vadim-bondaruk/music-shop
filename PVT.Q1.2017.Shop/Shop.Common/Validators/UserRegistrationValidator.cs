@@ -1,7 +1,9 @@
 ﻿namespace Shop.Common.Validators
 {
     using System;
+    using System.Web.Mvc;
     using FluentValidation;
+    using Infrastructure;
     using ViewModels;
 
     /// <summary>
@@ -9,40 +11,37 @@
     /// </summary>
     public class UserRegistrationValidator : AbstractValidator<UserViewModel>
     {
-
-        /// <summary>
-        /// 
-        /// </summary>
-        //private readonly IUserService _userService;
-
         /// <summary>
         /// 
         /// </summary>
         public UserRegistrationValidator()
         {
-           // this._userService = new UserService();
+            var validator = DependencyResolver.Current.GetService<IUserValidator>();
 
             RuleFor(u => u.FirstName).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
+            RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
+                .WithMessage("Используйте только буквы");
 
             RuleFor(u => u.LastName).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
+            RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
+                .WithMessage("Используйте только буквы");
 
             RuleFor(u => u.Login).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.Login).Matches("^[a-zA-Z0-9_.-]*$")
                 .WithMessage("Только буквы латинского алфавита, цифры и знак подчеркивания");
-            //RuleFor(u => u.Login)
-            //    .Must(login => !_userService.IsUserExist(login));
-                //SetValidator(new UniqueUserIdentityValidator(this._userRepository, "Пользователь с таким логином уже существует"));
+            RuleFor(u => u.Login).Must(login => !validator.IsUserExist(login))
+                .WithMessage("Пользователь с таким логином уже существует");
 
             RuleFor(u => u.Password).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.Password)
                 .Matches(@"^(?=.*\w)(?=.*\d)(?=.*[!-*]).[^\s]*$")
                 .WithMessage("Пароль должен содержать символы латинского алфавита, цифры и спецсимволы");
-            RuleFor(u => u.Password).Length(7, 50)
-                .WithMessage("Пароль должен содержать не менее 7 символов");
+            RuleFor(u => u.Password).Length(4, 50)
+                .WithMessage("Пароль должен содержать не менее 4 символов");
 
             RuleFor(u => u.ConfirmPassword)
                     .Equal(u => u.Password)
@@ -52,12 +51,14 @@
                 .WithMessage("Адрес введен некорректно");
             RuleFor(u => u.Email).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
-            //RuleFor(u => u.Email)
-            //    .Must(email => !_userService.IsUserExist(email));
-                //.SetValidator(new UniqueUserIdentityValidator(this._userRepository, "Пользователь с таким адресом электронной почты уже существует"));
+            RuleFor(u => u.Email).Must(email => !validator.IsUserExist(email))
+                .WithMessage("Пользователь с таким адресом электронной почты уже существект");
 
-            RuleFor(u => u.BirthDate).InclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today)
-                .WithMessage("Дата рождения выбрана неверно");
+            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today.AddYears(-5))
+                .WithMessage("Дата рождения выбрана некорректно");
+
+            RuleFor(u => u.Country).Matches("^[a-zA-Zа-яА-Я_.-]*$")
+                .WithMessage("Используйте только буквы");
 
             RuleFor(u => u.PhoneNumber)
                 .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")

@@ -41,6 +41,10 @@
       <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -57,6 +61,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\InvalidAlbumIdException.cs" />
@@ -88,9 +93,6 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />
     <Compile Include="Utils\CurrentUser.cs" />
-    <Compile Include="Utils\ID3Tag\BitReader.cs" />
-    <Compile Include="Utils\ID3Tag\ID3v2.cs" />
-    <Compile Include="Utils\ID3Tag\id3v2Frame.cs" />
     <Compile Include="Utils\Infrastructure\IAuthModule.cs" />
     <Compile Include="Utils\PasswordEncryptor.cs" />
     <Compile Include="Services\FeedbackService.cs" />
@@ -110,8 +112,11 @@
     <Compile Include="Services\TrackService.cs" />
     <Compile Include="Services\UserPaymentMethodService.cs" />
     <Compile Include="Utils\UserIdentity.cs" />
+    <Compile Include="Utils\MailDispatch.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>

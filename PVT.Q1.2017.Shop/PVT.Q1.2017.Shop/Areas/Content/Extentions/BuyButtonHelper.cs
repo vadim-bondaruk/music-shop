@@ -126,11 +126,6 @@
             {
                 iconClass = DEFAULT_BUY_BUTTON_ICON_CSS_CLASS;
             }
-
-            if (string.IsNullOrWhiteSpace(href))
-            {
-                href = "#";
-            }
             
             if (string.IsNullOrWhiteSpace(text))
             {

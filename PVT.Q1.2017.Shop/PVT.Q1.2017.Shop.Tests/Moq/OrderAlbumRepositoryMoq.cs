@@ -51,12 +51,16 @@
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<OrderAlbum, bool>>>()))
                 .Returns((Expression<Func<OrderAlbum, bool>> exp) => _orderAlbum.Any(exp.Compile()));
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderAlbum>()))
                 .Callback((OrderAlbum orderAlbum) =>
                 {
                     orderAlbum.Id = _orderAlbum.Count + 1;
                     _orderAlbum.Add(orderAlbum);
                 });
+
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<OrderAlbum, bool>>>()))
+                 .Returns(() => _orderAlbum.Count);
 
             _mock.Setup(m => m.Delete(It.IsNotNull<OrderAlbum>())).Callback((OrderAlbum orderAlbum) =>
             {

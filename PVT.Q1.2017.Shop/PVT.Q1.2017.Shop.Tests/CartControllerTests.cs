@@ -9,14 +9,10 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Linq;
 using Shop.BLL.Services.Infrastructure;
-using System.Collections;
 
 namespace PVT.Q1._2017.Shop.Tests
 {
-    using BLL.Utils;
-    using Controllers;
     using global::Shop.BLL.Exceptions;
-    using global::Shop.Common.ViewModels;
 
     [TestClass]
     public class CartControllerTests

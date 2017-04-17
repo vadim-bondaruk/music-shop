@@ -1,4 +1,5 @@
-﻿<li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
+﻿@{ var user = Request.RequestContext.HttpContext.User as Shop.BLL.Utils.CurrentUser;}
+<li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
 <li>@Html.ActionLink("Исполнители", "List", "Artist", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Альбомы", "List", "Album", new { area = "Content" }, null)</li>
 <li>@Html.ActionLink("Треки", "List", "Track", new { area = "Content" }, null)</li>
@@ -30,4 +31,19 @@
     </div>
 </li>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+@if (Request.IsAuthenticated && user.IsInRole(Shop.Infrastructure.Enums.UserRoles.Admin))
+{
+    <li class="dropdown-item" style="height: 50px; display: inline-block">
+        <div class="dropdown" id="purple-dropdown" style="padding: 15px 15px 15px 15px">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="color: #999; background-color: #222222; text-decoration: none">Администрирование<b class="caret" style="border-color: #222222"></b></a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li>
+                    <a href="@Url.Action("Index","Currency", new {area="Admin"})">Настройка валюты</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Setting", new {area="Admin"})">Глобальные настройки</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+}

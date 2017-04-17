@@ -51,6 +51,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Genre, bool>>>()))
                  .Returns(() => _genres.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Genre, bool>>>()))
+                 .Returns(() => _genres.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Genre>())).Callback(() => _genres.Add(new Genre
             {
                 Id = _genres.Count + 1,

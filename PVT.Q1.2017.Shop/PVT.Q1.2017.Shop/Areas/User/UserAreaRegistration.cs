@@ -5,14 +5,14 @@
     /// <summary>
     /// 
     /// </summary>
-    public class UserAreaRegistration : AreaRegistration 
+    public class UserAreaRegistration : AreaRegistration
     {
         /// <summary>
         /// 
         /// </summary>
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "User";
             }
@@ -22,12 +22,13 @@
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "User_default",
                 "User/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional });
+                new { action = "Index", id = UrlParameter.Optional});
+
         }
     }
 }

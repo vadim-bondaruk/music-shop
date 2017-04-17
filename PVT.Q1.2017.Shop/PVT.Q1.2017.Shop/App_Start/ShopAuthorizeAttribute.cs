@@ -1,16 +1,17 @@
-﻿namespace PVT.Q1._2017.Shop
+﻿namespace PVT.Q1._2017.Shop.App_Start
 {
     using System;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using global::Shop.DAL.Infrastruture;
+    using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Enums;
+    using global::Shop.DAL.Infrastruture;
 
     /// <summary>
     /// 
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    [AttributeUsageAttribute(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class ShopAuthorizeAttribute : AuthorizeAttribute
     {
         /// <summary>
@@ -41,7 +42,7 @@
             
             var user = httpContext.User;
 
-            if (user == null || !user.Identity.IsAuthenticated || this._userRoles.Length == 0)
+            if (!user.Identity.IsAuthenticated)
             {
                 return false;
             }
@@ -49,10 +50,18 @@
             string userName = user.Identity.Name;
 
             // TODO: Get user from Repository by Name
+            User userDB;
             using (var repository = DependencyResolver.Current.GetService<IRepositoryFactory>().GetUserRepository())
             {
-                var userDB = repository.FirstOrDefault(u => u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase));
-                if (!this._userRoles.ToList().Contains(userDB.UserRoles))
+                userDB = userName.Contains("@")
+                                 ? repository.FirstOrDefault(u => u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                                 : repository.FirstOrDefault(u => u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            }
+
+
+            if (user != null && this._userRoles.Length > 0)
+            {
+                if (!this._userRoles.ToList().Contains(userDB.UserRole))
                 {
                     return false;
                 }

@@ -28,7 +28,7 @@
                     </li>
                     <li class="list-group-item">
                         @Html.DisplayNameFor(m => m.ReleaseDate)
-                        @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата выпуска", type = "text", value = Model.ReleaseDate } })
+                        @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { @class = "form-control datecontrol", placeholder = "Дата выпуска", type = "text", value = Model.ReleaseDate } })
                     </li>
                 </ul>
             </div>

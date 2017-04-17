@@ -54,6 +54,9 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Cart, bool>>>()))
                  .Returns((Func<Cart, bool> exp) => _carts.Any(exp));
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Cart, bool>>>()))
+                 .Returns(() => _carts.Count);
+
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Cart>())).Callback((Cart cart) =>
             {
                 cart.Id = _carts.Count + 1;

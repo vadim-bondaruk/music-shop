@@ -1,18 +1,20 @@
-﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+﻿@using Shop.Infrastructure.Enums
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Music Shop</title>
+
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @RenderSection("cssStyles", required: false)
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    <script src="~/Scripts/moment.js"></script>
 
-    <meta name="description" content="The description of my page"/>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <meta name="description" content="PVT.2017.Q1 Music Shop"/>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,7 +35,7 @@
             {
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
+                        <a>@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
                     </li>
                 </ul>
                 using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -41,13 +43,16 @@
                     @Html.AntiForgeryToken()
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a class="btn btn-sm btn-default" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
-                               title="Нажмите, чтобы перейти в Вашу корзину">
-                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
-                            </a>
-                        </li>
+                        @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString()))
+                        {
+                            <li>
+                                <a class="btn btn-sm btn-default" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
+                                   title="Нажмите, чтобы перейти в Вашу корзину">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
+                                </a>
+                            </li>
+                        }
                         <li>
                             @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", "Manage", new { area = "User" }, htmlAttributes: new { title = "Manage" })
                         </li>
@@ -69,21 +74,26 @@
 </div>
 
 <div class="container body-content">
-   
     <div class="title">
         <div class="breadcrumb" id="bc-override">@Html.MvcSiteMap().SiteMapPath()</div>
         @ViewBag.Title
     </div>
-    @RenderBody()
+    <div style="margin-top: 90px">
+        @RenderBody()
+    </div>
     <hr/>
     <footer>
         <p>&copy; @DateTime.Now.Year - Music Shop</p>
     </footer>
 </div>
+
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
 <script src="~/Scripts/common.js"></script>
+
 @RenderSection("scripts", required: false)
 </body>
 </html>
