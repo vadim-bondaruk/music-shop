@@ -28,15 +28,16 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="TracksController"/> class.
         /// </summary>
-        /// <param name="trackServiceo">
-        /// The track serviceo.
-        /// </param>
         /// <param name="repositoryFactory">
         /// The repository factory.
         /// </param>
-        public TracksController(IRepositoryFactory repositoryFactory)
+        /// <param name="trackService">
+        /// The track service.
+        /// </param>
+        public TracksController(IRepositoryFactory repositoryFactory, ITrackService trackService)
         {
             this._repositoryFactory = repositoryFactory;
+            this._trackService = trackService;
         }
 
         /// <summary>
