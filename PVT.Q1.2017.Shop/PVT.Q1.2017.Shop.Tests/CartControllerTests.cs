@@ -34,7 +34,7 @@ namespace PVT.Q1._2017.Shop.Tests
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
             var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
-            cartController.SetCurrentUser();
+            cartController.SetDefaultCurrency();
             var result = cartController.Index();
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }

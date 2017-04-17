@@ -232,22 +232,21 @@
         /// </summary>
         public void SetCurrentUser()
         {
-            /// TODO: Moq для HttpConext чтобы убрать try-catch
-            try
-            {
-                _currentUserId = CurrentUser == null ? 0 : CurrentUser.Id;
-                _userCurrency = this.GetCurrentUserCurrency();
-            }
-            catch (NullReferenceException)
-            {
-                _userCurrency = null;
-            }
-
+            _currentUserId = CurrentUser == null ? 0 : CurrentUser.Id;
+            _userCurrency = this.GetCurrentUserCurrency();
             if (_userCurrency == null)
             {
-                _userCurrency = new CurrencyViewModel()
-                { FullName = "EURO", ShortName = "EUR", Code = 978 };
+                this.SetDefaultCurrency();
             }
+        }
+
+        /// <summary>
+        /// Set default currency "EUR"
+        /// </summary>
+        public void SetDefaultCurrency()
+        {
+            _userCurrency = new CurrencyViewModel()
+            { FullName = "EURO", ShortName = "EUR", Code = 978 };
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
