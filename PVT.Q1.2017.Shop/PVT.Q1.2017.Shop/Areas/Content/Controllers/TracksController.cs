@@ -55,17 +55,16 @@
             }
 
             TrackAlbumsListViewModel trackAlbumsViewModel = null;
-            if (CurrentUser != null)
+            if (this.CurrentUser != null)
             {
-                var currency = GetCurrentUserCurrency();
+                var currency = this.GetCurrentUserCurrency();
                 if (currency == null)
                 {
-                    var priceLevel = GetCurrentUserPriceLevel();
+                    var priceLevel = this.GetCurrentUserPriceLevel();
                     trackAlbumsViewModel = this._trackService.GetAlbumsList(
                         id.Value,
                         currency.Code,
-                        priceLevel,
-                        GetUserDataId());
+                        priceLevel, this.GetUserDataId());
                 }
             }
 
@@ -76,7 +75,7 @@
 
             if (trackAlbumsViewModel == null)
             {
-                return HttpNotFound($"Трек с id = {id.Value} не найден");
+                return this.HttpNotFound($"Трек с id = {id.Value} не найден");
             }
 
             return this.View(trackAlbumsViewModel);
@@ -90,14 +89,14 @@
         /// </returns>
         public ActionResult List()
         {
-            if (CurrentUser != null)
+            if (this.CurrentUser != null)
             {
-                var currency = GetCurrentUserCurrency();
+                var currency = this.GetCurrentUserCurrency();
                 if (currency != null)
                 {
-                    var priceLevel = GetCurrentUserPriceLevel();
+                    var priceLevel = this.GetCurrentUserPriceLevel();
                     return this.View(
-                        this._trackService.GetDetailedTracksList(currency.Code, priceLevel, GetUserDataId()));
+                        this._trackService.GetDetailedTracksList(currency.Code, priceLevel, this.GetUserDataId()));
                 }
             }
 
@@ -119,17 +118,16 @@
             }
 
             TrackDetailsViewModel trackViewModel = null;
-            if (CurrentUser != null)
+            if (this.CurrentUser != null)
             {
-                var currency = GetCurrentUserCurrency();
+                var currency = this.GetCurrentUserCurrency();
                 if (currency != null)
                 {
-                    var priceLevel = GetCurrentUserPriceLevel();
+                    var priceLevel = this.GetCurrentUserPriceLevel();
                     trackViewModel = this._trackService.GetTrackDetails(
                         id.Value,
                         currency.Code,
-                        priceLevel,
-                        GetUserDataId());
+                        priceLevel, this.GetUserDataId());
                 }
             }
 
@@ -140,7 +138,7 @@
 
             if (trackViewModel == null)
             {
-                return HttpNotFound($"Трек с id = {id.Value} не найден");
+                return this.HttpNotFound($"Трек с id = {id.Value} не найден");
             }
 
             return this.View(trackViewModel);
