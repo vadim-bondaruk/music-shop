@@ -311,7 +311,7 @@
         /// </returns>
         public static PurchasedTrackViewModel GetPurchasedTrackViewModel(Track track)
         {
-            return _commonMapper.Map<PurchasedTrackViewModel>(track);
+            return _modelDetailsMapper.Map<PurchasedTrackViewModel>(track);
         }
 
         /// <summary>
@@ -373,9 +373,6 @@
                    .ForMember(dest => dest.UserId, opt => opt.ResolveUsing(f => f.UserDataId));
 
                 cfg.CreateMap<Setting, SettingViewModel>();
-
-                cfg.CreateMap<Track, PurchasedTrackViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
             });
 
             return commonMapperConfiguration.CreateMapper();
@@ -464,6 +461,10 @@
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
                    .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre))
                    .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
+
+                cfg.CreateMap<Track, PurchasedTrackViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre));
             });
 
             return detailsMapperConfiguration.CreateMapper();
