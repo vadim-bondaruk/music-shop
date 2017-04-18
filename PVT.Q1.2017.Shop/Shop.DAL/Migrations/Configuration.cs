@@ -1955,7 +1955,7 @@ namespace Shop.DAL.Migrations
                                         },
                                         new User
                                         {
-                                            UserRole = UserRoles.Customer,
+                                            UserRole = UserRoles.Seller,
                                             Login = "seller",
                                             FirstName = "seller",
                                             LastName = "seller",
