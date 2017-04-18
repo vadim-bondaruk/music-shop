@@ -1,0 +1,16 @@
+﻿@model ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
+
+@{ ViewBag.Title = "Все треки"; }
+<div class="tracks-list">
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_TrackListItem", item)
+        }
+    </ul>
+</div>
+
+
+@section cssStyles{
+    <link href="~/Content/tracks.css" rel="stylesheet"/>
+}
