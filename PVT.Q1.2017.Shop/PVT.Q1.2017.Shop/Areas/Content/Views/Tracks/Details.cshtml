@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.TrackDetailsViewModel
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.TrackDetailsViewModel
     @{ViewBag.Title = Model.Name;}
 <body>
     <div style="text-align: initial">
@@ -44,4 +45,5 @@
 @section cssStyles
 {
     <link href="~/Content/tracks.css" rel="stylesheet" />
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
 }

@@ -434,8 +434,8 @@
                 throw new ArgumentOutOfRangeException(nameof(page), page, @"Incorrect current page value specified");
             }
 
-            var result = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            return new PagedResult<TEntity>(result.ToList(), pageSize, page);
+            var result = query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return new PagedResult<TEntity>(result, pageSize, page, query.Count());
         }
     }
 }

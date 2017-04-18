@@ -326,6 +326,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Management\Views\Album\Create.cshtml" />
+    <Content Include="Areas\Content\Views\Feedbacks\Details.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -381,6 +382,7 @@
     <Compile Include="Areas\Content\Extentions\BuyButtonHelper.cs" />
     <Compile Include="Areas\Content\Extentions\ManagementButtonsHelper.cs" />
     <Compile Include="Areas\Content\Extentions\PriceButtonHelper.cs" />
+    <Compile Include="Areas\Content\Controllers\FeedbacksController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumPriceController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />

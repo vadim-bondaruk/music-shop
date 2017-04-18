@@ -148,6 +148,20 @@
         }
 
         /// <summary>
+        ///     Executes a mapping from the <see cref="FeedbackViewModel" /> model to a new <see cref="Feedback" /> model.
+        /// </summary>
+        /// <param name="feedbackViewModel">
+        ///     The feedback view model.
+        /// </param>
+        /// <returns>
+        ///     A new <see cref="Feedback" /> DTO model.
+        /// </returns>
+        public static Feedback GetFeedback(FeedbackViewModel feedbackViewModel)
+        {
+            return _commonMapper.Map<Feedback>(feedbackViewModel);
+        }
+
+        /// <summary>
         ///     Executes a mapping from the <see cref="Feedback" /> model to a new <see cref="FeedbackViewModel" /> model.
         /// </summary>
         /// <param name="feedback">
@@ -232,7 +246,7 @@
         }
 
         /// <summary>
-        ///     Executes a mapping from the <see cref="Setting" /> model to a new <see cref="SettingViewModel" /> model.
+        ///     Executes a mapping from the <see cref="Artist" /> model to a new <see cref="ArtistTracksListViewModel" /> model.
         /// </summary>
         /// <param name="setting">
         ///     The setting DTO model
@@ -274,6 +288,18 @@
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static TrackFeedbacksListViewModel GetTrackFeedbacksListViewModel(Track track)
+        {
+            return _specialListMapper.Map<TrackFeedbacksListViewModel>(track);
+        }
+
+        /// <summary>
         ///     Executes a mapping from the <see cref="Track" /> model to a new <see cref="TrackViewModel" /> model.
         /// </summary>
         /// <param name="track">
@@ -285,6 +311,20 @@
         public static TrackViewModel GetTrackViewModel(Track track)
         {
             return _commonMapper.Map<TrackViewModel>(track);
+        }
+
+        /// <summary>
+        ///     Executes a mapping from the <see cref="FeedbackViewModel" /> model to a new <see cref="Vote" /> model.
+        /// </summary>
+        /// <param name="feedbackViewModel">
+        ///     The vote view model.
+        /// </param>
+        /// <returns>
+        ///     A new <see cref="Vote" /> DTO model.
+        /// </returns>
+        public static Vote GetVote(FeedbackViewModel feedbackViewModel)
+        {
+            return _commonMapper.Map<Vote>(feedbackViewModel);
         }
 
         /// <summary>
@@ -415,6 +455,10 @@
                         cfg.CreateMap<Artist, ArtistAlbumsListViewModel>()
                             .ForMember(dest => dest.ArtistDetails, opt => opt.MapFrom(a => a))
                             .ForMember(dest => dest.Albums, opt => opt.Ignore());
+
+                        cfg.CreateMap<Track, TrackFeedbacksListViewModel>()
+                            .ForMember(dest => dest.TrackDetails, opt => opt.MapFrom(t => t))
+                            .ForMember(dest => dest.Feedbacks, opt => opt.Ignore());
                     });
 
             return specialListMapperConfiguration.CreateMapper();

@@ -41,7 +41,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
             ArtistAlbumsListViewModel artistAlbumsViewModel = null;
@@ -89,7 +89,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
             var artistViewModel = _artistService.GetArtistDetails(id.Value);
@@ -114,7 +114,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
             var currency = GetCurrentUserCurrency();

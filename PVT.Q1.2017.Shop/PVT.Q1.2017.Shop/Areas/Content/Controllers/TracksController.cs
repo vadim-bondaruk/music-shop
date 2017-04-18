@@ -51,7 +51,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
             TrackAlbumsListViewModel trackAlbumsViewModel = null;
@@ -93,7 +93,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
             TrackDetailsViewModel trackViewModel = null;
@@ -133,12 +133,24 @@
         /// </returns>
         public ActionResult GetAudio(int id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var trackRepository = factory.GetTrackRepository())
             {
-                var audioBytes = trackRepository.GetById(id).TrackFile;
-                return this.File(audioBytes, "audio/mp3");
+                //var track = trackRepository.GetById(id.Value);
+                //if (track == null)
+                //{
+                //    return HttpNotFound($"Трек с id = { id.Value } не найден");
+                //}
+
+                //var audioBytes = track.TrackFile;
+                //return this.File(audioBytes, "audio/mp3");
             }
+            return HttpNotFound();
         }
 
         /// <summary>

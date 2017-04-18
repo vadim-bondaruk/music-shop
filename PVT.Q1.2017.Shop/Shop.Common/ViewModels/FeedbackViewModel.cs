@@ -6,22 +6,27 @@
     public class FeedbackViewModel
     {
         /// <summary>
-        /// Gets or sets the user id.
+        /// The user id who have leaved the current feedback.
         /// </summary>
         public int UserDataId { get; set; }
 
         /// <summary>
-        /// Gets or sets the user name.
+        /// The track.
+        /// </summary>
+        public int TrackId { get; set; }
+
+        /// <summary>
+        /// Name of the user who have leaved the current feedback.
         /// </summary>
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets the comments.
+        /// Comments of the user who have leaved the current feedback.
         /// </summary>
         public string Comments { get; set; }
 
         /// <summary>
-        /// Gets or sets the mark.
+        /// Mark of the user who have leaved the current feedback.
         /// </summary>
         public int Mark { get; set; }
     }
