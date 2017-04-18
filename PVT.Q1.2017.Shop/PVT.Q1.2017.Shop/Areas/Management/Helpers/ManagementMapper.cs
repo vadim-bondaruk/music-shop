@@ -183,8 +183,7 @@
                         cfg.CreateMap<GenreViewModel, Genre>();
                         cfg.CreateMap<GenreDetailsViewModel, GenreManagementViewModel>();
 
-                        cfg.CreateMap<Track, TrackManagementViewModel>()
-                            .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.TrackPrices.First().Price));
+                        cfg.CreateMap<Track, TrackManagementViewModel>();
 
                         cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
                             .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.Price.Amount));
