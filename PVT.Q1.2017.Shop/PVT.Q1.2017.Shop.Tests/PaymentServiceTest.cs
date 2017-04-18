@@ -32,5 +32,16 @@ namespace PVT.Q1._2017.Shop.Tests
             Assert.AreSame("Failure", result);
 
         }
+
+        [TestMethod]
+        public void TestCreatePaymentWithPaymentCard()
+        {
+            var PaymentService = new PaymentService(new RepositoryFactoryMoq());
+            var result = PaymentService.CreatePaymentWithCreditCard();
+            var expected = "created";
+
+            Assert.AreSame(expected, result);
+        }
+
     }
 }

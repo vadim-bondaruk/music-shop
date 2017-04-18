@@ -231,7 +231,7 @@
 
                     var guid = Request.Params["guid"];
 
-                    var executedPayment = ExecutePaymentDemo(apiContext, payerId, Session[guid] as string);
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
 
                     if (executedPayment.state.ToLower() != "approved")
                     {
@@ -261,7 +261,7 @@
             {
                 string payerId = Request.Params["PayerID"];
 
-                if (string.IsNullOrEmpty(payerId))
+                if (string.IsNullOrEmpty(payerId)&&cart.TotalPrice>0)
                 {
                     //this section will be executed first because PayerID doesn't exist
                     //it is returned by the create function call of the payment class
@@ -400,21 +400,7 @@
             // Create a payment using a APIContext
             return this.payment.Create(apiContext);
         }
-
-        /// <summary>
-        /// Executes payment info by payerId and paymentId
-        /// </summary>
-        /// <param name="apiContext">PayPal API context</param>
-        /// <param name="payerId">Payer id</param>
-        /// <param name="paymentId">Payment id</param>
-        /// <returns></returns>
-        private Payment ExecutePaymentDemo(APIContext apiContext, string payerId, string paymentId)
-        {
-            var paymentExecution = new PaymentExecution() { payer_id = payerId };
-            this.payment = new Payment() { id = paymentId };
-            return this.payment.Execute(apiContext, paymentExecution);
-        }
-
+              
         /// <summary>
         /// Creates PayPal payment 
         /// </summary>
@@ -423,7 +409,6 @@
         /// <returns></returns>
         private Payment CreatePayment(APIContext apiContext, string redirectUrl, CartViewModel cart)
         {
-            // TODO: получить валюту корзины в человеческом виде
             
             //similar to credit card create itemlist and add item objects to it
             var itemList = new ItemList() { items = new List<Item>() };

@@ -34,7 +34,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        public ActionResult Success()
+        public RedirectToRouteResult Success()
         {
             return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment", IsAccepted = true });
 
@@ -46,14 +46,14 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        public ActionResult Failure()
+        public ViewResult Failure()
         {
             return View();
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult PaymentWithCreditCard()
+        public ContentResult PaymentWithCreditCard()
         {
             var viewName = _paymentService.CreatePaymentWithCreditCard();
             return Content(viewName); // View("SuccessView");
