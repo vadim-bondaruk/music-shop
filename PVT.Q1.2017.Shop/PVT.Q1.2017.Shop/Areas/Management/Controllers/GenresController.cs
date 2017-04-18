@@ -17,7 +17,7 @@
 
     /// <summary>
     /// </summary>
-    [ShopAuthorize(UserRoles.Buyer, UserRoles.Admin, UserRoles.Seller)]
+    [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
     public class GenresController : BaseController
     {
         /// <summary>

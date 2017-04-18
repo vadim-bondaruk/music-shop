@@ -19,7 +19,7 @@
     /// <summary>
     ///     The track controller
     /// </summary>
-    [ShopAuthorize(UserRoles.Buyer, UserRoles.Admin, UserRoles.Seller)]
+    [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
     public class TracksController : BaseController
     {
         /// <summary>
