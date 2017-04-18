@@ -48,7 +48,7 @@
         /// The track genre.
         /// </summary>
         [DisplayName("Жанр")]
-        public Genre Genre { get; set; }
+        public GenreViewModel Genre { get; set; }
 
         /// <summary>
         /// The track media file.
