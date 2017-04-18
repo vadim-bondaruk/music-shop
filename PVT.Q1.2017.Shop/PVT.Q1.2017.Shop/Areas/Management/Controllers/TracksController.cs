@@ -24,24 +24,11 @@
     {
         /// <summary>
         /// </summary>
-        private readonly IAlbumRepository _albumRepository;
-
-        /// <summary>
-        /// </summary>
         private readonly IArtistRepository _artistRepository;
 
         /// <summary>
         /// </summary>
-        private readonly IArtistService _artistService;
-
-        /// <summary>
-        /// </summary>
         private readonly IGenreRepository _genreRepository;
-
-        /// <summary>
-        ///     The track service.
-        /// </summary>
-        private readonly ITrackService _trackService;
 
         /// <summary>
         /// </summary>
@@ -77,10 +64,8 @@
             ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this._artistService = artistService;
             this._artistRepository = artistRepository;
             this._genreRepository = genreRepository;
-            this._albumRepository = albumRepository;
             this._trackRepository = trackRepository;
         }
 
@@ -118,11 +103,8 @@
             ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this._trackService = trackService;
-            this._artistService = artistService;
             this._artistRepository = artistRepository;
             this._genreRepository = genreRepository;
-            this._albumRepository = albumRepository;
             this._trackRepository = trackRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
