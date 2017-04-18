@@ -3,7 +3,7 @@ namespace Shop.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddedPaymentTransactions : DbMigration
+    public partial class AddPaymentTransaction : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,7 @@ namespace Shop.DAL.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Amount = c.Int(nullable: false),
+                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         UserId = c.Int(nullable: false),
                         CurrencyId = c.Int(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
@@ -23,26 +23,26 @@ namespace Shop.DAL.Migrations
                 .Index(t => t.UserId)
                 .Index(t => t.CurrencyId);
             
-            AddColumn("dbo.Albums", "PaymentTransaction_Id", c => c.Int());
-            AddColumn("dbo.Tracks", "PaymentTransaction_Id", c => c.Int());
-            CreateIndex("dbo.Albums", "PaymentTransaction_Id");
-            CreateIndex("dbo.Tracks", "PaymentTransaction_Id");
-            AddForeignKey("dbo.Albums", "PaymentTransaction_Id", "dbo.PaymentTransactions", "Id");
-            AddForeignKey("dbo.Tracks", "PaymentTransaction_Id", "dbo.PaymentTransactions", "Id");
+            AddColumn("dbo.PurchasedAlbums", "PaymentTransaction_Id", c => c.Int());
+            AddColumn("dbo.PurchasedTracks", "PaymentTransaction_Id", c => c.Int());
+            CreateIndex("dbo.PurchasedAlbums", "PaymentTransaction_Id");
+            CreateIndex("dbo.PurchasedTracks", "PaymentTransaction_Id");
+            AddForeignKey("dbo.PurchasedAlbums", "PaymentTransaction_Id", "dbo.PaymentTransactions", "Id");
+            AddForeignKey("dbo.PurchasedTracks", "PaymentTransaction_Id", "dbo.PaymentTransactions", "Id");
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.PaymentTransactions", "UserId", "dbo.UsersData");
-            DropForeignKey("dbo.Tracks", "PaymentTransaction_Id", "dbo.PaymentTransactions");
+            DropForeignKey("dbo.PurchasedTracks", "PaymentTransaction_Id", "dbo.PaymentTransactions");
+            DropForeignKey("dbo.PurchasedAlbums", "PaymentTransaction_Id", "dbo.PaymentTransactions");
             DropForeignKey("dbo.PaymentTransactions", "CurrencyId", "dbo.Currencies");
-            DropForeignKey("dbo.Albums", "PaymentTransaction_Id", "dbo.PaymentTransactions");
             DropIndex("dbo.PaymentTransactions", new[] { "CurrencyId" });
             DropIndex("dbo.PaymentTransactions", new[] { "UserId" });
-            DropIndex("dbo.Tracks", new[] { "PaymentTransaction_Id" });
-            DropIndex("dbo.Albums", new[] { "PaymentTransaction_Id" });
-            DropColumn("dbo.Tracks", "PaymentTransaction_Id");
-            DropColumn("dbo.Albums", "PaymentTransaction_Id");
+            DropIndex("dbo.PurchasedTracks", new[] { "PaymentTransaction_Id" });
+            DropIndex("dbo.PurchasedAlbums", new[] { "PaymentTransaction_Id" });
+            DropColumn("dbo.PurchasedTracks", "PaymentTransaction_Id");
+            DropColumn("dbo.PurchasedAlbums", "PaymentTransaction_Id");
             DropTable("dbo.PaymentTransactions");
         }
     }

@@ -20,5 +20,6 @@
 
         string PaymentWithPaypalDemo(HttpRequestBase Request, HttpSessionStateBase Session);
 
+        void CreatePaymentTransaction(CartViewModel cart);
     }
 }

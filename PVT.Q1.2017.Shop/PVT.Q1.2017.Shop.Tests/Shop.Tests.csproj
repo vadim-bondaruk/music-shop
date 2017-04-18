@@ -104,7 +104,6 @@
   <ItemGroup>
     <Compile Include="ArtistServiceTest.cs" />
     <Compile Include="AlbumServiceTest.cs" />
-    <Compile Include="BllServiceTests\PaymentServiceTest.cs" />
     <Compile Include="CartServiceTest.cs" />
     <Compile Include="CurrencyServiceTest.cs" />
     <Compile Include="ModelsMapperTest.cs" />

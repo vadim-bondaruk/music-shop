@@ -16,7 +16,7 @@
         /// <summary>
         /// Total amount for current transaction
         /// </summary>
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// User ID
@@ -41,11 +41,11 @@
         /// <summary>
         /// Purchased tracks
         /// </summary>
-        public virtual ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<PurchasedTrack> PurchasedTrack { get; set; }
 
         /// <summary>
         /// Purchased albums
         /// </summary>
-        public virtual ICollection<Album> Albums { get; set; }
+        public virtual ICollection<PurchasedAlbum> PurchasedAlbum { get; set; }
     }
 }

@@ -136,9 +136,9 @@
     <Compile Include="Migrations\201704151152501_UpdateUserModel.Designer.cs">
       <DependentUpon>201704151152501_UpdateUserModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704172158490_AddedPaymentTransactions.cs" />
-    <Compile Include="Migrations\201704172158490_AddedPaymentTransactions.Designer.cs">
-      <DependentUpon>201704172158490_AddedPaymentTransactions.cs</DependentUpon>
+    <Compile Include="Migrations\201704181348024_AddPaymentTransaction.cs" />
+    <Compile Include="Migrations\201704181348024_AddPaymentTransaction.Designer.cs">
+      <DependentUpon>201704181348024_AddPaymentTransaction.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
@@ -263,8 +263,8 @@
     <EmbeddedResource Include="Migrations\201704151152501_UpdateUserModel.resx">
       <DependentUpon>201704151152501_UpdateUserModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704172158490_AddedPaymentTransactions.resx">
-      <DependentUpon>201704172158490_AddedPaymentTransactions.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704181348024_AddPaymentTransaction.resx">
+      <DependentUpon>201704181348024_AddPaymentTransaction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

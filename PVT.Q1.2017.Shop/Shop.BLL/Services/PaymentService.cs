@@ -12,6 +12,8 @@
     using System.Web;
     using Shop.BLL.Helpers;
     using Common.ViewModels;
+    using Common.Models;
+    using Exceptions;
 
     /// <summary>
     /// The payment service class
@@ -57,7 +59,7 @@
             itemList.items = items;
 
             //Address for the payment
-            Address billingAddress = new Address();
+            PayPal.Api.Address billingAddress = new PayPal.Api.Address();
             billingAddress.city = "NewYork";
             billingAddress.country_code = "US";
             billingAddress.line1 = "23rd street kew gardens";
@@ -487,6 +489,87 @@
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
             this.payment = new Payment() { id = paymentId };
             return this.payment.Execute(apiContext, paymentExecution);
+        }
+
+        /// <summary>
+        /// Creates and saves instance of payment transaction in DB
+        /// </summary>
+        /// <param name="cart">cart with tracks or albums</param>
+        public void CreatePaymentTransaction(CartViewModel cart)
+        {
+            ////
+            var userID = cart.CurrentUserId;
+            UserData user;
+            var currencyId = 0;
+            using (var userDataRepository = Factory.GetUserDataRepository())
+            {
+                user = userDataRepository.FirstOrDefault(u => u.UserId == userID);
+                if (user == null)
+                {
+                    throw new InvalidUserIdException($"Пользователь с ID={userID} не найден");
+                }
+                else
+                {
+                    currencyId = user.CurrencyId;
+                }
+            }
+
+            using (var payTransRepo = Factory.GetPaymentTransactionRepository())
+            {
+                var transaction = new PaymentTransaction()
+                {
+                    PurchasedTrack = new List<PurchasedTrack>(),
+                    PurchasedAlbum = new List<PurchasedAlbum>(),
+                    Amount = cart.TotalPrice,
+                    CurrencyId = currencyId,
+                    UserId = userID
+                };
+
+                #region tracks
+                using (var purchasedTrackRepository = Factory.GetPurchasedTrackRepository())
+                {
+                    foreach (var track in cart.Tracks)
+                    {
+                        var trackID = track.Id;
+                        var purchasedTrack = purchasedTrackRepository.FirstOrDefault(p =>
+                            p.UserId == userID
+                            && p.TrackId == trackID);
+                        if (purchasedTrack == null)
+                        {
+                            purchasedTrack = new PurchasedTrack() { UserId = userID, TrackId = trackID };
+                            purchasedTrackRepository.AddOrUpdate(purchasedTrack);
+                        }
+                        transaction.PurchasedTrack.Add(purchasedTrack);
+                    }
+                    purchasedTrackRepository.SaveChanges();
+                }
+                #endregion
+
+                #region albums
+                using (var purchasedAlbumRepository = Factory.GetPurchasedAlbumRepository())
+                {
+                    foreach (var album in cart.Albums)
+                    {
+                        var albumID = album.Id;
+                        var purchasedAlbum = purchasedAlbumRepository.FirstOrDefault(p =>
+                            p.UserId == userID
+                            && p.AlbumId == albumID);
+                        if (purchasedAlbum == null)
+                        {
+                            purchasedAlbum = new PurchasedAlbum() { UserId = userID, AlbumId = albumID };
+                            purchasedAlbumRepository.AddOrUpdate(purchasedAlbum);
+                        }
+                        transaction.PurchasedAlbum.Add(purchasedAlbum);
+                    }
+                    purchasedAlbumRepository.SaveChanges();
+                }
+                #endregion
+
+                payTransRepo.AddOrUpdate(transaction);
+                payTransRepo.SaveChanges();
+            }
+
+
         }
     }
 }
