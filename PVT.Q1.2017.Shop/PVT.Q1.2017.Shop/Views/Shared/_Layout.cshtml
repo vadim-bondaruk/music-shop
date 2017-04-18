@@ -1,6 +1,20 @@
-﻿@using Shop.Infrastructure.Enums
+﻿@using Shop.BLL.Utils
+@using Shop.Infrastructure.Enums
+
+@{
+    var isAuthenticated = Request.IsAuthenticated;
+    var isAdmin = false;
+    var isSeller = false;
+    if (isAuthenticated)
+    {
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+
+    }
+}
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,42 +30,42 @@
 
     <meta name="description" content="PVT.2017.Q1 Music Shop"/>
 </head>
+
 <body>
+
+   
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand", style = "margin-left:20px;" })
         </div>
         <div class="navbar-collapse collapse">
 
             <ul class="nav navbar-nav">
                 @Html.Partial("_MenuPartial")
             </ul>
-            @if (Request.IsAuthenticated)
+            @if (isAuthenticated && !isSeller && !isAdmin)
             {
                 <ul class="nav navbar-nav" style="display: inline-block">
                     <li>
                         <a>@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
                     </li>
                 </ul>
-                using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style="display: inline-block" }))
+                using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
                 {
                     @Html.AntiForgeryToken()
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            @Html.ActionLink("Привет  " + User.Identity.Name + "!", "Index", "Manage", new { area = "User" }, new { title = "Manage" })
+                            @Html.Partial("_UserMenuPartial", User.Identity.Name)
                         </li>
-                        
+
                         <li>
                             <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
                                title="Нажмите, чтобы перейти в Вашу корзину">
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                                 <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
                             </a>
-                        </li>
-                        <li>
-                            <a href="#" title="Нажмите, чтобы выйти" onclick="$('#logoutForm').submit();">Выйти</a>
                         </li>
                     </ul>
                 }
@@ -70,8 +84,8 @@
 <div class="container body-content">
     <div class="main-header">
         <h1 class="title">@ViewBag.Title</h1>
-    <div id="bc-override">@Html.MvcSiteMap().SiteMapPath()</div>
-</div>
+        <div id="bc-override">@Html.MvcSiteMap().SiteMapPath()</div>
+    </div>
 
     @RenderBody()
 

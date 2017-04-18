@@ -13,7 +13,7 @@
 
 .artist-edit { margin-bottom: 50px }
 
-.artist-edit img { height: 300px; }
+.artist-edit img { height: 300px;vertical-align: top; }
 
 .artist-edit .details {
     display: inline-block;
@@ -70,21 +70,6 @@ body {
     text-align: center;
     color: black;
     background-color: #dadada;
-}
-
-li { padding-right: 25px; }
-
-
-.row {
-    width: 100%;
-    margin: 0;
-}
-
-.row-el {
-    margin-top: -30px;
-    display: block;
-    text-align: left;
-    height: 800px;
 }
 
 .form-control {
@@ -766,7 +751,7 @@ a.tracks-list > ul {
     display: inline-block;
     width: 100%;
     background: white;
-    margin-bottom: 50px
+    margin-bottom: 20px
 }
 
 .track-edit ul li {
@@ -780,7 +765,23 @@ a.tracks-list > ul {
 
 .track-edit audio { width: 100%; }
 
-.track-edit .btn-group { margin: 55px 0 20px 0; }
+.track-edit .buttons { margin: 40px 0 20px 0; }
+
+.inner-addon { 
+    position: relative; 
+}
+
+.track-edit .inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  /*pointer-events: none;*/
+}
+.track-edit .right-addon .glyphicon { right: 0px; top: 4px}
+.track-edit .right-addon input { padding-right: 60px; }
+
+.track-edit .inner-addon .glyphicon:hover {
+    color: red;
+}
 
 .new-track > .list-group {
     height: 500px;
