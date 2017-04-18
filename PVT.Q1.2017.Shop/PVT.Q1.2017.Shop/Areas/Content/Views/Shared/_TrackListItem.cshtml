@@ -1,0 +1,29 @@
+﻿@using System.Globalization
+@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@model Shop.Common.ViewModels.TrackDetailsViewModel
+
+<li class="list-group-item">
+    <div class="left">
+        <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Image)" onerror="this.src = '/img/defuserpic.png'"/>
+        <div class="details">
+            <div>
+                <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Name)</a>
+                <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Artist.Name)</a>
+            </div>
+            <div>
+                @Html.Partial("_Stars", Model.Id)
+                @Html.Partial("Audio/AudioSection", Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id }))
+            </div>
+        </div>
+    </div>
+    <div class="order-block">
+        @{
+            if (Model.Price != null)
+            {
+                <div class="buy-btn">@Html.BtnBuyTrack(Model.Id, Model.IsOrdered, string.Format("{0}{1}", Model.Price.Amount.ToString(CultureInfo.CurrentUICulture), Model.Price.Currency.Symbol ?? Model.Price.Currency.ShortName), animate: true)</div>
+            }
+
+        }
+    </div>
+
+</li>

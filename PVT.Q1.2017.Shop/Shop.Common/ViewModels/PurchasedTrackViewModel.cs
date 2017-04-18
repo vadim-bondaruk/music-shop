@@ -3,6 +3,8 @@
     using System;
     using System.ComponentModel;
 
+    using Shop.Common.Models;
+
     /// <summary>
     /// The purchased track view model.
     /// </summary>

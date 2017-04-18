@@ -243,7 +243,7 @@
             ICollection<Track> tracks;
             using (var repository = this.Factory.GetPurchasedTrackRepository())
             {
-                tracks = repository.GetAll(p => p.UserId == userId, p => p.Track, p => p.Track.Artist).Select(p => p.Track).ToList();
+                tracks = repository.GetAll(p => p.UserId == userId, p => p.Track, p => p.Track.Artist, p => p.Track.Genre).Select(p => p.Track).ToList();
             }
 
             var trackViewModels = new List<PurchasedTrackViewModel>();

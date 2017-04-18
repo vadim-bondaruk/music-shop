@@ -8,13 +8,17 @@
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
 
+    using PVT.Q1._2017.Shop.App_Start;
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+    using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
     /// </summary>
-    public class GenresController : Controller
+    [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
+    public class GenresController : BaseController
     {
         /// <summary>
         /// </summary>
