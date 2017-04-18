@@ -368,7 +368,8 @@
                         cfg.CreateMap<Setting, SettingViewModel>();
 
                         cfg.CreateMap<Track, PurchasedTrackViewModel>()
-                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
+                            .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                            .ForMember(dst => dst.Genre, opt => opt.MapFrom(src => src.Genre));
                     });
 
             return commonMapperConfiguration.CreateMapper();
