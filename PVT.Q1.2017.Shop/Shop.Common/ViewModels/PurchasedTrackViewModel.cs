@@ -52,5 +52,10 @@
         /// The track media file.
         /// </summary>
         public byte[] TrackFile { get; set; }
+
+        /// <summary>
+        /// The track image. Optional.
+        /// </summary>
+        public byte[] Image { get; set; }
     }
 }
