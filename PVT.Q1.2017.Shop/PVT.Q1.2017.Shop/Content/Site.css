@@ -109,7 +109,8 @@ dl dd {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
+
     right: 80px;
     bottom: 20px;
     color: black;

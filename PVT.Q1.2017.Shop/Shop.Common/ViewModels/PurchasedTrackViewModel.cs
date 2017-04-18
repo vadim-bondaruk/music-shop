@@ -3,6 +3,8 @@
     using System;
     using System.ComponentModel;
 
+    using Shop.Common.Models;
+
     /// <summary>
     /// The purchased track view model.
     /// </summary>
@@ -46,7 +48,7 @@
         /// The track genre.
         /// </summary>
         [DisplayName("Жанр")]
-        public GenreViewModel Genre { get; set; }
+        public Genre Genre { get; set; }
 
         /// <summary>
         /// The track media file.
