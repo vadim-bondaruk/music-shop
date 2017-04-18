@@ -22,7 +22,7 @@
 
     <mvcSiteMapNode title="Альбомы" controller="Albums" action="List" area="Content">
     <mvcSiteMapNode title="Новый альбом" action="New" area="Management" />
-    <mvcSiteMapNode title= "Детальная информация" action="Details" area="Content" preservedRouteParameters="details,id" key="album-details-id" />
+    <mvcSiteMapNode title= "Треклист" action="Details" area="Content" preservedRouteParameters="details,id" key="album-details-id" />
     <mvcSiteMapNode title= "Правка" action="Edit" area="Management" preservedRouteParameters="details,id" key="album-edit-id" />
     </mvcSiteMapNode>
 
