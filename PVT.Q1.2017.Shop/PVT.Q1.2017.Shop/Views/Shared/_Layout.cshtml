@@ -57,17 +57,20 @@
                     @Html.AntiForgeryToken()
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @Html.Partial("_UserMenuPartial", User.Identity.Name)
-                        </li>
+                        @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString()))
+                        {
+                            <li>
+                                @Html.Partial("_UserMenuPartial", User.Identity.Name)
+                            </li>
 
-                        <li>
-                            <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
-                               title="Нажмите, чтобы перейти в Вашу корзину">
-                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
+                                   title="Нажмите, чтобы перейти в Вашу корзину">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 }
             }
