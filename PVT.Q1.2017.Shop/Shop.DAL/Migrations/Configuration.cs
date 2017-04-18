@@ -33,6 +33,7 @@ namespace Shop.DAL.Migrations
 #if DEBUG
             AddDefaultArtistsAndTracks(context);
             AddDefaultUsers(context);
+            AddDefaultPurchasedTracks(context);
 #endif
         }
 
@@ -1999,6 +2000,24 @@ namespace Shop.DAL.Migrations
                 }
 
                 context.SaveChanges();
+            }
+        }
+
+        private void AddDefaultPurchasedTracks(ShopContext context)
+        {
+            if (!context.Set<PurchasedTrack>().Any())
+            {
+                var userData = context.Set<UserData>().FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.CurrentCultureIgnoreCase));
+
+                if (userData != null)
+                {
+                    var userDataId = userData.Id;
+                    var tracks = context.Set<Track>().OrderBy(t => t.Id).Skip(5).Take(5).ToList();
+                    var purchasedTracks = tracks.Select(t => new PurchasedTrack { TrackId = t.Id, UserId = userDataId }).ToArray();
+
+                    context.Set<PurchasedTrack>().AddOrUpdate(purchasedTracks);
+                    context.SaveChanges();
+                }
             }
         }
     }
