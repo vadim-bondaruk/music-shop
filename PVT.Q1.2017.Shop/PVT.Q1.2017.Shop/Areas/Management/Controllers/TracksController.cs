@@ -24,28 +24,28 @@
     {
         /// <summary>
         /// </summary>
-        private readonly IAlbumRepository albumRepository;
+        private readonly IAlbumRepository _albumRepository;
 
         /// <summary>
         /// </summary>
-        private readonly IArtistRepository artistRepository;
+        private readonly IArtistRepository _artistRepository;
 
         /// <summary>
         /// </summary>
-        private readonly IArtistService artistService;
+        private readonly IArtistService _artistService;
 
         /// <summary>
         /// </summary>
-        private readonly IGenreRepository genreRepository;
+        private readonly IGenreRepository _genreRepository;
 
         /// <summary>
         ///     The track service.
         /// </summary>
-        private readonly ITrackService trackService;
+        private readonly ITrackService _trackService;
 
         /// <summary>
         /// </summary>
-        private readonly ITrackRepository trackRepository;
+        private readonly ITrackRepository _trackRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TracksController"/> class.
@@ -77,11 +77,11 @@
             ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.artistService = artistService;
-            this.artistRepository = artistRepository;
-            this.genreRepository = genreRepository;
-            this.albumRepository = albumRepository;
-            this.trackRepository = trackRepository;
+            this._artistService = artistService;
+            this._artistRepository = artistRepository;
+            this._genreRepository = genreRepository;
+            this._albumRepository = albumRepository;
+            this._trackRepository = trackRepository;
         }
 
         /// <summary>
@@ -118,12 +118,12 @@
             ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.trackService = trackService;
-            this.artistService = artistService;
-            this.artistRepository = artistRepository;
-            this.genreRepository = genreRepository;
-            this.albumRepository = albumRepository;
-            this.trackRepository = trackRepository;
+            this._trackService = trackService;
+            this._artistService = artistService;
+            this._artistRepository = artistRepository;
+            this._genreRepository = genreRepository;
+            this._albumRepository = albumRepository;
+            this._trackRepository = trackRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
@@ -160,9 +160,9 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var track = this.trackRepository.GetById(id);
+            var track = this._trackRepository.GetById(id);
             var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
-            var genres = this.genreRepository.GetAll();
+            var genres = this._genreRepository.GetAll();
             trackManagementViewModel.Genres = genres;
             return this.View(trackManagementViewModel);
         }
@@ -177,12 +177,12 @@
         public virtual ActionResult New(int id)
         {
             ICollection<Genre> genres;
-            using (var repo = this.genreRepository)
+            using (var repo = this._genreRepository)
             {
                 genres = repo.GetAll();
             }
 
-            var artist = this.artistRepository.GetById(id);
+            var artist = this._artistRepository.GetById(id);
             return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
         }
 
