@@ -13,7 +13,10 @@
 
 .artist-edit { margin-bottom: 50px }
 
-.artist-edit img { height: 300px;vertical-align: top; }
+.artist-edit img {
+    height: 300px;
+    vertical-align: top;
+}
 
 .artist-edit .details {
     display: inline-block;
@@ -332,6 +335,7 @@ li > input { width: 100% }
     padding-top: 4px;
     margin-top: 5px;
     overflow: hidden;
+    opacity: 0.8;
 }
 
 .albums-list .details .label a {
@@ -488,6 +492,8 @@ li > input { width: 100% }
     box-shadow: 0 0 5px orange;
 }
 
+.genres-list ul li{opacity: 0.8}
+
 .vertical {
     display: inline-block;
     width: 600px;
@@ -546,6 +552,7 @@ li > input { width: 100% }
     margin-top: 5px;
     border: solid;
     border-width: 1px;
+    opacity: 0.8;
 }
 
 .artists-list ul li:hover {
@@ -573,7 +580,8 @@ a.tracks-list > ul {
     display: table;
     height: 60px;
     width: 100%;
-    text-align: left
+    text-align: left;
+    opacity: 0.8;
 }
 
 .order-block {
@@ -582,9 +590,8 @@ a.tracks-list > ul {
     padding-top: 35px;
 }
 
-.order-block .buy-btn {
-    height: 100%;
-}
+.order-block .buy-btn { height: 100%; }
+
 .order-block .buy-btn button {
     width: 120px;
     height: 35px;
@@ -606,9 +613,7 @@ a.tracks-list > ul {
 
 .order-block .buy-btn button:hover p { display: none; }
 
-.order-block .buy-btn button:hover:before {
-    content: 'В корзину';
-}
+.order-block .buy-btn button:hover:before { content: 'В корзину'; }
 
 .order-block { display: inline-block; }
 
@@ -692,9 +697,7 @@ a.tracks-list > ul {
     margin-bottom: 150px;
 }
 
-.track-details .buttons {
-    margin-top: 135px;
-}
+.track-details .buttons { margin-top: 135px; }
 
 .track-details .panel {
     display: inline-block;
@@ -767,21 +770,22 @@ a.tracks-list > ul {
 
 .track-edit .buttons { margin: 40px 0 20px 0; }
 
-.inner-addon { 
-    position: relative; 
-}
+.inner-addon { position: relative; }
 
 .track-edit .inner-addon .glyphicon {
-  position: absolute;
-  padding: 10px;
-  /*pointer-events: none;*/
+    position: absolute;
+    padding: 10px;
+    /*pointer-events: none;*/
 }
-.track-edit .right-addon .glyphicon { right: 0px; top: 4px}
+
+.track-edit .right-addon .glyphicon {
+    right: 0px;
+    top: 4px
+}
+
 .track-edit .right-addon input { padding-right: 60px; }
 
-.track-edit .inner-addon .glyphicon:hover {
-    color: red;
-}
+.track-edit .inner-addon .glyphicon:hover { color: red; }
 
 .new-track > .list-group {
     height: 500px;
