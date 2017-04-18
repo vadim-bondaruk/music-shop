@@ -1,8 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
-    using System;
+    using System.Collections.Generic;
     using System.IO;
-    using System.Net;
+    using System.Linq;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
@@ -10,7 +10,7 @@
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
 
-    using Shop.Controllers;
+    using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
     ///     The track controller
@@ -19,20 +19,20 @@
     {
         /// <summary>
         /// </summary>
-        private readonly ITrackService _trackService;
-
-        /// <summary>
-        /// </summary>
         private readonly IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TracksController"/> class.
+        /// </summary>
+        private readonly ITrackService _trackService;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TracksController" /> class.
         /// </summary>
         /// <param name="repositoryFactory">
-        /// The repository factory.
+        ///     The repository factory.
         /// </param>
         /// <param name="trackService">
-        /// The track service.
+        ///     The track service.
         /// </param>
         public TracksController(IRepositoryFactory repositoryFactory, ITrackService trackService)
         {
@@ -64,7 +64,8 @@
                     trackAlbumsViewModel = this._trackService.GetAlbumsList(
                         id.Value,
                         currency.Code,
-                        priceLevel, this.GetUserDataId());
+                        priceLevel,
+                        this.GetUserDataId());
                 }
             }
 
@@ -79,28 +80,6 @@
             }
 
             return this.View(trackAlbumsViewModel);
-        }
-
-        /// <summary>
-        ///     Shows all tracks.
-        /// </summary>
-        /// <returns>
-        ///     All tracks view.
-        /// </returns>
-        public ActionResult List()
-        {
-            if (this.CurrentUser != null)
-            {
-                var currency = this.GetCurrentUserCurrency();
-                if (currency != null)
-                {
-                    var priceLevel = this.GetCurrentUserPriceLevel();
-                    return this.View(
-                        this._trackService.GetDetailedTracksList(currency.Code, priceLevel, this.GetUserDataId()));
-                }
-            }
-
-            return this.View(this._trackService.GetDetailedTracksList());
         }
 
         /// <summary>
@@ -127,7 +106,8 @@
                     trackViewModel = this._trackService.GetTrackDetails(
                         id.Value,
                         currency.Code,
-                        priceLevel, this.GetUserDataId());
+                        priceLevel,
+                        this.GetUserDataId());
                 }
             }
 
@@ -189,6 +169,45 @@
             }
 
             return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
+        }
+
+        /// <summary>
+        ///     Shows all tracks.
+        /// </summary>
+        /// <returns>
+        ///     All tracks view.
+        /// </returns>
+        public ActionResult List()
+        {
+            if (this.CurrentUser != null)
+            {
+                var currency = this.GetCurrentUserCurrency();
+                if (currency != null)
+                {
+                    var priceLevel = this.GetCurrentUserPriceLevel();
+                    return
+                        this.View(
+                            this._trackService.GetDetailedTracksList(currency.Code, priceLevel, this.GetUserDataId()));
+                }
+            }
+
+            return this.View(this._trackService.GetDetailedTracksList());
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public ActionResult PurchasedList()
+        {
+            var purchasedTracks = this._trackService.GetPurchasedTracks(this.CurrentUser.Id);
+
+            if (purchasedTracks == null)
+            {
+                return this.HttpNotFound("У вас нет приобретенных товаров");
+            }
+
+            return this.View(purchasedTracks);
         }
     }
 }

@@ -277,6 +277,8 @@
     <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_TrackListItem.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\MiniPlayer.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
@@ -458,6 +460,7 @@
     <Content Include="Views\Shared\_Stars.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
+    <Content Include="Views\Shared\_UserMenuPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

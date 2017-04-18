@@ -1,11 +1,12 @@
-﻿@model ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
+﻿@model ICollection<Shop.Common.ViewModels.PurchasedTrackViewModel>
 
-@{ ViewBag.Title = "Все треки"; }
+@{ ViewBag.Title = "Мои покупки"; }
+
 <div class="tracks-list">
     <ul class="list-group">
         @foreach (var item in Model)
         {
-            @Html.Partial("_TrackListItem", item)
+            @Html.Partial("_PurchasedTrackListItem", item)
         }
     </ul>
 </div>
