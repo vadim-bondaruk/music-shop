@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net.Mail;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Class for sending mail
@@ -42,6 +43,72 @@
         /// <returns></returns>
         public static bool SendingMail(string userEmail, string subject, string body)
         {
+            var smtp = ConfigureSmtpClient();
+            var message = ConfigureMailMessage(userEmail, subject, body);
+
+            try
+            {
+                smtp.Send(message);
+                return true;
+            }
+            catch (Exception)
+            {
+                // TODO: write data to log
+                return false;
+            }            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public static async Task<bool> SendingMailAsync(string userEmail, string subject, string body)
+        {
+            var smtp = ConfigureSmtpClient();
+            var message = ConfigureMailMessage(userEmail, subject, body);
+
+            try
+            {
+                await smtp.SendMailAsync(message).ConfigureAwait(false);
+                return true;
+            }
+            catch (Exception)
+            {
+                // TODO: write data to log
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private static SmtpClient ConfigureSmtpClient()
+        {
+            SmtpClient smtp = new SmtpClient(_smtpClient, _smtpPort);
+            smtp.Credentials = new System.Net.NetworkCredential(_emailOfSendr, _passwordBox);
+
+            // Use SSH Encryption
+            smtp.EnableSsl = true;
+
+            return smtp;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private static MailMessage ConfigureMailMessage(string userEmail, string subject, string body)
+        {
             if (userEmail == null)
             {
                 throw new ArgumentException("userEmail");
@@ -57,31 +124,17 @@
                 throw new ArgumentException("body");
             }
 
-            try
-            {
-                MailAddress from = new MailAddress(_emailOfSendr, _nameOfSendr);
-            
-                MailAddress to = new MailAddress(userEmail);
-           
-                MailMessage message = new MailMessage(from, to);
-            
-                message.Subject = subject;           
-                message.Body = string.Format(body);
-                message.IsBodyHtml = true;            
-                SmtpClient smtp = new SmtpClient(_smtpClient, _smtpPort);            
-                smtp.Credentials = new System.Net.NetworkCredential(_emailOfSendr, _passwordBox);
+            MailAddress from = new MailAddress(_emailOfSendr, _nameOfSendr);
 
-                //Use SSH Encryption
-                smtp.EnableSsl = true;
+            MailAddress to = new MailAddress(userEmail);
 
-                smtp.Send(message);
-                return true;
-            }
-            catch (Exception)
-            {
-                // TODO: write data to log
-                return false;
-            }            
+            MailMessage message = new MailMessage(from, to);
+
+            message.Subject = subject;
+            message.Body = string.Format(body);
+            message.IsBodyHtml = true;
+
+            return message;
         }
     }
 }

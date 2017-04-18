@@ -1,19 +1,17 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
-    using System.Web;
+    using System;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
-    using App_Start;
     using Helpers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.BLL.Utils;
     using global::Shop.BLL.Utils.Infrastructure;
     using global::Shop.Common.ViewModels;
-    using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
+    using global::Shop.DAL.Infrastruture;
     using ViewModels;
-    using global::Shop.BLL.Utils;
-    using System;
-    using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
@@ -98,7 +96,7 @@
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return this.View();
         }
 
         /// <summary>
@@ -128,11 +126,11 @@
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
-                    return View(model);
+                    return this.View(model);
                 }
             }
 
-            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
+            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
         }
 
         /// <summary>
@@ -166,7 +164,7 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
+        public async Task<ActionResult> Register([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
                                                     Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
@@ -180,16 +178,17 @@
                     if (result)
                     {
                         string subject = "Подтверждение регистрации";
-                        string body = string.Format("Для завершения регистрации перейдите по ссылке:" +
-                            "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
+                        string body = string.Format(
+                                                    "Для завершения регистрации перейдите по ссылке:" +
+                                                    "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
                             Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
-                        if (MailDispatch.SendingMail(userDB.Email, subject, body))
+                        if (await MailDispatch.SendingMailAsync(userDB.Email, subject, body))
                         {
                             return this.RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Ошибка отправки сообщения");
+                            ModelState.AddModelError(string.Empty, "Ошибка отправки сообщения");
                         }
                     }
                 }
@@ -198,8 +197,8 @@
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
             }
-            return this.View(user);
 
+            return this.View(user);
         }
 
         /// <summary>
@@ -209,9 +208,8 @@
         [AllowAnonymous]
         public ActionResult Siterules()
         {
-            return View();
+            return this.View();
         }
-
 
         /// <summary>
         /// GET: User/Account/Confirm
@@ -226,6 +224,7 @@
                 ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие " +
                     "инструкции по завершению регистрации";
                 }
+
             return this.View();
             }
 
@@ -242,16 +241,18 @@
             {
                 throw new ArgumentException("Token");
             }
+
             if (token == null)
             {
                 throw new ArgumentException("Email");
             }
-            if (_userService.UpdateConfirmEmail(token, email))
+
+            if (this._userService.UpdateConfirmEmail(token, email))
             {
-                return RedirectToAction("Success", "Account", new { area = "User" });
+                return this.RedirectToAction("Success", "Account", new { area = "User" });
             }
 
-            return RedirectToAction("Confirm", "Account", new { Email = "" });
+            return this.RedirectToAction("Confirm", "Account", new { Email = string.Empty });
         }
 
         /// <summary>
@@ -266,7 +267,6 @@
             return this.View();
         }
 
-
         /// <summary>
         /// POST: User/Account/ForgotPassword
         /// </summary>
@@ -276,39 +276,40 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword([Bind(Include = "UserIdentity")] ForgotPasswordViewModel model)
+        public async Task<ActionResult> ForgotPassword([Bind(Include = "UserIdentity")] ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    string usetEmail = _userService.GetEmailByUserIdentity(model.UserIdentity);
-                    int id = _userService.GetIdOflogin(usetEmail);
+                    string usetEmail = this._userService.GetEmailByUserIdentity(model.UserIdentity);
+                    int id = this._userService.GetIdOflogin(usetEmail);
                     string newPassword = PasswordEncryptor.RendomPassword();
-                    if (_userService.UpdatePassword(id, newPassword))
+                    if (this._userService.UpdatePassword(id, newPassword))
                     {
                         string subject = "Ваш пароль был изменен";
                         string body = "Новый пароль: " + newPassword;
-                        if (MailDispatch.SendingMail(usetEmail, subject, body))
+                        if (await MailDispatch.SendingMailAsync(usetEmail, subject, body))
                         {
-                            return RedirectToAction("ForgotPasswordSuccess");
+                            return this.RedirectToAction("ForgotPasswordSuccess");
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Ошибка отправки");
+                            ModelState.AddModelError(string.Empty, "Ошибка отправки");
                         }
                     }
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
-                    return View();
+                    return this.View();
                 }
             }
             else
         {
                 return this.View();
         }
+
             return this.View();
         }
 
@@ -336,7 +337,7 @@
         /// <returns></returns>
         public ActionResult Error()
         {
-            return View();
+            return this.View();
         }
     }
 }

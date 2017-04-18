@@ -2,10 +2,12 @@
     ViewBag.Title = "Удалить аккаунт";
 }
 
-<h2>Удалить аккаунт</h2>
+<h3>Удалить аккаунт</h3>
 
-@Html.ActionLink("Редактировать личные данные", "UpdatePersonal", "Manage") | @Html.ActionLink("Изменить пароль", "ChangePassword", "Manage") | @Html.ActionLink("Изменить логин", "ChangeLogin", "Manage")
-| @Html.ActionLink("Удалить аккаунт", "Delete", "Manage")
+<input type="button" class="btn" value="Редактировать данные профиля" onclick="location.href='@Url.Action("UpdatePersonal", "Manage")'" />
+<input type="button" class="btn" value="Изменить пароль" onclick="location.href='@Url.Action("ChangePassword", "Manage")'" />
+<input type="button" class="btn" value="Изменить логин" onclick="location.href='@Url.Action("ChangeLogin", "Manage")'" />
+<input type="button" class="btn" value="Удалить аккаунт" onclick="location.href='@Url.Action("Delete", "Manage")'" />
 
 <h3>Вы уверены, что хотите удалить аккаунт?</h3>
 <div>
