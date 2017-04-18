@@ -6,16 +6,21 @@
     using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.BLL.Utils;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
 
+    using PVT.Q1._2017.Shop.App_Start;
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+    using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
     ///     The track controller
     /// </summary>
-    public class TracksController : Controller
+    [ShopAuthorize(UserRoles.Buyer, UserRoles.Admin, UserRoles.Seller)]
+    public class TracksController : BaseController
     {
         /// <summary>
         /// </summary>
@@ -193,6 +198,56 @@
         public virtual ActionResult New(TrackManagementViewModel viewModel)
         {
             var track = ManagementMapper.GetTrackModel(viewModel);
+
+            if (this.CurrentUser != null && this.CurrentUser.IsInRole(UserRoles.Seller))
+            {
+                track.OwnerId = this.CurrentUser.Id;
+            }
+
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            {
+                repository.AddOrUpdate(track);
+                repository.SaveChanges();
+            }
+
+            return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        /// The view model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(TrackManagementViewModel viewModel)
+        {
+            Track currentTrack;
+
+            using (var repo = this.RepositoryFactory.GetTrackRepository())
+            {
+                currentTrack = repo.GetById(viewModel.Id);
+            }
+
+            if (currentTrack == null)
+            {
+                return this.HttpNotFound($"Трек с id = {viewModel.Id} не найден");
+            }
+
+            if (viewModel.PostedTrackFile == null && viewModel.TrackFile == null)
+            {
+                viewModel.TrackFile = currentTrack.TrackFile;
+            }
+
+            if ((viewModel.PostedImage == null) && (viewModel.Image == null))
+            {
+                viewModel.Image = currentTrack.Image;
+            }
+
+            var track = ManagementMapper.GetTrackModel(viewModel);
+            track.OwnerId = currentTrack.OwnerId;
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track);
