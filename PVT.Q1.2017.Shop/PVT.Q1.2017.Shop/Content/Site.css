@@ -32,6 +32,17 @@ body {
 
 .navbar {
     border: none;
+    height: 25px;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 28px;
+    text-shadow: 1px 1px 10px;
+}
+
+.navbar .container {
+    width: 1300px;
 }
 
 .title {
@@ -45,6 +56,17 @@ body {
     z-index: 101;
         border-bottom-left-radius: 10px; 
     border-bottom-right-radius: 10px;
+}
+
+#currency-dropdown {
+    margin-top: -2px;
+    height: 20px;
+    border: none;
+    background: black;
+    border-radius: 18px;
+    font-size: 11px;
+    color: #999;
+    box-shadow: 1px 1px 10px #ff6347;
 }
 
 #bc-override {
