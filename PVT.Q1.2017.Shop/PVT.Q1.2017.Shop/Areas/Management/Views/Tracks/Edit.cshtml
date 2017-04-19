@@ -1,12 +1,11 @@
 ﻿@using System.Web.Mvc.Html
 @model PVT.Q1._2017.Shop.Areas.Management.ViewModels.TrackManagementViewModel
 <head>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/file-change.js"></script>
     <script>
         function ClearTrackFile() {
+            $("#track-file").val('');
             $("#file-path").val('');
-            @*@Model.PostedTrackFile = null;*@
         }
     </script>
 </head>
@@ -74,8 +73,8 @@
             </div>
         </div>
     </div>
-    <input type="file" id="file" name="PostedImage" style="display: none"/>
-    <input type="file" id="track-file" name="PostedTrackFile" style="display: none" />
+    <input type="file" id="file" name="PostedImage" style="display: none" />
+    <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
 }
 
 @using (Html.BeginForm("Delete", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))
