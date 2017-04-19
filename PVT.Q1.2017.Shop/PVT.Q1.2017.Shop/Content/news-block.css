@@ -1,4 +1,4 @@
-﻿#bc-override {
+﻿.title, #bc-override {
     display: none;
 }
 
@@ -9,7 +9,7 @@
     position: absolute;
     font-size: 58px;
     left: 710px;
-    top: 120px;
+    top: 50px;
     text-shadow: 1px 1px 10px 
 }
 
