@@ -1,9 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Helpers
 {
-    using System.Web;
+    using System.Collections.Generic;
     using AutoMapper;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
+    using global::Shop.Infrastructure.Models;
 
     /// <summary>
     /// The user mapper
@@ -38,6 +39,12 @@
             return UserModelsMapper.Map<UserEditView>(user);
         }
 
+        public static PagedResult<UserEditView> GetUsersToEdit(PagedResult<User> users)
+        {
+            return new PagedResult<UserEditView>(UserModelsMapper.Map<ICollection<UserEditView>>(users.Items),
+                                                 users.PageSize, users.CurrentPage, users.TotalItemsCount);
+        }
+
         public static User GetUserByUserEditView(UserEditView user)
         {
             return UserModelsMapper.Map<User>(user);
@@ -50,7 +57,13 @@
         /// </returns>
         private static IMapper CreateMapper()
         {
-            MapperConfiguration managementConfiguration = new MapperConfiguration(cfg => { cfg.CreateMap<UserViewModel, User>(); cfg.CreateMap<User, UserEditView>(); cfg.CreateMap<UserEditView, User>(); });
+            MapperConfiguration managementConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<UserViewModel, User>();
+                cfg.CreateMap<User, UserEditView>();
+                cfg.CreateMap<UserEditView, User>();
+                cfg.CreateMap<PagedResult<User>, PagedResult<UserEditView>>();
+            });
   
             return managementConfiguration.CreateMapper();
         }

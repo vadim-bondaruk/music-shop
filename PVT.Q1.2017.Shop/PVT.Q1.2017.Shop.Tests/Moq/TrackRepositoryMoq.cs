@@ -32,6 +32,21 @@
                                      It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
                  .Returns(_tracks);
 
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Track, bool>>>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
+            _mock.Setup(
+                        m =>
+                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Track, bool>>>(),
+                                     It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Track, bool>>>()))
                  .Returns(() => _tracks.FirstOrDefault());
 

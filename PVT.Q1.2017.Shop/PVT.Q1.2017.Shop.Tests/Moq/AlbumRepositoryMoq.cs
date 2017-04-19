@@ -32,6 +32,21 @@
                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
                  .Returns(_albums);
 
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>()))
+                 .Returns(() => new PagedResult<Album>(_albums, 10, 1, _albums.Count));
+
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
+                 .Returns(() => new PagedResult<Album>(_albums, 10, 1, _albums.Count));
+
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>()))
+                 .Returns(() => new PagedResult<Album>(_albums, 10, 1, _albums.Count));
+
+            _mock.Setup(
+                        m =>
+                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>(),
+                                     It.IsAny<Expression<Func<Album, BaseEntity>>[]>()))
+                 .Returns(() => new PagedResult<Album>(_albums, 10, 1, _albums.Count));
+
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Album, bool>>>()))
                  .Returns(() => _albums.FirstOrDefault());
 
