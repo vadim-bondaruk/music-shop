@@ -4,16 +4,16 @@
 
     /// <summary>
     /// </summary>
-    public class NewsController : Controller
+    public class MusicController : Controller
     {
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Article()
+        public ActionResult Article(string partialName)
         {
             this.ViewBag.Title = "Новости музыки";
-            return this.View("_NewAlbumOfDorn");
+            return this.View(partialName);
         }
     }
 }

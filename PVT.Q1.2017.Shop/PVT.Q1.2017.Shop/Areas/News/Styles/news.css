@@ -1,4 +1,24 @@
-﻿body {
-    width: 60%;
-    opacity: 1.5;
+.main-col {
+    background: #fff;
+    padding: 55px;
+    text-align: center;
+    box-shadow: 1px 1px 10px;
+    opacity: 0.9;
+}
+
+.main-col p {
+    margin: 25px 0 25px 0;
+}
+
+.article-detail__date {
+    font-weight: bold;
+
+    margin: 25px 0 25px 0;
+}
+
+.post__photo span {
+        display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    font-style: italic;
 }

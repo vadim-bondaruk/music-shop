@@ -284,7 +284,7 @@
     <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
     <Content Include="Areas\News\Views\Music\Article.cshtml" />
-    <Content Include="Areas\News\Views\Shared\_NewAlbumOfDorn.cshtml" />
+    <Content Include="Areas\News\Views\Shared\NewAlbumOfDorn.cshtml" />
     <Content Include="Areas\News\Views\web.config" />
     <Content Include="Areas\News\Views\_ViewStart.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
