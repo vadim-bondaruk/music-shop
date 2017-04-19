@@ -4,6 +4,7 @@
     text-align: center;
     box-shadow: 1px 1px 10px;
     opacity: 0.9;
+    margin-top: 50px;
 }
 
 .main-col p {
@@ -26,9 +27,4 @@
 .slider__item__img {
     max-width: 1000px;
     margin: 5px 0 5px 0;
-}
-
-.EmbedVideo {
-    width: 604px;
-    height: 604px;
 }
