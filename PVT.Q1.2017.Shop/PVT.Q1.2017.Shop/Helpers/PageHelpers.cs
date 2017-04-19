@@ -3,7 +3,7 @@
     using System;
     using System.Text;
     using System.Web.Mvc;
-    using global::Shop.Common.Models;
+    using global::Shop.Infrastructure.Models;
 
     /// <summary>
     /// Class for page displaying
@@ -17,7 +17,7 @@
         /// <param name="pageInfo"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static MvcHtmlString PageLinks(this HtmlHelper helper, PageInfo pageInfo, Func<int, string> url)
+        public static MvcHtmlString PageLinks<T>(this HtmlHelper helper, PagedResult<T> pageInfo, Func<int, string> url)
         {
             StringBuilder result = new StringBuilder();
 
@@ -27,15 +27,15 @@
             tag.AddCssClass("btn btn-default");
             result.Append(tag.ToString());
 
-            for (int i = pageInfo.PageNumber - 2; i <= pageInfo.PageNumber + 2; i++)
+            for (int i = pageInfo.CurrentPage - 2; i <= pageInfo.CurrentPage + 2; i++)
             {
-                if (i > 0 && i <= pageInfo.TotalPages)
+                if (i > 0 && i <= pageInfo.PagesCount)
                 {
                     tag = new TagBuilder("a");
                     tag.MergeAttribute("href", url(i));
                     tag.InnerHtml = i.ToString();
 
-                    if (i == pageInfo.PageNumber)
+                    if (i == pageInfo.CurrentPage)
                     {
                         tag.AddCssClass("selected");
                         tag.AddCssClass("btn btn-primary");
@@ -50,7 +50,7 @@
             }
 
             tag = new TagBuilder("a");
-            tag.MergeAttribute("href", url(pageInfo.TotalPages));
+            tag.MergeAttribute("href", url(pageInfo.PagesCount));
             tag.InnerHtml = "Last";
             tag.AddCssClass("btn btn-default");
             result.Append(tag.ToString());

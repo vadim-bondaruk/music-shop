@@ -309,6 +309,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Management\Views\Album\Create.cshtml" />
     <Content Include="Areas\Content\Views\Feedbacks\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PagedTracksList.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>

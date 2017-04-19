@@ -94,12 +94,12 @@
             var album = _albumService.GetAlbumsList().FirstOrDefault();
             Assert.IsNotNull(album);
 
-            Assert.IsTrue(_albumService.GetAlbumsWithPrice().Any());
+            Assert.IsTrue(_albumService.GetAlbumsWithPrice(1, 10).Items.Any());
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(
                         m =>
-                            m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),
+                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>(),
                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
         }
 
@@ -107,12 +107,12 @@
         public void GetAlbumsWithoutPriceConfiguredTest()
         {
             AddAlbumTest();
-            Assert.IsTrue(_albumService.GetAlbumsWithoutPrice().Any());
+            Assert.IsTrue(_albumService.GetAlbumsWithoutPrice(1, 10).Items.Any());
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(
                         m =>
-                            m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),
+                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>(),
                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
         }
 

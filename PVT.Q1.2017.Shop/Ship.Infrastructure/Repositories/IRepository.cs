@@ -57,7 +57,7 @@
         /// <param name="filter">The filter.</param>
         /// <param name="includes">The additional include if needed.</param>
         /// <returns>Entities which correspond to the <paramref name="filter"/> using pagination.</returns>
-        PagedResult<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes);
+        PagedResult<TEntity> GetAll(int page, int pageSize, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
         /// Tries to find an entity from the repository using the specified <paramref name="filter"/>.

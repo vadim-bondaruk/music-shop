@@ -53,7 +53,6 @@
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\OrderAlbum.cs" />
     <Compile Include="Models\OrderTrack.cs" />
-    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Validators\ChangeLoginValidator.cs" />
     <Compile Include="Models\PaymentTransaction.cs" />
     <Compile Include="Models\PurchasedAlbum.cs" />

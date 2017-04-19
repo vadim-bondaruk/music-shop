@@ -1,8 +1,8 @@
 ﻿@using Shop.BLL.Utils
 @using PVT.Q1._2017.Shop.Areas.Content.Extentions
-@using Shop.Infrastructure.Enums
-@model ICollection<Shop.Common.ViewModels.TrackViewModel>
 @using PVT.Q1._2017.Shop.Helpers
+@using Shop.Infrastructure.Enums
+@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.TrackViewModel>
     
 @{
     bool isAuthenticated = Request.IsAuthenticated;
@@ -21,7 +21,7 @@
 }
 
 <table class="table table-hover table-responsive">
-    @foreach (var track in Model)
+    @foreach (var track in Model.Items)
     {
         <tr>
             <td>
@@ -96,4 +96,4 @@
     }
 </table>
 
-@Html.PageLinks(Model, i => Url.Action("List", "Track", new { page = i, area = "Content" }))
+@Html.PageLinks(Model, i => Url.Action("List", "Track", new { id = i, area = "List" }))

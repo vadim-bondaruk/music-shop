@@ -7,6 +7,7 @@
     using DAL.Infrastruture;
     using Helpers;
     using Infrastructure;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The artist service.
@@ -261,29 +262,7 @@
                 artists = repository.GetAll();
             }
 
-            List<ArtistViewModel> artistViewModels = new List<ArtistViewModel>();
-            using (var repository = Factory.GetTrackRepository())
-            {
-                foreach (var artist in artists)
-                {
-                    var artistViewModel = ModelsMapper.GetArtistViewModel(artist);
-                    if (artistViewModel != null)
-                    {
-                        artistViewModel.TracksCount = repository.Count(t => t.ArtistId == artist.Id);
-                        artistViewModels.Add(artistViewModel);
-                    }
-                }
-            }
-
-            using (var repository = Factory.GetAlbumRepository())
-            {
-                foreach (var artistViewModel in artistViewModels)
-                {
-                    artistViewModel.AlbumsCount = repository.Count(a => a.ArtistId != null && a.ArtistId == artistViewModel.Id);
-                }
-            }
-
-            return artistViewModels;
+            return CreateArtistViewModelsList(artists);
         }
 
         /// <summary>
@@ -307,6 +286,59 @@
             }
 
             return detailedList;
+        }
+
+        /// <summary>
+        /// Returns all registered artists.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <returns>
+        /// All registered artists.
+        /// </returns>
+        public PagedResult<ArtistViewModel> GetArtistsList(int page, int pageSize)
+        {
+            PagedResult<Artist> artists;
+            using (var repository = this.Factory.GetArtistRepository())
+            {
+                artists = repository.GetAll(page, pageSize);
+            }
+
+            var artistViewModels = CreateArtistViewModelsList(artists.Items);
+            return new PagedResult<ArtistViewModel>(artistViewModels, pageSize, page, artists.TotalItemsCount);
+        }
+
+        /// <summary>
+        /// Returns all registered artists with detailed information.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <returns>
+        /// All registered artists with detailed information.
+        /// </returns>
+        public PagedResult<ArtistDetailsViewModel> GetDetailedArtistsList(int page, int pageSize)
+        {
+            PagedResult<Artist> artists;
+            using (var repository = this.Factory.GetArtistRepository())
+            {
+                artists = repository.GetAll(page, pageSize);
+            }
+
+            List<ArtistDetailsViewModel> detailedList = new List<ArtistDetailsViewModel>();
+            foreach (var artist in artists.Items)
+            {
+                detailedList.Add(GetArtistDetails(artist.Id));
+            }
+
+            return new PagedResult<ArtistDetailsViewModel>(detailedList, pageSize, page, artists.TotalItemsCount);
         }
 
         /// <summary>
@@ -363,6 +395,33 @@
             }
 
             return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
+        }
+
+        private ICollection<ArtistViewModel> CreateArtistViewModelsList(ICollection<Artist> artists)
+        {
+            List<ArtistViewModel> artistViewModels = new List<ArtistViewModel>();
+            using (var repository = Factory.GetTrackRepository())
+            {
+                foreach (var artist in artists)
+                {
+                    var artistViewModel = ModelsMapper.GetArtistViewModel(artist);
+                    if (artistViewModel != null)
+                    {
+                        artistViewModel.TracksCount = repository.Count(t => t.ArtistId == artist.Id);
+                        artistViewModels.Add(artistViewModel);
+                    }
+                }
+            }
+
+            using (var repository = Factory.GetAlbumRepository())
+            {
+                foreach (var artistViewModel in artistViewModels)
+                {
+                    artistViewModel.AlbumsCount = repository.Count(a => a.ArtistId != null && a.ArtistId == artistViewModel.Id);
+                }
+            }
+
+            return artistViewModels;
         }
     }
 }
