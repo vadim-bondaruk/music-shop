@@ -541,7 +541,7 @@
                         }
                         transaction.PurchasedTrack.Add(purchasedTrack);
                     }
-                    purchasedTrackRepository.SaveChanges();
+                    //purchasedTrackRepository.SaveChanges();
                 }
                 #endregion
 
@@ -561,15 +561,32 @@
                         }
                         transaction.PurchasedAlbum.Add(purchasedAlbum);
                     }
-                    purchasedAlbumRepository.SaveChanges();
+                    //purchasedAlbumRepository.SaveChanges();
                 }
                 #endregion
 
                 payTransRepo.AddOrUpdate(transaction);
                 payTransRepo.SaveChanges();
             }
+        }
 
-
+        /// <summary>
+        /// Gets and returns collection of payment transactions for certain user by its ID
+        /// </summary>
+        /// <param name="userID">user ID</param>
+        /// <returns></returns>
+        public IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID)
+        {
+            IEnumerable<PaymentTransaction> transactions = null;
+            if (userID!=0)
+            {
+                using (var payRepo = Factory.GetPaymentTransactionRepository())
+                {
+                    transactions = payRepo.GetAll((c) => c.UserId == userID,
+                                                  a => a.Currency, a => a.User.User);
+                }
+            }
+            return transactions;
         }
     }
 }

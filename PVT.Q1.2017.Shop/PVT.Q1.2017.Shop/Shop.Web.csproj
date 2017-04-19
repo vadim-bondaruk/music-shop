@@ -281,6 +281,7 @@
     <Content Include="Areas\Content\Views\Shared\Audio\MiniPlayer.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
@@ -314,7 +315,6 @@
     <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\PlayButtonPartial.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\AudioSection.cshtml" />
-    <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
     <Content Include="Areas\Management\Views\Album\AddTracks.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
@@ -410,6 +410,7 @@
     <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
+    <Compile Include="Areas\Payment\Helpers\PaymentMapper.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />

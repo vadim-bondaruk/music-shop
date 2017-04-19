@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using Common.ViewModels;
+    using Common.Models;
 
     /// <summary>
     /// The payment service interface
@@ -21,5 +22,7 @@
         string PaymentWithPaypalDemo(HttpRequestBase Request, HttpSessionStateBase Session);
 
         void CreatePaymentTransaction(CartViewModel cart);
+
+        IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID);
     }
 }

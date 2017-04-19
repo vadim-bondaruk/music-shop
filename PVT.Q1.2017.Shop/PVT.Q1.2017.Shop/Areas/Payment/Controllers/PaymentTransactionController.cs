@@ -8,6 +8,7 @@
     using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.Common.ViewModels;
     using global::Shop.BLL.Services.Infrastructure;
+    using Helpers;
 
     public class PaymentTransactionController : BaseController
     {
@@ -19,20 +20,38 @@
             _paymentService = payService;
         }         
 
-        // GET: Payment/PaymentTransaction
+        /// <summary>
+        /// Action for 
+        /// </summary>
+        /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Get|HttpVerbs.Post)]
         [Authorize]
         public ActionResult Index()
         {
             if (CurrentUser != null && CurrentUser.Identity.IsAuthenticated)
             {
-                return View();
+                var transactions = _paymentService.GetTransactionsByUserId(CurrentUser.Id);
+                var transactionsViewModels = PaymentMapper.GetPaymentTransactionViewModels(transactions);
+                return View(transactionsViewModels);
             }
             else
             {
                 return HttpNotFound();
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Details(int? transactionID)
+        {
+            //TODO: реализоавть просмотр деталей заказа
+            if(transactionID==null)
+            {
+                return HttpNotFound();
+            }
+            return View();
+        }
+
 
         [HttpGet]
         [Authorize]
