@@ -17,27 +17,8 @@
     /// </summary>
     public class TracksController : BaseController
     {
-        /// <summary>
-        /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
-
-        /// <summary>
-        /// </summary>
-        private readonly ITrackService _trackService;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="TracksController" /> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        /// <param name="trackService">
-        ///     The track service.
-        /// </param>
-        public TracksController()
+        public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._repositoryFactory = repositoryFactory;
-            this._trackService = trackService;
         }
 
         /// <summary>
@@ -49,23 +30,23 @@
         /// </returns>
         public virtual ActionResult AlbumsList(int? id)
         {
-            if (id == null)
+            if (id.GetValueOrDefault() <= 0)
             {
                 return this.RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
             TrackAlbumsListViewModel trackAlbumsViewModel = null;
+
             if (this.CurrentUser != null)
             {
                 var currency = this.GetCurrentUserCurrency();
                 if (currency == null)
                 {
-                    var priceLevel = this.GetCurrentUserPriceLevel();
-                    trackAlbumsViewModel = this._trackService.GetAlbumsList(
+                    trackAlbumsViewModel = this._trackService.GetAlbums(
                         id.Value,
-                        currency.Code,
-                        priceLevel,
-                        this.GetUserDataId());
+                        CurrentUser.CurrencyId,
+                        CurrentUser.PriceLevelId,
+                        CurrentUser.UserProfileId);
                 }
             }
 
@@ -138,7 +119,6 @@
                 return HttpNotFound();
             }
 
-            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var trackRepository = factory.GetTrackRepository())
             {
                 //var track = trackRepository.GetById(id.Value);

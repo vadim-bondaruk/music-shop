@@ -44,7 +44,6 @@
                 return null;
             }
 
-            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             Currency currency = null;
             using (var repository = factory.GetUserDataRepository())
             {
@@ -69,7 +68,6 @@
                 return null;
             }
 
-            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var repository = factory.GetUserDataRepository())
             {
                 var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
@@ -94,7 +92,6 @@
                 return (int)Session[CURRENT_USER_DATA_ID_KEY];
             }
 
-            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var repository = factory.GetUserDataRepository())
             {
                 var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
