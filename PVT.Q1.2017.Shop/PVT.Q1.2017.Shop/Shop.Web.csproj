@@ -293,6 +293,7 @@
     <Content Include="Areas\News\Views\Shared\VyhPlanyRedakcii.cshtml" />
     <Content Include="Areas\News\Views\Shared\NewClip5Nizza.cshtml" />
     <Content Include="Areas\News\Views\Shared\PriznVLubviVSocSetyah.cshtml" />
+    <Content Include="Areas\News\Views\Shared\KLefflerPlaylist.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
