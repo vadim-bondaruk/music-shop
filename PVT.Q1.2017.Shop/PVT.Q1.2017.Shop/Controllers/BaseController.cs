@@ -12,6 +12,15 @@
     /// </summary>
     public class BaseController : Controller
     {
+        protected readonly IRepositoryFactory RepositoryFactory;
+        protected readonly IServiceFactory ServiceFactory;
+
+        public BaseController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory)
+        {
+            RepositoryFactory = repositoryFactory;
+            ServiceFactory = serviceFactory;
+        }
+
         private const string CURRENT_USER_DATA_ID_KEY = "UserDataId";
 
         public CurrentUser CurrentUser

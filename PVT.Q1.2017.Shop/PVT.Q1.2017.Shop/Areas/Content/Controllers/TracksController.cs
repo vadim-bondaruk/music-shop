@@ -34,7 +34,7 @@
         /// <param name="trackService">
         ///     The track service.
         /// </param>
-        public TracksController(IRepositoryFactory repositoryFactory, ITrackService trackService)
+        public TracksController()
         {
             this._repositoryFactory = repositoryFactory;
             this._trackService = trackService;
