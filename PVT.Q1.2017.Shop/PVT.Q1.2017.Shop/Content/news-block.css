@@ -3,12 +3,14 @@
 }
 
 .content-block {
-    margin-top: 80px;
+    margin-top: 150px;
 }
 .content-block__title {
     position: absolute;
-    left: 810px;
+    font-size: 58px;
+    left: 710px;
     top: 120px;
+    text-shadow: 1px 1px 10px 
 }
 
 .article__title__link {
