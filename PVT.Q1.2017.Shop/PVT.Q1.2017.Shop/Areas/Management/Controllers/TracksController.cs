@@ -6,7 +6,6 @@
     using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.BLL.Utils;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
