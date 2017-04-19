@@ -10,6 +10,8 @@
     using global::Shop.Infrastructure.Enums;
     using Shop.Controllers;
 
+    using MvcSiteMapProvider;
+
     /// <summary>
     /// The currency controller for admin
     /// </summary>

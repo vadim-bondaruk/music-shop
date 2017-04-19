@@ -164,6 +164,21 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapStars.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Players\Circle\js\circle.player.js" />
+    <Content Include="Content\Players\Circle\js\jquery.grab.js" />
+    <Content Include="Content\Players\Circle\js\jquery.jplayer.js" />
+    <Content Include="Content\Players\Circle\js\jquery.jplayer.min.js" />
+    <Content Include="Content\Players\Circle\js\jquery.min.js" />
+    <Content Include="Content\Players\Circle\js\jquery.transform2d.js" />
+    <Content Include="Content\Players\Circle\js\mod.csstransforms.min.js" />
+    <Content Include="Content\Players\Circle\skin\bgr.jpg" />
+    <Content Include="Content\Players\Circle\skin\buffer.png" />
+    <Content Include="Content\Players\Circle\skin\circle.player.css" />
+    <Content Include="Content\Players\Circle\skin\controls.jpg" />
+    <Content Include="Content\Players\Circle\skin\jquery.jplayer.swf" />
+    <Content Include="Content\Players\Circle\skin\progress.png" />
+    <Content Include="Content\Players\Circle\skin\progress_sprite.jpg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -207,14 +222,15 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\tracks.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\back.jpg" />
     <Content Include="img\failure.png" />
-    <Content Include="img\success.png" />
     <Content Include="Content\ratingStars.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\ratingStars.css" />
     <Content Include="Global.asax" />
     <Content Include="img\arrow.png" />
     <Content Include="img\defuserpic.png" />
+    <Content Include="img\success.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -258,8 +274,14 @@
     <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
     <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\Content\Views\Album\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\TrackListItem.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_TrackListItem.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\MiniPlayer.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
@@ -285,9 +307,7 @@
     <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
     <Content Include="Areas\Content\Views\Genres\List.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\AlbumsList.cshtml" />
-    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
-    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Content\Views\Albums\List.cshtml" />
     <Content Include="Areas\Content\Views\Albums\TracksList.cshtml" />
     <Content Include="Mvc.sitemap" />
@@ -445,6 +465,7 @@
     <Content Include="Views\Shared\_Stars.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
+    <Content Include="Views\Shared\_UserMenuPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

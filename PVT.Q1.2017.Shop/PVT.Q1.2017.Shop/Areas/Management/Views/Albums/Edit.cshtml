@@ -35,6 +35,7 @@
             <input type="file" id="file" name="PostedCover" style="display: none"/>
         </div>
         <div class="right">
+            <h2>Треклист</h2>
             <ol class="list-group">
                 @foreach (var track in (ICollection<Track>)ViewBag.Tracks)
                 {
@@ -44,21 +45,17 @@
                 }
             </ol>
         </div>
-
-    </div>
-    <div style="margin-top: 15px">
-        <a href="@Url.Action("List", "Albums", new { Area = "Content" })" class="btn btn-primary">
-            <span class="glyphicon glyphicon-list-alt"></span> Cписок
-        </a>
-        <a class="btn btn-primary" href="@Url.Action("New", "Tracks", new { area = "Management", id = Model.Id })">
-            <span class="glyphicon glyphicon-plus"></span> Трек
-        </a>
-        <a class="btn btn-danger" href="javascript:document.forms[1].submit()">
-            <span class="glyphicon glyphicon-remove"></span> Удалить
-        </a>
-        <button type="submit" class="btn btn-success">
-            <span class="glyphicon glyphicon-floppy-disk"></span> Сохранить
-        </button>
+        <div class="buttons">
+            <a class="btn btn-primary" href="@Url.Action("New", "Tracks", new { area = "Management", id = Model.Id })">
+                <span class="glyphicon glyphicon-plus"></span> Трек
+            </a>
+            <a class="btn btn-danger" href="javascript:document.forms[1].submit()">
+                <span class="glyphicon glyphicon-remove"></span> Удалить
+            </a>
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Сохранить
+            </button>
+        </div>
     </div>
 }
 
