@@ -96,4 +96,4 @@
     }
 </table>
 
-@Html.PageLinks(Model, i => Url.Action("List", "Track", new { id = i, area = "List" }))
+@Html.PageLinks(Model, i => Url.Action("List", "Track", new { page = i, area = "Content" }))
