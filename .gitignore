@@ -21,3 +21,5 @@ PVT.Q1.2017.Shop/Shop.Security/obj
 PVT\.Q1\.2017\.Shop/obj/
 PVT.Q1.2017.Shop/TestResults/
 *.coverage
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop.mdf
+PVT.Q1.2017.Shop/PVT.Q1.2017.Shop/App_Data/Shop_log.ldf

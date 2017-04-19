@@ -1,0 +1,21 @@
+﻿.bc-override {
+    display: none;
+}
+
+.content-block {
+    margin-top: 80px;
+}
+.content-block__title {
+    position: absolute;
+    left: 810px;
+    top: 120px;
+}
+
+.article__title__link {
+    color: white;
+    text-shadow: 1px 1px 10px black
+}
+
+.article__title {
+    margin-bottom: 40px;
+}
