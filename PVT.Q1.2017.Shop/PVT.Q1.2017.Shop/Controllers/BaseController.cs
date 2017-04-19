@@ -12,9 +12,8 @@
     /// </summary>
     public class BaseController : Controller
     {
-        /// <summary>
-        /// 
-        /// </summary>
+        private const string CURRENT_USER_DATA_ID_KEY = "UserDataId";
+
         public CurrentUser CurrentUser
         {
             get
@@ -81,12 +80,18 @@
                 return null;
             }
 
+            if (Session[CURRENT_USER_DATA_ID_KEY] != null)
+            {
+                return (int)Session[CURRENT_USER_DATA_ID_KEY];
+            }
+
             var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             using (var repository = factory.GetUserDataRepository())
             {
                 var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
                 if (userData != null)
                 {
+                    Session[CURRENT_USER_DATA_ID_KEY] = userData.Id;
                     return userData.Id;
                 }
             }

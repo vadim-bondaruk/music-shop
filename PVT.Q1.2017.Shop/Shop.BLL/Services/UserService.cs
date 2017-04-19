@@ -10,6 +10,7 @@
     using Helpers;
     using Infrastructure;
     using Shop.Infrastructure.Enums;
+    using Shop.Infrastructure.Models;
     using Utils;
 
     /// <summary>
@@ -377,16 +378,12 @@
         /// <param name="pageNumber"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public ICollection<User> GetDataPerPage(int pageNumber = 1, int count = 10)
+        public PagedResult<User> GetDataPerPage(int pageNumber = 1, int count = 10)
         {
-            var users = Factory.GetUserRepository().GetAll();
-
-            if (users == null || users.Count<1)
+            using (var repository = Factory.GetUserRepository())
             {
-                return null;
+                return repository.GetAll(pageNumber, count);
             }
-
-            return users.Skip((pageNumber - 1) * count).Take(count).ToList();
         }
 
         /// <summary>
@@ -395,7 +392,10 @@
         /// <returns></returns>
         public int GetUsersCount()
         {
-            return Factory.GetUserRepository().Count();
+            using (var repository = Factory.GetUserRepository())
+            {
+                return repository.Count();
+            }
         }
 
         /// <summary>
@@ -410,7 +410,10 @@
                 return null;
             }
 
-            return Factory.GetUserRepository().GetAll().Where(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            using (var repository = Factory.GetUserRepository())
+            {
+                return repository.GetAll(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
         }
 
         /// <summary>

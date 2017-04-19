@@ -9,14 +9,15 @@
     /// <remarks>
     /// Idea is taken from Gunnar Peipman's ASP.NET blog: https://weblogs.asp.net/gunnarpeipman/returning-paged-results-from-repositories-using-pagedresult-lt-t-gt
     /// </remarks>
-    public class PagedResult<T> where T: BaseEntity
+    public class PagedResult<T>
     {
         private readonly ICollection<T> _items;
         private readonly int _pagesCount;
         private readonly int _pageSize;
+        private readonly int _totalItemsCount;
         private readonly int _currentPage;
 
-        public PagedResult(ICollection<T> items, int pageSize, int page)
+        public PagedResult(ICollection<T> items, int pageSize, int page, int totalItemsCount)
         {
             if (items == null)
             {
@@ -30,9 +31,15 @@
                 throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "Incorrect page size specified");
             }
 
-            _pageSize = pageSize;
+            if (totalItemsCount < items.Count)
+            {
+                totalItemsCount = items.Count;
+            }
 
-            _pagesCount = (int)Math.Ceiling((double)_items.Count / _pageSize);
+            _pageSize = pageSize;
+            _totalItemsCount = totalItemsCount;
+
+            _pagesCount = (int)Math.Ceiling((double)_totalItemsCount / _pageSize);
 
             if (page <= 0)
             {
@@ -62,9 +69,9 @@
             get { return _pageSize; }
         }
 
-        public int ItemsCount
+        public int TotalItemsCount
         {
-            get { return _items.Count; }
+            get { return _totalItemsCount; }
         }
     }
 }

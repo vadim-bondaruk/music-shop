@@ -32,17 +32,17 @@
         /// <returns>
         /// All tracks view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
             var currency = GetCurrentUserCurrency();
 
             if (currency != null)
             {
                 var priceLevel = GetCurrentUserPriceLevel();
-                return this.View(this._trackService.GetTracksList(currency.Code, priceLevel, GetUserDataId()));
+                return this.View(this._trackService.GetTracksList(page, pageSize, currency.Code, priceLevel, GetUserDataId()));
             }
 
-            return this.View(this._trackService.GetTracksList());
+            return this.View(this._trackService.GetTracksList(page, pageSize));
         }
 
         /// <summary>
@@ -56,7 +56,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Track", new { area = "Content" });
             }
 
             var currency = GetCurrentUserCurrency();

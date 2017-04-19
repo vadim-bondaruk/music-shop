@@ -11,6 +11,7 @@
     using System.Linq.Expressions;
     using global::Shop.BLL.Exceptions;
     using System.Collections.Generic;
+    using global::Shop.Infrastructure.Models;
 
     [TestClass]
     public class UserServiceTests
@@ -452,12 +453,12 @@
             int page = 2, count = 4;
 
             Mock.Get(_factory.GetUserRepository())
-             .Setup(m => m.GetAll())
-             .Returns(usersList);
+                .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>()))
+                .Returns(() => new PagedResult<User>(usersList.GetRange(0, count), count, page, usersList.Count));
 
             var result = _service.GetDataPerPage(page, count);
-
-            Assert.IsTrue(result.Count.Equals(count));
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Items.Count.Equals(count));
         }
 
         [TestMethod]
@@ -489,12 +490,13 @@
             };
 
             Mock.Get(_factory.GetUserRepository())
-             .Setup(m => m.GetAll())
-             .Returns(usersList);
+             .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>()))
+             .Returns(() => new PagedResult<User>(expected, count, page, usersList.Count));
 
             var result = _service.GetDataPerPage(page, count);
-
-            CollectionAssert.Equals(result, expected);
+            
+            Assert.IsNotNull(result);
+            CollectionAssert.Equals(result.Items, expected);
         }
     }
 }

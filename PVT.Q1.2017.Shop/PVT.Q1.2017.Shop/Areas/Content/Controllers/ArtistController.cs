@@ -47,7 +47,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Artist", new { area = "Content" });
             }
 
             var currency = GetCurrentUserCurrency();

@@ -29,9 +29,19 @@
         <h5>@Model.TrackDetails.Artist.Name</h5>
 
         <p>
-            @Html.DisplayFor(model => model.TrackDetails.Rating)
-            @Html.ActionLink("оттавить отзыв", "Feedback", "Track", new { area = "Content", trackId = Model.TrackDetails.Id }, new { @class = "btn btn-sm btn-link" })
+            <table>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.TrackDetails.Rating)
+                    </td>
+                    <td style="vertical-align: top">
+                        @Html.ButtonWithIcon("btn btn-xs btn-success", "glyphicon glyphicon-comment", "Оставить отзыв",
+                                             Url.Action("Details", "Feedbacks", new { area = "Content", trackId = Model.TrackDetails.Id }))
+                    </td>
+                </tr>
+            </table>
         </p>
+        
 
         <div>
             <a class="btn btn-sm btn-success" href="@Url.Action("Details", "Artist", new { id = Model.TrackDetails.Artist.Id, area = "Content" })"
@@ -196,13 +206,6 @@
 <div class="panel">
     <div class="panel-body">
         <h2>Альбомы с этим треком <span class="badge">@Model.TrackDetails.AlbumsCount</span></h2>
-        @if (isAuthenticated)
-        {
-            if (isAdmin || (isSeller && (Model.TrackDetails.OwnerId <= 0m || Model.TrackDetails.OwnerId == currentUserId)))
-            {
-                
-            }
-        }
         @Html.Partial("_AlbumsList", Model.Albums)
     </div>
 </div>

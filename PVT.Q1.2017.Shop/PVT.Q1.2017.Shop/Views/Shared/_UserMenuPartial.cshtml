@@ -1,0 +1,13 @@
+﻿@model string
+<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="background-color: #222222; color: #999; text-decoration: none">@Model<b class="caret" style="border-color: #222222"></b></a>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li>
+        <a href="@Url.Action("Index", "Manage", new { area = "User" })">Профиль</a>
+    </li>
+    <li>
+        <a href="@Url.Action("PurchasedList", "Tracks",  new { area = "Content"})">Мои треки</a>
+    </li>
+    <li>
+        <a href="#" title="Нажмите, чтобы выйти" onclick="$('#logoutForm').submit();">Выход</a>
+    </li>
+</ul>

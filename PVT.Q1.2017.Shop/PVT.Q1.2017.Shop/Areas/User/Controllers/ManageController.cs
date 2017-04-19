@@ -243,10 +243,8 @@
         {
             int countPerPage = 10;
             this.TempData["CurrentPage"] = id;
-            ViewBag.PageInfo = new PageInfo { PageNumber = id, PageSize = countPerPage, TotalItems = this._userService.GetUsersCount() };
             var list = this._userService.GetDataPerPage(id, countPerPage);
-            var result = list.Select(u => UserMapper.GetUserEditView(u));
-            return this.View(result);
+            return this.View(UserMapper.GetUsersToEdit(list));
         }
 
         /// <summary>

@@ -1,31 +1,16 @@
-﻿
-@using System.Security.Policy
-@model System.Collections.Generic.ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
+﻿@model ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
 
-@{ ViewBag.Title = "Все треки";}
+@{ ViewBag.Title = "Все треки"; }
 <div class="tracks-list">
-    <ul class="list-group" id="slist">
+    <ul class="list-group">
         @foreach (var item in Model)
         {
-            @Html.Partial("TrackListItem", item)
-            
+            @Html.Partial("_TrackListItem", item)
         }
     </ul>
 </div>
 
-@section scripts
-{
-    <script>
-        function itemClick(id) {
-            var url = '@Url.Action("Details", "Tracks", new { id = "*" })';
-            window.location.href = url.replace('*', encodeURIComponent(id));
-        }
 
-        function audioClick() {
-            alert("click detected");
-        }
-    </script>
-}
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet"/>
 }

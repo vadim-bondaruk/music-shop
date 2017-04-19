@@ -1,10 +1,10 @@
-﻿@model ICollection<Shop.Common.ViewModels.TrackViewModel>
+﻿@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.TrackViewModel>
 
 @{
     ViewBag.Title = "Список треков";
 }
 
-@Html.Partial("_TracksList", Model)
+@Html.Partial("_PagedTracksList", Model)
 
 @section cssStyles
 {
