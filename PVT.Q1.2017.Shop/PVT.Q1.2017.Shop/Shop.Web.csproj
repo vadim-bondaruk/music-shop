@@ -159,12 +159,13 @@
     <Content Include="App_Data\Shop_log.ldf">
       <DependentUpon>Shop.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\News\Styles\news.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapStars.css" />
-    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\news-block.css" />
     <Content Include="Content\Players\Circle\js\circle.player.js" />
     <Content Include="Content\Players\Circle\js\jquery.grab.js" />
     <Content Include="Content\Players\Circle\js\jquery.jplayer.js" />
@@ -281,6 +282,20 @@
     <Content Include="Areas\Content\Views\Shared\Audio\MiniPlayer.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
+    <Content Include="Areas\News\Views\Music\Article.cshtml" />
+    <Content Include="Areas\News\Views\Shared\NewAlbumOfDorn.cshtml" />
+    <Content Include="Areas\News\Views\web.config" />
+    <Content Include="Areas\News\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\News\Views\Shared\AlfaJazzFest.cshtml" />
+    <Content Include="Areas\News\Views\Shared\DahaBraha.cshtml" />
+    <Content Include="Areas\News\Views\Shared\VyhPlanyRedakcii.cshtml" />
+    <Content Include="Areas\News\Views\Shared\NewClip5Nizza.cshtml" />
+    <Content Include="Areas\News\Views\Shared\PriznVLubviVSocSetyah.cshtml" />
+    <Content Include="Areas\News\Views\Shared\KLefflerPlaylist.cshtml" />
+    <Content Include="Areas\News\Views\Shared\NewAlbumGorillaz.cshtml" />
+    <Content Include="Areas\News\Views\Shared\ByorkVirtual.cshtml" />
+    <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
+    <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
@@ -406,6 +421,8 @@
     <Compile Include="Areas\Management\ViewModels\GenreManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
+    <Compile Include="Areas\News\Controllers\MusicController.cs" />
+    <Compile Include="Areas\News\NewsAreaRegistration.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
@@ -476,6 +493,7 @@
   <ItemGroup>
     <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />
+    <Folder Include="Areas\News\Models\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
