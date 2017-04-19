@@ -6,41 +6,33 @@
     using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.BLL.Utils;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
 
+    using PVT.Q1._2017.Shop.App_Start;
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+    using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
     ///     The track controller
     /// </summary>
-    public class TracksController : Controller
+    [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
+    public class TracksController : BaseController
     {
         /// <summary>
         /// </summary>
-        private readonly IAlbumRepository albumRepository;
+        private readonly IArtistRepository _artistRepository;
 
         /// <summary>
         /// </summary>
-        private readonly IArtistRepository artistRepository;
+        private readonly IGenreRepository _genreRepository;
 
         /// <summary>
         /// </summary>
-        private readonly IArtistService artistService;
-
-        /// <summary>
-        /// </summary>
-        private readonly IGenreRepository genreRepository;
-
-        /// <summary>
-        ///     The track service.
-        /// </summary>
-        private readonly ITrackService trackService;
-
-        /// <summary>
-        /// </summary>
-        private ITrackRepository TrackRepository;
+        private readonly ITrackRepository _trackRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TracksController"/> class.
@@ -72,11 +64,9 @@
             ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.artistService = artistService;
-            this.artistRepository = artistRepository;
-            this.genreRepository = genreRepository;
-            this.albumRepository = albumRepository;
-            this.TrackRepository = trackRepository;
+            this._artistRepository = artistRepository;
+            this._genreRepository = genreRepository;
+            this._trackRepository = trackRepository;
         }
 
         /// <summary>
@@ -113,12 +103,9 @@
             ITrackRepository trackRepository)
         {
             this.RepositoryFactory = repositoryFactory;
-            this.trackService = trackService;
-            this.artistService = artistService;
-            this.artistRepository = artistRepository;
-            this.genreRepository = genreRepository;
-            this.albumRepository = albumRepository;
-            this.TrackRepository = trackRepository;
+            this._artistRepository = artistRepository;
+            this._genreRepository = genreRepository;
+            this._trackRepository = trackRepository;
             Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
@@ -155,9 +142,9 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var track = this.TrackRepository.GetById(id);
+            var track = this._trackRepository.GetById(id);
             var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
-            var genres = this.genreRepository.GetAll();
+            var genres = this._genreRepository.GetAll();
             trackManagementViewModel.Genres = genres;
             return this.View(trackManagementViewModel);
         }
@@ -172,12 +159,12 @@
         public virtual ActionResult New(int id)
         {
             ICollection<Genre> genres;
-            using (var repo = this.genreRepository)
+            using (var repo = this._genreRepository)
             {
                 genres = repo.GetAll();
             }
 
-            var artist = this.artistRepository.GetById(id);
+            var artist = this._artistRepository.GetById(id);
             return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
         }
 
@@ -193,6 +180,56 @@
         public virtual ActionResult New(TrackManagementViewModel viewModel)
         {
             var track = ManagementMapper.GetTrackModel(viewModel);
+
+            if (this.CurrentUser != null && this.CurrentUser.IsInRole(UserRoles.Seller))
+            {
+                track.OwnerId = this.CurrentUser.Id;
+            }
+
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            {
+                repository.AddOrUpdate(track);
+                repository.SaveChanges();
+            }
+
+            return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        /// The view model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(TrackManagementViewModel viewModel)
+        {
+            Track currentTrack;
+
+            using (var repo = this.RepositoryFactory.GetTrackRepository())
+            {
+                currentTrack = repo.GetById(viewModel.Id);
+            }
+
+            if (currentTrack == null)
+            {
+                return this.HttpNotFound($"Трек с id = {viewModel.Id} не найден");
+            }
+
+            if (viewModel.PostedTrackFile == null && viewModel.TrackFile == null)
+            {
+                viewModel.TrackFile = currentTrack.TrackFile;
+            }
+
+            if ((viewModel.PostedImage == null) && (viewModel.Image == null))
+            {
+                viewModel.Image = currentTrack.Image;
+            }
+
+            var track = ManagementMapper.GetTrackModel(viewModel);
+            track.OwnerId = currentTrack.OwnerId;
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track);

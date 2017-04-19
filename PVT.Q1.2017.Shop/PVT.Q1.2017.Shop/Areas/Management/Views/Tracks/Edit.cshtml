@@ -3,12 +3,18 @@
 <head>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/file-change.js"></script>
+    <script>
+        function ClearTrackFile() {
+            $("#file-path").val('');
+            @*@Model.PostedTrackFile = null;*@
+        }
+    </script>
 </head>
 @{ ViewBag.Title = "Правка";}
 
 <body>
 
-@using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formedit" }))
+@using (Html.BeginForm("Edit", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formedit" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
@@ -51,8 +57,11 @@
 
                 <li class="list-group-item" style="height: 100px">
                     @Html.DisplayNameFor(m => m.PostedTrackFile)
-                    <input placeholder="Файл" type="text" class="form-control" id="file-path" name="FileName" onclick="document.formedit.PostedTrackFile.click()" value="@Model.FileName"/>
-                    <audio controls>
+                    <div class="inner-addon right-addon">
+                        <input placeholder="Файл" type="text" class="form-control" id="file-path" name="FileName" onclick="document.formedit.PostedTrackFile.click()" value="@Model.FileName">
+                        <i class="glyphicon glyphicon-remove" onclick="javaScript: ClearTrackFile();"></i>
+                    </div>
+                    <audio controls download="test.mp3">
                         <source src="@Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id })" type="audio/mp3"/>
                     </audio>
                 </li>
@@ -66,7 +75,7 @@
         </div>
     </div>
     <input type="file" id="file" name="PostedImage" style="display: none"/>
-    <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
+    <input type="file" id="track-file" name="PostedTrackFile" style="display: none" />
 }
 
 @using (Html.BeginForm("Delete", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data" }))

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.ViewModels;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The artist service.
@@ -140,5 +141,33 @@
         /// All registered artists with detailed information.
         /// </returns>
         ICollection<ArtistDetailsViewModel> GetDetailedArtistsList();
+
+        /// <summary>
+        /// Returns all registered artists.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <returns>
+        /// All registered artists.
+        /// </returns>
+        PagedResult<ArtistViewModel> GetArtistsList(int page, int pageSize);
+
+        /// <summary>
+        /// Returns all registered artists with detailed information.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <returns>
+        /// All registered artists with detailed information.
+        /// </returns>
+        PagedResult<ArtistDetailsViewModel> GetDetailedArtistsList(int page, int pageSize);
     }
 }

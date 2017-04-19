@@ -3,11 +3,16 @@
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+    using global::Shop.Infrastructure.Enums;
+
+    using PVT.Q1._2017.Shop.App_Start;
+
     using Shop.Controllers;
 
     /// <summary>
     ///     The artist controller.
     /// </summary>
+    [ShopAuthorize(UserRoles.Buyer, UserRoles.Admin, UserRoles.Seller)]
     public class ArtistsController : BaseController
     {
         private readonly IArtistService _artistService;
@@ -36,7 +41,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
             ArtistAlbumsListViewModel artistAlbumsViewModel = null;
@@ -84,7 +89,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
             var artistViewModel = _artistService.GetArtistDetails(id.Value);
@@ -109,7 +114,7 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
             var currency = GetCurrentUserCurrency();

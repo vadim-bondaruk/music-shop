@@ -133,7 +133,7 @@
         /// <param name="filter">The filter.</param>
         /// <param name="includes">The additional include if needed.</param>
         /// <returns>Entities which correspond to the <paramref name="filter"/> using pagination.</returns>
-        public PagedResult<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes)
+        public PagedResult<TEntity> GetAll(int page, int pageSize, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
             var query = GetActiveItems(filter, includes);
             return GetPagedResultForQuery(query, page, pageSize);
@@ -434,8 +434,8 @@
                 throw new ArgumentOutOfRangeException(nameof(page), page, @"Incorrect current page value specified");
             }
 
-            var result = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            return new PagedResult<TEntity>(result.ToList(), pageSize, page);
+            var result = query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return new PagedResult<TEntity>(result, pageSize, page, query.Count());
         }
     }
 }

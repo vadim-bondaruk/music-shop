@@ -2,6 +2,7 @@
 {
     using Shop.Common.Models;
     using System.Collections.Generic;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The user service
@@ -95,7 +96,7 @@
         /// <param name="pageNumber"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        ICollection<User> GetDataPerPage(int pageNumber, int count);
+        PagedResult<User> GetDataPerPage(int pageNumber, int count);
 
         /// <summary>
         /// 
