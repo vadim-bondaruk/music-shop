@@ -22,3 +22,7 @@
     font-weight: bold;
     font-style: italic;
 }
+
+.slider__item__img {
+    max-width: 1000px;
+}

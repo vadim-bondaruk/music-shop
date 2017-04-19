@@ -288,6 +288,7 @@
     <Content Include="Areas\News\Views\web.config" />
     <Content Include="Areas\News\Views\_ViewStart.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Areas\News\Views\Shared\AlfaJazzFest.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
