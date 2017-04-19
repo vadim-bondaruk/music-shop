@@ -166,7 +166,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapStars.css" />
-    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\news-block.css" />
     <Content Include="Content\Players\Circle\js\circle.player.js" />
     <Content Include="Content\Players\Circle\js\jquery.grab.js" />
     <Content Include="Content\Players\Circle\js\jquery.jplayer.js" />
