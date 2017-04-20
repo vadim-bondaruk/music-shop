@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <select onchange="updateUserCurrency(this.options[this.selectedIndex].value);">
+    <select class="form-control input-sm" id="currency-dropdown" onchange="updateUserCurrency(options[selectedIndex].value);">
         @foreach (var currency in Model)
         {
             if (currency.Code == ViewBag.SelectedCurrency)

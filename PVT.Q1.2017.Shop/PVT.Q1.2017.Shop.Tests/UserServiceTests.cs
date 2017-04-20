@@ -11,6 +11,7 @@
     using System.Linq.Expressions;
     using global::Shop.BLL.Exceptions;
     using System.Collections.Generic;
+    using global::Shop.Infrastructure.Models;
 
     [TestClass]
     public class UserServiceTests
@@ -25,13 +26,13 @@
 
             _service = new UserService(_factory);
 
-            using (var repository = this._factory.GetCurrencyRepository())
+            using (var repository = _factory.GetCurrencyRepository())
             {
                 repository.AddOrUpdate(new Currency { Id = 1, ShortName = "USD", Code = 840 });
                 repository.SaveChanges();
             }
 
-            using (var repository = this._factory.GetPriceLevelRepository())
+            using (var repository = _factory.GetPriceLevelRepository())
             {
                 repository.AddOrUpdate(new PriceLevel { Id = 1, Name = "Default Price Level" });
                 repository.SaveChanges();
@@ -452,12 +453,12 @@
             int page = 2, count = 4;
 
             Mock.Get(_factory.GetUserRepository())
-             .Setup(m => m.GetAll())
-             .Returns(usersList);
+                .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>()))
+                .Returns(() => new PagedResult<User>(usersList.GetRange(0, count), count, page, usersList.Count));
 
-            var result = _service.GetDataPerPage(page, count, null);
-
-            Assert.IsTrue(result.Count.Equals(count));
+            var result = _service.GetDataPerPage(page, count);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Items.Count.Equals(count));
         }
 
         [TestMethod]
@@ -489,12 +490,13 @@
             };
 
             Mock.Get(_factory.GetUserRepository())
-             .Setup(m => m.GetAll())
-             .Returns(usersList);
+             .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>()))
+             .Returns(() => new PagedResult<User>(expected, count, page, usersList.Count));
 
-            var result = _service.GetDataPerPage(page, count, null);
-
-            CollectionAssert.Equals(result, expected);
+            var result = _service.GetDataPerPage(page, count);
+            
+            Assert.IsNotNull(result);
+            CollectionAssert.Equals(result.Items, expected);
         }
     }
 }

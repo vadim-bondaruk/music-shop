@@ -118,8 +118,9 @@
 
             Assert.IsNotNull(artistViewModel);
 
-            Assert.IsTrue(artistViewModel.Id == artistDto.Id);
-            Assert.IsTrue(artistViewModel.Name.Equals(artistDto.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.IsNotNull(artistViewModel.ArtistDetails);
+            Assert.IsTrue(artistViewModel.ArtistDetails.Id == artistDto.Id);
+            Assert.IsTrue(artistViewModel.ArtistDetails.Name.Equals(artistDto.Name, StringComparison.OrdinalIgnoreCase));
         }
 
         [TestMethod]
@@ -130,8 +131,9 @@
 
             Assert.IsNotNull(artistViewModel);
 
-            Assert.IsTrue(artistViewModel.Id == artistDto.Id);
-            Assert.IsTrue(artistViewModel.Name.Equals(artistDto.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.IsNotNull(artistViewModel.ArtistDetails);
+            Assert.IsTrue(artistViewModel.ArtistDetails.Id == artistDto.Id);
+            Assert.IsTrue(artistViewModel.ArtistDetails.Name.Equals(artistDto.Name, StringComparison.OrdinalIgnoreCase));
         }
 
         [TestMethod]
@@ -256,11 +258,12 @@
 
             Assert.IsNotNull(track);
 
-            Assert.IsTrue(track.Id == trackDto.Id);
-            Assert.IsTrue(track.Name.Equals(trackDto.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.IsNotNull(track.TrackDetails);
+            Assert.IsTrue(track.TrackDetails.Id == trackDto.Id);
+            Assert.IsTrue(track.TrackDetails.Name.Equals(trackDto.Name, StringComparison.OrdinalIgnoreCase));
 
-            Assert.IsNotNull(track.Artist);
-            Assert.IsTrue(track.Artist.Id == trackDto.ArtistId);
+            Assert.IsNotNull(track.TrackDetails.Artist);
+            Assert.IsTrue(track.TrackDetails.Artist.Id == trackDto.ArtistId);
         }
 
         [TestMethod]

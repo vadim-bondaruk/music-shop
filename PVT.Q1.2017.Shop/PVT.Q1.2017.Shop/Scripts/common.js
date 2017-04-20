@@ -1,4 +1,27 @@
-﻿function addAlbumToCart(sender, albumId) {
+﻿$(function () {
+    $.validator.methods.date = function (value, element) {
+        return this.optional(element) || moment(value, "DD.MM.YYYY", true).isValid();
+    }
+
+    var date = new Date();
+    date.setDate(date.getDate());
+    $(".datecontrol").datepicker({
+        startDate: date,
+        dateFormat: 'dd.mm.yy',
+        autoclose: true,
+        todayHighlight: true,
+        weekStart: 1,
+        language: 'de-DE',
+        calendarWeeks: true
+    });
+
+    $('.nav-tabs a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+});
+
+function addAlbumToCart(sender, albumId) {
     $(sender).addClass('disabled');
     var root = getCurrentLocationRoot();
     $.post(root + "/Payment/Cart/AddAlbum", { albumId: albumId }, function () {

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using App_Start;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -9,21 +10,14 @@
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
+    using global::Shop.Infrastructure.Enums;
+
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
+    [ShopAuthorize(UserRoles.Buyer, UserRoles.Customer)]
     public class CartController : BaseController
     {
-        /// <summary>
-        /// Репозиторий для хранения корзины
-        /// </summary>
-        private ICartRepository _cartRepository;
-
-        /// <summary>
-        /// Сервис для работы с данными в корзине
-        /// </summary>
-        private ICartService _cartService;
-
         /// <summary>
         /// ViewModel для отображения корзины 
         /// </summary>
@@ -39,49 +33,56 @@
         /// </summary>
         private CurrencyViewModel _userCurrency;
 
-        /// <param name="cartService">
-        /// Сервис для работы с данными в корзине
-        /// </param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CartController"/> class.
+        /// </summary>
         /// <param name="repositoryFactory">
-        /// Фабрика для работы с репозиториями
+        /// The repository factory.
         /// </param>
-        public CartController(ICartService cartService, IRepositoryFactory repositoryFactory) 
+        /// <param name="serviceFactory">
+        /// The service factory.
+        /// </param>
+        public CartController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._cartRepository = repositoryFactory.GetCartRepository();
-            this._cartService = cartService;
-            this._viewModel = new CartViewModel { Tracks = new List<TrackDetailsViewModel>(),
+            _viewModel = new CartViewModel
+            {
+                Tracks = new List<TrackDetailsViewModel>(),
                 Albums = new List<AlbumDetailsViewModel>(),
-                IsEmpty = true };
+                IsEmpty = true
+            };
         }
 
         /// <summary>
         /// Действие для отображения корзины
         /// </summary>
         [HttpGet]
-        [Authorize]
         //TODO: отлавливать в параметре контроллера статус оплаты.
         public ViewResult Index()
         {
-            SetCurrentUser();
-            if (_cartRepository.GetByUserId(_currentUserId) == null)
+            using (var cartRepository = RepositoryFactory.GetCartRepository())
             {
-                _cartRepository.AddOrUpdate(new Cart(_currentUserId));
-                _cartRepository.SaveChanges();
-            }
-            var cart = this._cartRepository.GetByUserId(_currentUserId);
-            this._viewModel.Tracks = _cartService.GetOrderTracks(_currentUserId, _userCurrency.Code);
-            this._viewModel.Albums = _cartService.GetOrderAlbums(_currentUserId, _userCurrency.Code);
-            this._viewModel.CurrentUserId = _currentUserId;
 
-            //// Установка текущей валюты пользователя и пересчёт суммы к оплате
+                if (cartRepository.GetByUserId(_currentUserId) == null)
+                {
+                    cartRepository.AddOrUpdate(new Cart(_currentUserId));
+                    cartRepository.SaveChanges();
+                }
+
+                var cartService = ServiceFactory.GetCartService();
+                _viewModel.Tracks = cartService.GetOrderTracks(_currentUserId, _userCurrency?.Code);
+                _viewModel.Albums = cartService.GetOrderAlbums(_currentUserId, _userCurrency?.Code);
+                _viewModel.CurrentUserId = _currentUserId;
+            }
+
+            // Установка текущей валюты пользователя и пересчёт суммы к оплате
             if (_currentUserId > 0)
             {
-                this._viewModel.CurrencyShortName = _userCurrency.ShortName;
-                CartViewModelService.SetTotalPrice(this._viewModel, _userCurrency);
+                _viewModel.CurrencyShortName = _userCurrency.ShortName;
+                CartViewModelService.SetTotalPrice(_viewModel, _userCurrency);
                 TempData["cart"] = _viewModel;
             }
 
-            return this.View(this._viewModel);
+            return View(_viewModel);
         }
 
         /// <summary>
@@ -91,20 +92,19 @@
         /// Id добавляемого альбома
         /// </param>
         [HttpPost]
-        [Authorize]
         public ActionResult AddAlbum(int albumId = 0)
         {
-            SetCurrentUser();
             try
             {
-                this._cartService.AddAlbum(_currentUserId, albumId);
+                var cartService = ServiceFactory.GetCartService();
+                cartService.AddAlbum(_currentUserId, albumId);
             }
             catch (InvalidAlbumIdException ex)
             {
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
             }
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -114,13 +114,12 @@
         /// Id удаляемого альбома
         /// </param>
         [HttpPost]
-        [Authorize]
         public ActionResult DeleteAlbum(int albumId = 0)
         {
-            SetCurrentUser();
             try
             {
-                this._cartService.RemoveAlbum(_currentUserId, albumId);
+                var cartService = ServiceFactory.GetCartService();
+                cartService.RemoveAlbum(_currentUserId, albumId);
             }
             catch (InvalidAlbumIdException ex)
             {
@@ -128,7 +127,7 @@
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -138,13 +137,12 @@
         /// Id добавляемого трэка
         /// </param>
         [HttpPost]
-        [Authorize]
         public ActionResult AddTrack(int trackId = 0)
         {
-            SetCurrentUser();
             try
             {
-                this._cartService.AddTrack(_currentUserId, trackId);
+                var cartService = ServiceFactory.GetCartService();
+                cartService.AddTrack(_currentUserId, trackId);
             }
             catch (InvalidTrackIdException ex)
             {
@@ -152,7 +150,7 @@
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -162,13 +160,12 @@
         /// Id удаляемого трэка
         /// </param>
         [HttpPost]
-        [Authorize]
         public ActionResult DeleteTrack(int trackId = 0)
         {
-            SetCurrentUser();
             try
             {
-                this._cartService.RemoveTrack(_currentUserId, trackId);
+                var cartService = ServiceFactory.GetCartService();
+                cartService.RemoveTrack(_currentUserId, trackId);
             }
             catch (InvalidTrackIdException ex)
             {
@@ -176,7 +173,36 @@
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
             }
 
-            return this.RedirectToRoute(new { controller = "Cart", action = "Index"});
+            return RedirectToAction("Index", "Cart", new { Area = "Payment" });
+        }
+
+        /// <summary>
+        /// Очищает всю корзину текущего пользователя
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ClearCart()
+        {
+            var cartService = ServiceFactory.GetCartService();
+            cartService.RemoveAll(_currentUserId);
+            return RedirectToAction("Index", "Cart", new { Area = "Payment" });
+        }
+
+        /// <summary>
+        /// Перемещает товары пользователя в купленные при успешной оплате
+        /// </summary>
+        /// <param name="isAccepted"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AcceptPayment(bool isAccepted)
+        {
+            if (isAccepted)
+            {
+                var cartService = ServiceFactory.GetCartService();
+                cartService.AcceptPayment(_currentUserId);
+                return RedirectToAction("Index", "Home", new { Area = string.Empty });
+            }
+            return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -185,17 +211,19 @@
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public JsonResult GetOrdersCount()
         {
-            SetCurrentUser();
             int count = 0;
 
-            var cart = _cartRepository.GetByUserId(_currentUserId);
-            if (cart != null)
+            using (var cartRepository = RepositoryFactory.GetCartRepository())
             {
-                count += cart.OrderTracks.Count;
-                count += cart.OrderAlbums.Count;
-                if (Session != null)
+                var cart = cartRepository.GetByUserId(_currentUserId);
+                if (cart != null)
                 {
-                    Session["OrdersCount"] = count;
+                    count += cart.OrderTracks.Count;
+                    count += cart.OrderAlbums.Count;
+                    if (Session != null)
+                    {
+                        Session["OrdersCount"] = count;
+                    }
                 }
             }
 
@@ -205,19 +233,10 @@
         /// <summary>
         /// Set current user from base controller
         /// </summary>
-        private void SetCurrentUser()
+        public void SetCurrentUser()
         {
-            try
-            {
-                _userCurrency = this.GetCurrentUserCurrency();
-                _currentUserId = CurrentUser.Id;
-            }
-            catch
-            {
-                _currentUserId = 0;
-                _userCurrency = null;
-            }
-
+            _currentUserId = CurrentUser == null ? 0 : CurrentUser.Id;
+            _userCurrency = CurrentUserCurrency;
             if (_userCurrency == null)
             {
                 _userCurrency = new CurrencyViewModel()
@@ -225,13 +244,10 @@
             }
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (disposing)
-            {
-                _cartRepository.Dispose();
-            }
-            base.Dispose(disposing);
+            base.OnActionExecuting(filterContext);
+            SetCurrentUser();
         }
     }
 }

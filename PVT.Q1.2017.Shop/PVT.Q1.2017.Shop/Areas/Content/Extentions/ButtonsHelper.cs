@@ -11,23 +11,24 @@
         /// Renders a button with icon.
         /// </summary>
         /// <param name="helper">
-        /// The helper.
+        ///     The helper.
         /// </param>
         /// <param name="class">
-        /// The button CSS class.
+        ///     The button CSS class.
         /// </param>
         /// <param name="iconClass">
-        /// The button icon CSS class.
+        ///     The button icon CSS class.
         /// </param>
         /// <param name="text">
-        /// The button text.
+        ///     The button text.
         /// </param>
         /// <param name="href">
-        /// The url to a page.
+        ///     The url to a page.
         /// </param>
         /// <param name="onclick">
-        /// On client click function. Optional.
+        ///     On client click function. Optional.
         /// </param>
+        /// <param name="animate"></param>
         /// <returns>
         /// The button html.
         /// </returns>
@@ -37,16 +38,29 @@
             string iconClass,
             string text,
             string href,
-            string onclick = null)
+            string onclick = null,
+            bool animate = false)
         {
-            var builder = new TagBuilder("a");
+            TagBuilder builder;
+            if (!string.IsNullOrWhiteSpace(href))
+            {
+                builder = new TagBuilder("a");
+                builder.Attributes["href"] = href;
+            }
+            else
+            {
+                builder = new TagBuilder("button");
+            }
             builder.Attributes["class"] = @class;
-            builder.Attributes["href"] = href;
+
             if (!string.IsNullOrWhiteSpace(onclick))
             {
                 builder.Attributes["onclick"] = onclick;
             }
-            builder.InnerHtml = $"<span class=\"{ iconClass }\"></span> { text }";
+
+            builder.InnerHtml = !animate
+                                    ? $"<span class=\"{iconClass}\"></span> {text}"
+                                    : $"<p><span class=\"{iconClass}\"></span> {text}</p>";
             return MvcHtmlString.Create(builder.ToString());
         }
     }

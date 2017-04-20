@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using Common.Models;
     using Common.Validators.Infrastructure;
     using DAL.Infrastruture;
@@ -11,6 +10,7 @@
     using Helpers;
     using Infrastructure;
     using Shop.Infrastructure.Enums;
+    using Shop.Infrastructure.Models;
     using Utils;
 
     /// <summary>
@@ -35,7 +35,7 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity)
         {
-            User user = this.GetUserByUserIdentity(userIdentity);
+            User user = GetUserByUserIdentity(userIdentity);
 
             return user != null;
         }
@@ -48,7 +48,7 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity, out User user)
         {
-            user = this.GetUserByUserIdentity(userIdentity);
+            user = GetUserByUserIdentity(userIdentity);
 
             return user != null && user.IsDeleted.Equals(false);
         }
@@ -66,7 +66,7 @@
             }
 
             user.Password = PasswordEncryptor.GetHashString(user.Password);
-            user.UserRole = this.GetDefaultUserRoles();
+            user.UserRole = GetDefaultUserRoles();
 
             try
             {
@@ -107,7 +107,7 @@
         {
             User user = null;
 
-            if (this.IsUserExist(userIdentity, out user))
+            if (IsUserExist(userIdentity, out user))
             {
                 return user.Id;
             }
@@ -132,7 +132,7 @@
                 throw new ArgumentException("user");
             }
 
-            using (var userRepository = this.Factory.GetUserRepository())
+            using (var userRepository = Factory.GetUserRepository())
             {
                 var userUpdate = userRepository.GetById(id);
                 userUpdate.FirstName = user.FirstName;
@@ -167,7 +167,7 @@
         {
             User user = null;
 
-            if (this.IsUserExist(userIdentity, out user))
+            if (IsUserExist(userIdentity, out user))
             {
                 string userEmail = user.Email;
 
@@ -276,7 +276,7 @@
         {
             if (!string.IsNullOrEmpty(userIdentity) && !string.IsNullOrEmpty(newLogin))
             {
-                using (var userRepository = this.Factory.GetUserRepository())
+                using (var userRepository = Factory.GetUserRepository())
                 {
                     var user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
                                                       : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
@@ -309,7 +309,7 @@
         /// <returns></returns>
         public bool UpdateConfirmEmail(string token, string email)
         {
-            using (var userRepository = this.Factory.GetUserRepository())
+            using (var userRepository = Factory.GetUserRepository())
             {
                 var user = userRepository.GetById(Int32.Parse(token));
                 if (user != null)
@@ -378,23 +378,12 @@
         /// <param name="pageNumber"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public ICollection<User> GetDataPerPage(int pageNumber, int count, Expression<Func<User, dynamic>> sortFunc, bool ascending = true)
+        public PagedResult<User> GetDataPerPage(int pageNumber = 1, int count = 10)
         {
-            var users = Factory.GetUserRepository().GetAll();
-
-            if (users == null || users.Count < 1)
+            using (var repository = Factory.GetUserRepository())
             {
-                return null;
+                return repository.GetAll(pageNumber, count);
             }
-
-            if (sortFunc == null)
-            {
-                sortFunc = u => u.LastName;
-            }
-
-            var result = ascending == true ? users.AsQueryable().OrderBy(sortFunc).Skip((pageNumber - 1) * count).Take(count)
-                                           : users.AsQueryable().OrderByDescending(sortFunc).Skip((pageNumber - 1) * count).Take(count);
-            return result.ToList();
         }
 
         /// <summary>
@@ -403,7 +392,10 @@
         /// <returns></returns>
         public int GetUsersCount()
         {
-            return Factory.GetUserRepository().Count();
+            using (var repository = Factory.GetUserRepository())
+            {
+                return repository.Count();
+            }
         }
 
         /// <summary>
@@ -418,7 +410,10 @@
                 return null;
             }
 
-            return Factory.GetUserRepository().GetAll().Where(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            using (var repository = Factory.GetUserRepository())
+            {
+                return repository.GetAll(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
         }
 
         /// <summary>
@@ -432,7 +427,7 @@
 
             if (!string.IsNullOrEmpty(userIdentity))
             {
-                using (var userRepository = this.Factory.GetUserRepository())
+                using (var userRepository = Factory.GetUserRepository())
                 {
                     user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
                                                       : userRepository?.FirstOrDefault(u => u.Login == userIdentity);

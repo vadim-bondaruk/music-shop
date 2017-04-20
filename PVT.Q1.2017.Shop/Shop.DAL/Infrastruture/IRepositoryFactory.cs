@@ -4,7 +4,7 @@ namespace Shop.DAL.Infrastruture
     /// The common repository factory.
     /// </summary>
     /// <remarks>
-    /// //// read!!! https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
+    /// read!!! https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
     /// </remarks>
     public interface IRepositoryFactory
     {

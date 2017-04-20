@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.ViewModels;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The album service.
@@ -62,7 +63,7 @@
         /// <returns>
         /// All registered tracks with price for the specified album.
         /// </returns>
-        AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        AlbumTracksListViewModel GetTracks(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all tracks for the specified album without price.
@@ -106,7 +107,30 @@
         /// <returns>
         /// All registered albums.
         /// </returns>
-        ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        ICollection<AlbumViewModel> GetAlbums(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
+        /// Returns all registered albums using the specified currency and price level for album price.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for album price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered albums.
+        /// </returns>
+        PagedResult<AlbumViewModel> GetAlbums(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered albums detailed information using the specified currency and price level for album price.
@@ -126,16 +150,45 @@
         ICollection<AlbumDetailsViewModel> GetDetailedAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
+        /// Returns all registered albums detailed information using the specified currency and price level for album price.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <param name="currencyCode">
+        /// The currency code for album price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for album price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered albums detailed information.
+        /// </returns>
+        PagedResult<AlbumDetailsViewModel> GetDetailedAlbumsList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
         /// Returns all albums without price configured.
         /// </summary>
         /// <returns>
         /// All albums without price configured.
         /// </returns>
-        ICollection<AlbumViewModel> GetAlbumsWithoutPrice();
+        PagedResult<AlbumViewModel> GetAlbumsWithoutPrice(int page, int pageSize);
 
         /// <summary>
         /// Returns all albums with price specified using the specified currency and price level for album price.
         /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
         /// <param name="currencyCode">
         /// The currency code for album price. If it doesn't specified than default currency is used.
         /// </param>
@@ -148,6 +201,6 @@
         /// <returns>
         /// All albums with price specified.
         /// </returns>
-        ICollection<AlbumViewModel> GetAlbumsWithPrice(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        PagedResult<AlbumViewModel> GetAlbumsWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
     }
 }

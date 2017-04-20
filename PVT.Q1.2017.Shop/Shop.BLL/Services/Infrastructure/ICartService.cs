@@ -95,6 +95,12 @@ namespace Shop.BLL.Services.Infrastructure
         ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId, int? currencyCode = null);
 
         /// <summary>
+        /// Remove all tracks and albums from cart
+        /// </summary>
+        /// <param name="userId"></param>
+        void RemoveAll(int userId);
+
+        /// <summary>
         /// Accept Payment of All User's Cart
         /// </summary>
         /// <param name="userId">User's ID</param>

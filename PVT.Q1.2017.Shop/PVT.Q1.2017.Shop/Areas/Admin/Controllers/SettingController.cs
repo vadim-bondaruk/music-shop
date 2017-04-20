@@ -3,27 +3,22 @@
     using System.Web.Mvc;
 
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.ViewModels;
+    using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
+
+    using PVT.Q1._2017.Shop.App_Start;
+    using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
     /// 
     /// </summary>
-    public class SettingController : Controller
+    [ShopAuthorize(UserRoles.Admin)]
+    public class SettingController : BaseController
     {
-        /// <summary>
-        /// The service setting
-        /// </summary>
-        private readonly ISettingService _settingService;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="settingService"></param>
-        public SettingController(ISettingService settingService)
+        public SettingController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._settingService = settingService;
         }
-
+        
         /// <summary>
         /// </summary>
         /// <returns>
@@ -31,8 +26,9 @@
         [HttpGet]
         public ActionResult Index()
         {
-            var setting = this._settingService.GetSettingViewModel();
-            return this.View(setting);
+            var settingService = ServiceFactory.GetSettingService();
+            var setting = settingService.GetSettingViewModel();
+            return View(setting);
         }
 
         /// <summary>
@@ -46,8 +42,9 @@
         [HttpPost]
         public JsonResult Save(int defaultCurrencyId)
         {
-            this._settingService.SaveSettingViewModel(defaultCurrencyId);
-            return this.Json("Saved", JsonRequestBehavior.AllowGet);
+            var settingService = ServiceFactory.GetSettingService();
+            settingService.SaveSettingViewModel(defaultCurrencyId);
+            return Json("Saved", JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -32,7 +32,7 @@
         /// </returns>
         protected ICollection<PaymentCard> GetAll()
         {
-            var result = this.CurrentDbSet;
+            var result = CurrentDbSet;
             return result.ToList();
         }
 
@@ -43,7 +43,7 @@
         /// <returns></returns>
         protected ICollection<PaymentCard> GetAll(Expression<Func<PaymentCard, bool>> filter)
         {
-            IQueryable<PaymentCard> query = this.CurrentDbSet;
+            IQueryable<PaymentCard> query = CurrentDbSet;
             if (filter != null)
             {
                 query = query.Where(filter);

@@ -29,7 +29,7 @@
         /// </param>
         public SettingService(IRepositoryFactory factory, CurrencyService currencyService) : base(factory)
         {
-            this._currencyService = currencyService;
+            _currencyService = currencyService;
         }
 
         /// <summary>
@@ -41,12 +41,12 @@
             var settingViewModel = new SettingViewModel()
             {
                 // fill drop down lists
-                DefaultCurrencyViewModelList = _currencyService.GetCurrenciesList()
+                DefaultCurrencyViewModelList = _currencyService.GetCurrencies()
             };
 
             // if setting exists in db
             Setting setting;
-            using (var repository = this.Factory.GetSettingRepository())
+            using (var repository = Factory.GetSettingRepository())
             {
                 setting = repository.GetAll().FirstOrDefault();
             }
@@ -70,7 +70,7 @@
                 DefaultCurrencyId = defaultCurrencyId
             };
 
-            using (var repository = this.Factory.GetSettingRepository())
+            using (var repository = Factory.GetSettingRepository())
             {
                 var oldSetting = repository.GetAll().FirstOrDefault();
                 if (oldSetting != null)

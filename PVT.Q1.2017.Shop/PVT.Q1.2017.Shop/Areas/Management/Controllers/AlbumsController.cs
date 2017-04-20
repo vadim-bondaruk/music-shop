@@ -2,66 +2,26 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
 
+    using PVT.Q1._2017.Shop.App_Start;
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+    using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
     /// </summary>
-    public class AlbumsController : Controller
+    [ShopAuthorize( UserRoles.Admin, UserRoles.Seller)]
+    public class AlbumsController : BaseController
     {
-        /// <summary>
-        /// </summary>
-        private readonly IArtistRepository artistRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly IRepositoryFactory repositoryFactory;
-
-        /// <summary>
-        /// </summary>
-        private readonly IAlbumTrackRelationRepository albumTrackRelationRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly ITrackRepository trackRepository;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        /// <param name="albumService">
-        ///     The album service.
-        /// </param>
-        /// <param name="artistService">
-        ///     The artist service.
-        /// </param>
-        /// <param name="albumRepository">
-        ///     The album repository.
-        /// </param>
-        /// <param name="artistRepository">
-        ///     The artist repository.
-        /// </param>
-        public AlbumsController(
-            IRepositoryFactory repositoryFactory,
-            IAlbumService albumService,
-            IArtistService artistService,
-            IAlbumRepository albumRepository,
-            IArtistRepository artistRepository,
-            IAlbumTrackRelationRepository albumTrackRelationRepository,
-            ITrackRepository trackRepository)
+        public AlbumsController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this.repositoryFactory = repositoryFactory;
-            this.artistRepository = artistRepository;
-            this.albumTrackRelationRepository = albumTrackRelationRepository;
-            this.trackRepository = trackRepository;
         }
 
         /// <summary>
@@ -73,13 +33,13 @@
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(int id)
         {
-            using (var repository = this.repositoryFactory.GetAlbumRepository())
+            using (var repository = RepositoryFactory.GetAlbumRepository())
             {
                 repository.Delete(id);
                 repository.SaveChanges();
             }
 
-            return this.RedirectToAction("List", "Albums", new { area = "Content" });
+            return RedirectToAction("List", "Albums", new { area = "Content" });
         }
 
         /// <summary>
@@ -91,8 +51,7 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var tracks = new List<Track>();
-            using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
+            using (var albumRepo = RepositoryFactory.GetAlbumRepository())
             {
                 var album = albumRepo.GetById(id, a => a.Artist);
                 if (album != null)
@@ -103,30 +62,18 @@
                         viewModel.ArtistName = album.Artist.Name;
                     }
 
-                    using (var realtionsRepo = this.albumTrackRelationRepository)
+                    using (var realtionsRepo = RepositoryFactory.GetAlbumTrackRelationRepository())
                     {
-                        var relations = realtionsRepo.GetAll(t => t.AlbumId == id);
+                        var tracks = realtionsRepo.GetAll(t => t.AlbumId == id, t => t.Track).Select(t => t.Track).ToList();
 
-                        using (var tracksRepo = this.trackRepository)
-                        {
-                            foreach (var relation in relations)
-                            {
-                                var track = tracksRepo.GetById(relation.TrackId);
-                                if (track != null)
-                                {
-                                    tracks.Add(track);
-                                }
-                            }
-                        }
-
-                        this.ViewBag.Tracks = tracks;
+                        ViewBag.Tracks = tracks;
                     }
 
-                    return this.View(viewModel);
+                    return View(viewModel);
                 }
             }
 
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -142,11 +89,11 @@
             [Bind(Include = "Id, Artist, ArtistName, Name, ReleaseDate, Cover, PostedCover")] AlbumManagementViewModel
                 viewModel)
         {
-            using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
+            using (var albumRepo = RepositoryFactory.GetAlbumRepository())
             {
                 var album = ManagementMapper.GetAlbumModel(viewModel);
 
-                using (var artistRepo = this.artistRepository)
+                using (var artistRepo = RepositoryFactory.GetArtistRepository())
                 {
                     var artist = artistRepo.GetById(viewModel.Artist.Id);
                     if (artist != null)
@@ -163,7 +110,7 @@
                     }
                 }
 
-                return this.RedirectToAction("Details", new { id = album.Id, area = "Content", Controller = "Albums" });
+                return RedirectToAction("Details", new { id = album.Id, area = "Content", Controller = "Albums" });
             }
         }
 
@@ -176,8 +123,11 @@
         /// </returns>
         public virtual ActionResult New(int id)
         {
-            var artist = this.artistRepository.GetById(id);
-            return this.View(new AlbumManagementViewModel { Artist = artist });
+            using (var artistRepository = RepositoryFactory.GetArtistRepository())
+            {
+                return View(new AlbumManagementViewModel { Artist = artistRepository.GetById(id) });
+            }
+            
         }
 
         /// <summary>
@@ -193,13 +143,13 @@
             [Bind(Include = "Artist, Name, ReleaseDate, Cover, PostedCover")] AlbumManagementViewModel viewModel)
         {
             var album = ManagementMapper.GetAlbumModel(viewModel);
-            using (var albumRepo = this.repositoryFactory.GetAlbumRepository())
+            using (var albumRepo = RepositoryFactory.GetAlbumRepository())
             {
                 albumRepo.AddOrUpdate(album);
                 albumRepo.SaveChanges();
             }
 
-            return this.RedirectToAction("Details", new { area = "Content", Controller = "Albums", id = album.Id });
+            return RedirectToAction("Details", new { area = "Content", Controller = "Albums", id = album.Id });
         }
     }
 }

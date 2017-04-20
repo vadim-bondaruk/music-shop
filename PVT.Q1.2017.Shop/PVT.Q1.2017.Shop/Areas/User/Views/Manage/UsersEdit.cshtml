@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Shop.Common.ViewModels.UserEditView>
+﻿@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.UserEditView>
 @using PVT.Q1._2017.Shop.Helpers
 @using Shop.Common.Models
 
@@ -17,14 +17,12 @@ Sort by: @Html.ActionLink("LastName", "UsersEdit", new { controller = "Manage", 
 @Html.ActionLink("Login", "UsersEdit", new { controller = "Manage", area = "User", id = ViewBag.PageInfo.PageNumber, sort = "Login" }) |
 @Html.ActionLink("Email", "UsersEdit", new { controller = "Manage", area = "User", id = ViewBag.PageInfo.PageNumber, sort = "Email" })
 
-@Html.Partial("_UsersEdit", Model)
+@Html.Partial("_UsersEdit", Model.Items)
 
-@Html.PageLinks(ViewBag.PageInfo as PageInfo, i => Url.Action("UsersEdit", new { id = i, controller = "Manage", area = "User" }))
+@Html.PageLinks(Model, i => Url.Action("UsersEdit", new { id = i, controller = "Manage", area = "User" }))
 
 @section scripts
 {
- 
-<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
     <script>
         $(function () {
             $("#lastName").autocomplete(
@@ -33,7 +31,7 @@ Sort by: @Html.ActionLink("LastName", "UsersEdit", new { controller = "Manage", 
                     source: function (request, response) {
                         $.ajax(
                             {
-                                url: "@Url.Action("GetMatchingData",new { controller = "Manage", area = "User"})",
+                                url: "@Url.Action("GetLastNameMatchingData",new { controller = "Manage", area = "User"})",
                                 type: "POST",
                                 data: {
                                     term: request.term

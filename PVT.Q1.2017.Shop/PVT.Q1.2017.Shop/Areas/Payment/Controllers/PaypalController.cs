@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Shop.BLL.Services;
+﻿using System.Web.Mvc;
 using Shop.BLL.Services.Infrastructure;
 using Shop.Common.ViewModels;
 using PVT.Q1._2017.Shop.Controllers;
 
 namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
+    using App_Start;
+    using global::Shop.DAL.Infrastruture;
+    
+    [ShopAuthorize]
     public class PaypalController : BaseController
     {
-        private readonly IPaymentService _paymentService;
-
-        public PaypalController(IPaymentService paymentService)
+        public PaypalController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._paymentService = paymentService;
         }
 
         [HttpGet]
@@ -41,7 +37,8 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         [Authorize]
         public ActionResult PaymentWithCreditCard()
         {
-            var viewName = _paymentService.CreatePaymentWithCreditCard();
+            var paymentService = ServiceFactory.GetPaymentService();
+            var viewName = paymentService.CreatePaymentWithCreditCard();
             return Content(viewName); // View("SuccessView");
         }
 
@@ -49,7 +46,8 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         [Authorize]
         public ActionResult PaymentWithPaypalDemo()
         {
-            var status = _paymentService.PaymentWithPaypalDemo(this.Request, this.Session);
+            var paymentService = ServiceFactory.GetPaymentService();
+            var status = paymentService.PaymentWithPaypalDemo(Request, Session);
 
             if (status.StartsWith("http"))
             {
@@ -75,7 +73,9 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             {
                 return RedirectToAction("Failure");
             }
-            var status = _paymentService.PaymentWithPaypal(this.Request, this.Session, cart);
+
+            var paymentService = ServiceFactory.GetPaymentService();
+            var status = paymentService.PaymentWithPaypal(Request, Session, cart);
 
             if (status.StartsWith("http"))
             {
@@ -95,7 +95,8 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         [Authorize]
         public ActionResult PaymentWithPaypal()
         {
-            var status = _paymentService.PaymentWithPaypal(this.Request, this.Session);
+            var paymentService = ServiceFactory.GetPaymentService();
+            var status = paymentService.PaymentWithPaypal(Request, Session);
 
             if (status.StartsWith("http"))
             {

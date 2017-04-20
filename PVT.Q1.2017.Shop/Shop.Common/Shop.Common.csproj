@@ -53,12 +53,12 @@
     <Compile Include="Models\AlbumTrackRelation.cs" />
     <Compile Include="Models\OrderAlbum.cs" />
     <Compile Include="Models\OrderTrack.cs" />
-    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Validators\ChangeLoginValidator.cs" />
     <Compile Include="Models\PaymentTransaction.cs" />
     <Compile Include="Models\PurchasedAlbum.cs" />
     <Compile Include="Models\PurchasedTrack.cs" />
     <Compile Include="Models\UserPrincipalSerializeModel.cs" />
+    <Compile Include="Validators\FeedbackValidator.cs" />
     <Compile Include="Validators\Infrastructure\IUserValidator.cs" />
     <Compile Include="Validators\LoginViewValidator.cs" />
     <Compile Include="Validators\UserRegistrationValidator.cs" />
@@ -76,6 +76,7 @@
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="ViewModels\ChangeLoginViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\ArtistContentViewModel.cs" />
     <Compile Include="ViewModels\ArtistTracksListViewModel.cs" />
     <Compile Include="ViewModels\ArtistViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Models\UserData.cs" />
     <Compile Include="Models\UserPaymentMethod.cs" />
     <Compile Include="ViewModels\PurchasedTrackViewModel.cs" />
+    <Compile Include="ViewModels\TrackFeedbacksListViewModel.cs" />
     <Compile Include="ViewModels\TrackViewModel.cs" />
     <Compile Include="ViewModels\UserEditView.cs" />
     <Compile Include="ViewModels\UserPersonalViewModel.cs" />
@@ -111,7 +113,6 @@
     <Compile Include="Validators\ChangePasswordValidator.cs" />
     <Compile Include="Validators\CurrencyRateValidator.cs" />
     <Compile Include="Validators\CurrencyValidator.cs" />
-    <Compile Include="Validators\FeedbackValidator.cs" />
     <Compile Include="Validators\ForgotPassworValidator.cs" />
     <Compile Include="Validators\GenreValidator.cs" />
     <Compile Include="Validators\PaymentCardValidator.cs" />

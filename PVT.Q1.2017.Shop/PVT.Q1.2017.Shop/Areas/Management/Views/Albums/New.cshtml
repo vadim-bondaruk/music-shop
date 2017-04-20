@@ -15,7 +15,7 @@
             <input type="hidden" name="@Html.NameFor(m => m.Artist.Id)" value="@Model.Artist.Id" />
 
             <div class="center">
-                <img class="img-thumbnail" id="new-album-img" onclick="document.formreg.PostedCover.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64" />
+                <img class="img-thumbnail" id="new-album-img" onclick="document.formreg.PostedCover.click()" onerror="src = '/img/defuserpic.png'" src="data:image;base64" />
 
                 <div class="details">
                     <div class="list-back">
@@ -27,7 +27,7 @@
                                 @Html.EditorFor(m => Model.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
                             </li>
                             <li class="list-group-item">
-                                @Html.EditorFor(m => Model.ReleaseDate, new { htmlAttributes = new { id = "datep", placeholder = "Дата релиза", type = "text", @class = "form-control" } })
+                                @Html.EditorFor(m => Model.ReleaseDate, new { htmlAttributes = new { id = "datep", placeholder = "Дата релиза", type = "text", @class = "form-control datecontrol" } })
                             </li>
                         </ul>
                     </div>

@@ -44,12 +44,14 @@
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 
-            _mock.Setup(m => m.GetById(It.IsAny<int>(),
-                                      It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
+            _mock.Setup(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<User, BaseEntity>>[]>()))
                 .Returns(() => _users.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<User, bool>>>()))
                  .Returns(() => _users.Any());
+
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<User, bool>>>()))
+                 .Returns(() => _users.Count);
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<User>())).Callback(() => _users.Add(new User
             {

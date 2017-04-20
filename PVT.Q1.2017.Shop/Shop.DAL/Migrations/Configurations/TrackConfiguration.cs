@@ -14,19 +14,19 @@
         /// </summary>
         public TrackConfiguration()
         {
-            this.HasKey(t => t.Id);
-            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
+            HasKey(t => t.Id);
+            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(t => t.Name).IsRequired().HasMaxLength(150).IsUnicode().IsVariableLength();
 
             // TODO: uncomment this when track management will be ready
-            // this.Property(t => t.TrackFile).IsRequired(); 
+            // Property(t => t.TrackFile).IsRequired(); 
 
-            this.HasRequired(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
-            this.HasRequired(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
+            HasRequired(t => t.Artist).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
+            HasRequired(t => t.Genre).WithMany(a => a.Tracks).WillCascadeOnDelete(true);
 
             HasOptional(t => t.Owner).WithMany().HasForeignKey(t => t.OwnerId).WillCascadeOnDelete(false);
 
-            this.ToTable("Tracks");
+            ToTable("Tracks");
         }
     }
 }

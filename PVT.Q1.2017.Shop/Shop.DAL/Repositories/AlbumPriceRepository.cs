@@ -48,9 +48,9 @@
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The AlbumPriceBaseRepository should be SOLID, should only add information about album price! Not about album, currency or price level!
-            this.DetachNavigationProperty(albumPrice.Album, out albumEntryState);
-            this.DetachNavigationProperty(albumPrice.Currency, out currencyEntryState);
-            this.DetachNavigationProperty(albumPrice.PriceLevel, out priceLevelEntryState);
+            DetachNavigationProperty(albumPrice.Album, out albumEntryState);
+            DetachNavigationProperty(albumPrice.Currency, out currencyEntryState);
+            DetachNavigationProperty(albumPrice.PriceLevel, out priceLevelEntryState);
 
             albumPrice.Album = null;
             albumPrice.Currency = null;

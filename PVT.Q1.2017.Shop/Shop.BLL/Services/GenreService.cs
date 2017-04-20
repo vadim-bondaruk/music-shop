@@ -31,7 +31,7 @@
         public ICollection<GenreDetailsViewModel> GetAllViewModels()
         {
             ICollection<Genre> genres;
-            using (var repository = this.Factory.GetGenreRepository())
+            using (var repository = Factory.GetGenreRepository())
             {
                 genres = repository.GetAll();
             }
@@ -48,7 +48,7 @@
         /// </returns>
         public Genre GetGenre(int id)
         {
-            using (var repository = this.Factory.GetGenreRepository())
+            using (var repository = Factory.GetGenreRepository())
             {
                 return null;
 
@@ -65,7 +65,7 @@
         /// </returns>
         public GenreDetailsViewModel GetGenreDetailsViewModel(int id)
         {
-            using (var repository = this.Factory.GetGenreRepository())
+            using (var repository = Factory.GetGenreRepository())
             {
                 var genre = repository.GetById(id);
                 return ModelsMapper.GetGenreDetailsViewModel(genre);
@@ -78,7 +78,7 @@
         /// </returns>
         public ICollection<Genre> GetGenresList()
         {
-            using (var repository = this.Factory.GetGenreRepository())
+            using (var repository = Factory.GetGenreRepository())
             {
                 return null;
 

@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+    using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
 
     /// <summary>
@@ -10,20 +11,8 @@
     /// </summary>
     public class TrackController : BaseController
     {
-        /// <summary>
-        /// The track service.
-        /// </summary>
-        private readonly ITrackService _trackService;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrackController"/> class.
-        /// </summary>
-        /// <param name="trackService">
-        ///     The track service.
-        /// </param>
-        public TrackController(ITrackService trackService)
+        public TrackController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._trackService = trackService;
         }
 
         /// <summary>
@@ -32,17 +21,15 @@
         /// <returns>
         /// All tracks view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
-            var currency = GetCurrentUserCurrency();
-
-            if (currency != null)
+            var trackService = ServiceFactory.GetTrackService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var priceLevel = GetCurrentUserPriceLevel();
-                return this.View(this._trackService.GetTracksList(currency.Code, priceLevel, GetUserDataId()));
+                return this.View(trackService.GetTracks(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(this._trackService.GetTracksList());
+            return this.View(trackService.GetTracks(page, pageSize));
         }
 
         /// <summary>
@@ -56,20 +43,19 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List");
+                return this.RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            var currency = GetCurrentUserCurrency();
-            TrackDetailsViewModel trackViewModel;
+            TrackAlbumsListViewModel trackViewModel;
 
-            if (currency != null)
+            var trackService = ServiceFactory.GetTrackService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var priceLevel = GetCurrentUserPriceLevel();
-                trackViewModel = _trackService.GetTrackDetails(id.Value, currency.Code, priceLevel, GetUserDataId());
+                trackViewModel = trackService.GetAlbums(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
             else
             {
-                trackViewModel = _trackService.GetTrackDetails(id.Value);
+                trackViewModel = trackService.GetAlbums(id.Value);
             }
 
             if (trackViewModel == null)
@@ -78,41 +64,6 @@
             }
 
             return this.View(trackViewModel);
-        }
-
-        /// <summary>
-        /// Shows all albums where the specified track is exist.
-        /// </summary>
-        /// <param name="id">The track id.</param>
-        /// <returns>
-        /// All albums where the specified track is exist.
-        /// </returns>
-        public ActionResult AlbumsList(int? id)
-        {
-            if (id == null)
-            {
-                return this.RedirectToAction("List");
-            }
-
-            var currency = GetCurrentUserCurrency();
-            TrackAlbumsListViewModel trackAlbumsViewModel;
-
-            if (currency != null)
-            {
-                var priceLevel = GetCurrentUserPriceLevel();
-                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
-            }
-            else
-            {
-                trackAlbumsViewModel = _trackService.GetAlbumsList(id.Value);
-            }
-
-            if (trackAlbumsViewModel == null)
-            {
-                return HttpNotFound($"Трек с id = { id.Value } не найден");
-            }
-
-            return this.View(trackAlbumsViewModel);
         }
 
         /// <summary>
@@ -131,7 +82,8 @@
                 return HttpNotFound();
             }
 
-            var trackViewModel = _trackService.GetTrackDetails(id.Value);
+            var trackService = ServiceFactory.GetTrackService();
+            var trackViewModel = trackService.GetTrackDetails(id.Value);
             if (trackViewModel == null)
             {
                 return HttpNotFound($"Трек с id = { id.Value } не найден");

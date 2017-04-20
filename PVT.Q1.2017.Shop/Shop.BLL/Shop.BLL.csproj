@@ -37,6 +37,10 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -51,6 +55,10 @@
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Factory, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Factory.3.2.1.0\lib\net45-full\Ninject.Extensions.Factory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PayPal, Version=1.8.0.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
@@ -70,6 +78,7 @@
     <Compile Include="Exceptions\InvalidUserIdException.cs" />
     <Compile Include="Helpers\ModelsMapper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="Helpers\Mp3StreamHelper.cs" />
     <Compile Include="Helpers\PriceHelper.cs" />
     <Compile Include="Helpers\ServiceHelper.cs" />
     <Compile Include="Helpers\PayPalCommon.cs" />
@@ -87,6 +96,7 @@
     <Compile Include="Services\CurrencyService.cs" />
     <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\Infrastructure\IArtistService.cs" />
+    <Compile Include="Services\Infrastructure\IServiceFactory.cs" />
     <Compile Include="Services\Infrastructure\ISettingService.cs" />
     <Compile Include="Services\Infrastructure\IGenreService.cs" />
     <Compile Include="Services\Infrastructure\IUserService.cs" />
@@ -94,9 +104,6 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\AuthModule.cs" />
     <Compile Include="Utils\CurrentUser.cs" />
-    <Compile Include="Utils\ID3Tag\BitReader.cs" />
-    <Compile Include="Utils\ID3Tag\ID3v2.cs" />
-    <Compile Include="Utils\ID3Tag\id3v2Frame.cs" />
     <Compile Include="Utils\Infrastructure\IAuthModule.cs" />
     <Compile Include="Utils\PasswordEncryptor.cs" />
     <Compile Include="Services\FeedbackService.cs" />
@@ -110,7 +117,6 @@
     <Compile Include="Services\Infrastructure\ITrackPriceService.cs" />
     <Compile Include="Services\Infrastructure\ITrackService.cs" />
     <Compile Include="Services\Infrastructure\IUserPaymentMethodService.cs" />
-    <Compile Include="Services\Infrastructure\IUserDataService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\PaymentService.cs" />
     <Compile Include="Services\TrackPriceService.cs" />
@@ -119,9 +125,7 @@
     <Compile Include="Utils\UserIdentity.cs" />
     <Compile Include="Utils\MailDispatch.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validators\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ship.Infrastructure\Shop.Infrastructure.csproj">
       <Project>{c0e3b0f8-3fd8-4d53-b3b1-b98bdf5da9cf}</Project>

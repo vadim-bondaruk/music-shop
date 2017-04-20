@@ -2,20 +2,20 @@
 @{ ViewBag.Title = "Новый исполнитель";}
 <body>
 
-<div class="artist-new">
+<div class="artist-new" style="margin-top: 130px">
 
     @using (Html.BeginForm("New", "Artists", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
     {
         @Html.AntiForgeryToken()
         <div class="inner">
             <div>
-                <img class="img-thumbnail" id="artist-img" style="width: 500px; height: 500px;"onclick="document.formreg.PostedPhoto.click()" onerror="this.src = '/img/defuserpic.png'" src="data:image;base64"/>
-                <ul class="list-group" style="width: 500px">
+                <img class="img-thumbnail" id="artist-img" onclick="document.formreg.PostedPhoto.click()" onerror="src = '/img/defuserpic.png'" src="data:image;base64"/>
+                <ul class="list-group">
                     <li class="list-group-item">
                         @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель", style = "max-width: 100%; margin-top: 0;" } })
                     </li>
                     <li class="list-group-item">
-                        @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата рождения", type = "text", id = "item-birthday", style = "max-width: 100%" } })
+                        @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control datecontrol", placeholder = "Дата рождения", type = "text", id = "item-birthday", style = "max-width: 100%" } })
                     </li>
                     <li class="list-group-item">
                         @Html.TextAreaFor(m => m.Biography, new { @class = "form-control", placeholder = "Биография", id = "item-bio", style = "heigth: 200px" })

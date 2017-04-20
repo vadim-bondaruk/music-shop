@@ -1,13 +1,14 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
     using System.Web.Mvc;
-    using AutoMapper;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using App_Start;
+    using global::Shop.BLL.Helpers;
     using global::Shop.Infrastructure.Enums;
+    using Helpers;
     using Shop.Controllers;
 
     /// <summary>
@@ -17,24 +18,16 @@
     public class CurrencyController : BaseController
     {
         /// <summary>
-        /// The repository currency
-        /// </summary>
-        private readonly ICurrencyRepository _currencyRepository;
-
-        /// <summary>
-        /// The service currency
-        /// </summary>
-        private readonly ICurrencyService _curencyService;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CurrencyController"/> class.
         /// </summary>
-        /// <param name="currencyRepository">The repository currency</param>
-        /// <param name="currencyService">The service currency</param>
-        public CurrencyController(ICurrencyRepository currencyRepository, ICurrencyService currencyService)
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        /// <param name="serviceFactory">
+        /// The service factory.
+        /// </param>
+        public CurrencyController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._currencyRepository = currencyRepository;
-            this._curencyService = currencyService;
         }
 
         /// <summary>
@@ -43,8 +36,9 @@
         /// <returns></returns>
         public ViewResult Index()
         {
-            var currencies = _curencyService.GetCurrenciesList();
-            return this.View(currencies);
+            var currencyService = ServiceFactory.GetCurrencyService();
+            var currencies = currencyService.GetCurrencies();
+            return View(currencies);
         }
 
         /// <summary>
@@ -53,13 +47,26 @@
         /// <param name="id">currency id for edit</param>
         /// <returns></returns>
         [HttpGet]
-        public ViewResult Edit(int id)
+        public ActionResult Edit(int id = 0)
         {
-            // var currency = this._curencyService.GetCurrencyInfo(id);
-            var currency = this._currencyRepository.GetById(id);
-            Mapper.Initialize(cfg => cfg.CreateMap<Currency, CurrencyViewModel>());
-            CurrencyViewModel model = Mapper.Map<Currency, CurrencyViewModel>(currency);
-            return this.View(model);
+            if (id <= 0)
+            {
+                return RedirectToAction("Index", "Currency", new { area = "Admin" });
+            }
+
+            Currency currency;
+            using (var currencyRepository = RepositoryFactory.GetCurrencyRepository())
+            {
+                currency = currencyRepository.GetById(id);
+            }
+
+            if (currency == null)
+            {
+                return HttpNotFound("Валюты с указанным id не существует");
+            }
+
+            CurrencyViewModel model = ModelsMapper.GetCurrencyViewModel(currency);
+            return View(model);
         }
 
         /// <summary>
@@ -67,24 +74,21 @@
         /// </summary>
         /// <param name="model">CurrencyViewModel for edit</param>
         /// <returns></returns>
-        public ActionResult Edit(CurrencyViewModel model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Code,ShortName,FullName,Symbol")] CurrencyViewModel model)
         {
-            if (this.ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<CurrencyViewModel, Currency>());
-                Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
-                try
+                Currency currency = AdminModelsMapper.GetCurrency(model);
+                using (var currencyRepository = RepositoryFactory.GetCurrencyRepository())
                 {
-                    this._currencyRepository.AddOrUpdate(currency);
-                    this._currencyRepository.SaveChanges();
-                    return this.RedirectToAction("Index");
-                }
-                catch
-                {
+                    currencyRepository.AddOrUpdate(currency);
+                    currencyRepository.SaveChanges();
+                    return RedirectToAction("Index", "Currency", new { area = "Admin" });
                 }
             }
 
-            return this.View(model);
+            return View(model);
         }
 
         /// <summary>
@@ -93,11 +97,43 @@
         /// <param name="id">currency id for delete</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id = 0)
         {
-            this._currencyRepository.Delete(id);
-            this._currencyRepository.SaveChanges();
-            return this.RedirectToAction("Index");
+            if (id <= 0)
+            {
+                return RedirectToAction("Index", "Currency", new { area = "Admin" });
+            }
+
+            Currency currency;
+            using (var currencyRepository = RepositoryFactory.GetCurrencyRepository())
+            {
+                currency = currencyRepository.GetById(id);
+            }
+
+            if (currency == null)
+            {
+                return HttpNotFound("Валюты с указанным id не существует");
+            }
+
+            CurrencyViewModel model = ModelsMapper.GetCurrencyViewModel(currency);
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Delete([Bind(Include = "Id,Code,ShortName,FullName,Symbol")] CurrencyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Currency currency = AdminModelsMapper.GetCurrency(model);
+                using (var currencyRepository = RepositoryFactory.GetCurrencyRepository())
+                {
+                    currencyRepository.Delete(currency);
+                    currencyRepository.SaveChanges();
+                    return RedirectToAction("Index", "Currency", new { area = "Admin" });
+                }
+            }
+
+            return View(model);
         }
 
         /// <summary>
@@ -106,7 +142,7 @@
         /// <returns></returns>
         public ActionResult Create()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -114,30 +150,29 @@
         /// </summary>
         /// <param name="model">CurrencyViewModel for create</param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult Create(CurrencyViewModel model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Code,ShortName,FullName,Symbol")]CurrencyViewModel model)
         {
             try
             {
-                if (this.ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    Mapper.Initialize(cfg => cfg.CreateMap<CurrencyViewModel, Currency>());
-                    Currency currency = Mapper.Map<CurrencyViewModel, Currency>(model);
-                    this._currencyRepository.AddOrUpdate(currency);
-                    this._currencyRepository.SaveChanges();
+                    Currency currency = AdminModelsMapper.GetCurrency(model);
+                    using (var currencyRepository = RepositoryFactory.GetCurrencyRepository())
+                    {
+                        currencyRepository.AddOrUpdate(currency);
+                        currencyRepository.SaveChanges();
+                    }
 
-                    return this.RedirectToAction("Index");
+                    return RedirectToAction("Index");
                 }
             }
             catch
             {
-                this.ModelState.AddModelError("Name", "Unable to save changes. Try again, and if the problem persists see your system administrator");
-
-
-                return this.RedirectToAction("Create", model);
+                ModelState.AddModelError("Name", "Unable to save changes. Try again, and if the problem persists see your system administrator");
             }
 
-            return null;
+            return View(model);
         }
     }
 }

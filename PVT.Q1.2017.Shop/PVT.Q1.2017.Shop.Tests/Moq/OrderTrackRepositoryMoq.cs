@@ -21,46 +21,52 @@
             _mock.Setup(m => m.GetAll()).Returns(_orderTrack);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
-                 .Returns(_orderTrack);
+                .Returns(_orderTrack);
 
             _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<OrderTrack, bool>>>()))
-                 .Returns(_orderTrack);
+                .Returns((Expression<Func<OrderTrack, bool>> exp) => _orderTrack.Where(exp.Compile()).ToList());
 
             _mock.Setup(
-                        m =>
-                            m.GetAll(It.IsAny<Expression<Func<OrderTrack, bool>>>(),
-                                     It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
-                 .Returns(_orderTrack);
+                    m =>
+                        m.GetAll(It.IsAny<Expression<Func<OrderTrack, bool>>>(),
+                            It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
+                .Returns(_orderTrack);
 
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<OrderTrack, bool>>>()))
-                 .Returns(() => _orderTrack.FirstOrDefault());
+                .Returns((Expression<Func<OrderTrack, bool>> exp) => _orderTrack.FirstOrDefault(exp.Compile()));
 
             _mock.Setup(
-                        m =>
-                            m.FirstOrDefault(It.IsAny<Expression<Func<OrderTrack, bool>>>(),
-                                             It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
-                 .Returns(() => _orderTrack.FirstOrDefault());
+                    m =>
+                        m.FirstOrDefault(It.IsAny<Expression<Func<OrderTrack, bool>>>(),
+                            It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
+                .Returns((Expression<Func<OrderTrack, bool>> exp, Expression<Func<OrderTrack, BaseEntity>>[] exp2) => 
+                _orderTrack.FirstOrDefault(exp.Compile()));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _orderTrack.FirstOrDefault(a => a.Id > 0));
+                .Returns((int id) => _orderTrack.FirstOrDefault(a => a.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
-                                       It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
-                 .Returns(() => _orderTrack.FirstOrDefault(a => a.Id > 0));
+                    It.IsAny<Expression<Func<OrderTrack, BaseEntity>>[]>()))
+                .Returns(() => _orderTrack.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<OrderTrack, bool>>>()))
-                 .Returns(() => _orderTrack.Any());
+                .Returns((Expression<Func<OrderTrack, bool>> exp) => _orderTrack.Any(exp.Compile()));
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderTrack>())).Callback(() => _orderTrack.Add(new OrderTrack
-            {
-                Id = _orderTrack.Count + 1
-            }));
-
-            _mock.Setup(m => m.Delete(It.IsNotNull<OrderTrack>())).Callback(() =>
-            {
-                if (_orderTrack.Any())
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<OrderTrack>()))
+                .Callback((OrderTrack orderTrack) =>
                 {
-                    _orderTrack.RemoveAt(_orderTrack.Count - 1);
+                    orderTrack.Id = _orderTrack.Count + 1;
+                    _orderTrack.Add(orderTrack);
+                });
+
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<OrderTrack, bool>>>()))
+                 .Returns(() => _orderTrack.Count);
+
+        _mock.Setup(m => m.Delete(It.IsNotNull<OrderTrack>())).Callback((OrderTrack orderTrack) =>
+            {
+                if (_orderTrack.Any(o => o.Id == orderTrack.Id))
+                {
+                    _orderTrack.Remove(orderTrack);
                 }
             });
         }

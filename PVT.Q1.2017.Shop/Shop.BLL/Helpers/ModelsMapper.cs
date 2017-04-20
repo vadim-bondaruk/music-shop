@@ -231,6 +231,34 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="FeedbackViewModel"/> model to a new <see cref="Feedback"/> model.
+        /// </summary>
+        /// <param name="feedbackViewModel">
+        /// The feedback view model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="Feedback"/> DTO model.
+        /// </returns>
+        public static Feedback GetFeedback(FeedbackViewModel feedbackViewModel)
+        {
+            return _commonMapper.Map<Feedback>(feedbackViewModel);
+        }
+
+        /// <summary>
+        /// Executes a mapping from the <see cref="FeedbackViewModel"/> model to a new <see cref="Vote"/> model.
+        /// </summary>
+        /// <param name="feedbackViewModel">
+        /// The vote view model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="Vote"/> DTO model.
+        /// </returns>
+        public static Vote GetVote(FeedbackViewModel feedbackViewModel)
+        {
+            return _commonMapper.Map<Vote>(feedbackViewModel);
+        }
+
+        /// <summary>
         /// Executes a mapping from the <see cref="Artist"/> model to a new <see cref="ArtistTracksListViewModel"/> model.
         /// </summary>
         /// <param name="artist">
@@ -283,7 +311,21 @@
         /// </returns>
         public static PurchasedTrackViewModel GetPurchasedTrackViewModel(Track track)
         {
-            return _commonMapper.Map<PurchasedTrackViewModel>(track);
+            return _modelDetailsMapper.Map<PurchasedTrackViewModel>(track);
+        }
+
+        /// <summary>
+        /// Executes a mapping from the <see cref="Track"/> model to a new <see cref="TrackFeedbacksListViewModel"/> model.
+        /// </summary>
+        /// <param name="track">
+        /// The track DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="TrackFeedbacksListViewModel"/> model.
+        /// </returns>
+        public static TrackFeedbacksListViewModel GetTrackFeedbacksListViewModel(Track track)
+        {
+            return _specialListMapper.Map<TrackFeedbacksListViewModel>(track);
         }
 
         /// <summary>
@@ -321,12 +363,16 @@
                    .ForMember(dest => dest.Currency, opt => opt.MapFrom(p => p.Currency));
 
                 cfg.CreateMap<Feedback, FeedbackViewModel>()
-                   .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId));
+                   .ForMember(dest => dest.UserDataId, opt => opt.ResolveUsing(f => f.UserId))
+                   .ForMember(dest => dest.UserName, opt => opt.ResolveUsing(f => f.User != null && f.User.User != null ? f.User.User.Login : string.Empty));
+
+                cfg.CreateMap<FeedbackViewModel, Feedback>()
+                   .ForMember(dest => dest.UserId, opt => opt.ResolveUsing(f => f.UserDataId));
+
+                cfg.CreateMap<FeedbackViewModel, Vote>()
+                   .ForMember(dest => dest.UserId, opt => opt.ResolveUsing(f => f.UserDataId));
 
                 cfg.CreateMap<Setting, SettingViewModel>();
-
-                cfg.CreateMap<Track, PurchasedTrackViewModel>()
-                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist));
             });
 
             return commonMapperConfiguration.CreateMapper();
@@ -346,8 +392,19 @@
                    .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))
                    .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
 
-                cfg.CreateMap<Track, TrackAlbumsListViewModel>()
+                cfg.CreateMap<Genre, GenreViewModel>();
+
+                cfg.CreateMap<Artist, ArtistDetailsViewModel>()
+                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
+
+                cfg.CreateMap<Track, TrackDetailsViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre))
+                   .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
+
+                cfg.CreateMap<Track, TrackAlbumsListViewModel>()
+                   .ForMember(dest => dest.TrackDetails, opt => opt.MapFrom(t => t))
                    .ForMember(dest => dest.Albums, opt => opt.Ignore());
 
                 cfg.CreateMap<Album, AlbumDetailsViewModel>()
@@ -356,14 +413,19 @@
 
                 cfg.CreateMap<Album, AlbumTracksListViewModel>()
                    .ForMember(dest => dest.AlbumDetails, opt => opt.MapFrom(a => a))
-                   .ForMember(dest => dest.Tracks, opt => opt.Ignore())
-                   .ForMember(dest => dest.TracksCount, opt => opt.UseValue(0));
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
 
                 cfg.CreateMap<Artist, ArtistTracksListViewModel>()
+                   .ForMember(dest => dest.ArtistDetails, opt => opt.MapFrom(a => a))
                    .ForMember(dest => dest.Tracks, opt => opt.Ignore());
 
                 cfg.CreateMap<Artist, ArtistAlbumsListViewModel>()
+                   .ForMember(dest => dest.ArtistDetails, opt => opt.MapFrom(a => a))
                    .ForMember(dest => dest.Albums, opt => opt.Ignore());
+
+                cfg.CreateMap<Track, TrackFeedbacksListViewModel>()
+                   .ForMember(dest => dest.TrackDetails, opt => opt.MapFrom(t => t))
+                   .ForMember(dest => dest.Feedbacks, opt => opt.Ignore());
             });
 
             return specialListMapperConfiguration.CreateMapper();
@@ -399,6 +461,10 @@
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
                    .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre))
                    .ForMember(dest => dest.AlbumsCount, opt => opt.UseValue(0));
+
+                cfg.CreateMap<Track, PurchasedTrackViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre));
             });
 
             return detailsMapperConfiguration.CreateMapper();

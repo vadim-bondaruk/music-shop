@@ -21,7 +21,7 @@
         /// <param name="kernel">Kernel</param>
         public CustomDependencyResolver(IKernel kernel)
         {
-            this._kernel = kernel;
+            _kernel = kernel;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@
         /// <returns>The requested service or object</returns>
         public object GetService(Type serviceType)
         {
-            return this._kernel.Get(serviceType);
+            return _kernel.Get(serviceType);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@
         /// <returns>The requested services</returns>
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return this._kernel.GetAll(serviceType);
+            return _kernel.GetAll(serviceType);
         }
     }
 }

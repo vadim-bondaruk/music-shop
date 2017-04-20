@@ -33,7 +33,7 @@
                  .Returns(_purchasedAlbum);
 
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<PurchasedAlbum, bool>>>()))
-                 .Returns(() => _purchasedAlbum.FirstOrDefault());
+                 .Returns((Func<PurchasedAlbum, bool> exp) => _purchasedAlbum.FirstOrDefault(exp));
 
             _mock.Setup(
                         m =>
@@ -42,25 +42,29 @@
                  .Returns(() => _purchasedAlbum.FirstOrDefault());
 
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _purchasedAlbum.FirstOrDefault(a => a.Id > 0));
+                 .Returns((int id) => _purchasedAlbum.FirstOrDefault(a => a.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<PurchasedAlbum, BaseEntity>>[]>()))
                  .Returns(() => _purchasedAlbum.FirstOrDefault(a => a.Id > 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<PurchasedAlbum, bool>>>()))
-                 .Returns(() => _purchasedAlbum.Any());
+                 .Returns((Expression<Func<PurchasedAlbum, bool>> exp) => _purchasedAlbum.Any(exp.Compile()));
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedAlbum>())).Callback(() => _purchasedAlbum.Add(new PurchasedAlbum
-            {
-                Id = _purchasedAlbum.Count + 1
-            }));
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<PurchasedAlbum, bool>>>()))
+                 .Returns(() => _purchasedAlbum.Count);
 
-            _mock.Setup(m => m.Delete(It.IsNotNull<PurchasedAlbum>())).Callback(() =>
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<PurchasedAlbum>())).Callback((PurchasedAlbum pAlbum) =>
             {
-                if (_purchasedAlbum.Any())
+                pAlbum.Id = _purchasedAlbum.Count + 1;
+                _purchasedAlbum.Add(pAlbum);
+            });
+
+            _mock.Setup(m => m.Delete(It.IsNotNull<PurchasedAlbum>())).Callback((PurchasedAlbum pAlbum) =>
+            {
+                if (_purchasedAlbum.Any(p => p.Id == pAlbum.Id))
                 {
-                    _purchasedAlbum.RemoveAt(_purchasedAlbum.Count - 1);
+                    _purchasedAlbum.RemoveAt(pAlbum.Id - 1);
                 }
             });
         }

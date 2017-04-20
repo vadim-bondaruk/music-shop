@@ -14,13 +14,13 @@
         /// </summary>
         public VoteConfiguration()
         {
-            this.HasKey(t => t.Id);
-            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(t => t.Mark).IsRequired();
-            this.HasRequired(v => v.Track).WithMany(t => t.Votes).WillCascadeOnDelete(false);
-            this.HasRequired(v => v.User).WithMany(t => t.Votes).WillCascadeOnDelete(false);
+            HasKey(t => t.Id);
+            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(t => t.Mark).IsRequired();
+            HasRequired(v => v.Track).WithMany(t => t.Votes).WillCascadeOnDelete(false);
+            HasRequired(v => v.User).WithMany(t => t.Votes).WillCascadeOnDelete(false);
 
-            this.ToTable("Votes");
+            ToTable("Votes");
         }
     }
 }

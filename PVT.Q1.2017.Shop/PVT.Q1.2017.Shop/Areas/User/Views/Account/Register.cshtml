@@ -73,7 +73,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control datecontrol", type="text" } })
                 @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -109,13 +109,3 @@
 <div>
     @Html.ActionLink("На главную", "Index", new { area = "", controller = "Home" })
 </div>
-
-<link href="~/Content/Site.css" rel="stylesheet" />
-
-@section Scripts {
-
-<script src="~/Scripts/jquery-1.12.4.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-}

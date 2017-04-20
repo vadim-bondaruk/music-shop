@@ -22,7 +22,7 @@
                 ViewBag.Message = "Вы не авторизованы";
             }
 
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@
         {
             ViewBag.Message = "Контакты";
 
-            return this.View();
+            return View();
         }
     }
 }

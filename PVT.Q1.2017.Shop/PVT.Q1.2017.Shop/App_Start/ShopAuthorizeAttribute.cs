@@ -4,11 +4,9 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Enums;
     using global::Shop.DAL.Infrastruture;
-    using System.Web.Routing;
 
     /// <summary>
     /// 
@@ -27,7 +25,7 @@
         /// <param name="UserRoles"> Array UserRoles enum </param>
         public ShopAuthorizeAttribute(params UserRoles[] userRoles)
         {
-            this._userRoles = userRoles;
+            _userRoles = userRoles;
         }
 
         /// <summary>
@@ -52,14 +50,18 @@
             string userName = user.Identity.Name;
 
             // TODO: Get user from Repository by Name
-            var userDB = userName.Contains("@") ? DependencyResolver.Current.GetService<IRepositoryFactory>()
-                .GetUserRepository()?.FirstOrDefault(u => u.Email.Equals(userName, StringComparison.OrdinalIgnoreCase))
-                                                : DependencyResolver.Current.GetService<IRepositoryFactory>()
-                .GetUserRepository()?.FirstOrDefault(u => u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase));
-
-            if (user != null && this._userRoles.Length > 0)
+            User userDB;
+            using (var repository = DependencyResolver.Current.GetService<IRepositoryFactory>().GetUserRepository())
             {
-                if (!this._userRoles.ToList().Contains(userDB.UserRole))
+                userDB = userName.Contains("@")
+                                 ? repository.FirstOrDefault(u => u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                                 : repository.FirstOrDefault(u => u.Login.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            }
+
+
+            if (user != null && _userRoles.Length > 0)
+            {
+                if (!_userRoles.ToList().Contains(userDB.UserRole))
                 {
                     return false;
                 }

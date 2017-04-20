@@ -42,15 +42,15 @@
         {
             if (currencyCode == null)
             {
-                currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
+                currencyCode = ServiceHelper.GetDefaultCurrency(Factory).Code;
             }
 
             if (priceLevelId == null)
             {
-                priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
+                priceLevelId = ServiceHelper.GetDefaultPriceLevel(Factory);
             }
 
-            using (var repository = this.Factory.GetTrackPriceRepository())
+            using (var repository = Factory.GetTrackPriceRepository())
             {
                 using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
                 {
@@ -68,7 +68,7 @@
         public ICollection<PriceViewModel> GetTrackPrices(int trackId, int priceLevelId)
         {
             ICollection<TrackPrice> trackPrices;
-            using (var repository = this.Factory.GetTrackPriceRepository())
+            using (var repository = Factory.GetTrackPriceRepository())
             {
                 trackPrices = repository.GetAll(
                                          p => p.TrackId == trackId &&
@@ -87,7 +87,7 @@
         public ICollection<PriceViewModel> GetTrackPrices(int trackId)
         {
             ICollection<TrackPrice> trackPrices;
-            using (var repository = this.Factory.GetTrackPriceRepository())
+            using (var repository = Factory.GetTrackPriceRepository())
             {
                 trackPrices = repository.GetAll(
                                          p => p.TrackId == trackId,

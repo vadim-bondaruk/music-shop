@@ -27,7 +27,7 @@
         /// <param name="property"></param>
         public UserValidationException(string message, string property) : base(message)
         {
-            this.UserProperty = property;
+            UserProperty = property;
         }
 
         /// <summary>

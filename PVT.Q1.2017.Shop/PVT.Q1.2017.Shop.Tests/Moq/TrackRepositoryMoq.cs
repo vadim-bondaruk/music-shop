@@ -32,6 +32,21 @@
                                      It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
                  .Returns(_tracks);
 
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
+            _mock.Setup(m => m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Track, bool>>>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
+            _mock.Setup(
+                        m =>
+                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Track, bool>>>(),
+                                     It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
+                 .Returns(() => new PagedResult<Track>(_tracks, 10, 1, _tracks.Count));
+
             _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Track, bool>>>()))
                  .Returns(() => _tracks.FirstOrDefault());
 
@@ -44,12 +59,16 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Track, bool>>>()))
                  .Returns(() => _tracks.Any());
 
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Track, bool>>>()))
+                 .Returns(() => _tracks.Count);
+
             _mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => _tracks.FirstOrDefault(t => t.Id > 0));
+                 .Returns((int id) => _tracks.FirstOrDefault(t => t.Id == id));
 
             _mock.Setup(m => m.GetById(It.IsAny<int>(),
                                        It.IsAny<Expression<Func<Track, BaseEntity>>[]>()))
-                 .Returns(() => _tracks.FirstOrDefault(t => t.Id > 0));
+                 .Returns((int id, Expression<Func<Track, BaseEntity>>[] exp) => 
+                 _tracks.FirstOrDefault(t => t.Id == id));
 
             _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Track>())).Callback(() => _tracks.Add(new Track
             {

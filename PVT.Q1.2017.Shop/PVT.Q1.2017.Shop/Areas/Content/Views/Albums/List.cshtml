@@ -1,12 +1,14 @@
-﻿@using MvcSiteMapProvider.Web.Html
+﻿@using System.Globalization
+@using MvcSiteMapProvider.Web.Html
+@using PVT.Q1._2017.Shop.Areas.Content.Extentions
 @model ICollection<Shop.Common.ViewModels.AlbumDetailsViewModel>
-@{ViewBag.Title = "Все альбомы";}
+@{ ViewBag.Title = "Все альбомы"; }
 <div class="albums-list">
     <ul class="list-group" id="slist">
         @foreach (var album in Model)
         {
             <li class="list-group-item" id="albums-item">
-                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="this.src = '/img/defuserpic.png'"/>
+                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="src = '/img/defuserpic.png'"/>
                 <div class="details">
                     <div class="album-title">
                         <p>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id, area = "Content" }, new { @class = "album-name" })</p>
@@ -19,9 +21,19 @@
                     <span class="label label-success">Pop</span>
                 </div>
                 <div class="btn-align">
-                    <i class="fa fa-eur">1.25</i>
                     <div class="btn-buy">
-                        <a class="btn btn-warning" style="font-weight: bolder; vertical-align: middle"><span class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
+                        @if (album.Price != null)
+                        {
+                            <div class="order-block">
+                                @{
+                                    if (album.Price != null)
+                                    {
+                                        <div class="buy-btn">@Html.BtnBuyTrack(album.Id, album.IsOrdered, string.Format("{0}{1}", album.Price.Amount.ToString(CultureInfo.CurrentUICulture), album.Price.Currency.Symbol ?? album.Price.Currency.ShortName), animate: true)</div>
+                                    }
+
+                                }
+                            </div>
+                        }
                     </div>
                 </div>
             </li>

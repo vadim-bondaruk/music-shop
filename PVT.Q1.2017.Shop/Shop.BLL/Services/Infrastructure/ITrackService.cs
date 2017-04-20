@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.ViewModels;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The track service
@@ -30,18 +31,41 @@
         /// Returns all registered tracks using the specified currency and price level for track price.
         /// </summary>
         /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
+        ///     The currency code for track price. If it doesn't specified than default currency is used.
         /// </param>
         /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
+        ///     The price level for track price. If it doesn't specified than default price level is used.
         /// </param>
         /// <param name="userId">
-        /// The current user id.
+        ///     The current user id.
         /// </param>
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        ICollection<TrackViewModel> GetTracks(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
+        /// Returns all registered tracks using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <param name="currencyCode">
+        ///     The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        ///     The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        ///     The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered tracks.
+        /// </returns>
+        PagedResult<TrackViewModel> GetTracks(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
@@ -61,16 +85,51 @@
         ICollection<TrackDetailsViewModel> GetDetailedTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
+        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <param name="currencyCode">
+        /// The currency code for track price. If it doesn't specified than default currency is used.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level for track price. If it doesn't specified than default price level is used.
+        /// </param>
+        /// <param name="userId">
+        /// The current user id.
+        /// </param>
+        /// <returns>
+        /// All registered tracks with detailed information.
+        /// </returns>
+        PagedResult<TrackDetailsViewModel> GetDetailedTracksList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
         /// Returns all tracks which don't have price.
         /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
         /// <returns>
         /// All tracks without price configured.
         /// </returns>
-        ICollection<TrackViewModel> GetTracksWithoutPrice();
+        PagedResult<TrackViewModel> GetTracksWithoutPrice(int page, int pageSize);
 
         /// <summary>
         /// Returns all tracks with price specified using the specified currency and price level for track price.
         /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
         /// <param name="currencyCode">
         /// The currency code for track price. If it doesn't specified than default currency is used.
         /// </param>
@@ -83,7 +142,7 @@
         /// <returns>
         /// All tracks with price specified.
         /// </returns>
-        ICollection<TrackViewModel> GetTracksWithPrice(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        PagedResult<TrackViewModel> GetTracksWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all albums which contain the specified track using the specified currency and price level.
@@ -101,7 +160,7 @@
         /// <returns>
         /// All albums which contain the specified track.
         /// </returns>
-        TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null);
+        TrackAlbumsListViewModel GetAlbums(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null);
 
         /// <summary>
         /// Return all tracks that the specified user have bought.
@@ -113,5 +172,22 @@
         /// All tracks that the specified user have bought.
         /// </returns>
         ICollection<PurchasedTrackViewModel> GetPurchasedTracks(int userId);
+
+        /// <summary>
+        /// Return all tracks that the specified user have bought.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// All tracks that the specified user have bought.
+        /// </returns>
+        PagedResult<PurchasedTrackViewModel> GetPurchasedTracks(int page, int pageSize, int userId);
     }
 }

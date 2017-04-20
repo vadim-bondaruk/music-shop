@@ -26,7 +26,7 @@
         /// </param>
         public EntityNotFoundException(T entity)
         {
-            this.Entity = entity;
+            Entity = entity;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@
         /// </param>
         public EntityNotFoundException(T entity, string message) : base(message)
         {
-            this.Entity = entity;
+            Entity = entity;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@
         /// </param>
         public EntityNotFoundException(T entity, string message, Exception inner) : base(message, inner)
         {
-            this.Entity = entity;
+            Entity = entity;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@
             string entityId = info.GetString("EntityId");
             if (!string.IsNullOrWhiteSpace(entityId))
             {
-                this.Entity = new T { Id = Convert.ToInt32(entityId) };
+                Entity = new T { Id = Convert.ToInt32(entityId) };
             }
         }
 
@@ -118,9 +118,9 @@
         /// </param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info != null && this.Entity != null)
+            if (info != null && Entity != null)
             {
-                info.AddValue("EntityId", this.Entity.Id);
+                info.AddValue("EntityId", Entity.Id);
             }
 
             base.GetObjectData(info, context);

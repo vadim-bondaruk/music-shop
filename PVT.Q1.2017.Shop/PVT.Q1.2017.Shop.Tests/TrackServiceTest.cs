@@ -30,13 +30,13 @@
             _factory = new RepositoryFactoryMoq();
             _trackService = new TrackService(_factory);
 
-            using (var repository = this._factory.GetCurrencyRepository())
+            using (var repository = _factory.GetCurrencyRepository())
             {
                 repository.AddOrUpdate(new Currency { Id = 1, ShortName = "USD", Code = 840 });
                 repository.SaveChanges();
             }
 
-            using (var repository = this._factory.GetPriceLevelRepository())
+            using (var repository = _factory.GetPriceLevelRepository())
             {
                 repository.AddOrUpdate(new PriceLevel { Id = 1, Name = "Default Price Level" });
                 repository.SaveChanges();
@@ -46,7 +46,7 @@
         [TestMethod]
         public void AddTrackTest()
         {
-            using (var repository = this._factory.GetTrackRepository())
+            using (var repository = _factory.GetTrackRepository())
             {
                 repository.AddOrUpdate(new Track { Name = "Some track" });
                 repository.SaveChanges();
@@ -59,14 +59,14 @@
         public void GetTracksListTest()
         {
             AddTrackTest();
-            Assert.IsTrue(this._trackService.GetTracksList().Any());
+            Assert.IsTrue(_trackService.GetTracks().Any());
         }
 
         [TestMethod]
         public void GetTrackDetailsTest()
         {
             AddTrackTest();
-            Assert.IsNotNull(this._trackService.GetTrackDetails(1));
+            Assert.IsNotNull(_trackService.GetTrackDetails(1));
         }
 
         [TestMethod]
@@ -74,30 +74,30 @@
         {
             AddTrackTest();
 
-            var track = this._trackService.GetTracksList().FirstOrDefault();
+            var track = _trackService.GetTracks().FirstOrDefault();
             Assert.IsNotNull(track);
 
             track.Price = new PriceViewModel { Amount = 1.99m, Currency = new CurrencyViewModel { Code = 840, ShortName = "USD" } };
 
-            Assert.IsNotNull(_trackService.GetTracksWithPrice());
+            Assert.IsNotNull(_trackService.GetTracksWithPrice(1, 10));
         }
 
         [TestMethod]
         public void GetTracksWithoutPriceTest()
         {
             AddTrackTest();
-            Assert.IsTrue(_trackService.GetTracksWithoutPrice().Any());
+            Assert.IsTrue(_trackService.GetTracksWithoutPrice(1, 10).Items.Any());
         }
 
         [TestMethod]
-        public void GetAlbumsList()
+        public void GetAlbumsListTest()
         {
             AddTrackTest();
 
-            var track = this._trackService.GetTracksList().FirstOrDefault();
+            var track = _trackService.GetTracks().FirstOrDefault();
             Assert.IsNotNull(track);
 
-            using (var repository = this._factory.GetAlbumRepository())
+            using (var repository = _factory.GetAlbumRepository())
             {
                 repository.AddOrUpdate(new Album
                 {
@@ -107,7 +107,7 @@
                 repository.SaveChanges();
             }
 
-            using (var repository = this._factory.GetAlbumTrackRelationRepository())
+            using (var repository = _factory.GetAlbumTrackRelationRepository())
             {
                 repository.AddOrUpdate(new AlbumTrackRelation
                 {
@@ -116,7 +116,7 @@
                 });
             }
 
-            Assert.IsTrue(_trackService.GetAlbumsList(track.Id, 840, 1).Albums.Any());
+            Assert.IsTrue(_trackService.GetAlbums(track.Id, 840, 1).Albums.Any());
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(m => m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),

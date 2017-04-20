@@ -16,29 +16,8 @@
     /// </summary>
     public class AlbumController : BaseController
     {
-        /// <summary>
-        /// The album  service.
-        /// </summary>
-        private readonly IAlbumService _albumService;
-
-        /// <summary>
-        /// The repository factory.
-        /// </summary>
-        private readonly IRepositoryFactory _repositoryFactory;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumController"/> class.
-        /// </summary>
-        /// <param name="albumService">
-        /// The album service.
-        /// </param>
-        /// <param name="repositoryFactory">
-        /// The repository factory.
-        /// </param>
-        public AlbumController(IAlbumService albumService, IRepositoryFactory repositoryFactory)
+        public AlbumController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._albumService = albumService;
-            this._repositoryFactory = repositoryFactory;
         }
 
         /// <summary>
@@ -55,10 +34,11 @@
             if (artistId != null)
             {
                 ArtistViewModel artist;
-                using (var repository = _repositoryFactory.GetArtistRepository())
+                using (var repository = RepositoryFactory.GetArtistRepository())
                 {
                     artist = ModelsMapper.GetArtistViewModel(repository.GetById(artistId.Value));
                 }
+
                 if (artist != null)
                 {
                     var album = new AlbumManagementViewModel
@@ -67,11 +47,11 @@
                         ArtistName = artist.Name
                     };
 
-                    return this.View(album);
+                    return View(album);
                 }
             }
 
-            return this.View();
+            return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -82,7 +62,7 @@
             if (model != null && ModelState.IsValid)
             {
                 var album = ManagementMapper.GetAlbumModel(model);
-                using (var repository = this._repositoryFactory.GetAlbumRepository())
+                using (var repository = RepositoryFactory.GetAlbumRepository())
                 {
                     if (CurrentUser != null && !CurrentUser.IsInRole(UserRoles.Admin.ToString()))
                     {
@@ -93,10 +73,10 @@
                     repository.SaveChanges();
                 }
 
-                return this.RedirectToAction("Details", "Album", new { id = album.Id, area = "Content" });
+                return RedirectToAction("Details", "Album", new { id = album.Id, area = "Content" });
             }
 
-            return this.View(model);
+            return View(model);
         }
 
         public ActionResult Edit(int? id)
@@ -106,13 +86,14 @@
                 return RedirectToAction("List", "Album", new { area = "Content" });
             }
 
-            var album = ManagementMapper.GetAlbumManagementViewModel(this._albumService.GetAlbumDetails(id.Value));
+            var albumService = ServiceFactory.GetAlbumService();
+            var album = ManagementMapper.GetAlbumManagementViewModel(albumService.GetAlbumDetails(id.Value));
             if (album == null)
             {
                 return HttpNotFound("Альбом с указанным id не найден");
             }
 
-            return this.View(album);
+            return View(album);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -122,7 +103,7 @@
         {
             if (album != null && ModelState.IsValid)
             {
-                using (var repository = this._repositoryFactory.GetAlbumRepository())
+                using (var repository = RepositoryFactory.GetAlbumRepository())
                 {
                     var currentAlbum = repository.GetById(album.Id);
                     if (currentAlbum == null)
@@ -138,10 +119,10 @@
                     repository.SaveChanges();
                 }
 
-                return this.RedirectToAction("Details", "Album", new { id = album.Id, area = "Content" });
+                return RedirectToAction("Details", "Album", new { id = album.Id, area = "Content" });
             }
 
-            return this.View(album);
+            return View(album);
         }
 
         /// <summary>
@@ -158,11 +139,12 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Album", new { area = "Content" });
+                return RedirectToAction("List", "Album", new { area = "Content" });
             }
 
-            var album = ManagementMapper.GetAlbumManagementViewModel(this._albumService.GetAlbumDetails(id.Value));
-            return this.View(album);
+            var albumService = ServiceFactory.GetAlbumService();
+            var album = ManagementMapper.GetAlbumManagementViewModel(albumService.GetAlbumDetails(id.Value));
+            return View(album);
         }
 
         /// <summary>
@@ -179,14 +161,14 @@
         {
             if (album != null && ModelState.IsValid)
             {
-                using (var repository = this._repositoryFactory.GetAlbumRepository())
+                using (var repository = RepositoryFactory.GetAlbumRepository())
                 {
                     repository.Delete(ManagementMapper.GetAlbumModel(album));
                     repository.SaveChanges();
                 }
             }
 
-            return this.RedirectToAction("List", "Album", new { area = "Content" });
+            return RedirectToAction("List", "Album", new { area = "Content" });
         }
 
         /// <summary>
@@ -198,24 +180,23 @@
         /// <returns>
         /// The view for adding tracks to the album.
         /// </returns>
-        public ActionResult AddTracks(int? id)
+        public ActionResult AddTracksToAlbum(int? id)
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Track", new { area = "Content" });
+                return RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            var currency = GetCurrentUserCurrency();
             AlbumTracksListViewModel albumTracksViewModel;
 
-            if (currency != null)
+            var albumService = ServiceFactory.GetAlbumService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var priceLevel = GetCurrentUserPriceLevel();
-                albumTracksViewModel = _albumService.GetTracksToAdd(id.Value, currency.Code, priceLevel);
+                albumTracksViewModel = albumService.GetTracksToAdd(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId);
             }
             else
             {
-                albumTracksViewModel = _albumService.GetTracksToAdd(id.Value);
+                albumTracksViewModel = albumService.GetTracksToAdd(id.Value);
             }
 
             if (albumTracksViewModel == null)
@@ -223,13 +204,13 @@
                 return HttpNotFound($"Альбом с id = { id.Value } не найден");
             }
 
-            return this.View(albumTracksViewModel);
+            return View(albumTracksViewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult AddTrack(int id, int trackId)
+        public ActionResult AddTrackToAlbum(int id, int trackId)
         {
-            using (var repository = _repositoryFactory.GetAlbumTrackRelationRepository())
+            using (var repository = RepositoryFactory.GetAlbumTrackRelationRepository())
             {
                 repository.AddOrUpdate(new AlbumTrackRelation
                 {
@@ -239,13 +220,13 @@
                 repository.SaveChanges();
             }
 
-            return RedirectToAction("AddTracks", "Album", new { id = id, area = "Management" });
+            return RedirectToAction("AddTracksToAlbum", "Album", new { id = id, area = "Management" });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult RemoveTrack(int id, int trackId)
         {
-            using (var repository = _repositoryFactory.GetAlbumTrackRelationRepository())
+            using (var repository = RepositoryFactory.GetAlbumTrackRelationRepository())
             {
                 var albumTrackRelation = repository.FirstOrDefault(r => r.AlbumId == id && r.TrackId == trackId);
                 if (albumTrackRelation != null)
@@ -255,7 +236,7 @@
                 }
             }
 
-            return RedirectToAction("TracksList", "Album", new { id = id, area = "Content" });
+            return RedirectToAction("Details", "Album", new { id = id, area = "Content" });
         }
     }
 }

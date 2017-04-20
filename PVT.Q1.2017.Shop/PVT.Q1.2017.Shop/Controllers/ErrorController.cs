@@ -13,7 +13,7 @@
         /// <returns></returns>
         public ActionResult Unauthorized()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -22,7 +22,7 @@
         /// <returns></returns>
         public ActionResult Blocked()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@
         /// <returns></returns>
         public ActionResult Unconfirmed()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         /// <returns></returns>
         public ActionResult RegisterError()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@
         /// <returns></returns>
         public ActionResult InvalidRequestParameter()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// <returns></returns>
         public ActionResult NotFound(string aspxerrorpath)
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -68,7 +68,7 @@
         /// <returns></returns>
         public ActionResult InnerException()
         {
-            return this.View();
+            return View();
         }
     }
 }

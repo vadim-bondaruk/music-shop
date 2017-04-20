@@ -42,7 +42,7 @@
         public void GetAlbumsListTest()
         {
             AddAlbumTest();
-            Assert.IsTrue(_albumService.GetAlbumsList().Any());
+            Assert.IsTrue(_albumService.GetAlbums().Any());
 
             Mock.Get(_factory.GetAlbumRepository()).Verify(m => m.GetAll(), Times.Once);
         }
@@ -67,7 +67,7 @@
                 });
             }
 
-            Assert.IsNotNull(_albumService.GetTracksList(1));
+            Assert.IsNotNull(_albumService.GetTracks(1));
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -91,15 +91,15 @@
         {
             AddAlbumTest();
 
-            var album = _albumService.GetAlbumsList().FirstOrDefault();
+            var album = _albumService.GetAlbums().FirstOrDefault();
             Assert.IsNotNull(album);
 
-            Assert.IsTrue(_albumService.GetAlbumsWithPrice().Any());
+            Assert.IsTrue(_albumService.GetAlbumsWithPrice(1, 10).Items.Any());
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(
                         m =>
-                            m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),
+                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>(),
                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
         }
 
@@ -107,12 +107,12 @@
         public void GetAlbumsWithoutPriceConfiguredTest()
         {
             AddAlbumTest();
-            Assert.IsTrue(_albumService.GetAlbumsWithoutPrice().Any());
+            Assert.IsTrue(_albumService.GetAlbumsWithoutPrice(1, 10).Items.Any());
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(
                         m =>
-                            m.GetAll(It.IsAny<Expression<Func<Album, bool>>>(),
+                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>(),
                                      It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
         }
 

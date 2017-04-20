@@ -51,10 +51,14 @@
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<UserData, bool>>>()))
                  .Returns(() => _users.Any());
 
-            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<UserData>())).Callback(() => _users.Add(new UserData
+            _mock.Setup(m => m.Count(It.IsAny<Expression<Func<UserData, bool>>>()))
+                 .Returns(() => _users.Count);
+
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<UserData>())).Callback((UserData user) =>
             {
-                Id = _users.Count + 1
-            }));
+                user.Id = _users.Count + 1;
+                _users.Add(user);
+            });
 
             _mock.Setup(m => m.Delete(It.IsNotNull<UserData>())).Callback(() =>
             {

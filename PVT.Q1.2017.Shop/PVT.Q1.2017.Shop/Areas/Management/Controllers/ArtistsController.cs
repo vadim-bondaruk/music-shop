@@ -4,35 +4,21 @@
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
 
+    using PVT.Q1._2017.Shop.App_Start;
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
+    using Shop.Controllers;
 
     /// <summary>
     ///     The artist controller.
     /// </summary>
-    public class ArtistsController : Controller
+    [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
+    public class ArtistsController : BaseController
     {
-        /// <summary>
-        /// </summary>
-        private readonly IArtistService artistService;
-
-        /// <summary>
-        ///     The repository factory.
-        /// </summary>
-        private readonly IRepositoryFactory repositoryFactory;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ArtistsController" /> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        /// <param name="artistService"></param>
-        public ArtistsController(IRepositoryFactory repositoryFactory, IArtistService artistService)
+        public ArtistsController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this.repositoryFactory = repositoryFactory;
-            this.artistService = artistService;
         }
 
         /// <summary>
@@ -46,14 +32,14 @@
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete([Bind(Include = "Id")] ArtistManagementViewModel viewModel)
         {
-            using (var repo = this.repositoryFactory.GetArtistRepository())
+            using (var repo = RepositoryFactory.GetArtistRepository())
             {
                 var artist = ManagementMapper.GetArtistModel(viewModel);
                 repo.Delete(artist);
                 repo.SaveChanges();
             }
 
-            return this.RedirectToAction("List", "Artists", new { area = "Content" });
+            return RedirectToAction("List", "Artists", new { area = "Content" });
         }
 
         /// <summary>
@@ -65,8 +51,9 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var artist = ManagementMapper.GetArtistManagementViewModel(this.artistService.GetArtistDetails(id));
-            return this.View(artist);
+            var artistService = ServiceFactory.GetArtistService();
+            var artist = ManagementMapper.GetArtistManagementViewModel(artistService.GetArtistDetails(id));
+            return View(artist);
         }
 
         /// <summary>
@@ -81,12 +68,12 @@
         public virtual ActionResult Edit(
             [Bind(Include = "Id, Name, Birthday, Biography, Photo, PostedPhoto")] ArtistManagementViewModel viewModel)
         {
-            using (var repository = this.repositoryFactory.GetArtistRepository())
+            using (var repository = RepositoryFactory.GetArtistRepository())
             {
                 var artist = ManagementMapper.GetArtistModel(viewModel);
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();
-                return this.RedirectToAction("Details", new { id = viewModel.Id, area = "Content" });
+                return RedirectToAction("Details", new { id = viewModel.Id, area = "Content" });
             }
         }
 
@@ -98,9 +85,9 @@
         /// </returns>
         public ActionResult Index()
         {
-            using (var repository = this.repositoryFactory.GetArtistRepository())
+            using (var repository = RepositoryFactory.GetArtistRepository())
             {
-                return this.View(repository.GetAll());
+                return View(repository.GetAll());
             }
         }
 
@@ -110,7 +97,7 @@
         /// </returns>
         public ActionResult New()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -122,13 +109,11 @@
         public ActionResult New(ArtistManagementViewModel viewModel)
         {
             var artist = ManagementMapper.GetArtistModel(viewModel);
-            using (var repository = this.repositoryFactory.GetArtistRepository())
+            using (var repository = RepositoryFactory.GetArtistRepository())
             {
                 repository.AddOrUpdate(artist);
                 repository.SaveChanges();
-                return this.RedirectToAction(
-                    "Details",
-                    new { area = "Content", Controller = "Artists", id = artist.Id });
+                return RedirectToAction("Details", new { area = "Content", Controller = "Artists", id = artist.Id });
             }
         }
     }

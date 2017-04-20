@@ -155,8 +155,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Shop.mdf" />
+    <Content Include="App_Data\Shop_log.ldf">
+      <DependentUpon>Shop.mdf</DependentUpon>
+    </Content>
+    <Content Include="Areas\News\Styles\news.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrapStars.css" />
+    <Content Include="Content\news-block.css" />
+    <Content Include="Content\Players\Circle\js\circle.player.js" />
+    <Content Include="Content\Players\Circle\js\jquery.grab.js" />
+    <Content Include="Content\Players\Circle\js\jquery.jplayer.js" />
+    <Content Include="Content\Players\Circle\js\jquery.jplayer.min.js" />
+    <Content Include="Content\Players\Circle\js\jquery.min.js" />
+    <Content Include="Content\Players\Circle\js\jquery.transform2d.js" />
+    <Content Include="Content\Players\Circle\js\mod.csstransforms.min.js" />
+    <Content Include="Content\Players\Circle\skin\bgr.jpg" />
+    <Content Include="Content\Players\Circle\skin\buffer.png" />
+    <Content Include="Content\Players\Circle\skin\circle.player.css" />
+    <Content Include="Content\Players\Circle\skin\controls.jpg" />
+    <Content Include="Content\Players\Circle\skin\jquery.jplayer.swf" />
+    <Content Include="Content\Players\Circle\skin\progress.png" />
+    <Content Include="Content\Players\Circle\skin\progress_sprite.jpg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -198,18 +221,17 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Content\bootstrapStars.css" />
     <Content Include="Content\tracks.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\back.jpg" />
     <Content Include="img\failure.png" />
-    <Content Include="img\success.png" />
     <Content Include="Content\ratingStars.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\ratingStars.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\arrow.png" />
     <Content Include="img\defuserpic.png" />
-    <Content Include="img\bg.png" />
+    <Content Include="img\success.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -235,8 +257,6 @@
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithCreditCard.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Index.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\List.cshtml" />
-    <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
     <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
@@ -253,26 +273,34 @@
     <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
     <Content Include="Areas\Content\Views\Artist\List.cshtml" />
     <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\TracksList.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Album\List.cshtml" />
     <Content Include="Areas\Content\Views\Album\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\TrackListItem.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_TrackListItem.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\Audio\MiniPlayer.cshtml" />
+    <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
+    <Content Include="Areas\News\Views\Music\Article.cshtml" />
+    <Content Include="Areas\News\Views\Shared\NewAlbumOfDorn.cshtml" />
+    <Content Include="Areas\News\Views\web.config" />
+    <Content Include="Areas\News\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\News\Views\Shared\AlfaJazzFest.cshtml" />
+    <Content Include="Areas\News\Views\Shared\DahaBraha.cshtml" />
+    <Content Include="Areas\News\Views\Shared\VyhPlanyRedakcii.cshtml" />
+    <Content Include="Areas\News\Views\Shared\NewClip5Nizza.cshtml" />
+    <Content Include="Areas\News\Views\Shared\PriznVLubviVSocSetyah.cshtml" />
+    <Content Include="Areas\News\Views\Shared\KLefflerPlaylist.cshtml" />
+    <Content Include="Areas\News\Views\Shared\NewAlbumGorillaz.cshtml" />
+    <Content Include="Areas\News\Views\Shared\ByorkVirtual.cshtml" />
+    <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
+    <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
+    <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <Content Include="Views\Shared\_Rating.cshtml" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Track\AlbumsList.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\AddTrackPriceButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\EditTrackPriceButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\AddAlbumPriceButtonPartialView.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\EditAlbumPriceButtonPartialView.cshtml" />
     <Content Include="Areas\User\Views\Account\Confirm.cshtml" />
     <Content Include="Areas\User\Views\Account\Siterules.cshtml" />
     <Content Include="Areas\User\Views\Manage\Delete.cshtml" />
@@ -295,9 +323,7 @@
     <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
     <Content Include="Areas\Content\Views\Genres\List.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\AlbumsList.cshtml" />
-    <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
-    <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Content\Views\Albums\List.cshtml" />
     <Content Include="Areas\Content\Views\Albums\TracksList.cshtml" />
     <Content Include="Mvc.sitemap" />
@@ -306,32 +332,33 @@
     <Content Include="Areas\Content\Views\Shared\Audio\AudioSection.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Album\AddTracks.cshtml" />
+    <Content Include="Areas\Management\Views\Album\AddTracksToAlbum.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_TracksList.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Management\Views\Album\Create.cshtml" />
+    <Content Include="Areas\Content\Views\Feedbacks\Details.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PagedTracksList.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\datepicker-ru.js" />
     <Content Include="Scripts\del-artist.js" />
     <Content Include="Scripts\file-change.js" />
-    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
-    <Content Include="Scripts\jquery-1.12.4.js" />
-    <Content Include="Scripts\jquery-1.12.4.min.js" />
-    <Content Include="Scripts\jquery-1.12.4.min.map" />
-    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
-    <Content Include="Scripts\jquery-ui-1.12.1.js" />
-    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <Content Include="Scripts\jquery-3.2.0.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
@@ -352,7 +379,6 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\openfile.dialog.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -366,6 +392,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
+    <Compile Include="Areas\Admin\Helpers\AdminModelsMapper.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
@@ -375,10 +402,10 @@
     <Compile Include="Areas\Content\Extentions\BuyButtonHelper.cs" />
     <Compile Include="Areas\Content\Extentions\ManagementButtonsHelper.cs" />
     <Compile Include="Areas\Content\Extentions\PriceButtonHelper.cs" />
+    <Compile Include="Areas\Content\Controllers\FeedbacksController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumPriceController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
-    <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
@@ -395,6 +422,8 @@
     <Compile Include="Areas\Management\ViewModels\GenreManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
+    <Compile Include="Areas\News\Controllers\MusicController.cs" />
+    <Compile Include="Areas\News\NewsAreaRegistration.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
@@ -432,9 +461,6 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -457,6 +483,7 @@
     <Content Include="Views\Shared\_Stars.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
+    <Content Include="Views\Shared\_UserMenuPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -465,14 +492,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Management\Views\Artist\" />
     <Folder Include="Areas\Management\Views\Track\" />
+    <Folder Include="Areas\News\Models\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
-    <Folder Include="Views\Base\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
