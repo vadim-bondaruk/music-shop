@@ -49,11 +49,12 @@
         [Authorize]
         public ActionResult Details(int? transactionID)
         {
-            //TODO: реализоавть просмотр деталей заказа
+            //TODO: реализовать просмотр деталей заказа
             if(transactionID==null)
             {
                 return HttpNotFound();
             }
+            
             return View();
         }
 

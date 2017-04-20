@@ -1,7 +1,8 @@
-﻿@model Shop.Common.ViewModels.PaymentTransactionViewModel
+﻿@model IEnumerable <Shop.Common.ViewModels.PaymentTransactionViewModel>
 
 @if (Model != null)
-{<table class="table">
+{
+    <table class="table">
         <tr>
             <th>
                 Идентификатор
@@ -33,11 +34,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CurrencyShortName)
                 </td>
-                <td>
+                @*<td>
                     @Html.ActionLink("Подробно", "Details", new { id = item.Id })
-                </td>
+                </td>*@
             </tr>
         }
 
     </table>
 }
+

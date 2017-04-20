@@ -600,7 +600,8 @@
         {
             using (var repository = Factory.GetPaymentTransactionRepository())
             {
-                return repository.GetAll(pageNumber, count, (x) => x.UserId == userID);
+                return repository.GetAll(pageNumber, count, a => a.UserId == userID,
+                                        a => a.Currency, a => a.User.User);
             }
         }
     }

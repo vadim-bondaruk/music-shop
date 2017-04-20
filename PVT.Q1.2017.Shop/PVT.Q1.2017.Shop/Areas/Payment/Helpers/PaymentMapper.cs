@@ -73,10 +73,10 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Helpers
                 {
                     cfg.CreateMap<PaymentTransaction, PaymentTransactionViewModel>()
                         .ForMember(dest => dest.UserName,
-                                    //opt => opt.MapFrom(src => src.User.User.Login))
                                     opt => opt.MapFrom(src => src.User.User.Login))
                         .ForMember(dest => dest.CurrencyShortName,
-                                    opt => opt.MapFrom(src => src.Currency.ShortName));
+                                    opt => opt.MapFrom(src => src.Currency.ShortName))
+                        ;
 
 
                     //cfg.CreateMap<ArtistViewModel, Artist>();

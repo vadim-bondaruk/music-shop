@@ -42,12 +42,12 @@ namespace Shop.Common.ViewModels
         ///// <summary>
         ///// Purchased tracks
         ///// </summary>
-        //public ICollection<TrackViewModel> PurchasedTrack { get; set; }
+        //public ICollection<Track> PurchasedTrack { get; set; }
 
         ///// <summary>
         ///// Purchased albums
         ///// </summary>
-        //public ICollection<AlbumViewModel> PurchasedAlbum { get; set; }
+        //public ICollection<Album> PurchasedAlbum { get; set; }
 
 
 
