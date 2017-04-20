@@ -14,13 +14,13 @@
         /// </summary>
         public TrackPriceConfiguration()
         {
-            this.HasKey(t => t.Id);
-            this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(t => t.IsDeleted);
-            this.HasRequired(t => t.PriceLevel).WithMany(t => t.TrackPriceLevels).HasForeignKey(t => t.PriceLevelId).WillCascadeOnDelete(false);
-            this.HasRequired(t => t.Track).WithMany(t => t.TrackPrices).HasForeignKey(t => t.TrackId).WillCascadeOnDelete(false);
-            this.HasRequired(t => t.Currency).WithMany(t => t.TrackPrices).HasForeignKey(t => t.CurrencyId).WillCascadeOnDelete(false);
-            this.ToTable("TrackPrices");
+            HasKey(t => t.Id);
+            Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(t => t.IsDeleted);
+            HasRequired(t => t.PriceLevel).WithMany(t => t.TrackPriceLevels).HasForeignKey(t => t.PriceLevelId).WillCascadeOnDelete(false);
+            HasRequired(t => t.Track).WithMany(t => t.TrackPrices).HasForeignKey(t => t.TrackId).WillCascadeOnDelete(false);
+            HasRequired(t => t.Currency).WithMany(t => t.TrackPrices).HasForeignKey(t => t.CurrencyId).WillCascadeOnDelete(false);
+            ToTable("TrackPrices");
         }
     }
 }

@@ -43,7 +43,7 @@
         public TrackDetailsViewModel GetTrackDetails(int id, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
             Track track;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 track = repository.GetById(id, t => t.Artist, t => t.Genre);
             }
@@ -52,15 +52,15 @@
 
             if (currencyCode == null)
             {
-                currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
+                currencyCode = ServiceHelper.GetDefaultCurrency(Factory).Code;
             }
 
             if (priceLevelId == null)
             {
-                priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
+                priceLevelId = ServiceHelper.GetDefaultPriceLevel(Factory);
             }
 
-            using (var repository = this.Factory.GetTrackPriceRepository())
+            using (var repository = Factory.GetTrackPriceRepository())
             {
                 using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
                 {
@@ -69,9 +69,9 @@
                 }
             }
 
-            trackViewModel.Rating = ServiceHelper.CalculateTrackRating(this.Factory, id);
+            trackViewModel.Rating = ServiceHelper.CalculateTrackRating(Factory, id);
 
-            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
             {
                 trackViewModel.AlbumsCount = repository.Count(r => r.TrackId == id);
             }
@@ -109,15 +109,15 @@
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        public ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        public ICollection<TrackViewModel> GetTracks(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 tracks = repository.GetAll(t => t.Artist, t => t.Genre);
             }
 
-            return ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
+            return ServiceHelper.ConvertToTrackViewModels(Factory, tracks, currencyCode, priceLevel, userId);
         }
 
         /// <summary>
@@ -141,15 +141,15 @@
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        public PagedResult<TrackViewModel> GetTracksList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        public PagedResult<TrackViewModel> GetTracks(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             PagedResult<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 tracks = repository.GetAll(page, pageSize, t => t.Artist, t => t.Genre);
             }
 
-            var trackViewModels = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks.Items, currencyCode, priceLevel, userId);
+            var trackViewModels = ServiceHelper.ConvertToTrackViewModels(Factory, tracks.Items, currencyCode, priceLevel, userId);
             return new PagedResult<TrackViewModel>(trackViewModels, tracks.PageSize, tracks.CurrentPage, tracks.TotalItemsCount);
         }
 
@@ -171,7 +171,7 @@
         public ICollection<TrackDetailsViewModel> GetDetailedTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 tracks = repository.GetAll(t => t.Artist, t => t.Genre);
             }
@@ -209,7 +209,7 @@
         public PagedResult<TrackDetailsViewModel> GetDetailedTracksList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             PagedResult<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 tracks = repository.GetAll(page, pageSize, t => t.Artist, t => t.Genre);
             }
@@ -238,7 +238,7 @@
         public PagedResult<TrackViewModel> GetTracksWithoutPrice(int page, int pageSize)
         {
             PagedResult<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 tracks = repository.GetAll(page, pageSize, t => !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
@@ -271,12 +271,12 @@
         public PagedResult<TrackViewModel> GetTracksWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             PagedResult<Track> tracks;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 tracks = repository.GetAll(page, pageSize, t => t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
             }
 
-            var tracksViewModels = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks.Items, currencyCode, priceLevel, userId);
+            var tracksViewModels = ServiceHelper.ConvertToTrackViewModels(Factory, tracks.Items, currencyCode, priceLevel, userId);
             return new PagedResult<TrackViewModel>(tracksViewModels, pageSize, page, tracks.TotalItemsCount);
         }
 
@@ -296,19 +296,19 @@
         /// <returns>
         /// All albums which contain the specified track.
         /// </returns>
-        public TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
+        public TrackAlbumsListViewModel GetAlbums(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
-            TrackAlbumsListViewModel trackAlbumsListViewModel = this.CreateTrackAlbumsListViewModel(trackId, currencyCode, priceLevelId, userId);
+            TrackAlbumsListViewModel trackAlbumsListViewModel = CreateTrackAlbumsListViewModel(trackId, currencyCode, priceLevelId, userId);
 
             if (trackAlbumsListViewModel.TrackDetails.AlbumsCount > 0)
             {
                 ICollection<Album> albums;
-                using (var repository = this.Factory.GetAlbumRepository())
+                using (var repository = Factory.GetAlbumRepository())
                 {
                     albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackId), a => a.Artist);
                 }
 
-                trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId, userId);
+                trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(Factory, albums, currencyCode, priceLevelId, userId);
             }
 
             return trackAlbumsListViewModel;
@@ -326,7 +326,7 @@
         public ICollection<PurchasedTrackViewModel> GetPurchasedTracks(int userId)
         {
             ICollection<Track> tracks;
-            using (var repository = this.Factory.GetPurchasedTrackRepository())
+            using (var repository = Factory.GetPurchasedTrackRepository())
             {
                 tracks = repository.GetAll(p => p.UserId == userId, p => p.Track, p => p.Track.Artist, p => p.Track.Genre).Select(p => p.Track).ToList();
             }
@@ -353,7 +353,7 @@
         public PagedResult<PurchasedTrackViewModel> GetPurchasedTracks(int page, int pageSize, int userId)
         {
             PagedResult<PurchasedTrack> tracks;
-            using (var repository = this.Factory.GetPurchasedTrackRepository())
+            using (var repository = Factory.GetPurchasedTrackRepository())
             {
                 tracks = repository.GetAll(page, pageSize, p => p.UserId == userId, p => p.Track, p => p.Track.Artist, p => p.Track.Genre);
             }

@@ -48,9 +48,9 @@
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The UserBaseRepository should be SOLID, should only add information about user! Not about price level or user currency!
-            this.DetachNavigationProperty(userData.PriceLevel, out priveLevelEntryState);
-            this.DetachNavigationProperty(userData.UserCurrency, out currencyEntryState);
-            this.DetachNavigationProperty(userData.User, out userEntryState);
+            DetachNavigationProperty(userData.PriceLevel, out priveLevelEntryState);
+            DetachNavigationProperty(userData.UserCurrency, out currencyEntryState);
+            DetachNavigationProperty(userData.User, out userEntryState);
 
             userData.PriceLevel = null;
             userData.UserCurrency = null;

@@ -27,14 +27,12 @@
 
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    <script src="~/Scripts/moment.min.js"></script>
 
     <meta name="description" content="PVT.2017.Q1 Music Shop"/>
 </head>
 
 <body>
 
-   
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -52,7 +50,7 @@
                         <a>@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
                     </li>
                 </ul>
-                using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
+                using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class= "navbar-right", style = "display: inline-block" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -76,7 +74,7 @@
             }
             else
             {
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav" style="margin-left: 90px">
                     <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, new { id = "registerLink" })</li>
                     <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, new { id = "loginLink" })</li>
                 </ul>
@@ -100,6 +98,8 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
 <script src="~/Scripts/common.js"></script>
 @RenderSection("scripts", required: false)
 </body>

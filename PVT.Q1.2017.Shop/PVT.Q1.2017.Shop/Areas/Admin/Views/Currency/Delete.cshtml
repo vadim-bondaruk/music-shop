@@ -1,0 +1,60 @@
+﻿@model Shop.Common.ViewModels.CurrencyViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CurrencyViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Symbol)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Symbol)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm("Delete", "Currency", new { area = "Admin"}, FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Code)
+        @Html.HiddenFor(m => m.ShortName)
+        @Html.HiddenFor(m => m.FullName)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index", "Currency", new { area = "Admin"}, null)
+        </div>
+    }
+</div>

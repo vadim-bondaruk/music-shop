@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using Shop.Common.ViewModels;
-    using System.Collections.Generic;
 
     /// <summary>
     /// The setting service

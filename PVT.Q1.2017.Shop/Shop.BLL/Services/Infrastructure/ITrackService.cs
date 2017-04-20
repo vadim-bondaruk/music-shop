@@ -42,7 +42,7 @@
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        ICollection<TrackViewModel> GetTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        ICollection<TrackViewModel> GetTracks(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered tracks using the specified currency and price level for track price.
@@ -65,7 +65,7 @@
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        PagedResult<TrackViewModel> GetTracksList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        PagedResult<TrackViewModel> GetTracks(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
@@ -160,7 +160,7 @@
         /// <returns>
         /// All albums which contain the specified track.
         /// </returns>
-        TrackAlbumsListViewModel GetAlbumsList(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null);
+        TrackAlbumsListViewModel GetAlbums(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null);
 
         /// <summary>
         /// Return all tracks that the specified user have bought.

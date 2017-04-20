@@ -1,14 +1,15 @@
 ﻿@using System.Globalization
 @using MvcSiteMapProvider.Web.Html
 @using PVT.Q1._2017.Shop.Areas.Content.Extentions
-@model ICollection<Shop.Common.ViewModels.AlbumDetailsViewModel>
+@using PVT.Q1._2017.Shop.Helpers
+@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.AlbumViewModel>
 @{ ViewBag.Title = "Все альбомы"; }
 <div class="albums-list">
     <ul class="list-group" id="slist">
-        @foreach (var album in Model)
+        @foreach (var album in Model.Items)
         {
             <li class="list-group-item" id="albums-item">
-                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="this.src = '/img/defuserpic.png'"/>
+                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="src = '/img/defuserpic.png'"/>
                 <div class="details">
                     <div class="album-title">
                         <p>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id, area = "Content" }, new { @class = "album-name" })</p>
@@ -39,6 +40,7 @@
             </li>
         }
     </ul>
+    @Html.PageLinks(Model, i => Url.Action("List", "Albums", new { page = i, area = "Content" }))
 </div>
 
 @section cssStyles{

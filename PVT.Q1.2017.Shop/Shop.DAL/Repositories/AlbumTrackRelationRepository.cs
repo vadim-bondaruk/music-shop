@@ -42,8 +42,8 @@
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The AlbumBaseRepository should be SOLID, should only add information about album! Not about artist!
-            this.DetachNavigationProperty(relation.Album, out albumEntryState);
-            this.DetachNavigationProperty(relation.Track, out trackEntryState);
+            DetachNavigationProperty(relation.Album, out albumEntryState);
+            DetachNavigationProperty(relation.Track, out trackEntryState);
 
             relation.Album = null;
             relation.Track = null;

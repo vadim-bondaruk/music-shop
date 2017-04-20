@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+    using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
 
     using PVT.Q1._2017.Shop.App_Start;
@@ -15,17 +16,8 @@
     [ShopAuthorize(UserRoles.Buyer, UserRoles.Admin, UserRoles.Seller)]
     public class ArtistsController : BaseController
     {
-        private readonly IArtistService _artistService;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArtistsController"/> class.
-        /// </summary>
-        /// <param name="artistService">
-        /// The artist service.
-        /// </param>
-        public ArtistsController(IArtistService artistService)
+        public ArtistsController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            _artistService = artistService;
         }
 
         /// <summary>
@@ -41,24 +33,18 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Artists", new { area = "Content" });
+                return RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
-            ArtistAlbumsListViewModel artistAlbumsViewModel = null;
-            if (CurrentUser != null)
+            ArtistAlbumsListViewModel artistAlbumsViewModel;
+            var artistService = ServiceFactory.GetArtistService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var currency = GetCurrentUserCurrency();
-                if (currency != null)
-                {
-                    var priceLevel = GetCurrentUserPriceLevel();
-                    artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value, currency.Code, priceLevel, GetUserDataId());
-                }
+                artistAlbumsViewModel = artistService.GetAlbums(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
-            
-
-            if (artistAlbumsViewModel == null)
+            else
             {
-                artistAlbumsViewModel = _artistService.GetAlbumsList(id.Value);
+                artistAlbumsViewModel = artistService.GetAlbums(id.Value);
             }
 
             if (artistAlbumsViewModel == null)
@@ -66,16 +52,22 @@
                 return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
             }
 
-            return this.View(artistAlbumsViewModel);
+            return View(artistAlbumsViewModel);
         }
 
         /// <summary>
         /// </summary>
         /// <returns>
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
-            return this.View(_artistService.GetDetailedArtistsList());
+            var artistsService = ServiceFactory.GetArtistService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
+            {
+                return this.View(artistsService.GetArtists(page, pageSize));
+            }
+
+            return this.HttpNotFound("no user found");
         }
 
         /// <summary>
@@ -89,16 +81,17 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Artists", new { area = "Content" });
+                return RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
-            var artistViewModel = _artistService.GetArtistDetails(id.Value);
+            var artistService = ServiceFactory.GetArtistService();
+            var artistViewModel = artistService.GetArtistDetails(id.Value);
             if (artistViewModel == null)
             {
                 return HttpNotFound($"Артист с id = { id.Value } не найден");
             }
 
-            return this.View(artistViewModel);
+            return View(artistViewModel);
         }
 
         /// <summary>
@@ -114,20 +107,18 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Artists", new { area = "Content" });
+                return RedirectToAction("List", "Artists", new { area = "Content" });
             }
 
-            var currency = GetCurrentUserCurrency();
             ArtistTracksListViewModel artistTracksViewModel;
-
-            if (currency != null && CurrentUser != null)
+            var artistService = ServiceFactory.GetArtistService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var priceLevel = GetCurrentUserPriceLevel();
-                artistTracksViewModel = _artistService.GetTracksList(id.Value, currency.Code, priceLevel, GetUserDataId());
+                artistTracksViewModel = artistService.GetTracks(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
             else
             {
-                artistTracksViewModel = _artistService.GetTracksList(id.Value);
+                artistTracksViewModel = artistService.GetTracks(id.Value);
             }
 
             if (artistTracksViewModel == null)
@@ -135,7 +126,7 @@
                 return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
             }
 
-            return this.View(artistTracksViewModel);
+            return View(artistTracksViewModel);
         }
     }
 }

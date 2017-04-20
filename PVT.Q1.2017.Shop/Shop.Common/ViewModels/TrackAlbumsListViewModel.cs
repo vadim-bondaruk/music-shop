@@ -12,7 +12,7 @@
         /// </summary>
         public TrackAlbumsListViewModel()
         {
-            this.Albums = new List<AlbumViewModel>();
+            Albums = new List<AlbumViewModel>();
         }
 
         /// <summary>

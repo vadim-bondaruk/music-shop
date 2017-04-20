@@ -19,32 +19,18 @@
     /// <summary>
     /// 
     /// </summary>
-    [ShopAuthorize(UserRoles.Customer, UserRoles.Admin)]
+    [ShopAuthorize]
     public class ManageController : BaseController
     {
         /// <summary>
         /// 
         /// </summary>
-        private IUserService _userService;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private IAuthModule _authModule;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private IRepositoryFactory Factory;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ManageController(IUserService userService, IAuthModule authModule, IRepositoryFactory factory)
+        public ManageController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory, IAuthModule authModule)
+            : base(repositoryFactory, serviceFactory)
         {
-            this._userService = userService;
-            this._authModule = authModule;
-            this.Factory = factory;
+            _authModule = authModule;
         }
 
         /// <summary>
@@ -54,7 +40,7 @@
         public ActionResult Index()
         {
             ViewBag.Message = "Редактировать аккаунт";
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -70,19 +56,19 @@
             else
             {
                 ViewBag.Message = "Вы не авторизованы";
-                return this.View();
+                return View();
             }
 
-            int id = this.CurrentUser.Id;
+            int id = CurrentUser.Id;
             User userDB = null;
-            using (var userRepository = this.Factory.GetUserRepository())
+            using (var userRepository = RepositoryFactory.GetUserRepository())
             {
                 userDB = userRepository.GetById(id);
             }
 
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<User, UserPersonalViewModel>());
             var user = AutoMapper.Mapper.Map<UserPersonalViewModel>(userDB);
-            return this.View(user);
+            return View(user);
         }
 
         /// <summary>
@@ -99,15 +85,16 @@
             {
                 AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserPersonalViewModel, User>());
                 var userDB = AutoMapper.Mapper.Map<User>(user);
-                result = this._userService.UpdatePersonal(userDB, this.CurrentUser.Id);
+                var userService = ServiceFactory.GetUserService();
+                result = userService.UpdatePersonal(userDB, CurrentUser.Id);
 
                 if (result)
                 {
-                    return this.RedirectToAction("UpdatePersonal");
+                    return RedirectToAction("UpdatePersonal");
                 }
             }
 
-            return this.View(user);
+            return View(user);
         }
 
         /// <summary>
@@ -116,7 +103,7 @@
         /// <returns></returns>
         public ActionResult ChangePassword()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -132,20 +119,21 @@
             {
                 try
                 {
-                    if (this._userService.UpdatePassword(this.CurrentUser.Id, model.Password, model.OldPassword))
+                    var userService = ServiceFactory.GetUserService();
+                    if (userService.UpdatePassword(CurrentUser.Id, model.Password, model.OldPassword))
                     {
-                        this.TempData["message"] = "Пароль успешно изменён";
-                        return this.RedirectToAction("ChangeAccepted");
+                        TempData["message"] = "Пароль успешно изменён";
+                        return RedirectToAction("ChangeAccepted");
                     }
                 }
                 catch (UserValidationException ex)
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
-                    return this.View();
+                    return View();
                 }
             }
 
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -154,7 +142,7 @@
         /// <returns></returns>
         public ActionResult ChangeLogin()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -167,24 +155,25 @@
         {
             if (ModelState.IsValid)
             {
-                if (this._userService.UpdateLogin(User.Identity.Name, user.Login))
+                var userService = ServiceFactory.GetUserService();
+                if (userService.UpdateLogin(User.Identity.Name, user.Login))
                 {
                     string subject = "Ваш Логин был изменен";
                     string body = "Новый логин: " + user.Login;
-                    string usetEmail = this._userService.GetEmailByUserIdentity(user.Login);
+                    string usetEmail = userService.GetEmailByUserIdentity(user.Login);
                     if (!MailDispatch.SendingMail(usetEmail, subject, body))
                     {
                         ModelState.AddModelError(string.Empty, "Ошибка отправки");
-                        return this.View();
+                        return View();
                     }
 
-                    this.HttpContext.Session.Abandon();
-                    this._authModule.LogOut();
-                    return this.RedirectToAction("Login", "Account", new { area = "User" });
+                    HttpContext.Session.Abandon();
+                    _authModule.LogOut();
+                    return RedirectToAction("Login", "Account", new { area = "User" });
                 }
             }
 
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -194,7 +183,7 @@
         /// <returns></returns>
         public ActionResult Delete()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -207,12 +196,10 @@
         {
             try
             {
-                using (var userRepository = this.Factory.GetUserRepository())
-                {
-                    this._userService.SoftDelete(this.CurrentUser.Id);
-                    this.HttpContext.Session.Abandon();
-                    this._authModule.LogOut();
-                }
+                var userService = ServiceFactory.GetUserService();
+                userService.SoftDelete(CurrentUser.Id);
+                HttpContext.Session.Abandon();
+                _authModule.LogOut();
             }
             catch (Exception)
             {
@@ -220,7 +207,7 @@
                 throw;
             }
 
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            return RedirectToAction("Index", "Home", new { area = string.Empty });
         }
 
         /// <summary>
@@ -229,9 +216,9 @@
         /// <returns></returns>
         public ActionResult ChangeAccepted()
         {
-            ViewBag.Message = this.TempData["message"];
+            ViewBag.Message = TempData["message"];
 
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -242,9 +229,11 @@
         public ActionResult UsersEdit(int id = 1)
         {
             int countPerPage = 10;
-            this.TempData["CurrentPage"] = id;
-            var list = this._userService.GetDataPerPage(id, countPerPage);
-            return this.View(UserMapper.GetUsersToEdit(list));
+            TempData["CurrentPage"] = id;
+
+            var userService = ServiceFactory.GetUserService();
+            var list = userService.GetDataPerPage(id, countPerPage);
+            return View(UserMapper.GetUsersToEdit(list));
         }
 
         /// <summary>
@@ -254,8 +243,9 @@
         /// <returns></returns>
         public ActionResult GetMatchingData(string term)
         {
-            var list = this._userService.GetLastNameMatchingData(term);
-            return this.Json(list);
+            var userService = ServiceFactory.GetUserService();
+            var list = userService.GetLastNameMatchingData(term);
+            return Json(list);
         }
 
         /// <summary>
@@ -266,15 +256,19 @@
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var user = this.Factory.GetUserRepository().GetById(id);
+            User user;
+            using (var repository = RepositoryFactory.GetUserRepository())
+            {
+                user = repository.GetById(id);
+            }
 
             if (user != null)
             {
                 var editUser = UserMapper.GetUserEditView(user);
-                return this.View(editUser);
+                return View(editUser);
             }
 
-            return this.HttpNotFound();
+            return HttpNotFound();
         }
 
         /// <summary>
@@ -292,11 +286,11 @@
 
                 if (userDB != null)
                 {
-                    userDB.Password = this.Factory.GetUserRepository().GetById(userDB.Id).Password;
-                    using (var repository = this.Factory.GetUserRepository())
+                    using (var repository = RepositoryFactory.GetUserRepository())
                     {
                         try
                         {
+                            userDB.Password = repository.GetById(userDB.Id).Password;
                             repository.AddOrUpdate(userDB);
                             repository.SaveChanges();
                         }
@@ -309,7 +303,7 @@
                 }
             }
 
-            return this.RedirectToAction("UsersEdit", new { controller = "Manage", area = "User", id = TempData["CurrentPage"] });
+            return RedirectToAction("UsersEdit", new { controller = "Manage", area = "User", id = TempData["CurrentPage"] });
         }
     }
 }

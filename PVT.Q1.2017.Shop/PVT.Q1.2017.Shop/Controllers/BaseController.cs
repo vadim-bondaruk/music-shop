@@ -1,7 +1,9 @@
 ﻿namespace PVT.Q1._2017.Shop.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using global::Shop.BLL.Helpers;
+    using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
@@ -12,91 +14,82 @@
     /// </summary>
     public class BaseController : Controller
     {
-        private const string CURRENT_USER_DATA_ID_KEY = "UserDataId";
+        private const string CURRENT_USER_CURRENCY_KEY = "UserCurrency";
+
+        protected readonly IRepositoryFactory RepositoryFactory;
+        protected readonly IServiceFactory ServiceFactory;
+
+        public BaseController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory)
+        {
+            RepositoryFactory = repositoryFactory;
+            ServiceFactory = serviceFactory;
+        }
 
         public CurrentUser CurrentUser
         {
+            get { return this.HttpContext.User as CurrentUser; }
+        }
+
+        protected CurrencyViewModel CurrentUserCurrency
+        {
             get
             {
-                return this.HttpContext.User as CurrentUser;
+                if (CurrentUser == null)
+                {
+                    return null;
+                }
+
+                if (Session[CURRENT_USER_CURRENCY_KEY] != null)
+                {
+                    return (CurrencyViewModel)Session[CURRENT_USER_CURRENCY_KEY];
+                }
+
+                var userCurrency = GetUserCurrencyFromDb();
+                Session[CURRENT_USER_CURRENCY_KEY] = userCurrency;
+                return userCurrency;
+            }
+            set
+            {
+                if (CurrentUser == null)
+                {
+                    return;
+                }
+
+                SaveUserCurrencyToDb(value);
+                Session[CURRENT_USER_CURRENCY_KEY] = value;
             }
         }
 
-        /// <summary>
-        /// Returns the current user currency.
-        /// </summary>
-        /// <returns>
-        /// The current user currency or <b>null</b> if the there is an ananimous user.
-        /// </returns>
-        protected CurrencyViewModel GetCurrentUserCurrency()
+        private CurrencyViewModel GetUserCurrencyFromDb()
         {
-            if (CurrentUser == null)
-            {
-                return null;
-            }
-
-            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
             Currency currency = null;
-            using (var repository = factory.GetUserDataRepository())
+            using (var repository = RepositoryFactory.GetUserDataRepository())
             {
                 var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id, u => u.UserCurrency);
                 if (userData != null)
                 {
                     currency = userData.UserCurrency;
-                }  
+                }
             }
 
             return ModelsMapper.GetCurrencyViewModel(currency);
         }
 
-        /// <summary>
-        /// Returns the current user price level.
-        /// </summary>
-        /// <returns></returns>
-        protected int? GetCurrentUserPriceLevel()
+        private void SaveUserCurrencyToDb(CurrencyViewModel currency)
         {
-            if (CurrentUser == null)
+            if (currency == null)
             {
-                return null;
+                throw new ArgumentOutOfRangeException(nameof(currency));
             }
 
-            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
-            using (var repository = factory.GetUserDataRepository())
+            using (var repository = RepositoryFactory.GetUserDataRepository())
             {
                 var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
-                if (userData != null)
-                {
-                    return userData.PriceLevelId;
-                }
+
+                userData.CurrencyId = currency.Id;
+                repository.AddOrUpdate(userData);
+                repository.SaveChanges();
             }
-
-            return null;
-        }
-
-        protected int? GetUserDataId()
-        {
-            if (CurrentUser == null)
-            {
-                return null;
-            }
-
-            if (Session[CURRENT_USER_DATA_ID_KEY] != null)
-            {
-                return (int)Session[CURRENT_USER_DATA_ID_KEY];
-            }
-
-            var factory = DependencyResolver.Current.GetService<IRepositoryFactory>();
-            using (var repository = factory.GetUserDataRepository())
-            {
-                var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
-                if (userData != null)
-                {
-                    Session[CURRENT_USER_DATA_ID_KEY] = userData.Id;
-                    return userData.Id;
-                }
-            }
-
-            return null;
         }
     }
 }

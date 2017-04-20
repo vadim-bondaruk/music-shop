@@ -10,15 +10,15 @@
     {
         public Cart()
         {
-            this.OrderTracks = new List<OrderTrack>();
-            this.OrderAlbums = new List<OrderAlbum>();
+            OrderTracks = new List<OrderTrack>();
+            OrderAlbums = new List<OrderAlbum>();
         }
 
         public Cart(int userId)
         {
-            this.UserId = userId;
-            this.OrderTracks = new List<OrderTrack>();
-            this.OrderAlbums = new List<OrderAlbum>();
+            UserId = userId;
+            OrderTracks = new List<OrderTrack>();
+            OrderAlbums = new List<OrderAlbum>();
         }
         /// <summary>
         /// Current User

@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+    using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
 
     /// <summary>
@@ -10,17 +11,8 @@
     /// </summary>
     public class ArtistController : BaseController
     {
-        private readonly IArtistService _artistService;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArtistController"/> class.
-        /// </summary>
-        /// <param name="artistService">
-        /// The artist service.
-        /// </param>
-        public ArtistController(IArtistService artistService)
+        public ArtistController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            _artistService = artistService;
         }
 
         /// <summary>
@@ -31,7 +23,8 @@
         /// </returns>
         public ActionResult List()
         {
-            return this.View(_artistService.GetArtistsList());
+            var artistService = ServiceFactory.GetArtistService();
+            return View(artistService.GetArtists());
         }
 
         /// <summary>
@@ -47,20 +40,19 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Artist", new { area = "Content" });
+                return RedirectToAction("List", "Artist", new { area = "Content" });
             }
 
-            var currency = GetCurrentUserCurrency();
             ArtistContentViewModel artistViewModel;
 
-            if (currency != null)
+            var artistService = ServiceFactory.GetArtistService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var priceLevel = GetCurrentUserPriceLevel();
-                artistViewModel = _artistService.GetContent(id.Value, currency.Code, priceLevel, GetUserDataId());
+                artistViewModel = artistService.GetContent(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
             else
             {
-                artistViewModel = _artistService.GetContent(id.Value);
+                artistViewModel = artistService.GetContent(id.Value);
             }
 
             if (artistViewModel == null)
@@ -68,7 +60,7 @@
                 return HttpNotFound($"Артист с id = { id.Value } не найден");
             }
 
-            return this.View(artistViewModel);
+            return View(artistViewModel);
         }
     }
 }
