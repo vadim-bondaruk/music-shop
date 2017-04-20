@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
     ///     Represents the paged results.
@@ -19,6 +20,10 @@
         /// <summary>
         /// </summary>
         private readonly ICollection<T> _items;
+
+        /// <summary>
+        /// </summary>
+        private readonly Task<List<T>> _task_items;
 
         /// <summary>
         /// </summary>
@@ -68,6 +73,57 @@
             if (totalItemsCount < items.Count)
             {
                 totalItemsCount = items.Count;
+            }
+
+            this._pageSize = pageSize;
+            this._totalItemsCount = totalItemsCount;
+
+            this._pagesCount = (int)Math.Ceiling((double)this._totalItemsCount / this._pageSize);
+
+            if (page <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(page), page, "Incorrect current page value specified");
+            }
+
+            this._currentPage = page > this._pagesCount ? this._pagesCount : page;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PagedResult{T}"/> class.
+        /// </summary>
+        /// <param name="items">
+        /// The items.
+        /// </param>
+        /// <param name="pageSize">
+        /// The page size.
+        /// </param>
+        /// <param name="page">
+        /// The page.
+        /// </param>
+        /// <param name="totalItemsCount">
+        /// The total items count.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// </exception>
+        public PagedResult(Task<List<T>> items, int pageSize, int page, int totalItemsCount)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            this._task_items = items;
+
+            if (pageSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "Incorrect page size specified");
+            }
+
+            if (totalItemsCount < _task_items.Result.Count)
+            {
+                totalItemsCount = _task_items.Result.Count;
             }
 
             this._pageSize = pageSize;
