@@ -6,6 +6,8 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
+
     using Infrastructure.Models;
     using Infrastructure.Repositories;
 
@@ -99,6 +101,18 @@
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="includes">
+        /// The includes.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual async Task<ICollection<TEntity>> GetAllAsync(params Expression<Func<TEntity, BaseEntity>>[] includes)
+        {
+            return await GetActiveItems(includes).ToListAsync();
+        }
+
+        /// <summary>
         /// Tries to find models from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
@@ -108,6 +122,21 @@
         {
             IQueryable<TEntity> query = GetActiveItems(filter, includes);
             return query.ToList();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="filter">
+        /// The filter.
+        /// </param>
+        /// <param name="includes">
+        /// The includes.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
+        {
+            return await GetActiveItems(filter, includes).ToListAsync();
         }
 
         /// <summary>

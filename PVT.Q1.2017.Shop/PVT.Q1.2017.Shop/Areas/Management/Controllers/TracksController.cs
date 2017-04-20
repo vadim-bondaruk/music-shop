@@ -21,14 +21,31 @@
     [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
     public class TracksController : BaseController
     {
-        public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TracksController"/> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        /// <param name="serviceFactory">
+        /// The service factory.
+        /// </param>
+        public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory)
+            : base(repositoryFactory, serviceFactory)
         {
+            this.RepositoriesFactory = repositoryFactory;
+            this.ServicesFactory = serviceFactory;
         }
 
         /// <summary>
         ///     Gets or sets the repository factory.
         /// </summary>
-        public IRepositoryFactory RepositoryFactory { get; set; }
+        public IRepositoryFactory RepositoriesFactory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service factory.
+        /// </summary>
+        public IServiceFactory ServicesFactory { get; set; }
 
         /// <summary>
         /// </summary>
@@ -59,74 +76,26 @@
         public virtual ActionResult Edit(int id)
         {
             Track track;
-            using (var repository = RepositoryFactory.GetTrackRepository())
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
                 track = repository.GetById(id);
             }
 
             var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
 
-            using (var repository = RepositoryFactory.GetGenreRepository())
+            using (var repository = this.RepositoryFactory.GetGenreRepository())
             {
                 var genres = repository.GetAll();
                 trackManagementViewModel.Genres = genres;
             }
+
             return this.View(trackManagementViewModel);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult New(int id)
-        {
-            ICollection<Genre> genres;
-            using (var repo = RepositoryFactory.GetGenreRepository())
-            {
-                genres = repo.GetAll();
-            }
-
-            using (var repository = RepositoryFactory.GetArtistRepository())
-            {
-                var artist = repository.GetById(id);
-                return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
-            }
         }
 
         /// <summary>
         /// </summary>
         /// <param name="viewModel">
         ///     The view model.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult New(TrackManagementViewModel viewModel)
-        {
-            var track = ManagementMapper.GetTrackModel(viewModel);
-
-            if (this.CurrentUser != null && this.CurrentUser.IsInRole(UserRoles.Seller))
-            {
-                track.OwnerId = this.CurrentUser.Id;
-            }
-
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
-            {
-                repository.AddOrUpdate(track);
-                repository.SaveChanges();
-            }
-
-            return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="viewModel">
-        /// The view model.
         /// </param>
         /// <returns>
         /// </returns>
@@ -151,13 +120,62 @@
                 viewModel.TrackFile = currentTrack.TrackFile;
             }
 
-            if ((viewModel.PostedImage == null) && (viewModel.Image == null))
+            if (viewModel.PostedImage == null && viewModel.Image == null)
             {
                 viewModel.Image = currentTrack.Image;
             }
 
             var track = ManagementMapper.GetTrackModel(viewModel);
             track.OwnerId = currentTrack.OwnerId;
+            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            {
+                repository.AddOrUpdate(track);
+                repository.SaveChanges();
+            }
+
+            return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual ActionResult New(int id)
+        {
+            ICollection<Genre> genres;
+            using (var repo = this.RepositoryFactory.GetGenreRepository())
+            {
+                genres = repo.GetAll();
+            }
+
+            using (var repository = this.RepositoryFactory.GetArtistRepository())
+            {
+                var artist = repository.GetById(id);
+                return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="viewModel">
+        ///     The view model.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult New(TrackManagementViewModel viewModel)
+        {
+            var track = ManagementMapper.GetTrackModel(viewModel);
+
+            if (this.CurrentUser != null && this.CurrentUser.IsInRole(UserRoles.Seller))
+            {
+                track.OwnerId = this.CurrentUser.Id;
+            }
+
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
                 repository.AddOrUpdate(track);
