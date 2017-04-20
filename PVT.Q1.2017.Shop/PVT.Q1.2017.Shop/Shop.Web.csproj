@@ -296,6 +296,7 @@
     <Content Include="Areas\News\Views\Shared\ByorkVirtual.cshtml" />
     <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
     <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
+    <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
@@ -331,7 +332,7 @@
     <Content Include="Areas\Content\Views\Shared\Audio\AudioSection.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Album\AddTracks.cshtml" />
+    <Content Include="Areas\Management\Views\Album\AddTracksToAlbum.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_TracksList.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -391,6 +392,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
+    <Compile Include="Areas\Admin\Helpers\AdminModelsMapper.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
@@ -404,7 +406,6 @@
     <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumPriceController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
-    <Compile Include="Areas\Management\Controllers\ArtistController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />

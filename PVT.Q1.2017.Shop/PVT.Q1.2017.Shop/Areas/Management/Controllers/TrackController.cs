@@ -30,8 +30,8 @@
         /// <param name="repositoryFactory">The repository factory.</param>
         public TrackController(ITrackService trackService, IRepositoryFactory repositoryFactory)
         {
-            this._trackService = trackService;
-            this._repositoryFactory = repositoryFactory;
+            _trackService = trackService;
+            _repositoryFactory = repositoryFactory;
         }
 
         /// <summary>
@@ -44,11 +44,11 @@
         {
             if (id == null)
             {
-                return this.View();
+                return View();
             }
 
-            var track = ManagementMapper.GetTrackManagementViewModel(this._trackService.GetTrackDetails(id.Value));
-            return this.View(track);
+            var track = ManagementMapper.GetTrackManagementViewModel(_trackService.GetTrackDetails(id.Value));
+            return View(track);
         }
 
         /// <summary>
@@ -68,16 +68,16 @@
         {
             if (track != null && ModelState.IsValid)
             {
-                using (var repository = this._repositoryFactory.GetTrackRepository())
+                using (var repository = _repositoryFactory.GetTrackRepository())
                 {
                     repository.AddOrUpdate(ManagementMapper.GetTrackModel(track));
                     repository.SaveChanges();
                 }
 
-                return this.RedirectToAction("Details", "Track", new { id = track.Id, area = "Content" });
+                return RedirectToAction("Details", "Track", new { id = track.Id, area = "Content" });
             }
 
-            return this.View(track);
+            return View(track);
         }
 
         public ActionResult Create(int? artistid)
@@ -104,11 +104,11 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Track", new { area = "Content" });
+                return RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            var track = ManagementMapper.GetTrackManagementViewModel(this._trackService.GetTrackDetails(id.Value));
-            return this.View(track);
+            var track = ManagementMapper.GetTrackManagementViewModel(_trackService.GetTrackDetails(id.Value));
+            return View(track);
         }
 
         /// <summary>
@@ -125,14 +125,14 @@
         {
             if (track != null && ModelState.IsValid)
             {
-                using (var repository = this._repositoryFactory.GetTrackRepository())
+                using (var repository = _repositoryFactory.GetTrackRepository())
                 {
                     repository.Delete(ManagementMapper.GetTrackModel(track));
                     repository.SaveChanges();
                 }
             }
 
-            return this.RedirectToAction("List", "Track", new { area = "Content" });
+            return RedirectToAction("List", "Track", new { area = "Content" });
         }
     }
 }

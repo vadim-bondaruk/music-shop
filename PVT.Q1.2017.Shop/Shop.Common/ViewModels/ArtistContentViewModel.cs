@@ -12,8 +12,8 @@
         /// </summary>
         public ArtistContentViewModel()
         {
-            this.Tracks = new List<TrackViewModel>();
-            this.Albums = new List<AlbumViewModel>();
+            Tracks = new List<TrackViewModel>();
+            Albums = new List<AlbumViewModel>();
         }
 
         /// <summary>

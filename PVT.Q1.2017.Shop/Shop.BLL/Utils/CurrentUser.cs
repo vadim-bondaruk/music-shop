@@ -2,6 +2,7 @@
 {
     using System;
     using System.Security.Principal;
+    using Common.ViewModels;
     using global::Shop.Common.Models;
     using global::Shop.Infrastructure.Enums;
 
@@ -24,10 +25,12 @@
         /// 
         /// </summary>
         /// <param name="user"></param>
-        public CurrentUser(User user)
+        public CurrentUser(User user, int userProfileId, int priceLevelId)
         {
-            this._user = user;
-            this._userIdentity = new UserIdentity(this._user);
+            UserProfileId = userProfileId;
+            PriceLevelId = priceLevelId;
+            _user = user;
+            _userIdentity = new UserIdentity(_user);
         }
 
         /// <summary>
@@ -37,7 +40,7 @@
         {
             get
             {
-                return this._userIdentity;
+                return _userIdentity;
             }
         }
 
@@ -48,9 +51,13 @@
         {
             get
             {
-                return this._user.Id;
+                return _user.Id;
             }
         }
+
+        public int UserProfileId { get; }
+
+        public int PriceLevelId { get; }
 
         /// <summary>
         /// 
@@ -64,14 +71,14 @@
                 throw new ArgumentException("role");
             }
 
-            var userIdentity = this._userIdentity as UserIdentity;
+            var userIdentity = _userIdentity as UserIdentity;
 
             if (userIdentity == null)
             {
                 return false;
             }
 
-            if (this._user.UserRole.ToString().Equals(role, StringComparison.OrdinalIgnoreCase))
+            if (_user.UserRole.ToString().Equals(role, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
@@ -81,7 +88,7 @@
 
         public bool IsInRole(UserRoles role)
         {
-            return this._user.UserRole.Equals(role); 
+            return _user.UserRole.Equals(role); 
         }
     }
 }

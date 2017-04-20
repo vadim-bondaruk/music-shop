@@ -42,7 +42,7 @@
         public void GetAlbumsListTest()
         {
             AddAlbumTest();
-            Assert.IsTrue(_albumService.GetAlbumsList().Any());
+            Assert.IsTrue(_albumService.GetAlbums().Any());
 
             Mock.Get(_factory.GetAlbumRepository()).Verify(m => m.GetAll(), Times.Once);
         }
@@ -67,7 +67,7 @@
                 });
             }
 
-            Assert.IsNotNull(_albumService.GetTracksList(1));
+            Assert.IsNotNull(_albumService.GetTracks(1));
 
             Mock.Get(_factory.GetAlbumTrackRelationRepository())
                 .Verify(
@@ -91,7 +91,7 @@
         {
             AddAlbumTest();
 
-            var album = _albumService.GetAlbumsList().FirstOrDefault();
+            var album = _albumService.GetAlbums().FirstOrDefault();
             Assert.IsNotNull(album);
 
             Assert.IsTrue(_albumService.GetAlbumsWithPrice(1, 10).Items.Any());

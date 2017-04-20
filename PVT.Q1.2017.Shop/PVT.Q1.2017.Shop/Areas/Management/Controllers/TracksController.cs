@@ -21,91 +21,8 @@
     [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
     public class TracksController : BaseController
     {
-        /// <summary>
-        /// </summary>
-        private readonly IArtistRepository _artistRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly IGenreRepository _genreRepository;
-
-        /// <summary>
-        /// </summary>
-        private readonly ITrackRepository _trackRepository;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TracksController"/> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        /// The repository factory.
-        /// </param>
-        /// <param name="artistService">
-        /// The artist service.
-        /// </param>
-        /// <param name="artistRepository">
-        /// The artist repository.
-        /// </param>
-        /// <param name="genreRepository">
-        /// The genre repository.
-        /// </param>
-        /// <param name="albumRepository">
-        /// The album repository.
-        /// </param>
-        /// <param name="trackRepository">
-        /// The track repository.
-        /// </param>
-        public TracksController(
-            IRepositoryFactory repositoryFactory,
-            IArtistService artistService,
-            IArtistRepository artistRepository,
-            IGenreRepository genreRepository,
-            IAlbumRepository albumRepository,
-            ITrackRepository trackRepository)
+        public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this.RepositoryFactory = repositoryFactory;
-            this._artistRepository = artistRepository;
-            this._genreRepository = genreRepository;
-            this._trackRepository = trackRepository;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TracksController"/> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        /// The repository factory.
-        /// </param>
-        /// <param name="trackService">
-        /// The track service.
-        /// </param>
-        /// <param name="artistService">
-        /// The artist service.
-        /// </param>
-        /// <param name="artistRepository">
-        /// The artist repository.
-        /// </param>
-        /// <param name="genreRepository">
-        /// The genre repository.
-        /// </param>
-        /// <param name="albumRepository">
-        /// The album repository.
-        /// </param>
-        /// <param name="trackRepository">
-        /// The track repository.
-        /// </param>
-        public TracksController(
-            IRepositoryFactory repositoryFactory,
-            ITrackService trackService,
-            IArtistService artistService,
-            IArtistRepository artistRepository,
-            IGenreRepository genreRepository,
-            IAlbumRepository albumRepository,
-            ITrackRepository trackRepository)
-        {
-            this.RepositoryFactory = repositoryFactory;
-            this._artistRepository = artistRepository;
-            this._genreRepository = genreRepository;
-            this._trackRepository = trackRepository;
-            Mapper.Initialize(cfg => cfg.CreateMap<TrackManagementViewModel, Track>());
         }
 
         /// <summary>
@@ -141,10 +58,19 @@
         /// </returns>
         public virtual ActionResult Edit(int id)
         {
-            var track = this._trackRepository.GetById(id);
+            Track track;
+            using (var repository = RepositoryFactory.GetTrackRepository())
+            {
+                track = repository.GetById(id);
+            }
+
             var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
-            var genres = this._genreRepository.GetAll();
-            trackManagementViewModel.Genres = genres;
+
+            using (var repository = RepositoryFactory.GetGenreRepository())
+            {
+                var genres = repository.GetAll();
+                trackManagementViewModel.Genres = genres;
+            }
             return this.View(trackManagementViewModel);
         }
 
@@ -158,13 +84,16 @@
         public virtual ActionResult New(int id)
         {
             ICollection<Genre> genres;
-            using (var repo = this._genreRepository)
+            using (var repo = RepositoryFactory.GetGenreRepository())
             {
                 genres = repo.GetAll();
             }
 
-            var artist = this._artistRepository.GetById(id);
-            return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
+            using (var repository = RepositoryFactory.GetArtistRepository())
+            {
+                var artist = repository.GetById(id);
+                return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
+            }
         }
 
         /// <summary>

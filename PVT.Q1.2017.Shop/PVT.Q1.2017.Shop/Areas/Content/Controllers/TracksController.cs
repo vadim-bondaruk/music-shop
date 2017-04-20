@@ -1,8 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
@@ -28,7 +26,7 @@
         /// <returns>
         ///     All albums where the specified track is exist.
         /// </returns>
-        public virtual ActionResult AlbumsList(int? id)
+        public ActionResult AlbumsList(int? id)
         {
             if (id.GetValueOrDefault() <= 0)
             {
@@ -36,23 +34,14 @@
             }
 
             TrackAlbumsListViewModel trackAlbumsViewModel = null;
-
-            if (this.CurrentUser != null)
+            var trackService = ServiceFactory.GetTrackService();
+            if (this.CurrentUser != null && CurrentUserCurrency != null)
             {
-                var currency = this.GetCurrentUserCurrency();
-                if (currency == null)
-                {
-                    trackAlbumsViewModel = this._trackService.GetAlbums(
-                        id.Value,
-                        CurrentUser.CurrencyId,
-                        CurrentUser.PriceLevelId,
-                        CurrentUser.UserProfileId);
-                }
+                trackAlbumsViewModel = trackService.GetAlbums(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
-
-            if (trackAlbumsViewModel == null)
+            else
             {
-                trackAlbumsViewModel = this._trackService.GetAlbumsList(id.Value);
+                trackAlbumsViewModel = trackService.GetAlbums(id.Value);
             }
 
             if (trackAlbumsViewModel == null)
@@ -70,31 +59,22 @@
         /// <returns>
         ///     Track info view.
         /// </returns>
-        public virtual ActionResult Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return this.RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
-            TrackDetailsViewModel trackViewModel = null;
-            if (this.CurrentUser != null)
+            TrackDetailsViewModel trackViewModel;
+            var trackService = ServiceFactory.GetTrackService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var currency = this.GetCurrentUserCurrency();
-                if (currency != null)
-                {
-                    var priceLevel = this.GetCurrentUserPriceLevel();
-                    trackViewModel = this._trackService.GetTrackDetails(
-                        id.Value,
-                        currency.Code,
-                        priceLevel,
-                        this.GetUserDataId());
-                }
+                trackViewModel = trackService.GetTrackDetails(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
-
-            if (trackViewModel == null)
+            else
             {
-                trackViewModel = this._trackService.GetTrackDetails(id.Value);
+                trackViewModel = trackService.GetTrackDetails(id.Value);
             }
 
             if (trackViewModel == null)
@@ -112,38 +92,10 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public ActionResult GetAudio(int id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-
-            using (var trackRepository = factory.GetTrackRepository())
-            {
-                //var track = trackRepository.GetById(id.Value);
-                //if (track == null)
-                //{
-                //    return HttpNotFound($"Трек с id = { id.Value } не найден");
-                //}
-
-                //var audioBytes = track.TrackFile;
-                //return this.File(audioBytes, "audio/mp3");
-            }
-            return HttpNotFound();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        /// <returns>
-        /// </returns>
         public FileStreamResult GetTrackAsStream(int id)
         {
             MemoryStream stream;
-            using (var repo = this._repositoryFactory.GetTrackRepository())
+            using (var repo = RepositoryFactory.GetTrackRepository())
             {
                 var track = repo.GetById(id, p => p.Artist);
 
@@ -171,19 +123,13 @@
         /// </returns>
         public ActionResult List()
         {
-            if (this.CurrentUser != null)
+            var trackService = ServiceFactory.GetTrackService();
+            if (this.CurrentUser != null && CurrentUserCurrency != null)
             {
-                var currency = this.GetCurrentUserCurrency();
-                if (currency != null)
-                {
-                    var priceLevel = this.GetCurrentUserPriceLevel();
-                    return
-                        this.View(
-                            this._trackService.GetDetailedTracksList(currency.Code, priceLevel, this.GetUserDataId()));
-                }
+                return View(trackService.GetDetailedTracksList(CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(this._trackService.GetDetailedTracksList());
+            return this.View(trackService.GetDetailedTracksList());
         }
 
         /// <summary>
@@ -192,7 +138,8 @@
         /// </returns>
         public ActionResult PurchasedList()
         {
-            var purchasedTracks = this._trackService.GetPurchasedTracks(this.CurrentUser.Id);
+            var trackService = ServiceFactory.GetTrackService();
+            var purchasedTracks = trackService.GetPurchasedTracks(this.CurrentUser.Id);
 
             if (purchasedTracks == null)
             {

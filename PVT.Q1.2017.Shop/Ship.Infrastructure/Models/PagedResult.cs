@@ -24,7 +24,7 @@
                 throw new ArgumentNullException(nameof(items));
             }
 
-            this._items = items;
+            _items = items;
 
             if (pageSize <= 0)
             {
@@ -51,7 +51,7 @@
 
         public ICollection<T> Items
         {
-            get { return this._items; }
+            get { return _items; }
         }
 
         public int CurrentPage

@@ -64,7 +64,7 @@
                 repository.SaveChanges();
             }
 
-            Assert.IsNotNull(_artistService.GetTracksList(1));
+            Assert.IsNotNull(_artistService.GetTracks(1));
 
             Mock.Get(_factory.GetArtistRepository())
                 .Verify(m => m.GetById(It.IsAny<int>()), Times.Once);
@@ -85,7 +85,7 @@
                 repository.SaveChanges();
             }
 
-            Assert.IsNotNull(_artistService.GetAlbumsList(1));
+            Assert.IsNotNull(_artistService.GetAlbums(1));
 
             Mock.Get(_factory.GetArtistRepository())
                 .Verify(m => m.GetById(It.IsAny<int>()), Times.Once);
@@ -200,7 +200,7 @@
                 repository.SaveChanges();
             }
 
-            Assert.IsTrue(_artistService.GetArtistsList().Any());
+            Assert.IsTrue(_artistService.GetArtists().Any());
 
             Mock.Get(_factory.GetArtistRepository())
                 .Verify(m => m.GetAll(), Times.Once);

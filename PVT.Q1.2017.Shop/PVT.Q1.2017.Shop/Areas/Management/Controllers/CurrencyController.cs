@@ -39,9 +39,9 @@
             ICurrencyService currenycService,
             IRepositoryFactory factory)
         {
-            this._rateService = rateService;
-            this._currenycService = currenycService;
-            this._factory = factory;
+            _rateService = rateService;
+            _currenycService = currenycService;
+            _factory = factory;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@
         /// <returns></returns>
         public ActionResult Index()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -60,9 +60,9 @@
         [HttpGet]
         public ActionResult All()
         {
-            using (var repo = this._factory.GetCurrencyRepository())
+            using (var repo = _factory.GetCurrencyRepository())
             {
-                return this.View(repo.GetAll());
+                return View(repo.GetAll());
             }
         }
 
@@ -73,10 +73,10 @@
         [HttpGet]
         public ActionResult Rates()
         {
-            using (var curRepo = this._factory.GetCurrencyRepository())
-            using (var rateRepo = this._factory.GetCurrencyRateRepository())
+            using (var curRepo = _factory.GetCurrencyRepository())
+            using (var rateRepo = _factory.GetCurrencyRateRepository())
             {
-                return this.View(rateRepo.GetAll().Select(r => new RateViewModel
+                return View(rateRepo.GetAll().Select(r => new RateViewModel
                 {
                     Id = r.Id,
                     FromId = r.CurrencyId,
@@ -98,15 +98,15 @@
         {
             if (ModelState.IsValid)
             {
-                using (var repo = this._factory.GetCurrencyRepository())
+                using (var repo = _factory.GetCurrencyRepository())
                 {
                     repo.AddOrUpdate(currency);
                     repo.SaveChanges();
-                    return this.RedirectToAction("All");
+                    return RedirectToAction("All");
                 }
             }
 
-            return this.View("EditCurrency", currency);
+            return View("EditCurrency", currency);
         }
 
         /// <summary>
@@ -118,13 +118,13 @@
         {
             if (id.HasValue)
             {
-                using (var repo = this._factory.GetCurrencyRepository())
+                using (var repo = _factory.GetCurrencyRepository())
                 {
-                    return this.View("EditCurrency", repo.GetById(id.Value));
+                    return View("EditCurrency", repo.GetById(id.Value));
                 }
             }
 
-            return this.View("CreateCurrency", new Currency());
+            return View("CreateCurrency", new Currency());
         }
 
         /// <summary>
@@ -134,11 +134,11 @@
         [HttpGet]
         public ActionResult DeleteCurrency(int id)
         {
-            using (var repo = this._factory.GetCurrencyRepository())
+            using (var repo = _factory.GetCurrencyRepository())
             {
                 repo.Delete(id);
                 repo.SaveChanges();
-                return this.RedirectToAction("All");
+                return RedirectToAction("All");
             }
         }
 
@@ -151,7 +151,7 @@
         {
             if (ModelState.IsValid)
             {
-                using (var repo = this._factory.GetCurrencyRateRepository())
+                using (var repo = _factory.GetCurrencyRateRepository())
                 {
                     repo.AddOrUpdate(new CurrencyRate
                     {
@@ -161,17 +161,17 @@
                         Date = rate.Date
                     });
                     repo.SaveChanges();
-                    return this.RedirectToAction("Rates");
+                    return RedirectToAction("Rates");
                 }
             }
 
-            using (var repo = this._factory.GetCurrencyRepository())
+            using (var repo = _factory.GetCurrencyRepository())
             {
                 rate.From = repo.GetAll();
                 rate.To = repo.GetAll();
             }
 
-            return this.View("AddRate", rate);
+            return View("AddRate", rate);
         }
 
         /// <summary>
@@ -181,9 +181,9 @@
         [HttpGet]
         public ActionResult AddRate()
         {
-            using (var repo = this._factory.GetCurrencyRepository())
+            using (var repo = _factory.GetCurrencyRepository())
             {
-                return this.View(new RateViewModel
+                return View(new RateViewModel
                 {
                     Date = DateTime.Now.Date,
                     From = repo.GetAll(),
@@ -199,11 +199,11 @@
         [HttpGet]
         public ActionResult DeleteRate(int id)
         {
-            using (var repo = this._factory.GetCurrencyRateRepository())
+            using (var repo = _factory.GetCurrencyRateRepository())
             {
                 repo.Delete(id);
                 repo.SaveChanges();
-                return this.RedirectToAction("Rates");
+                return RedirectToAction("Rates");
             }
         }
     }

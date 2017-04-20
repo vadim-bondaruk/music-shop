@@ -68,9 +68,9 @@
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The TrackBaseRepository should be SOLID, should only add information about track! Not about artist, album or genre!
-            this.DetachNavigationProperty(track.Artist, out artistEntryState);
-            this.DetachNavigationProperty(track.Genre, out genreEntryState);
-            this.DetachNavigationProperty(track.Owner, out ownerEntryState);
+            DetachNavigationProperty(track.Artist, out artistEntryState);
+            DetachNavigationProperty(track.Genre, out genreEntryState);
+            DetachNavigationProperty(track.Owner, out ownerEntryState);
 
             track.Artist = null;
             track.Genre = null;

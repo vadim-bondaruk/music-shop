@@ -22,7 +22,7 @@
         /// </param>
         public CurrencyService(IRepositoryFactory factory) : base(factory)
         {
-            this.DefaultCurrency = ServiceHelper.GetDefaultCurrency(factory);
+            DefaultCurrency = ServiceHelper.GetDefaultCurrency(factory);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@
         public CurrencyViewModel GetCurrencyByCode(int code)
         {
             Currency currency;
-            using (var repositry = this.Factory.GetCurrencyRepository())
+            using (var repositry = Factory.GetCurrencyRepository())
             {
                 currency = repositry.FirstOrDefault(c => c.Code == code);
             }
@@ -62,7 +62,7 @@
         public CurrencyViewModel GetCurrencyByName(string name)
         {
             Currency currency;
-            using (var repositry = this.Factory.GetCurrencyRepository())
+            using (var repositry = Factory.GetCurrencyRepository())
             {
                 currency = repositry.FirstOrDefault(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase));
             }
@@ -76,10 +76,10 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        public ICollection<CurrencyViewModel> GetCurrenciesList()
+        public ICollection<CurrencyViewModel> GetCurrencies()
         {
             ICollection<Currency> allCurrencies;
-            using (var repositry = this.Factory.GetCurrencyRepository())
+            using (var repositry = Factory.GetCurrencyRepository())
             {
                 allCurrencies = repositry.GetAll();
             }
@@ -99,7 +99,7 @@
         /// </returns>
         public bool CurrencyExists(string name)
         {
-            using (var repositry = this.Factory.GetCurrencyRepository())
+            using (var repositry = Factory.GetCurrencyRepository())
             {
                 return repositry.Exist(c => c.ShortName.Equals(name.Trim(), StringComparison.OrdinalIgnoreCase));
             }
@@ -117,7 +117,7 @@
         /// </returns>
         public bool CurrencyExists(int code)
         {
-            using (var repositry = this.Factory.GetCurrencyRepository())
+            using (var repositry = Factory.GetCurrencyRepository())
             {
                 return repositry.Exist(c => c.Code == code);
             }
@@ -140,7 +140,7 @@
                 return false;
             }
 
-            using (var repositry = this.Factory.GetCurrencyRepository())
+            using (var repositry = Factory.GetCurrencyRepository())
             {
                 return repositry.Exist(c => c.Code == currency.Code ||
                                             c.ShortName.Equals(currency.ShortName.Trim(), StringComparison.OrdinalIgnoreCase));
@@ -156,7 +156,7 @@
         /// </returns>
         public Currency GetCurrency(int id)
         {
-            using (var repositry = this.Factory.GetCurrencyRepository())
+            using (var repositry = Factory.GetCurrencyRepository())
             {
                 return repositry.GetById(id);
             }

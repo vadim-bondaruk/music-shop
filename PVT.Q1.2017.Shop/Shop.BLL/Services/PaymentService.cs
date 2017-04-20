@@ -196,7 +196,7 @@
                     //CreatePayment function gives us the payment approval url
                     //on which payer is redirected for paypal account payment
 
-                    var createdPayment = this.CreatePaymentDemo(apiContext, baseURI + "guid=" + guid);
+                    var createdPayment = CreatePaymentDemo(apiContext, baseURI + "guid=" + guid);
 
                     //get links returned from paypal in response to Create function call
 
@@ -280,7 +280,7 @@
                     //CreatePayment function gives us the payment approval url
                     //on which payer is redirected for paypal account payment
 
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid, cart);
+                    var createdPayment = CreatePayment(apiContext, baseURI + "guid=" + guid, cart);
 
                     //get links returned from paypal in response to Create function call
 
@@ -389,7 +389,7 @@
                 item_list = itemList
             });
 
-            this.payment = new Payment()
+            payment = new Payment()
             {
                 intent = "sale",
                 payer = payer,
@@ -398,7 +398,7 @@
             };
 
             // Create a payment using a APIContext
-            return this.payment.Create(apiContext);
+            return payment.Create(apiContext);
         }
 
         /// <summary>
@@ -411,8 +411,8 @@
         private Payment ExecutePaymentDemo(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
-            this.payment = new Payment() { id = paymentId };
-            return this.payment.Execute(apiContext, paymentExecution);
+            payment = new Payment() { id = paymentId };
+            return payment.Execute(apiContext, paymentExecution);
         }
 
         /// <summary>
@@ -477,7 +477,7 @@
                 item_list = itemList
             });
 
-            this.payment = new Payment()
+            payment = new Payment()
             {
                 intent = "sale",
                 payer = payer,
@@ -486,7 +486,7 @@
             };
 
             // Create a payment using a APIContext
-            return this.payment.Create(apiContext);
+            return payment.Create(apiContext);
         }
 
         /// <summary>
@@ -500,8 +500,8 @@
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
-            this.payment = new Payment() { id = paymentId };
-            return this.payment.Execute(apiContext, paymentExecution);
+            payment = new Payment() { id = paymentId };
+            return payment.Execute(apiContext, paymentExecution);
         }
     }
 }

@@ -40,13 +40,13 @@
         public FeedbackViewModel GetTrackFeedback(int trackId, int userDataId)
         {
             Feedback feedback;
-            using (var repository = this.Factory.GetFeedbackRepository())
+            using (var repository = Factory.GetFeedbackRepository())
             {
                 feedback = repository.FirstOrDefault(f => f.TrackId == trackId && f.UserId == userDataId, f => f.User, f => f.User.User);
             }
 
             Vote vote;
-            using (var repository = this.Factory.GetVoteRepository())
+            using (var repository = Factory.GetVoteRepository())
             {
                 vote = repository.FirstOrDefault(v => v.TrackId == trackId && v.UserId == userDataId);
             }
@@ -97,13 +97,13 @@
         public bool FeedbackExists(int trackId, int userDataId)
         {
             bool feedbackCommentsExist;
-            using (var repository = this.Factory.GetFeedbackRepository())
+            using (var repository = Factory.GetFeedbackRepository())
             {
                 feedbackCommentsExist = repository.Exist(f => f.TrackId == trackId && f.UserId == userDataId);
             }
 
             bool voteExists;
-            using (var repository = this.Factory.GetVoteRepository())
+            using (var repository = Factory.GetVoteRepository())
             {
                 voteExists = repository.Exist(v => v.TrackId == trackId && v.UserId == userDataId);
             }
@@ -140,7 +140,7 @@
                 throw new ArgumentNullException(nameof(feedbackViewModel));
             }
 
-            using (var repository = this.Factory.GetFeedbackRepository())
+            using (var repository = Factory.GetFeedbackRepository())
             {
                 var feedback = repository.FirstOrDefault(f => f.TrackId == feedbackViewModel.TrackId && f.UserId == feedbackViewModel.UserDataId);
 
@@ -172,7 +172,7 @@
 
             if (feedbackViewModel.Mark > 0)
             {
-                using (var repository = this.Factory.GetVoteRepository())
+                using (var repository = Factory.GetVoteRepository())
                 {
                     var vote = repository.FirstOrDefault(v => v.TrackId == feedbackViewModel.TrackId && v.UserId == feedbackViewModel.UserDataId);
 
@@ -194,14 +194,14 @@
         private TrackFeedbacksListViewModel CreateTrackFeedbacksListViewModel(int trackId)
         {
             Track track;
-            using (var repository = this.Factory.GetTrackRepository())
+            using (var repository = Factory.GetTrackRepository())
             {
                 track = repository.GetById(trackId, t => t.Artist, t => t.Genre);
             }
 
             var trackViewModel = ModelsMapper.GetTrackFeedbacksListViewModel(track);
 
-            trackViewModel.TrackDetails.Rating = ServiceHelper.CalculateTrackRating(this.Factory, trackId);
+            trackViewModel.TrackDetails.Rating = ServiceHelper.CalculateTrackRating(Factory, trackId);
 
             return trackViewModel;
         }

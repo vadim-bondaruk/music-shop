@@ -42,8 +42,8 @@
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The CurrencyRateBaseRepository should be SOLID, should only add information about currency rate! Not about currencies!
-            this.DetachNavigationProperty(currencyRate.Currency, out currencyEntryState);
-            this.DetachNavigationProperty(currencyRate.TargetCurrency, out targetCurrencyEntryState);
+            DetachNavigationProperty(currencyRate.Currency, out currencyEntryState);
+            DetachNavigationProperty(currencyRate.TargetCurrency, out targetCurrencyEntryState);
 
             currencyRate.Currency = null;
             currencyRate.TargetCurrency = null;

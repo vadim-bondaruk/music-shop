@@ -26,13 +26,13 @@
 
             _service = new UserService(_factory);
 
-            using (var repository = this._factory.GetCurrencyRepository())
+            using (var repository = _factory.GetCurrencyRepository())
             {
                 repository.AddOrUpdate(new Currency { Id = 1, ShortName = "USD", Code = 840 });
                 repository.SaveChanges();
             }
 
-            using (var repository = this._factory.GetPriceLevelRepository())
+            using (var repository = _factory.GetPriceLevelRepository())
             {
                 repository.AddOrUpdate(new PriceLevel { Id = 1, Name = "Default Price Level" });
                 repository.SaveChanges();

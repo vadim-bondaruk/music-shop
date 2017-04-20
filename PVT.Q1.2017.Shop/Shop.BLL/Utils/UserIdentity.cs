@@ -19,7 +19,7 @@
         /// <param name="user"></param>
         public UserIdentity(User user)
         {
-            this._user = user;
+            _user = user;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         {
             get
             {
-                return this._user != null;
+                return _user != null;
             }
         }
 
@@ -51,7 +51,7 @@
         {
             get
             {
-                return this._user.Login;
+                return _user.Login;
             }
         }
     }

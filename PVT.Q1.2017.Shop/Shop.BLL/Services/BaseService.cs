@@ -20,7 +20,7 @@
         /// </param>
         protected BaseService(IRepositoryFactory factory)
         {
-            this.Factory = factory;
+            Factory = factory;
         }
     }
 }

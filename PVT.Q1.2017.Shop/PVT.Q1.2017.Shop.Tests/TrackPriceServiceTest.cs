@@ -26,8 +26,8 @@ namespace PVT.Q1._2017.Shop.Tests
 
         public TrackPriceServiceTest()
         {
-            this._factory = new RepositoryFactoryMoq();
-            this._trackPriceService = new TrackPriceService(this._factory);
+            _factory = new RepositoryFactoryMoq();
+            _trackPriceService = new TrackPriceService(_factory);
         }
 
         #endregion //Constructors
@@ -37,7 +37,7 @@ namespace PVT.Q1._2017.Shop.Tests
         [TestMethod]
         public void AddTrackPriceTest()
         {
-            using (var repository = this._factory.GetTrackPriceRepository())
+            using (var repository = _factory.GetTrackPriceRepository())
             {
                 repository.AddOrUpdate(new TrackPrice { Price = 1.99m });
                 repository.SaveChanges();
@@ -50,15 +50,15 @@ namespace PVT.Q1._2017.Shop.Tests
         public void GetTrackPriceTest()
         {
             AddTrackPriceTest();
-            Assert.IsNotNull(this._trackPriceService.GetTrackPrice(1));
+            Assert.IsNotNull(_trackPriceService.GetTrackPrice(1));
         }
 
         [TestMethod]
         public void GetTrackPriceInfoTest()
         {
             AddTrackPriceTest();
-            Assert.IsNotNull(this._trackPriceService.GetTrackPrices(1));
-            Assert.IsTrue(this._trackPriceService.GetTrackPrices(1).Any());
+            Assert.IsNotNull(_trackPriceService.GetTrackPrices(1));
+            Assert.IsTrue(_trackPriceService.GetTrackPrices(1).Any());
         }
 
         #endregion //Tests

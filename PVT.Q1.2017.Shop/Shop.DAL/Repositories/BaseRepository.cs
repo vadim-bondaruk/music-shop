@@ -50,8 +50,8 @@
                 throw new ArgumentNullException(nameof(dbContext));
             }
 
-            this._dbContext = dbContext;
-            this._currentDbSet = this._dbContext.Set<TEntity>();
+            _dbContext = dbContext;
+            _currentDbSet = _dbContext.Set<TEntity>();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// </summary>
         protected DbContext DbContext
         {
-            get { return this._dbContext; }
+            get { return _dbContext; }
         }
 
         /// <summary>
@@ -67,7 +67,7 @@
         /// </summary>
         protected IDbSet<TEntity> CurrentDbSet
         {
-            get { return this._currentDbSet; }
+            get { return _currentDbSet; }
         }
 
         /// <summary>
@@ -121,7 +121,7 @@
         /// </returns>
         public PagedResult<TEntity> GetAll(int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            var query = this.GetActiveItems(includes);
+            var query = GetActiveItems(includes);
             return GetPagedResultForQuery(query, page, pageSize);
         }
 
@@ -149,10 +149,10 @@
         {
             if (includes == null || includes.Length == 0)
             {
-                return this._currentDbSet.FirstOrDefault(filter);
+                return _currentDbSet.FirstOrDefault(filter);
             }
 
-            IQueryable<TEntity> query = this.LoadIncludes(this._currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
+            IQueryable<TEntity> query = LoadIncludes(_currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
             return query.FirstOrDefault();
         }
 
@@ -169,10 +169,10 @@
         {
             if (filter == null)
             {
-                return this._currentDbSet.Count(x => !x.IsDeleted);
+                return _currentDbSet.Count(x => !x.IsDeleted);
             }
 
-            return this._currentDbSet.Where(x => !x.IsDeleted).Count(filter);
+            return _currentDbSet.Where(x => !x.IsDeleted).Count(filter);
         }
 
         /// <summary>
@@ -189,10 +189,10 @@
         {
             if (filter == null)
             {
-                return this._currentDbSet.Any(x => !x.IsDeleted);
+                return _currentDbSet.Any(x => !x.IsDeleted);
             }
 
-            return this._currentDbSet.Where(x => !x.IsDeleted).Any(filter);
+            return _currentDbSet.Where(x => !x.IsDeleted).Any(filter);
         }
 
         /// <summary>
@@ -209,16 +209,16 @@
             }
 
             // if the model exists in Db then we have to update it
-            var originalModel = this.GetById(model.Id);
+            var originalModel = GetById(model.Id);
             if (originalModel != null)
             {
-                this.Update(originalModel, model);
-                this._stateChanged = true;
+                Update(originalModel, model);
+                _stateChanged = true;
             }
             else
             {
-                this.Add(model);
-                this._stateChanged = true;
+                Add(model);
+                _stateChanged = true;
             }
         }
 
@@ -228,11 +228,11 @@
         /// <param name="id">The model key.</param>
         public virtual void Delete(int id)
         {
-            var model = this.GetById(id);
+            var model = GetById(id);
             if (model != null)
             {
-                this._currentDbSet.Remove(model);
-                this._stateChanged = true;
+                _currentDbSet.Remove(model);
+                _stateChanged = true;
             }
         }
 
@@ -258,7 +258,7 @@
         /// <param name="models">A model to add or update.</param>
         public virtual void AddOrUpdate(TEntity[] models)
         {
-            this._dbContext.Set<TEntity>().AddOrUpdate(models);
+            _dbContext.Set<TEntity>().AddOrUpdate(models);
         }
 
         /// <summary>
@@ -266,10 +266,10 @@
         /// </summary>
         public void SaveChanges()
         {
-            if (this._stateChanged)
+            if (_stateChanged)
             {
-                this._dbContext.SaveChanges();
-                this._stateChanged = false;
+                _dbContext.SaveChanges();
+                _stateChanged = false;
             }
         }
 
@@ -292,8 +292,8 @@
             {
                 if (disposing)
                 {
-                    this._dbContext?.Dispose();
-                    this._disposed = true;
+                    _dbContext?.Dispose();
+                    _disposed = true;
                 }
             }
         }
@@ -309,7 +309,7 @@
         /// </param>
         protected virtual void Update(TEntity modelFromDb, TEntity model)
         {
-            var entry = this._dbContext.Entry(modelFromDb);
+            var entry = _dbContext.Entry(modelFromDb);
             entry.CurrentValues.SetValues(model);
         }
 
@@ -322,7 +322,7 @@
         protected virtual void Add(TEntity model)
         {
             // if it is a new model then we have to insert it
-            this._currentDbSet.Add(model);
+            _currentDbSet.Add(model);
         }
 
         /// <summary>
@@ -358,7 +358,7 @@
         {
             if (entity != null)
             {
-                var entry = this._dbContext.Entry(entity);
+                var entry = _dbContext.Entry(entity);
                 previousEntityState = entry.State;
                 entry.State = EntityState.Detached;
             }
@@ -414,12 +414,12 @@
 
         protected IQueryable<TEntity> GetActiveItems(params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            return LoadIncludes(this._currentDbSet.Where(x => !x.IsDeleted), includes);
+            return LoadIncludes(_currentDbSet.Where(x => !x.IsDeleted), includes);
         }
 
         protected IQueryable<TEntity> GetActiveItems(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            return LoadIncludes(this._currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
+            return LoadIncludes(_currentDbSet.Where(filter).Where(x => !x.IsDeleted), includes);
         }
 
         protected static PagedResult<TEntity> GetPagedResultForQuery(IQueryable<TEntity> query, int page, int pageSize)

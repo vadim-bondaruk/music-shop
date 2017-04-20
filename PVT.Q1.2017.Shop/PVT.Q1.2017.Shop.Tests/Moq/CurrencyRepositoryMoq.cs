@@ -16,38 +16,38 @@
 
         public CurrencyRepositoryMoq()
         {
-            this._mock = new Mock<ICurrencyRepository>();
-            this._currencies = new List<Currency>
+            _mock = new Mock<ICurrencyRepository>();
+            _currencies = new List<Currency>
             {
                 new Currency { ShortName = "USD", Code = 840},
                 new Currency { ShortName = "EUR", Code = 978}
             };
 
-            this._mock.Setup(m => m.GetAll()).Returns(this._currencies);
+            _mock.Setup(m => m.GetAll()).Returns(_currencies);
 
-            this._mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                 .Returns(this._currencies);
+            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
+                 .Returns(_currencies);
 
-            this._mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>()))
-                 .Returns(this._currencies);
+            _mock.Setup(m => m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>()))
+                 .Returns(_currencies);
 
-            this._mock.Setup(
+            _mock.Setup(
                         m =>
                             m.GetAll(It.IsAny<Expression<Func<Currency, bool>>>(),
                                      It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                 .Returns(this._currencies);
+                 .Returns(_currencies);
 
-            this._mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Currency, bool>>>()))
-                 .Returns(() => this._currencies.FirstOrDefault());
+            _mock.Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<Currency, bool>>>()))
+                 .Returns(() => _currencies.FirstOrDefault());
 
-            this._mock.Setup(
+            _mock.Setup(
                         m =>
                             m.FirstOrDefault(It.IsAny<Expression<Func<Currency, bool>>>(),
                                              It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                 .Returns(() => this._currencies.FirstOrDefault());
+                 .Returns(() => _currencies.FirstOrDefault());
 
-            this._mock.Setup(m => m.GetById(It.IsAny<int>()))
-                 .Returns(() => this._currencies.FirstOrDefault(с => с.Id >= 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>()))
+                 .Returns(() => _currencies.FirstOrDefault(с => с.Id >= 0));
 
             _mock.Setup(m => m.Exist(It.IsAny<Expression<Func<Currency, bool>>>()))
                  .Returns(() => _currencies.Any());
@@ -55,30 +55,30 @@
             _mock.Setup(m => m.Count(It.IsAny<Expression<Func<Currency, bool>>>()))
                  .Returns(() => _currencies.Count);
 
-            this._mock.Setup(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
-                 .Returns(() => this._currencies.FirstOrDefault(a => a.Id >= 0));
+            _mock.Setup(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Currency, BaseEntity>>[]>()))
+                 .Returns(() => _currencies.FirstOrDefault(a => a.Id >= 0));
 
-            this._mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Currency>())).Callback(() => this._currencies.Add(new Currency
+            _mock.Setup(m => m.AddOrUpdate(It.IsNotNull<Currency>())).Callback(() => _currencies.Add(new Currency
             {
-                Id = this._currencies.Count + 1,
-                Code = this._currencies.Count + 100,
-                ShortName = $"CR{this._currencies.Count + 1}"
+                Id = _currencies.Count + 1,
+                Code = _currencies.Count + 100,
+                ShortName = $"CR{_currencies.Count + 1}"
             }));
 
-            this._mock.Setup(m => m.Delete(It.IsNotNull<Currency>())).Callback(() =>
+            _mock.Setup(m => m.Delete(It.IsNotNull<Currency>())).Callback(() =>
             {
-                if (this._currencies.Any())
+                if (_currencies.Any())
                 {
-                    this._currencies.RemoveAt(this._currencies.Count - 1);
+                    _currencies.RemoveAt(_currencies.Count - 1);
                 }
             });
 
-            this._mock.Setup(m => m.GetDefaultCurrency()).Returns(new Currency { Code = 840, ShortName = "USD" });
+            _mock.Setup(m => m.GetDefaultCurrency()).Returns(new Currency { Code = 840, ShortName = "USD" });
         }
 
         public ICurrencyRepository Repository
         {
-            get { return this._mock.Object; }
+            get { return _mock.Object; }
         }
     }
 }

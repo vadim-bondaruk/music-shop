@@ -53,7 +53,7 @@
                         UserRole = serializeUser.UserRole
                     };
 
-                    CurrentUser newUser = new CurrentUser(user);
+                    CurrentUser newUser = new CurrentUser(user, serializeUser.UserProfileId, serializeUser.PriceLevelId);
 
                     HttpContext.Current.User = newUser; 
                 }
