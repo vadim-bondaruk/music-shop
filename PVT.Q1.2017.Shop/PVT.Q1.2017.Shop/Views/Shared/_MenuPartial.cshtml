@@ -2,7 +2,7 @@
 <li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
 
 <li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
-<li class="dropdown-item" style="display: inline-block; height: 50px;">
+@*<li class="dropdown-item" style="display: inline-block; height: 50px;">
     <div class="dropdown" id="admin-dropdown" style="padding: 15px 15px 15px 15px">
         <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="background-color: #222222; color: #999; text-decoration: none">AdminTeam<b class="caret" style="border-color: #222222"></b></a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -11,7 +11,7 @@
             <li>@Html.ActionLink("Новая валюта", "Create", "Currency", new { area = "Admin" }, null)</li>
         </ul>
     </div>
-</li>
+</li>*@
 
 <li class="dropdown-item" style="display: inline-block; height: 50px;">
     <div class="dropdown" id="purple-dropdown" style="padding: 15px 15px 15px 15px">
@@ -55,6 +55,9 @@
                 </li>
                 <li>
                     <a href="@Url.Action("Index","Setting", new {area="Admin"})">Глобальные настройки</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("UsersEdit","Manage", new {area="User"})">Управление пользователями</a>
                 </li>
             </ul>
         </div>
