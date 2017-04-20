@@ -1,6 +1,25 @@
 ﻿@using System.Globalization
 @using PVT.Q1._2017.Shop.Areas.Content.Extentions
-@model Shop.Common.ViewModels.TrackDetailsViewModel
+@using Shop.BLL.Utils
+@using Shop.Infrastructure.Enums
+@model Shop.Common.ViewModels.TrackViewModel
+
+@{
+    var isAuthenticated = Request.IsAuthenticated;
+    var currentUserId = 0;
+    var isAdmin = false;
+    var isSeller = false;
+    var isBuyer = false;
+    if (isAuthenticated)
+    {
+        var currentUser = ((CurrentUser)User);
+        currentUserId = currentUser.Id;
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString());
+    }
+
+}
 
 <li class="list-group-item">
     <div class="left">
@@ -16,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="order-block">
+    @*<div class="order-block">
         @{
             if (Model.Price != null)
             {
@@ -24,6 +43,6 @@
             }
 
         }
-    </div>
+    </div>*@
 
 </li>
