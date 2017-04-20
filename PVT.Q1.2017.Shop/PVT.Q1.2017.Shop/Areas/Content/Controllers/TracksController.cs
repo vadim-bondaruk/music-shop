@@ -121,15 +121,15 @@
         /// <returns>
         ///     All tracks view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
             var trackService = ServiceFactory.GetTrackService();
-            if (this.CurrentUser != null && CurrentUserCurrency != null)
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return View(trackService.GetDetailedTracksList(CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return this.View(trackService.GetTracks(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(trackService.GetDetailedTracksList());
+            return this.View(trackService.GetTracks(page, pageSize));
         }
 
         /// <summary>
