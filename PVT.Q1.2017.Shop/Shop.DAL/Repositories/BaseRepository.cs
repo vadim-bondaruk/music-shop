@@ -287,28 +287,6 @@
         }
 
         /// <summary>
-        /// </summary>
-        /// <param name="page">
-        /// The page.
-        /// </param>
-        /// <param name="pageSize">
-        /// The page size.
-        /// </param>
-        /// <param name="includes">
-        /// The includes.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public async Task<PagedResult<TEntity>> GetAllAsync(
-            int page,
-            int pageSize,
-            params Expression<Func<TEntity, BaseEntity>>[] includes)
-        {
-            var query = this.GetActiveItems(includes);
-            return await GetPagedResultForQueryAsync(query, page, pageSize);
-        }
-
-        /// <summary>
         ///     Tries to find entities from the repository using the specified <paramref name="filter" />.
         /// </summary>
         /// <param name="page">The page number.</param>
@@ -324,32 +302,6 @@
         {
             var query = this.GetActiveItems(filter, includes);
             return GetPagedResultForQuery(query, page, pageSize);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="page">
-        /// The page.
-        /// </param>
-        /// <param name="pageSize">
-        /// The page size.
-        /// </param>
-        /// <param name="filter">
-        /// The filter.
-        /// </param>
-        /// <param name="includes">
-        /// The includes.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public async Task<PagedResult<TEntity>> GetAllAsync(
-            int page,
-            int pageSize,
-            Expression<Func<TEntity, bool>> filter,
-            params Expression<Func<TEntity, BaseEntity>>[] includes)
-        {
-            var query = this.GetActiveItems(filter, includes);
-            return await GetPagedResultForQueryAsync(query, page, pageSize);
         }
 
         /// <summary>
@@ -409,37 +361,6 @@
 
             var result = query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return new PagedResult<TEntity>(result, pageSize, page, query.Count());
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="query">
-        /// The query.
-        /// </param>
-        /// <param name="page">
-        /// The page.
-        /// </param>
-        /// <param name="pageSize">
-        /// The page size.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// </exception>
-        protected static async Task<PagedResult<TEntity>> GetPagedResultForQueryAsync(IQueryable<TEntity> query, int page, int pageSize)
-        {
-            if (pageSize <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, @"Incorrect page size specified");
-            }
-
-            if (page <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(page), page, @"Incorrect current page value specified");
-            }
-
-            var result = query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-            return await Task.Run(() => new PagedResult<TEntity>(result, pageSize, page, query.Count()));
         }
 
         /// <summary>
