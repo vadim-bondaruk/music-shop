@@ -186,6 +186,7 @@
             var cartService = ServiceFactory.GetCartService();
             cartService.RemoveAll(_currentUserId);
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
+        }
 
         /// <summary>
         /// Перемещает товары пользователя в купленные при успешной оплате
@@ -206,7 +207,7 @@
                 Session.Remove("IsAccepted");
                 AcceptPayment(isAccepted);
             }
-            
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>

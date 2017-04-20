@@ -13,16 +13,9 @@
     public class PaymentTransactionController : BaseController
     {
 
-    	//public PaymentTransactionController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
-        //{
-        //}
-    
-        private IPaymentService _paymentService;
-
-        public PaymentTransactionController(IPaymentService payService)
+        public PaymentTransactionController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            _paymentService = payService;
-        }         
+        }
 
         /// <summary>
         /// Action for 
@@ -36,7 +29,7 @@
             {
                 int countPerPage = 10;
                 this.TempData["CurrentPage"] = id;
-                var transactions = _paymentService.GetDataPerPage(CurrentUser.Id, id, countPerPage);
+                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, id, countPerPage);
                 return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
 
                 //var transactions = _paymentService.GetTransactionsByUserId(CurrentUser.Id);
@@ -84,7 +77,7 @@
             CartViewModel cart = (CartViewModel)TempData["cart"];
             if(accept)
             {
-                _paymentService.CreatePaymentTransaction(cart);
+                ServiceFactory.GetPaymentService().CreatePaymentTransaction(cart);
             }
             return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
         }
