@@ -35,7 +35,7 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity)
         {
-            User user = this.GetUserByUserIdentity(userIdentity);
+            User user = GetUserByUserIdentity(userIdentity);
 
             return user != null;
         }
@@ -48,7 +48,7 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity, out User user)
         {
-            user = this.GetUserByUserIdentity(userIdentity);
+            user = GetUserByUserIdentity(userIdentity);
 
             return user != null && user.IsDeleted.Equals(false);
         }
@@ -66,7 +66,7 @@
             }
 
             user.Password = PasswordEncryptor.GetHashString(user.Password);
-            user.UserRole = this.GetDefaultUserRoles();
+            user.UserRole = GetDefaultUserRoles();
 
             try
             {
@@ -107,7 +107,7 @@
         {
             User user = null;
 
-            if (this.IsUserExist(userIdentity, out user))
+            if (IsUserExist(userIdentity, out user))
             {
                 return user.Id;
             }
@@ -132,7 +132,7 @@
                 throw new ArgumentException("user");
             }
 
-            using (var userRepository = this.Factory.GetUserRepository())
+            using (var userRepository = Factory.GetUserRepository())
             {
                 var userUpdate = userRepository.GetById(id);
                 userUpdate.FirstName = user.FirstName;
@@ -167,7 +167,7 @@
         {
             User user = null;
 
-            if (this.IsUserExist(userIdentity, out user))
+            if (IsUserExist(userIdentity, out user))
             {
                 string userEmail = user.Email;
 
@@ -276,7 +276,7 @@
         {
             if (!string.IsNullOrEmpty(userIdentity) && !string.IsNullOrEmpty(newLogin))
             {
-                using (var userRepository = this.Factory.GetUserRepository())
+                using (var userRepository = Factory.GetUserRepository())
                 {
                     var user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
                                                       : userRepository?.FirstOrDefault(u => u.Login == userIdentity);
@@ -309,7 +309,7 @@
         /// <returns></returns>
         public bool UpdateConfirmEmail(string token, string email)
         {
-            using (var userRepository = this.Factory.GetUserRepository())
+            using (var userRepository = Factory.GetUserRepository())
             {
                 var user = userRepository.GetById(Int32.Parse(token));
                 if (user != null)
@@ -427,7 +427,7 @@
 
             if (!string.IsNullOrEmpty(userIdentity))
             {
-                using (var userRepository = this.Factory.GetUserRepository())
+                using (var userRepository = Factory.GetUserRepository())
                 {
                     user = userIdentity.Contains("@") ? userRepository?.FirstOrDefault(u => u.Email == userIdentity)
                                                       : userRepository?.FirstOrDefault(u => u.Login == userIdentity);

@@ -31,7 +31,7 @@
         /// </returns>
         protected ICollection<BaseAddress> GetAll()
         {
-            var result = this.CurrentDbSet;
+            var result = CurrentDbSet;
             return result.ToList();
         }
 
@@ -42,7 +42,7 @@
         /// <returns></returns>
         protected ICollection<BaseAddress> GetAll(Expression<Func<BaseAddress, bool>> filter)
         {
-            IQueryable<BaseAddress> query = this.CurrentDbSet;
+            IQueryable<BaseAddress> query = CurrentDbSet;
             if (filter != null)
             {
                 query = query.Where(filter);

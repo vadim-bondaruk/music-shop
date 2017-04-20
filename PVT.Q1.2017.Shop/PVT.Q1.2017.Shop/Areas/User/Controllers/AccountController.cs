@@ -1,8 +1,6 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.User.Controllers
 {
-    using System.Web;
     using System.Web.Mvc;
-    using App_Start;
     using Helpers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
@@ -13,7 +11,6 @@
     using ViewModels;
     using global::Shop.BLL.Utils;
     using System;
-    using global::Shop.Infrastructure.Enums;
 
     /// <summary>
     /// 
@@ -23,26 +20,12 @@
         /// <summary>
         /// 
         /// </summary>
-        private IUserService _userService;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private IAuthModule _authModule;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private IRepositoryFactory Factory;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public AccountController(IUserService userService, IAuthModule authModule, IRepositoryFactory factory)
+        public AccountController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory, IAuthModule authModule)
+            : base(repositoryFactory, serviceFactory)
         {
-            this._userService = userService;
-            this._authModule = authModule;
-            this.Factory = factory;
+            _authModule = authModule;
         }
 
         /// <summary>
@@ -55,9 +38,10 @@
         [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsLoginUnique(string login)
         {
-            var isUnique = !this._userService.IsUserExist(login);
+            var userService = ServiceFactory.GetUserService();
+            var isUnique = !userService.IsUserExist(login);
 
-            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
+            return Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -70,9 +54,10 @@
         [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsEmailUnique(string email)
         {
-            var isUnique = !this._userService.IsUserExist(email);
+            var userService = ServiceFactory.GetUserService();
+            var isUnique = !userService.IsUserExist(email);
 
-            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
+            return Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -84,9 +69,10 @@
         [HttpGet]
         public ActionResult IsUserNotExist(string userIdentity)
         {
-            var isUnique = this._userService.IsUserExist(userIdentity);
+            var userService = ServiceFactory.GetUserService();
+            var isUnique = userService.IsUserExist(userIdentity);
 
-            return this.Json(isUnique, JsonRequestBehavior.AllowGet);
+            return Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -116,13 +102,13 @@
             {
                 try
                 {
-                    this._authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current, model.RememberMe);
+                    _authModule.LogIn(model.UserIdentity, model.Password, System.Web.HttpContext.Current, model.RememberMe);
 
                     var returnUrl = HttpContext.Request.QueryString["ReturnUrl"];
 
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        return this.Redirect(returnUrl);
+                        return Redirect(returnUrl);
                     }
                 }
                 catch (UserValidationException ex)
@@ -132,7 +118,7 @@
                 }
             }
 
-            return this.RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
+            return RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
         }
 
         /// <summary>
@@ -143,10 +129,10 @@
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
-            this.Session.Abandon();
-            this._authModule.LogOut();
+            Session.Abandon();
+            _authModule.LogOut();
 
-            return this.RedirectToAction("Login", "Account", new { area = "User" });
+            return RedirectToAction("Login", "Account", new { area = "User" });
         }
 
         /// <summary>
@@ -155,9 +141,7 @@
         /// <returns></returns>
         public ActionResult Register()
         {
-            var count = _userService.GetUsersCount();
-            var list = _userService.GetDataPerPage(5, 10);
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -178,7 +162,8 @@
                 try
                 {
                     var userDB = UserMapper.GetUserModel(user);
-                    result = this._userService.RegisterUser(userDB);
+                    var userService = ServiceFactory.GetUserService();
+                    result = userService.RegisterUser(userDB);
                     if (result)
                     {
                         string subject = "Подтверждение регистрации";
@@ -187,7 +172,7 @@
                             Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
                         if (MailDispatch.SendingMail(userDB.Email, subject, body))
                         {
-                            return this.RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
+                            return RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
                         }
                         else
                         {
@@ -200,7 +185,7 @@
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
             }
-            return this.View(user);
+            return View(user);
 
         }
 
@@ -228,7 +213,7 @@
                 ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие " +
                     "инструкции по завершению регистрации";
                 }
-            return this.View();
+            return View();
             }
 
         /// <summary>
@@ -248,7 +233,9 @@
             {
                 throw new ArgumentException("Email");
             }
-            if (_userService.UpdateConfirmEmail(token, email))
+
+            var userService = ServiceFactory.GetUserService();
+            if (userService.UpdateConfirmEmail(token, email))
             {
                 return RedirectToAction("Success", "Account", new { area = "User" });
             }
@@ -265,7 +252,7 @@
         public ActionResult ForgotPassword(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return this.View();
+            return View();
         }
 
 
@@ -284,10 +271,11 @@
             {
                 try
                 {
-                    string usetEmail = _userService.GetEmailByUserIdentity(model.UserIdentity);
-                    int id = _userService.GetIdOflogin(usetEmail);
+                    var userService = ServiceFactory.GetUserService();
+                    string usetEmail = userService.GetEmailByUserIdentity(model.UserIdentity);
+                    int id = userService.GetIdOflogin(usetEmail);
                     string newPassword = PasswordEncryptor.RendomPassword();
-                    if (_userService.UpdatePassword(id, newPassword))
+                    if (userService.UpdatePassword(id, newPassword))
                     {
                         string subject = "Ваш пароль был изменен";
                         string body = "Новый пароль: " + newPassword;
@@ -309,9 +297,9 @@
             }
             else
         {
-                return this.View();
+                return View();
         }
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -320,7 +308,7 @@
         /// <returns></returns>
         public ActionResult ForgotPasswordSuccess()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>
@@ -329,7 +317,7 @@
         /// <returns></returns>
         public ActionResult Success()
         {
-            return this.View();
+            return View();
         }
 
         /// <summary>

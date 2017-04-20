@@ -16,8 +16,8 @@
 
         public CurrencyServiceTest()
         {
-            this._factory = new RepositoryFactoryMoq();
-            this._currencyService = new CurrencyService(this._factory);
+            _factory = new RepositoryFactoryMoq();
+            _currencyService = new CurrencyService(_factory);
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@
             int currencyCode = 840;
             string currencyName = "USD";
 
-            using (var repository = this._factory.GetCurrencyRepository())
+            using (var repository = _factory.GetCurrencyRepository())
             {
                 repository.AddOrUpdate(new Currency { ShortName = currencyName, Code = currencyCode });
                 repository.SaveChanges();
@@ -38,29 +38,29 @@
         [TestMethod]
         public void GetCurrenciesListTest()
         {
-            this.AddCurrenciesTest();
-            Assert.IsTrue(this._currencyService.GetCurrenciesList().Any());
+            AddCurrenciesTest();
+            Assert.IsTrue(_currencyService.GetCurrencies().Any());
         }
 
         [TestMethod]
         public void GetCurrencyByCodeTest()
         {
-            this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.GetCurrencyByCode(840));
+            AddCurrenciesTest();
+            Assert.IsNotNull(_currencyService.GetCurrencyByCode(840));
         }
 
         [TestMethod]
         public void GetCurrencyByNameTest()
         {
-            this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.GetCurrencyByName("byn"));
+            AddCurrenciesTest();
+            Assert.IsNotNull(_currencyService.GetCurrencyByName("byn"));
         }
 
         [TestMethod]
         public void GetCurrencyInfoTest()
         {
-            this.AddCurrenciesTest();
-            Assert.IsNotNull(this._currencyService.DefaultCurrency);
+            AddCurrenciesTest();
+            Assert.IsNotNull(_currencyService.DefaultCurrency);
         }
     }
 }

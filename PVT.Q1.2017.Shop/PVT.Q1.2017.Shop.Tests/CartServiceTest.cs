@@ -26,7 +26,7 @@ namespace PVT.Q1._2017.Shop.Tests
 		[TestMethod]
 		public void AddCartTest()
 		{
-            using (var repo = this._factory.GetCartRepository())
+            using (var repo = _factory.GetCartRepository())
 			{
 				repo.AddOrUpdate(new Cart(1) {Id = 1});
 				repo.SaveChanges();

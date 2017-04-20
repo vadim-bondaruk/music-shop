@@ -48,9 +48,9 @@
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The TrackPriceBaseRepository should be SOLID, should only add information about track! Not about track, currency or price level!
-            this.DetachNavigationProperty(trackPrice.Track, out trackEntryState);
-            this.DetachNavigationProperty(trackPrice.Currency, out currencyEntryState);
-            this.DetachNavigationProperty(trackPrice.PriceLevel, out priceLevelEntryState);
+            DetachNavigationProperty(trackPrice.Track, out trackEntryState);
+            DetachNavigationProperty(trackPrice.Currency, out currencyEntryState);
+            DetachNavigationProperty(trackPrice.PriceLevel, out priceLevelEntryState);
 
             trackPrice.Track = null;
             trackPrice.Currency = null;

@@ -25,7 +25,7 @@
         /// <param name="factory"></param>
         public AuthModule(IRepositoryFactory users)
         {
-            this._factory = users;
+            _factory = users;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@
                 throw new ArgumentException("password");
             }
 
-            User user = this.GetUser(useridentity);
+            User user = GetUser(useridentity);
 
             if (user != null)
             {
@@ -55,12 +55,20 @@
                     throw new UserValidationException("Не верный пароль", "Password");
                 }
 
+                UserData userData;
+                using (var repository = _factory.GetUserDataRepository())
+                {
+                    userData = repository.FirstOrDefault(u => u.User.Id == user.Id);
+                }
+
                 UserPrincipalSerializeModel userPrincipal = new UserPrincipalSerializeModel
                 {
                     Id = user.Id,
                     Login = user.Login,
                     Email = user.Email,
-                    UserRole = user.UserRole
+                    UserRole = user.UserRole,
+                    UserProfileId = userData.Id,
+                    PriceLevelId = userData.PriceLevelId
                 };
                 if(!user.ConfirmedEmail)
                 {
@@ -70,7 +78,7 @@
                 {
                     throw new UserValidationException("Этот аккаунт был удален", "Useridentity");
                 }
-                context.Response.Cookies.Add(this.GetAuthCookies(userPrincipal, redirect));
+                context.Response.Cookies.Add(GetAuthCookies(userPrincipal, redirect));
 
             }
             else
@@ -136,7 +144,7 @@
 
             if (!string.IsNullOrEmpty(useridentity))
             {
-                using (var users = this._factory.GetUserRepository())
+                using (var users = _factory.GetUserRepository())
                 {
                     if (useridentity.Contains("@"))
                     {

@@ -5,32 +5,14 @@
     using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.DAL.Infrastruture;
+    using Shop.Controllers;
 
     /// <summary>
     /// </summary>
-    public class GenresController : Controller
+    public class GenresController : BaseController
     {
-        /// <summary>
-        /// </summary>
-        private readonly IGenreService genreService;
-
-        /// <summary>
-        /// </summary>
-        private readonly IRepositoryFactory repositoryFactory;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="GenresController" /> class.
-        /// </summary>
-        /// <param name="repositoryFactory">
-        ///     The repository factory.
-        /// </param>
-        /// <param name="genreService">
-        ///     The genre service.
-        /// </param>
-        public GenresController(IRepositoryFactory repositoryFactory, IGenreService genreService)
+        public GenresController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this.repositoryFactory = repositoryFactory;
-            this.genreService = genreService;
         }
 
         /// <summary>
@@ -42,16 +24,16 @@
         /// </returns>
         public virtual ActionResult Details(int id)
         {
-            using (var repository = this.repositoryFactory.GetGenreRepository())
+            using (var repository = RepositoryFactory.GetGenreRepository())
             {
                 var model = repository.GetById(id);
                 if (model == null)
                 {
-                    return this.View("_NotFound");
+                    return View("_NotFound");
                 }
 
                 var viewModel = ModelsMapper.GetGenreDetailsViewModel(model);
-                return this.View(viewModel);
+                return View(viewModel);
             }
         }
 
@@ -63,7 +45,8 @@
         /// </returns>
         public ActionResult List()
         {
-            return this.View(this.genreService.GetAllViewModels());
+            var genreService = ServiceFactory.GetGenreService();
+            return View(genreService.GetAllViewModels());
         }
     }
 }

@@ -23,7 +23,7 @@
         /// <param name="factory"></param>
         public CurrencyRateService(IRepositoryFactory factory)
         {
-            this._factory = factory;
+            _factory = factory;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@
         public IEnumerable<CurrencyRate> GetActualRates(DateTime? date = null)
         {
             var dateValue = date ?? DateTime.Now;
-            using (var repository = this._factory.GetCurrencyRateRepository())
+            using (var repository = _factory.GetCurrencyRateRepository())
             {
                 var rates = repository.GetAll(rate => rate.Currency, rate => rate.TargetCurrency);
                 return rates.Where(c => c.Date <= dateValue)
@@ -52,7 +52,7 @@
         /// <returns></returns>
         public decimal GetRateByDate(int from, int to, DateTime date)
         {
-            using (var repository = this._factory.GetCurrencyRateRepository())
+            using (var repository = _factory.GetCurrencyRateRepository())
             {
                 if (from == to)
                 {

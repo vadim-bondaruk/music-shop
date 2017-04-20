@@ -1,11 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
-
 {
     using System.Web.Mvc;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
-
+    using global::Shop.DAL.Infrastruture;
     using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
@@ -13,20 +12,8 @@
     /// </summary>
     public class AlbumsController : BaseController
     {
-        /// <summary>
-        ///     The album service.
-        /// </summary>
-        private readonly IAlbumService _albumService;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AlbumsController" /> class.
-        /// </summary>
-        /// <param name="albumService">
-        ///     The album service.
-        /// </param>
-        public AlbumsController(IAlbumService albumService)
+        public AlbumsController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._albumService = albumService;
         }
 
         /// <summary>
@@ -40,31 +27,27 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Albums", new { area = "Content" });
+                return RedirectToAction("List", "Albums", new { area = "Content" });
             }
 
             AlbumTracksListViewModel albumTracksViewModel = null;
-            if (this.CurrentUser != null)
+            var albumService = ServiceFactory.GetAlbumService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var currency = this.GetCurrentUserCurrency();
-                if (currency != null)
-                {
-                    var priceLevel = this.GetCurrentUserPriceLevel();
-                    albumTracksViewModel = this._albumService.GetTracksList(id.Value, currency.Code, priceLevel, this.GetUserDataId());
-                }
+                albumTracksViewModel = albumService.GetTracks(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
             
             if (albumTracksViewModel == null)
             {
-                albumTracksViewModel = this._albumService.GetTracksList(id.Value);
+                albumTracksViewModel = albumService.GetTracks(id.Value);
             }
 
             if (albumTracksViewModel == null)
             {
-                return this.HttpNotFound($"Альбом с id = {id.Value} не найден");
+                return HttpNotFound($"Альбом с id = {id.Value} не найден");
             }
 
-            return this.View(albumTracksViewModel);
+            return View(albumTracksViewModel);
         }
 
         /// <summary>
@@ -75,17 +58,13 @@
         /// </returns>
         public ActionResult List()
         {
-            if (this.CurrentUser != null)
+            var albumService = ServiceFactory.GetAlbumService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var currency = this.GetCurrentUserCurrency();
-                if (currency != null)
-                {
-                    var priceLevel = this.GetCurrentUserPriceLevel();
-                    return this.View(this._albumService.GetDetailedAlbumsList(currency.Code, priceLevel, this.GetUserDataId()));
-                }
+                return View(albumService.GetDetailedAlbumsList(CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(this._albumService.GetDetailedAlbumsList());
+            return View(albumService.GetDetailedAlbumsList());
         }
 
         /// <summary>
@@ -95,7 +74,7 @@
         /// </returns>
         public virtual ActionResult TracksList(int? id)
         {
-            return this.Details(id);
+            return Details(id);
         }
     }
 }

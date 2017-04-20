@@ -54,7 +54,7 @@
             if (string.IsNullOrWhiteSpace(href))
             {
                 var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-                href = urlHelper.Action("Create", "Artist", new { area = "Management" });
+                href = urlHelper.Action("New", "Artists", new { area = "Management" });
             }
 
             if (string.IsNullOrWhiteSpace(text))
@@ -110,7 +110,7 @@
             if (string.IsNullOrWhiteSpace(href))
             {
                 var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-                href = urlHelper.Action("Edit", "Artist", new { id = artistId, area = "Management" });
+                href = urlHelper.Action("Edit", "Artists", new { id = artistId, area = "Management" });
             }
 
             if (string.IsNullOrWhiteSpace(text))
@@ -166,7 +166,7 @@
             if (string.IsNullOrWhiteSpace(href))
             {
                 var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-                href = urlHelper.Action("Delete", "Artist", new { id = artistId, area = "Management" });
+                href = urlHelper.Action("Delete", "Artists", new { id = artistId, area = "Management" });
             }
 
             if (string.IsNullOrWhiteSpace(text))
@@ -390,7 +390,7 @@
             if (string.IsNullOrWhiteSpace(href))
             {
                 var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-                href = urlHelper.Action("Create", "Track", new { artistId = artistId, area = "Management" });
+                href = urlHelper.Action("New", "Tracks", new { artistId = artistId, area = "Management" });
             }
 
             if (string.IsNullOrWhiteSpace(text))
@@ -446,7 +446,7 @@
             if (string.IsNullOrWhiteSpace(href))
             {
                 var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-                href = urlHelper.Action("Edit", "Track", new { id = trackId, area = "Management" });
+                href = urlHelper.Action("Edit", "Tracks", new { id = trackId, area = "Management" });
             }
 
             if (string.IsNullOrWhiteSpace(text))
@@ -502,7 +502,7 @@
             if (string.IsNullOrWhiteSpace(href))
             {
                 var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-                href = urlHelper.Action("Delete", "Track", new { id = trackId, area = "Management" });
+                href = urlHelper.Action("Delete", "Tracks", new { id = trackId, area = "Management" });
             }
 
             if (string.IsNullOrWhiteSpace(text))
@@ -558,7 +558,7 @@
             if (string.IsNullOrWhiteSpace(href))
             {
                 var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-                href = urlHelper.Action("AddTracks", "Album", new { id = albumId, area = "Management" });
+                href = urlHelper.Action("AddTracksToAlbum", "Album", new { id = albumId, area = "Management" });
             }
 
             if (string.IsNullOrWhiteSpace(text))

@@ -4,17 +4,15 @@
     using App_Start;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+    using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
     using Shop.Controllers;
 
     [ShopAuthorize(UserRoles.Buyer, UserRoles.Customer)]
     public class FeedbacksController : BaseController
     {
-        private readonly IFeedbackService _feedbackService;
-
-        public FeedbacksController(IFeedbackService feedbackService)
+        public FeedbacksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._feedbackService = feedbackService;
         }
 
         [HttpGet]
@@ -22,16 +20,16 @@
         {
             if (trackid == null)
             {
-                return this.RedirectToAction("List", "Track", new { area = "Content" });
+                return RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            var userDataId = GetUserDataId();
-            if (userDataId != null)
+            var feedbackService = ServiceFactory.GetFeedbackService();
+            if (CurrentUser != null)
             {
-                ViewBag.CurrentFeedback = _feedbackService.GetTrackFeedback(trackid.Value, userDataId.Value);
+                ViewBag.CurrentFeedback = feedbackService.GetTrackFeedback(trackid.Value, CurrentUser.UserProfileId);
             }
 
-            var feedbacks = _feedbackService.GetTrackFeedbacks(trackid.Value);
+            var feedbacks = feedbackService.GetTrackFeedbacks(trackid.Value);
             return View(feedbacks);
         }
 
@@ -41,14 +39,14 @@
         {
             if (feedback == null)
             {
-                return this.RedirectToAction("List", "Track", new { area = "Content" });
+                return RedirectToAction("List", "Track", new { area = "Content" });
             }
 
-            var userDataId = GetUserDataId();
-            if (userDataId != null)
+            var feedbackService = ServiceFactory.GetFeedbackService();
+            if (CurrentUser != null)
             {
-                feedback.UserDataId = userDataId.Value;
-                _feedbackService.AddOrUpdateFeedback(feedback);
+                feedback.UserDataId = CurrentUser.UserProfileId;
+                feedbackService.AddOrUpdateFeedback(feedback);
             }
 
             return RedirectToAction("Details", "Feedbacks", new { area = "Content", trackId = feedback.TrackId });

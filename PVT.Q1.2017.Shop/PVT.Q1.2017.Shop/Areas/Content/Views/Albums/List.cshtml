@@ -8,7 +8,7 @@
         @foreach (var album in Model)
         {
             <li class="list-group-item" id="albums-item">
-                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="this.src = '/img/defuserpic.png'"/>
+                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="src = '/img/defuserpic.png'"/>
                 <div class="details">
                     <div class="album-title">
                         <p>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id, area = "Content" }, new { @class = "album-name" })</p>

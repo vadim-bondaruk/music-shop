@@ -1,18 +1,22 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
+    using App_Start;
+    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.DAL.Infrastruture;
     using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.Common.ViewModels;
     using global::Shop.BLL.Services.Infrastructure;
     using Helpers;
 
+    [ShopAuthorize]
     public class PaymentTransactionController : BaseController
     {
 
+    	//public PaymentTransactionController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
+        //{
+        //}
+    
         private IPaymentService _paymentService;
 
         public PaymentTransactionController(IPaymentService payService)
