@@ -26,13 +26,18 @@
         /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Get|HttpVerbs.Post)]
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int id = 1)
         {
             if (CurrentUser != null && CurrentUser.Identity.IsAuthenticated)
             {
-                var transactions = _paymentService.GetTransactionsByUserId(CurrentUser.Id);
-                var transactionsViewModels = PaymentMapper.GetPaymentTransactionViewModels(transactions);
-                return View(transactionsViewModels);
+                int countPerPage = 10;
+                this.TempData["CurrentPage"] = id;
+                var transactions = _paymentService.GetDataPerPage(CurrentUser.Id, id, countPerPage);
+                return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
+
+                //var transactions = _paymentService.GetTransactionsByUserId(CurrentUser.Id);
+                //var transactionsViewModels = PaymentMapper.GetPaymentTransactionViewModels(transactions);
+                //return View(transactionsViewModels);
             }
             else
             {

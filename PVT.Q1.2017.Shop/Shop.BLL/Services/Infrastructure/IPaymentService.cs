@@ -8,6 +8,7 @@
     using System.Web;
     using Common.ViewModels;
     using Common.Models;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The payment service interface
@@ -24,5 +25,7 @@
         void CreatePaymentTransaction(CartViewModel cart);
 
         IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID);
+
+        PagedResult<PaymentTransaction> GetDataPerPage(int? userID, int pageNumber = 1, int count = 10);
     }
 }

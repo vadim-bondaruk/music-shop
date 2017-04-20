@@ -8,6 +8,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Helpers
     using AutoMapper;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
+    using global::Shop.Infrastructure.Models;
 
     public class PaymentMapper
     {
@@ -53,6 +54,12 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Helpers
             return result;
         }
 
+        public static PagedResult<PaymentTransactionViewModel> GetPaymentTransactionsToEdit(PagedResult<PaymentTransaction> paymentTransactions)
+        {
+            return new PagedResult<PaymentTransactionViewModel>(_paymentModelsMapper.Map<ICollection<PaymentTransactionViewModel>>(paymentTransactions.Items),
+                                                 paymentTransactions.PageSize, paymentTransactions.CurrentPage, paymentTransactions.TotalItemsCount);
+        }
+
         /// <summary>
         ///     Configures and returns a new instance of the mapper for models which have a list of other models.
         /// </summary>
@@ -70,6 +77,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Helpers
                                     opt => opt.MapFrom(src => src.User.User.Login))
                         .ForMember(dest => dest.CurrencyShortName,
                                     opt => opt.MapFrom(src => src.Currency.ShortName));
+
 
                     //cfg.CreateMap<ArtistViewModel, Artist>();
 

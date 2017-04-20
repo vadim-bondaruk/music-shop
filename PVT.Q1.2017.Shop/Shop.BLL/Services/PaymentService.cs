@@ -14,6 +14,7 @@
     using Common.ViewModels;
     using Common.Models;
     using Exceptions;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The payment service class
@@ -587,6 +588,20 @@
                 }
             }
             return transactions;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public PagedResult<PaymentTransaction> GetDataPerPage(int? userID, int pageNumber = 1, int count = 10)
+        {
+            using (var repository = Factory.GetPaymentTransactionRepository())
+            {
+                return repository.GetAll(pageNumber, count, (x) => x.UserId == userID);
+            }
         }
     }
 }

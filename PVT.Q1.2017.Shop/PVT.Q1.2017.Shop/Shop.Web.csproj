@@ -282,6 +282,7 @@
     <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\_Index.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
