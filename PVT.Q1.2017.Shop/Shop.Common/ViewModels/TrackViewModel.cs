@@ -49,5 +49,10 @@
         /// Gets or sets a value indicating whether the track is purchased.
         /// </summary>
         public bool IsPurchased { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image.
+        /// </summary>
+        public byte[] Image { get; set; }
     }
 }
