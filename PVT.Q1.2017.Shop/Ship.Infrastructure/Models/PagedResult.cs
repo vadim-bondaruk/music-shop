@@ -81,7 +81,14 @@
                 throw new ArgumentOutOfRangeException(nameof(page), page, "Incorrect current page value specified");
             }
 
-            this._currentPage = page > this._pagesCount ? this._pagesCount : page;
+            if(_pagesCount>0)
+            {
+                this._currentPage = page > this._pagesCount ? this._pagesCount : page;
+            }
+            else
+            {
+                this._currentPage = 1;
+            }
         }
 
         /// <summary>
