@@ -494,16 +494,6 @@
 
         protected static async Task<PagedResult<TEntity>> GetPagedResultForQueryAsync(IQueryable<TEntity> query, int page, int pageSize)
         {
-            if (pageSize <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, @"Incorrect page size specified");
-            }
-
-            if (page <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(page), page, @"Incorrect current page value specified");
-            }
-
             var result = await query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync().ConfigureAwait(false);
             return new PagedResult<TEntity>(result, pageSize, page, query.Count());
         }
