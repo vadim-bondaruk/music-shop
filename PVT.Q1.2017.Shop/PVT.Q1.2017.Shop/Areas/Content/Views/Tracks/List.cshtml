@@ -1,15 +1,16 @@
-﻿@model ICollection<Shop.Common.ViewModels.TrackDetailsViewModel>
+﻿@using PVT.Q1._2017.Shop.Helpers
+@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.TrackDetailsViewModel>
 
 @{ ViewBag.Title = "Все треки"; }
 <div class="tracks-list">
     <ul class="list-group">
-        @foreach (var item in Model)
+        @foreach (var track in Model.Items)
         {
-            @Html.Partial("_TrackListItem", item)
+            @Html.Partial("_TrackListItem", track)
         }
     </ul>
 </div>
-
+@Html.PageLinks(Model, i => Url.Action("List", "Tracks", new { page = i, area = "Content" }))
 
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet"/>

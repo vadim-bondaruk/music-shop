@@ -181,6 +181,7 @@
                                     opt.MapFrom(src => src.PostedPhoto != null ? src.PostedPhoto.ToBytes() : src.Photo));
 
                         cfg.CreateMap<GenreViewModel, Genre>();
+                        cfg.CreateMap<GenreManagementViewModel, Genre>();
                         cfg.CreateMap<GenreDetailsViewModel, GenreManagementViewModel>();
 
                         cfg.CreateMap<Track, TrackManagementViewModel>();

@@ -56,15 +56,15 @@
         /// <returns>
         ///     All albums view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
             var albumService = ServiceFactory.GetAlbumService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return View(albumService.GetDetailedAlbumsList(CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return this.View(albumService.GetDetailedAlbumsList(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return View(albumService.GetDetailedAlbumsList());
+            return this.View(albumService.GetDetailedAlbumsList(page, pageSize));
         }
 
         /// <summary>
