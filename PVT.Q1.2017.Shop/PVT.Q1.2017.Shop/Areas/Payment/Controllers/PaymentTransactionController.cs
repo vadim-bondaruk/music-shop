@@ -23,13 +23,13 @@
         /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Get|HttpVerbs.Post)]
         [Authorize]
-        public ActionResult Index(int id = 1)
+        public ActionResult Index(int pageId = 1)
         {
             if (CurrentUser != null && CurrentUser.Identity.IsAuthenticated)
             {
                 int countPerPage = 10;
-                this.TempData["CurrentPage"] = id;
-                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, id, countPerPage);
+                this.TempData["CurrentPage"] = pageId;
+                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, pageId, countPerPage);
                 return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
 
                 //var transactions = _paymentService.GetTransactionsByUserId(CurrentUser.Id);
