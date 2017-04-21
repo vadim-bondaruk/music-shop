@@ -63,7 +63,7 @@
         /// <returns>
         /// All registered tracks with price for the specified album.
         /// </returns>
-        AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        AlbumTracksListViewModel GetTracks(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all tracks for the specified album without price.
@@ -107,7 +107,7 @@
         /// <returns>
         /// All registered albums.
         /// </returns>
-        ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        ICollection<AlbumViewModel> GetAlbums(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered albums using the specified currency and price level for album price.
@@ -130,7 +130,7 @@
         /// <returns>
         /// All registered albums.
         /// </returns>
-        PagedResult<AlbumViewModel> GetAlbumsList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        PagedResult<AlbumViewModel> GetAlbums(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered albums detailed information using the specified currency and price level for album price.

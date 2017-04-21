@@ -2,11 +2,10 @@
 @{
     ViewBag.Title = "Валюта";
 }
-<h2>Index</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-primary" href="@Url.Action("Create")" id="new-currency-btn"><span class="glyphicon glyphicon-plus"></span> Новая</a>
 </p>
-<table class="table">
+<table class="table" id="curr-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.FullName)
@@ -20,7 +19,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Symbol)
         </th>
-        <th></th>
+        <th>Операция</th>
     </tr>
     @foreach (var item in Model)
     {
@@ -38,8 +37,8 @@
                 @Html.DisplayFor(modelItem => item.Symbol)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Правка", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new {style="color: red"})
             </td>
         </tr>
     }

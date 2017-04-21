@@ -15,7 +15,7 @@
         /// </summary>
         public SettingConfiguration()
         {
-            this.HasKey(t => t.Id);
+            HasKey(t => t.Id);
             Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             HasRequired(x => x.DefaultCurrency).WithMany().HasForeignKey(x => x.DefaultCurrencyId).WillCascadeOnDelete(false);

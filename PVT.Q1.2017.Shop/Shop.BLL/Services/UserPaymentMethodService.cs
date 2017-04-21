@@ -33,7 +33,7 @@
         {
             if (user != null)
             {
-                using (var repository = this.Factory.GetUserPaymentMethodRepository())
+                using (var repository = Factory.GetUserPaymentMethodRepository())
                 {
                     return repository.GetAll(a => a.User.Equals(user));
                 }

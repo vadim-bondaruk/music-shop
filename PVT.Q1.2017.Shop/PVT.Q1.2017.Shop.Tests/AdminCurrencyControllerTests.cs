@@ -22,7 +22,7 @@ namespace PVT.Q1._2017.Shop.Tests
             // Arrange - create the mock service
             var currencyRepositoryMoq = new Mock<ICurrencyRepository>();
             var mockService = new Mock<ICurrencyService>();
-            mockService.Setup(x => x.GetCurrenciesList()).Returns(new List<CurrencyViewModel>()
+            mockService.Setup(x => x.GetCurrencies()).Returns(new List<CurrencyViewModel>()
             {
                 new CurrencyViewModel {ShortName = "USD", Code = 840},
                 new CurrencyViewModel {ShortName = "EUR", Code = 978}

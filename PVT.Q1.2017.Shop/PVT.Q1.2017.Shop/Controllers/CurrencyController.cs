@@ -2,30 +2,25 @@
 {
     using System.Net;
     using System.Web.Mvc;
+    using App_Start;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
 
-    [Authorize]
+    [ShopAuthorize]
     public class CurrencyController : BaseController
     {
-        private readonly ICurrencyService _currencyService;
-        private readonly IRepositoryFactory _repositoryFactory;
-
-        public CurrencyController(ICurrencyService currencyService, IRepositoryFactory repositoryFactory)
+        public CurrencyController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            _currencyService = currencyService;
-            _repositoryFactory = repositoryFactory;
         }
 
         [ChildActionOnly]
         public ActionResult UserCurrency()
         {
-            var currenctCurrency = GetCurrentUserCurrency();
-            if (currenctCurrency != null)
+            if (CurrentUserCurrency != null)
             {
-                ViewBag.SelectedCurrency = GetCurrentUserCurrency().Code;
-                return PartialView("_UserCurrency", _currencyService.GetCurrenciesList());
+                ViewBag.SelectedCurrency = CurrentUserCurrency.Code;
+                var currencyService = ServiceFactory.GetCurrencyService();
+                return PartialView("_UserCurrency", currencyService.GetCurrencies());
             }
 
             return PartialView("_UserCurrency");
@@ -36,29 +31,15 @@
         {
             if (CurrentUser != null)
             {
-                Currency currency;
-                using (var repository = _repositoryFactory.GetCurrencyRepository())
-                {
-                    currency = repository.FirstOrDefault(c => c.Code == currencyCode);
-                }
+                var currencyService = ServiceFactory.GetCurrencyService();
+                var currency = currencyService.GetCurrencyByCode(currencyCode.Value);
 
                 if (currency == null)
                 {
                     return HttpNotFound("Валюта с указанным кодом не найдена");
                 }
 
-                using (var repository = _repositoryFactory.GetUserDataRepository())
-                {
-                    var userData = repository.FirstOrDefault(u => u.UserId == CurrentUser.Id);
-                    if (userData == null)
-                    {
-                        return HttpNotFound("Данные пользователя не найдены");
-                    }
-
-                    userData.CurrencyId = currency.Id;
-                    repository.AddOrUpdate(userData);
-                    repository.SaveChanges();
-                }
+                CurrentUserCurrency = currency;
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }

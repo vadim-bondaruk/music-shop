@@ -43,7 +43,7 @@
         public AlbumDetailsViewModel GetAlbumDetails(int id, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
             Album album;
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = Factory.GetAlbumRepository())
             {
                 album = repository.GetById(id, a => a.Artist);
             }
@@ -52,12 +52,12 @@
 
             if (currencyCode == null)
             {
-                currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
+                currencyCode = ServiceHelper.GetDefaultCurrency(Factory).Code;
             }
 
             if (priceLevelId == null)
             {
-                priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
+                priceLevelId = ServiceHelper.GetDefaultPriceLevel(Factory);
             }
 
             using (var repository = Factory.GetAlbumPriceRepository())
@@ -111,12 +111,12 @@
         /// </returns>
         public AlbumTracksListViewModel GetTracksToAdd(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
+            AlbumTracksListViewModel albumTracksListViewModel = CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
 
             if (albumTracksListViewModel.AlbumDetails.TracksCount > 0)
             {
                 ICollection<Track> tracks;
-                using (var repository = this.Factory.GetTrackRepository())
+                using (var repository = Factory.GetTrackRepository())
                 {
                     decimal ownerId = albumTracksListViewModel.AlbumDetails.OwnerId;
                     if (albumTracksListViewModel.AlbumDetails.Artist == null)
@@ -136,7 +136,7 @@
                     }
                 }
 
-                albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
+                albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(Factory, tracks, currencyCode, priceLevel, userId);
             }
 
             return albumTracksListViewModel;
@@ -158,17 +158,17 @@
         /// <returns>
         /// All registered tracks with price for the specified album.
         /// </returns>
-        public AlbumTracksListViewModel GetTracksList(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        public AlbumTracksListViewModel GetTracks(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
+            AlbumTracksListViewModel albumTracksListViewModel = CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
 
             ICollection<Track> tracks;
-            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
             {
                 tracks = repository.GetAll(r => r.AlbumId == albumId, r => r.Track, r => r.Track.Artist).Select(r => r.Track).ToList();
             }
 
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(Factory, tracks, currencyCode, priceLevel, userId);
             foreach (var trackViewModel in albumTracksListViewModel.Tracks)
             {
                 trackViewModel.AlbumId = albumId;
@@ -186,10 +186,10 @@
         /// </returns>
         public AlbumTracksListViewModel GetTracksWithoutPrice(int albumId)
         {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId);
+            AlbumTracksListViewModel albumTracksListViewModel = CreateAlbumTracksListViewModel(albumId);
 
             ICollection<AlbumTrackRelation> albumTrackRelations;
-            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
             {
                 albumTrackRelations = repository.GetAll(
                                            r => r.AlbumId == albumId &&
@@ -227,10 +227,10 @@
         /// </returns>
         public AlbumTracksListViewModel GetTracksWithPrice(int albumId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
-            AlbumTracksListViewModel albumTracksListViewModel = this.CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
+            AlbumTracksListViewModel albumTracksListViewModel = CreateAlbumTracksListViewModel(albumId, currencyCode, priceLevel, userId);
 
             ICollection<Track> tracks;
-            using (var repository = this.Factory.GetAlbumTrackRelationRepository())
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
             {
                 tracks = repository.GetAll(
                                            r => r.AlbumId == albumId &&
@@ -239,7 +239,7 @@
                                    .Select(r => r.Track).ToList();
             }
 
-            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(this.Factory, tracks, currencyCode, priceLevel, userId);
+            albumTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(Factory, tracks, currencyCode, priceLevel, userId);
             foreach (var trackViewModel in albumTracksListViewModel.Tracks)
             {
                 trackViewModel.AlbumId = albumId;
@@ -263,15 +263,15 @@
         /// <returns>
         /// All registered albums.
         /// </returns>
-        public ICollection<AlbumViewModel> GetAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        public ICollection<AlbumViewModel> GetAlbums(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = Factory.GetAlbumRepository())
             {
                 albums = repository.GetAll(a => a.Artist);
             }
 
-            return ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevel, userId);
+            return ServiceHelper.ConvertToAlbumViewModels(Factory, albums, currencyCode, priceLevel, userId);
         }
 
         /// <summary>
@@ -295,15 +295,15 @@
         /// <returns>
         /// All registered albums.
         /// </returns>
-        public PagedResult<AlbumViewModel> GetAlbumsList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
+        public PagedResult<AlbumViewModel> GetAlbums(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             PagedResult<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = Factory.GetAlbumRepository())
             {
                 albums = repository.GetAll(page, pageSize, a => a.Artist);
             }
 
-            var albumViewModels = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums.Items, currencyCode, priceLevel, userId);
+            var albumViewModels = ServiceHelper.ConvertToAlbumViewModels(Factory, albums.Items, currencyCode, priceLevel, userId);
             return new PagedResult<AlbumViewModel>(albumViewModels, pageSize, page, albums.TotalItemsCount);
         }
 
@@ -325,7 +325,7 @@
         public ICollection<AlbumDetailsViewModel> GetDetailedAlbumsList(int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             ICollection<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = Factory.GetAlbumRepository())
             {
                 albums = repository.GetAll();
             }
@@ -363,7 +363,7 @@
         public PagedResult<AlbumDetailsViewModel> GetDetailedAlbumsList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             PagedResult<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = Factory.GetAlbumRepository())
             {
                 albums = repository.GetAll(page, pageSize);
             }
@@ -392,7 +392,7 @@
         public PagedResult<AlbumViewModel> GetAlbumsWithoutPrice(int page, int pageSize)
         {
             PagedResult<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = Factory.GetAlbumRepository())
             {
                 albums = repository.GetAll(page, pageSize, a => !a.AlbumPrices.Any(), a => a.Artist);
             }
@@ -425,12 +425,12 @@
         public PagedResult<AlbumViewModel> GetAlbumsWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
         {
             PagedResult<Album> albums;
-            using (var repository = this.Factory.GetAlbumRepository())
+            using (var repository = Factory.GetAlbumRepository())
             {
                 albums = repository.GetAll(page, pageSize, a => a.AlbumPrices.Any(), a => a.Artist);
             }
 
-            var albumViewModels = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums.Items, currencyCode, priceLevel, userId);
+            var albumViewModels = ServiceHelper.ConvertToAlbumViewModels(Factory, albums.Items, currencyCode, priceLevel, userId);
             return new PagedResult<AlbumViewModel>(albumViewModels, pageSize, page, albums.TotalItemsCount);
         }
 

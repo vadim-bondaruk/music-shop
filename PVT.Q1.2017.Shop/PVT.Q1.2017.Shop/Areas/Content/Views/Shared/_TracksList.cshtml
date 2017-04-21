@@ -83,7 +83,7 @@
                         @if (track.IsPurchased)
                         {
                             @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
-                                                 Url.Action("PurchasedTracks", "Track", new { area = "Content", id = track.Id }))
+                                                 Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
                         }
                         else if (track.Price != null)
                         {
@@ -95,5 +95,3 @@
         </tr>
     }
 </table>
-
-@Html.PageLinks(Model, i => Url.Action("List", "Track", new { page = i, area = "Content" }))

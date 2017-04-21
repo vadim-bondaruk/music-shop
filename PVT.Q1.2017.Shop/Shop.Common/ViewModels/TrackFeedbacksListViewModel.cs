@@ -12,7 +12,7 @@
         /// </summary>
         public TrackFeedbacksListViewModel()
         {
-            this.Feedbacks = new List<FeedbackViewModel>();
+            Feedbacks = new List<FeedbackViewModel>();
         }
 
         /// <summary>

@@ -34,7 +34,7 @@
         /// <returns>
         /// All registered tracks with price for the specified artist.
         /// </returns>
-        ArtistTracksListViewModel GetTracksList(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        ArtistTracksListViewModel GetTracks(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered albums for the specified artist using the specified currency and price level for album price.
@@ -52,7 +52,7 @@
         /// <returns>
         /// All registered albums with price for the specified artist.
         /// </returns>
-        ArtistAlbumsListViewModel GetAlbumsList(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        ArtistAlbumsListViewModel GetAlbums(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered tracks and albums for the specified artist using the specified currency and price level for the price.
@@ -132,7 +132,7 @@
         /// <returns>
         /// All registered artists.
         /// </returns>
-        ICollection<ArtistViewModel> GetArtistsList();
+        ICollection<ArtistViewModel> GetArtists();
 
         /// <summary>
         /// Returns all registered artists with detailed information.
@@ -154,7 +154,7 @@
         /// <returns>
         /// All registered artists.
         /// </returns>
-        PagedResult<ArtistViewModel> GetArtistsList(int page, int pageSize);
+        PagedResult<ArtistViewModel> GetArtists(int page, int pageSize);
 
         /// <summary>
         /// Returns all registered artists with detailed information.

@@ -1,6 +1,7 @@
 ﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@using PVT.Q1._2017.Shop.Helpers
 @using Shop.Infrastructure.Enums
-@model ICollection<Shop.Common.ViewModels.ArtistViewModel>
+@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.ArtistViewModel>
 
 @{
     ViewBag.Title = "Список исполнителей";
@@ -28,7 +29,7 @@
 }
 
 <table class="table table-hover table-responsive">
-    @foreach (var artist in Model) {
+    @foreach (var artist in Model.Items) {
         <tr>
             <td>
                 @Html.ActionLink(artist.Name, "Details", "Artist", new { id = artist.Id, area = "Content" }, new
@@ -61,3 +62,5 @@
         </tr>
     }
 </table>
+
+@Html.PageLinks(Model, i => Url.Action("List", "Artist", new { page = i, area = "Content" }))

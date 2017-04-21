@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
+    using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
 
     /// <summary>
@@ -10,20 +11,9 @@
     /// </summary>
     public class AlbumController : BaseController
     {
-        /// <summary>
-        /// The album service.
-        /// </summary>
-        private readonly IAlbumService _albumService;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AlbumController"/> class.
-        /// </summary>
-        /// <param name="albumService">
-        /// The album service.
-        /// </param>
-        public AlbumController(IAlbumService albumService)
+        public AlbumController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            this._albumService = albumService;
         }
 
         /// <summary>
@@ -32,16 +22,15 @@
         /// <returns>
         /// All albums view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
-            var currency = GetCurrentUserCurrency();
-            if (currency != null)
+            var albumService = ServiceFactory.GetAlbumService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var priceLevel = GetCurrentUserPriceLevel();
-                return this.View(this._albumService.GetAlbumsList(currency.Code, priceLevel, GetUserDataId()));
+                return View(albumService.GetAlbums(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(this._albumService.GetAlbumsList());
+            return View(albumService.GetAlbums(page, pageSize));
         }
 
         /// <summary>
@@ -55,20 +44,18 @@
         {
             if (id == null)
             {
-                return this.RedirectToAction("List", "Album", new { area = "Content" });
+                return RedirectToAction("List", "Album", new { area = "Content" });
             }
 
-            var currency = GetCurrentUserCurrency();
             AlbumTracksListViewModel albumViewModel;
-
-            if (currency != null)
+            var albumService = ServiceFactory.GetAlbumService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                var priceLevel = GetCurrentUserPriceLevel();
-                albumViewModel = _albumService.GetTracksList(id.Value, currency.Code, priceLevel, GetUserDataId());
+                albumViewModel = albumService.GetTracks(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
             else
             {
-                albumViewModel = _albumService.GetTracksList(id.Value);
+                albumViewModel = albumService.GetTracks(id.Value);
             }
 
             if (albumViewModel == null)
@@ -76,7 +63,7 @@
                 return HttpNotFound($"Альбом с id = { id.Value } не найден");
             }
 
-            return this.View(albumViewModel);
+            return View(albumViewModel);
         }
     }
 }

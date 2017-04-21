@@ -34,7 +34,7 @@ namespace PVT.Q1._2017.Shop.Tests
             //Arrange
             int currencyId = 1;
 
-            using (var repository = this._factory.GetSettingRepository())
+            using (var repository = _factory.GetSettingRepository())
             {
                 //Act
                 repository.AddOrUpdate(new Setting { DefaultCurrencyId = currencyId});

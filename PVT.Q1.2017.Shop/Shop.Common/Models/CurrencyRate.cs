@@ -16,7 +16,7 @@
         /// </summary>
         public CurrencyRate()
         {
-            this.Date = DateTime.Today;
+            Date = DateTime.Today;
         }
 
         /// <summary>

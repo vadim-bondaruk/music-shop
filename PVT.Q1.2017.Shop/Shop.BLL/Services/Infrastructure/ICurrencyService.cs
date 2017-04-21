@@ -41,7 +41,7 @@
         /// <returns>
         /// All registered currencies.
         /// </returns>
-        ICollection<CurrencyViewModel> GetCurrenciesList();
+        ICollection<CurrencyViewModel> GetCurrencies();
 
         /// <summary>
         /// Determines whether a currency with the specified <paramref name="name"/> exists.

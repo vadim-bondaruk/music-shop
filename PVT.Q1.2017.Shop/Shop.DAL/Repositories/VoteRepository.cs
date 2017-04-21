@@ -71,8 +71,8 @@
 
             // Detaching the navigation properties in case if they are attached to prevent unexpected behaviour of the DbContext.
             // The VoteBaseRepository should be SOLID, should only add information about vote! Not about track or user!
-            this.DetachNavigationProperty(vote.Track, out trackEntryState);
-            this.DetachNavigationProperty(vote.User, out userEntryState);
+            DetachNavigationProperty(vote.Track, out trackEntryState);
+            DetachNavigationProperty(vote.User, out userEntryState);
 
             vote.Track = null;
             vote.User = null;

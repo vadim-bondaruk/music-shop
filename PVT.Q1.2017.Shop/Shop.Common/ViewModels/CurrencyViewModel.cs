@@ -23,12 +23,13 @@
         [Required]
         [StringLength(3, MinimumLength = 3)]
         [RegularExpression(@"^[A-Z]{3}$", ErrorMessage = "Поле ShortName должно состоять из 3 прописных символов")]
-
+        [Display(Name = "Буквенное обозначение")]
         public string ShortName { get; set; }
 
         /// <summary>
         /// Gets or sets the fullname
         /// </summary>
+        [Display(Name = "Имя")]
         public string FullName { get; set; }
 
         /// <summary>
@@ -36,11 +37,13 @@
         /// </summary>
         [Required]
         [Range(0,999)]
+        [Display(Name = "Код")]
         public int Code { get; set; }
 
         /// <summary>
         /// Gets or sets the graphic currency symbol.
         /// </summary>
+        [Display(Name = "Символ")]
         public string Symbol { get; set; }
     }
 }

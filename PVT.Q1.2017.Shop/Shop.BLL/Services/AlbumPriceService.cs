@@ -42,17 +42,17 @@
         {
             if (currencyCode == null)
             {
-                currencyCode = ServiceHelper.GetDefaultCurrency(this.Factory).Code;
+                currencyCode = ServiceHelper.GetDefaultCurrency(Factory).Code;
             }
 
             if (priceLevelId == null)
             {
-                priceLevelId = ServiceHelper.GetDefaultPriceLevel(this.Factory);
+                priceLevelId = ServiceHelper.GetDefaultPriceLevel(Factory);
             }
 
-            using (var repository = this.Factory.GetAlbumPriceRepository())
+            using (var repository = Factory.GetAlbumPriceRepository())
             {
-                using (var currencyRatesrepository = this.Factory.GetCurrencyRateRepository())
+                using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
                 {
                     return PriceHelper.GetAlbumPrice(repository, currencyRatesrepository, albumId, currencyCode.Value, priceLevelId.Value);
                 }
@@ -70,7 +70,7 @@
         public ICollection<PriceViewModel> GetAlbumPrices(int albumId, int priceLevelId)
         {
             ICollection<AlbumPrice> albumPrices;
-            using (var repository = this.Factory.GetAlbumPriceRepository())
+            using (var repository = Factory.GetAlbumPriceRepository())
             {
                 albumPrices = repository.GetAll(
                                                 p => p.AlbumId == albumId &&
@@ -89,7 +89,7 @@
         public ICollection<PriceViewModel> GetAlbumPrices(int albumId)
         {
             ICollection<AlbumPrice> albumPrices;
-            using (var repository = this.Factory.GetAlbumPriceRepository())
+            using (var repository = Factory.GetAlbumPriceRepository())
             {
                 albumPrices = repository.GetAll(
                                                 p => p.AlbumId == albumId,

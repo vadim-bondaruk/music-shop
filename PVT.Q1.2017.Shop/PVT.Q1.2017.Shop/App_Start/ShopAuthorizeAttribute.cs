@@ -25,7 +25,7 @@
         /// <param name="UserRoles"> Array UserRoles enum </param>
         public ShopAuthorizeAttribute(params UserRoles[] userRoles)
         {
-            this._userRoles = userRoles;
+            _userRoles = userRoles;
         }
 
         /// <summary>
@@ -59,9 +59,9 @@
             }
 
 
-            if (user != null && this._userRoles.Length > 0)
+            if (user != null && _userRoles.Length > 0)
             {
-                if (!this._userRoles.ToList().Contains(userDB.UserRole))
+                if (!_userRoles.ToList().Contains(userDB.UserRole))
                 {
                     return false;
                 }

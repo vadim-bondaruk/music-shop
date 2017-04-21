@@ -77,7 +77,7 @@
                     @(track.Price != null ? Html.BtnEditTrackPrice(track.Id) : Html.BtnCreateTrackPrice(track.Id))
                 </td>
                 <td>
-                    @using (Ajax.BeginForm("AddTrack", "Album", new { area = "Management" }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "alert('Success')"}))
+                    @using (Html.BeginForm("AddTrackToAlbum", "Album", new { area = "Management" }, FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <input type="hidden" value="@Model.AlbumDetails.Id" name="id" />

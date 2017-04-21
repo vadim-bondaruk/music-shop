@@ -12,8 +12,8 @@
         /// <returns></returns>
         public ActionResult Article(string partialName)
         {
-            this.ViewBag.Title = "Новости музыки";
-            return this.View(partialName);
+            ViewBag.Title = "Новости музыки";
+            return View(partialName);
         }
     }
 }

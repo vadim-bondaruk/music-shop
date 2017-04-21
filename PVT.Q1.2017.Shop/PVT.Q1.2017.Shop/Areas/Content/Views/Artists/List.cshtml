@@ -1,14 +1,15 @@
-﻿@model ICollection<Shop.Common.ViewModels.ArtistDetailsViewModel>
+﻿@using PVT.Q1._2017.Shop.Helpers
+@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.ArtistDetailsViewModel>
 
-@{ViewBag.Title = "Все исполнители";}
+@{ ViewBag.Title = "Все исполнители"; }
 
 <div class="artists-list">
     <ul class="list-group" id="slist">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Items)
         {
-            <li class="list-group-item" onclick="window.location.href = '@Url.Action("Details", "Artists", new { id = item.Id, area = "Content"})'">
+            <li class="list-group-item" onclick="window.location.href = '@Url.Action("Details", "Artists", new { id = item.Id, area = "Content" })'">
                 <div class="artists-list-image">
-                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(item.Photo)" onerror="this.src = '/img/defuserpic.png'"/>
+                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(item.Photo)" onerror="src = '/img/defuserpic.png'"/>
                 </div>
                 <div class="text-box">
                     <div class="info">
@@ -20,7 +21,8 @@
         }
     </ul>
 </div>
+@Html.PageLinks(Model, i => Url.Action("List", "Artists", new { page = i, area = "Content"}))
 
 @section cssStyles{
-    <link href="~/Content/tracks.css" rel="stylesheet" /> 
+    <link href="~/Content/tracks.css" rel="stylesheet"/>
 }
