@@ -8,6 +8,10 @@
     <mvcSiteMapNode title="Регистрация" controller="Account" action="Register" area="User"/>
     <mvcSiteMapNode title="Корзина"  action="Index" controller="Cart" area="Payment"/>
 
+    <mvcSiteMapNode title="Пользователи" controller="Manage" action="UsersEdit" area="User"  >
+    <mvcSiteMapNode title="Правка" controller="Manage" action="Edit" area="User" preservedRouteParameters="id" key="user-edit" />
+    </mvcSiteMapNode>
+    
     <mvcSiteMapNode title="Настройки системы"  action="Index" controller="Setting" area="Admin"/>
     <mvcSiteMapNode title="Валюта"  action="Index" controller="Currency" area="Admin" preservedRouteParameters="edit" key="edit">
     <mvcSiteMapNode title="Новая валюта"  action="Create" controller="Currency" area="Admin"/>
