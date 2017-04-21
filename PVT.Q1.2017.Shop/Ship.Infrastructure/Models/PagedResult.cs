@@ -63,7 +63,7 @@
 
             if (pageSize <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "Incorrect page size specified");
+                pageSize = 1;
             }
 
             if (totalItemsCount < items.Count)
@@ -78,7 +78,7 @@
 
             if (page <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(page), page, "Incorrect current page value specified");
+                page = 1;
             }
 
             if(_pagesCount>0)

@@ -36,7 +36,10 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
-            var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
+            Mock<IServiceFactory> moqServiceFactory = new Mock<IServiceFactory>();
+            moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
+
+            var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
             var result = cartController.Index();
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -69,7 +72,10 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
-            var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
+            Mock<IServiceFactory> moqServiceFactory = new Mock<IServiceFactory>();
+            moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
+
+            var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
 
             var result = (RedirectToRouteResult)cartController.AddTrack(3);
             Assert.IsFalse(result.Permanent);
@@ -108,7 +114,10 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
-            var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
+            Mock<IServiceFactory> moqServiceFactory = new Mock<IServiceFactory>();
+            moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
+
+            var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
 
             var result = (RedirectToRouteResult)cartController.AddAlbum(3);
             Assert.IsFalse(result.Permanent);
@@ -145,7 +154,10 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
-            var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
+            Mock<IServiceFactory> moqServiceFactory = new Mock<IServiceFactory>();
+            moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
+
+            var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
 
             var result = (RedirectToRouteResult)cartController.DeleteTrack(3);
             Assert.IsFalse(result.Permanent);
@@ -182,7 +194,10 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
-            var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
+            Mock<IServiceFactory> moqServiceFactory = new Mock<IServiceFactory>();
+            moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
+
+            var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
 
             var result = (RedirectToRouteResult)cartController.DeleteAlbum(3);
             Assert.IsFalse(result.Permanent);
@@ -222,7 +237,10 @@ namespace PVT.Q1._2017.Shop.Tests
             Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
             moqRepositoryFactory.Setup(m => m.GetCartRepository()).Returns(moqCartRepository.Object);
 
-            var cartController = new CartController(moqCartService.Object, moqRepositoryFactory.Object);
+            Mock<IServiceFactory> moqServiceFactory = new Mock<IServiceFactory>();
+            moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
+
+            var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
             var result = cartController.GetOrdersCount();
             Assert.IsInstanceOfType(result, typeof(JsonResult));
         }

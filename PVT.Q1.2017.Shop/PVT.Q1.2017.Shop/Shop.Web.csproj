@@ -300,6 +300,7 @@
     <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
     <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PagedAlbumsList.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Areas\Content\Views\Track\List.cshtml" />
