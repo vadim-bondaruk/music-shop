@@ -59,10 +59,15 @@
         /// </summary>
         /// <returns>
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
-            var artistService = ServiceFactory.GetArtistService();
-            return View(artistService.GetDetailedArtistsList());
+            var artistsService = ServiceFactory.GetArtistService();
+            if (CurrentUser != null && CurrentUserCurrency != null)
+            {
+                return this.View(artistsService.GetDetailedArtistsList(page, pageSize));
+            }
+
+            return this.HttpNotFound("no user found");
         }
 
         /// <summary>
