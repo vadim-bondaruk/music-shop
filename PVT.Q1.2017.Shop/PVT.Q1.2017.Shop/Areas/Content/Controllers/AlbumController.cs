@@ -22,15 +22,15 @@
         /// <returns>
         /// All albums view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
             var albumService = ServiceFactory.GetAlbumService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return View(albumService.GetAlbums(CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return View(albumService.GetAlbums(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return View(albumService.GetAlbums());
+            return View(albumService.GetAlbums(page, pageSize));
         }
 
         /// <summary>
