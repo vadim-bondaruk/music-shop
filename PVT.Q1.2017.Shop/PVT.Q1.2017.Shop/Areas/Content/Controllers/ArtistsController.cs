@@ -64,7 +64,7 @@
             var artistsService = ServiceFactory.GetArtistService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return this.View(artistsService.GetArtists(page, pageSize));
+                return this.View(artistsService.GetDetailedArtistsList(page, pageSize));
             }
 
             return this.HttpNotFound("no user found");
