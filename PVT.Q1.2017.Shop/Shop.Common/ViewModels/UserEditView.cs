@@ -51,6 +51,7 @@ namespace Shop.Common.ViewModels
         /// Users birth date
         /// </summary>
         [Display(Name = "Дата рождения")]
+        [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
 
         /// <summary>
