@@ -83,6 +83,7 @@
     <Compile Include="Helpers\ServiceHelper.cs" />
     <Compile Include="Helpers\PayPalCommon.cs" />
     <Compile Include="Helpers\PayPalConfiguration.cs" />
+    <Compile Include="Helpers\SortFuncHelper.cs" />
     <Compile Include="Services\AlbumPriceService.cs" />
     <Compile Include="Exceptions\UserValidationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

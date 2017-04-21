@@ -412,7 +412,7 @@
 
             using (var repository = Factory.GetUserRepository())
             {
-                return repository.GetAll(u => u.LastName.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0);
+                return repository.GetAll(u => u.LastName.Contains(pattern));
             }
         }
 
