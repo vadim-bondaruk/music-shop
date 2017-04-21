@@ -8,7 +8,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>CurrencyViewModel</h4>
+        <h4>Изменение данных о валюте</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -48,6 +48,6 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Назад к списку", "Index")
 </div>
 

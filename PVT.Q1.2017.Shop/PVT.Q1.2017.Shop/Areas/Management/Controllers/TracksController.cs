@@ -59,10 +59,14 @@
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(TrackManagementViewModel model)
         {
-            var trackModel = Mapper.Map<TrackManagementViewModel, Track>(model);
+            if (model.Id <= 0)
+            {
+                return this.HttpNotFound("track not found");
+            }
+
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
-                repository.Delete(trackModel);
+                repository.Delete(model.Id);
                 repository.SaveChanges();
             }
 
@@ -78,7 +82,7 @@
             Track track;
             using (var repository = this.RepositoryFactory.GetTrackRepository())
             {
-                track = repository.GetById(id);
+                track = repository.GetById(id, a => a.Artist, b => b.Genre);
             }
 
             var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);

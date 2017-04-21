@@ -2,14 +2,13 @@
 @{
     ViewBag.Title = "Новая валюта";
 }
-<h2>Create</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>CurrencyViewModel</h4>
+        <h4>Добавление новой валюты</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -48,6 +47,6 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Назад к списку", "Index")
 </div>
 

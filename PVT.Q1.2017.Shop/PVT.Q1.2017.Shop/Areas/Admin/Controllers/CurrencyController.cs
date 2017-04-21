@@ -127,9 +127,16 @@
                 Currency currency = AdminModelsMapper.GetCurrency(model);
                 using (var currencyRepository = RepositoryFactory.GetCurrencyRepository())
                 {
-                    currencyRepository.Delete(currency);
-                    currencyRepository.SaveChanges();
-                    return RedirectToAction("Index", "Currency", new { area = "Admin" });
+                    try
+                    {
+                        currencyRepository.Delete(currency);
+                        currencyRepository.SaveChanges();
+                        return RedirectToAction("Index", "Currency", new { area = "Admin" });
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("ShortName", "Невозможно удалить валюту из системы. Возможно, она используется пользователями магазина.");
+                    }
                 }
             }
 
@@ -169,7 +176,7 @@
             }
             catch
             {
-                ModelState.AddModelError("Name", "Unable to save changes. Try again, and if the problem persists see your system administrator");
+                ModelState.AddModelError("Name", "Невозможно сохранить изменения.");
             }
 
             return View(model);
