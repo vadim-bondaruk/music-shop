@@ -109,7 +109,7 @@
         /// </returns>
         public virtual async Task<ICollection<TEntity>> GetAllAsync(params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            return await GetActiveItems(includes).ToListAsync();
+            return await GetActiveItems(includes).ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@
         /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
         public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
-            return await GetActiveItems(filter, includes).ToListAsync();
+            return await GetActiveItems(filter, includes).ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@
         public async Task<PagedResult<TEntity>> GetAllAsync(int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
             var query = GetActiveItems(includes);
-            return await GetPagedResultForQueryAsync(query, page, pageSize);
+            return await GetPagedResultForQueryAsync(query, page, pageSize).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@
         public async Task<PagedResult<TEntity>> GetAllAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes)
         {
             var query = GetActiveItems(filter, includes);
-            return await GetPagedResultForQueryAsync(query, page, pageSize);
+            return await GetPagedResultForQueryAsync(query, page, pageSize).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -504,7 +504,7 @@
                 throw new ArgumentOutOfRangeException(nameof(page), page, @"Incorrect current page value specified");
             }
 
-            var result = await query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            var result = await query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync().ConfigureAwait(false);
             return new PagedResult<TEntity>(result, pageSize, page, query.Count());
         }
     }
