@@ -122,6 +122,12 @@
         public DbSet<Setting> Settings { get; set; }
 
         /// <summary>
+        /// Payment Transactions
+        /// </summary>
+        public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+
+
+        /// <summary>
         /// The Db configuration.
         /// </summary>
         /// <param name="modelBuilder">

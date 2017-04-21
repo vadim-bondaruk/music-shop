@@ -9,14 +9,16 @@
 <div>
     <img src="~/img/success.png" />
     <p>Вы будете перенаправлены на главную страницу через 5 секунд....</p>
-    <p>В случае если этого не произошло нажмите @Html.ActionLink("эту ссылку", "Index", new { Controller = "Home" , Area = "" })</p>
+    <p>В случае если этого не произошло нажмите @Html.ActionLink("эту ссылку", "AcceptPayment", new { Controller = "Cart", Area = "Payment" })</p>
 </div>
+
+
 
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-
+    
     function back2main(){
-        var url = "/Home/Index";
+        var url = "/Payment/Cart/AcceptPayment";
         $(location).attr('href', url);
     }
 
