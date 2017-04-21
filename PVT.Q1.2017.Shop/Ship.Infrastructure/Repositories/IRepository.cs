@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
+
     using Models;
 
     /// <summary>
@@ -31,12 +33,29 @@
         ICollection<TEntity> GetAll(params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
+        /// Returns all models from the repository asynchronously.
+        /// </summary>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>
+        /// All models from the repository.
+        /// </returns>
+        Task<ICollection<TEntity>> GetAllAsync(params Expression<Func<TEntity, BaseEntity>>[] includes);
+
+        /// <summary>
         /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="includes">The additional include if needed.</param>
         /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
         ICollection<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
+
+        /// <summary>
+        /// Tries to find models from the repository asynchronously using the specified <paramref name="filter"/>.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>Entities which correspond to the <paramref name="filter"/>.</returns>
+        Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
         /// Returns all entities from the repository using pagination.
@@ -50,6 +69,17 @@
         PagedResult<TEntity> GetAll(int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
+        /// Returns all entities from the repository asynchronously using pagination.
+        /// </summary>
+        /// <param name="page">The page number.</param>
+        /// <param name="pageSize">The number of items to return.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>
+        /// All entities from the repository using pagination.
+        /// </returns>
+        Task<PagedResult<TEntity>> GetAllAsync(int page, int pageSize, params Expression<Func<TEntity, BaseEntity>>[] includes);
+
+        /// <summary>
         /// Tries to find entities from the repository using the specified <paramref name="filter"/>.
         /// </summary> 
         /// <param name="page">The page number.</param>
@@ -58,6 +88,16 @@
         /// <param name="includes">The additional include if needed.</param>
         /// <returns>Entities which correspond to the <paramref name="filter"/> using pagination.</returns>
         PagedResult<TEntity> GetAll(int page, int pageSize, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
+
+        /// <summary>
+        /// Tries to find entities from the repository asynchronously using the specified <paramref name="filter"/>.
+        /// </summary> 
+        /// <param name="page">The page number.</param>
+        /// <param name="pageSize">The number of items to return.</param>
+        /// <param name="filter">The filter.</param>
+        /// <param name="includes">The additional include if needed.</param>
+        /// <returns>Entities which correspond to the <paramref name="filter"/> using pagination.</returns>
+        Task<PagedResult<TEntity>> GetAllAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, BaseEntity>>[] includes);
 
         /// <summary>
         /// Tries to find an entity from the repository using the specified <paramref name="filter"/>.
