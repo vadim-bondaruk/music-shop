@@ -126,10 +126,10 @@
             var trackService = ServiceFactory.GetTrackService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return this.View(trackService.GetTracks(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return this.View(trackService.GetDetailedTracksList(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(trackService.GetTracks(page, pageSize));
+            return this.View(trackService.GetDetailedTracksList(page, pageSize));
         }
 
         /// <summary>
