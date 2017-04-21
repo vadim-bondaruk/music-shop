@@ -1,6 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
     using System.IO;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     using global::Shop.BLL.Helpers;
@@ -126,20 +127,20 @@
             var trackService = ServiceFactory.GetTrackService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return this.View(trackService.GetTracks(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return this.View(trackService.GetDetailedTracksList(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(trackService.GetTracks(page, pageSize));
+            return this.View(trackService.GetDetailedTracksList(page, pageSize));
         }
 
         /// <summary>
         /// </summary>
         /// <returns>
         /// </returns>
-        public ActionResult PurchasedList()
+        public async Task<ActionResult> PurchasedList()
         {
             var trackService = ServiceFactory.GetTrackService();
-            var purchasedTracks = trackService.GetPurchasedTracks(this.CurrentUser.Id);
+            var purchasedTracks = await trackService.GetPurchasedTracksAsync(this.CurrentUser.Id);
 
             if (purchasedTracks == null)
             {

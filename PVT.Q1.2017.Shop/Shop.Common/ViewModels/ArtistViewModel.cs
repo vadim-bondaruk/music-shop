@@ -24,15 +24,5 @@
         /// The number of the artist albums.
         /// </summary>
         public int AlbumsCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets the photo.
-        /// </summary>
-        public byte[] Photo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the biography.
-        /// </summary>
-        public object Biography { get; set; }
     }
 }

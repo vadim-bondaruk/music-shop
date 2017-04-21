@@ -1,0 +1,90 @@
+@using Shop.BLL.Utils
+@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@using PVT.Q1._2017.Shop.Helpers
+@using Shop.Infrastructure.Enums
+@model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.AlbumViewModel>
+
+@{
+    bool isAuthenticated = Request.IsAuthenticated;
+    int currentUserId = 0;
+    bool isAdmin = false;
+    bool isSeller = false;
+    bool isBuyer = false;
+    if (isAuthenticated)
+    {
+        var currentUser = ((CurrentUser)User);
+        currentUserId = currentUser.Id;
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+        isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString());
+    }
+}
+
+<table class="table table-hover table-responsive">
+    @foreach (var album in Model.Items)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(album.Name, "Details", "Album", new
+                {
+                    id = album.Id,
+                    area = "Content"
+                }, new
+                {
+                    @class = "btn btn-link",
+                    title = "Нажмите, чтобы посмотреть подробную информацию об альбоме"
+                })
+            </td>
+            <td>
+                @if (album.Artist != null)
+                {
+                    @Html.ActionLink(album.Artist.Name, "Details", "Artist", new
+                    {
+                        id = album.Artist.Id,
+                        area = "Content"
+                    }, new
+                    {
+                        @class = "btn btn-link",
+                        title = "Нажмите, чтобы перейти к информации об исполнителе"
+                    })
+                }
+            </td>
+            <td>
+                <a class="btn btn-link" href="@Url.Action("Details", "Album", new { id = album.Id, area = "Content" })"
+                   title="Нажмите, чтобы увидеть все треки из альбома">
+                    Треки <span class="badge">@album.TracksCount</span>
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(m => album.Price)
+            </td>
+            @if (Request.IsAuthenticated)
+            {
+                if (isAdmin || (isSeller && (album.OwnerId <= 0m || album.OwnerId == currentUserId)))
+                {
+                    <td>
+                        @Html.BtnEditAlbum(album.Id)
+                        @Html.BtnDeleteAlbum(album.Id)
+                        @(album.Price != null ? Html.BtnEditAlbumPrice(album.Id) : Html.BtnCreateAlbumPrice(album.Id))
+                    </td>
+                }
+                else if (isBuyer)
+                {
+                    <td>
+                        @if (album.IsPurchased)
+                        {
+                            @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
+                                                 Url.Action("PurchasedList", "Albums", new { area = "Content" }))
+                        }
+                        else if (album.Price != null)
+                        {
+                            @Html.BtnBuyAlbum(album.Id, album.IsOrdered)
+                        }
+                    </td>
+                }
+            }
+        </tr>
+    }
+</table>
+
+@Html.PageLinks(Model, i => Url.Action("List", "Album", new { page = i, area = "Content" }))

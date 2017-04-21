@@ -21,10 +21,10 @@
         /// <returns>
         /// All artists view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
             var artistService = ServiceFactory.GetArtistService();
-            return View(artistService.GetArtists());
+            return View(artistService.GetArtists(page, pageSize));
         }
 
         /// <summary>

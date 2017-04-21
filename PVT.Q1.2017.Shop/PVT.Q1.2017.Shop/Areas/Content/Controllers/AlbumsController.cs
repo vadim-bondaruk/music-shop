@@ -61,10 +61,10 @@
             var albumService = ServiceFactory.GetAlbumService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return this.View(albumService.GetAlbums(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return this.View(albumService.GetDetailedAlbumsList(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(albumService.GetAlbums(page, pageSize));
+            return this.View(albumService.GetDetailedAlbumsList(page, pageSize));
         }
 
         /// <summary>
