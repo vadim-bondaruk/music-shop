@@ -126,6 +126,36 @@
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public FileStreamResult GetTrackSampleAsStream(int id)
+        {
+            MemoryStream stream;
+            using (var repo = RepositoryFactory.GetTrackRepository())
+            {
+                var track = repo.GetById(id, p => p.Artist);
+
+                if (track == null)
+                {
+                    return null;
+                }
+
+                stream = Mp3StreamHelper.GetAudioSampleStream(
+                    this.Response,
+                    this.Request,
+                    track.Name,
+                    track.Artist.Name,
+                    track.TrackFile);
+            }
+
+            return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
+        }
+
+        /// <summary>
         ///     Shows all tracks.
         /// </summary>
         /// <returns>

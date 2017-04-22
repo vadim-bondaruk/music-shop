@@ -33,7 +33,7 @@
             <div>
                 @Html.Partial("_Stars", Model.Id)
                 <div style="width: 500px">
-                    <a id="preview-btn" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = Model.Id })', @Model.Id);"><i class="fa fa-play" style="margin: 17px 0 0 11px; font-size: 16px; opacity: 0.4"></i></a>
+                    <a id="preview-btn" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackSampleAsStream", "Tracks", new { id = Model.Id })', @Model.Id);"><i class="fa fa-play" style="margin: 17px 0 0 11px; font-size: 16px; opacity: 0.4"></i></a>
                 </div>
             </div>
         </div>
