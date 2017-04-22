@@ -813,5 +813,7 @@ a.tracks-list > ul {
     cursor: pointer;
 }
 
+#audio-hidden{width: 800px}
+
 .copyright { display: none; }
 
