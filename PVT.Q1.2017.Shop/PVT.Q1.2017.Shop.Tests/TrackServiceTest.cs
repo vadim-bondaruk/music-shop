@@ -1,12 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using global::Moq;
-    using global::Shop.BLL;
-    using global::Shop.BLL.Helpers;
+
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -59,7 +57,9 @@
         public void GetTracksListTest()
         {
             AddTrackTest();
-            Assert.IsTrue(_trackService.GetTracks().Any());
+            var result = _trackService.GetTracks(1, 10);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Items.Any());
         }
 
         [TestMethod]
@@ -74,7 +74,7 @@
         {
             AddTrackTest();
 
-            var track = _trackService.GetTracks().FirstOrDefault();
+            var track = _trackService.GetTracks(1, 10).Items.FirstOrDefault();
             Assert.IsNotNull(track);
 
             track.Price = new PriceViewModel { Amount = 1.99m, Currency = new CurrencyViewModel { Code = 840, ShortName = "USD" } };
@@ -94,7 +94,7 @@
         {
             AddTrackTest();
 
-            var track = _trackService.GetTracks().FirstOrDefault();
+            var track = _trackService.GetTracks(1, 10).Items.FirstOrDefault();
             Assert.IsNotNull(track);
 
             using (var repository = _factory.GetAlbumRepository())

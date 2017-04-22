@@ -89,6 +89,7 @@
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\GenreDetailsViewModel.cs" />
     <Compile Include="ViewModels\GenreViewModel.cs" />
+    <Compile Include="ViewModels\PaymentTransactionViewModel.cs" />
     <Compile Include="ViewModels\PriceViewModel.cs" />
     <Compile Include="ViewModels\RatingViewModel.cs" />
     <Compile Include="ViewModels\ArtistAlbumsListViewModel.cs" />

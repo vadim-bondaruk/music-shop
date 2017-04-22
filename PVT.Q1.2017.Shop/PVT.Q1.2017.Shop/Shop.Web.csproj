@@ -315,6 +315,9 @@
     <Content Include="Areas\Content\Views\Shared\Audio\MiniPlayer.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\_Index.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\Details.cshtml" />
     <Content Include="Areas\News\Views\Music\Article.cshtml" />
     <Content Include="Areas\News\Views\Shared\NewAlbumOfDorn.cshtml" />
     <Content Include="Areas\News\Views\web.config" />
@@ -337,7 +340,7 @@
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Areas\User\Views\Account\Confirm.cshtml" />
     <Content Include="Areas\User\Views\Account\Siterules.cshtml" />
-    <Content Include="Areas\User\Views\Manage\Delete.cshtml" />
+    <Content Include="Areas\User\Views\Manage\DeleteCurrentUserMessage.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangeAccepted.cshtml" />
     <Content Include="Areas\User\Views\Manage\_UsersEdit.cshtml" />
     <Content Include="Areas\User\Views\Manage\UsersEdit.cshtml" />
@@ -364,7 +367,6 @@
     <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\PlayButtonPartial.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\AudioSection.cshtml" />
-    <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
     <Content Include="Areas\Management\Views\Album\AddTracksToAlbum.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
@@ -463,6 +465,7 @@
     <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
+    <Compile Include="Areas\Payment\Helpers\PaymentMapper.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistController.cs" />

@@ -104,7 +104,7 @@
   <ItemGroup>
     <Compile Include="ArtistServiceTest.cs" />
     <Compile Include="AlbumServiceTest.cs" />
-    <Compile Include="BllServiceTests\PaymentServiceTest.cs" />
+    <Compile Include="CartControllerTests.cs" />
     <Compile Include="CartServiceTest.cs" />
     <Compile Include="CurrencyServiceTest.cs" />
     <Compile Include="ModelsMapperTest.cs" />
@@ -127,11 +127,11 @@
     <Compile Include="Moq\UserPaymentMethodRepositoryMoq.cs" />
     <Compile Include="Moq\SettingRepositoryMoq.cs" />
     <Compile Include="Moq\UserRepositoryMoq.cs" />
+    <Compile Include="PaymentServiceTest.cs" />
     <Compile Include="SettingServiceTest.cs" />
     <Compile Include="UserServiceTests.cs" />
     <Compile Include="FeedbackServiceTest.cs" />
     <Compile Include="BllServiceTests\CurrencyRateServiceTest.cs" />
-    <Compile Include="CartControllerTests.cs" />
     <Compile Include="CartViewModelServiceTests.cs" />
     <Compile Include="Moq\TrackPriceRepositoryMoq.cs" />
     <Compile Include="Moq\TrackRepositoryMoq.cs" />
@@ -141,7 +141,6 @@
     <Compile Include="AlbumPriceServiceTest.cs" />
     <Compile Include="TrackPriceServiceTest.cs" />
     <Compile Include="TrackServiceTest.cs" />
-    <Compile Include="AdminCurrencyControllerTests.cs" />
     <Compile Include="UserPaymentMethodTest.cs" />
   </ItemGroup>
   <ItemGroup>

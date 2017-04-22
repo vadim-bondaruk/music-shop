@@ -11,6 +11,10 @@
     <label for="lastName">Поиск: </label>
     <input id="lastName">
 </div>
+Sort by: @Html.ActionLink("LastName", "UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"], sort = "LastName"}) |
+@Html.ActionLink("FirstName", "UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"], sort = "FirstName" }) |
+@Html.ActionLink("Login", "UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"], sort = "Login" }) |
+@Html.ActionLink("Email", "UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"], sort = "Email" })
 
 @Html.Partial("_UsersEdit", Model.Items)
 

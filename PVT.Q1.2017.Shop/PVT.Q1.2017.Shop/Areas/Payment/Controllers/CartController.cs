@@ -11,7 +11,7 @@
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.Infrastructure.Enums;
-
+    
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
@@ -186,6 +186,28 @@
             var cartService = ServiceFactory.GetCartService();
             cartService.RemoveAll(_currentUserId);
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
+        }
+
+        /// <summary>
+        /// Перемещает товары пользователя в купленные при успешной оплате
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize]
+        public ActionResult AcceptPayment()
+        {
+            var isAccepted = false;
+            if (Session["IsAccepted"] != null)
+            {
+                isAccepted = (bool)Session["IsAccepted"];
+            }
+            
+            if (isAccepted)
+            {
+                Session.Remove("IsAccepted");
+                AcceptPayment(isAccepted);
+            }
+            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>

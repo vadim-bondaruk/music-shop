@@ -37,9 +37,11 @@
 
             RuleFor(u => u.Password).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
+#if DEBUG
             RuleFor(u => u.Password)
                 .Matches(@"^(?=.*\w)(?=.*\d)(?=.*[!-*]).[^\s]*$")
                 .WithMessage("Пароль должен содержать символы латинского алфавита, цифры и спецсимволы");
+#endif
             RuleFor(u => u.Password).Length(4, 50)
                 .WithMessage("Пароль должен содержать не менее 4 символов");
 
