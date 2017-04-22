@@ -1,10 +1,12 @@
-﻿@using Shop.Common.Models
+﻿@using Shop.BLL.Utils
+@using Shop.Common.Models
+@using Shop.Infrastructure.Enums
 @model Shop.Common.ViewModels.AlbumTracksListViewModel
-@{ ViewBag.Title = Model.AlbumDetails.Name;}
+@{ ViewBag.Title = Model.AlbumDetails.Name; }
 <div class="album-details">
     <div class="common">
         <div class="left">
-            <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.AlbumDetails.Cover)" onerror="src = '/img/defuserpic.png'" />
+            <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.AlbumDetails.Cover)" onerror="src = '/img/defuserpic.png'"/>
         </div>
         <div class="right">
             <div>
@@ -13,27 +15,48 @@
                         <span class="glyphicon glyphicon-list-alt"></span> Треклист
                     </h3>
                 </div>
-                <div>
-                    <ol>
-                        @{
-                            if (Model.Tracks != null)
+                <table class="table">
+                    <tbody>
+                    @{
+                        if (Model.Tracks != null)
+                        {
+                            var i = 1;
+                            <tr>
+                                <th>#</th>
+                                <th>Трек</th>
+                            </tr>
+                            foreach (var track in Model.Tracks)
                             {
-                                foreach (var track in Model.Tracks)
-                                {
-                                    <li>@track.Name</li>
-                                }
+                                <tr>
+                                    <td>i</td>
+                                    <td>@track.Name</td>
+                                </tr>
+                                i++;
                             }
                         }
 
-                    </ol>
-                </div>
+                    }
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="buttons">
-            <a class="btn btn-primary" href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.AlbumDetails.Id })">
-                <span class="glyphicon glyphicon-pencil"></span> Правка
-            </a>
-        </div>
+        @{
+            var isAuthenticated = Request.IsAuthenticated;
+            if (isAuthenticated)
+            {
+                var currentUser = ((CurrentUser)User);
+                if (currentUser.IsInRole(UserRoles.Admin.ToString()))
+                {
+                    <div class="buttons">
+                        <a class="btn btn-primary" href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.AlbumDetails.Id })">
+                            <span class="glyphicon glyphicon-pencil"></span> Правка
+                        </a>
+                    </div>
+                }
+            }
+
+        }
+
     </div>
 </div>
 

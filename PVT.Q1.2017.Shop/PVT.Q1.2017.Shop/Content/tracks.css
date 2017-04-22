@@ -434,7 +434,9 @@ li > input { width: 100% }
     margin-top: 15px;
     height: 600px;
     background: #fff;
+    -ms-border-radius: 15px;
     border-radius: 15px;
+    -ms-opacity: 0.8;
     opacity: 0.8;
 }
 
@@ -450,8 +452,8 @@ li > input { width: 100% }
     font-size: 24px;
 }
 
-.album-details ol {
-    font-size: 18px;
+.album-details th {
+    text-align: center;
 }
 .album-details .details { display: inline-block; }
 
