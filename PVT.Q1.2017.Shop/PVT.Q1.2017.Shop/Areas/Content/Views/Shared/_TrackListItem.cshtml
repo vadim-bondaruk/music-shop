@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @using PVT.Q1._2017.Shop.Areas.Content.Extentions
 @using Shop.BLL.Utils
+@using Shop.DAL.Repositories
 @using Shop.Infrastructure.Enums
 @model Shop.Common.ViewModels.TrackDetailsViewModel
 
@@ -21,9 +22,9 @@
 
 }
 
-<li class="list-group-item">
+<li class="list-group-item" id="item-@Model.Id">
     <div class="left">
-        <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Image)" onerror="src = '/img/defuserpic.png'"/>
+        <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Image)" onerror="src = '/img/defuserpic.png'" />
         <div class="details">
             <div>
                 <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Name)</a>
@@ -31,7 +32,10 @@
             </div>
             <div>
                 @Html.Partial("_Stars", Model.Id)
-                @Html.Partial("Audio/AudioSection", Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id }))
+                <div style="width: 500px">
+                    <a id="preview-btn" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = Model.Id })', @Model.Id);"><i class="fa fa-play-circle" style="margin: 14px 0 0 10px"></i></a>
+                </div>
+                <audio></audio>
             </div>
         </div>
     </div>
@@ -44,5 +48,4 @@
 
         }
     </div>
-
 </li>

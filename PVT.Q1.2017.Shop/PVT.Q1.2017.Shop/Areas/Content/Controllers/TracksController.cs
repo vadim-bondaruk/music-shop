@@ -16,6 +16,15 @@
     /// </summary>
     public class TracksController : BaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TracksController"/> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        /// <param name="serviceFactory">
+        /// The service factory.
+        /// </param>
         public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
         }

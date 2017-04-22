@@ -2,6 +2,10 @@
 @model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.TrackDetailsViewModel>
 
 @{ ViewBag.Title = "Все треки"; }
+
+<audio controls id="audio-hidden" type="audio/mp3" autoplay="autoplay" style="display: none">
+</audio>
+
 <div class="tracks-list">
     <ul class="list-group">
         @foreach (var track in Model.Items)
@@ -9,9 +13,12 @@
             @Html.Partial("_TrackListItem", track)
         }
     </ul>
+
 </div>
 @Html.PageLinks(Model, i => Url.Action("List", "Tracks", new { page = i, area = "Content" }))
 
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet"/>
 }
+
+<script src="~/Scripts/get-audio.js"></script>
