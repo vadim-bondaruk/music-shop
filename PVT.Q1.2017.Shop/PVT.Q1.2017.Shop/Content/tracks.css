@@ -430,10 +430,29 @@ li > input { width: 100% }
 .album-edit input { cursor: default; }
 
 .album-details {
-    text-align: left;
+    text-align: center; 
     margin-top: 15px;
+    height: 600px;
+    background: #fff;
+    border-radius: 15px;
+    opacity: 0.8;
 }
 
+.album-details .common {
+    width: 1000px;
+    display: inline-block;
+}
+.album-details .panel-heading {
+    text-align: center;
+}
+
+.album-details .panel-title {
+    font-size: 24px;
+}
+
+.album-details ol {
+    font-size: 18px;
+}
 .album-details .details { display: inline-block; }
 
 .album-details h1, h2, h3 {
@@ -456,19 +475,16 @@ li > input { width: 100% }
     display: inline-block;
     vertical-align: top;
     padding-top: 2px;
-    width: 720px;
+    width: 500px;
     height: 400px;
 }
+
+.album-details .buttons { margin-top: 140px;}
+
 
 .album-details .tracklist-header {
     text-align: center;
     font-weight: bold;
-}
-
-.album-details .panel {
-    font-size: 18px;
-    height: 397px;
-    width: 100%;
 }
 
 #genres-title { margin-top: 1px; }
