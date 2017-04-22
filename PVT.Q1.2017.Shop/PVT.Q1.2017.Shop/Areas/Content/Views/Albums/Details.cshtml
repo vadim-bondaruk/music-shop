@@ -41,8 +41,7 @@
             </div>
         </div>
         @{
-            var isAuthenticated = Request.IsAuthenticated;
-            if (isAuthenticated)
+            if (Request.IsAuthenticated)
             {
                 var currentUser = ((CurrentUser)User);
                 if (currentUser.IsInRole(UserRoles.Admin.ToString()))
