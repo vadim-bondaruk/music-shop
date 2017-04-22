@@ -144,12 +144,12 @@
                     return null;
                 }
 
-                stream = Mp3StreamHelper.GetAudioSampleStream(
+                stream = Mp3StreamHelper.GetAudioStream(
                     this.Response,
                     this.Request,
                     track.Name,
                     track.Artist.Name,
-                    track.TrackFile);
+                    track.TrackFile, true);
             }
 
             return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
