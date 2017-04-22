@@ -27,9 +27,9 @@
                             </tr>
                             foreach (var track in Model.Tracks)
                             {
-                                <tr>
-                                    <td>i</td>
-                                    <td>@track.Name</td>
+                                <tr class="regular">
+                                    <td>@i</td>
+                                    <td style="text-align: left">@track.Name</td>
                                 </tr>
                                 i++;
                             }
