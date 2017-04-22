@@ -157,7 +157,7 @@
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
-                                                    Email, Sex, BirthDate, Country, PhoneNumber")] UserViewModel user)
+                                                    Email, Sex, BirthDate, CountryId, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
 
@@ -331,6 +331,15 @@
         public ActionResult Error()
         {
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetCountries()
+        {
+            using (var countries = RepositoryFactory.GetCountryRepository())
+            {
+                return Json(countries.GetAll(), JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
