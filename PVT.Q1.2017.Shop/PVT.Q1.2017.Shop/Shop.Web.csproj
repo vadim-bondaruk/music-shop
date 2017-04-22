@@ -307,7 +307,7 @@
     <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Areas\User\Views\Account\Confirm.cshtml" />
     <Content Include="Areas\User\Views\Account\Siterules.cshtml" />
-    <Content Include="Areas\User\Views\Manage\Delete.cshtml" />
+    <Content Include="Areas\User\Views\Manage\DeleteCurrentUserMessage.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangeAccepted.cshtml" />
     <Content Include="Areas\User\Views\Manage\_UsersEdit.cshtml" />
     <Content Include="Areas\User\Views\Manage\UsersEdit.cshtml" />
