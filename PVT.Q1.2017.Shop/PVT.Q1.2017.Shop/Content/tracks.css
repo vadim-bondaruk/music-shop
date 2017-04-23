@@ -891,28 +891,32 @@ a.tracks-list > ul {
     right: 10px;
 }
 
-.track-edit { text-align: left; }
+.track-edit { text-align: left;
+    background: #fff;
+    position: relative;
+}
 
 .track-edit img {
+    display: inline-block;
     border: solid;
     border-width: 1px;
     margin: 15px;
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     padding: 5px;
     vertical-align: top;
 }
 
 .track-edit ul {
     height: 500px;
-    width: 68%;
     margin-left: 10px;
     border: none
 }
 
 .track-edit div {
     display: inline-block;
-    width: 100%;
+    width: 250px;
+    vertical-align: top;
     background: white;
     margin-bottom: 20px
 }
@@ -922,6 +926,11 @@ a.tracks-list > ul {
     height: 50.6px;
     margin-top: 15px;
     padding: 2px 5px 2px 5px;
+}
+
+.track-edit .buttons {
+    position: absolute;
+    bottom: 1px;right: 15px;
 }
 
 .track-edit ul li input { height: 30px; }
