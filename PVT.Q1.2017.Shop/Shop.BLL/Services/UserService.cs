@@ -382,7 +382,7 @@
         {
             using (var repository = Factory.GetUserRepository())
             {
-                return repository.GetAll(pageNumber, count);
+                return repository.GetAll(pageNumber, count, u => u.Country);
             }
         }
 

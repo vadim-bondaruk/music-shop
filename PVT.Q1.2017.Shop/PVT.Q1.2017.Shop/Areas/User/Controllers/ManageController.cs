@@ -260,11 +260,15 @@
             User user;
             using (var repository = RepositoryFactory.GetUserRepository())
             {
-                user = repository.GetById(id);
+                user = repository.GetById(id, u => u.Country);
             }
 
             if (user != null)
             {
+                using (var countries = RepositoryFactory.GetCountryRepository())
+                {
+                    ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name", user.CountryId);
+                }
                 var editUser = UserMapper.GetUserEditView(user);
                 return View(editUser);
             }
