@@ -117,8 +117,8 @@ body {
 }
 
 #artist-img {
-    width: 500px;
-    height: 500px;
+    width: 200px;
+    height: 200px;
     display: inline-block;
 }
 
@@ -817,47 +817,75 @@ a.tracks-list > ul {
     margin-top: 8px;
 }
 
-.track-details {
-    text-align: center;
+.track-details .container {
     margin-top: 15px;
 }
 
-.track-details .common {
+.track-details .container .common {
     display: inline-block;
     width: 1020px;
     margin-bottom: 15px;
 }
 
-.track-details .panel {
+.track-details .container .panel {
     display: inline-block;
     text-align: center;
-    width: 500px;
-    height: 498px;
+    width: 800px;
+    height: 200px;
     margin: 1px 0 0 15px;
     border: none;
 }
 
-.track-details img {
+.track-details {
+    height: 800px;
+    background: #fff;
+    border-radius: 15px;
+    opacity: 0.9;
+}
+.track-details .container img {
+    width: 200px;
+    height: 200px;
     float: left;
     display: initial;
 }
 
-.track-details .panel .panel-body {
-
+.track-details .container .panel .panel-body {
+    padding: 5px;
     text-align: center;
-    padding-top: 80px;
 }
 
-.track-details .panel .panel-body .center, .album-details .panel .panel-body .center {
-    display: inline-block;
+.track-details .container .panel-heading {
+    position: relative;
+    width: 900px;
+}
+
+.track-details .container .panel .panel-body .center, .album-details .panel .panel-body .center {
     width: 370px;
     text-align: left;
-    font-size: 22px;
+    font-size: 17px;
 }
 
-.track-details .btn-group {
+.track-details .container .btn-group {
     margin-top: 55px;
     text-align: right;
+}
+
+    .track-details .buttons {
+        text-align: left !important;
+    }
+.track-details .albums-list li {
+    position: relative;
+}
+
+.track-details .albums-list .edit-btn .fa {
+     font-size: 14px;
+    display: inherit;
+}
+.track-details .albums-list .edit-btn {
+    position: absolute;
+    height: 24px;
+    top: 10px;
+    right: 10px;
 }
 
 .track-edit { text-align: left; }
