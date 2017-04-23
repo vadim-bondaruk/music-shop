@@ -16,8 +16,23 @@ body {
     padding-right: 15px;
 }
 
-
-
+.navbar-form {
+    width: 300px;
+}
+.input-group {
+    width: 300px;
+}
+#main-searchbox {
+    background: #222;
+    margin-top: -6px;
+}
+#main-search-btn {
+    background: #222;
+    padding: 0;
+    margin-top: 5.23px;
+    vertical-align: bottom;
+    display: block;
+}
 
 /* Set width on the form input elements since they're 100% wide by default */
 
