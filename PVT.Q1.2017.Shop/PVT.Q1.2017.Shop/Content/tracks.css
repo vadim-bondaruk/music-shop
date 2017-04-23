@@ -87,37 +87,8 @@
 }
 
 body {
-    display: block;
-    text-align: center;
     color: black;
     background-color: #dadada;
-}
-
-.form-control {
-    mso-border-shadow: yes;
-    border-color: black;
-    margin-top: 5px;
-    max-width: 100%;
-}
-
-.col-1 {
-    display: block;
-    margin-top: 25px;
-    width: 100%;
-    text-align: left;
-}
-
-.col-1 img {
-    display: inline-block;
-    width: 500px;
-    height: 500px;
-}
-
-.col-1 > .details {
-    display: inline-block;
-    vertical-align: top;
-    height: 500px;
-    width: 600px;
 }
 
 .album-new .list-back {
@@ -511,7 +482,7 @@ li > input { width: 100% }
 
 #genres-title { margin-top: 1px; }
 
-.genres-list .list-group { width: 100% }
+.genres-list .list-group {background: #fff;padding: 15px; width: 100%; text-align: center;border-radius: 15px; opacity: 0.8 }
 
 .genres-list .list-group .list-group-item {
     height: 48px;

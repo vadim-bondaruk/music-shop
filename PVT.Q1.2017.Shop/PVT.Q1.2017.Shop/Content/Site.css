@@ -19,18 +19,20 @@ body {
 .navbar-form {
     width: 300px;
 }
-.input-group {
-    width: 300px;
+
+.search-box {
+    padding-left: 0 !important;
+    margin-top: 7.9px !important;
+    padding-right: 0 !important;
+    width: 350px !important;
 }
-#main-searchbox {
-    background: #222;
-    margin-top: -1px;
+
+.search-group {
+    display: block !important;
 }
-#main-search-btn {
-    background: #222;
-    display: initial;
-    vertical-align: bottom;
-    display: block;
+
+.search-btn {
+    height: 34px !important;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
