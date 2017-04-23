@@ -191,5 +191,19 @@
         /// All tracks that the specified user have bought.
         /// </returns>
         PagedResult<PurchasedTrackViewModel> GetPurchasedTracks(int page, int pageSize, int userId);
+
+        /// <summary>
+        /// Return a track with the specified id purchased by the specified user.
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="userProfileId">
+        /// The user profile id.
+        /// </param>
+        /// <returns>
+        /// A track with the specified id purchased by the specified user if exists or <b>null</b>.
+        /// </returns>
+        PurchasedTrackViewModel GetPurchasedTrack(int trackId, int userProfileId);
     }
 }

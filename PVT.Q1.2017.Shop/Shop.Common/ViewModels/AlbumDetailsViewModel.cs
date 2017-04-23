@@ -1,6 +1,7 @@
 ﻿namespace Shop.Common.ViewModels
 {
     using System;
+    using System.ComponentModel;
 
     /// <summary>
     /// The album details view model.
@@ -15,6 +16,7 @@
         /// <summary>
         /// Album name.
         /// </summary>
+        [DisplayName("Название")]
         public string Name { get; set; }
 
         /// <summary>
@@ -25,16 +27,19 @@
         /// <summary>
         /// Album release date.
         /// </summary>
+        [DisplayName("Релиз")]
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
         /// The Artist. Optional.
         /// </summary>
+        [DisplayName("Исполнитель")]
         public ArtistViewModel Artist { get; set; }
 
         /// <summary>
         /// Album price.
         /// </summary>
+        [DisplayName("Стоимость")]
         public PriceViewModel Price { get; set; }
 
         /// <summary>
