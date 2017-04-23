@@ -46,41 +46,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        [Authorize]
-        public ContentResult PaymentWithCreditCard()
-        {
-            var paymentService = ServiceFactory.GetPaymentService();
-            var viewName = paymentService.CreatePaymentWithCreditCard();
-            return Content(viewName); // View("SuccessView");
-        }
-
-        /// <summary>
-        /// Демо реализация платежей PayPal
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Authorize]
-        public ActionResult PaymentWithPaypalDemo()
-        {
-            var paymentService = ServiceFactory.GetPaymentService();
-            var status = paymentService.PaymentWithPaypalDemo(Request, Session);
-
-            if (status.StartsWith("http"))
-            {
-                return Redirect(status);
-            }
-            if (status == "Success")
-            {
-                return RedirectToAction("Success", "Paypal", new { Area = "Payment"});
-            }
-            else
-            {
-                return RedirectToAction("Failure", "Paypal", new { Area = "Payment" });
-            }
-        }
-
+        
         /// <summary>
         /// Метод вызывает диалог оплаты для пользователя на стороне PayPal
         /// </summary>

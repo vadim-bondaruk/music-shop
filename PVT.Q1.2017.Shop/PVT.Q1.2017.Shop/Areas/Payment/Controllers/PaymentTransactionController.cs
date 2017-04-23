@@ -6,7 +6,6 @@
     using global::Shop.DAL.Infrastruture;
     using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.Common.ViewModels;
-    using global::Shop.BLL.Services.Infrastructure;
     using Helpers;
 
     [ShopAuthorize]

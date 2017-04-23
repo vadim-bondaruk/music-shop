@@ -16,12 +16,8 @@
     public interface IPaymentService
     {
 
-        string CreatePaymentWithCreditCard();
-
-        string PaymentWithPaypal(HttpRequestBase Request, HttpSessionStateBase Session, CartViewModel cart = null);
-
-        string PaymentWithPaypalDemo(HttpRequestBase Request, HttpSessionStateBase Session);
-
+        string PaymentWithPaypal(HttpRequestBase request, HttpSessionStateBase session, CartViewModel cart = null);
+        
         void CreatePaymentTransaction(CartViewModel cart);
 
         IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID);

@@ -11,10 +11,7 @@
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
-    using global::Shop.DAL.Infrastruture;
     using ViewModels;
-    using global::Shop.BLL.Utils;
-    using System;
 
     /// <summary>
     /// 

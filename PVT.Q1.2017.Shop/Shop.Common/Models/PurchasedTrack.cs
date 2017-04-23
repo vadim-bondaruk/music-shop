@@ -18,6 +18,16 @@
         public int TrackId { get; set; }
 
         /// <summary>
+        /// Currency ID
+        /// </summary>
+        public int CurrencyId { get; set; }
+
+        /// <summary>
+        /// Currency for transaction
+        /// </summary>
+        public virtual Currency Currency { get; set; }
+
+        /// <summary>
         /// User
         /// </summary>
         public virtual UserData User { get; set; }
