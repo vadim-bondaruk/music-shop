@@ -141,6 +141,7 @@
                 userUpdate.BirthDate = user.BirthDate;
                 userUpdate.Country = user.Country;
                 userUpdate.PhoneNumber = user.PhoneNumber;
+                userUpdate.CountryId = user.CountryId;
 
                 try
                 {
