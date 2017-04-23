@@ -16,7 +16,19 @@ body {
     padding-right: 15px;
 }
 
+.field-validation-error {
+    color: darkred;
+}
 
+.error {
+    font-size: 16px;
+    color: brown !important;
+}
+
+.error-header {
+    font-size: 36px !important;
+    color: brown;
+}
 
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -166,4 +178,8 @@ footer {
 .email-confirmed {
     text-align: left;
     margin-left: 15px;
+}
+
+.datecontrol {
+    /* please do not remove this style;it is used for editing dates */
 }

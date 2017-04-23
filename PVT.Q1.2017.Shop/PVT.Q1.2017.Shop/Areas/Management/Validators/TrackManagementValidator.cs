@@ -16,10 +16,8 @@
             RuleFor(t => t.Name).NotEmpty().WithMessage("Укажите название трека");
             RuleFor(t => t.Name).Matches(@"^\S+(\s\S+)*$").WithMessage("Название трека указано не корректно");
 
-            RuleFor(t => t.TrackFile).NotNull().WithMessage("Укажите файл трека");
-
-            RuleFor(t => t.Artist).NotNull().WithMessage("Не указан исполнитель трека");
-            RuleFor(t => t.Genre).NotNull().WithMessage("Не указан жанр трека");
+            RuleFor(t => t.ArtistId).NotNull().WithMessage("Не указан исполнитель трека");
+            RuleFor(t => t.GenreId).NotNull().WithMessage("Не указан жанр трека");
         }
     }
 }

@@ -3,6 +3,7 @@
     using System.Web.Mvc;
 
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
 
@@ -22,21 +23,51 @@
         }
 
         /// <summary>
+        /// Deletes the artist with the specified <paramref name="id"/> from the system.
         /// </summary>
-        /// <param name="viewModel">
-        ///     The view model.
+        /// <param name="id">
+        /// The artist id.
         /// </param>
         /// <returns>
+        /// The view which generates page for deleting artists in case if <paramref name="id"/> was specified;
+        /// otherwise redirects to the list of artists.
         /// </returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete([Bind(Include = "Id")] ArtistManagementViewModel viewModel)
+        public ActionResult Delete(int? id)
         {
-            using (var repo = RepositoryFactory.GetArtistRepository())
+            if (id == null || id <= 0)
             {
-                var artist = ManagementMapper.GetArtistModel(viewModel);
-                repo.Delete(artist);
-                repo.SaveChanges();
+                return RedirectToAction("List", "Artists", new { area = "Content" });
+            }
+
+            var artistService = ServiceFactory.GetArtistService();
+            var artist = ManagementMapper.GetArtistManagementViewModel(artistService.GetArtistDetails(id.Value));
+            if (artist == null)
+            {
+                return HttpNotFound($"Исполнитель с id = {id} не найден");
+            }
+
+            return View(artist);
+        }
+
+        /// <summary>
+        /// Deletes the specified artist from the system.
+        /// </summary>
+        /// <param name="artist">
+        /// The artist to delete.
+        /// </param>
+        /// <returns>
+        /// Redirects to the view which generates page with artists list.
+        /// </returns>
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Delete([Bind(Include = "Id,Name")] ArtistManagementViewModel artist)
+        {
+            if (artist != null)
+            {
+                using (var repository = RepositoryFactory.GetArtistRepository())
+                {
+                    repository.Delete(ManagementMapper.GetArtistModel(artist));
+                    repository.SaveChanges();
+                }
             }
 
             return RedirectToAction("List", "Artists", new { area = "Content" });
@@ -49,10 +80,20 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Edit(int id)
+        public virtual ActionResult Edit(int id = 0)
         {
+            if (id <= 0)
+            {
+                return RedirectToAction("List", "Artists", new { area = "Content" });
+            }
+
             var artistService = ServiceFactory.GetArtistService();
             var artist = ManagementMapper.GetArtistManagementViewModel(artistService.GetArtistDetails(id));
+            if (artist == null)
+            {
+                return HttpNotFound($"Исполнитель с id = {id} не найден");
+            }
+
             return View(artist);
         }
 
@@ -66,29 +107,32 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(
-            [Bind(Include = "Id, Name, Birthday, Biography, Photo, PostedPhoto")] ArtistManagementViewModel viewModel)
+            [Bind(Include = "Id, Name, Birthday, Biography, Photo, PostedPhoto")]
+            ArtistManagementViewModel viewModel)
         {
-            using (var repository = RepositoryFactory.GetArtistRepository())
+            if (ModelState.IsValid)
             {
-                var artist = ManagementMapper.GetArtistModel(viewModel);
-                repository.AddOrUpdate(artist);
-                repository.SaveChanges();
-                return RedirectToAction("Details", new { id = viewModel.Id, area = "Content" });
-            }
-        }
+                Artist currentArtist;
+                using (var repo = this.RepositoryFactory.GetArtistRepository())
+                {
+                    currentArtist = repo.GetById(viewModel.Id);
+                }
 
-        /// <summary>
-        ///     Shows all artists.
-        /// </summary>
-        /// <returns>
-        ///     All artists view.
-        /// </returns>
-        public ActionResult Index()
-        {
-            using (var repository = RepositoryFactory.GetArtistRepository())
-            {
-                return View(repository.GetAll());
+                if (currentArtist == null)
+                {
+                    return this.HttpNotFound($"Исполнитель с id = {viewModel.Id} не найден");
+                }
+
+                using (var repository = RepositoryFactory.GetArtistRepository())
+                {
+                    var artist = ManagementMapper.GetArtistModel(viewModel);
+                    repository.AddOrUpdate(artist);
+                    repository.SaveChanges();
+                    return RedirectToAction("Details", "Artists", new { id = viewModel.Id, area = "Content" });
+                }
             }
+
+            return View(viewModel);
         }
 
         /// <summary>
@@ -106,15 +150,22 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ArtistManagementViewModel viewModel)
+        public ActionResult New(
+            [Bind(Include = "Name, Birthday, Biography, Photo, PostedPhoto")]
+            ArtistManagementViewModel viewModel)
         {
-            var artist = ManagementMapper.GetArtistModel(viewModel);
-            using (var repository = RepositoryFactory.GetArtistRepository())
+            if (ModelState.IsValid)
             {
-                repository.AddOrUpdate(artist);
-                repository.SaveChanges();
-                return RedirectToAction("Details", new { area = "Content", Controller = "Artists", id = artist.Id });
+                var artist = ManagementMapper.GetArtistModel(viewModel);
+                using (var repository = RepositoryFactory.GetArtistRepository())
+                {
+                    repository.AddOrUpdate(artist);
+                    repository.SaveChanges();
+                    return RedirectToAction("Details", "Artists", new { area = "Content", id = artist.Id });
+                }
             }
+
+            return View(viewModel);
         }
     }
 }

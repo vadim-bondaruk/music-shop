@@ -9,17 +9,22 @@
     using FluentValidation.Mvc;
     using global::Shop.BLL.Utils;
     using global::Shop.Common.Models;
+    using NLog;
 
     /// <summary>
     ///     Base class in an ASP.NET application
     /// </summary>
     public class MvcApplication : HttpApplication
     {
+        private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         ///     Start application
         /// </summary>
         protected void Application_Start()
         {
+            _logger.Info("Music Shopt start...");
+
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
@@ -42,6 +47,7 @@
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
 
                 UserPrincipalSerializeModel serializeUser = serializer.Deserialize<UserPrincipalSerializeModel>(authTicket.UserData);
+                _logger.Debug($"authTicket: { authTicket.UserData }");
 
                 if (serializeUser != null)
                 {
@@ -53,9 +59,13 @@
                         UserRole = serializeUser.UserRole
                     };
 
+                    _logger.Debug($"User: id = { user.Id }, login = { user.Login }, e-mail = { user.Email }, role = { user.UserRole }");
+                    
                     CurrentUser newUser = new CurrentUser(user, serializeUser.UserProfileId, serializeUser.PriceLevelId);
 
-                    HttpContext.Current.User = newUser; 
+                    _logger.Debug($"User Data: ProfileId = { serializeUser.UserProfileId }, price level = { serializeUser.PriceLevelId }");
+
+                    HttpContext.Current.User = newUser;
                 }
             }
         }

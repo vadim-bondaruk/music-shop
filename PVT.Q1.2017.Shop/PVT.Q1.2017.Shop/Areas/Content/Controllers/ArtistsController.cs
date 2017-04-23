@@ -4,55 +4,15 @@
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-    using global::Shop.Infrastructure.Enums;
-
-    using PVT.Q1._2017.Shop.App_Start;
-
     using Shop.Controllers;
 
     /// <summary>
     ///     The artist controller.
     /// </summary>
-    [ShopAuthorize(UserRoles.Buyer, UserRoles.Admin, UserRoles.Seller)]
     public class ArtistsController : BaseController
     {
         public ArtistsController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-        }
-
-        /// <summary>
-        ///     Shows all artist albums
-        /// </summary>
-        /// <param name="id">
-        ///     The artist id.
-        /// </param>
-        /// <returns>
-        ///     All artist albums view.
-        /// </returns>
-        public ActionResult AlbumsList(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction("List", "Artists", new { area = "Content" });
-            }
-
-            ArtistAlbumsListViewModel artistAlbumsViewModel;
-            var artistService = ServiceFactory.GetArtistService();
-            if (CurrentUser != null && CurrentUserCurrency != null)
-            {
-                artistAlbumsViewModel = artistService.GetAlbums(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
-            }
-            else
-            {
-                artistAlbumsViewModel = artistService.GetAlbums(id.Value);
-            }
-
-            if (artistAlbumsViewModel == null)
-            {
-                return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
-            }
-
-            return View(artistAlbumsViewModel);
         }
 
         /// <summary>
@@ -62,12 +22,7 @@
         public ActionResult List(int page = 1, int pageSize = 10)
         {
             var artistsService = ServiceFactory.GetArtistService();
-            if (CurrentUser != null && CurrentUserCurrency != null)
-            {
-                return this.View(artistsService.GetDetailedArtistsList(page, pageSize));
-            }
-
-            return this.HttpNotFound("no user found");
+            return this.View(artistsService.GetDetailedArtistsList(page, pageSize));
         }
 
         /// <summary>
@@ -85,48 +40,22 @@
             }
 
             var artistService = ServiceFactory.GetArtistService();
-            var artistViewModel = artistService.GetArtistDetails(id.Value);
-            if (artistViewModel == null)
-            {
-                return HttpNotFound($"Артист с id = { id.Value } не найден");
-            }
-
-            return View(artistViewModel);
-        }
-
-        /// <summary>
-        ///     Shows all artist tracks.
-        /// </summary>
-        /// <param name="id">
-        ///     The artist id.
-        /// </param>
-        /// <returns>
-        ///     All artist tracks view.
-        /// </returns>
-        public ActionResult TracksList(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction("List", "Artists", new { area = "Content" });
-            }
-
-            ArtistTracksListViewModel artistTracksViewModel;
-            var artistService = ServiceFactory.GetArtistService();
+            ArtistContentViewModel artistViewModel;
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                artistTracksViewModel = artistService.GetTracks(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
+                artistViewModel = artistService.GetContent(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
             else
             {
-                artistTracksViewModel = artistService.GetTracks(id.Value);
+                artistViewModel = artistService.GetContent(id.Value);
             }
 
-            if (artistTracksViewModel == null)
+            if (artistViewModel == null)
             {
                 return HttpNotFound($"Исполнитель с id = { id.Value } не найден");
             }
 
-            return View(artistTracksViewModel);
+            return View(artistViewModel);
         }
     }
 }

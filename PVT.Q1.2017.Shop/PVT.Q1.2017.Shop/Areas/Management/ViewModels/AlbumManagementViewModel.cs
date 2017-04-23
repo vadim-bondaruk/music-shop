@@ -1,32 +1,28 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.ViewModels
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
+    using FluentValidation.Attributes;
+    using Validators;
 
-    using global::Shop.Common.Models;
 
     /// <summary>
     ///     The album view model.
     /// </summary>
+    [Validator(typeof(AlbumManagementValidator))]
     public class AlbumManagementViewModel
     {
         /// <summary>
-        ///     Gets or sets the artist.
-        /// </summary>
-        [DisplayName("Исполнитель")]
-        public Artist Artist { get; set; }
-
-        /// <summary>
         ///     Gets or sets the artist id.
         /// </summary>
-        public int ArtistId { get; set; }
+        public int? ArtistId { get; set; }
 
         /// <summary>
         ///     Gets or sets the artst name.
         /// </summary>
+        [DisplayName("Исполнитель")]
         public string ArtistName { get; set; }
 
         /// <summary>
@@ -57,5 +53,11 @@
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ReleaseDate { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the price.
+        /// </summary>
+        [DisplayName("Стоимость")]
+        public decimal? Price { get; set; }
     }
 }

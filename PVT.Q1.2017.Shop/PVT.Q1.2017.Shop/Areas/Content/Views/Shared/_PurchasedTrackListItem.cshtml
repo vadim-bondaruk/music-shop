@@ -1,6 +1,4 @@
-﻿@using System.Globalization
-@using PVT.Q1._2017.Shop.Areas.Content.Extentions
-@model Shop.Common.ViewModels.PurchasedTrackViewModel
+﻿@model Shop.Common.ViewModels.PurchasedTrackViewModel
 
 <li class="list-group-item">
     <div class="left">
@@ -11,7 +9,7 @@
                 <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Artist.Name)</a>
             </div>
             <div>
-                @Html.Partial("_Stars", Model.Id)
+                @Html.Partial("_Rating", Model.Rating)
                 @Html.Partial("Audio/AudioSection", Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id }))
             </div>
         </div>

@@ -1,97 +1,98 @@
-﻿@using Shop.BLL.Utils
-@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
+@using Shop.BLL.Utils
 @using Shop.Infrastructure.Enums
 @model ICollection<Shop.Common.ViewModels.TrackViewModel>
-@using PVT.Q1._2017.Shop.Helpers
-    
+
 @{
-    bool isAuthenticated = Request.IsAuthenticated;
-    int currentUserId = 0;
-    bool isAdmin = false;
-    bool isSeller = false;
-    bool isBuyer = false;
+    var isAuthenticated = Request.IsAuthenticated;
+    var currentUserId = 0;
+    var isAdmin = false;
+    var isSeller = false;
+    var isBuyer = false;
     if (isAuthenticated)
     {
-        var currentUser = ((CurrentUser) User);
+        var currentUser = ((CurrentUser)User);
         currentUserId = currentUser.Id;
         isAdmin = User.IsInRole(UserRoles.Admin.ToString());
         isSeller = User.IsInRole(UserRoles.Seller.ToString());
         isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString());
     }
-}
 
-<table class="table table-hover table-responsive">
-    @foreach (var track in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(track.Name, "Details", "Track", new
-                {
-                    id = track.Id,
-                    area = "Content"
-                }, new
-                {
-                    @class = "btn btn-link",
-                    title = "Нажмите, чтобы посмотреть подробную информацию о треке"
-                })
-            </td>
-            <td>
-                @Html.ActionLink(track.Artist.Name, "Details", "Artist", new
-                {
-                    id = track.Artist.Id,
-                    area = "Content"
-                }, new
-                {
-                    @class = "btn btn-link",
-                    title = "Нажмите, чтобы перейти к информации об исполнителе"
-                })
-            </td>
-            <td>
-                @Html.Partial("_Rating", track.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(m => track.Price)
-            </td>
-            @if (isAuthenticated)
-            {
-                if (isAdmin || (isSeller && (track.OwnerId <= 0m || track.OwnerId == currentUserId)))
-                {
-                    if (track.AlbumId > 0m)
+}
+<div class="tracks-list">
+    <ul class="list-group">
+
+        @foreach (var track in Model)
+        {
+            <li class="list-group-item">
+                <div class="left">
+                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(track.Image)" onerror="src = '/img/defuserpic.png'" />
+                    <div class="details">
+                        <div>
+                            <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Name)</a>
+                            <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Artist.Name)</a>
+                        </div>
+                        <div>
+                            @Html.Partial("_Rating", track.Rating)
+                        </div>
+                        <div class="albums-count">
+                            Альбомов с этим треком <span class="badge">@track.AlbumsCount</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right">
+                    @if (isAuthenticated)
                     {
-                        <td>
-                            @using (Html.BeginForm("RemoveTrack", "Album", new { area = "Management" }, FormMethod.Post))
+                        if (isAdmin || (isSeller && (track.OwnerId <= 0m || track.OwnerId == currentUserId)))
+                        {
+                            <div class="order-block">
+                                <div class="buy-btn">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            @if (track.AlbumId > 0m) //если отображается список треков из альбома
+                                            {
+                                                using (Html.BeginForm("RemoveTrack", "Albums", new { area = "Management" }, FormMethod.Post))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" value="@track.AlbumId" name="id" />
+                                                    <input type="hidden" value="@track.Id" name="trackId" />
+                                                    <input type="submit" value="Удалить из альбома" class="btn btn-primary" />
+                                                }
+                                            }
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })"
+                                               class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>Правка</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (isBuyer)
+                        {
+                            if (track.IsPurchased)
                             {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" value="@track.AlbumId" name="id"/>
-                                <input type="hidden" value="@track.Id" name="trackId"/>
-                                <input type="submit" value="Удалить из альбома" class="btn btn-sm btn-primary"/>
+                                @Html.ButtonWithIcon("btn btn-sm btn-success", "glyphicon glyphicon-music", "Прослушать",
+                                                     Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
                             }
-                        </td>
+                            else if (track.Price != null)
+                            {
+                                var price = string.Format("{0}{1}", track.Price.Amount, track.Price.Currency.Symbol ?? track.Price.Currency.ShortName);
+                                <div class="order-block">
+                                    <div class="buy-btn">
+                                        @Html.BtnBuyTrack(track.Id, track.IsOrdered, price)
+                                    </div>
+                                </div>
+                            }
+                        }
                     }
-                    else
+                    else if (track.Price != null)
                     {
-                        <td>
-                            @Html.BtnEditTrack(track.Id)
-                            @Html.BtnDeleteTrack(track.Id)
-                            @(track.Price != null ? Html.BtnEditTrackPrice(track.Id) : Html.BtnCreateTrackPrice(track.Id))
-                        </td>
+                        @Html.DisplayFor(m => track.Price)
                     }
-                }
-                else if (isBuyer)
-                {
-                    <td>
-                        @if (track.IsPurchased)
-                        {
-                            @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
-                                                 Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
-                        }
-                        else if (track.Price != null)
-                        {
-                            @Html.BtnBuyTrack(track.Id, track.IsOrdered)
-                        }
-                    </td>
-                }
-            }
-        </tr>
-    }
-</table>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

@@ -1,6 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Web.Mvc;
     using App_Start;
     using global::Shop.BLL.Services;
@@ -104,6 +106,12 @@
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
             }
+
+            if (Request.IsAjaxRequest())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
@@ -125,6 +133,11 @@
             {
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
@@ -150,6 +163,11 @@
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
             }
 
+            if (Request.IsAjaxRequest())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
@@ -171,6 +189,11 @@
             {
                 //Logger.Log("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });

@@ -28,7 +28,6 @@
         /// <param name="onclick">
         ///     On client click function. Optional.
         /// </param>
-        /// <param name="animate"></param>
         /// <returns>
         /// The button html.
         /// </returns>
@@ -38,8 +37,7 @@
             string iconClass,
             string text,
             string href,
-            string onclick = null,
-            bool animate = false)
+            string onclick = null)
         {
             TagBuilder builder;
             if (!string.IsNullOrWhiteSpace(href))
@@ -58,9 +56,7 @@
                 builder.Attributes["onclick"] = onclick;
             }
 
-            builder.InnerHtml = !animate
-                                    ? $"<span class=\"{iconClass}\"></span> {text}"
-                                    : $"<p><span class=\"{iconClass}\"></span> {text}</p>";
+            builder.InnerHtml = $"<div><span class=\"{iconClass}\"></span> <span class=\"button-with-icon-text\">{text}</span></div>";
             return MvcHtmlString.Create(builder.ToString());
         }
     }

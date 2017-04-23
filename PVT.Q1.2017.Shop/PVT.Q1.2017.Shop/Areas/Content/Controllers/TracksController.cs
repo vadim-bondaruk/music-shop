@@ -3,12 +3,13 @@
     using System.IO;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-
+    using App_Start;
     using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
-
+    using global::Shop.Infrastructure.Enums;
     using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
@@ -18,39 +19,6 @@
     {
         public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-        }
-
-        /// <summary>
-        ///     Shows all albums where the specified track is exist.
-        /// </summary>
-        /// <param name="id">The track id.</param>
-        /// <returns>
-        ///     All albums where the specified track is exist.
-        /// </returns>
-        public ActionResult AlbumsList(int? id)
-        {
-            if (id.GetValueOrDefault() <= 0)
-            {
-                return this.RedirectToAction("List", "Tracks", new { area = "Content" });
-            }
-
-            TrackAlbumsListViewModel trackAlbumsViewModel = null;
-            var trackService = ServiceFactory.GetTrackService();
-            if (this.CurrentUser != null && CurrentUserCurrency != null)
-            {
-                trackAlbumsViewModel = trackService.GetAlbums(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
-            }
-            else
-            {
-                trackAlbumsViewModel = trackService.GetAlbums(id.Value);
-            }
-
-            if (trackAlbumsViewModel == null)
-            {
-                return this.HttpNotFound($"Трек с id = {id.Value} не найден");
-            }
-
-            return this.View(trackAlbumsViewModel);
         }
 
         /// <summary>
@@ -67,15 +35,15 @@
                 return this.RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
-            TrackDetailsViewModel trackViewModel;
+            TrackAlbumsListViewModel trackViewModel;
             var trackService = ServiceFactory.GetTrackService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                trackViewModel = trackService.GetTrackDetails(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
+                trackViewModel = trackService.GetAlbums(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
             else
             {
-                trackViewModel = trackService.GetTrackDetails(id.Value);
+                trackViewModel = trackService.GetAlbums(id.Value);
             }
 
             if (trackViewModel == null)
@@ -84,36 +52,6 @@
             }
 
             return this.View(trackViewModel);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public FileStreamResult GetTrackAsStream(int id)
-        {
-            MemoryStream stream;
-            using (var repo = RepositoryFactory.GetTrackRepository())
-            {
-                var track = repo.GetById(id, p => p.Artist);
-
-                if (track == null)
-                {
-                    return null;
-                }
-
-                stream = Mp3StreamHelper.GetAudioStream(
-                    this.Response,
-                    this.Request,
-                    track.Name,
-                    track.Artist.Name,
-                    track.TrackFile);
-            }
-
-            return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
         }
 
         /// <summary>
@@ -127,16 +65,17 @@
             var trackService = ServiceFactory.GetTrackService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return this.View(trackService.GetDetailedTracksList(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return this.View(trackService.GetTracks(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return this.View(trackService.GetDetailedTracksList(page, pageSize));
+            return this.View(trackService.GetTracks(page, pageSize));
         }
 
         /// <summary>
         /// </summary>
         /// <returns>
         /// </returns>
+        [ShopAuthorize(UserRoles.Buyer, UserRoles.Customer)]
         public async Task<ActionResult> PurchasedList()
         {
             var trackService = ServiceFactory.GetTrackService();
@@ -148,6 +87,108 @@
             }
 
             return this.View(purchasedTracks);
+        }
+
+        /// <summary>
+        /// Loads the sample of the specified track.
+        /// </summary>
+        /// <param name="id">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// The track sample file.
+        /// </returns>
+        public ActionResult LoadSample(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            var trackService = ServiceFactory.GetTrackService();
+            var trackViewModel = trackService.GetTrackDetails(id.Value);
+            if (trackViewModel == null)
+            {
+                return HttpNotFound($"Трек с id = { id.Value } не найден");
+            }
+
+            return File(trackViewModel.TrackSample, "audio/mp3");
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        [ShopAuthorize]
+        public FileStreamResult GetTrackAsStream(int id = 0)
+        {
+            if (id <= 0)
+            {
+                return null;
+            }
+
+            MemoryStream stream = null;
+
+            if (CurrentUser.IsInRole(UserRoles.Admin))
+            {
+                // мы можем дать скачать и послушать все треки админу
+                Track track;
+                using (var repository = RepositoryFactory.GetTrackRepository())
+                {
+                    track = repository.GetById(id, t => t.Artist);
+                }
+
+                if (track != null)
+                {
+                    stream = Mp3StreamHelper.GetAudioStream(
+                                                            this.Response,
+                                                            this.Request,
+                                                            track.Name,
+                                                            track.Artist.Name,
+                                                            track.TrackFile);
+                }
+            }
+            else if (CurrentUser.IsInRole(UserRoles.Seller))
+            {
+                // мы можем дать скачать и послушать свои треки продавцу
+                Track track;
+                using (var repository = RepositoryFactory.GetTrackRepository())
+                {
+                    track = repository.FirstOrDefault(t => t.Id == id && (t.OwnerId == CurrentUser.UserProfileId || t.OwnerId == null), t => t.Artist);
+                }
+
+                if (track != null)
+                {
+                    stream = Mp3StreamHelper.GetAudioStream(
+                                                            this.Response,
+                                                            this.Request,
+                                                            track.Name,
+                                                            track.Artist.Name,
+                                                            track.TrackFile);
+                }
+            }
+            else
+            {
+                var trackService = ServiceFactory.GetTrackService();
+
+                // мы можем дать скачать и послушать только купленные треки для обычных пользователей
+                var purchasedTrack = trackService.GetPurchasedTrack(id, CurrentUser.UserProfileId);
+                if (purchasedTrack != null)
+                {
+                    stream = Mp3StreamHelper.GetAudioStream(
+                                                            this.Response,
+                                                            this.Request,
+                                                            purchasedTrack.Name,
+                                                            purchasedTrack.Artist.Name,
+                                                            purchasedTrack.TrackFile);
+                }
+            }
+            
+
+            return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
         }
     }
 }
