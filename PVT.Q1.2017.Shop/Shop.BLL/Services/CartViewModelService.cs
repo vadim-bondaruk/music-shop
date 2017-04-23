@@ -21,7 +21,7 @@
                 return false;
             }
 
-            userCart = CheckNull(userCart);
+            userCart = CheckCount(userCart);
 
             foreach (TrackDetailsViewModel anyTrack in userCart.Tracks)
             {
@@ -51,7 +51,7 @@
         /// </summary>
         /// <param name="userCart"></param>
         /// <returns>Корзина текущего пользователя</returns>
-        private static CartViewModel CheckNull(CartViewModel userCart)
+        private static CartViewModel CheckCount(CartViewModel userCart)
         {
             if (userCart.Tracks.Count > 0 || userCart.Albums.Count > 0)
             {
