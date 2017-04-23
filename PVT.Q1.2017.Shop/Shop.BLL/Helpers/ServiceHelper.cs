@@ -197,6 +197,11 @@
                 }
             }
 
+            using (var repository = factory.GetAlbumTrackRelationRepository())
+            {
+                trackViewModels.ForEach(t => t.AlbumsCount = repository.Count(r => r.TrackId == t.Id));
+            }
+
             using (var repository = factory.GetVoteRepository())
             {
                 trackViewModels.ForEach(t => t.Rating = repository.GetAverageMark(t.Id));

@@ -4,24 +4,24 @@
     ViewBag.Title = "Правка";
 }
 
-<body>
-
-@using (Html.BeginForm("Edit", "Albums", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg", @class = "edit-form" }))
+@using (Html.BeginForm("Edit", "Albums", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg"}))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
-    @Html.HiddenFor(m => m.Cover)
+    <input type="hidden" name="@Html.NameFor(m => m.ArtistId)" value="@Model.ArtistId"/>
 
-    <input type="hidden" name="@Html.NameFor(m => m.Artist.Id)" value="@Model.Artist.Id"/>
     <div class="album-edit">
         <div class="left">
             <img class="img-thumbnail" id="details-img" onclick="document.formreg.PostedCover.click()" onerror="src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Cover)"/>
             <div class="details" style="display: block; width: 100%;">
                 <ul class="list-group">
-                    <li class="list-group-item">
-                        @Html.DisplayNameFor(m => m.Artist)
-                        @Html.EditorFor(m => m.ArtistName, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель" }, value = Model.ArtistName })
-                    </li>
+                    @if (Model.ArtistId != null && Model.ArtistId > 0)
+                    {
+                        <li class="list-group-item">
+                            @Html.DisplayNameFor(m => m.ArtistName)
+                            @Html.EditorFor(m => m.ArtistName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control disabled", placeholder = "Исполнитель" }, value = Model.ArtistName })
+                        </li>
+                    }
                     <li class="list-group-item">
                         @Html.DisplayNameFor(m => m.Name)
                         @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Название", type = "text", value = Model.Name } })
@@ -29,6 +29,10 @@
                     <li class="list-group-item">
                         @Html.DisplayNameFor(m => m.ReleaseDate)
                         @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { @class = "form-control datecontrol", placeholder = "Дата выпуска", type = "text", value = Model.ReleaseDate } })
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(m => m.Price)
+                        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
                     </li>
                 </ul>
             </div>
@@ -39,17 +43,17 @@
             <ol class="list-group">
                 @foreach (var track in (ICollection<Track>)ViewBag.Tracks)
                 {
-                    <li class="list-group-items">
+                    <li class="list-group-item">
                         <input class="form-control" value="@track.Name" readonly="readonly"/>
                     </li>
                 }
             </ol>
         </div>
         <div class="buttons">
-            <a class="btn btn-primary" href="@Url.Action("New", "Tracks", new { area = "Management", id = Model.Id })">
+            <a class="btn btn-primary" href="@Url.Action("AddTracksToAlbum", "Albums", new { area = "Management", id = Model.Id })">
                 <span class="glyphicon glyphicon-plus"></span> Трек
             </a>
-            <a class="btn btn-danger" href="javascript:document.forms[1].submit()">
+            <a class="btn btn-danger" href="@Url.Action("Delete", "Albums", new { area = "Management", id = Model.Id })">
                 <span class="glyphicon glyphicon-remove"></span> Удалить
             </a>
             <button type="submit" class="btn btn-success">
@@ -59,15 +63,9 @@
     </div>
 }
 
-@using (Html.BeginForm("Delete", "Albums", FormMethod.Post, new { name = "delete-form", id = "btn-delete-form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
+@section scripts{
+    <script src="/Scripts/file-change.js" type="text/javascript"></script>
 }
-
-<script src="/Scripts/file-change.js" type="text/javascript"></script>
-
-</body>
 
 @section cssStyles{
     <link href="/Content/tracks.css" rel="stylesheet" type="text/css"/>

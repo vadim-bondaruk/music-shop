@@ -1,37 +1,78 @@
-﻿@using Shop.BLL.Utils
-@using Shop.Infrastructure.Enums
-@model Shop.Common.ViewModels.ArtistDetailsViewModel
+﻿@using Shop.Infrastructure.Enums
+@model Shop.Common.ViewModels.ArtistContentViewModel
 
-@{ ViewBag.Title = Model.Name; }
+@{
+    ViewBag.Title = Model.ArtistDetails.Name;
+
+    bool isAuthenticated = Request.IsAuthenticated;
+    bool isAdmin = false;
+    bool isSeller = false;
+    if (isAuthenticated)
+    {
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+    }
+}
 <div class="artist-details">
     <div class="inner">
-        <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Photo)" style="max-height: 300px; max-width: 300px" onerror="src = '/img/defuserpic.png'"/>
-        <p>@Html.DisplayFor(model => model.Biography, new { @readonly = "readonly", id = "ro-textarea" })</p>
-    </div>
-</div>
-
-<div style="margin: 15px 38px; text-align: right">
-    <div style="margin: 0; width: initial">
-        <a class="btn btn-primary"
-           href="@Url.Action("List", "Tracks", new { Area = "Content", id = Model.Id })">
-            <span class="glyphicon glyphicon-list-alt"></span> Слушать
-        </a>
-        @{
-            if (Request.IsAuthenticated)
-            {
-                var currentUser = ((CurrentUser)User);
-                if (currentUser.IsInRole(UserRoles.Admin.ToString()))
+        <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.ArtistDetails.Photo)"
+             style="max-height: 300px; max-width: 300px" onerror="src = '/img/defuserpic.png'"/>
+        <p>
+            <dl style="text-align: left">
+                @if (Model.ArtistDetails.Birthday != null)
                 {
-                    <a class="btn btn-primary" href="@Url.Action("Edit", "Artists", new { Area = "Management", id = Model.Id })">
-                        <span class="glyphicon glyphicon-pencil"></span> Правка
-                    </a>
+                    <dt>
+                        @Html.LabelFor(m => m.ArtistDetails.Birthday, "День рождения (основания группы)")
+                    </dt>
+
+                    <dd>
+                        @Html.ValueFor(m => m.ArtistDetails.Birthday, "{0:dd MMMM yyyy} г.")
+                    </dd>
                 }
-            }
 
-        }
+                <dt>
+                    @Html.LabelFor(m => m.ArtistDetails.Biography, "Биография")
+                </dt>
 
+                <dd>
+                    @Html.DisplayFor(model => model.ArtistDetails.Biography, new { @readonly = "readonly", id = "ro-textarea" })
+                </dd>
+            </dl>
+        </p>
     </div>
 </div>
+
+@if (isAdmin || isSeller)
+{
+    <div style="margin: 15px 38px; text-align: right">
+        <div style="margin: 0; width: initial">
+            <a class="btn btn-primary" href="@Url.Action("Edit", "Artists", new { Area = "Management", id = Model.ArtistDetails.Id })">
+                <span class="glyphicon glyphicon-pencil"></span> Правка
+            </a>
+        </div>
+    </div>
+}
+
+@if (Model.ArtistDetails.AlbumsCount > 0 || Model.ArtistDetails.TracksCount > 0)
+{
+    <div class="panel">
+        <div class="panel-body">
+            <ul class="nav nav-tabs nav-justified" id="tabsArtistContent">
+                <li class="active"><a href="#artistTracks">Треки <span class="badge">@Model.ArtistDetails.TracksCount</span></a></li>
+                <li><a href="#artistAlbums">Альбомы <span class="badge">@Model.ArtistDetails.AlbumsCount</span></a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="artistTracks">
+                    @Html.Partial("_TracksList", Model.Tracks)
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="artistAlbums">
+                    @Html.Partial("_AlbumsList", Model.Albums)
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section scripts
 {
@@ -39,5 +80,5 @@
 }
 
 @section cssStyles{
-    <link href="~/Content/tracks.css" rel="stylesheet"/>
+    <link href="~/Content/tracks.css" rel="stylesheet" /> 
 }

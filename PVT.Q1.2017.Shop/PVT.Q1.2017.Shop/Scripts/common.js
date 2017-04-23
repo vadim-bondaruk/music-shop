@@ -3,6 +3,15 @@
         return this.optional(element) || moment(value, "DD.MM.YYYY", true).isValid();
     }
 
+    $.validator.methods.range = function (value, element, param) {
+        var globalizedValue = value.replace(",", ".");
+        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    }
+
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+
     var date = new Date();
     date.setDate(date.getDate());
     $(".datecontrol").datepicker({
@@ -21,25 +30,95 @@
     });
 });
 
-function addAlbumToCart(sender, albumId) {
-    $(sender).addClass('disabled');
+function addAlbumToCart(sender, albumId, text, alternateText) {
+    var btn = $(sender);
+    btn.addClass('disabled');
     var root = getCurrentLocationRoot();
     $.post(root + "/Payment/Cart/AddAlbum", { albumId: albumId }, function () {
         updateOrdersCount();
+
+        btn.addClass('ordered');
+
+        if (alternateText) {
+            btn.find(".button-with-icon-text").text(alternateText);
+        }
+
+        btn.off("click").on("click", function() {
+            removeAlbumFromCart(sender, albumId, alternateText, text);
+        });
     }).fail(function () {
-        $(sender).removeClass('disabled');
         alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
+    }).always(function () {
+        btn.removeClass('disabled');
     });
 }
 
-function addTrackToCart(sender, trackId) {
-    $(sender).addClass('disabled');
+function removeAlbumFromCart(sender, albumId, text, alternateText) {
+    var btn = $(sender);
+    btn.addClass('disabled');
+    var root = getCurrentLocationRoot();
+    $.post(root + "/Payment/Cart/DeleteAlbum", { albumId: albumId }, function () {
+        updateOrdersCount();
+
+        btn.removeClass('ordered');
+
+        if (alternateText) {
+            btn.find(".button-with-icon-text").text(alternateText);
+        }
+
+        btn.off("click").on("click", function () {
+            addAlbumToCart(sender, albumId, alternateText, text);
+        });
+    }).fail(function () {
+        alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
+    }).always(function () {
+        btn.removeClass('disabled');
+    });
+}
+
+function addTrackToCart(sender, trackId, text, alternateText) {
+    var btn = $(sender);
+    btn.addClass('disabled');
     var root = getCurrentLocationRoot();
     $.post(root + "/Payment/Cart/AddTrack", { trackId: trackId }, function () {
         updateOrdersCount();
+
+        btn.addClass('ordered');
+
+        if (alternateText) {
+            btn.find(".button-with-icon-text").text(alternateText);
+        }
+
+        btn.off("click").on("click", function () {
+            removeTrackFromCart(sender, trackId, alternateText, text);
+        });
     }).fail(function () {
-        $(sender).removeClass('disabled');
         alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
+    }).always(function () {
+        btn.removeClass('disabled');
+    });
+}
+
+function removeTrackFromCart(sender, trackId, text, alternateText) {
+    var btn = $(sender);
+    btn.addClass('disabled');
+    var root = getCurrentLocationRoot();
+    $.post(root + "/Payment/Cart/DeleteTrack", { trackId: trackId }, function () {
+        updateOrdersCount();
+
+        btn.removeClass('ordered');
+
+        if (alternateText) {
+            btn.find(".button-with-icon-text").text(alternateText);
+        }
+
+        btn.off("click").on("click", function () {
+            addTrackToCart(sender, trackId, alternateText, text);
+        });
+    }).fail(function () {
+        alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
+    }).always(function () {
+        btn.removeClass('disabled');
     });
 }
 

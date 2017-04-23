@@ -8,6 +8,7 @@
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.BLL.Utils;
+    using NLog;
 
     /// <summary>
     /// 
@@ -15,6 +16,8 @@
     public class BaseController : Controller
     {
         private const string CURRENT_USER_CURRENCY_KEY = "UserCurrency";
+
+        private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         protected readonly IRepositoryFactory RepositoryFactory;
         protected readonly IServiceFactory ServiceFactory;
@@ -90,6 +93,20 @@
                 repository.AddOrUpdate(userData);
                 repository.SaveChanges();
             }
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            _logger.Error(filterContext.Exception);
+            if (!filterContext.ExceptionHandled)
+            {
+                filterContext.Result = this.RedirectToAction("Index", "Error", new { area = string.Empty });
+                filterContext.ExceptionHandled = true;
+
+                filterContext.HttpContext.Response.Clear();
+            }
+
+            base.OnException(filterContext);
         }
     }
 }

@@ -1,15 +1,12 @@
 ﻿@model PVT.Q1._2017.Shop.Areas.Management.ViewModels.TrackManagementViewModel
-<head>
-    <script src="/Scripts/file-change.js" type="text/javascript"></script>
-</head>
 @{
     ViewBag.Title = "Новый трек";
 }
-<body>
+
 @using (Html.BeginForm("New", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formreg" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Artist.Id)
+    @Html.HiddenFor(m => m.ArtistId)
 
     <div class="new-track" style="display: block; text-align: left">
 
@@ -21,8 +18,8 @@
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
             </li>
             <li class="list-group-item">
-                @Html.DisplayNameFor(m => m.Artist)
-                @Html.TextBoxFor(m => m.Artist.Name, new { PlaceHolder = "Исполнитель", @class = "form-control", ReadOnly = "true" })
+                @Html.DisplayNameFor(m => m.ArtistName)
+                @Html.TextBoxFor(m => m.ArtistName, new { PlaceHolder = "Исполнитель", @class = "form-control", ReadOnly = "true" })
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.ReleaseDate)
@@ -40,17 +37,28 @@
                 @Html.DisplayNameFor(m => m.PostedTrackFile)
                 <input placeholder="Файл" type="text" class="form-control" id="file-path" onclick="document.formreg.PostedTrackFile.click()"/>
             </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(m => m.PostedTrackSample)
+                <input placeholder="Sample" type="file" id="track-sample-file" name="PostedTrackSample" />
+            </li>
+            
+            <li class="list-group-item">
+                <div class="buttons">
+                    <button type="submit" class="btn btn-primary" id="btn-save">Сохранить</button>
+                </div>
+            </li>
         </ul>
-    </div>
 
-    <div class="buttons">
-        <button type="submit" class="btn btn-primary" id="btn-save">Сохранить</button>
+        
     </div>
     <input type="file" id="file" name="PostedImage" style="display: none"/>
     <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
 }
 
-</body>
+@section scripts
+{
+    <script src="/Scripts/file-change.js" type="text/javascript"></script>
+}
 
 @section cssStyles
 {

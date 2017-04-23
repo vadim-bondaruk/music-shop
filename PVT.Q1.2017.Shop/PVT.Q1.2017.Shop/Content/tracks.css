@@ -14,7 +14,8 @@
 .artist-edit { margin-bottom: 50px }
 
 .artist-edit img {
-    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
     vertical-align: top;
 }
 
@@ -163,11 +164,23 @@ img {
 }
 
 .artist-new ul textarea {
-    height: 358px;
-    max-height: 358px;
+    height: 300px;
+    max-height: 300px;
+}
+
+.artist-new {
+    text-align: left;
 }
 
 .artists-list .list-group { width: 100%; }
+
+.artists-list a {
+    color: black;
+}
+
+.artists-list .btn {
+    color: white !important;
+}
 
 .artists-list .list-group .list-group-item h3 {
     font-weight: bold;
@@ -191,8 +204,8 @@ img {
 
 .artists-list .list-group .list-group-item img {
     vertical-align: top;
-    width: 110px;
-    height: 110px;
+    max-width: 110px;
+    max-height: 110px;
 }
 
 .artists-list .list-group .list-group-item .text-box {
@@ -220,7 +233,7 @@ img {
     background: white;
     border: solid;
     border-width: 1px;
-    height: 650px;
+    height: 380px;
     overflow: auto;
     padding: 25px;
 }
@@ -303,8 +316,8 @@ li > input { width: 100% }
 .albums-list > ul > li img {
     float: left;
     /*margin: 15px 15px 90px 15px;*/
-    width: 100px;
-    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
     overflow: auto;
 }
 
@@ -599,6 +612,11 @@ a.tracks-list > ul {
     opacity: 0.8;
 }
 
+.albums-list li .order-block {
+    font-size: 18px;
+    text-align: left;
+}
+
 .order-block {
     display: block;
     text-align: center;
@@ -607,7 +625,8 @@ a.tracks-list > ul {
 
 .order-block .buy-btn { height: 100%; }
 
-.order-block .buy-btn button {
+.order-block .buy-btn button, 
+.buttons .buy-btn button {
     width: 120px;
     height: 35px;
     padding-top: 7px;
@@ -619,16 +638,32 @@ a.tracks-list > ul {
     color: black;
 }
 
-.order-block .buy-btn button p {
+.order-block .buy-btn button.ordered,
+.buttons .buy-btn button.ordered {
+    background: orangered;
+}
+
+.order-block .buy-btn button div,
+.buttons .buy-btn button div {
     color: black;
     font-size: 15px;
     font-weight: bold;
     font-family: sans-serif;
 }
 
-.order-block .buy-btn button:hover p { display: none; }
+.order-block .buy-btn button:hover div,
+.buttons .buy-btn button:hover div {
+    display: none;
+}
 
-.order-block .buy-btn button:hover:before { content: 'В корзину'; }
+.order-block .buy-btn button:hover:before,
+.buttons .buy-btn button:hover:before {
+    content: 'В корзину';
+}
+.order-block .buy-btn button.ordered:hover:before,
+.buttons .buy-btn button.ordered:hover:before {
+    content: 'Из корзины';
+}
 
 .order-block { display: inline-block; }
 
@@ -644,7 +679,14 @@ a.tracks-list > ul {
     font-size: 20px;
 }
 
-.tracks-list .artist-name { font-size: 15px; }
+.tracks-list .albums-count {
+    padding-top: 10px;
+}
+
+.tracks-list .artist-name, .tracks-list .albums-count {
+    font-size: 15px;
+    color: black;
+}
 
 .tracks-list img { display: inline-block; }
 
@@ -654,8 +696,17 @@ a.tracks-list > ul {
     width: 500px;
 }
 
+.feedback-details {
+    text-align: left !important;
+}
 
-.tracks-list div a { color: black; }
+.tracks-list div a, .track-details .panel-body a, .album-details .panel-body a, .feedback-details a {
+    color: black;
+}
+
+.tracks-list .btn, .track-details .btn, .album-details .btn, .feedback-details .btn {
+    color: #fff !important;
+}
 
 .tracks-list > ul > li { margin-left: 0; }
 
@@ -675,8 +726,8 @@ a.tracks-list > ul {
 }
 
 .tracks-list > ul > li > div > img {
-    height: 100px;
-    width: 100px;
+    max-height: 100px;
+    max-width: 100px;
 }
 
 .tracks-list > ul > li > div > a { color: black; }
@@ -709,10 +760,8 @@ a.tracks-list > ul {
 .track-details .common {
     display: inline-block;
     width: 1020px;
-    margin-bottom: 150px;
+    margin-bottom: 15px;
 }
-
-.track-details .buttons { margin-top: 135px; }
 
 .track-details .panel {
     display: inline-block;
@@ -734,7 +783,7 @@ a.tracks-list > ul {
     padding-top: 80px;
 }
 
-.track-details .panel .panel-body .center {
+.track-details .panel .panel-body .center, .album-details .panel .panel-body .center {
     display: inline-block;
     width: 370px;
     text-align: left;
@@ -783,8 +832,6 @@ a.tracks-list > ul {
 
 .track-edit audio { width: 100%; }
 
-.track-edit .buttons { margin: 40px 0 20px 0; }
-
 .inner-addon { position: relative; }
 
 .track-edit .inner-addon .glyphicon {
@@ -814,8 +861,7 @@ a.tracks-list > ul {
 
 .buttons {
     width: 100%;
-    text-align: center;
-    margin: 40px 0 40px 0;
+    text-align: center !important;
 }
 
 #preview-btn { cursor: pointer; }

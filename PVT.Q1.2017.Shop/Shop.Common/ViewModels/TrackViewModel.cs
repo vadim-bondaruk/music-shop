@@ -49,5 +49,15 @@
         /// Gets or sets a value indicating whether the track is purchased.
         /// </summary>
         public bool IsPurchased { get; set; }
+
+        /// <summary>
+        /// The track image.
+        /// </summary>
+        public byte[] Image { get; set; }
+
+        /// <summary>
+        /// The number of albums where the current track exist.
+        /// </summary>
+        public int AlbumsCount { get; set; }
     }
 }

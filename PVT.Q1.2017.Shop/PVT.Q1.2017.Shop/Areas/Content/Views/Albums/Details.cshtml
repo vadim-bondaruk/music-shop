@@ -1,64 +1,25 @@
-﻿@using Shop.BLL.Utils
-@using Shop.Common.Models
-@using Shop.Infrastructure.Enums
-@model Shop.Common.ViewModels.AlbumTracksListViewModel
-@{ ViewBag.Title = Model.AlbumDetails.Name; }
-<div class="album-details">
-    <div class="common">
-        <div class="left">
-            <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.AlbumDetails.Cover)" onerror="src = '/img/defuserpic.png'"/>
-        </div>
-        <div class="right">
-            <div>
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-list-alt"></span> Треклист
-                    </h3>
-                </div>
-                <table class="table">
-                    <tbody>
-                    @{
-                        if (Model.Tracks != null)
-                        {
-                            var i = 1;
-                            <tr>
-                                <th>#</th>
-                                <th>Трек</th>
-                            </tr>
-                            foreach (var track in Model.Tracks)
-                            {
-                                <tr class="regular">
-                                    <td>@i</td>
-                                    <td style="text-align: left">@track.Name</td>
-                                </tr>
-                                i++;
-                            }
-                        }
+﻿@model Shop.Common.ViewModels.AlbumTracksListViewModel
+@{
+    ViewBag.Title = Model.AlbumDetails.Name;
+}
 
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        @{
-            if (Request.IsAuthenticated)
-            {
-                var currentUser = ((CurrentUser)User);
-                if (currentUser.IsInRole(UserRoles.Admin.ToString()))
-                {
-                    <div class="buttons">
-                        <a class="btn btn-primary" href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.AlbumDetails.Id })">
-                            <span class="glyphicon glyphicon-pencil"></span> Правка
-                        </a>
-                    </div>
-                }
+<div>
+    @{
+        Html.RenderPartial("_AlbumDetails", Model.AlbumDetails);
+    }
+
+    <div class="panel">
+        <div class="panel-body" style="text-align: left">
+            <h2>Треклист  <span class="badge">@Model.AlbumDetails.TracksCount</span></h2>
+            @{
+                Html.RenderPartial("_TracksList", Model.Tracks);
             }
-
-        }
-
+        </div>
     </div>
 </div>
 
+
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet"/>
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
 }

@@ -328,6 +328,44 @@
             return new PagedResult<PurchasedTrackViewModel>(trackViewModels, pageSize, page, tracks.TotalItemsCount);
         }
 
+        /// <summary>
+        /// Return a track with the specified id purchased by the specified user.
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// A track with the specified id purchased by the specified user if exists or <b>null</b>.
+        /// </returns>
+        public PurchasedTrackViewModel GetPurchasedTrack(int trackId, int userId)
+        {
+            PurchasedTrack track;
+            using (var repository = Factory.GetPurchasedTrackRepository())
+            {
+                track = repository.FirstOrDefault(
+                                                  p => p.UserId == userId && p.TrackId == trackId,
+                                                  p => p.Track,
+                                                  p => p.Track.Artist,
+                                                  p => p.Track.Genre);
+            }
+
+            if (track == null)
+            {
+                return null;
+            }
+
+            var trackViewModel = ModelsMapper.GetPurchasedTrackViewModel(track.Track);
+            using (var repository = Factory.GetVoteRepository())
+            {
+                trackViewModel.Rating = repository.GetAverageMark(track.Id);
+            }
+
+            return trackViewModel;
+        }
+
         private TrackAlbumsListViewModel CreateTrackAlbumsListViewModel(int trackId, int? currencyCode, int? priceLevel = null, int? userId = null)
         {
             return new TrackAlbumsListViewModel
@@ -357,8 +395,13 @@
 
         private TrackDetailsViewModel CreateTrackDetailsViewModel(Track track, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
-            var trackViewModel = ModelsMapper.GetTrackDetailsViewModel(track);
+            if (track == null)
+            {
+                return null;
+            }
 
+            var trackViewModel = ModelsMapper.GetTrackDetailsViewModel(track);
+            
             if (currencyCode == null)
             {
                 currencyCode = ServiceHelper.GetDefaultCurrency(Factory).Code;

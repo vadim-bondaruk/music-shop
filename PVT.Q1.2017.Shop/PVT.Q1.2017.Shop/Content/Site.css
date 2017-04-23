@@ -16,6 +16,14 @@ body {
     padding-right: 15px;
 }
 
+.field-validation-error {
+    color: darkred;
+}
+
+.error {
+    font-size: 16px;
+    color: brown !important;
+}
 .navbar-form {
     width: 300px;
 }
@@ -27,6 +35,10 @@ body {
     width: 350px !important;
 }
 
+.error-header {
+    font-size: 36px !important;
+    color: brown;
+}
 .search-group {
     display: block !important;
 }
@@ -182,4 +194,8 @@ footer {
 .email-confirmed {
     text-align: left;
     margin-left: 15px;
+}
+
+.datecontrol {
+    /* please do not remove this style;it is used for editing dates */
 }

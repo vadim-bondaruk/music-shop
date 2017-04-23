@@ -112,6 +112,10 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.6\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -290,17 +294,11 @@
     <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Success.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\List.cshtml" />
-    <Content Include="Areas\Content\Views\Artist\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Album\List.cshtml" />
-    <Content Include="Areas\Content\Views\Album\Details.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
     <Content Include="Areas\Content\Views\Albums\Details.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_TrackListItem.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\MiniPlayer.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\PurchasedList.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\Index.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\_Index.cshtml" />
     <Content Include="Areas\Payment\Views\PaymentTransaction\Details.cshtml" />
@@ -319,11 +317,16 @@
     <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
     <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_PagedAlbumsList.cshtml" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Views\Shared\_AlbumDetails.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\Delete.cshtml" />
+    <Content Include="Areas\Management\Views\Tracks\Delete.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PurchasedTrackListItem.cshtml" />
+    <Content Include="Areas\Management\Views\Artists\Delete.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
-    <Content Include="Areas\Content\Views\Track\List.cshtml" />
-    <Content Include="Areas\Content\Views\Track\Details.cshtml" />
     <Content Include="Areas\User\Views\Account\Confirm.cshtml" />
     <Content Include="Areas\User\Views\Account\Siterules.cshtml" />
     <Content Include="Areas\User\Views\Manage\DeleteCurrentUserMessage.cshtml" />
@@ -339,22 +342,17 @@
     <Content Include="Areas\Management\Views\Genres\New.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\Edit.cshtml" />
     <Content Include="Areas\Management\Views\Tracks\New.cshtml" />
-    <Content Include="Areas\Content\Views\Artists\AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Artists\Details.cshtml" />
     <Content Include="Areas\Content\Views\Artists\List.cshtml" />
-    <Content Include="Areas\Content\Views\Artists\TracksList.cshtml" />
     <Content Include="Areas\Content\Views\Genres\Details.cshtml" />
     <Content Include="Areas\Content\Views\Genres\List.cshtml" />
-    <Content Include="Areas\Content\Views\Tracks\AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Tracks\List.cshtml" />
     <Content Include="Areas\Content\Views\Albums\List.cshtml" />
-    <Content Include="Areas\Content\Views\Albums\TracksList.cshtml" />
     <Content Include="Mvc.sitemap" />
-    <Content Include="Areas\Content\Views\Shared\_NotFound.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\PlayButtonPartial.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\AudioSection.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Album\AddTracksToAlbum.cshtml" />
+    <Content Include="Areas\Management\Views\Albums\AddTracksToAlbum.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_AlbumsList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_TracksList.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -365,9 +363,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Areas\Management\Views\Album\Create.cshtml" />
     <Content Include="Areas\Content\Views\Feedbacks\Details.cshtml" />
-    <Content Include="Areas\Content\Views\Shared\_PagedTracksList.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -386,9 +382,6 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -424,21 +417,17 @@
     <Compile Include="Areas\Content\Extentions\ButtonsHelper.cs" />
     <Compile Include="Areas\Content\Extentions\BuyButtonHelper.cs" />
     <Compile Include="Areas\Content\Extentions\ManagementButtonsHelper.cs" />
-    <Compile Include="Areas\Content\Extentions\PriceButtonHelper.cs" />
     <Compile Include="Areas\Content\Controllers\FeedbacksController.cs" />
-    <Compile Include="Areas\Management\Controllers\AlbumController.cs" />
-    <Compile Include="Areas\Management\Controllers\AlbumPriceController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
     <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
-    <Compile Include="Areas\Management\Controllers\TrackController.cs" />
-    <Compile Include="Areas\Management\Controllers\TrackPriceController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
     <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Management\Helpers\ManagementMapper.cs" />
     <Compile Include="Areas\Management\Validators\AlbumManagementValidator.cs" />
+    <Compile Include="Areas\Management\Validators\ArtistManagementValidator.cs" />
     <Compile Include="Areas\Management\Validators\TrackManagementValidator.cs" />
     <Compile Include="Areas\Management\ViewModels\AlbumManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\ArtistManagementViewModel.cs" />
@@ -453,8 +442,6 @@
     <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
     <Compile Include="Areas\Payment\Helpers\PaymentMapper.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
-    <Compile Include="Areas\Content\Controllers\AlbumController.cs" />
-    <Compile Include="Areas\Content\Controllers\ArtistController.cs" />
     <Compile Include="Areas\User\Helpers\UserMapper.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CurrencyController.cs" />
@@ -463,7 +450,6 @@
     <Compile Include="Areas\User\Controllers\ManageController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Areas\Content\Controllers\TrackController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -508,6 +494,8 @@
     <Content Include="Views\Shared\DisplayTemplates\PriceViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\RatingViewModel.cshtml" />
     <Content Include="Views\Shared\_UserMenuPartial.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\_TrackDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -516,13 +504,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Management\Views\Artist\" />
-    <Folder Include="Areas\Management\Views\Track\" />
     <Folder Include="Areas\News\Models\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />
-    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
