@@ -181,7 +181,7 @@
         /// GET: User/Manage/Delete 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Delete()
+        public ActionResult DeleteCurrentUserMessage()
         {
             return View();
         }
@@ -192,7 +192,7 @@
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int? Id)
+        public ActionResult DeleteCurrentUser()
         {
             try
             {
@@ -241,6 +241,7 @@
         /// </summary>
         /// <param name="term"></param>
         /// <returns></returns>
+        [HttpPost]
         public ActionResult GetLastNameMatchingData(string term)
         {
             var userService = ServiceFactory.GetUserService();
@@ -303,7 +304,26 @@
                 }
             }
 
-            return RedirectToAction("UsersEdit", new { controller = "Manage", area = "User", id = TempData["CurrentPage"] });
+            return RedirectToAction("UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"] });
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id != null)
+            {
+                try
+                {
+                    var userService = ServiceFactory.GetUserService();
+                    userService.SoftDelete(id.Value);
+                }
+                catch (Exception)
+                {
+                    // Write data to log
+                    throw;
+                }
+            }
+            return RedirectToAction("UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"] });
         }
     }
 }
