@@ -11,6 +11,7 @@
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.Infrastructure.Enums;
+    using NLog;
 
     /// <summary>
     /// Контоллер для корзины покупателя
@@ -33,6 +34,8 @@
         /// </summary>
         private CurrencyViewModel _userCurrency;
 
+        private Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CartController"/> class.
         /// </summary>
@@ -51,7 +54,6 @@
         /// Действие для отображения корзины
         /// </summary>
         [HttpGet]
-        //TODO: отлавливать в параметре контроллера статус оплаты.
         public ViewResult Index()
         {
             using (var cartRepository = RepositoryFactory.GetCartRepository())
@@ -96,7 +98,7 @@
             }
             catch (InvalidAlbumIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
             }
 
@@ -124,7 +126,7 @@
             }
             catch (InvalidAlbumIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
             }
 
@@ -152,7 +154,7 @@
             }
             catch (InvalidTrackIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
             }
 
@@ -180,7 +182,7 @@
             }
             catch (InvalidTrackIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
             }
 
