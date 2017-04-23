@@ -228,7 +228,7 @@
             if (isAccepted)
             {
                 Session.Remove("IsAccepted");
-                AcceptPayment(isAccepted);
+                return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment", isAccepted } );
             }
             return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
