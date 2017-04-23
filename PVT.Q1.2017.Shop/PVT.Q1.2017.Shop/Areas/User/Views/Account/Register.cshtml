@@ -4,14 +4,13 @@
     ViewBag.Title = "Регистрация";
 }
 
-<h3>Хочется музыки? Регистрируйся, гражданин</h3>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Заполняем форму:</h4>
+        <h4>Для регистрации заполните пожалуйста форму:</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -110,7 +109,8 @@
     @Html.ActionLink("На главную", "Index", new { area = "", controller = "Home" })
 </div>
 
-@System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
 
 
     <script>
@@ -118,6 +118,7 @@
             $("#input1").inputmask("+(999 99)999-99-99");
         });
     </script>
+
 
 
 
