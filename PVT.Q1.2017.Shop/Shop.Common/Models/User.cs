@@ -48,11 +48,11 @@
         /// Users role in this shop
         /// </summary>
         public UserRoles UserRole { get; set; }
-
+        public int? CountryId { get; set; }
         /// <summary>
         /// Users country
         /// </summary>
-        public string Country { get; set; }
+        public Country Country { get; set; }
 
         /// <summary>
         /// The phone number

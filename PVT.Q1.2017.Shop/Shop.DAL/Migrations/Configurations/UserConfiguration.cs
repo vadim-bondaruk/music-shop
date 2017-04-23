@@ -17,7 +17,7 @@
             HasKey(t => t.Id);
             Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(p => p.BirthDate).IsOptional();
-            Property(p => p.Country).IsOptional().HasMaxLength(15);
+           // Property(p => p.Country).IsOptional().HasMaxLength(15);
             Property(p => p.Email).IsRequired().HasMaxLength(40);
             Property(p => p.FirstName).IsRequired().HasMaxLength(15).IsUnicode();
             Property(p => p.LastName).IsRequired().HasMaxLength(25).IsUnicode();
