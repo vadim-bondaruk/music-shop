@@ -70,9 +70,7 @@
     height: 700px;
 }
 
-.genre-details .buttons {
-    margin-top: 20px;
-}
+.genre-details .buttons { margin-top: 20px; }
 
 
 .page-title {
@@ -487,7 +485,10 @@ li > input { width: 100% }
     width: 810px;
 }
 
-.album-details .right .panel .buttons { margin-top: 0;  text-align: left !important; }
+.album-details .right .panel .buttons {
+    margin-top: 0;
+    text-align: left !important;
+}
 
 
 .album-details .buttons {
@@ -534,9 +535,7 @@ li > input { width: 100% }
     padding: 0;
 }
 
-.album-details .tracks-list .buy-btn {
-    margin-top: -10px;
-}
+.album-details .tracks-list .buy-btn { margin-top: -10px; }
 
 .album-details .scrollable {
     width: 1050px;
@@ -744,9 +743,10 @@ a.tracks-list > ul {
     display: inline-block;
     width: 88%;
 }
-
-
-
+.tracks-list li {
+    height: 80px;
+    padding: 0;
+}
 .tracks-list .track-name {
     font-weight: bold;
     font-size: 20px;
@@ -754,9 +754,11 @@ a.tracks-list > ul {
 
 .tracks-list .albums-count { padding-top: 10px; }
 
-.tracks-list .artist-name, .tracks-list .albums-count {
+.tracks-list .artist-name, .albums-count {
     font-size: 15px;
     color: black;
+    display: inline-block;
+    margin-left: 15px;
 }
 
 .tracks-list img { display: inline-block; }
@@ -764,7 +766,11 @@ a.tracks-list > ul {
 .tracks-list .details {
     display: inline-block;
     vertical-align: top;
-    width: 500px;
+    width: 700px;
+}
+
+.tracks-list .buy-btn {
+    margin-top: -28px;
 }
 
 .feedback-details { text-align: left !important; }
@@ -791,8 +797,8 @@ a.tracks-list > ul {
 }
 
 .tracks-list > ul > li > div > img {
-    max-height: 100px;
-    max-width: 100px;
+    width: 80px;
+    height: 80px;
 }
 
 .tracks-list > ul > li > div > a { color: black; }
@@ -817,9 +823,7 @@ a.tracks-list > ul {
     margin-top: 8px;
 }
 
-.track-details .container {
-    margin-top: 15px;
-}
+.track-details .container { margin-top: 15px; }
 
 .track-details .container .common {
     display: inline-block;
@@ -842,6 +846,7 @@ a.tracks-list > ul {
     border-radius: 15px;
     opacity: 0.9;
 }
+
 .track-details .container img {
     width: 200px;
     height: 200px;
@@ -870,17 +875,15 @@ a.tracks-list > ul {
     text-align: right;
 }
 
-    .track-details .buttons {
-        text-align: left !important;
-    }
-.track-details .albums-list li {
-    position: relative;
-}
+.track-details .buttons { text-align: left !important; }
+
+.track-details .albums-list li { position: relative; }
 
 .track-details .albums-list .edit-btn .fa {
-     font-size: 14px;
+    font-size: 14px;
     display: inherit;
 }
+
 .track-details .albums-list .edit-btn {
     position: absolute;
     height: 24px;
