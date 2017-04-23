@@ -70,14 +70,18 @@ body {
     height: 25px;
 }
 
+.navbar-collapse {
+     width: 1250px !important;
+}
+
 .navbar-inverse .navbar-brand {
     color: white;
-    margin-left: 30px;
     font-size: 28px !important;
     text-shadow: 1px 1px 10px;
 }
 
 .container .navbar-collapse form {
+   
     margin-right: 40px;
 }
 
