@@ -1,7 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Net;
     using System.Web.Mvc;
     using App_Start;
@@ -13,7 +11,7 @@
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.Infrastructure.Enums;
-    
+
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
@@ -46,12 +44,7 @@
         /// </param>
         public CartController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            _viewModel = new CartViewModel
-            {
-                Tracks = new List<TrackDetailsViewModel>(),
-                Albums = new List<AlbumDetailsViewModel>(),
-                IsEmpty = true
-            };
+            _viewModel = new CartViewModel();
         }
 
         /// <summary>
