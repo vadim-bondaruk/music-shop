@@ -107,7 +107,7 @@
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
             }
 
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
@@ -135,7 +135,7 @@
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
             }
 
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
@@ -163,7 +163,7 @@
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
             }
 
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
@@ -191,7 +191,7 @@
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
             }
 
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
