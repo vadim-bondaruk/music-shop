@@ -59,7 +59,7 @@
     margin-top: 50px;
     padding: 20px;
     background: #fff;
-    opacity: 0.8;
+    opacity: 0.9;
     height: 800px;
     border-radius: 15px;
 }
@@ -343,7 +343,7 @@ li > input { width: 100% }
     padding-top: 4px;
     margin-top: 5px;
     overflow: hidden;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .albums-list .details .label a {
@@ -391,7 +391,9 @@ li > input { width: 100% }
 
 .album-edit {
     text-align: left;
-    background: white;
+    background: #fff;
+    opacity: 0.9;
+    border-radius: 15px;
     border: solid;
     border-width: 1px;
     height: 650px;
@@ -431,6 +433,10 @@ li > input { width: 100% }
 
 .album-edit input { cursor: default; }
 
+.album-edit .buttons {
+    margin-top: -30px;
+}
+
 .album-details {
     text-align: center;
     margin-top: 15px;
@@ -439,8 +445,8 @@ li > input { width: 100% }
     background: #fff;
     -ms-border-radius: 15px;
     border-radius: 15px;
-    -ms-opacity: 0.8;
-    opacity: 0.8;
+    -ms-opacity: 0.9;
+    opacity: 0.9;
 }
 
 .album-details .common {
@@ -495,7 +501,7 @@ li > input { width: 100% }
 
 #genres-title { margin-top: 1px; }
 
-.genres-list .list-group {background: #fff;padding: 15px; width: 100%; text-align: center;border-radius: 15px; opacity: 0.8 }
+.genres-list .list-group {background: #fff;padding: 15px; width: 100%; text-align: center;border-radius: 15px; opacity: 0.9 }
 
 .genres-list .list-group .list-group-item {
     height: 48px;
@@ -520,7 +526,7 @@ li > input { width: 100% }
     box-shadow: 0 0 5px orange;
 }
 
-.genres-list ul li { opacity: 0.8 }
+.genres-list ul li { opacity: 0.9 }
 
 .vertical {
     display: inline-block;
@@ -580,7 +586,7 @@ li > input { width: 100% }
     margin-top: 5px;
     border: solid;
     border-width: 1px;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .artists-list ul li:hover {
@@ -609,7 +615,7 @@ a.tracks-list > ul {
     height: 60px;
     width: 100%;
     text-align: left;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .albums-list li .order-block {
