@@ -6,10 +6,10 @@
 
 <h3>@ViewBag.Title</h3>
 
-<input type="button" class="btn" value="Редактировать данные профиля" onclick="location.href='@Url.Action("UpdatePersonal", "Manage")'" />
-<input type="button" class="btn" value="Изменить пароль" onclick="location.href='@Url.Action("ChangePassword", "Manage")'" />
-<input type="button" class="btn" value="Изменить логин" onclick="location.href='@Url.Action("ChangeLogin", "Manage")'" />
-<input type="button" class="btn" value="Удалить аккаунт" onclick="location.href='@Url.Action("Delete", "Manage")'" />
+<input type="button" class="btn" value="Редактировать данные профиля" onclick="location.href='@Url.Action("UpdatePersonal", "Manage", new { area = "User"})'" />
+<input type="button" class="btn" value="Изменить пароль" onclick="location.href='@Url.Action("ChangePassword", "Manage", new { area = "User"})'" />
+<input type="button" class="btn" value="Изменить логин" onclick="location.href='@Url.Action("ChangeLogin", "Manage", new { area = "User"})'" />
+<input type="button" class="btn" value="Удалить аккаунт" onclick="location.href='@Url.Action("DeleteCurrentUserMessage", "Manage", new { area = "User"})'" />
 
 @using (Html.BeginForm()) 
 {

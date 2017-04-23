@@ -52,7 +52,7 @@
                 Password = "12345",
                 BirthDate = DateTime.Now.AddYears(-30),
                 PhoneNumber = "+37529 123-56-78",
-                Country = "Belarus"
+                CountryId = 1
             };
 
             var registered = _service.RegisterUser(user);
@@ -197,7 +197,7 @@
                 LastName = "Ivanov",
                 Sex = "M",
                 BirthDate = DateTime.Now,
-                Country = "Belarus",
+                CountryId = 1,
                 PhoneNumber = "+37529 123-56-78"
             };
 
@@ -208,7 +208,7 @@
                 Sex = "W",
                 BirthDate = DateTime.Now.AddYears(-30),
                 PhoneNumber = "+37529 123-56-78",
-                Country = "Belarus"
+                CountryId = 1
             };
 
             Mock.Get(_factory.GetUserRepository())

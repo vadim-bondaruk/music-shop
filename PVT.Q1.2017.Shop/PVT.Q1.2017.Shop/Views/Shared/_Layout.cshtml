@@ -12,9 +12,8 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @RenderSection("cssStyles", required: false)
-
-    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+    @System.Web.Optimization.Scripts.Render("~/bundles/modernizr")
 
     <meta name="description" content="PVT.2017.Q1 Music Shop" />
 </head>
@@ -87,8 +86,7 @@
             <p>&copy; @DateTime.Now.Year - Music Shop</p>
         </footer>
     </div>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/moment.min.js"></script>

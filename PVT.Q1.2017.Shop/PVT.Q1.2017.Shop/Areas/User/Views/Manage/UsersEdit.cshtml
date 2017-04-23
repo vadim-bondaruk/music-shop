@@ -31,7 +31,7 @@ Sort by: @Html.ActionLink("LastName", "UsersEdit", new { controller = "Manage", 
                         $.ajax(
                             {
                                 url: "@Url.Action("GetLastNameMatchingData",new { controller = "Manage", area = "User"})",
-                                type: "POST",
+                                type: "get",
                                 data: {
                                     term: request.term
                                 },

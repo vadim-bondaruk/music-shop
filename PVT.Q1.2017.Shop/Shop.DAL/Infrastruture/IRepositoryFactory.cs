@@ -181,5 +181,11 @@ namespace Shop.DAL.Infrastruture
         /// The Purchased Album repository.
         /// </returns>
         IPurchasedAlbumRepository GetPurchasedAlbumRepository();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        ICountryRepository GetCountryRepository();
     }
 }

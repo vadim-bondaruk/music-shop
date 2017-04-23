@@ -56,11 +56,8 @@
             RuleFor(u => u.Email).Must(email => !validator.IsUserExist(email))
                 .WithMessage("Пользователь с таким адресом электронной почты уже существект");
 
-            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today.AddYears(-5))
+            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-100), DateTime.Today.AddYears(-20))
                 .WithMessage("Дата рождения выбрана некорректно");
-
-            RuleFor(u => u.Country).Matches("^[a-zA-Zа-яА-Я_.-]*$")
-                .WithMessage("Используйте только буквы");
 
             RuleFor(u => u.PhoneNumber)
                 .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")
