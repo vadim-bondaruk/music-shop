@@ -13,7 +13,6 @@
     using global::Shop.Common.ViewModels;
     using Shop.Controllers;
     using global::Shop.DAL.Infrastruture;
-    using global::Shop.Infrastructure.Enums;
     using ViewModels;
 
     /// <summary>
@@ -59,6 +58,11 @@
                 return View();
             }
 
+            using (var countries = RepositoryFactory.GetCountryRepository())
+            {
+                ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
+            }
+
             int id = CurrentUser.Id;
             User userDB = null;
             using (var userRepository = RepositoryFactory.GetUserRepository())
@@ -78,11 +82,12 @@
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdatePersonal([Bind(Include = @"FirstName, LastName, Sex, BirthDate, Country, PhoneNumber")] UserPersonalViewModel user)
+        public ActionResult UpdatePersonal([Bind(Include = @"FirstName, LastName, Sex, BirthDate, CountryId, PhoneNumber")] UserPersonalViewModel user)
         {
             bool result = false;
             if (ModelState.IsValid)
             {
+
                 AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<UserPersonalViewModel, User>());
                 var userDB = AutoMapper.Mapper.Map<User>(user);
                 var userService = ServiceFactory.GetUserService();
@@ -247,7 +252,7 @@
         {
             var userService = ServiceFactory.GetUserService();
             var list = userService.GetLastNameMatchingData(term);
-            return Json(list.Select( u => new { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}), JsonRequestBehavior.AllowGet);
+            return Json(list?.Select( u => new { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
