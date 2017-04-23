@@ -12,7 +12,5 @@
 @if (Model != null)
 {
     @Html.Partial("_Index", Model.Items)
-
-    @*@Html.PageLinks(Model, i => Url.Action("UsersEdit", new { id = i, controller = "Manage", area = "User" }))*@
     @Html.PageLinks(Model, i => Url.Action("Index", new { id = i, controller = "PaymentTransaction", area = "Payment" }))
 }

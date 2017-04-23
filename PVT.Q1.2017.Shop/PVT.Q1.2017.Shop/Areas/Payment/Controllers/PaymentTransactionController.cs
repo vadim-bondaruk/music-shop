@@ -24,21 +24,10 @@
         [Authorize]
         public ActionResult Index(int pageId = 1)
         {
-            if (CurrentUser != null && CurrentUser.Identity.IsAuthenticated)
-            {
-                int countPerPage = 10;
-                this.TempData["CurrentPage"] = pageId;
-                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, pageId, countPerPage);
-                return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
-
-                //var transactions = _paymentService.GetTransactionsByUserId(CurrentUser.Id);
-                //var transactionsViewModels = PaymentMapper.GetPaymentTransactionViewModels(transactions);
-                //return View(transactionsViewModels);
-            }
-            else
-            {
-                return HttpNotFound();
-            }
+            int countPerPage = 10;
+            this.TempData["CurrentPage"] = pageId;
+            var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, pageId, countPerPage);
+            return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
         }
 
         [HttpGet]
@@ -63,10 +52,9 @@
             if (Session["IsAccepted"] != null)
             {
                 accept = (bool)Session["IsAccepted"];
-                AcceptTransaction(accept);
+                return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment", accept = true });
             }
             return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
-
         }
 
         [HttpPost]
