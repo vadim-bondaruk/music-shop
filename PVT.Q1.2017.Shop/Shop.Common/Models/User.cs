@@ -50,9 +50,10 @@
         public UserRoles UserRole { get; set; }
 
         /// <summary>
-        /// 
+        /// Id of specific country in the database
         /// </summary>
         public int? CountryId { get; set; }
+
         /// <summary>
         /// Users country
         /// </summary>
