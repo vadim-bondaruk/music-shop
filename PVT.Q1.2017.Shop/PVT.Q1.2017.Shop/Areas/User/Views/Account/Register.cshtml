@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Для регистрации заполните пожалуйста форму:</h4>
+        <h4>Для регистрации заполните, пожалуйста, форму:</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -112,13 +112,11 @@
 
     @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
 
+@section scripts{
 
     <script>
         $(document).ready(function () {
             $("#input1").inputmask("+(999 99)999-99-99");
         });
     </script>
-
-
-
-
+}
