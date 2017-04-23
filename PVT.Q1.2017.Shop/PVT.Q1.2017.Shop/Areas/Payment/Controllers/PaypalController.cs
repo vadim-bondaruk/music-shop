@@ -1,13 +1,15 @@
-﻿using System.Web.Mvc;
-using Shop.BLL.Services.Infrastructure;
-using Shop.Common.ViewModels;
-using PVT.Q1._2017.Shop.Controllers;
+﻿
 
 namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
+    using System;
+    using System.Web.Mvc;
     using App_Start;
+    using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.DAL.Infrastruture;
-    
+    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.ViewModels;
+
     [ShopAuthorize]
     public class PaypalController : BaseController
     {
@@ -69,7 +71,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             {
                 return Redirect(status);
             }
-            if(status == "Success")
+            if(String.Compare(status,"Success", StringComparison.OrdinalIgnoreCase)==0)
             {
                 this.Session.Add("IsAccepted", true);
                 return RedirectToAction("Success", "Paypal", new { Area = "Payment" });
