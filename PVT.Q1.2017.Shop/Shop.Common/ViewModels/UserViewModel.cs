@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Common.Validators;
+    using Models;
 
     /// <summary>
     /// 
@@ -69,7 +70,7 @@
         /// Users country
         /// </summary>
         [Display(Name = "Страна")]
-        public string Country { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Users phone

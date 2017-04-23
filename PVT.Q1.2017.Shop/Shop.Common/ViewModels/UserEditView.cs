@@ -1,6 +1,8 @@
-﻿using Shop.Infrastructure.Enums;
+﻿using Shop.Common.Models;
+using Shop.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +53,8 @@ namespace Shop.Common.ViewModels
         /// Users birth date
         /// </summary>
         [Display(Name = "Дата рождения")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BirthDate { get; set; }
 
         /// <summary>
@@ -61,10 +64,16 @@ namespace Shop.Common.ViewModels
         public UserRoles UserRole { get; set; }
 
         /// <summary>
+        /// Users country id
+        /// </summary>
+        //public string Country { get; set; }
+        public int? CountryId { get; set; }
+
+        /// <summary>
         /// Users country
         /// </summary>
         [Display(Name = "Страна")]
-        public string Country { get; set; }
+        public string CountryName { get; set; }
 
         /// <summary>
         /// The phone number

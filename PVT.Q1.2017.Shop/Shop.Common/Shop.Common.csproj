@@ -50,6 +50,7 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\AlbumTrackRelation.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\OrderAlbum.cs" />
     <Compile Include="Models\OrderTrack.cs" />
     <Compile Include="Validators\ChangeLoginValidator.cs" />

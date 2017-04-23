@@ -141,6 +141,7 @@
                 userUpdate.BirthDate = user.BirthDate;
                 userUpdate.Country = user.Country;
                 userUpdate.PhoneNumber = user.PhoneNumber;
+                userUpdate.CountryId = user.CountryId;
 
                 try
                 {
@@ -382,7 +383,7 @@
         {
             using (var repository = Factory.GetUserRepository())
             {
-                return repository.GetAll(pageNumber, count);
+                return repository.GetAll(pageNumber, count, u => u.Country);
             }
         }
 
