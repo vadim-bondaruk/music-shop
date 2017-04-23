@@ -57,17 +57,12 @@
         /// <summary>
         /// Users country
         /// </summary>
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
 
         /// <summary>
         /// The phone number
         /// </summary>
         public string PhoneNumber { get; set; }
-
-        /// <summary>
-        /// User role
-        /// </summary>
-        //public object UserRole { get; set; }
 
         /// <summary>
         /// Verification of email confirmation

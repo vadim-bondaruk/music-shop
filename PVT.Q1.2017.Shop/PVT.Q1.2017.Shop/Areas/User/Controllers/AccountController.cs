@@ -11,10 +11,7 @@
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using Shop.Controllers;
-    using global::Shop.DAL.Infrastruture;
     using ViewModels;
-    using global::Shop.BLL.Utils;
-    using System;
 
     /// <summary>
     /// 
@@ -44,7 +41,7 @@
         {
             var userService = ServiceFactory.GetUserService();
             var isUnique = !userService.IsUserExist(login);
-
+            
             return Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
@@ -145,6 +142,11 @@
         /// <returns></returns>
         public ActionResult Register()
         {
+            using(var countries = RepositoryFactory.GetCountryRepository())
+            {
+                ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
+            }
+
             return View();
         }
 

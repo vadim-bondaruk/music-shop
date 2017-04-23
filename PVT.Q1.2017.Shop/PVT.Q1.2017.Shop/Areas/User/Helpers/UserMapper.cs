@@ -60,7 +60,8 @@
             MapperConfiguration managementConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<UserViewModel, User>();
-                cfg.CreateMap<User, UserEditView>();
+                cfg.CreateMap<User, UserEditView>()
+                    .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.Name));
                 cfg.CreateMap<UserEditView, User>();
                 cfg.CreateMap<PagedResult<User>, PagedResult<UserEditView>>();
             });

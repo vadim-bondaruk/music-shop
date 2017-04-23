@@ -1,10 +1,8 @@
 ﻿@model Shop.Common.ViewModels.UserEditView
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактирование данных пользователя";
 }
-
-<h2>Edit</h2>
 
 @using (Html.BeginForm("Update", "Manage", new { area = "User" }, FormMethod.Post, null ))
 {
@@ -65,16 +63,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control datecontrol" , @type = "text" } })
                 @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select id="countries" class="form-control" name="CountryId"></select>
-                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.CountryId, ViewBag.Countries as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CountryName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -104,24 +102,3 @@
     </div>
 }
 
-@section scripts{
-
-    <script>
-            $(function(){
-
-                $.ajax({
-                    url: "@Url.Action("GetCountries", "Account", new { area = "User"})",
-                    type: "get",
-                    success: function (countries) {
-                        var list = $('#countries');
-                        list.find('option').remove();
-                        $(countries).each(function (index, country) {
-                            list.append('<option value="' + country.Id + '">' + country.Name + '</option>');
-                        })
-
-                    }
-                });
-            });
-
-    </script>
-}
