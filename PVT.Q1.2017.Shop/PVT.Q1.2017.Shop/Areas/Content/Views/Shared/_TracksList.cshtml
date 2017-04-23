@@ -31,13 +31,14 @@
                         <div>
                             <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Name)</a>
                             <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Artist.Name)</a>
+                            <div class="albums-count">
+                                Альбомов с этим треком <span class="badge">@track.AlbumsCount</span>
+                            </div>
                         </div>
                         <div>
                             @Html.Partial("_Rating", track.Rating)
                         </div>
-                        <div class="albums-count">
-                            Альбомов с этим треком <span class="badge">@track.AlbumsCount</span>
-                        </div>
+                        
                     </div>
                 </div>
                 
@@ -48,8 +49,7 @@
                         {
                             <div class="order-block">
                                 <div class="buy-btn">
-                                    <div class="row">
-                                        <div class="col-sm-8">
+                                        <div class="btn-remove">
                                             @if (track.AlbumId > 0m) //если отображается список треков из альбома
                                             {
                                                 using (Html.BeginForm("RemoveTrack", "Albums", new { area = "Management" }, FormMethod.Post))
@@ -57,17 +57,15 @@
                                                     @Html.AntiForgeryToken()
                                                     <input type="hidden" value="@track.AlbumId" name="id" />
                                                     <input type="hidden" value="@track.Id" name="trackId" />
-                                                    <input type="submit" value="Удалить из альбома" class="btn btn-primary" />
+                                                    <a href="javascript:document.forms[0].submit();"><i class="fa fa-remove" style="color: red"></i></a>
                                                 }
                                             }
                                         </div>
-                                        <div class="col-sm-4">
-                                            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })"
-                                               class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>Правка</a>
+                                        <div class="btn-edit">
+                                            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })"><i class="fa fa-pencil"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         }
                         else if (isBuyer)
                         {
