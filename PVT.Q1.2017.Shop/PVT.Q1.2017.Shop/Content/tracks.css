@@ -54,6 +54,24 @@
 
 .genre-edit .btn { display: inline-block; }
 
+.genre-details {
+    margin-top: 50px;
+    padding: 20px;
+    background: #fff;
+    opacity: 0.8;
+    height: 800px;
+    border-radius: 15px;
+}
+
+.genre-details .description {
+    overflow: auto;
+    padding: 15px;
+    height: 700px;
+}
+
+.genre-details .buttons { margin-top: 20px; }
+
+
 .page-title {
     width: 100%;
     text-align: center;
@@ -430,7 +448,7 @@ li > input { width: 100% }
 .album-edit input { cursor: default; }
 
 .album-details {
-    text-align: center; 
+    text-align: center;
     margin-top: 15px;
     padding: 30px;
     height: 600px;
@@ -447,21 +465,15 @@ li > input { width: 100% }
     text-align: left;
     display: inline-block;
 }
-.album-details .panel-heading {
-    text-align: center;
-}
 
-.album-details .panel-title {
-    font-size: 24px;
-}
+.album-details .panel-heading { text-align: center; }
 
-.album-details th {
-    text-align: center;
-}
+.album-details .panel-title { font-size: 24px; }
 
-.album-details .regular:hover {
-    box-shadow: 0.1px 0.1px 20px;
-}
+.album-details th { text-align: center; }
+
+.album-details .regular:hover { box-shadow: 0.1px 0.1px 20px; }
+
 .album-details .details { display: inline-block; }
 
 .album-details h1, h2, h3 {
@@ -489,7 +501,7 @@ li > input { width: 100% }
     height: 400px;
 }
 
-.album-details .buttons { margin-top: 100px;}
+.album-details .buttons { margin-top: 100px; }
 
 
 .album-details .tracklist-header {
@@ -835,11 +847,8 @@ a.tracks-list > ul {
     margin: 40px 0 40px 0;
 }
 
-#preview-btn {
-    cursor: pointer;
-}
+#preview-btn { cursor: pointer; }
 
-#audio-hidden{width: 500px}
+#audio-hidden { width: 500px }
 
 .copyright { display: none; }
-
