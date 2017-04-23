@@ -9,6 +9,7 @@
     using FluentValidation.Mvc;
     using global::Shop.BLL.Utils;
     using global::Shop.Common.Models;
+    using System.Web.Optimization;
 
     /// <summary>
     ///     Base class in an ASP.NET application
@@ -22,7 +23,7 @@
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             FluentValidationModelValidatorProvider.Configure();
         }
 
