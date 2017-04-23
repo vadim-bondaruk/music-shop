@@ -15,33 +15,51 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         {
         }
 
+        /// <summary>
+        /// стартовая страница для демо-методов
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Метод реакции на успешный статус оплаты
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
-        public ActionResult Success()
+        public RedirectToRouteResult Success()
         {
-            return View();
+            this.Session.Add("IsAccepted", true);
+            // return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
+            return RedirectToAction("AcceptTransaction", "PaymentTransaction", new { Area = "Payment" });
         }
 
+        /// <summary>
+        /// Метод реакции на неуспешный статус оплаты
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
-        public ActionResult Failure()
+        public ViewResult Failure()
         {
             return View();
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult PaymentWithCreditCard()
+        public ContentResult PaymentWithCreditCard()
         {
             var paymentService = ServiceFactory.GetPaymentService();
             var viewName = paymentService.CreatePaymentWithCreditCard();
             return Content(viewName); // View("SuccessView");
         }
 
+        /// <summary>
+        /// Демо реализация платежей PayPal
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult PaymentWithPaypalDemo()
@@ -63,6 +81,11 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             }
         }
 
+        /// <summary>
+        /// Метод вызывает диалог оплаты для пользователя на стороне PayPal
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public ActionResult PaymentWithPaypal(CartViewModel cart)
@@ -83,6 +106,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             }
             if(status == "Success")
             {
+                this.Session.Add("IsAccepted", true);
                 return RedirectToAction("Success", "Paypal", new { Area = "Payment" });
             }
             else
@@ -91,6 +115,10 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             }
         }
 
+        /// <summary>
+        /// Метод обработки статуса платежа PayPal
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult PaymentWithPaypal()

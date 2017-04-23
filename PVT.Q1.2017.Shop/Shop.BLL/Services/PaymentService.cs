@@ -12,6 +12,9 @@
     using System.Web;
     using Shop.BLL.Helpers;
     using Common.ViewModels;
+    using Common.Models;
+    using Exceptions;
+    using Shop.Infrastructure.Models;
 
     /// <summary>
     /// The payment service class
@@ -57,7 +60,7 @@
             itemList.items = items;
 
             //Address for the payment
-            Address billingAddress = new Address();
+            PayPal.Api.Address billingAddress = new PayPal.Api.Address();
             billingAddress.city = "NewYork";
             billingAddress.country_code = "US";
             billingAddress.line1 = "23rd street kew gardens";
@@ -231,7 +234,7 @@
 
                     var guid = Request.Params["guid"];
 
-                    var executedPayment = ExecutePaymentDemo(apiContext, payerId, Session[guid] as string);
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
 
                     if (executedPayment.state.ToLower() != "approved")
                     {
@@ -261,7 +264,7 @@
             {
                 string payerId = Request.Params["PayerID"];
 
-                if (string.IsNullOrEmpty(payerId))
+                if (string.IsNullOrEmpty(payerId)&&cart.TotalPrice>0)
                 {
                     //this section will be executed first because PayerID doesn't exist
                     //it is returned by the create function call of the payment class
@@ -400,21 +403,7 @@
             // Create a payment using a APIContext
             return payment.Create(apiContext);
         }
-
-        /// <summary>
-        /// Executes payment info by payerId and paymentId
-        /// </summary>
-        /// <param name="apiContext">PayPal API context</param>
-        /// <param name="payerId">Payer id</param>
-        /// <param name="paymentId">Payment id</param>
-        /// <returns></returns>
-        private Payment ExecutePaymentDemo(APIContext apiContext, string payerId, string paymentId)
-        {
-            var paymentExecution = new PaymentExecution() { payer_id = payerId };
-            payment = new Payment() { id = paymentId };
-            return payment.Execute(apiContext, paymentExecution);
-        }
-
+              
         /// <summary>
         /// Creates PayPal payment 
         /// </summary>
@@ -423,7 +412,6 @@
         /// <returns></returns>
         private Payment CreatePayment(APIContext apiContext, string redirectUrl, CartViewModel cart)
         {
-            // TODO: получить валюту корзины в человеческом виде
             
             //similar to credit card create itemlist and add item objects to it
             var itemList = new ItemList() { items = new List<Item>() };
@@ -502,6 +490,119 @@
             var paymentExecution = new PaymentExecution() { payer_id = payerId };
             payment = new Payment() { id = paymentId };
             return payment.Execute(apiContext, paymentExecution);
+        }
+
+        /// <summary>
+        /// Creates and saves instance of payment transaction in DB
+        /// </summary>
+        /// <param name="cart">cart with tracks or albums</param>
+        public void CreatePaymentTransaction(CartViewModel cart)
+        {
+            ////
+            var userID = cart.CurrentUserId;
+            UserData user;
+            var currencyId = 0;
+            using (var userDataRepository = Factory.GetUserDataRepository())
+            {
+                user = userDataRepository.FirstOrDefault(u => u.UserId == userID);
+                if (user == null)
+                {
+                    throw new InvalidUserIdException($"Пользователь с ID={userID} не найден");
+                }
+                else
+                {
+                    currencyId = user.CurrencyId;
+                }
+            }
+
+            using (var payTransRepo = Factory.GetPaymentTransactionRepository())
+            {
+                var transaction = new PaymentTransaction()
+                {
+                    PurchasedTrack = new List<PurchasedTrack>(),
+                    PurchasedAlbum = new List<PurchasedAlbum>(),
+                    Amount = cart.TotalPrice,
+                    CurrencyId = currencyId,
+                    UserId = userID
+                };
+
+                #region tracks
+                using (var purchasedTrackRepository = Factory.GetPurchasedTrackRepository())
+                {
+                    foreach (var track in cart.Tracks)
+                    {
+                        var trackID = track.Id;
+                        var purchasedTrack = purchasedTrackRepository.FirstOrDefault(p =>
+                            p.UserId == userID
+                            && p.TrackId == trackID);
+                        if (purchasedTrack == null)
+                        {
+                            purchasedTrack = new PurchasedTrack() { UserId = userID, TrackId = trackID };
+                            purchasedTrackRepository.AddOrUpdate(purchasedTrack);
+                        }
+                        transaction.PurchasedTrack.Add(purchasedTrack);
+                    }
+                    //purchasedTrackRepository.SaveChanges();
+                }
+                #endregion
+
+                #region albums
+                using (var purchasedAlbumRepository = Factory.GetPurchasedAlbumRepository())
+                {
+                    foreach (var album in cart.Albums)
+                    {
+                        var albumID = album.Id;
+                        var purchasedAlbum = purchasedAlbumRepository.FirstOrDefault(p =>
+                            p.UserId == userID
+                            && p.AlbumId == albumID);
+                        if (purchasedAlbum == null)
+                        {
+                            purchasedAlbum = new PurchasedAlbum() { UserId = userID, AlbumId = albumID };
+                            purchasedAlbumRepository.AddOrUpdate(purchasedAlbum);
+                        }
+                        transaction.PurchasedAlbum.Add(purchasedAlbum);
+                    }
+                    //purchasedAlbumRepository.SaveChanges();
+                }
+                #endregion
+
+                payTransRepo.AddOrUpdate(transaction);
+                payTransRepo.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Gets and returns collection of payment transactions for certain user by its ID
+        /// </summary>
+        /// <param name="userID">user ID</param>
+        /// <returns></returns>
+        public IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID)
+        {
+            IEnumerable<PaymentTransaction> transactions = null;
+            if (userID!=0)
+            {
+                using (var payRepo = Factory.GetPaymentTransactionRepository())
+                {
+                    transactions = payRepo.GetAll((c) => c.UserId == userID,
+                                                  a => a.Currency, a => a.User.User);
+                }
+            }
+            return transactions;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public PagedResult<PaymentTransaction> GetDataPerPage(int? userID, int pageNumber = 1, int count = 10)
+        {
+            using (var repository = Factory.GetPaymentTransactionRepository())
+            {
+                return repository.GetAll(pageNumber, count, a => a.UserId == userID,
+                                        a => a.Currency, a => a.User.User);
+            }
         }
     }
 }

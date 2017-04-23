@@ -217,7 +217,7 @@
             ICollection<Vote> votes;
             using (var repository = Factory.GetVoteRepository())
             {
-                votes = repository.GetAll(v => v.TrackId == trackId);
+                votes = repository.GetAll(v => v.TrackId == trackId, f => f.User, f => f.User.User);
             }
 
             ICollection<FeedbackViewModel> feedbackViewModels = feedbacks.Select(ModelsMapper.GetFeedbackViewModel).ToList();
@@ -239,8 +239,10 @@
                 var feedbackViewModel = new FeedbackViewModel
                 {
                     Mark = vote.Mark,
-                    UserDataId = vote.UserId
+                    UserDataId = vote.UserId,
+                    UserName = vote.User.User.Login
                 };
+            
                 feedbackViewModels.Add(feedbackViewModel);
             }
 

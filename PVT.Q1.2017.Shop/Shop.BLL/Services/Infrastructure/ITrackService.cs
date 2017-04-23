@@ -1,6 +1,8 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using Common.ViewModels;
     using Shop.Infrastructure.Models;
 
@@ -42,7 +44,7 @@
         /// <returns>
         /// All registered tracks.
         /// </returns>
-        ICollection<TrackViewModel> GetTracks(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        Task<ICollection<TrackViewModel>> GetTracksAsync(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered tracks using the specified currency and price level for track price.
@@ -82,7 +84,7 @@
         /// <returns>
         /// All registered tracks with detailed information.
         /// </returns>
-        ICollection<TrackDetailsViewModel> GetDetailedTracksList(int? currencyCode = null, int? priceLevel = null, int? userId = null);
+        Task<ICollection<TrackDetailsViewModel>> GetDetailedTracksListAsync(int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
@@ -171,7 +173,7 @@
         /// <returns>
         /// All tracks that the specified user have bought.
         /// </returns>
-        ICollection<PurchasedTrackViewModel> GetPurchasedTracks(int userId);
+        Task<ICollection<PurchasedTrackViewModel>> GetPurchasedTracksAsync(int userId);
 
         /// <summary>
         /// Return all tracks that the specified user have bought.
@@ -189,5 +191,19 @@
         /// All tracks that the specified user have bought.
         /// </returns>
         PagedResult<PurchasedTrackViewModel> GetPurchasedTracks(int page, int pageSize, int userId);
+
+        /// <summary>
+        /// Return a track with the specified id purchased by the specified user.
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="userProfileId">
+        /// The user profile id.
+        /// </param>
+        /// <returns>
+        /// A track with the specified id purchased by the specified user if exists or <b>null</b>.
+        /// </returns>
+        PurchasedTrackViewModel GetPurchasedTrack(int trackId, int userProfileId);
     }
 }

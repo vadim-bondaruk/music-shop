@@ -1,47 +1,25 @@
-﻿@using PVT.Q1._2017.Shop.Areas.Content.Extentions
-@model Shop.Common.ViewModels.TrackDetailsViewModel
-    @{ViewBag.Title = Model.Name;}
-<body>
-    <div style="text-align: initial">
-        <div>
-            <div class="track-details">
-                <div class="common">
-                    <img id="artist-img" onclick="document.formreg.PostedPhoto.click()" class="img-thumbnail"
-                         onerror="src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)"/>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"></h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="center">
-                                <p>
-                                    <strong>@Html.DisplayNameFor(m => m.Artist):</strong> @Html.DisplayTextFor(m => m.Artist.Name)
-                                </p>
-                                <p>
-                                    <strong>@Html.DisplayNameFor(m => m.ReleaseDate):</strong> @Html.ValueFor(m => m.ReleaseDate, "{0:dd MMMM yyyy} г.")
-                                </p>
-                                <p>
-                                    <strong>@Html.DisplayNameFor(m => m.Genre):</strong> @Html.DisplayTextFor(m => m.Genre.Name)
-                                </p>
-                                <p>
-                                    <strong>@Html.DisplayNameFor(m => m.Duration):</strong> @Html.ValueFor(m => m.Duration, "{0:mm\\:ss}")
-                                </p>
-                                <p>
-                                    <strong>@Html.DisplayNameFor(m => m.Price):</strong> @Html.DisplayTextFor(m => m.Price)
-                                </p>
-                                
-                            </div>
-                        </div>
-                        <div class="buttons">
-                            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Правка</a>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
+﻿@model Shop.Common.ViewModels.TrackAlbumsListViewModel
+@{
+    ViewBag.Title = Model.TrackDetails.Name;
+}
+
+<div style="text-align: initial">
+    <div>dsfsdf
+        @{
+            Html.RenderPartial("_TrackDetails", Model.TrackDetails);
+        }
+    </div>
+    
+    <div class="panel">
+        <div class="panel-body">
+            <h2>Альбомы с этим треком <span class="badge">@Model.TrackDetails.AlbumsCount</span></h2>
+            @{
+                Html.RenderPartial("_AlbumsList", Model.Albums);
+            }
         </div>
     </div>
-    </body>
+</div>
+
 @section cssStyles
 {
     <link href="~/Content/tracks.css" rel="stylesheet" />

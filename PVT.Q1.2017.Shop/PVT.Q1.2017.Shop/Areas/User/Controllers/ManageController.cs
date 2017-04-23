@@ -241,12 +241,13 @@
         /// </summary>
         /// <param name="term"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, VaryByParam = "*")]
         public ActionResult GetLastNameMatchingData(string term)
         {
             var userService = ServiceFactory.GetUserService();
             var list = userService.GetLastNameMatchingData(term);
-            return Json(list);
+            return Json(list.Select( u => new { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

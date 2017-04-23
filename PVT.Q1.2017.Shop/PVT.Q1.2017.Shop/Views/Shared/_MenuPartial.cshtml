@@ -1,29 +1,38 @@
-﻿@{ var user = Request.RequestContext.HttpContext.User as Shop.BLL.Utils.CurrentUser;}
+﻿@using Shop.Infrastructure.Enums
+@{ var user = Request.RequestContext.HttpContext.User as Shop.BLL.Utils.CurrentUser;}
 <li>@Html.ActionLink("Главная", "Index", new { area = string.Empty, controller = "Home" })</li>
 
 <li>@Html.ActionLink("Контакты", "Contact", new { area = string.Empty, controller = "Home" })</li>
-<li class="dropdown-item" style="display: inline-block; height: 50px;">
-    <div class="dropdown" id="admin-dropdown" style="padding: 15px 15px 15px 15px">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="background-color: #222222; color: #999; text-decoration: none">AdminTeam<b class="caret" style="border-color: #222222"></b></a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li>@Html.ActionLink("Настройки", "Index", "Setting", new { area = "Admin" }, null)</li>
-            <li>@Html.ActionLink("Валюта", "Index", "Currency", new { area = "Admin" }, null)</li>
-            <li>@Html.ActionLink("Новая валюта", "Create", "Currency", new { area = "Admin" }, null)</li>
-        </ul>
-    </div>
-</li>
+
+@{
+    var isAuthenticated = Request.IsAuthenticated;
+    var isAdmin = false;
+    var isSeller = false;
+    if (isAuthenticated)
+    {
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+
+    }
+}
 
 <li class="dropdown-item" style="display: inline-block; height: 50px;">
     <div class="dropdown" id="purple-dropdown" style="padding: 15px 15px 15px 15px">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="background-color: #222222; color: #999; text-decoration: none">TracksTeam<b class="caret" style="border-color: #222222"></b></a>
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="background-color: #222222; color: #999; text-decoration: none">Медиаконтент<b class="caret" style="border-color: #222222"></b></a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li>
-                <a href="@Url.Action("New", "Artists", new { area = "Management" })">Новый исполнитель</a>
-            </li>
-            <li>
-                <a href="@Url.Action("New", "Genres", new { area = "Management" })">Новый жанр</a>
-            </li>
-            <li role="separator" class="divider"></li>
+            @if (isAdmin || isSeller)
+            {
+                <li>
+                    <a href="@Url.Action("New", "Artists", new { area = "Management" })">Новый исполнитель</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("New", "Albums", new { area = "Management" })">Новый сборник</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("New", "Genres", new { area = "Management" })">Новый жанр</a>
+                </li>
+                <li role="separator" class="divider"></li>
+            }
             <li>
                 <a href="@Url.Action("List", "Tracks", new { area = "Content" })">Треки</a>
             </li>
@@ -36,10 +45,6 @@
             <li>
                 <a href="@Url.Action("List", "Genres", new { area = "Content" })">Жанры</a>
             </li>
-            <li role="separator" class="divider"></li>
-            <li>@Html.ActionLink("Исполнители", "List", "Artist", new { area = "Content" }, null)</li>
-            <li>@Html.ActionLink("Альбомы", "List", "Album", new { area = "Content" }, null)</li>
-            <li>@Html.ActionLink("Треки", "List", "Track", new { area = "Content" }, null)</li>
         </ul>
     </div>
 </li>
@@ -57,7 +62,7 @@
                     <a href="@Url.Action("Index","Setting", new {area="Admin"})">Глобальные настройки</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("UsersEdit", "Manage", new {area = "User"})">Управление пользователями</a>
+                    <a href="@Url.Action("UsersEdit","Manage", new {area="User"})">Управление пользователями</a>
                 </li>
             </ul>
         </div>

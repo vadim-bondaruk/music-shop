@@ -83,5 +83,10 @@
         /// Gets or sets a value indicating whether the track is purchased.
         /// </summary>
         public bool IsPurchased { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file name.
+        /// </summary>
+        public string FileName { get; set; }
     }
 }

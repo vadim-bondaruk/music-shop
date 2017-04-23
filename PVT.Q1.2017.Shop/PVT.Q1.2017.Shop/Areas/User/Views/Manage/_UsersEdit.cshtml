@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Shop.Common.ViewModels.UserEditView>
 
-<table class="table">
+<table class="table" id="users-table">
     <tr>
-        <th>
+        <th style="border: none">
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
@@ -32,7 +32,6 @@
         <th>
             @Html.DisplayNameFor(model => model.ConfirmedEmail)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -68,8 +67,8 @@
             @Html.DisplayFor(modelItem => item.ConfirmedEmail)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) 
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Правка", "Edit", new { id=item.Id }) 
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id }, new {style="color: red"})
         </td>
     </tr>
 }

@@ -1,0 +1,68 @@
+﻿@model Shop.Common.ViewModels.AlbumTracksListViewModel
+
+@{
+    ViewBag.Title = "Добавление треков в альбом";
+}
+
+<div>
+    @{
+        Html.RenderPartial("_AlbumDetails", Model.AlbumDetails);
+    }
+
+    <div class="panel">
+        <div class="panel-body" style="text-align: left">
+            <h2>Треклист для добавления в альбом <span class="badge">@Model.Tracks.Count</span></h2>
+            <div class="tracks-list">
+                <ul class="list-group">
+
+                    @foreach (var track in Model.Tracks)
+                    {
+                        <li class="list-group-item">
+                            <div class="left">
+                                <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(track.Image)" onerror="src = '/img/defuserpic.png'" />
+                                <div class="details">
+                                    <div>
+                                        <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Name)</a>
+                                        <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Artist.Name)</a>
+                                    </div>
+                                    <div>
+                                        @Html.Partial("_Rating", track.Rating)
+                                    </div>
+                                    <div class="albums-count">
+                                        Альбомов с этим треком <span class="badge">@track.AlbumsCount</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="order-block">
+                                <div class="buy-btn">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            @using (Html.BeginForm("AddTrackToAlbum", "Albums", new { area = "Management" }, FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" value="@Model.AlbumDetails.Id" name="id" />
+                                                <input type="hidden" value="@track.Id" name="trackId" />
+                                                <input type="submit" class="btn, btn-sm btn-primary" value="Добавить в альбом"/>
+                                            }
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })"
+                                               class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>Правка</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section cssStyles
+{
+    <link href="~/Content/tracks.css" rel="stylesheet" />
+    <link href="~/Content/ratingStars.css" rel="stylesheet" />
+}

@@ -7,6 +7,11 @@
     /// </summary>
     public class ErrorController : Controller
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         /// <summary>
         /// To show unauthorized error message
         /// </summary>

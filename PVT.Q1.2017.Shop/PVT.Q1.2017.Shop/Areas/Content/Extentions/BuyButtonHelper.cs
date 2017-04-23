@@ -17,8 +17,8 @@
         /// <param name="albumId">
         /// The album id.
         /// </param>
-        /// <param name="disabled">
-        /// Determines whether to disable a button.
+        /// <param name="isOrdered">
+        /// Determines whether an item is ordered.
         /// </param>
         /// <param name="text">
         /// The button text.
@@ -35,29 +35,36 @@
         /// <param name="onclick">
         /// Client onclick function.
         /// </param>
-        /// <param name="animate"></param>
         /// <returns>
         /// The button html.
         /// </returns>
         public static MvcHtmlString BtnBuyAlbum(
             this HtmlHelper helper,
             int albumId,
-            bool disabled,
+            bool isOrdered,
             string text = null,
             string @class = null,
             string iconClass = null,
             string href = null,
-            string onclick = null,
-            bool animate = false)
+            string onclick = null)
         {
             if (string.IsNullOrWhiteSpace(onclick))
             {
-                onclick = $"addAlbumToCart(this, {albumId})";
+                string alternateText = string.Empty;
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    text = isOrdered ? "Из корзины" : "В корзину";
+                    alternateText = isOrdered ? "В корзину" : "Из корзины";
+                }
+
+                onclick = isOrdered
+                              ? $"removeAlbumFromCart(this, {albumId}, '{text}', '{alternateText}')"
+                              : $"addAlbumToCart(this, {albumId}, '{text}', '{alternateText}')";
             }
 
-            return GenerateBtnBuyItem(helper, disabled, text, @class, iconClass, href, onclick, animate);
+            return GenerateBtnBuyItem(helper, isOrdered, text, @class, iconClass, href, onclick);
         }
-
+        
         /// <summary>
         /// Renders a button for buying a track.
         /// </summary>
@@ -67,8 +74,8 @@
         /// <param name="trackId">
         /// The track id.
         /// </param>
-        /// <param name="disabled">
-        /// Determines whether to disable a button.
+        /// <param name="isOrdered">
+        /// Determines whether an item is ordered.
         /// </param>
         /// <param name="text">
         /// The button text.
@@ -85,75 +92,48 @@
         /// <param name="onclick">
         /// Client onclick function.
         /// </param>
-        /// <param name="animate"></param>
         /// <returns>
         /// The button html.
         /// </returns>
         public static MvcHtmlString BtnBuyTrack(
             this HtmlHelper helper,
             int trackId,
-            bool disabled,
+            bool isOrdered,
             string text = null,
             string @class = null,
             string iconClass = null,
             string href = null,
-            string onclick = null,
-            bool animate = false)
+            string onclick = null)
         {
             if (string.IsNullOrWhiteSpace(onclick))
             {
-                onclick = $"addTrackToCart(this, {trackId})";
+                string alternateText = string.Empty;
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    text = isOrdered ? "Из корзины" : "В корзину";
+                    alternateText = isOrdered ? "В корзину" : "Из корзины";
+                }
+
+                onclick = isOrdered
+                              ? $"removeTrackFromCart(this, {trackId}, '{text}', '{alternateText}')"
+                              : $"addTrackToCart(this, {trackId}, '{text}', '{alternateText}')";
             }
 
-            return GenerateBtnBuyItem(helper, disabled, text, @class, iconClass, href, onclick, animate);
+            return GenerateBtnBuyItem(helper, isOrdered, text, @class, iconClass, href, onclick);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="helper">
-        /// The helper.
-        /// </param>
-        /// <param name="disabled">
-        /// The disabled.
-        /// </param>
-        /// <param name="text">
-        /// The text.
-        /// </param>
-        /// <param name="class">
-        /// The class.
-        /// </param>
-        /// <param name="iconClass">
-        /// The icon class.
-        /// </param>
-        /// <param name="href">
-        /// The href.
-        /// </param>
-        /// <param name="onclick">
-        /// The onclick.
-        /// </param>
-        /// <param name="animate">
-        /// The animate.
-        /// </param>
-        /// <returns>
-        /// </returns>
         private static MvcHtmlString GenerateBtnBuyItem(
             this HtmlHelper helper,
-            bool disabled,
+            bool isOrdered,
             string text,
             string @class,
             string iconClass,
             string href,
-            string onclick,
-            bool animate)
+            string onclick)
         {
             if (string.IsNullOrWhiteSpace(@class))
             {
-                @class = DEFAULT_BUY_BUTTON_CSS_CLASS;
-            }
-
-            if (disabled)
-            {
-                @class += $" disabled";
+                @class = isOrdered ? "ordered " + DEFAULT_BUY_BUTTON_CSS_CLASS : DEFAULT_BUY_BUTTON_CSS_CLASS;
             }
 
             if (string.IsNullOrWhiteSpace(iconClass))
@@ -163,10 +143,10 @@
             
             if (string.IsNullOrWhiteSpace(text))
             {
-                text = "Купить";
+                text = isOrdered ? "Из корзины" : "В корзину";
             }
 
-            return helper.ButtonWithIcon(@class, iconClass, text, href, onclick, animate);
+            return helper.ButtonWithIcon(@class, iconClass, text, href, onclick);
         }
     }
 }

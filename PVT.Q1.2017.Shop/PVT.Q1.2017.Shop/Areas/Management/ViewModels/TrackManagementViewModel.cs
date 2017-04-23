@@ -5,19 +5,25 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
-
+    using FluentValidation.Attributes;
     using global::Shop.Common.Models;
-    using global::Shop.Common.ViewModels;
+    using Validators;
 
     /// <summary>
     /// </summary>
+    [Validator(typeof(TrackManagementValidator))]
     public class TrackManagementViewModel
     {
         /// <summary>
         ///     Gets or sets the artist.
         /// </summary>
+        public int ArtistId { get; set; }
+
+        /// <summary>
+        /// The artist name.
+        /// </summary>
         [DisplayName("Исполнитель")]
-        public Artist Artist { get; set; }
+        public string ArtistName { get; set; }
 
         /// <summary>
         ///     Gets or sets the duration.
@@ -29,16 +35,6 @@
         /// Gets or sets the file name.
         /// </summary>
         public string FileName { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the genre.
-        /// </summary>
-        public Genre Genre { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the genre.
-        /// </summary>
-        /*public Genre Genre { get; set; }*/
 
         /// <summary>
         ///     Gets or sets the genre id.
@@ -79,15 +75,16 @@
         public HttpPostedFileBase PostedTrackFile { get; set; }
 
         /// <summary>
+        ///     The track sample.
+        /// </summary>
+        [DisplayName("Sample")]
+        public HttpPostedFileBase PostedTrackSample { get; set; }
+
+        /// <summary>
         ///     Gets or sets the price.
         /// </summary>
         [DisplayName("Стоимость")]
-        public double Price { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the rating.
-        /// </summary>
-        public RatingViewModel Rating { get; set; }
+        public decimal? Price { get; set; }
 
         /// <summary>
         ///     Gets or sets the release date.
@@ -101,5 +98,10 @@
         ///     Gets or sets the track file.
         /// </summary>
         public byte[] TrackFile { get; set; }
+
+        /// <summary>
+        /// The track sample. Optional.
+        /// </summary>
+        public byte[] TrackSample { get; set; }
     }
 }

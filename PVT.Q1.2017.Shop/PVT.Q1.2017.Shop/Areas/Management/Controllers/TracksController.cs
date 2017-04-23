@@ -1,6 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Web.Caching;
     using System.Web.Mvc;
 
     using AutoMapper;
@@ -9,11 +11,11 @@
     using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
-
     using PVT.Q1._2017.Shop.App_Start;
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
     using PVT.Q1._2017.Shop.Controllers;
+    using System.Web.Caching;
 
     /// <summary>
     ///     The track controller
@@ -21,6 +23,8 @@
     [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
     public class TracksController : BaseController
     {
+        private const string GENRES_CACHE_KEY = "Genres_Cache";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TracksController"/> class.
         /// </summary>
@@ -33,61 +37,78 @@
         public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory)
             : base(repositoryFactory, serviceFactory)
         {
-            this.RepositoriesFactory = repositoryFactory;
-            this.ServicesFactory = serviceFactory;
         }
 
         /// <summary>
-        ///     Gets or sets the repository factory.
+        /// Deletes the track with the specified <paramref name="id"/> from the system.
         /// </summary>
-        public IRepositoryFactory RepositoriesFactory { get; set; }
-
-        /// <summary>
-        /// Gets or sets the service factory.
-        /// </summary>
-        public IServiceFactory ServicesFactory { get; set; }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="trackId">
-        ///     The track id.
+        /// <param name="id">
+        /// The track id.
         /// </param>
-        /// <param name="model"></param>
         /// <returns>
+        /// The view which generates page for deleting tracks in case if <paramref name="id"/> was specified;
+        /// otherwise redirects to the list of tracks.
         /// </returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(TrackManagementViewModel model)
+        public ActionResult Delete(int? id)
         {
-            var trackModel = Mapper.Map<TrackManagementViewModel, Track>(model);
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            if (id == null || id <= 0)
             {
-                repository.Delete(trackModel);
-                repository.SaveChanges();
+                return RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
-            return this.RedirectToAction("List", "Tracks", new { area = "Content" });
+            var trackService = ServiceFactory.GetTrackService();
+            var track = ManagementMapper.GetTrackManagementViewModel(trackService.GetTrackDetails(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId));
+            if (track == null)
+            {
+                return HttpNotFound($"Трек с id = {id} не найден");
+            }
+
+            return View(track);
+        }
+
+        /// <summary>
+        /// Deletes the specified track from the system.
+        /// </summary>
+        /// <param name="track">
+        /// The track to delete.
+        /// </param>
+        /// <returns>
+        /// Redirects to the view which generates page with tracks list.
+        /// </returns>
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Delete([Bind(Include = "Id,Name")] TrackManagementViewModel track)
+        {
+            if (track != null)
+            {
+                using (var repository = RepositoryFactory.GetTrackRepository())
+                {
+                    repository.Delete(ManagementMapper.GetTrackModel(track));
+                    repository.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("List", "Tracks", new { area = "Content" });
         }
 
         /// <summary>
         /// </summary>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Edit(int id)
+        public virtual ActionResult Edit(int id = 0)
         {
-            Track track;
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            if (id <= 0)
             {
-                track = repository.GetById(id);
+                return RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
-            var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(track);
-
-            using (var repository = this.RepositoryFactory.GetGenreRepository())
+            var trackService = ServiceFactory.GetTrackService();
+            var trackManagementViewModel = ManagementMapper.GetTrackManagementViewModel(trackService.GetTrackDetails(id, CurrentUserCurrency.Code, CurrentUser.PriceLevelId));
+            if (trackManagementViewModel == null)
             {
-                var genres = repository.GetAll();
-                trackManagementViewModel.Genres = genres;
+                return HttpNotFound($"Трек с id = {id} не найден");
             }
+
+            trackManagementViewModel.Genres = GetGenres();
 
             return this.View(trackManagementViewModel);
         }
@@ -101,61 +122,84 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(TrackManagementViewModel viewModel)
+        public virtual ActionResult Edit(
+            [Bind(Include = "Id,PostedTrackFile,PostedImage,PostedTrackSample,ArtistId,ArtistName,Duration,Genres,GenreId,Name,ReleaseDate,FileName,Price,Image,TrackFile,TrackSample")]
+            TrackManagementViewModel viewModel)
         {
-            Track currentTrack;
-
-            using (var repo = this.RepositoryFactory.GetTrackRepository())
+            if (ModelState.IsValid)
             {
-                currentTrack = repo.GetById(viewModel.Id);
+                Track currentTrack;
+                using (var repo = this.RepositoryFactory.GetTrackRepository())
+                {
+                    currentTrack = repo.GetById(viewModel.Id);
+                }
+
+                if (currentTrack == null)
+                {
+                    return this.HttpNotFound($"Трек с id = {viewModel.Id} не найден");
+                }
+
+                if (viewModel.PostedTrackFile == null)
+                {
+                    viewModel.TrackFile = currentTrack.TrackFile;
+                }
+
+                if (viewModel.PostedImage == null)
+                {
+                    viewModel.Image = currentTrack.Image;
+                }
+
+                if (viewModel.PostedTrackSample == null)
+                {
+                    viewModel.TrackSample = currentTrack.TrackSample;
+                }
+
+                var track = ManagementMapper.GetTrackModel(viewModel);
+                track.OwnerId = currentTrack.OwnerId;
+                using (var repository = this.RepositoryFactory.GetTrackRepository())
+                {
+                    repository.AddOrUpdate(track);
+                    repository.SaveChanges();
+                }
+
+                return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
             }
 
-            if (currentTrack == null)
+            if (viewModel.Genres == null)
             {
-                return this.HttpNotFound($"Трек с id = {viewModel.Id} не найден");
+                viewModel.Genres = GetGenres();
             }
 
-            if (viewModel.PostedTrackFile == null && viewModel.TrackFile == null)
-            {
-                viewModel.TrackFile = currentTrack.TrackFile;
-            }
-
-            if (viewModel.PostedImage == null && viewModel.Image == null)
-            {
-                viewModel.Image = currentTrack.Image;
-            }
-
-            var track = ManagementMapper.GetTrackModel(viewModel);
-            track.OwnerId = currentTrack.OwnerId;
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
-            {
-                repository.AddOrUpdate(track);
-                repository.SaveChanges();
-            }
-
-            return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
+            return View(viewModel);
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="id">
+        /// <param name="artistId">
         ///     The id.
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult New(int id)
+        public virtual ActionResult New(int artistId = 0)
         {
-            ICollection<Genre> genres;
-            using (var repo = this.RepositoryFactory.GetGenreRepository())
+            if (artistId <= 0)
             {
-                genres = repo.GetAll();
+                return RedirectToAction("List", "Tracks", new { area = "Content" });
             }
 
+            Artist artist;
             using (var repository = this.RepositoryFactory.GetArtistRepository())
             {
-                var artist = repository.GetById(id);
-                return this.View(new TrackManagementViewModel { Artist = artist, Genres = genres });
+                artist = repository.GetById(artistId);
             }
+
+            if (artist == null)
+            {
+                return HttpNotFound($"Артист с id = {artistId} не найден");
+            }
+
+            ICollection<Genre> genres = GetGenres();
+            return this.View(new TrackManagementViewModel { ArtistId = artist.Id, ArtistName = artist.Name, Genres = genres });
         }
 
         /// <summary>
@@ -167,22 +211,45 @@
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult New(TrackManagementViewModel viewModel)
+        public virtual ActionResult New(
+            [Bind(Include = "PostedTrackFile,PostedImage,PostedTrackSample,ArtistId,ArtistName,Duration,Genres,GenreId,Name,ReleaseDate,FileName,Price")]
+            TrackManagementViewModel viewModel)
         {
-            var track = ManagementMapper.GetTrackModel(viewModel);
-
-            if (this.CurrentUser != null && this.CurrentUser.IsInRole(UserRoles.Seller))
+            if (ModelState.IsValid)
             {
-                track.OwnerId = this.CurrentUser.Id;
+                var track = ManagementMapper.GetTrackModel(viewModel);
+
+                if (this.CurrentUser != null && this.CurrentUser.IsInRole(UserRoles.Seller))
+                {
+                    track.OwnerId = this.CurrentUser.UserProfileId;
+                }
+
+                using (var repository = this.RepositoryFactory.GetTrackRepository())
+                {
+                    repository.AddOrUpdate(track);
+                    repository.SaveChanges();
+                }
+
+                return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
             }
 
-            using (var repository = this.RepositoryFactory.GetTrackRepository())
+            return View(viewModel);
+        }
+
+        private ICollection<Genre> GetGenres()
+        {
+            ICollection<Genre> genres = System.Web.HttpContext.Current.Cache[GENRES_CACHE_KEY] as ICollection<Genre>;
+            if (genres == null)
             {
-                repository.AddOrUpdate(track);
-                repository.SaveChanges();
+                using (var repo = this.RepositoryFactory.GetGenreRepository())
+                {
+                    genres = repo.GetAll();
+                    System.Web.HttpContext.Current.Cache.Add(GENRES_CACHE_KEY, genres, null, DateTime.Now.AddHours(2),
+                                                             Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                }
             }
 
-            return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
+            return genres;
         }
     }
 }

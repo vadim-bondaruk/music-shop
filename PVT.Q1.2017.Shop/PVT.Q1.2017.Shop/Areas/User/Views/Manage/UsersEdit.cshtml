@@ -3,11 +3,12 @@
 @using Shop.Common.Models
 
 @{
-    ViewBag.Title = "Редактирование Пользователей";
+    ViewBag.Title = "Управление пользователями";
 }
 
-<div class="ui-widget">
-    <label for="lastName">Last Name Search: </label>
+
+<div class="ui-widget" id="search-box">
+    <label for="lastName">Поиск: </label>
     <input id="lastName">
 </div>
 Sort by: @Html.ActionLink("LastName", "UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"], sort = "LastName"}) |
@@ -30,7 +31,7 @@ Sort by: @Html.ActionLink("LastName", "UsersEdit", new { controller = "Manage", 
                         $.ajax(
                             {
                                 url: "@Url.Action("GetLastNameMatchingData",new { controller = "Manage", area = "User"})",
-                                type: "POST",
+                                type: "get",
                                 data: {
                                     term: request.term
                                 },

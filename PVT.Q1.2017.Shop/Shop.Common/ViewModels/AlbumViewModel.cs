@@ -44,5 +44,10 @@
         /// Gets or sets a value indicating whether the album is purchased.
         /// </summary>
         public bool IsPurchased { get; set; }
+
+        /// <summary>
+        /// The album cover.
+        /// </summary>
+        public byte[] Cover { get; set; }
     }
 }

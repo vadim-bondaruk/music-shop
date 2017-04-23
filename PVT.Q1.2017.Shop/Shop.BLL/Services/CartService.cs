@@ -378,6 +378,8 @@
                     && p.TrackId == trackId);
                 if (purchasedTrack != null)
                 {
+                    this.RemoveTrack(userId, trackId);
+                    return;
                     throw new InvalidPaymentOperation(
                         $"Трек ID={trackId} пользователем ID={userId} уже был куплен ранее. Необходимо вернуть деньги!");
                 }
@@ -413,6 +415,8 @@
                     && p.AlbumId == albumId);
                 if (purchasedAlbum != null)
                 {
+                    this.RemoveAlbum(userId, albumId);
+                    return;
                     throw new InvalidPaymentOperation(
                         $"Альбом ID={albumId} пользователем ID={userId} уже был куплен ранее. Необходимо вернуть деньги!");
                 }

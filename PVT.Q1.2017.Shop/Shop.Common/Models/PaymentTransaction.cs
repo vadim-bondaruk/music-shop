@@ -16,22 +16,36 @@
         /// <summary>
         /// Total amount for current transaction
         /// </summary>
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
 
+        /// <summary>
+        /// User ID
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// Currency ID
+        /// </summary>
+        public int CurrencyId { get; set; }
+        
         /// <summary>
         /// Transaction holder
         /// </summary>
-        public User User { get; set; }
+        public virtual UserData User { get; set; }
 
         /// <summary>
         /// Currency for transaction
         /// </summary>
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
         /// <summary>
-        /// The order ID for which the transaction was created
+        /// Purchased tracks
         /// </summary>
-        public int OrderId { get; set; }
+        public virtual ICollection<PurchasedTrack> PurchasedTrack { get; set; }
 
+        /// <summary>
+        /// Purchased albums
+        /// </summary>
+        public virtual ICollection<PurchasedAlbum> PurchasedAlbum { get; set; }
     }
 }

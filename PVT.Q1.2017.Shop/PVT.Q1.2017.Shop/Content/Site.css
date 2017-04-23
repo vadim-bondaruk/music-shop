@@ -1,5 +1,5 @@
 ﻿.navbar-collapse {
-    font-size: 18px;
+    font-size: 15px;
 }
 body {
     padding-top: 50px;
@@ -16,7 +16,19 @@ body {
     padding-right: 15px;
 }
 
+.field-validation-error {
+    color: darkred;
+}
 
+.error {
+    font-size: 16px;
+    color: brown !important;
+}
+
+.error-header {
+    font-size: 36px !important;
+    color: brown;
+}
 
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -120,4 +132,54 @@ footer {
     color: black;
     font-weight: bold;
     font-size: 18px;
+}
+
+#users-table {
+    background: #fff;
+    opacity: 0.8;
+    border-radius: 15px;
+    margin-top: 25px;
+}
+
+#lastName {
+    border-radius: 5px;
+    max-width: 400px;
+    width: 400px;
+}
+
+#search-box {
+    margin-top: 15px;
+    text-align: center;
+}
+#curr-table {
+    background: #fff;
+    border-radius: 15px;
+    opacity: 0.8;
+}
+
+#user-edit-form {
+    width: 500px;
+    display: inline-block;
+}
+
+.user-edit-center {
+    width: 100%;
+    text-align: center;
+     background: #fff;
+    border-radius: 15px;
+    opacity: 0.8;
+}
+
+#user-edit-savebtn {
+    width: 150px;
+    margin-bottom: 30px !important;
+}
+
+.email-confirmed {
+    text-align: left;
+    margin-left: 15px;
+}
+
+.datecontrol {
+    /* please do not remove this style;it is used for editing dates */
 }

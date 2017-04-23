@@ -23,7 +23,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual ActionResult Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -36,8 +36,7 @@
             {
                 albumTracksViewModel = albumService.GetTracks(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
             }
-            
-            if (albumTracksViewModel == null)
+            else
             {
                 albumTracksViewModel = albumService.GetTracks(id.Value);
             }
@@ -56,25 +55,20 @@
         /// <returns>
         ///     All albums view.
         /// </returns>
-        public ActionResult List()
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
             var albumService = ServiceFactory.GetAlbumService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return View(albumService.GetDetailedAlbumsList(CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return this.View(albumService.GetAlbums(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
             }
 
-            return View(albumService.GetDetailedAlbumsList());
+            return this.View(albumService.GetAlbums(page, pageSize));
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="id">The album id.</param>
-        /// <returns>
-        /// </returns>
-        public virtual ActionResult TracksList(int? id)
+        public ActionResult PurchasedList()
         {
-            return Details(id);
+            throw new System.NotImplementedException();
         }
     }
 }
