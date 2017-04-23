@@ -18,16 +18,6 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         }
 
         /// <summary>
-        /// стартовая страница для демо-методов
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// Метод реакции на успешный статус оплаты
         /// </summary>
         /// <returns></returns>
