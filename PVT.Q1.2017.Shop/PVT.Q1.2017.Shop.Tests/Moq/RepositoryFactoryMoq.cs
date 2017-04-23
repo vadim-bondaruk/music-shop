@@ -138,5 +138,10 @@
         {
             return _purchasedAlbumRepositoryMoq.Repository;
         }
+
+        public ICountryRepository GetCountryRepository()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

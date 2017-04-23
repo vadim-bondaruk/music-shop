@@ -40,7 +40,8 @@
         /// Users country
         /// </summary>
         [Display(Name = "Страна")]
-        public string Country { get; set; }
+        //public string Country { get; set; }
+        public int? CountryId { get; set; }
 
         /// <summary>
         /// Users phone

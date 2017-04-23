@@ -50,19 +50,19 @@
         public UserRoles UserRole { get; set; }
 
         /// <summary>
+        /// Id of specific country in the database
+        /// </summary>
+        public int? CountryId { get; set; }
+
+        /// <summary>
         /// Users country
         /// </summary>
-        public string Country { get; set; }
+        public virtual Country Country { get; set; }
 
         /// <summary>
         /// The phone number
         /// </summary>
         public string PhoneNumber { get; set; }
-
-        /// <summary>
-        /// User role
-        /// </summary>
-        //public object UserRole { get; set; }
 
         /// <summary>
         /// Verification of email confirmation

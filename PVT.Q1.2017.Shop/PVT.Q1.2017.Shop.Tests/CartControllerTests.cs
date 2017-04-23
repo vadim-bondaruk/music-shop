@@ -13,11 +13,33 @@ using Shop.BLL.Services.Infrastructure;
 namespace PVT.Q1._2017.Shop.Tests
 {
     using global::Shop.BLL.Exceptions;
+    using global::Shop.BLL.Utils;
     using global::Shop.Common.ViewModels;
+    using Moq;
+    using System.Web;
+    using System.Web.Routing;
 
     [TestClass]
     public class CartControllerTests
     {
+        public Mock<HttpContextBase> TestInitialize()
+        {
+            var context = new Mock<HttpContextBase>();
+            var request = new Mock<HttpRequestBase>();
+            var session = new HttpSessionMock();
+            var currentUser = new CurrentUser(new User(), 1, 1);
+            context
+                .Setup(c => c.Request)
+                .Returns(request.Object);
+            context
+                .Setup(c => c.User)
+                .Returns(currentUser);
+            context
+                .Setup(c => c.Session)
+                .Returns(session);
+            return context;
+        }
+
         [TestMethod]
         public void CartController_ActionIndexTest()
         {
@@ -40,6 +62,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
 
             var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
+            var context = TestInitialize();
+            cartController.ControllerContext = new ControllerContext(context.Object, new RouteData(), cartController);
             var result = cartController.Index();
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -76,6 +100,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
 
             var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
+            var context = TestInitialize();
+            cartController.ControllerContext = new ControllerContext(context.Object, new RouteData(), cartController);
 
             var result = (RedirectToRouteResult)cartController.AddTrack(3);
             Assert.IsFalse(result.Permanent);
@@ -118,6 +144,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
 
             var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
+            var context = TestInitialize();
+            cartController.ControllerContext = new ControllerContext(context.Object, new RouteData(), cartController);
 
             var result = (RedirectToRouteResult)cartController.AddAlbum(3);
             Assert.IsFalse(result.Permanent);
@@ -158,6 +186,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
 
             var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
+            var context = TestInitialize();
+            cartController.ControllerContext = new ControllerContext(context.Object, new RouteData(), cartController);
 
             var result = (RedirectToRouteResult)cartController.DeleteTrack(3);
             Assert.IsFalse(result.Permanent);
@@ -198,6 +228,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
 
             var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
+            var context = TestInitialize();
+            cartController.ControllerContext = new ControllerContext(context.Object, new RouteData(), cartController);
 
             var result = (RedirectToRouteResult)cartController.DeleteAlbum(3);
             Assert.IsFalse(result.Permanent);
@@ -241,6 +273,8 @@ namespace PVT.Q1._2017.Shop.Tests
             moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
 
             var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
+            var context = TestInitialize();
+            cartController.ControllerContext = new ControllerContext(context.Object, new RouteData(), cartController);
             var result = cartController.GetOrdersCount();
             Assert.IsInstanceOfType(result, typeof(JsonResult));
         }
