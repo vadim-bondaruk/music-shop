@@ -17,17 +17,39 @@
         /// <param name="pageInfo"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static MvcHtmlString PageLinks<T>(this HtmlHelper helper, PagedResult<T> pageInfo, Func<int, string> url)
+        public static MvcHtmlString PageLinks<T>(this HtmlHelper helper, PagedResult<T> pageInfo, Func<int, string> url, int totalVisiblePages = 5)
         {
             StringBuilder result = new StringBuilder();
 
-            TagBuilder tag = new TagBuilder("a");
-            tag.MergeAttribute("href", url(1));
-            tag.InnerHtml = "First";
-            tag.AddCssClass("btn btn-default");
-            result.Append(tag.ToString());
+            int middle = (int)Math.Ceiling((double)totalVisiblePages / 2);
 
-            for (int i = pageInfo.CurrentPage - 2; i <= pageInfo.CurrentPage + 2; i++)
+            int firstVisiblePage = pageInfo.CurrentPage < middle ? 1 : pageInfo.CurrentPage - middle + 1;
+            int lastVisiblePage = firstVisiblePage + totalVisiblePages - 1;
+            if (lastVisiblePage > pageInfo.PagesCount)
+            {
+                lastVisiblePage = pageInfo.PagesCount;
+            }
+
+            if (lastVisiblePage - firstVisiblePage + 1 < totalVisiblePages)
+            {
+                firstVisiblePage -= totalVisiblePages - (lastVisiblePage - firstVisiblePage + 1);
+                if (firstVisiblePage <= 0)
+                {
+                    firstVisiblePage = 1;
+                }
+            }
+
+            TagBuilder tag;
+            if (firstVisiblePage > 1)
+            {
+                tag = new TagBuilder("a");
+                tag.MergeAttribute("href", url(1));
+                tag.InnerHtml = "Первая";
+                tag.AddCssClass("btn btn-default");
+                result.Append(tag);
+            }
+
+            for (int i = firstVisiblePage; i <= lastVisiblePage; i++)
             {
                 if (i > 0 && i <= pageInfo.PagesCount)
                 {
@@ -45,15 +67,18 @@
                         tag.AddCssClass("btn btn-default");
                     }
 
-                    result.Append(tag.ToString());
+                    result.Append(tag);
                 }
             }
 
-            tag = new TagBuilder("a");
-            tag.MergeAttribute("href", url(pageInfo.PagesCount));
-            tag.InnerHtml = "Last";
-            tag.AddCssClass("btn btn-default");
-            result.Append(tag.ToString());
+            if (lastVisiblePage < pageInfo.PagesCount)
+            {
+                tag = new TagBuilder("a");
+                tag.MergeAttribute("href", url(pageInfo.PagesCount));
+                tag.InnerHtml = "Последняя";
+                tag.AddCssClass("btn btn-default");
+                result.Append(tag);
+            }
 
             return new MvcHtmlString(result.ToString());
         }
