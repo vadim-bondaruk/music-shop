@@ -2343,13 +2343,15 @@
                     UserId = userData.UserId,
                     Date = DateTime.Now,
                     Amount = 11,
-                    PurchasedTrack = tracks.Select(t => new PurchasedTrack
-                    {
+                    PurchasedTrack =
+                    tracks.Select(t => new PurchasedTrack
+                        {
                         TrackId = t.Id,
                         UserId = userData.UserId,
                         CurrencyId = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().CurrencyId : 1,
                         Price = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().Price : 1
-                    }).ToArray()
+                    }
+                    ).ToArray()
                 };
                 context.Set<PaymentTransaction>().AddOrUpdate(paymentTransaction);
                 context.SaveChanges();

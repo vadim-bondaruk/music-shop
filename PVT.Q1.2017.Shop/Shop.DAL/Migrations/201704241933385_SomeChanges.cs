@@ -3,7 +3,7 @@ namespace Shop.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ModifyPaymentTransaction : DbMigration
+    public partial class SomeChanges : DbMigration
     {
         public override void Up()
         {
