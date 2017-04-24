@@ -1,7 +1,7 @@
 ﻿@model Shop.Common.ViewModels.UserEditView
 
 @{
-    ViewBag.Title = "Правка";
+    ViewBag.Title = "Редактирование пользователей";
 }
 
 <div class="user-edit-center">
@@ -49,8 +49,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Sex, new SelectList(new string[] { "Мужской", "Женский" }), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Sex, string.Empty, new { @class = "text-danger" })
+                @Html.RadioButtonFor(model => model.Sex, "Мужской") Мужской
+                @Html.RadioButtonFor(model => model.Sex, "Женский") Женский
+                @Html.RadioButtonFor(model => model.Sex, "не указано", new { Checked = "checked", hidden = "hidden" })
             </div>
         </div>
         <div class="form-group">
@@ -96,13 +97,16 @@
     }
 </div>
 
-@System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
 
 @section scripts{
 
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
+
     <script>
         $(document).ready(function () {
-            $("#phone").inputmask("+(999)999-99-99");
+            $("#phone").inputmask("+(999 99)999-99-99");
         });
     </script>
 }

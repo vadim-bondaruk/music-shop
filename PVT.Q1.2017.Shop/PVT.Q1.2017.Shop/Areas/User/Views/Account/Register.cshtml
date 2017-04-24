@@ -64,8 +64,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.RadioButtonFor(model => model.Sex, "Мужской") Мужской   
+                @Html.RadioButtonFor(model => model.Sex, "Мужской") Мужской
                 @Html.RadioButtonFor(model => model.Sex, "Женский") Женский
+                @Html.RadioButtonFor(model => model.Sex, "не указано", new { Checked = "checked", hidden = "hidden" })
             </div>
         </div>
 
@@ -110,13 +111,17 @@
 </div>
 
 
-    @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
 
 @section scripts{
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
 
     <script>
         $(document).ready(function () {
             $("#input1").inputmask("+(999 99)999-99-99");
         });
     </script>
+
 }
