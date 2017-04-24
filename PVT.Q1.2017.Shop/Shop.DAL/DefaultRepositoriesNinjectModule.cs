@@ -94,6 +94,10 @@
                 .To<PurchasedAlbumRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetPurchasedAlbumRepository());
 
+            Bind<ICountryRepository>()
+                .To<CountryRepository>()
+                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCountryRepository());
+
             Bind<IRepositoryFactory>().ToFactory();
         }
     }

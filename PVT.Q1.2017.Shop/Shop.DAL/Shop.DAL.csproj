@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Infrastruture\IAlbumTrackRelationRepository.cs" />
     <Compile Include="Infrastruture\IBaseAddressRepository.cs" />
+    <Compile Include="Infrastruture\ICountryRepository.cs" />
     <Compile Include="Infrastruture\IOrderAlbumRepository.cs" />
     <Compile Include="Infrastruture\IOrderTrackRepository.cs" />
     <Compile Include="Infrastruture\IPaymentCardRepository.cs" />
@@ -140,6 +141,10 @@
     <Compile Include="Migrations\201704181348024_AddPaymentTransaction.Designer.cs">
       <DependentUpon>201704181348024_AddPaymentTransaction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704231457489_AddCountriesUpdateUserModel.cs" />
+    <Compile Include="Migrations\201704231457489_AddCountriesUpdateUserModel.Designer.cs">
+      <DependentUpon>201704231457489_AddCountriesUpdateUserModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201704230000237_genreDescription.cs" />
     <Compile Include="Migrations\201704230000237_genreDescription.Designer.cs">
       <DependentUpon>201704230000237_genreDescription.cs</DependentUpon>
@@ -147,6 +152,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
+    <Compile Include="Migrations\Configurations\CountryConfiguration.cs" />
     <Compile Include="Migrations\Configurations\PriceLevelConfiguration.cs" />
     <Compile Include="Migrations\Configurations\SettingConfiguration.cs" />
     <Compile Include="Migrations\Configurations\TrackPriceConfiguration.cs" />
@@ -167,6 +173,7 @@
     <Compile Include="Repositories\AlbumTrackRelationRepository.cs" />
     <Compile Include="Repositories\BaseAddressRepository.cs" />
     <Compile Include="Repositories\CartRepository.cs" />
+    <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\CurrencyRateRepository.cs" />
     <Compile Include="Repositories\AlbumPriceRepository.cs" />
     <Compile Include="Repositories\CurrencyRepository.cs" />
@@ -269,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704181348024_AddPaymentTransaction.resx">
       <DependentUpon>201704181348024_AddPaymentTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704231457489_AddCountriesUpdateUserModel.resx">
+      <DependentUpon>201704231457489_AddCountriesUpdateUserModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704230000237_genreDescription.resx">
       <DependentUpon>201704230000237_genreDescription.cs</DependentUpon>
