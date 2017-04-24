@@ -318,7 +318,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets paged result for current page 
         /// </summary>
         /// <param name="pageNumber"></param>
         /// <param name="count"></param>
