@@ -23,5 +23,9 @@
         IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID);
 
         PagedResult<PaymentTransaction> GetDataPerPage(int? userID, int pageNumber = 1, int count = 10);
+
+        PayResultsViewModel GetSellerPays(int userID, int currencyID);
+
+        PayResultsViewModel GetAllPays(int currencyID);
     }
 }

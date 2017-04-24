@@ -18,7 +18,7 @@
         }
 
         /// <summary>
-        /// Action for 
+        /// Action to view payment transactions
         /// </summary>
         /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Get|HttpVerbs.Post)]
@@ -40,6 +40,11 @@
             
         }
 
+        /// <summary>
+        /// Action for watching details of payment transaction
+        /// </summary>
+        /// <param name="transactionID"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult Details(int? transactionID)
@@ -53,7 +58,10 @@
             return View();
         }
 
-
+        /// <summary>
+        /// Action for accepting payment transaction
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult AcceptTransaction()
@@ -72,6 +80,25 @@
                 }
             }
             return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
+        }
+
+        /// <summary>
+        /// Action for watching money results
+        /// </summary>
+        /// <returns></returns>
+        [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
+        public ViewResult PayResult()
+        {
+            PayResultsViewModel pays = null;
+            if(CurrentUser.IsInRole(UserRoles.Seller))
+            {
+                pays = ServiceFactory.GetPaymentService().GetSellerPays(CurrentUser.Id, CurrentUserCurrency.Id);
+            }
+            else
+            {
+                pays = ServiceFactory.GetPaymentService().GetAllPays(CurrentUserCurrency.Id);
+            }
+            return View(pays);
         }
     }
 }

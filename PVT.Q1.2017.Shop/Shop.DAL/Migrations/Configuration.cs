@@ -2333,10 +2333,6 @@
 
         private void AddDefaultPurchasedTracks(ShopContext context)
         {
-                var userData =
-                    context.Set<UserData>()
-                        .FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.OrdinalIgnoreCase));
-
             if (!context.Set<PaymentTransaction>().Any())
             {
                 var userData = context.Set<UserData>().FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.OrdinalIgnoreCase));

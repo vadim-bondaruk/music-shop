@@ -323,6 +323,7 @@
     <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
     <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\PayResult.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -525,7 +526,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\News\Models\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />

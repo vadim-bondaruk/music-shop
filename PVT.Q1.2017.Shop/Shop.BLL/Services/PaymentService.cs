@@ -339,5 +339,23 @@
                                         a => a.Currency, a => a.User.User);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public PayResultsViewModel GetAllPays(int currencyID)
+        {
+            using(var payTransRepo = Factory.GetPaymentTransactionRepository())
+            {
+                var s = payTransRepo.GetAll(a => a.Currency).Sum(a => a.CurrencyId);
+            }
+            return new PayResultsViewModel();
+        }
+
+        public PayResultsViewModel GetSellerPays(int userID, int currencyID)
+        {
+            return new PayResultsViewModel();
+        }
     }
 }
