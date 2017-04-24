@@ -88,7 +88,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id= "input1", placeholder = "(555) 555-5555"  } })
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id= "input1", placeholder = "+(555 55)555-55-55"  } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -106,7 +106,7 @@
 }
 
 <div>
-    @Html.ActionLink("На главную", "Index", new { area = "", controller = "Home" })
+    @Html.ActionLink("На главную", "Index", new { area = string.Empty, controller = "Home" })
 </div>
 
 
@@ -116,7 +116,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#input1").inputmask("+(999 99)999-99-99");
+            $("#input1").inputmask("+(999)999-99-99");
         });
     </script>
 }
