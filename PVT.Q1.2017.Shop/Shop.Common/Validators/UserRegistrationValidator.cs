@@ -56,7 +56,7 @@
             RuleFor(u => u.Email).Must(email => !validator.IsUserExist(email))
                 .WithMessage("Пользователь с таким адресом электронной почты уже существект");
 
-            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-100), DateTime.Today.AddYears(-5))
+            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-120), DateTime.Today.AddYears(0))
                 .WithMessage("Дата рождения выбрана некорректно");
 
             RuleFor(u => u.PhoneNumber)

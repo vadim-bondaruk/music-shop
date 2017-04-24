@@ -163,7 +163,7 @@
                                                     Email, Sex, BirthDate, CountryId, PhoneNumber")] UserViewModel user)
         {
             bool result = false;
-
+            
             if (ModelState.IsValid)
             {
                 try
@@ -192,6 +192,10 @@
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
+            }
+            using (var countries = RepositoryFactory.GetCountryRepository())
+            {
+                ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
             }
             return View(user);
 
