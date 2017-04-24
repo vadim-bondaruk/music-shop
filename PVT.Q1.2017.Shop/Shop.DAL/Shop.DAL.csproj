@@ -149,6 +149,10 @@
     <Compile Include="Migrations\201704240709587_ModifyPaymentTransaction.Designer.cs">
       <DependentUpon>201704240709587_ModifyPaymentTransaction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704240745068_GenresDescription.cs" />
+    <Compile Include="Migrations\201704240745068_GenresDescription.Designer.cs">
+      <DependentUpon>201704240745068_GenresDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -282,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704240709587_ModifyPaymentTransaction.resx">
       <DependentUpon>201704240709587_ModifyPaymentTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704240745068_GenresDescription.resx">
+      <DependentUpon>201704240745068_GenresDescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
