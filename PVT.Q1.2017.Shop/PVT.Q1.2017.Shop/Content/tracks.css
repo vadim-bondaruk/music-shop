@@ -496,7 +496,7 @@ li > input { width: 100% }
 }
 
 
-.album-details .tracklist-header {
+/*.album-details .tracklist-header {
     text-align: center;
     font-weight: bold;
 }
@@ -534,7 +534,7 @@ li > input { width: 100% }
     padding: 0;
 }
 
-.album-details .tracks-list .buy-btn { margin-top: -10px; }
+.album-details .tracks-list .buy-btn { margin-top: -10px; }*/
 
 .album-details .scrollable {
     width: 1050px;
@@ -661,24 +661,6 @@ li > input { width: 100% }
 }
 
 
-a.tracks-list > ul {
-    display: inline-block;
-    width: 100%;
-}
-
-.tracks-list li {
-    font-size: 18px;
-    overflow: hidden;
-    border: solid;
-    border-width: 1px;
-    margin-top: 3px;
-    display: table;
-    height: 60px;
-    width: 100%;
-    text-align: left;
-    opacity: 0.9;
-}
-
 .albums-list li .order-block {
     font-size: 18px;
     text-align: left;
@@ -695,7 +677,6 @@ a.tracks-list > ul {
     width: 100px;
     height: 25px;
     color: black;
-    padding: 0;
 }
 
 .order-block .buy-btn button.ordered,
@@ -718,99 +699,7 @@ a.tracks-list > ul {
 .order-block .buy-btn button.ordered:hover:before,
 .buttons .buy-btn button.ordered:hover:before { content: 'Из корзины'; }
 
-.order-block { display: inline-block; }
-
-.tracks-list .left {
-    display: inline-block;
-    width: 88%;
-}
-
-.tracks-list li {
-    height: 80px;
-    padding: 0;
-}
-
-.tracks-list .track-name {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.tracks-list .albums-count { padding-top: 10px; }
-
-.tracks-list .artist-name, .albums-count {
-    font-size: 15px;
-    color: black;
-    display: inline-block;
-    margin-left: 15px;
-}
-
-.tracks-list img { display: inline-block; }
-
-.tracks-list .details {
-    display: inline-block;
-    vertical-align: top;
-    width: 700px;
-    margin-top: 15px;
-}
-
-.tracks-list .buy-btn { margin-top: -28px; }
-.tracks-list .b { margin-right: 25px; }
-
 .feedback-details { text-align: left !important; }
-
-.tracks-list div a, .track-details .panel-body a, .album-details .panel-body a, .feedback-details a { color: black; }
-
-.tracks-list .btn, .track-details .btn, .album-details .btn, .feedback-details .btn { color: #fff !important; }
-
-.tracks-list > ul > li { margin-left: 0; }
-
-.tracks-list > ul > li:hover {
-    border-radius: 10px;
-    transform: scale(1.01);
-    transition: all .2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-box-shadow: 0 0 5px orange;
-    -webkit-box-shadow: 0 0 5px orange;
-    box-shadow: 0 0 5px orange;
-}
-
-.tracks-list > ul > li > div {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.tracks-list > ul > li > div > img {
-    width: 80px;
-    height: 80px;
-}
-
-.tracks-list > ul > li > div > a { color: black; }
-
-.tracks-list > ul > li p {
-    display: inline-block;
-    font-size: 24px;
-}
-
-.tracks-list > ul > li h4 {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.tracks-list > ul > li > div > h3 { display: inline-block }
-
-.tracks-list > ul > li > div > p { display: inline-block }
-
-.tracks-list .btn-play { display: inline-block; }
-
-.tracks-list .track-header {
-    width: 400px;
-    display: inline-block;
-    margin-left: 15px;
-}
-.tracks-list .details-left { display: inline-block; width: 500px}
-.tracks-list .details-right { display: inline-block; vertical-align: top; margin-top: -15px}
-
 .track-details .container { margin-top: 15px; }
 
 .track-details .container .common {
@@ -888,51 +777,32 @@ a.tracks-list > ul {
     margin-top: 40px;
 }
 
-/*.track-edit {
-    text-align: left;
-    background: #fff;
-    position: relative;
-}
 
-.track-edit img {
+.tracks-list .track-header {
     display: inline-block;
-    border: solid;
-    border-width: 1px;
-    margin: 15px;
-    width: 200px;
-    height: 200px;
-    padding: 5px;
-    vertical-align: top;
+    padding-left: 8px;
+    margin-top: -2px;
+    
 }
 
-.track-edit ul {
-    height: 500px;
-    margin-left: 10px;
-    border: none
+.tracks-list .details-left {
+    margin-top: 20px;
 }
-
-.track-edit div {
+.tracks-list .albums-count {
     display: inline-block;
-    width: 250px;
-    vertical-align: top;
-    background: white;
-    margin-bottom: 20px
 }
 
-.track-edit ul li {
-    border: none;
-    height: 50.6px;
-    margin-top: 15px;
-    padding: 2px 5px 2px 5px;
+.tracks-list .details-right {
+    margin-top: 11px;
+}
+.tracks-list .stars {
+    display: inline-block;
 }
 
-.track-edit .buttons {
-    position: absolute;
-    bottom: 1px;
-    right: 15px;
-}*/
+.tracks-list .btn-play{float: left}
 
 .track-edit ul li input { height: 30px; }
+
 
 .track-edit audio { width: 100%; }
 

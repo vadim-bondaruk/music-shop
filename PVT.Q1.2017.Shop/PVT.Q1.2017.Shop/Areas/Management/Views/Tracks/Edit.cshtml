@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 @{ ViewBag.Title = "Правка"; }
-
+<body>
 @using (Html.BeginForm("Edit", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formedit" }))
 {
     @Html.AntiForgeryToken()
@@ -79,6 +79,8 @@
     <input type="file" id="file" name="PostedImage" style="display: none"/>
     <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
 }
+</body>
+
 
 @section scripts
 {
