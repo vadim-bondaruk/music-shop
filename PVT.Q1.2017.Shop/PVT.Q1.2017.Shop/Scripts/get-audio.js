@@ -3,12 +3,12 @@
 function GetAudioPlayer(url, id) {
     var itemId = "#item-" + id;
 
-    $("#audio-hidden").insertAfter($(itemId).find($(".fa")));
-    $(itemId).find($(".track-header")).insertBefore($(itemId).find($(".fa")));
+    $("#audio-hidden").insertAfter($(itemId).find($(".btn-prev")));
+    $(itemId).find($(".track-header")).insertBefore($(itemId).find($(".btn-prev")));
 
-    $(currentId).find($(".fa")).show();
-    $(currentId).find($(".track-header")).insertAfter($(currentId).find($(".fa")));
-    $(itemId).find($(".fa")).hide();
+    $(currentId).find($(".btn-prev")).show();
+    $(currentId).find($(".track-header")).insertAfter($(currentId).find($(".btn-prev")));
+    $(itemId).find($(".btn-prev")).hide();
 
     currentId = itemId;
 
