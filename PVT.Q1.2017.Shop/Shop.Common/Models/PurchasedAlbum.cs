@@ -28,6 +28,11 @@
         public virtual Currency Currency { get; set; }
 
         /// <summary>
+        /// Price for track
+        /// </summary>
+        public decimal Price { get; set; }
+
+        /// <summary>
         /// User
         /// </summary>
         public virtual UserData User { get; set; }

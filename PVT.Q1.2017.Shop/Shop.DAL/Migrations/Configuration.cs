@@ -2308,19 +2308,27 @@ namespace Shop.DAL.Migrations
 
         private void AddDefaultPurchasedTracks(ShopContext context)
         {
-            if (!context.Set<PurchasedTrack>().Any())
+
+            if (!context.Set<PaymentTransaction>().Any())
             {
-                var userData = context.Set<UserData>().FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.CurrentCultureIgnoreCase));
-
-                if (userData != null)
+                var userData = context.Set<UserData>().FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.OrdinalIgnoreCase));
+                var tracks = context.Set<Track>().OrderBy(t => t.Id).Skip(5).Take(5).ToList();
+                var paymentTransaction = new PaymentTransaction()
                 {
-                    var userDataId = userData.Id;
-                    var tracks = context.Set<Track>().OrderBy(t => t.Id).Skip(5).Take(5).ToList();
-                    var purchasedTracks = tracks.Select(t => new PurchasedTrack { TrackId = t.Id, UserId = userDataId }).ToArray();
-
-                    context.Set<PurchasedTrack>().AddOrUpdate(purchasedTracks);
-                    context.SaveChanges();
-                }
+                    CurrencyId = userData.UserCurrency.Id,
+                    UserId = userData.UserId,
+                    Date = DateTime.Now,
+                    Amount = 11,
+                    PurchasedTrack = tracks.Select(t => new PurchasedTrack
+                    {
+                        TrackId = t.Id,
+                        UserId = userData.UserId,
+                        CurrencyId = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().CurrencyId : 1,
+                        Price = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().Price : 1
+                    }).ToArray()
+                };
+                context.Set<PaymentTransaction>().AddOrUpdate(paymentTransaction);
+                context.SaveChanges();
             }
         }
 
@@ -2332,7 +2340,7 @@ namespace Shop.DAL.Migrations
                     new Country[]
                     {
                         new Country { Name = "Belarus" },
-                        new Country {Name = "Australia" },
+                        new Country { Name = "Australia" },
                         new Country { Name = "USA"},
                         new Country { Name = "England" }
                     }

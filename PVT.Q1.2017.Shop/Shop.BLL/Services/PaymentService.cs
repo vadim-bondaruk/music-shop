@@ -238,6 +238,7 @@
                 {
                     PurchasedTrack = new List<PurchasedTrack>(),
                     PurchasedAlbum = new List<PurchasedAlbum>(),
+                    Date = DateTime.Now,
                     Amount = cart.TotalPrice,
                     CurrencyId = currencyId,
                     UserId = userID
@@ -254,12 +255,16 @@
                             && p.TrackId == trackID);
                         if (purchasedTrack == null)
                         {
-                            purchasedTrack = new PurchasedTrack() { UserId = userID, TrackId = trackID };
+                            purchasedTrack = new PurchasedTrack() {
+                                UserId = userID,
+                                TrackId = trackID,
+                                CurrencyId = currencyId,
+                                Price = track.Price.Amount
+                            };
                             purchasedTrackRepository.AddOrUpdate(purchasedTrack);
                         }
                         transaction.PurchasedTrack.Add(purchasedTrack);
                     }
-                    //purchasedTrackRepository.SaveChanges();
                 }
                 #endregion
 
@@ -274,12 +279,17 @@
                             && p.AlbumId == albumID);
                         if (purchasedAlbum == null)
                         {
-                            purchasedAlbum = new PurchasedAlbum() { UserId = userID, AlbumId = albumID };
+                            purchasedAlbum = new PurchasedAlbum()
+                            {
+                                UserId = userID,
+                                AlbumId = albumID,
+                                CurrencyId = currencyId,
+                                Price = album.Price.Amount
+                            };
                             purchasedAlbumRepository.AddOrUpdate(purchasedAlbum);
                         }
                         transaction.PurchasedAlbum.Add(purchasedAlbum);
                     }
-                    //purchasedAlbumRepository.SaveChanges();
                 }
                 #endregion
 
