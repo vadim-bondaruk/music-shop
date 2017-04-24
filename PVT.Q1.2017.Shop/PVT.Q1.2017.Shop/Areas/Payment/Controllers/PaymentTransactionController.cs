@@ -62,19 +62,14 @@
             if (Session["IsAccepted"] != null)
             {
                 accept = (bool)Session["IsAccepted"];
-                return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment", accept = true });
-            }
-            return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
-        }
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult AcceptTransaction(bool accept)
-        {
-            CartViewModel cart = (CartViewModel)TempData["cart"];
-            if(accept)
-            {
-                ServiceFactory.GetPaymentService().CreatePaymentTransaction(cart);
+                if (accept)
+                {
+                    CartViewModel cart = (CartViewModel)TempData["cart"];
+                    if(cart!=null)
+                    {
+                        ServiceFactory.GetPaymentService().CreatePaymentTransaction(cart);
+                    }
+                }
             }
             return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
         }
