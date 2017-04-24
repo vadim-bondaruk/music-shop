@@ -7,6 +7,7 @@
     using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.Common.ViewModels;
     using Helpers;
+    using global::Shop.Infrastructure.Enums;
 
     [ShopAuthorize]
     public class PaymentTransactionController : BaseController
@@ -26,8 +27,17 @@
         {
             int countPerPage = 10;
             this.TempData["CurrentPage"] = pageId;
-            var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, pageId, countPerPage);
-            return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
+            if (CurrentUser.IsInRole(UserRoles.Admin))
+            {
+                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(null, pageId, countPerPage);
+                return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
+            }
+            else
+            {
+                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, pageId, countPerPage);
+                return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
+            }
+            
         }
 
         [HttpGet]

@@ -325,6 +325,14 @@
         /// <returns></returns>
         public PagedResult<PaymentTransaction> GetDataPerPage(int? userID, int pageNumber = 1, int count = 10)
         {
+            if (userID == null)
+            {
+                using (var repository = Factory.GetPaymentTransactionRepository())
+                {
+                    return repository.GetAll(pageNumber, count,
+                                            a => a.Currency, a => a.User.User);
+                }
+            }
             using (var repository = Factory.GetPaymentTransactionRepository())
             {
                 return repository.GetAll(pageNumber, count, a => a.UserId == userID,
