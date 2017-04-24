@@ -19,14 +19,14 @@
     }
 }
 
-<div class="album-details" style="display: inline-block">
+
     <div class="left">
         <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Cover)" onerror="src = '/img/defuserpic.png'"/>
     </div>
     <div class="right">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <div>
+                <div class="info">
                     <p>
                         <strong>@Html.DisplayNameFor(m => m.Name):</strong> @Html.ValueFor(m => m.Name)
                     </p>
@@ -54,14 +54,11 @@
                 </div>
                 @if (isAuthenticated)
                 {
-                    <p>
-                        <br />
-                        <hr />
                         <div class="buttons">
                             @if (isAdmin || (isSeller && (Model.OwnerId <= 0m || Model.OwnerId == currentUserId)))
                             {
                                 <a href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.Id })"
-                                   class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Правка</a>
+                                   class="fa fa-pencil"> Правка</a>
                             }
                             else if (isBuyer)
                             {
@@ -83,10 +80,8 @@
                                 }
                             }
                         </div>
-                    </p>
                 }
             </div>
         </div>
     </div>
-</div>
 
