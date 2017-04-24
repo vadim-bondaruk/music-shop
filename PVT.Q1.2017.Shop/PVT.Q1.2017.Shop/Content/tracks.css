@@ -503,15 +503,15 @@ li > input { width: 100% }
 }
 
 .album-details .tracks-list .left {
-    width: 600px;
+    width: 900px;
     margin: 0;
 }
 
 .album-details .tracks-list .right {
-    width: 150px;
+    width: 100px;
     height: 20px;
     float: right;
-    margin-right: 15px;
+    margin: 27px 15px 0 0;
 }
 
 .album-details .tracks-list img {
@@ -526,7 +526,7 @@ li > input { width: 100% }
 }
 
 .album-details .tracks-list .details {
-    width: 500px;
+    width: 800px;
     margin-left: 15px;
 }
 
