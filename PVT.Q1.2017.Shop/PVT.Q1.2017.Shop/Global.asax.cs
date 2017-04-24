@@ -24,7 +24,7 @@
         /// </summary>
         protected void Application_Start()
         {
-            _logger.Info("Music Shopt start...");
+            _logger.Info("Music Shop start...");
 
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
