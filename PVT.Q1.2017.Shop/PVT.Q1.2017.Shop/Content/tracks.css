@@ -777,6 +777,12 @@ li > input { width: 100% }
     margin-top: 40px;
 }
 
+.track-edit .btn-remove-track {
+    position: absolute;
+    right: 10px !important;
+    top: 28px;
+}
+
 .tracks-list li {
     height: 60px;
     margin-top: 7px;
