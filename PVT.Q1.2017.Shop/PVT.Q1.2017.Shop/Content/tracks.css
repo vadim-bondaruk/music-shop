@@ -743,10 +743,12 @@ a.tracks-list > ul {
     display: inline-block;
     width: 88%;
 }
+
 .tracks-list li {
     height: 80px;
     padding: 0;
 }
+
 .tracks-list .track-name {
     font-weight: bold;
     font-size: 20px;
@@ -766,12 +768,11 @@ a.tracks-list > ul {
 .tracks-list .details {
     display: inline-block;
     vertical-align: top;
-    width: 700px;
+    width: 800px;
+    margin-top: 15px;
 }
 
-.tracks-list .buy-btn {
-    margin-top: -28px;
-}
+.tracks-list .buy-btn { margin-top: -28px; }
 
 .feedback-details { text-align: left !important; }
 
@@ -818,10 +819,15 @@ a.tracks-list > ul {
 
 .tracks-list > ul > li > div > p { display: inline-block }
 
-.tracks-list audio {
-    vertical-align: bottom;
-    margin-top: 8px;
+.tracks-list .btn-play { display: inline-block; }
+
+.tracks-list .track-header {
+    width: 400px;
+    display: inline-block;
+    margin-left: 15px;
 }
+.tracks-list .details-left { display: inline-block; width: 500px}
+.tracks-list .details-right { display: inline-block; vertical-align: top; margin-top: -15px}
 
 .track-details .container { margin-top: 15px; }
 
@@ -891,7 +897,8 @@ a.tracks-list > ul {
     right: 10px;
 }
 
-.track-edit { text-align: left;
+.track-edit {
+    text-align: left;
     background: #fff;
     position: relative;
 }
@@ -930,7 +937,8 @@ a.tracks-list > ul {
 
 .track-edit .buttons {
     position: absolute;
-    bottom: 1px;right: 15px;
+    bottom: 1px;
+    right: 15px;
 }
 
 .track-edit ul li input { height: 30px; }
