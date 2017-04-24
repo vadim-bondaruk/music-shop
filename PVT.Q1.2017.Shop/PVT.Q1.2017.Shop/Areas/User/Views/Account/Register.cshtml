@@ -106,7 +106,7 @@
 }
 
 <div>
-    @Html.ActionLink("На главную", "Index", new { area = "", controller = "Home" })
+    @Html.ActionLink("На главную", "Index", new { area = string.Empty, controller = "Home" })
 </div>
 
 
@@ -116,7 +116,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#input1").inputmask("+(999 99)999-99-99");
+            $("#input1").inputmask("+(999)999-99-99");
         });
     </script>
 }
