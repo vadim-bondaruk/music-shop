@@ -37,7 +37,7 @@
         [AllowAnonymous]
         [HttpGet]
         [OutputCache(NoStore = false, Duration = 0)]
-        public ActionResult IsLoginUnique(string login)
+        public JsonResult IsLoginUnique(string login)
         {
             var userService = ServiceFactory.GetUserService();
             var isUnique = !userService.IsUserExist(login);
@@ -53,7 +53,7 @@
         [AllowAnonymous]
         [HttpGet]
         [OutputCache(NoStore = false, Duration = 0)]
-        public ActionResult IsEmailUnique(string email)
+        public JsonResult IsEmailUnique(string email)
         {
             var userService = ServiceFactory.GetUserService();
             var isUnique = !userService.IsUserExist(email);
@@ -68,6 +68,7 @@
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsUserNotExist(string userIdentity)
         {
             var userService = ServiceFactory.GetUserService();
@@ -336,6 +337,7 @@
         }
 
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public JsonResult GetCountries()
         {
             using (var countries = RepositoryFactory.GetCountryRepository())
