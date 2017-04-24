@@ -24,7 +24,7 @@
             RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
                 .WithMessage("Используйте только буквы");
 
-            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-80), DateTime.Today.AddYears(-5))
+            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-100), DateTime.Today.AddYears(-5))
                 .WithMessage("Дата рождения выбрана некорректно");
 
             RuleFor(u => u.PhoneNumber)
