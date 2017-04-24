@@ -17,14 +17,15 @@
             HttpRequestBase request,
             string trackName,
             string trackArtistName,
-            byte[] audio)
+            byte[] audio,
+            bool sample = false)
         {
             if (audio == null)
             {
                 return null;
             }
 
-            long fSize = audio.Length;
+            var fSize = sample ? (long)(audio.Length - audio.Length * 0.8) : audio.Length;
             long startbyte = 0;
             var endbyte = fSize - 1;
             var statusCode = 200;
@@ -49,6 +50,7 @@
 
             return new MemoryStream(audio, (int)startbyte, (int)desSize);
         }
+
 
         /// <summary>
         /// </summary>

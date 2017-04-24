@@ -17,6 +17,7 @@
         isSeller = User.IsInRole(UserRoles.Seller.ToString());
         isBuyer = User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString());
     }
+
 }
 
 <div class="albums-list">
@@ -43,23 +44,16 @@
                     {
                         if (isAdmin || (isSeller && (album.OwnerId <= 0m || album.OwnerId == currentUserId)))
                         {
-                            <div class="order-block">
-                                <div class="buy-btn">
-                                    <a class="btn btn-primary" href="@Url.Action("Edit", "Albums", new { Area = "Management", id = album.Id })">
-                                        <span class="glyphicon glyphicon-pencil"></span> Правка
-                                    </a>
-                                </div>
+                            <div class="edit-btn">
+                                <a href="@Url.Action("Edit", "Albums", new { Area = "Management", id = album.Id })">
+                                    <i class="fa fa-pencil"> Правка</i></a>
                             </div>
                         }
                         else if (isBuyer)
                         {
                             if (album.IsPurchased)
                             {
-                                @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать",
-                                                     Url.Action("PurchasedList", "Albums", new
-                                                     {
-                                                         area = "Content"
-                                                     }))
+                                @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать", Url.Action("PurchasedList", "Albums", new { area = "Content" }))
                             }
                             else if (album.Price != null)
                             {

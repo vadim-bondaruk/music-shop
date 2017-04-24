@@ -3,13 +3,16 @@
     using System.IO;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+
     using App_Start;
+
     using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
+
     using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
@@ -17,7 +20,17 @@
     /// </summary>
     public class TracksController : BaseController
     {
-        public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TracksController"/> class.
+        /// </summary>
+        /// <param name="repositoryFactory">
+        /// The repository factory.
+        /// </param>
+        /// <param name="serviceFactory">
+        /// The service factory.
+        /// </param>
+        public TracksController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory)
+            : base(repositoryFactory, serviceFactory)
         {
         }
 
@@ -39,7 +52,11 @@
             var trackService = ServiceFactory.GetTrackService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                trackViewModel = trackService.GetAlbums(id.Value, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId);
+                trackViewModel = trackService.GetAlbums(
+                    id.Value,
+                    CurrentUserCurrency.Code,
+                    CurrentUser.PriceLevelId,
+                    CurrentUser.UserProfileId);
             }
             else
             {
@@ -65,7 +82,14 @@
             var trackService = ServiceFactory.GetTrackService();
             if (CurrentUser != null && CurrentUserCurrency != null)
             {
-                return this.View(trackService.GetTracks(page, pageSize, CurrentUserCurrency.Code, CurrentUser.PriceLevelId, CurrentUser.UserProfileId));
+                return
+                    this.View(
+                        trackService.GetTracks(
+                            page,
+                            pageSize,
+                            CurrentUserCurrency.Code,
+                            CurrentUser.PriceLevelId,
+                            CurrentUser.UserProfileId));
             }
 
             return this.View(trackService.GetTracks(page, pageSize));
@@ -90,40 +114,17 @@
         }
 
         /// <summary>
-        /// Loads the sample of the specified track.
         /// </summary>
         /// <param name="id">
-        /// The track id.
+        /// The id.
         /// </param>
-        /// <returns>
-        /// The track sample file.
-        /// </returns>
-        public ActionResult LoadSample(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-
-            var trackService = ServiceFactory.GetTrackService();
-            var trackViewModel = trackService.GetTrackDetails(id.Value);
-            if (trackViewModel == null)
-            {
-                return HttpNotFound($"Трек с id = { id.Value } не найден");
-            }
-
-            return File(trackViewModel.TrackSample, "audio/mp3");
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="id">
-        ///     The id.
+        /// <param name="sampleOnly">
+        /// The sample only.
         /// </param>
         /// <returns>
         /// </returns>
         [ShopAuthorize]
-        public FileStreamResult GetTrackAsStream(int id = 0)
+        public FileStreamResult GetTrackAsStream(int id = 0, bool sampleOnly = false)
         {
             if (id <= 0)
             {
@@ -144,11 +145,11 @@
                 if (track != null)
                 {
                     stream = Mp3StreamHelper.GetAudioStream(
-                                                            this.Response,
-                                                            this.Request,
-                                                            track.Name,
-                                                            track.Artist.Name,
-                                                            track.TrackFile);
+                        this.Response,
+                        this.Request,
+                        track.Name,
+                        track.Artist.Name,
+                        track.TrackFile);
                 }
             }
             else if (CurrentUser.IsInRole(UserRoles.Seller))
@@ -157,17 +158,21 @@
                 Track track;
                 using (var repository = RepositoryFactory.GetTrackRepository())
                 {
-                    track = repository.FirstOrDefault(t => t.Id == id && (t.OwnerId == CurrentUser.UserProfileId || t.OwnerId == null), t => t.Artist);
+                    track =
+                        repository.FirstOrDefault(
+                            t => t.Id == id && (t.OwnerId == CurrentUser.UserProfileId || t.OwnerId == null),
+                            t => t.Artist);
                 }
 
                 if (track != null)
                 {
                     stream = Mp3StreamHelper.GetAudioStream(
-                                                            this.Response,
-                                                            this.Request,
-                                                            track.Name,
-                                                            track.Artist.Name,
-                                                            track.TrackFile);
+                        this.Response,
+                        this.Request,
+                        track.Name,
+                        track.Artist.Name,
+                        track.TrackFile,
+                        sampleOnly);
                 }
             }
             else
@@ -179,14 +184,13 @@
                 if (purchasedTrack != null)
                 {
                     stream = Mp3StreamHelper.GetAudioStream(
-                                                            this.Response,
-                                                            this.Request,
-                                                            purchasedTrack.Name,
-                                                            purchasedTrack.Artist.Name,
-                                                            purchasedTrack.TrackFile);
+                        this.Response,
+                        this.Request,
+                        purchasedTrack.Name,
+                        purchasedTrack.Artist.Name,
+                        purchasedTrack.TrackFile);
                 }
             }
-            
 
             return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
         }
