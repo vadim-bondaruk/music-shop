@@ -14,6 +14,16 @@
     <title>Корзина</title>
 </head>
 <body>
+    <style type="text/css">
+        TABLE {
+                background: lightgray; /* Цвет фона таблицы */
+                color: black; /* Цвет текста */
+              }
+
+        TD {
+              background: white; /* Цвет фона ячеек */
+           }
+    </style>
 @if (!Model.IsEmpty)
 {
     if (Model.Tracks.Count > 0)
@@ -25,23 +35,26 @@
             <b>Композиции</b>
             <br/>
             <br/>
-            <table border="1" cellpadding="3">
+            <table class="table">
                 <thead>
                 <tr>
                     <th style="text-align: center;">
-                        <font color="blue">Исполнитель</font>
+                        <font color="steelblue">Исполнитель</font>
                     </th>
                     <th style="text-align: center;">
-                        <font color="blue">Оценка</font>
+                        <font color="steelblue">Оценка</font>
                     </th>
                     <th style="text-align: center;">
-                        <font color="blue">Название композиции</font>
+                        <font color="steelblue">Название композиции</font>
                     </th>
                     <th style="text-align: center;">
-                        <font color="blue">Жанр</font>
+                        <font color="steelblue">Жанр</font>
                     </th>
                     <th style="text-align: center;">
-                        <font color="blue">Цена</font>
+                        <font color="steelblue">Цена</font>
+                    </th>
+                    <th style="text-align: center;">
+                        <font color="steelblue"></font>
                     </th>
                 </tr>
                 </thead>
@@ -54,8 +67,8 @@
                         <td width="256" align="center">@anyTrack.Name</td>
                         <td width="64" align="center">@anyTrack.Genre.Name</td>
                         <td width="96" align="center">@anyTrack.Price.Amount @Model.CurrencyShortName</td>
-                        <td>
-                            <button type="submit" name="trackId" value=@anyTrack.Id>Удалить</button>
+                        <td align="center">
+                            <button type="submit" class="btn btn-primary" name="trackId" value=@anyTrack.Id>Удалить</button>
                         </td>
                     </tr>
                 }
@@ -72,20 +85,23 @@
             <b>Альбомы</b>
             <br/>
             <br/>
-            <table border="1" cellpadding="3">
+            <table class="table">
                 <thead>
                 <tr>
                     <th style="text-align: center;">
-                        <font color="blue">Исполнитель</font>
+                        <font color="steelblue">Исполнитель</font>
                     </th>
                     <th style="text-align: center;">
-                        <font color="blue">Название альбома</font>
+                        <font color="steelblue">Название альбома</font>
                     </th>
                     <th style="text-align: center;">
-                        <font color="blue">Количество композиций</font>
+                        <font color="steelblue">Количество композиций</font>
                     </th>
                     <th style="text-align: center;">
-                        <font color="blue">Цена</font>
+                        <font color="steelblue">Цена</font>
+                    </th>
+                    <th style="text-align: center;">
+                        <font color="steelblue"></font>
                     </th>
                 </tr>
                 </thead>
@@ -97,8 +113,8 @@
                         <td width="256" align="center">@anyAlbum.Name</td>
                         <td width="192" align="center">@anyAlbum.TracksCount</td>
                         <td width="96" align="center">@anyAlbum.Price.Amount @Model.CurrencyShortName</td>
-                        <td>
-                            <button type="submit" name="albumId" value=@anyAlbum.Id>Удалить</button>
+                        <td align="center">
+                            <button type="submit" class="btn btn-primary" name="albumId" value=@anyAlbum.Id>Удалить</button>
                         </td>
                     </tr>
                 }
@@ -110,31 +126,21 @@
     <br/>
     using (Html.BeginForm("ClearCart", "Cart", new { area = "Payment" }))
     {
-        <button type="submit">Очистить корзину</button>
+         <button type="submit" class="btn btn-danger">Очистить корзину</button>
     }
 
-    <br/>
-    using (Html.BeginForm("PaymentWithPaypal", "Paypal", new { area = "Payment" }, FormMethod.Post))
-    {
-        <div>Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName</div>
-        <br/>
-        <br/>
-        <button type="submit" name="cart" value=@Model>Оплатить</button>
-    }
-
-    <br/>
-    <b>Test button</b>
-    <br/>
-    using (Html.BeginForm("AcceptPayment", "Cart", new { area = "Payment" }))
-    {
-        @Html.Hidden("isAccepted", true)
-        <button type="submit">Оплата прошла успешно</button>
-    }
-}
-else
-{  
-        <h1 class="empty-cart-message">Ваша корзина пуста.</h1>
-}
+            <br />
+            using (Html.BeginForm("PaymentWithPaypal", "Paypal", new { area = "Payment" }, FormMethod.Post))
+            {
+                 <div style="color:aquamarine"> Общая стоимость заказа: @Model.TotalPrice.ToString() @Model.CurrencyShortName </div>
+                  <br />
+                    <button type="submit" class="btn btn-success" name="cart">Оплатить</button>
+            }
+            }
+            else
+            {
+                <h1 class="empty-cart-message">Ваша корзина пуста.</h1>
+            }
 </body>
 </html>
 
