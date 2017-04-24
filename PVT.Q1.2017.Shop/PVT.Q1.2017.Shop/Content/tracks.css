@@ -595,7 +595,7 @@ li > input { width: 100% }
     font-size: 18px;
 }
 
-.genres-list ul li:hover {
+.genres-list ul li:hover, .tracks-list li:hover {
     border-radius: 5px;
     transform: scaleY(1.1);
     transition: all .2s ease-in-out;
@@ -669,7 +669,7 @@ li > input { width: 100% }
 .order-block {
     display: block;
     text-align: center;
-    padding-top: 35px;
+    padding-top: 7px;
 }
 
 .order-block .buy-btn button,
@@ -777,7 +777,18 @@ li > input { width: 100% }
     margin-top: 40px;
 }
 
+.tracks-list li {
+    height: 60px;
+    margin-top: 7px;
+    color: black;
+}
 
+    .tracks-list li a {
+        color: black;
+    }
+    
+
+.tracks-list #audio-hidden{width: 400px}
 .tracks-list .track-header {
     display: inline-block;
     padding-left: 8px;
@@ -786,14 +797,14 @@ li > input { width: 100% }
 }
 
 .tracks-list .details-left {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 .tracks-list .albums-count {
     display: inline-block;
 }
 
 .tracks-list .details-right {
-    margin-top: 11px;
+    margin-top: 2px;
 }
 .tracks-list .stars {
     display: inline-block;
