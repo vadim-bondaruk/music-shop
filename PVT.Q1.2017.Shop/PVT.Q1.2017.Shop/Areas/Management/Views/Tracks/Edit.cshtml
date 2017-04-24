@@ -1,5 +1,8 @@
 ﻿@using System.Web.Mvc.Html
 @model PVT.Q1._2017.Shop.Areas.Management.ViewModels.TrackManagementViewModel
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 @{ ViewBag.Title = "Правка"; }
 
 @using (Html.BeginForm("Edit", "Tracks", FormMethod.Post, new { enctype = "multipart/form-data", name = "formedit" }))
@@ -10,14 +13,14 @@
 
     @Html.ValidationSummary(true)
 
-    <div class="track-edit">
-        <div class="left">
-            <img class="img-thumbnail" id="details-img" onclick="document.formedit.PostedImage.click()"
+    <div class="track-edit col-md-12">
+        <div class="left col-md-3">
+            <img class="img-thumbnail col-md-12" id="details-img" onclick="document.formedit.PostedImage.click()"
                  onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)"/>
         </div>
 
-        <div class="right">
-            <ul class="list-group">
+        <div class="right col-md-9">
+            <ul class="list-group ">
 
                 <li class="list-group-item">
                     @Html.DisplayNameFor(m => m.Name)
