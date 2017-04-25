@@ -326,6 +326,9 @@
     <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
     <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Country\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Country\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Country\Edit.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -431,6 +434,7 @@
     <Compile Include="App_Start\ShopAuthorizeAttribute.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CountryController.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Helpers\AdminModelsMapper.cs" />
@@ -500,8 +504,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
-    <Content Include="Views\AdminTest\UserTest.cshtml" />
-    <Content Include="Views\AdminTest\AdminTest.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
@@ -510,8 +512,6 @@
     <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
-    <Content Include="Views\AdminTest\UserTest.cshtml" />
-    <Content Include="Views\AdminTest\AdminTest.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\PlayerPartial.cshtml" />
     <Content Include="Views\Shared\_Rating.cshtml" />
     <Content Include="Views\Shared\_UserCurrency.cshtml" />
@@ -529,7 +529,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\News\Models\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />

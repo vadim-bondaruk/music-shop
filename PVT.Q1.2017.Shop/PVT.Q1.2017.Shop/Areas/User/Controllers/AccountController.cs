@@ -37,7 +37,7 @@
         [AllowAnonymous]
         [HttpGet]
         [OutputCache(NoStore = false, Duration = 0)]
-        public ActionResult IsLoginUnique(string login)
+        public JsonResult IsLoginUnique(string login)
         {
             var userService = ServiceFactory.GetUserService();
             var isUnique = !userService.IsUserExist(login);
@@ -53,7 +53,7 @@
         [AllowAnonymous]
         [HttpGet]
         [OutputCache(NoStore = false, Duration = 0)]
-        public ActionResult IsEmailUnique(string email)
+        public JsonResult IsEmailUnique(string email)
         {
             var userService = ServiceFactory.GetUserService();
             var isUnique = !userService.IsUserExist(email);
@@ -68,6 +68,7 @@
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public ActionResult IsUserNotExist(string userIdentity)
         {
             var userService = ServiceFactory.GetUserService();
@@ -158,11 +159,11 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
-                                                    Email, Sex, BirthDate, CountryId, PhoneNumber")] UserViewModel user)
+        public async Task<ActionResult> Register([Bind(Include = @"Login, Password, ConfirmPassword, 
+                                                    Email")] UserViewModel user)
         {
             bool result = false;
-
+            
             if (ModelState.IsValid)
             {
                 try
@@ -191,6 +192,14 @@
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Произошла ошибка при регистрации");
+            }
+            using (var countries = RepositoryFactory.GetCountryRepository())
+            {
+                ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
             }
             return View(user);
 
@@ -336,6 +345,7 @@
         }
 
         [HttpGet]
+        [OutputCache(NoStore = false, Duration = 0)]
         public JsonResult GetCountries()
         {
             using (var countries = RepositoryFactory.GetCountryRepository())
