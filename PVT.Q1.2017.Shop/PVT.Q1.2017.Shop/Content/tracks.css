@@ -367,16 +367,24 @@ li > input { width: 100% }
 .albums-list .btn-align {
     vertical-align: top;
     text-align: right;
+    margin: 2px 0 0 60px;
 }
 
 .albums-list .btn-align i {
     margin: 38px 15px;
-    font-size: 24px;
+    color: black;
 }
 
 .albums-list .btn-buy a {
     display: inline-grid;
     margin-top: 27px;
+}
+
+
+.albums-list li .order-block, .btn-align {
+    font-size: 18px;
+    text-align: left;
+    
 }
 
 .album-edit {
@@ -493,7 +501,7 @@ li > input { width: 100% }
 }
 
 
-/*.album-details .tracklist-header {
+.album-details .tracklist-header {
     text-align: center;
     font-weight: bold;
 }
@@ -531,7 +539,7 @@ li > input { width: 100% }
     padding: 0;
 }
 
-.album-details .tracks-list .buy-btn { margin-top: -10px; }*/
+.album-details .tracks-list .buy-btn { margin-top: -10px; }
 
 .album-details .scrollable {
     width: 1050px;
@@ -655,13 +663,6 @@ li > input { width: 100% }
     -moz-box-shadow: 0 0 5px orange;
     -webkit-box-shadow: 0 0 5px orange;
     box-shadow: 0 0 5px orange;
-}
-
-
-.albums-list li .order-block {
-    font-size: 18px;
-    text-align: left;
-    margin: 30px 0 0 55px;
 }
 
 .order-block {
