@@ -14,13 +14,9 @@
         /// </summary>
         public UserPersonalValidator()
         {
-            RuleFor(u => u.FirstName).NotEmpty()
-                .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
                .WithMessage("Используйте только буквы");
 
-            RuleFor(u => u.LastName).NotEmpty()
-                .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
                 .WithMessage("Используйте только буквы");
 
