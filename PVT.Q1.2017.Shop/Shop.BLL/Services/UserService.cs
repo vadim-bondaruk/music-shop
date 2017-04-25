@@ -181,7 +181,7 @@
             }
             else
             {
-                throw new UserValidationException("Вы ввели неправеьный ник или email", string.Empty);
+                throw new UserValidationException("Вы ввели неправильный ник или email", string.Empty);
             }
         }
 
@@ -345,7 +345,7 @@
         {
             bool deleted = false;
 
-            if (id == 0)
+            if (id <= 0)
             {
                 throw new ArgumentException("id");
             }

@@ -52,7 +52,7 @@
             {
                 if (!user.Password.Equals(PasswordEncryptor.GetHashString(password), StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new UserValidationException("Не верный пароль", "Password");
+                    throw new UserValidationException("Неверный пароль", "Password");
                 }
 
                 UserData userData;
@@ -83,7 +83,7 @@
             }
             else
             {
-                throw new UserValidationException("Не верный логин", "Useridentity");
+                throw new UserValidationException("Неверный логин", "Useridentity");
             }
             //return new CurrentUser(user);
         }
