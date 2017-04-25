@@ -14,7 +14,7 @@
         /// 
         /// </summary>
         [Display(Name = "Электронная почта или логин")]
-        [Remote("IsUserNotExist", "Account", "User", ErrorMessage = "Такого пользователя не существует")]
+        [Remote("IsUserNotExist", "Account", "User", ErrorMessage = "Такой пользователь не зарегистрирован в магазине")]
         public string UserIdentity { get; set; }
 
         /// <summary>
