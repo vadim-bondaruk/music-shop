@@ -37,5 +37,12 @@
         /// Cart is empty or not
         /// </summary>
         public bool IsEmpty { get; set; }
+
+        public CartViewModel()
+        {
+            Tracks = new List<TrackDetailsViewModel>();
+            Albums = new List<AlbumDetailsViewModel>();
+            IsEmpty = true;
+        }
     }
 }

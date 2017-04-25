@@ -3,13 +3,16 @@
 }
 
 .content-block {
-    margin-top: 150px;
+    margin-top: 25px;
+}
+
+.news-header {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
 }
 .content-block__title {
-    position: absolute;
     font-size: 58px;
-    left: 710px;
-    top: 50px;
     text-shadow: 1px 1px 10px 
 }
 

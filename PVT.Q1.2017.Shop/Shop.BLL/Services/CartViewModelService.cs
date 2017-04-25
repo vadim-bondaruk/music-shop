@@ -1,8 +1,5 @@
 ﻿namespace Shop.BLL.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Common.Models;
     using Common.ViewModels;
 
     /// <summary>
@@ -24,7 +21,7 @@
                 return false;
             }
 
-            userCart = CheckNull(userCart);
+            userCart = CheckCount(userCart);
 
             foreach (TrackDetailsViewModel anyTrack in userCart.Tracks)
             {
@@ -54,20 +51,8 @@
         /// </summary>
         /// <param name="userCart"></param>
         /// <returns>Корзина текущего пользователя</returns>
-        private static CartViewModel CheckNull(CartViewModel userCart)
+        private static CartViewModel CheckCount(CartViewModel userCart)
         {
-            if (userCart.Tracks == null)
-            {
-                userCart.Tracks = new List<TrackDetailsViewModel>();
-                userCart.IsEmpty = true;
-            }
-
-            if (userCart.Albums == null)
-            {
-                userCart.Albums = new List<AlbumDetailsViewModel>();
-                userCart.IsEmpty = true;
-            }
-
             if (userCart.Tracks.Count > 0 || userCart.Albums.Count > 0)
             {
                 userCart.IsEmpty = false;

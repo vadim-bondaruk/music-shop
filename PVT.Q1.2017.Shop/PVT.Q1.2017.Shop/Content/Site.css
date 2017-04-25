@@ -24,12 +24,28 @@ body {
     font-size: 16px;
     color: brown !important;
 }
+.navbar-form {
+    width: 300px;
+}
+
+.search-box {
+    padding-left: 0 !important;
+    margin-top: 7.9px !important;
+    padding-right: 0 !important;
+    width: 350px !important;
+}
 
 .error-header {
     font-size: 36px !important;
     color: brown;
 }
+.search-group {
+    display: block !important;
+}
 
+.search-btn {
+    height: 34px !important;
+}
 
 /* Set width on the form input elements since they're 100% wide by default */
 
@@ -54,14 +70,18 @@ body {
     height: 25px;
 }
 
+.navbar-collapse {
+     width: 1050px !important;
+}
+
 .navbar-inverse .navbar-brand {
     color: white;
-    margin-left: 30px;
     font-size: 28px !important;
     text-shadow: 1px 1px 10px;
 }
 
 .container .navbar-collapse form {
+   
     margin-right: 40px;
 }
 
@@ -125,20 +145,15 @@ dl dd {
 }
 
 footer {
-    position: fixed;
-
-    right: 80px;
-    bottom: 20px;
-    color: black;
-    font-weight: bold;
     font-size: 18px;
 }
 
-#users-table {
+#curr-table, #users-table, .user-reg, .user-edit-center {
     background: #fff;
-    opacity: 0.8;
+    opacity: 0.9;
     border-radius: 15px;
     margin-top: 25px;
+    padding: 15px;
 }
 
 #lastName {
@@ -151,11 +166,6 @@ footer {
     margin-top: 15px;
     text-align: center;
 }
-#curr-table {
-    background: #fff;
-    border-radius: 15px;
-    opacity: 0.8;
-}
 
 #user-edit-form {
     width: 500px;
@@ -165,9 +175,6 @@ footer {
 .user-edit-center {
     width: 100%;
     text-align: center;
-     background: #fff;
-    border-radius: 15px;
-    opacity: 0.8;
 }
 
 #user-edit-savebtn {
