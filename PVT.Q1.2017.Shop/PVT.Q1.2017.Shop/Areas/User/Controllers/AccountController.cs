@@ -159,8 +159,8 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([Bind(Include = @"FirstName, LastName, Login, Password, ConfirmPassword, 
-                                                    Email, Sex, BirthDate, CountryId, PhoneNumber")] UserViewModel user)
+        public async Task<ActionResult> Register([Bind(Include = @"Login, Password, ConfirmPassword, 
+                                                    Email")] UserViewModel user)
         {
             bool result = false;
             
@@ -192,6 +192,10 @@
                 {
                     ModelState.AddModelError(ex.UserProperty, ex.Message);
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Произошла ошибка при регистрации");
             }
             using (var countries = RepositoryFactory.GetCountryRepository())
             {

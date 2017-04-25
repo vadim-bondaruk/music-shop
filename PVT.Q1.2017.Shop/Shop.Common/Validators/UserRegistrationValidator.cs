@@ -18,16 +18,6 @@
         {
             var validator = DependencyResolver.Current.GetService<IUserValidator>();
 
-            RuleFor(u => u.FirstName).NotEmpty()
-                .WithMessage("Поле обязательно должно быть заполнено");
-            RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
-                .WithMessage("Используйте только буквы");
-
-            RuleFor(u => u.LastName).NotEmpty()
-                .WithMessage("Поле обязательно должно быть заполнено");
-            RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
-                .WithMessage("Используйте только буквы");
-
             RuleFor(u => u.Login).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.Login).Matches("^[a-zA-Z0-9_.-]*$")
@@ -55,13 +45,6 @@
                 .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.Email).Must(email => !validator.IsUserExist(email))
                 .WithMessage("Пользователь с таким адресом электронной почты уже существект");
-
-            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-120), DateTime.Today.AddYears(0))
-                .WithMessage("Дата рождения выбрана некорректно");
-
-            RuleFor(u => u.PhoneNumber)
-                .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")
-                .WithMessage("Некорректный номер");
         }
     }
 }
