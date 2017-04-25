@@ -112,9 +112,6 @@ function removeTrackFromCart(sender, trackId, text, alternateText) {
             btn.find(".button-with-icon-text").text(alternateText);
         }
 
-        btn.off("click").on("click", function () {
-            addTrackToCart(sender, trackId, alternateText, text);
-        });
     }).fail(function () {
         alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
     }).always(function () {
