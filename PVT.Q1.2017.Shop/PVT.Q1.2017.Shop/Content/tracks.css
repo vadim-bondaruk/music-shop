@@ -365,7 +365,7 @@ li > input { width: 100% }
 .albums-list .btn-align {
     vertical-align: top;
     text-align: right;
-    margin: 32px 0 0 60px;
+    margin: 5px 0 0 60px;
 }
 
 .albums-list .btn-align i {
@@ -377,7 +377,6 @@ li > input { width: 100% }
     display: inline-grid;
     margin-top: 27px;
 }
-
 
 .albums-list li .order-block, .btn-align {
     font-size: 18px;
