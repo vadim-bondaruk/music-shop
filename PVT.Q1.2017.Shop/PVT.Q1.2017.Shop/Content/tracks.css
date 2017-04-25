@@ -263,9 +263,7 @@ li > input { width: 100% }
 
 .albums-list .details { margin-top: 8px; }
 
-.albums-list .details .album-title {
-    height: 18px;
-}
+.albums-list .details .album-title { height: 18px; }
 
 .albums-list .details .album-title p { display: inline-block; }
 
@@ -384,7 +382,6 @@ li > input { width: 100% }
 .albums-list li .order-block, .btn-align {
     font-size: 18px;
     text-align: left;
-    
 }
 
 .album-edit {
@@ -674,6 +671,7 @@ li > input { width: 100% }
     width: 100px;
     height: 25px;
     color: black;
+    position: relative;
 }
 
 .order-block .buy-btn button.ordered,
@@ -681,8 +679,8 @@ li > input { width: 100% }
 
 .order-block .buy-btn button div,
 .buttons .buy-btn button div {
+    margin-top: -1px;
     color: black;
-    font-size: 15px;
     font-weight: bold;
     font-family: sans-serif;
 }
@@ -691,12 +689,19 @@ li > input { width: 100% }
 .buttons .buy-btn button:hover div { display: none; }
 
 .order-block .buy-btn button:hover:before,
-.buttons .buy-btn button:hover:before { content: 'В корзину'; }
+.buttons .buy-btn button:hover:before {
+    font-weight: bold;
+    content: 'В корзину';
+    position: absolute;
+    top: 3px;
+    left: 22px;
+}
 
 .order-block .buy-btn button.ordered:hover:before,
 .buttons .buy-btn button.ordered:hover:before { content: 'Из корзины'; }
 
 .feedback-details { text-align: left !important; }
+
 .track-details .container { margin-top: 15px; }
 
 .track-details .container .common {
@@ -765,9 +770,7 @@ li > input { width: 100% }
     right: 10px;
 }
 
-.track-edit input, select {
-    max-width: 100% !important;
-}
+.track-edit input, select { max-width: 100% !important; }
 
 .track-edit .buttons {
     display: inline-block;
@@ -786,37 +789,28 @@ li > input { width: 100% }
     color: black;
 }
 
-    .tracks-list li a {
-        color: black;
-    }
+.tracks-list li a { color: black; }
     
 
-.tracks-list #audio-hidden{width: 400px}
+.tracks-list #audio-hidden { width: 400px }
+
 .tracks-list .track-header {
     display: inline-block;
     padding-left: 8px;
     margin-top: -2px;
 }
 
-.tracks-list .btn-edit {
-    margin-left: 90px !important;
-}
+.tracks-list .btn-edit { margin-left: 90px !important; }
 
-.tracks-list .details-left {
-    margin-top: 11px;
-}
-.tracks-list .albums-count {
-    display: inline-block;
-}
+.tracks-list .details-left { margin-top: 11px; }
 
-.tracks-list .details-right {
-    margin-top: 2px;
-}
-.tracks-list .stars {
-    display: inline-block;
-}
+.tracks-list .albums-count { display: inline-block; }
 
-.tracks-list .btn-play{float: left}
+.tracks-list .details-right { margin-top: 2px; }
+
+.tracks-list .stars { display: inline-block; }
+
+.tracks-list .btn-play { float: left }
 
 .track-edit ul li input { height: 30px; }
 
