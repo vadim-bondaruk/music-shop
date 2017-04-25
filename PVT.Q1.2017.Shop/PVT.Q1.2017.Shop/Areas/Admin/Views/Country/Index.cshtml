@@ -21,7 +21,8 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.ActionLink("Правка", "Edit", new { controller = "Country", area = "Admin" , id = item.Id})
+            @Html.ActionLink("Правка", "Edit", new { controller = "Country", area = "Admin" , id = item.Id}) |
+            @Html.ActionLink("Удалить", "Delete", new { controller = "Country", area = "Admin", id = item.Id })
         </td>
     </tr>
 }

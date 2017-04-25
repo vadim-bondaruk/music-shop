@@ -1,22 +1,33 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using App_Start;
-    using global::Shop.Infrastructure.Enums;
-    using Shop.Controllers;
-    using global::Shop.Common.ViewModels;
-    using System.Collections.Generic;
     using global::Shop.Common.Models;
+    using global::Shop.Common.ViewModels;
+    using Shop.Controllers;
+    using global::Shop.Infrastructure.Enums;
 
+    /// <summary>
+    /// Country management
+    /// </summary>
     [ShopAuthorize(UserRoles.Admin)]
     public class CountryController : BaseController
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryFactory"></param>
+        /// <param name="serviceFactory"></param>
         public CountryController(global::Shop.DAL.Infrastruture.IRepositoryFactory repositoryFactory, global::Shop.BLL.Services.Infrastructure.IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
         }
 
-        // GET: Admin/Country
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             IEnumerable<CountryViewModel> countries = null;
@@ -27,7 +38,7 @@
                                 .Select(c => new CountryViewModel { Id = c.Id, Name = c.Name });   
             }    
               
-            return View(countries);
+            return this.View(countries);
         }
 
         /// <summary>
@@ -36,7 +47,7 @@
         /// <returns></returns>
         public ActionResult Create()
         {
-            return View();
+            return this.View();
         }
 
         /// <summary>
@@ -48,17 +59,16 @@
         public ActionResult Create(CountryViewModel country)
         {
             var countryService = ServiceFactory.GetCountryService();
-            if(countryService.AddCountry(new Country { Name = country.Name }))
+            if (countryService.AddCountry(new Country { Name = country.Name }))
             {
-                return RedirectToAction("Index", new { controller = "Country", area = "Admin" });
+                return this.RedirectToAction("Index", new { controller = "Country", area = "Admin" });
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Произошла ошибка при сохранении");
             }
 
-            return View(country);
-            
+            return this.View(country);            
         }
 
         /// <summary>
@@ -74,13 +84,13 @@
             {
                 var countryDB = countryRepository.GetById(id);
 
-                if(countryDB != null)
+                if (countryDB != null)
                 {
                     country = new CountryViewModel { Id = countryDB.Id, Name = countryDB.Name };
                 }
             }
 
-            return View(country);            
+            return this.View(country);            
         }
         
         /// <summary>
@@ -91,16 +101,24 @@
         [HttpPost]
         public ActionResult Edit(CountryViewModel country)
         {
-            if(country != null)
+            if (country != null)
             {
                 var countryService = ServiceFactory.GetCountryService();
                 countryService.EditCountry(country.Id, country.Name);
             }
 
-            return RedirectToAction("Index", new { controller = "Country", area = "Admin" });
+            return this.RedirectToAction("Index", new { controller = "Country", area = "Admin" });
         }
 
+        public ActionResult Delete(int id)
+        {
+            if (id > 0)
+            {
+                var countryService = ServiceFactory.GetCountryService();
+                countryService.DeleteCountry(id);
+            }
 
-  
+            return this.RedirectToAction("Index", new { controller = "Country", area = "Admin" });
+        }
     }
 }

@@ -52,6 +52,38 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        public bool DeleteCountry(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("id <= 0");
+            }
+
+            bool isDeleted = false;
+
+            using (var countryRepository = Factory.GetCountryRepository())
+            {
+                try
+                {
+                    countryRepository.MarkAsDeleted(id);
+                    countryRepository.SaveChanges();
+                    isDeleted = true;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+            return isDeleted;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool EditCountry(int id, string name)
         {
             if (id <= 0)

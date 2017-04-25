@@ -20,5 +20,12 @@ namespace Shop.BLL.Services.Infrastructure
         /// <param name="country"></param>
         /// <returns></returns>
         bool EditCountry(int id, string name);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool DeleteCountry(int id);
     }
 }

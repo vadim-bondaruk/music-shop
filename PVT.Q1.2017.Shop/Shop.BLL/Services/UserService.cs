@@ -345,7 +345,7 @@
         {
             bool deleted = false;
 
-            if (id == 0)
+            if (id <= 0)
             {
                 throw new ArgumentException("id");
             }
