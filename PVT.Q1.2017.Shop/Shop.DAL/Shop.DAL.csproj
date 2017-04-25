@@ -149,6 +149,10 @@
     <Compile Include="Migrations\201704240745068_GenresDescription.Designer.cs">
       <DependentUpon>201704240745068_GenresDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704242001588_AddedNewRelationshipsBtwTracksAlbumsAndUserData.cs" />
+    <Compile Include="Migrations\201704242001588_AddedNewRelationshipsBtwTracksAlbumsAndUserData.Designer.cs">
+      <DependentUpon>201704242001588_AddedNewRelationshipsBtwTracksAlbumsAndUserData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -172,7 +176,6 @@
     <Compile Include="Repositories\AlbumRepository.cs" />
     <Compile Include="Repositories\AlbumTrackRelationRepository.cs" />
     <Compile Include="Repositories\BaseAddressRepository.cs" />
-    <Compile Include="Repositories\CartRepository.cs" />
     <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\CurrencyRateRepository.cs" />
     <Compile Include="Repositories\AlbumPriceRepository.cs" />
@@ -189,7 +192,6 @@
     <Compile Include="Infrastruture\IPriceLevelRepository.cs" />
     <Compile Include="Infrastruture\IRepositoryFactory.cs" />
     <Compile Include="Infrastruture\IUserDataRepository.cs" />
-    <Compile Include="Infrastruture\ICartRepository.cs" />
     <Compile Include="Repositories\OrderAlbumRepository.cs" />
     <Compile Include="Repositories\OrderTrackRepository.cs" />
     <Compile Include="Repositories\PaymentCardRepository.cs" />
@@ -282,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704240745068_GenresDescription.resx">
       <DependentUpon>201704240745068_GenresDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704242001588_AddedNewRelationshipsBtwTracksAlbumsAndUserData.resx">
+      <DependentUpon>201704242001588_AddedNewRelationshipsBtwTracksAlbumsAndUserData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

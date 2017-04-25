@@ -71,7 +71,6 @@
     <Compile Include="ViewModels\AlbumTracksListViewModel.cs" />
     <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\ArtistDetailsViewModel.cs" />
-    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\Feedback.cs" />

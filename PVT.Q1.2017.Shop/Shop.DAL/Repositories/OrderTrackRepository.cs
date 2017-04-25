@@ -16,5 +16,16 @@
         public OrderTrackRepository(DbContext dbContext) : base(dbContext)
         {
         }
+
+        /// <summary>
+        /// Delete Order Track from Repository
+        /// </summary>
+        /// <param name="model">OrderTrack to remove</param>
+        public override void Delete(OrderTrack model)
+        {
+            if (model == null) return;
+            this.CurrentDbSet.Remove(model);
+            this.SetStateChanged();
+        }
     }
 }

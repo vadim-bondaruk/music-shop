@@ -16,5 +16,12 @@
         public OrderAlbumRepository(DbContext dbContext) : base(dbContext)
         {
         }
+
+        public override void Delete(OrderAlbum model)
+        {
+            if (model == null) return;
+            this.CurrentDbSet.Remove(model);
+            this.SetStateChanged();
+        }
     }
 }

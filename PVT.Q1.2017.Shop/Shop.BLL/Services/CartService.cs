@@ -1,4 +1,10 @@
-﻿namespace Shop.BLL.Services
+﻿using System;
+using System.Text;
+using System.Web.Management;
+using Castle.Core.Internal;
+using Ninject.Infrastructure.Language;
+
+namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,6 +14,7 @@
     using Exceptions;
     using Common.ViewModels;
     using System.Collections;
+    using System.Data.SqlClient;
 
 
     /// <summary>
@@ -30,18 +37,20 @@
         /// <param name="trackId">Added Track ID</param> 
         public void AddTrack(int userId, int trackId)
         {
-            var cart = GetCartByUserId(userId);
-            var track = GetTrackById(trackId);
+            this.CheckInputId(userId, trackId, "Track");
             using (var orderTrackRepository = Factory.GetOrderTrackRepository())
             {
-                if (orderTrackRepository.Exist(o => o.CartId == cart.Id && o.TrackId == track.Id))
+                var orderTrack = new OrderTrack() { UserId = userId, TrackId = trackId };
+                try
                 {
-                    return;
+                    orderTrackRepository.AddOrUpdate(orderTrack);
+                    orderTrackRepository.SaveChanges();
                 }
 
-                var orderTrack = new OrderTrack() { CartId = cart.Id, TrackId = track.Id };
-                orderTrackRepository.AddOrUpdate(orderTrack);
-                orderTrackRepository.SaveChanges();
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -52,23 +61,22 @@
         /// <param name="trackIds">Added Tracks IDs</param> 
         public void AddTrack(int userId, IEnumerable<int> trackIds)
         {
-            var cart = this.GetCartByUserId(userId);
-            IEnumerable<Track> tracks;
-            using (var trackRepository = Factory.GetTrackRepository())
-            {
-                tracks = trackRepository.GetAll(t => trackIds.Contains(t.Id));
-            }
-
+            this.CheckInputIds(userId, trackIds, "Track");
             using (var orderTrackRepository = Factory.GetOrderTrackRepository())
             {
-                var orderTracks = orderTrackRepository.GetAll(o => o.CartId == cart.Id).Select(o => o.TrackId);
-                tracks = tracks.Where(t => !orderTracks.Contains(t.Id));
-                foreach (var track in tracks)
+                try
                 {
-                    var orderTrack = new OrderTrack() {CartId = cart.Id, TrackId = track.Id};
-                    orderTrackRepository.AddOrUpdate(orderTrack);
+                    foreach (var trackId in trackIds)
+                    {
+                        var orderTrack = new OrderTrack() { UserId = userId, TrackId = trackId };
+                        orderTrackRepository.AddOrUpdate(orderTrack);
+                    }
+                    orderTrackRepository.SaveChanges();
                 }
-                orderTrackRepository.SaveChanges();
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -79,19 +87,26 @@
         /// <param name="trackId">Removed Track ID</param> 
         public void RemoveTrack(int userId, int trackId)
         {
-            var cart = GetCartByUserId(userId);
+            this.CheckInputId(userId, trackId, "Track");
             using (var orderTrackRepository = Factory.GetOrderTrackRepository())
             {
                 var orderTrack = orderTrackRepository.FirstOrDefault(o =>
-                    o.CartId == cart.Id
+                    o.UserId == userId
                     && o.TrackId == trackId);
                 if (orderTrack == null)
                 {
                     return;
                 }
 
-                orderTrackRepository.Delete(orderTrack);
-                orderTrackRepository.SaveChanges();
+                try
+                {
+                    orderTrackRepository.Delete(orderTrack);
+                    orderTrackRepository.SaveChanges();
+                }
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -102,17 +117,25 @@
         /// <param name="trackIds">Removed Tracks IDs</param> 
         public void RemoveTrack(int userId, IEnumerable<int> trackIds)
         {
-            var cart = GetCartByUserId(userId);
+            this.CheckInputIds(userId, trackIds, "Track");
             using (var orderTrackRepository = Factory.GetOrderTrackRepository())
             {
                 var orderTracks = new List<OrderTrack>();
-                orderTracks.AddRange(orderTrackRepository.GetAll(o => o.CartId == cart.Id && trackIds.Contains(o.TrackId)));
-                foreach (var orderTrack in orderTracks)
+                orderTracks.AddRange(orderTrackRepository.GetAll(o => o.UserId == userId && trackIds.Contains(o.TrackId)));
+                try
                 {
-                    orderTrackRepository.Delete(orderTrack);
+                    foreach (var orderTrack in orderTracks)
+                    {
+                        orderTrackRepository.Delete(orderTrack);
+                    }
+
+                    orderTrackRepository.SaveChanges();
                 }
 
-                orderTrackRepository.SaveChanges();
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -123,18 +146,20 @@
         /// <param name="albumId">Added Album ID</param>
         public void AddAlbum(int userId, int albumId)
         {
-            var cart = GetCartByUserId(userId);
-            var album = GetAlbumById(albumId);
+            this.CheckInputId(userId, albumId, "Album");
             using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
             {
-                if (orderAlbumRepository.Exist(o => o.CartId == cart.Id && o.AlbumId == album.Id))
+                var orderAlbum = new OrderAlbum() { UserId = userId, AlbumId = albumId };
+                try
                 {
-                    return;
+                    orderAlbumRepository.AddOrUpdate(orderAlbum);
+                    orderAlbumRepository.SaveChanges();
                 }
 
-                var orderAlbum = new OrderAlbum() { CartId = cart.Id, AlbumId = album.Id };
-                orderAlbumRepository.AddOrUpdate(orderAlbum);
-                orderAlbumRepository.SaveChanges();
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -145,23 +170,23 @@
         /// <param name="albumIds">Added Albums IDs</param>
         public void AddAlbum(int userId, IEnumerable<int> albumIds)
         {
-            var cart = this.GetCartByUserId(userId);
-            IEnumerable<Album> albums;
-            using (var albumRepository = Factory.GetAlbumRepository())
-            {
-                albums = albumRepository.GetAll(a => albumIds.Contains(a.Id));
-            }
-
+            this.CheckInputIds(userId, albumIds, "Album");
             using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
             {
-                var orderAlbums = orderAlbumRepository.GetAll(o => o.CartId == cart.Id).Select(o => o.AlbumId);
-                albums = albums.Where(a => !orderAlbums.Contains(a.Id));
-                foreach (var album in albums)
+                try
                 {
-                    var orderAlbum = new OrderAlbum() { CartId = cart.Id, AlbumId = album.Id };
-                    orderAlbumRepository.AddOrUpdate(orderAlbum);
+                    foreach (var albumId in albumIds)
+                    {
+                        var orderAlbum = new OrderAlbum() { UserId = userId, AlbumId = albumId };
+                        orderAlbumRepository.AddOrUpdate(orderAlbum);
+                    }
+                    orderAlbumRepository.SaveChanges();
                 }
-                orderAlbumRepository.SaveChanges();
+
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -172,19 +197,27 @@
         /// <param name="albumId">Removed Album ID</param>
         public void RemoveAlbum(int userId, int albumId)
         {
-            var cart = GetCartByUserId(userId);
+            this.CheckInputId(userId, albumId, "Album");
             using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
             {
                 var orderAlbum = orderAlbumRepository.FirstOrDefault(o =>
-                    o.CartId == cart.Id
+                    o.UserId == userId
                     && o.AlbumId == albumId);
                 if (orderAlbum == null)
                 {
                     return;
                 }
 
-                orderAlbumRepository.Delete(orderAlbum);
-                orderAlbumRepository.SaveChanges();
+                try
+                {
+                    orderAlbumRepository.Delete(orderAlbum);
+                    orderAlbumRepository.SaveChanges();
+                }
+
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -195,17 +228,25 @@
         /// <param name="albumIds">Removed Albums IDs</param>
         public void RemoveAlbum(int userId, IEnumerable<int> albumIds)
         {
-            var cart = GetCartByUserId(userId);
+            this.CheckInputIds(userId, albumIds, "Album");
             using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
             {
                 var orderAlbums = new List<OrderAlbum>();
-                orderAlbums.AddRange(orderAlbumRepository.GetAll(o => o.CartId == cart.Id && albumIds.Contains(o.AlbumId)));
-                foreach (var orderAlbum in orderAlbums)
+                orderAlbums.AddRange(orderAlbumRepository.GetAll(o => o.UserId == userId && albumIds.Contains(o.AlbumId)));
+                try
                 {
-                    orderAlbumRepository.Delete(orderAlbum);
+                    foreach (var orderAlbum in orderAlbums)
+                    {
+                        orderAlbumRepository.Delete(orderAlbum);
+                    }
+
+                    orderAlbumRepository.SaveChanges();
                 }
 
-                orderAlbumRepository.SaveChanges();
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -216,20 +257,15 @@
         /// <returns>Returns Array of IDs</returns>
         public IEnumerable<int> GetOrderTracksIds(int userId)
         {
-            var returnResult = new List<int>();
-            Cart cart;
-            using (var cartRepository = Factory.GetCartRepository())
+            if (userId <= 0)
             {
-                cart = cartRepository.GetByUserId(userId);
-                if (cart == null)
-                {
-                    return returnResult;
-                }
+                throw new CartServiceException($"Неккоректный User ID={userId}");
             }
 
+            var returnResult = new List<int>();
             using (var orderTrackRepository = Factory.GetOrderTrackRepository())
             {
-                returnResult.AddRange(orderTrackRepository.GetAll(o => o.CartId == cart.Id).Select(o => o.TrackId));
+                returnResult.AddRange(orderTrackRepository.GetAll(o => o.UserId == userId).Select(o => o.TrackId));
             }
 
             return returnResult;
@@ -242,23 +278,18 @@
         /// <returns>Returns List of Tracks</returns>
         public ICollection<TrackDetailsViewModel> GetOrderTracks(int userId, int? currencyCode = null)
         {
-            var result = new List<TrackDetailsViewModel>();
-            Cart cart;
-            using (var cartRepository = Factory.GetCartRepository())
+            if (userId <= 0)
             {
-                cart = cartRepository.GetByUserId(userId);
-                if (cart == null)
-                {
-                    return result;
-                }
+                throw new CartServiceException($"Неккоректный User ID={userId}");
             }
 
+            var result = new List<TrackDetailsViewModel>();
             using (var trackRepository = Factory.GetTrackRepository())
             {
                 var trackService = new TrackService(Factory);
                 using (var orderTrackRepository = Factory.GetOrderTrackRepository())
                 {
-                    var tracksIds = orderTrackRepository.GetAll(o => o.CartId == cart.Id).Select(o => o.TrackId);
+                    var tracksIds = orderTrackRepository.GetAll(o => o.UserId == userId).Select(o => o.TrackId);
                     result =
                         trackRepository.GetAll(t => tracksIds.Contains(t.Id))
                             .Select(t => trackService.GetTrackDetails(t.Id, currencyCode)).ToList();
@@ -275,20 +306,15 @@
         /// <returns>Returns Array of IDs</returns>
         public IEnumerable<int> GetOrderAlbumsIds(int userId)
         {
-            var returnResult = new List<int>();
-            Cart cart;
-            using (var cartRepository = Factory.GetCartRepository())
+            if (userId <= 0)
             {
-                cart = cartRepository.GetByUserId(userId);
-                if (cart == null)
-                {
-                    return returnResult;
-                }
+                throw new CartServiceException($"Неккоректный User ID={userId}");
             }
 
+            var returnResult = new List<int>();
             using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
             {
-                returnResult.AddRange(orderAlbumRepository.GetAll(o => o.CartId == cart.Id).Select(o => o.AlbumId));
+                returnResult.AddRange(orderAlbumRepository.GetAll(o => o.UserId == userId).Select(o => o.AlbumId));
             }
 
             return returnResult;
@@ -301,23 +327,18 @@
         /// <returns>Returns List of Albums</returns>
         public ICollection<AlbumDetailsViewModel> GetOrderAlbums(int userId, int? currencyCode = null)
         {
-            var result = new List<AlbumDetailsViewModel>();
-            Cart cart;
-            using (var cartRepository = Factory.GetCartRepository())
+            if (userId <= 0)
             {
-                cart = cartRepository.GetByUserId(userId);
-                if (cart == null)
-                {
-                    return result;
-                }
+                throw new CartServiceException($"Неккоректный User ID={userId}");
             }
-            
+
+            var result = new List<AlbumDetailsViewModel>();
             using (var albumRepository = Factory.GetAlbumRepository())
             {
                 var albumService = new AlbumService(Factory);
                 using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
                 {
-                    var albumsIds = orderAlbumRepository.GetAll(o => o.CartId == cart.Id).Select(o => o.AlbumId);
+                    var albumsIds = orderAlbumRepository.GetAll(o => o.UserId == userId).Select(o => o.AlbumId);
                     result =
                         albumRepository.GetAll(a => albumsIds.Contains(a.Id))
                             .Select(a => albumService.GetAlbumDetails(a.Id, currencyCode)).ToList();
@@ -333,29 +354,49 @@
         /// <param name="userId">User ID</param>
         public void RemoveAll(int userId)
         {
-            var cart = this.GetCartByUserId(userId);
+            if (userId <= 0)
+            {
+                throw new CartServiceException($"Неккоректный User ID={userId}");
+            }
+
             using (var orderTrackRepository = Factory.GetOrderTrackRepository())
             {
                 var orderTracks = new List<OrderTrack>();
-                orderTracks.AddRange(orderTrackRepository.GetAll(o => o.CartId == cart.Id));
-                foreach (var orderTrack in orderTracks)
+                orderTracks.AddRange(orderTrackRepository.GetAll(o => o.UserId == userId));
+                try
                 {
-                    orderTrackRepository.Delete(orderTrack);
+                    foreach (var orderTrack in orderTracks)
+                    {
+                        orderTrackRepository.Delete(orderTrack);
+                    }
+
+                    orderTrackRepository.SaveChanges();
                 }
 
-                orderTrackRepository.SaveChanges();
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
 
             using (var orderAlbumRepository = Factory.GetOrderAlbumRepository())
             {
                 var orderAlbums = new List<OrderAlbum>();
-                orderAlbums.AddRange(orderAlbumRepository.GetAll(o => o.CartId == cart.Id));
-                foreach (var orderAlbum in orderAlbums)
+                orderAlbums.AddRange(orderAlbumRepository.GetAll(o => o.UserId == userId));
+                try
                 {
-                    orderAlbumRepository.Delete(orderAlbum);
+                    foreach (var orderAlbum in orderAlbums)
+                    {
+                        orderAlbumRepository.Delete(orderAlbum);
+                    }
+
+                    orderAlbumRepository.SaveChanges();
                 }
 
-                orderAlbumRepository.SaveChanges();
+                catch (SqlException ex)
+                {
+                    throw new CartServiceException(this.CheckSqlExceptions(ex));
+                }
             }
         }
 
@@ -365,69 +406,76 @@
         /// <param name="userId">User's ID</param>
         public void AcceptPayment(int userId)
         {
+            if (userId <= 0)
+            {
+                throw new CartServiceException($"Неккоректный User ID={userId}");
+            }
+
             this.RemoveAll(userId);
         }
 
         /// <summary>
-        /// Get Cart by User's ID
+        /// Cheking input IDs
         /// </summary>
-        /// <param name="userId">User ID</param>
-        /// <returns>User's Cart</returns>
-        private Cart GetCartByUserId(int userId)
+        /// <param name="userId">User's ID</param>
+        /// <param name="itemId">Item's ID</param>
+        /// <param name="itemType">Type of Item ("Track" or "Album")</param>
+        private void CheckInputId(int userId, int itemId, string itemType)
         {
-            Cart cart;
-            using (var cartRepository = Factory.GetCartRepository())
+            if (userId <= 0)
             {
-                cart = cartRepository.GetByUserId(userId);
-                if (cart == null)
-                {
-                    cart = new Cart(userId);
-                    cartRepository.AddOrUpdate(cart);
-                    cartRepository.SaveChanges();
-                }
+                throw new CartServiceException($"Неккоректный User ID={userId}");
             }
-
-            return cart;
+            if (itemId <= 0)
+            {
+                throw new CartServiceException($"Некорректный {itemType} ID={itemId} при работе с корзиной пользователя ID={userId}");
+            }
         }
 
         /// <summary>
-        /// Get Track by ID
+        /// Cheking input IDs
         /// </summary>
-        /// <param name="trackId">Track ID</param>
-        /// <returns>Track</returns>
-        private Track GetTrackById(int trackId)
+        /// <param name="userId">User's ID</param>
+        /// <param name="itemIds">Collection of Item's ID</param>
+        /// <param name="itemType">Type of Item ("Track" or "Album")</param>
+        private void CheckInputIds(int userId, IEnumerable<int> itemIds, string itemType)
         {
-            Track track;
-            using (var trackRepository = Factory.GetTrackRepository())
+            if (userId <= 0)
             {
-                track = trackRepository.GetById(trackId);
-                if (track == null || trackId == 0)
+                throw new CartServiceException($"Неккоректный User ID={userId}");
+            }
+            foreach (var itemId in itemIds)
+            {
+                if (itemId <= 0)
                 {
-                    throw new InvalidTrackIdException($"Трек с ID={trackId} не найден.");
+                    throw new CartServiceException($"Некорректный {itemType} ID={itemId} при работе с корзиной пользователя ID={userId}");
                 }
             }
-
-            return track;
         }
 
         /// <summary>
-        /// Get Album by ID
+        /// Combine all SQL Exceptions in one String
         /// </summary>
-        /// <param name="albumId">Album ID</param>
-        /// <returns>Album</returns>
-        private Album GetAlbumById(int albumId)
+        /// <param name="ex">SQL Exception</param>
+        /// <returns>String with all SQL Exception's messages</returns>
+        private string CheckSqlExceptions(SqlException ex)
         {
-            Album album;
-            using (var albumRepository = Factory.GetAlbumRepository())
+            var eMessages = new StringBuilder();
+            for (int i = 0; i < ex.Errors.Count; i++)
             {
-                album = albumRepository.GetById(albumId);
-                if (album == null || albumId == 0)
-                {
-                    throw new InvalidAlbumIdException($"Альбом с ID={albumId} не найден.");
-                }
+                eMessages.Append($"SQL Ошибка #{i + 1}: {Environment.NewLine}" +
+                                 $"Сообщение: {ex.Errors[i].Message} {Environment.NewLine}" +
+                                 $"Источник: {ex.Errors[i].Source} {Environment.NewLine}");
             }
 
-            return album;
+            if (ex.InnerException != null)
+            {
+                eMessages.Append($"Другая ошибка: {Environment.NewLine}" +
+                                 $"Сообщение: {ex.InnerException.Message} {Environment.NewLine}" +
+                                 $"Источник: {ex.InnerException.Source} {Environment.NewLine}");
+            }
+
+            return eMessages.ToString();
         }
     }
 }

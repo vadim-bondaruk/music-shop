@@ -49,21 +49,10 @@
         [HttpGet]
         public ViewResult Index()
         {
-            using (var cartRepository = RepositoryFactory.GetCartRepository())
-            {
-
-                if (cartRepository.GetByUserId(CurrentUser.Id) == null)
-                {
-                    cartRepository.AddOrUpdate(new Cart(CurrentUser.Id));
-                    cartRepository.SaveChanges();
-                }
-
-                var cartService = ServiceFactory.GetCartService();
-                _viewModel.Tracks = cartService.GetOrderTracks(CurrentUser.Id, CurrentUserCurrency?.Code);
-                _viewModel.Albums = cartService.GetOrderAlbums(CurrentUser.Id, CurrentUserCurrency?.Code);
-                _viewModel.CurrentUserId = CurrentUser.Id;
-            }
-
+            var cartService = ServiceFactory.GetCartService();
+            _viewModel.Tracks = cartService.GetOrderTracks(CurrentUser.Id, CurrentUserCurrency?.Code);
+            _viewModel.Albums = cartService.GetOrderAlbums(CurrentUser.Id, CurrentUserCurrency?.Code);
+            _viewModel.CurrentUserId = CurrentUser.Id;
             // Установка текущей валюты пользователя и пересчёт суммы к оплате
             if (CurrentUser.Id > 0)
             {
@@ -89,7 +78,7 @@
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AddAlbum(CurrentUser.Id, albumId);
             }
-            catch (InvalidAlbumIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
@@ -117,7 +106,7 @@
                 var cartService = ServiceFactory.GetCartService();
                 cartService.RemoveAlbum(CurrentUser.Id, albumId);
             }
-            catch (InvalidAlbumIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
@@ -145,7 +134,7 @@
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AddTrack(CurrentUser.Id, trackId);
             }
-            catch (InvalidTrackIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
@@ -173,7 +162,7 @@
                 var cartService = ServiceFactory.GetCartService();
                 cartService.RemoveTrack(CurrentUser.Id, trackId);
             }
-            catch (InvalidTrackIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
@@ -246,13 +235,13 @@
         {
             int count = 0;
 
-            using (var cartRepository = RepositoryFactory.GetCartRepository())
+            using (var userDataRepository = RepositoryFactory.GetUserDataRepository())
             {
-                var cart = cartRepository.GetByUserId(CurrentUser.Id);
-                if (cart != null)
+                var user = userDataRepository.GetById(CurrentUser.Id);
+                if (user != null)
                 {
-                    count += cart.OrderTracks.Count;
-                    count += cart.OrderAlbums.Count;
+                    count += user.OrderTracks.Count;
+                    count += user.OrderAlbums.Count;
                     if (Session != null)
                     {
                         Session["OrdersCount"] = count;

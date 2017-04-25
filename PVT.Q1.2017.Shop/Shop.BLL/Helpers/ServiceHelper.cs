@@ -122,7 +122,7 @@
                     foreach (var albumViewModel in albumViewModels)
                     {
                         albumViewModel.IsOrdered =
-                            repository.Exist(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id);
+                            repository.Exist(o => o.UserId == userId && o.AlbumId == albumViewModel.Id);
                     }
                 }
 
@@ -214,7 +214,7 @@
                     foreach (var trackViewModel in trackViewModels)
                     {
                         trackViewModel.IsOrdered =
-                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
+                            repository.Exist(o => o.UserId == userId && o.TrackId == trackViewModel.Id);
                     }
                 }
 
