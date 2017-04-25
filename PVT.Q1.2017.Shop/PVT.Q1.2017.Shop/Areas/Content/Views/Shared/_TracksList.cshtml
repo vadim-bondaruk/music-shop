@@ -26,9 +26,9 @@
         {
             <li class="list-group-item" id="item-@track.Id">
                 <div class="left col-md-10">
-                    <img class="col-md-1" src="data:image;base64,@Convert.ToBase64String(track.Image)" onerror="src = '/img/defuserpic.png'"/>
+                    <img  src="data:image;base64,@Convert.ToBase64String(track.Image)" onerror="src = '/img/defuserpic.png'"/>
                     <div class="details">
-                        <div class="details-left col-md-6">
+                        <div class="details-left col-md-7">
                             <div class="btn-play">
                                 <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = track.Id, sampleOnly = true })', @track.Id);">
                                     <i class="btn-prev fa fa-play" style="font-size: 16px; opacity: 0.4"></i>
@@ -38,9 +38,8 @@
                                 <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Name)</a>
                                 <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Artist.Name)</a>
                             </div>
-
                         </div>
-                        <div class="details-right col-md-5">
+                        <div class="details-right col-md-3">
                             @*<div class="albums-count">
                                 Альбомов <span class="badge">@track.AlbumsCount</span>
                             </div>*@
@@ -49,17 +48,16 @@
 
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <div class="right">
+                <div class="right col-md-2">
                     @if (isAuthenticated)
                     {
                         if (isAdmin || (isSeller && (track.OwnerId <= 0m || track.OwnerId == currentUserId)))
                         {
-                            <div class="order-block">
-                                <div class="buy-btn">
+                            <div class="order-block col-md-12">
+                                <div class="buy-btn col-md-12">
                                     <div class="btn-remove">
                                         @if (track.AlbumId > 0m)
                                         {
@@ -70,12 +68,12 @@
                                                 <input type="hidden" value="@track.AlbumId" name="id"/>
                                                 <input type="hidden" value="@track.Id" name="trackId"/>
                                                 <a href="javascript:document.forms[0].submit();">
-                                                    <i class="fa fa-remove" style="color: red"></i>
+                                                    <i class="fa fa-remove" style="color: red"> Удалить</i>
                                                 </a>
                                             }
                                         }
                                     </div>
-                                    <div class="btn-edit col-md-1">
+                                    <div class="btn-edit">
                                         <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })">
                                             <i class="fa fa-pencil"> Правка</i>
                                         </a>
