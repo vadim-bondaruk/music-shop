@@ -428,25 +428,6 @@ li > input { width: 100% }
 
 .album-edit input { cursor: default; }
 
-/*/*.album-details {
-    margin: 15px 0 0 15px;
-    padding: 30px;
-    height: 800px;
-    width: 1100px;
-    background: #fff;
-    -ms-border-radius: 15px;
-    border-radius: 15px;
-    -ms-opacity: 0.9;
-    opacity: 0.9;
-}
-
-.album-details .common {
-    width: 1100px;
-    height: 550px;
-    text-align: left;
-    display: inline-block;
-}*/*/
-
 .album-details .tracks-list .left img{
     margin: 2px 0 0 0 !important;
 }
@@ -454,9 +435,6 @@ li > input { width: 100% }
 .album-details .tracks-list .details-right {
     margin-top: 8px;
 }
-
-
-
 
 #genres-title { margin-top: 1px; }
 
