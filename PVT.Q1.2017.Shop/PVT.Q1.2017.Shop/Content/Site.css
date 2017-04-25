@@ -1,12 +1,12 @@
-﻿.navbar-collapse {
-    font-size: 15px;
-}
+﻿
+.navbar-collapse { font-size: 15px; }
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
     background-image: url("../img/back.jpg");
     background-attachment: fixed;
-    background-size: cover; 
+    background-size: cover;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -16,13 +16,20 @@ body {
     padding-right: 15px;
 }
 
-.field-validation-error {
-    color: darkred;
-}
+.field-validation-error { color: darkred; }
 
 .error {
     font-size: 16px;
     color: brown !important;
+}
+
+.navbar-form { width: 300px; }
+
+.search-box {
+    padding-left: 0 !important;
+    margin-top: 7.9px !important;
+    padding-right: 0 !important;
+    width: 350px !important;
 }
 
 .error-header {
@@ -30,6 +37,9 @@ body {
     color: brown;
 }
 
+.search-group { display: block !important; }
+
+.search-btn { height: 34px !important; }
 
 /* Set width on the form input elements since they're 100% wide by default */
 
@@ -45,29 +55,24 @@ textarea { max-width: 280px; }
     color: #ff6347
 }
 
-body {
-     background-color: #dadada;
-}
+body { background-color: #dadada; }
 
 .navbar {
     border: none;
     height: 25px;
 }
 
+.navbar-collapse { width: 1050px !important; }
+
 .navbar-inverse .navbar-brand {
     color: white;
-    margin-left: 30px;
     font-size: 28px !important;
     text-shadow: 1px 1px 10px;
 }
 
-.container .navbar-collapse form {
-    margin-right: 40px;
-}
+.container .navbar-collapse form { margin-right: 40px; }
 
-.dropdown-menu li a:hover{
-    background: cornflowerblue !important;
-}
+.dropdown-menu li a:hover { background: cornflowerblue !important; }
 
 .title {
     margin-top: 0;
@@ -78,7 +83,7 @@ body {
     font-size: 3em;
     color: white;
     z-index: 101;
-        border-bottom-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
@@ -104,17 +109,11 @@ body {
     margin-bottom: 5px;
 }
 
-.main-header {
-    overflow: hidden;
-}
+.main-header { overflow: hidden; }
 
-.no-information {
-    font-style: italic;
-}
+.no-information { font-style: italic; }
 
-dl dd {
-    padding-left: 5px;
-}
+dl dd { padding-left: 5px; }
 
 .empty-cart-message {
     color: white;
@@ -125,20 +124,25 @@ dl dd {
 }
 
 footer {
-    position: fixed;
-
-    right: 80px;
-    bottom: 20px;
-    color: black;
-    font-weight: bold;
     font-size: 18px;
+    height: 18px;
+    text-align: center;
+    opacity: 0.7;
 }
 
-#users-table {
+footer p {
+    height: 18px;
+    text-shadow: 1px 1px 10px white;
+    mix-blend-mode: difference;
+    color: white;
+}
+
+#curr-table, #users-table, .user-reg, .user-edit-center, #country-table {
     background: #fff;
-    opacity: 0.8;
+    opacity: 0.9;
     border-radius: 15px;
     margin-top: 25px;
+    padding: 15px;
 }
 
 #lastName {
@@ -151,11 +155,6 @@ footer {
     margin-top: 15px;
     text-align: center;
 }
-#curr-table {
-    background: #fff;
-    border-radius: 15px;
-    opacity: 0.8;
-}
 
 #user-edit-form {
     width: 500px;
@@ -165,9 +164,6 @@ footer {
 .user-edit-center {
     width: 100%;
     text-align: center;
-     background: #fff;
-    border-radius: 15px;
-    opacity: 0.8;
 }
 
 #user-edit-savebtn {
@@ -180,6 +176,4 @@ footer {
     margin-left: 15px;
 }
 
-.datecontrol {
-    /* please do not remove this style;it is used for editing dates */
-}
+.datecontrol { /* please do not remove this style;it is used for editing dates */ }

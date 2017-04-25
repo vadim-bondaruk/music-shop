@@ -2,6 +2,7 @@
 @model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.TrackViewModel>
 
 @{ ViewBag.Title = "Все треки"; }
+<audio controls controlsList="nodownload" id="audio-hidden" type="audio/mp3" autoplay="autoplay" style="display: none"></audio>
 
 @{
     Html.RenderPartial("_TracksList", Model.Items);
@@ -11,5 +12,7 @@
 
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet"/>
-    <link href="~/Content/ratingStars.css" rel="stylesheet" />
+    <link href="~/Content/ratingStars.css" rel="stylesheet"/>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet"/>
 }
+<script src="~/Scripts/get-audio.js"></script>

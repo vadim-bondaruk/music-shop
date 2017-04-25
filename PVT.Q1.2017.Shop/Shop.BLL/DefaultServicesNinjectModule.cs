@@ -50,6 +50,7 @@
             Bind<ICartService>().To<CartService>().NamedLikeFactoryMethod((IServiceFactory f) => f.GetCartService());
             Bind<IUserService>().To<UserService>().NamedLikeFactoryMethod((IServiceFactory f) => f.GetUserService());
             Bind<ISettingService>().To<SettingService>().NamedLikeFactoryMethod((IServiceFactory f) => f.GetSettingService());
+            Bind<ICountryService>().To<CountryService>().NamedLikeFactoryMethod((IServiceFactory f) => f.GetCountryService());
             Bind<IServiceFactory>().ToFactory();
         }
     }

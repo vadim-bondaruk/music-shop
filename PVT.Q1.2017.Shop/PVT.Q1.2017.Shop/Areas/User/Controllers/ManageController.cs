@@ -98,7 +98,10 @@
                     return RedirectToAction("UpdatePersonal");
                 }
             }
-
+            using (var countries = RepositoryFactory.GetCountryRepository())
+            {
+                ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
+            }
             return View(user);
         }
 

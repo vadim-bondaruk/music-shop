@@ -1,5 +1,17 @@
-﻿@using Shop.Infrastructure.Enums
+﻿@using Shop.BLL.Utils
+@using Shop.Infrastructure.Enums
 
+@{
+    var isAuthenticated = Request.IsAuthenticated;
+    var isAdmin = false;
+    var isSeller = false;
+    if (isAuthenticated)
+    {
+        isAdmin = User.IsInRole(UserRoles.Admin.ToString());
+        isSeller = User.IsInRole(UserRoles.Seller.ToString());
+
+    }
+}
 <!DOCTYPE html>
 <html>
 
@@ -23,53 +35,66 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand", style = "margin-left:20px;" })
+                @Html.ActionLink("Music Shop", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
 
                 <ul class="nav navbar-nav">
                     @Html.Partial("_MenuPartial")
                 </ul>
-                @if (Request.IsAuthenticated)
-                {
+                @if (isAuthenticated && !isSeller && !isAdmin)
+            {
                     <ul class="nav navbar-nav" style="display: inline-block">
                         <li>
                             <a>@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
                         </li>
                     </ul>
-                    using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
-                    {
-                        @Html.AntiForgeryToken()
+                                using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
+                                {
+                                    @Html.AntiForgeryToken()
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                @Html.Partial("_UserMenuPartial", User.Identity.Name)
-                            </li>
-                            @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString()))
-                            {
-                                <li>
-                                    <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
-                                       title="Нажмите, чтобы перейти в Вашу корзину">
-                                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                                        <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    }
-                }
-                else
-                {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, new { id = "registerLink" })</li>
-                        <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, new { id = "loginLink" })</li>
-                    </ul>
-                }
+                                    <ul class="nav navbar-nav navbar-right">
+                                        @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString()))
+                                        {
+                                            <li>
+                                                @Html.Partial("_UserMenuPartial", User.Identity.Name)
+                                            </li>
+
+                                            <li>
+                                                <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
+                                                   title="Нажмите, чтобы перейти в Вашу корзину">
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                                    <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                    }
+                                }
+                                else
+                                {
+                                    if (!isAuthenticated)
+                                    {
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, new { id = "registerLink" })</li>
+                                            <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, new { id = "loginLink" })</li>
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <ul class="nav navbar-nav navbar-right">
+                                                <li><label class="navbar-text">Привет, @User.Identity.Name</label></li>
+                                                <li><input type="submit" value="Выйти" class="btn btn-link navbar-btn" /></li>
+                                            </ul>
+                                           
+                                            
+                                        }
+                                    }
+
+                                }
             </div>
         </div>
     </div>
@@ -86,7 +111,6 @@
             <p>&copy; @DateTime.Now.Year - Music Shop</p>
         </footer>
     </div>
-    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/moment.min.js"></script>

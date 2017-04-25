@@ -3,8 +3,8 @@
     ViewBag.Title = Model.TrackDetails.Name;
 }
 
-<div style="text-align: initial">
-    <div>dsfsdf
+<div class="track-details" style="text-align: initial">
+    <div>
         @{
             Html.RenderPartial("_TrackDetails", Model.TrackDetails);
         }
@@ -22,6 +22,7 @@
 
 @section cssStyles
 {
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet"/>
     <link href="~/Content/tracks.css" rel="stylesheet" />
     <link href="~/Content/ratingStars.css" rel="stylesheet" />
 }

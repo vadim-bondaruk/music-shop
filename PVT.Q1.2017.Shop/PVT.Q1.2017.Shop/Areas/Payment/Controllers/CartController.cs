@@ -1,7 +1,5 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Net;
     using System.Web.Mvc;
     using App_Start;
@@ -13,7 +11,8 @@
     using Shop.Controllers;
     using global::Shop.BLL.Exceptions;
     using global::Shop.Infrastructure.Enums;
-    
+    using NLog;
+
     /// <summary>
     /// Контоллер для корзины покупателя
     /// </summary>
@@ -26,14 +25,9 @@
         private CartViewModel _viewModel;
 
         /// <summary>
-        /// id текущего юзера 
+        /// Logger for logging
         /// </summary>
-        private int _currentUserId;
-
-        /// <summary>
-        /// валюта текущего пользователя
-        /// </summary>
-        private CurrencyViewModel _userCurrency;
+        private Logger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CartController"/> class.
@@ -46,41 +40,35 @@
         /// </param>
         public CartController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-            _viewModel = new CartViewModel
-            {
-                Tracks = new List<TrackDetailsViewModel>(),
-                Albums = new List<AlbumDetailsViewModel>(),
-                IsEmpty = true
-            };
+            _viewModel = new CartViewModel();
         }
 
         /// <summary>
         /// Действие для отображения корзины
         /// </summary>
         [HttpGet]
-        //TODO: отлавливать в параметре контроллера статус оплаты.
         public ViewResult Index()
         {
             using (var cartRepository = RepositoryFactory.GetCartRepository())
             {
 
-                if (cartRepository.GetByUserId(_currentUserId) == null)
+                if (cartRepository.GetByUserId(CurrentUser.Id) == null)
                 {
-                    cartRepository.AddOrUpdate(new Cart(_currentUserId));
+                    cartRepository.AddOrUpdate(new Cart(CurrentUser.Id));
                     cartRepository.SaveChanges();
                 }
 
                 var cartService = ServiceFactory.GetCartService();
-                _viewModel.Tracks = cartService.GetOrderTracks(_currentUserId, _userCurrency?.Code);
-                _viewModel.Albums = cartService.GetOrderAlbums(_currentUserId, _userCurrency?.Code);
-                _viewModel.CurrentUserId = _currentUserId;
+                _viewModel.Tracks = cartService.GetOrderTracks(CurrentUser.Id, CurrentUserCurrency?.Code);
+                _viewModel.Albums = cartService.GetOrderAlbums(CurrentUser.Id, CurrentUserCurrency?.Code);
+                _viewModel.CurrentUserId = CurrentUser.Id;
             }
 
             // Установка текущей валюты пользователя и пересчёт суммы к оплате
-            if (_currentUserId > 0)
+            if (CurrentUser.Id > 0)
             {
-                _viewModel.CurrencyShortName = _userCurrency.ShortName;
-                CartViewModelService.SetTotalPrice(_viewModel, _userCurrency);
+                _viewModel.CurrencyShortName = CurrentUserCurrency.ShortName;
+                CartViewModelService.SetTotalPrice(_viewModel, CurrentUserCurrency);
                 TempData["cart"] = _viewModel;
             }
 
@@ -99,11 +87,11 @@
             try
             {
                 var cartService = ServiceFactory.GetCartService();
-                cartService.AddAlbum(_currentUserId, albumId);
+                cartService.AddAlbum(CurrentUser.Id, albumId);
             }
             catch (InvalidAlbumIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
             }
 
@@ -127,11 +115,11 @@
             try
             {
                 var cartService = ServiceFactory.GetCartService();
-                cartService.RemoveAlbum(_currentUserId, albumId);
+                cartService.RemoveAlbum(CurrentUser.Id, albumId);
             }
             catch (InvalidAlbumIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
             }
 
@@ -155,11 +143,11 @@
             try
             {
                 var cartService = ServiceFactory.GetCartService();
-                cartService.AddTrack(_currentUserId, trackId);
+                cartService.AddTrack(CurrentUser.Id, trackId);
             }
             catch (InvalidTrackIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
             }
 
@@ -183,11 +171,11 @@
             try
             {
                 var cartService = ServiceFactory.GetCartService();
-                cartService.RemoveTrack(_currentUserId, trackId);
+                cartService.RemoveTrack(CurrentUser.Id, trackId);
             }
             catch (InvalidTrackIdException ex)
             {
-                //Logger.Log("Error : " + ex.Message);
+                _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
             }
 
@@ -207,7 +195,7 @@
         public ActionResult ClearCart()
         {
             var cartService = ServiceFactory.GetCartService();
-            cartService.RemoveAll(_currentUserId);
+            cartService.RemoveAll(CurrentUser.Id);
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
@@ -244,7 +232,7 @@
             if (isAccepted)
             {
                 var cartService = ServiceFactory.GetCartService();
-                cartService.AcceptPayment(_currentUserId);
+                cartService.AcceptPayment(CurrentUser.Id);
                 return RedirectToAction("Index", "Home", new { Area = string.Empty });
             }
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
@@ -260,7 +248,7 @@
 
             using (var cartRepository = RepositoryFactory.GetCartRepository())
             {
-                var cart = cartRepository.GetByUserId(_currentUserId);
+                var cart = cartRepository.GetByUserId(CurrentUser.Id);
                 if (cart != null)
                 {
                     count += cart.OrderTracks.Count;
@@ -273,26 +261,6 @@
             }
 
             return Json(new { Count = count }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Set current user from base controller
-        /// </summary>
-        public void SetCurrentUser()
-        {
-            _currentUserId = CurrentUser == null ? 0 : CurrentUser.Id;
-            _userCurrency = CurrentUserCurrency;
-            if (_userCurrency == null)
-            {
-                _userCurrency = new CurrencyViewModel()
-                { FullName = "EURO", ShortName = "EUR", Code = 978 };
-            }
-        }
-
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            base.OnActionExecuting(filterContext);
-            SetCurrentUser();
         }
     }
 }

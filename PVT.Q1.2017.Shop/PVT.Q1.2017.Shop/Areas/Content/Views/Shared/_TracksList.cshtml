@@ -24,23 +24,35 @@
 
         @foreach (var track in Model)
         {
-            <li class="list-group-item">
-                <div class="left">
-                    <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(track.Image)" onerror="src = '/img/defuserpic.png'" />
+            <li class="list-group-item" id="item-@track.Id">
+                <div class="left col-md-10">
+                    <img class="col-md-1" src="data:image;base64,@Convert.ToBase64String(track.Image)" onerror="src = '/img/defuserpic.png'"/>
                     <div class="details">
-                        <div>
-                            <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Name)</a>
-                            <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Artist.Name)</a>
+                        <div class="details-left col-md-6">
+                            <div class="btn-play">
+                                <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = track.Id, sampleOnly = true })', @track.Id);">
+                                    <i class="btn-prev fa fa-play" style="font-size: 16px; opacity: 0.4"></i>
+                                </a>
+                            </div>
+                            <div class="track-header col-md-10">
+                                <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Name)</a>
+                                <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = track.Id })">@Html.DisplayFor(i => track.Artist.Name)</a>
+                            </div>
+
                         </div>
-                        <div>
-                            @Html.Partial("_Rating", track.Rating)
+                        <div class="details-right col-md-5">
+                            <div class="albums-count">
+                                Альбомов <span class="badge">@track.AlbumsCount</span>
+                            </div>
+                            <div class= "stars">
+                                @Html.Partial("_Rating", track.Rating)
+
+                            </div>
                         </div>
-                        <div class="albums-count">
-                            Альбомов с этим треком <span class="badge">@track.AlbumsCount</span>
-                        </div>
+
                     </div>
                 </div>
-                
+
                 <div class="right">
                     @if (isAuthenticated)
                     {
@@ -48,35 +60,32 @@
                         {
                             <div class="order-block">
                                 <div class="buy-btn">
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            @if (track.AlbumId > 0m) //если отображается список треков из альбома
+                                    <div class="btn-remove">
+                                        @if (track.AlbumId > 0m)
+                                        {
+                                            // если отображается список треков из альбома
+                                            using (Html.BeginForm("RemoveTrack", "Albums", new { area = "Management" }, FormMethod.Post))
                                             {
-                                                using (Html.BeginForm("RemoveTrack", "Albums", new { area = "Management" }, FormMethod.Post))
-                                                {
-                                                    @Html.AntiForgeryToken()
-                                                    <input type="hidden" value="@track.AlbumId" name="id" />
-                                                    <input type="hidden" value="@track.Id" name="trackId" />
-                                                    <input type="submit" value="Удалить из альбома" class="btn btn-primary" />
-                                                }
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" value="@track.AlbumId" name="id"/>
+                                                <input type="hidden" value="@track.Id" name="trackId"/>
+                                                <a href="javascript:document.forms[0].submit();">
+                                                    <i class="fa fa-remove" style="color: red"></i>
+                                                </a>
                                             }
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })"
-                                               class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>Правка</a>
-                                        </div>
+                                        }
+                                    </div>
+                                    <div class="btn-edit col-md-1">
+                                        <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })">
+                                            <i class="fa fa-pencil"> Правка</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         }
                         else if (isBuyer)
                         {
-                            if (track.IsPurchased)
-                            {
-                                @Html.ButtonWithIcon("btn btn-sm btn-success", "glyphicon glyphicon-music", "Прослушать",
-                                                     Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
-                            }
-                            else if (track.Price != null)
+                            if (track.Price != null)
                             {
                                 var price = string.Format("{0}{1}", track.Price.Amount, track.Price.Currency.Symbol ?? track.Price.Currency.ShortName);
                                 <div class="order-block">
