@@ -24,9 +24,9 @@
     <ul class="list-group" id="slist">
         @foreach (var album in Model)
         {
-            <li class="list-group-item" id="albums-item">
+            <li class="list-group-item" id="albums-item col-md-12">
                 <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(album.Cover)" onerror="src = '/img/defuserpic.png'"/>
-                <div class="details">
+                <div class="details col-md-9">
                     <div class="album-title">
                         <p>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id, area = "Content" }, new { @class = "album-name" })</p>
                     </div>
