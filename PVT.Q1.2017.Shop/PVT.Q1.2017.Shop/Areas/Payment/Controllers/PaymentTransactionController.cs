@@ -94,7 +94,7 @@
             {
                 pays = ServiceFactory.GetPaymentService().GetSellerPays(CurrentUser.Id, CurrentUserCurrency.Id);
             }
-            else
+            if (CurrentUser.IsInRole(UserRoles.Admin))
             {
                 pays = ServiceFactory.GetPaymentService().GetAllPays(CurrentUserCurrency.Id);
             }
