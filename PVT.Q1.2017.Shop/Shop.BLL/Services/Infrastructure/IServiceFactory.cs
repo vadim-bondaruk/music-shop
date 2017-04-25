@@ -116,5 +116,11 @@
         /// The settings service.
         /// </returns>
         ISettingService GetSettingService();
+
+        /// <summary>
+        /// Returns the country service.
+        /// </summary>
+        /// <returns></returns>
+        ICountryService GetCountryService();
     }
 }
