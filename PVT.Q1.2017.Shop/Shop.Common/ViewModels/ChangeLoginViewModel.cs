@@ -15,7 +15,7 @@
         /// <summary>
         /// Users login (nickname)
         /// </summary>
-        [Display(Name = "Логин")]
+        [Display(Name = "Новый логин")]
         [Remote("IsLoginUnique", "Account", "User", ErrorMessage = "Такой логин уже существует")]
         public string Login { get; set; }
        
