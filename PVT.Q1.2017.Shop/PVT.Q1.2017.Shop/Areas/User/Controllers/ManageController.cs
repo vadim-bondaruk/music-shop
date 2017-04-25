@@ -98,7 +98,10 @@
                     return RedirectToAction("UpdatePersonal");
                 }
             }
-
+            using (var countries = RepositoryFactory.GetCountryRepository())
+            {
+                ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
+            }
             return View(user);
         }
 
@@ -247,7 +250,7 @@
         /// <param name="term"></param>
         /// <returns></returns>
         [HttpGet]
-        [OutputCache(NoStore = true, Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, VaryByParam = "*")]
+        [OutputCache(NoStore = false, Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, VaryByParam = "*")]
         public ActionResult GetLastNameMatchingData(string term)
         {
             var userService = ServiceFactory.GetUserService();

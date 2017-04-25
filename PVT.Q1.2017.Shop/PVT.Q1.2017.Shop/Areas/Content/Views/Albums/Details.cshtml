@@ -1,7 +1,10 @@
-﻿@model Shop.Common.ViewModels.AlbumTracksListViewModel
+﻿@using System.Web.Optimization
+@model Shop.Common.ViewModels.AlbumTracksListViewModel
 @{
     ViewBag.Title = Model.AlbumDetails.Name;
 }
+
+
 <div class="album-details" style="display: inline-block">
     @{
         Html.RenderPartial("_AlbumDetails", Model.AlbumDetails);
@@ -20,8 +23,13 @@
         </div>
     </div>
 </div>
+
 @section cssStyles{
-    <link href="~/Content/tracks.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/cssTracks")
+}
+
+@*@section cssStyles{
+   <link href="~/Content/tracks.css" rel="stylesheet" />
     <link href="~/Content/ratingStars.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-}
+}*@

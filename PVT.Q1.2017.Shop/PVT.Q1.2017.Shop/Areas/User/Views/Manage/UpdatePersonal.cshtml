@@ -38,8 +38,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Sex, new SelectList(new string[] {"Мужской", "Женский"}), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                @Html.RadioButtonFor(model => model.Sex, "Мужской") Мужской
+                @Html.RadioButtonFor(model => model.Sex, "Женский") Женский
+                @Html.RadioButtonFor(model => model.Sex, "не указано", new { Checked = "checked", hidden = "hidden" })
             </div>
         </div>
 
@@ -62,7 +63,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id= "input1" } } )
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id = "input1", placeholder = "+(555 55)555-55-55" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -79,28 +80,12 @@
     @Html.ActionLink("На главную", "Index", new { area = "", controller = "Home" })
 </div>
 
-@System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
 
 @section scripts{
 
-    <script>
-            $(function(){
+@System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
 
-                $.ajax({
-                    url: "@Url.Action("GetCountries", "Account", new { area = "User"})",
-                    type: "get",
-                    success: function (countries) {
-                        var list = $('#countries');
-                        list.find('option').remove();
-                        $(countries).each(function (index, country) {
-                            list.append('<option value="' + country.Id + '">' + country.Name + '</option>');
-                        })
-
-                    }
-                });
-            });
-
-    </script>
+@System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
 
 <script>
         $(document).ready(function () {
