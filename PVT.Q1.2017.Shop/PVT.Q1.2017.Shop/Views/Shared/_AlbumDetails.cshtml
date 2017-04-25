@@ -20,7 +20,7 @@
 }
 
 
-    <div class="left">
+    <div class="left col-md-3" style="padding: 15px">
         <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Cover)" onerror="src = '/img/defuserpic.png'"/>
     </div>
     <div class="right">
@@ -54,7 +54,7 @@
                 </div>
                 @if (isAuthenticated)
                 {
-                        <div class="buttons">
+                        <div class="buttons col-md-3">
                             @if (isAdmin || (isSeller && (Model.OwnerId <= 0m || Model.OwnerId == currentUserId)))
                             {
                                 <a href="@Url.Action("Edit", "Albums", new { Area = "Management", id = Model.Id })"
