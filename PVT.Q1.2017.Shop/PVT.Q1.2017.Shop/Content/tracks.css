@@ -264,7 +264,6 @@ li > input { width: 100% }
 .albums-list .details { margin-top: 8px; }
 
 .albums-list .details .album-title {
-    width: 500px;
     height: 18px;
 }
 
@@ -366,20 +365,26 @@ li > input { width: 100% }
 }
 
 .albums-list .btn-align {
-    height: 100%;
-    width: 40%;
     vertical-align: top;
     text-align: right;
+    margin: 2px 0 0 60px;
 }
 
 .albums-list .btn-align i {
     margin: 38px 15px;
-    font-size: 24px;
+    color: black;
 }
 
 .albums-list .btn-buy a {
     display: inline-grid;
     margin-top: 27px;
+}
+
+
+.albums-list li .order-block, .btn-align {
+    font-size: 18px;
+    text-align: left;
+    
 }
 
 .album-edit {
@@ -389,7 +394,7 @@ li > input { width: 100% }
     border-radius: 15px;
     border: solid;
     border-width: 1px;
-    height: 650px;
+    height: 700px;
     margin-bottom: 50px;
 }
 
@@ -425,8 +430,6 @@ li > input { width: 100% }
 .album-edit .list-group { width: 100%; }
 
 .album-edit input { cursor: default; }
-
-.album-edit .buttons { margin-top: -30px; }
 
 .album-details {
     margin: 15px 0 0 15px;
@@ -595,7 +598,7 @@ li > input { width: 100% }
     font-size: 18px;
 }
 
-.genres-list ul li:hover {
+.genres-list ul li:hover, .tracks-list li:hover {
     border-radius: 5px;
     transform: scaleY(1.1);
     transition: all .2s ease-in-out;
@@ -660,34 +663,10 @@ li > input { width: 100% }
     box-shadow: 0 0 5px orange;
 }
 
-
-a.tracks-list > ul {
-    display: inline-block;
-    width: 100%;
-}
-
-.tracks-list li {
-    font-size: 18px;
-    overflow: hidden;
-    border: solid;
-    border-width: 1px;
-    margin-top: 3px;
-    display: table;
-    height: 60px;
-    width: 100%;
-    text-align: left;
-    opacity: 0.9;
-}
-
-.albums-list li .order-block {
-    font-size: 18px;
-    text-align: left;
-}
-
 .order-block {
     display: block;
     text-align: center;
-    padding-top: 35px;
+    padding-top: 7px;
 }
 
 .order-block .buy-btn button,
@@ -695,7 +674,6 @@ a.tracks-list > ul {
     width: 100px;
     height: 25px;
     color: black;
-    padding: 0;
 }
 
 .order-block .buy-btn button.ordered,
@@ -718,99 +696,7 @@ a.tracks-list > ul {
 .order-block .buy-btn button.ordered:hover:before,
 .buttons .buy-btn button.ordered:hover:before { content: 'Из корзины'; }
 
-.order-block { display: inline-block; }
-
-.tracks-list .left {
-    display: inline-block;
-    width: 88%;
-}
-
-.tracks-list li {
-    height: 80px;
-    padding: 0;
-}
-
-.tracks-list .track-name {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.tracks-list .albums-count { padding-top: 10px; }
-
-.tracks-list .artist-name, .albums-count {
-    font-size: 15px;
-    color: black;
-    display: inline-block;
-    margin-left: 15px;
-}
-
-.tracks-list img { display: inline-block; }
-
-.tracks-list .details {
-    display: inline-block;
-    vertical-align: top;
-    width: 700px;
-    margin-top: 15px;
-}
-
-.tracks-list .buy-btn { margin-top: -28px; }
-.tracks-list .b { margin-right: 25px; }
-
 .feedback-details { text-align: left !important; }
-
-.tracks-list div a, .track-details .panel-body a, .album-details .panel-body a, .feedback-details a { color: black; }
-
-.tracks-list .btn, .track-details .btn, .album-details .btn, .feedback-details .btn { color: #fff !important; }
-
-.tracks-list > ul > li { margin-left: 0; }
-
-.tracks-list > ul > li:hover {
-    border-radius: 10px;
-    transform: scale(1.01);
-    transition: all .2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-box-shadow: 0 0 5px orange;
-    -webkit-box-shadow: 0 0 5px orange;
-    box-shadow: 0 0 5px orange;
-}
-
-.tracks-list > ul > li > div {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.tracks-list > ul > li > div > img {
-    width: 80px;
-    height: 80px;
-}
-
-.tracks-list > ul > li > div > a { color: black; }
-
-.tracks-list > ul > li p {
-    display: inline-block;
-    font-size: 24px;
-}
-
-.tracks-list > ul > li h4 {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.tracks-list > ul > li > div > h3 { display: inline-block }
-
-.tracks-list > ul > li > div > p { display: inline-block }
-
-.tracks-list .btn-play { display: inline-block; }
-
-.tracks-list .track-header {
-    width: 400px;
-    display: inline-block;
-    margin-left: 15px;
-}
-.tracks-list .details-left { display: inline-block; width: 500px}
-.tracks-list .details-right { display: inline-block; vertical-align: top; margin-top: -15px}
-
 .track-details .container { margin-top: 15px; }
 
 .track-details .container .common {
@@ -888,51 +774,52 @@ a.tracks-list > ul {
     margin-top: 40px;
 }
 
-/*.track-edit {
-    text-align: left;
-    background: #fff;
-    position: relative;
-}
-
-.track-edit img {
-    display: inline-block;
-    border: solid;
-    border-width: 1px;
-    margin: 15px;
-    width: 200px;
-    height: 200px;
-    padding: 5px;
-    vertical-align: top;
-}
-
-.track-edit ul {
-    height: 500px;
-    margin-left: 10px;
-    border: none
-}
-
-.track-edit div {
-    display: inline-block;
-    width: 250px;
-    vertical-align: top;
-    background: white;
-    margin-bottom: 20px
-}
-
-.track-edit ul li {
-    border: none;
-    height: 50.6px;
-    margin-top: 15px;
-    padding: 2px 5px 2px 5px;
-}
-
-.track-edit .buttons {
+.track-edit .btn-remove-track {
     position: absolute;
-    bottom: 1px;
-    right: 15px;
-}*/
+    right: 10px !important;
+    top: 28px;
+}
+
+.tracks-list li {
+    height: 60px;
+    margin-top: 7px;
+    color: black;
+}
+
+    .tracks-list li a {
+        color: black;
+    }
+    
+
+.tracks-list #audio-hidden{width: 400px}
+.tracks-list .track-header {
+    display: inline-block;
+    padding-left: 8px;
+    margin-top: -2px;
+}
+
+.tracks-list .btn-edit {
+    margin-left: 90px !important;
+}
+
+.tracks-list .details-left {
+    margin-top: 11px;
+}
+.tracks-list .albums-count {
+    display: inline-block;
+}
+
+.tracks-list .details-right {
+    margin-top: 2px;
+}
+.tracks-list .stars {
+    display: inline-block;
+}
+
+.tracks-list .btn-play{float: left}
 
 .track-edit ul li input { height: 30px; }
+
 
 .track-edit audio { width: 100%; }
 
