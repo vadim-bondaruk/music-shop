@@ -88,6 +88,10 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             }
             else
             {
+                if (String.Compare(status, "Success", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    this.Session.Add("IsAccepted", true);
+                }
                 return RedirectToAction(status, "Paypal", new { Area = "Payment" });
             }
         }

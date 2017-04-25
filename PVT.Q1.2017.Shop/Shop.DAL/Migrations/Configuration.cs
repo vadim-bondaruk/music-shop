@@ -371,11 +371,11 @@
             {
                 context.Set<Track>()
                     .AddOrUpdate(
-                        new Track { ArtistId = 1, Name = "Море", GenreId = 10 },
-                        new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 10 },
-                        new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 10 },
-                        new Track { Name = "Just be", ArtistId = 5, GenreId = 24 },
-                        new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24 },
+                        new Track { ArtistId = 1, Name = "Море", GenreId = 10, OwnerId = 104 },
+                        new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 10, OwnerId = 104 },
+                        new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Just be", ArtistId = 5, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24, OwnerId = 104 },
                         new Track { Name = "Traffic", ArtistId = 5, GenreId = 24 },
                         new Track { Name = "Fligth 643", ArtistId = 5, GenreId = 24 },
                         new Track { Name = "Dance for life", ArtistId = 5, GenreId = 24 },

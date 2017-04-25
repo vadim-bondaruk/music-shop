@@ -111,7 +111,7 @@
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // TODO: LOGGER
                 // Logger.log("Error " + ex.Message);
