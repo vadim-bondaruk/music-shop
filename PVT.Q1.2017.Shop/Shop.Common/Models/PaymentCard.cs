@@ -70,7 +70,7 @@
         /// <summary>
         /// The billing address for the card.
         /// </summary>
-        public Address Billing_address { get; set; }
+        public string Billing_address { get; set; }
 
         /// <summary>
         /// The ID of the customer who owns this card account. The facilitator generates and provides this ID. Required when you create or use a stored funding instrument in the PayPal vault.

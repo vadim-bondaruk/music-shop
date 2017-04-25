@@ -20,6 +20,11 @@ namespace Shop.Common.ViewModels
         public decimal Amount { get; set; }
 
         /// <summary>
+        /// Date and time of transaction creation
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
         /// User ID
         /// </summary>
         public int UserId { get; set; }

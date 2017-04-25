@@ -11,14 +11,14 @@
     {
         //these variables will store the clientID and clientSecret
         //by reading them from the web.config
-        public readonly static string ClientId;
-        public readonly static string ClientSecret;
+        private readonly static string _clientId;
+        private readonly static string _clientSecret;
 
         static Configuration()
         {
             var config = GetConfig();
-            ClientId = config["clientId"];
-            ClientSecret = config["clientSecret"];
+            _clientId = config["clientId"];
+            _clientSecret = config["clientSecret"];
         }
 
         // getting properties from the web.config
@@ -31,7 +31,7 @@
         {
             // getting accesstocken from paypal                
             string accessToken = new OAuthTokenCredential
-        (ClientId, ClientSecret, GetConfig()).GetAccessToken();
+        (_clientId, _clientSecret, GetConfig()).GetAccessToken();
 
             return accessToken;
         }

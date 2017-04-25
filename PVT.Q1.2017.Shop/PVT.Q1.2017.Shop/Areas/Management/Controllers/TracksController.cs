@@ -15,7 +15,6 @@
     using PVT.Q1._2017.Shop.Areas.Management.Helpers;
     using PVT.Q1._2017.Shop.Areas.Management.ViewModels;
     using PVT.Q1._2017.Shop.Controllers;
-    using System.Web.Caching;
 
     /// <summary>
     ///     The track controller
