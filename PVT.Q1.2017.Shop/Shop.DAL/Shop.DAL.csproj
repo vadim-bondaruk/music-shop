@@ -153,6 +153,10 @@
     <Compile Include="Migrations\201704251453051_ModifiedUserRegistration.Designer.cs">
       <DependentUpon>201704251453051_ModifiedUserRegistration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704251751455_SomeChanges_1.cs" />
+    <Compile Include="Migrations\201704251751455_SomeChanges_1.Designer.cs">
+      <DependentUpon>201704251751455_SomeChanges_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -289,6 +293,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704251453051_ModifiedUserRegistration.resx">
       <DependentUpon>201704251453051_ModifiedUserRegistration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251751455_SomeChanges_1.resx">
+      <DependentUpon>201704251751455_SomeChanges_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

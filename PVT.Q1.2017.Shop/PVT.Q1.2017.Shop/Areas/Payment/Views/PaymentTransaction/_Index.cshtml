@@ -8,6 +8,9 @@
                 Идентификатор
             </th>
             <th>
+                Дата
+            </th>
+            <th>
                 Сумма
             </th>
             <th>
@@ -24,6 +27,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)

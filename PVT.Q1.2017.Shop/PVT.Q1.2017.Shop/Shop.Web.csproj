@@ -287,8 +287,6 @@
     <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
     <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
-    <Content Include="Areas\Payment\Views\Paypal\PaymentWithCreditCard.cshtml" />
-    <Content Include="Areas\Payment\Views\Paypal\Index.cshtml" />
     <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
     <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
@@ -300,7 +298,6 @@
     <Content Include="Areas\Payment\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Success.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
@@ -327,6 +324,7 @@
     <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Country\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\PayResult.cshtml" />
     <Content Include="Areas\Admin\Views\Country\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Country\Edit.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -466,7 +464,6 @@
     <Compile Include="Areas\News\Controllers\MusicController.cs" />
     <Compile Include="Areas\News\NewsAreaRegistration.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
-    <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
     <Compile Include="Areas\Payment\Helpers\PaymentMapper.cs" />

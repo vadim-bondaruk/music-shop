@@ -47,7 +47,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumPrice.cs" />
     <Compile Include="Models\AlbumTrackRelation.cs" />
@@ -92,6 +91,8 @@
     <Compile Include="ViewModels\GenreDetailsViewModel.cs" />
     <Compile Include="ViewModels\GenreViewModel.cs" />
     <Compile Include="ViewModels\PaymentTransactionViewModel.cs" />
+    <Compile Include="ViewModels\PayResultsViewModel.cs" />
+    <Compile Include="ViewModels\PayResultViewModel.cs" />
     <Compile Include="ViewModels\PriceViewModel.cs" />
     <Compile Include="ViewModels\RatingViewModel.cs" />
     <Compile Include="ViewModels\ArtistAlbumsListViewModel.cs" />
