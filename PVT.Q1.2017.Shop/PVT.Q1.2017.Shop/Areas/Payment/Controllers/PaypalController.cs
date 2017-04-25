@@ -24,7 +24,6 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         [Authorize]
         public RedirectToRouteResult Success()
         {
-            this.Session.Add("IsAccepted", true);
             return RedirectToAction("AcceptTransaction", "PaymentTransaction", new { Area = "Payment" });
         }
 
