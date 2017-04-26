@@ -315,9 +315,11 @@
                 }
             }
             else
-        {
+            {
+                ModelState.AddModelError(string.Empty, "Ошибка восстановления пароля");
                 return View();
-        }
+            }
+
             return View();
         }
 
