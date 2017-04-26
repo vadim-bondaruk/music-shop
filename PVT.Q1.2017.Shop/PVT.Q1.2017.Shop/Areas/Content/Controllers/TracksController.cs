@@ -118,21 +118,17 @@
         /// <param name="id">
         /// The id.
         /// </param>
-        /// <param name="sampleOnly">
-        /// The sample only.
-        /// </param>
         /// <returns>
         /// </returns>
         [ShopAuthorize]
-        public FileStreamResult GetTrackAsStream(int id = 0, bool sampleOnly = false)
+        public FileStreamResult GetTrackAsStream(int id = 0)
         {
             if (id <= 0)
             {
                 return null;
             }
 
-            MemoryStream stream = null;
-
+            MemoryStream stream;
             if (CurrentUser.IsInRole(UserRoles.Admin))
             {
                 stream = GetTrackStreamForAdmin(id);
