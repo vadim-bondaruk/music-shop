@@ -7,24 +7,24 @@
     {
         @Html.AntiForgeryToken()
         <div>
-            <div class="row">
-                <div class="col-sm-6">
+            <div class="row col-md-12">
+                <div class="col-md-3">
                     <img class="img-thumbnail" id="artist-img"
                          onclick="document.formreg.PostedPhoto.click()" onerror="src = '/img/defuserpic.png'" src="data:image;base64"/>
                 </div>
                 <div class="col-sm-6">
-                    <ul class="list-group" style="width: 100%">
-                        <li class="list-group-item" style="text-align: left !important;">
+                    <ul class="list-group col-md-12">
+                        <li class="list-group-item">
                             @Html.DisplayNameFor(m => m.Name)
-                            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель", style = "width: 100%; margin-top: 0;" } })
+                            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Исполнитель" } })
                         </li>
                         <li class="list-group-item">
                             @Html.DisplayNameFor(m => m.Birthday)
-                            @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control datecontrol", placeholder = "Дата рождения", type = "text", id = "item-birthday", style = "width: 100%" } })
+                            @Html.EditorFor(m => m.Birthday, new { htmlAttributes = new { @class = "form-control datecontrol", placeholder = "Дата рождения", type = "text", id = "item-birthday" } })
                         </li>
                         <li class="list-group-item">
                             @Html.DisplayNameFor(m => m.Biography)
-                            @Html.TextAreaFor(m => m.Biography, new { @class = "form-control", placeholder = "Биография", id = "item-bio", style = "heigth: 200px; width: 100%" })
+                            @Html.TextAreaFor(m => m.Biography, new { @class = "form-control", placeholder = "Биография", id = "item-bio" })
                         </li>
                     </ul>
                 </div>
