@@ -8,7 +8,7 @@
                 <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Name)</a>
                 <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Artist.Name)</a>
                 <div class="btn-play">
-                    <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new {area = "Content", id = Model.Id, sampleOnly = true })', @Model.Id);">
+                    <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new {area = "Content", id = Model.Id, sampleOnly = false })', @Model.Id);">
                         <i class="btn-prev fa fa-play" style="font-size: 16px; opacity: 0.4"></i>
                     </a>
                 </div>
