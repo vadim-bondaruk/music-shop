@@ -123,7 +123,7 @@
                 {
                     tracks = repository.GetAll(
                                                t => (t.OwnerId == null || t.OwnerId == ownerId) &&
-                                                    (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
+                                                    t.Albums.All(r => r.AlbumId != albumId),
                                                t => t.Artist);
                 }
                 else
@@ -131,7 +131,7 @@
                     tracks = repository.GetAll(
                                                t => t.ArtistId == albumTracksListViewModel.AlbumDetails.Artist.Id &&
                                                     (t.OwnerId == null || t.OwnerId == ownerId) &&
-                                                    (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
+                                                    t.Albums.All(r => r.AlbumId != albumId),
                                                t => t.Artist);
                 }
             }
