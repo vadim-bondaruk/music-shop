@@ -86,6 +86,7 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
+                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -114,6 +115,7 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
+                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -142,6 +144,7 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
+                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -170,6 +173,7 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
+                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -185,6 +189,7 @@
         {
             var cartService = ServiceFactory.GetCartService();
             cartService.RemoveAll(CurrentUser.Id);
+            Session["IsModifiedOrdersCount"] = true;
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
@@ -207,8 +212,10 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AcceptPayment(CurrentUser.Id);
+                Session["IsModifiedOrdersCount"] = true;
                 return RedirectToAction("Index", "Home", new { Area = string.Empty });
             }
+
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
@@ -218,7 +225,17 @@
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public JsonResult GetOrdersCount()
         {
+            if (Session["IsModifiedOrdersCount"] == null)
+            {
+                Session["IsModifiedOrdersCount"] = true;
+            }
+
             int count = 0;
+            if (!(bool)Session["IsModifiedOrdersCount"])
+            {
+                count = (int)Session["OrdersCount"];
+                return Json(new { Count = count }, JsonRequestBehavior.AllowGet);
+            }
 
             using (var userDataRepository = RepositoryFactory.GetUserDataRepository())
             {
@@ -230,6 +247,7 @@
                     if (Session != null)
                     {
                         Session["OrdersCount"] = count;
+                        Session["IsModifiedOrdersCount"] = false;
                     }
                 }
             }
