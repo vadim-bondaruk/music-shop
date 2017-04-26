@@ -133,6 +133,7 @@
 
             MemoryStream stream = null;
 
+            var fileName = "unknown";
             if (CurrentUser.IsInRole(UserRoles.Admin))
             {
                 // мы можем дать скачать и послушать все треки админу
@@ -140,6 +141,7 @@
                 using (var repository = RepositoryFactory.GetTrackRepository())
                 {
                     track = repository.GetById(id, t => t.Artist);
+                    fileName = track.FileName;
                 }
 
                 if (track != null)
@@ -189,10 +191,16 @@
                         purchasedTrack.Name,
                         purchasedTrack.Artist.Name,
                         purchasedTrack.TrackFile);
+                    fileName = purchasedTrack.FileName;
                 }
             }
 
-            return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
+            return stream == null
+                       ? null
+                       : new FileStreamResult(stream, this.Response.ContentType)
+                             {
+                                 FileDownloadName = fileName + ".mp3"
+                             };
         }
     }
 }
