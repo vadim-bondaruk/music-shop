@@ -453,7 +453,7 @@
             int page = 2, count = 4;
 
             Mock.Get(_factory.GetUserRepository())
-                .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>()))
+                .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>(), u => u.Country))
                 .Returns(() => new PagedResult<User>(usersList.GetRange(0, count), count, page, usersList.Count));
 
             var result = _service.GetDataPerPage(page, count);
@@ -490,7 +490,7 @@
             };
 
             Mock.Get(_factory.GetUserRepository())
-             .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>()))
+             .Setup(m => m.GetAll(It.IsAny<int>(), It.IsNotNull<int>(), u => u.Country))
              .Returns(() => new PagedResult<User>(expected, count, page, usersList.Count));
 
             var result = _service.GetDataPerPage(page, count);
