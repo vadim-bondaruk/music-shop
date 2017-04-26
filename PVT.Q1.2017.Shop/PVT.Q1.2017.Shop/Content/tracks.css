@@ -177,6 +177,7 @@ img {
 
 .artists-list .list-group .list-group-item h3 {
     font-weight: bold;
+    margin-top: -38px;
     font-variant: small-caps;
 }
 
@@ -305,7 +306,6 @@ li > input { width: 100% }
 
 .albums-list > ul > li img {
     float: left;
-    /*margin: 15px 15px 90px 15px;*/
     max-width: 100px;
     max-height: 100px;
     overflow: auto;
@@ -365,7 +365,7 @@ li > input { width: 100% }
 .albums-list .btn-align {
     vertical-align: top;
     text-align: right;
-    margin: 5px 0 0 60px;
+    margin: 20px 0 0 60px;
 }
 
 .albums-list .btn-align i {
@@ -695,8 +695,11 @@ li > input { width: 100% }
 
 .tracks-list .btn-play { float: left }
 
-.track-edit ul li input { height: 30px; }
+.tracks-list .right {
+      margin-top: 19px;
+}
 
+.track-edit ul li input { height: 30px; }
 
 .track-edit audio { width: 100%; }
 
