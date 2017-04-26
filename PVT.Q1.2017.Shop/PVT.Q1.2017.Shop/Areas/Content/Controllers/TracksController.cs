@@ -173,7 +173,7 @@
 
             // мы можем дать скачать и послушать только купленные треки для обычных пользователей
             var purchasedTrack = trackService.GetPurchasedTrack(trackId, CurrentUser.UserProfileId);
-            if (purchasedTrack != null)
+            if (purchasedTrack != null && purchasedTrack.TrackFile != null)
             {
                 return Mp3StreamHelper.GetAudioStream(
                                                       this.Response,
@@ -198,7 +198,7 @@
                                               t => t.Artist);
             }
 
-            if (track != null)
+            if (track != null && track.TrackFile != null)
             {
                 return Mp3StreamHelper.GetAudioStream(
                                                       this.Response,
@@ -216,13 +216,10 @@
             Track track;
             using (var repository = RepositoryFactory.GetTrackRepository())
             {
-                track =
-                    repository.FirstOrDefault(
-                                              t => t.Id == trackId && (t.OwnerId == CurrentUser.UserProfileId || t.OwnerId == null),
-                                              t => t.Artist);
+                track = repository.FirstOrDefault(t => t.Id == trackId, t => t.Artist);
             }
 
-            if (track != null)
+            if (track != null && track.TrackFile != null)
             {
                 return Mp3StreamHelper.GetAudioStream(
                                                       this.Response,
