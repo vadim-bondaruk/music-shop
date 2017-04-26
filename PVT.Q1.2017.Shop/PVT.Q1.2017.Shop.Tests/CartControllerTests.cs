@@ -174,5 +174,36 @@ namespace PVT.Q1._2017.Shop.Tests
             var result1 = cartController.DeleteAlbum(0);
             Assert.IsInstanceOfType(result1, typeof(HttpNotFoundResult));
          }
+        [TestMethod]
+        public void CartController_GetOrdersCount()
+        {
+            IList<OrderTrack> tracks = new List<OrderTrack>
+            {
+                new OrderTrack { UserId = 1, Track = new Track { Id = 1, Name = "Wide Awake" } },
+                new OrderTrack { UserId = 1, Track = new Track { Id = 2, Name = "Be mine" } },
+            };
+
+            IList<OrderAlbum> albums = new List<OrderAlbum>
+           {
+               new OrderAlbum { UserId=1, Album = new Album { Id = 1, Name = "Gold" } },
+               new OrderAlbum { UserId=1, Album = new Album { Id = 2, Name = "Platinum" } },
+           };
+
+            Mock<IUserDataRepository> moqUserDataRepository = new Mock<IUserDataRepository>();
+            moqUserDataRepository.Setup(m => m.GetById(It.Is<int>(t => t > 0))).Returns(new UserData { UserId = 1, OrderTracks = tracks, OrderAlbums = albums });
+
+            Mock<IRepositoryFactory> moqRepositoryFactory = new Mock<IRepositoryFactory>();
+            moqRepositoryFactory.Setup(m => m.GetUserDataRepository()).Returns(moqUserDataRepository.Object);
+
+            Mock<ICartService> moqCartService = new Mock<ICartService>();
+            Mock<IServiceFactory> moqServiceFactory = new Mock<IServiceFactory>();
+            moqServiceFactory.Setup(m => m.GetCartService()).Returns(moqCartService.Object);
+
+            var cartController = new CartController(moqRepositoryFactory.Object, moqServiceFactory.Object);
+            var context = TestInitialize();
+            cartController.ControllerContext = new ControllerContext(context.Object, new RouteData(), cartController);
+            var result = cartController.GetOrdersCount();
+            Assert.IsInstanceOfType(result, typeof(JsonResult));
+        } 
     }
 }
