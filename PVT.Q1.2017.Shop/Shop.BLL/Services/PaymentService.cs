@@ -15,6 +15,8 @@
     using Common.Models;
     using Exceptions;
     using Shop.Infrastructure.Models;
+    using Shop.Infrastructure.Enums;
+    using Utils;
 
     /// <summary>
     /// The payment service class
@@ -340,11 +342,25 @@
             }
         }
 
+        public PayResultsViewModel GetPaysForUser(CurrentUser currentUser, int currentUserCurrencyId)
+        {
+            PayResultsViewModel pays = null;
+            if (currentUser.IsInRole(UserRoles.Seller.ToString())
+            {
+                pays = GetSellerPays(currentUser.Id, currentUserCurrencyId);
+            }
+            if (currentUser.IsInRole(UserRoles.Admin))
+            {
+                pays = GetAllPays(currentUserCurrencyId);
+            }
+            return new PayResultsViewModel() { Payments = new List<PayResultViewModel>() };
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public PayResultsViewModel GetAllPays(int currencyID)
+        private PayResultsViewModel GetAllPays(int currencyID)
         {
             using(var payTransRepo = Factory.GetPaymentTransactionRepository())
             {
@@ -381,7 +397,7 @@
         /// <param name="userID">seller user id</param>
         /// <param name="currencyID">current currency id</param>
         /// <returns></returns>
-        public PayResultsViewModel GetSellerPays(int userID, int currencyID)
+        private PayResultsViewModel GetSellerPays(int userID, int currencyID)
         {
             var result = new PayResultsViewModel()
             {
