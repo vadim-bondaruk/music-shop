@@ -34,8 +34,8 @@
             this.AddDefaultPriceLevels(context);
             this.AddDefaultCountries(context);
 #if DEBUG
-            AddDefaultArtistsAndTracks(context);
             AddDefaultUsers(context);
+            AddDefaultArtistsAndTracks(context);
             AddDefaultPurchasedTracks(context);
 #endif
         }
@@ -2348,8 +2348,10 @@
                         {
                         TrackId = t.Id,
                         UserId = userData.UserId,
-                        CurrencyId = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().CurrencyId : 1,
-                        Price = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().Price : 1
+                        //CurrencyId = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().CurrencyId : 1,
+                        //Price = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().Price : 1
+                        CurrencyId = 1,
+                        Price = (decimal) 1.99
                     }
                     ).ToArray()
                 };
