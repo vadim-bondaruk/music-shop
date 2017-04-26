@@ -17,6 +17,7 @@
     using Shop.Infrastructure.Models;
     using Shop.Infrastructure.Enums;
     using Utils;
+    using NLog;
 
     /// <summary>
     /// The payment service class
@@ -27,6 +28,11 @@
         /// PayPal payment
         /// </summary>
         private PayPal.Api.Payment payment;
+
+        /// <summary>
+        /// logger
+        /// </summary>
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentService"/> class.
@@ -113,10 +119,9 @@
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: LOGGER
-                // Logger.log("Error " + ex.Message);
+                _logger.Error($"Произошла ошибка при оплате:\r\n{ex}");
                 return "Failure";
             }
 
@@ -226,6 +231,7 @@
                 user = userDataRepository.FirstOrDefault(u => u.UserId == userID);
                 if (user == null)
                 {
+                    _logger.Error($"Пользователь с ID={userID} не найден");
                     throw new InvalidUserIdException($"Пользователь с ID={userID} не найден");
                 }
                 else
@@ -305,10 +311,10 @@
         /// </summary>
         /// <param name="userID">user ID</param>
         /// <returns></returns>
-        public IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID)
+        public IEnumerable<PaymentTransaction> GetTransactionsByUserId(int? userID)
         {
             IEnumerable<PaymentTransaction> transactions = null;
-            if (userID!=0)
+            if (userID!=null)
             {
                 using (var payRepo = Factory.GetPaymentTransactionRepository())
                 {
@@ -342,6 +348,12 @@
             }
         }
 
+        /// <summary>
+        /// Gets financial result for admin or seller user in certain currency
+        /// </summary>
+        /// <param name="currentUser">user</param>
+        /// <param name="currentUserCurrencyId">target currency id</param>
+        /// <returns></returns>
         public PayResultsViewModel GetPaysForUser(CurrentUser currentUser, int currentUserCurrencyId)
         {
             PayResultsViewModel pays = new PayResultsViewModel() { Payments = new List<PayResultViewModel>() };

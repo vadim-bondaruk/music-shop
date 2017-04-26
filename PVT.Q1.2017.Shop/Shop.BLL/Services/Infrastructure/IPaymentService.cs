@@ -21,7 +21,7 @@
         
         void CreatePaymentTransaction(CartViewModel cart);
 
-        IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID);
+        IEnumerable<PaymentTransaction> GetTransactionsByUserId(int? userID);
 
         PagedResult<PaymentTransaction> GetDataPerPage(int? userID, int pageNumber = 1, int count = 10);
 
