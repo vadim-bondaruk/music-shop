@@ -77,6 +77,7 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AddAlbum(CurrentUser.Id, albumId);
+                Session["IsModifiedOrdersCount"] = true;
             }
             catch (CartServiceException ex)
             {
@@ -86,7 +87,6 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
-                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -106,6 +106,7 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.RemoveAlbum(CurrentUser.Id, albumId);
+                Session["IsModifiedOrdersCount"] = true;
             }
             catch (CartServiceException ex)
             {
@@ -115,7 +116,6 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
-                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -135,6 +135,7 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AddTrack(CurrentUser.Id, trackId);
+                Session["IsModifiedOrdersCount"] = true;
             }
             catch (CartServiceException ex)
             {
@@ -144,7 +145,6 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
-                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -164,6 +164,7 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.RemoveTrack(CurrentUser.Id, trackId);
+                Session["IsModifiedOrdersCount"] = true;
             }
             catch (CartServiceException ex)
             {
@@ -173,7 +174,6 @@
 
             if (Request != null && Request.IsAjaxRequest())
             {
-                Session["IsModifiedOrdersCount"] = true;
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
