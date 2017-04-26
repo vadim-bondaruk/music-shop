@@ -427,12 +427,22 @@ li > input { width: 100% }
 
 .album-edit input { cursor: default; }
 
-.album-details .tracks-list .left img{
-    margin: 2px 0 0 0 !important;
+.album-details .tracks-list .left img { margin: 2px 0 0 0 !important; }
+
+.album-details .tracks-list .details-right { margin-top: 8px; }
+
+.album-details .tracks-list .order-block { float: right; }
+
+.album-details .tracks-list .buy-btn { display: block; }
+
+.album-details .tracks-list .btn-edit {
+    width: 90px;
+    display: inline-block;
 }
 
-.album-details .tracks-list .details-right {
-    margin-top: 8px;
+.album-details .tracks-list .btn-remove {
+    width: 90px;
+    display: inline-block;
 }
 
 #genres-title { margin-top: 1px; }
@@ -528,6 +538,7 @@ li > input { width: 100% }
     display: block;
     text-align: center;
     padding-top: 7px;
+    margin-top: 10px;
 }
 
 .order-block .buy-btn button,
@@ -648,9 +659,10 @@ li > input { width: 100% }
 }
 
 .tracks-list li {
-    height: 60px;
     margin-top: 7px;
     color: black;
+    padding: 0 !important;
+    height: 60px;
 }
 
 .tracks-list li a { color: black; }
@@ -664,13 +676,20 @@ li > input { width: 100% }
     margin-top: -2px;
 }
 
-.tracks-list .btn-edit { margin-left: 90px !important; }
+.tracks-list img {
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-top: 4px;
+}
 
-.tracks-list .details-left { margin-top: 11px; }
+.tracks-list .btn-edit { margin-left: 15px !important; }
+
+.tracks-list .details-left { margin-top: 20px; }
 
 .tracks-list .albums-count { display: inline-block; }
 
-.tracks-list .details-right { margin-top: 2px; }
+.tracks-list .details-right { margin-top: 18px; }
 
 .tracks-list .stars { display: inline-block; }
 
