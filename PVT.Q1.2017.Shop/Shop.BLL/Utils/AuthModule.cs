@@ -74,10 +74,7 @@
                 {
                     throw new UserValidationException("Не подтвержден email", "");
                 }
-                if(user.IsDeleted == true)
-                {
-                    throw new UserValidationException("Этот аккаунт был удален", "Useridentity");
-                }
+
                 context.Response.Cookies.Add(GetAuthCookies(userPrincipal, redirect));
 
             }
