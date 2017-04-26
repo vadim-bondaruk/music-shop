@@ -118,81 +118,119 @@
         /// <param name="id">
         /// The id.
         /// </param>
-        /// <param name="sampleOnly">
-        /// The sample only.
-        /// </param>
         /// <returns>
         /// </returns>
         [ShopAuthorize]
-        public FileStreamResult GetTrackAsStream(int id = 0, bool sampleOnly = false)
+        public FileStreamResult GetTrackAsStream(int id = 0)
         {
             if (id <= 0)
             {
                 return null;
             }
 
-            MemoryStream stream = null;
-
+            MemoryStream stream;
             if (CurrentUser.IsInRole(UserRoles.Admin))
             {
-                // мы можем дать скачать и послушать все треки админу
-                Track track;
-                using (var repository = RepositoryFactory.GetTrackRepository())
-                {
-                    track = repository.GetById(id, t => t.Artist);
-                }
-
-                if (track != null)
-                {
-                    stream = Mp3StreamHelper.GetAudioStream(
-                        this.Response,
-                        this.Request,
-                        track.Name,
-                        track.Artist.Name,
-                        track.TrackFile);
-                }
+                stream = GetTrackStreamForAdmin(id);
             }
             else if (CurrentUser.IsInRole(UserRoles.Seller))
             {
-                // мы можем дать скачать и послушать свои треки продавцу
-                Track track;
-                using (var repository = RepositoryFactory.GetTrackRepository())
-                {
-                    track =
-                        repository.FirstOrDefault(
-                            t => t.Id == id && (t.OwnerId == CurrentUser.UserProfileId || t.OwnerId == null),
-                            t => t.Artist);
-                }
-
-                if (track != null)
-                {
-                    stream = Mp3StreamHelper.GetAudioStream(
-                        this.Response,
-                        this.Request,
-                        track.Name,
-                        track.Artist.Name,
-                        track.TrackFile,
-                        sampleOnly);
-                }
+                stream = GetTrackStreamForSeller(id);
             }
             else
             {
-                var trackService = ServiceFactory.GetTrackService();
-
-                // мы можем дать скачать и послушать только купленные треки для обычных пользователей
-                var purchasedTrack = trackService.GetPurchasedTrack(id, CurrentUser.UserProfileId);
-                if (purchasedTrack != null)
-                {
-                    stream = Mp3StreamHelper.GetAudioStream(
-                        this.Response,
-                        this.Request,
-                        purchasedTrack.Name,
-                        purchasedTrack.Artist.Name,
-                        purchasedTrack.TrackFile);
-                }
+                stream = GetTrackStreamForBuyer(id);
             }
 
             return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
+        }
+
+        private MemoryStream GetTrackStreamForAdmin(int trackId)
+        {
+            // мы можем дать скачать и послушать все треки админу
+            Track track;
+            using (var repository = RepositoryFactory.GetTrackRepository())
+            {
+                track = repository.GetById(trackId, t => t.Artist);
+            }
+
+            if (track != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(
+                                                        this.Response,
+                                                        this.Request,
+                                                        track.Name,
+                                                        track.Artist.Name,
+                                                        track.TrackFile);
+            }
+
+            return null;
+        }
+
+        private MemoryStream GetTrackStreamForBuyer(int trackId)
+        {
+            var trackService = ServiceFactory.GetTrackService();
+
+            // мы можем дать скачать и послушать только купленные треки для обычных пользователей
+            var purchasedTrack = trackService.GetPurchasedTrack(trackId, CurrentUser.UserProfileId);
+            if (purchasedTrack != null && purchasedTrack.TrackFile != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(
+                                                      this.Response,
+                                                      this.Request,
+                                                      purchasedTrack.Name,
+                                                      purchasedTrack.Artist.Name,
+                                                      purchasedTrack.TrackFile);
+            }
+
+            return GetTrackSampleAsStream(trackId);
+        }
+
+        private MemoryStream GetTrackStreamForSeller(int trackId)
+        {
+            // мы можем дать скачать и послушать свои треки продавцу
+            Track track;
+            using (var repository = RepositoryFactory.GetTrackRepository())
+            {
+                track =
+                    repository.FirstOrDefault(
+                                              t => t.Id == trackId && (t.OwnerId == CurrentUser.UserProfileId || t.OwnerId == null),
+                                              t => t.Artist);
+            }
+
+            if (track != null && track.TrackFile != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(
+                                                      this.Response,
+                                                      this.Request,
+                                                      track.Name,
+                                                      track.Artist.Name,
+                                                      track.TrackFile);
+            }
+
+            return GetTrackSampleAsStream(trackId);
+        }
+
+        private MemoryStream GetTrackSampleAsStream(int trackId)
+        {
+            Track track;
+            using (var repository = RepositoryFactory.GetTrackRepository())
+            {
+                track = repository.FirstOrDefault(t => t.Id == trackId, t => t.Artist);
+            }
+
+            if (track != null && track.TrackFile != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(
+                                                      this.Response,
+                                                      this.Request,
+                                                      track.Name,
+                                                      track.Artist.Name,
+                                                      track.TrackFile,
+                                                      true);
+            }
+
+            return null;
         }
     }
 }
