@@ -478,7 +478,9 @@
     <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Areas\User\Controllers\AccountController.cs" />
-    <Compile Include="Areas\User\Controllers\ManageController.cs" />
+    <Compile Include="Areas\User\Controllers\ManageController.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

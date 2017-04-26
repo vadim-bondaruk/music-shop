@@ -153,13 +153,22 @@ img {
     width: 100%;
 }
 
+.artist-new .form-control {
+    width: 700px;
+    max-width: 700px;
+    min-width: 700px;
+}
 .artist-new .inner { display: inline-block; }
 
 .artist-new img { float: left; }
 
+.artist-new .row{ height: 600px !important;}
+
 .artist-new ul {
+    width: 750px;
     display: inline-block;
-    height: 500px;
+    border: none;
+
 }
 
 .artist-new ul textarea {
@@ -177,6 +186,7 @@ img {
 
 .artists-list .list-group .list-group-item h3 {
     font-weight: bold;
+    margin-top: -38px;
     font-variant: small-caps;
 }
 
@@ -305,7 +315,6 @@ li > input { width: 100% }
 
 .albums-list > ul > li img {
     float: left;
-    /*margin: 15px 15px 90px 15px;*/
     max-width: 100px;
     max-height: 100px;
     overflow: auto;
@@ -365,11 +374,11 @@ li > input { width: 100% }
 .albums-list .btn-align {
     vertical-align: top;
     text-align: right;
-    margin: 5px 0 0 60px;
+    margin: 20px 0 0 60px;
 }
 
 .albums-list .btn-align i {
-    margin: 38px 15px;
+    margin: 20px 15px;
     color: black;
 }
 
@@ -538,11 +547,12 @@ li > input { width: 100% }
     display: block;
     text-align: center;
     padding-top: 7px;
-    margin-top: 10px;
+    margin-top: -2px;
 }
 
 .order-block .buy-btn button,
 .buttons .buy-btn button {
+    margin-top: 15px;
     width: 100px;
     height: 25px;
     color: black;
@@ -594,11 +604,12 @@ li > input { width: 100% }
     border: none;
 }
 
-.track-details {
+.track-details, .artist-new .row {
     height: 800px;
     background: #fff;
     border-radius: 15px;
     opacity: 0.9;
+    padding: 15px;
 }
 
 .track-details .container img {
@@ -683,7 +694,7 @@ li > input { width: 100% }
     margin-top: 4px;
 }
 
-.tracks-list .btn-edit { margin-left: 15px !important; }
+.tracks-list .btn-edit { margin: 20px 15px !important; height: 18px }
 
 .tracks-list .details-left { margin-top: 20px; }
 
@@ -696,7 +707,6 @@ li > input { width: 100% }
 .tracks-list .btn-play { float: left }
 
 .track-edit ul li input { height: 30px; }
-
 
 .track-edit audio { width: 100%; }
 

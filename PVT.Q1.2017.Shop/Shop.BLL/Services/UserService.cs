@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Common.Models;
     using Common.Validators.Infrastructure;
     using DAL.Infrastruture;
     using Exceptions;
     using Helpers;
     using Infrastructure;
+    using NLog;
     using Shop.Infrastructure.Enums;
     using Shop.Infrastructure.Models;
     using Utils;
@@ -18,6 +18,11 @@
     /// </summary>
     public class UserService : BaseService, IUserService, IUserValidator
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
@@ -35,7 +40,7 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity)
         {
-            User user = GetUserByUserIdentity(userIdentity);
+            User user = this.GetUserByUserIdentity(userIdentity);
 
             return user != null;
         }
@@ -48,7 +53,7 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity, out User user)
         {
-            user = GetUserByUserIdentity(userIdentity);
+            user = this.GetUserByUserIdentity(userIdentity);
 
             return user != null && user.IsDeleted.Equals(false);
         }
@@ -66,7 +71,7 @@
             }
 
             user.Password = PasswordEncryptor.GetHashString(user.Password);
-            user.UserRole = GetDefaultUserRoles();
+            user.UserRole = this.GetDefaultUserRoles();
 
             try
             {
@@ -91,9 +96,9 @@
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: write data to log
+                _logger.Error($"Произошла ошибка при регистрации пользователя:\r\n{ex}");
                 return false;
             }
         }
@@ -107,7 +112,7 @@
         {
             User user = null;
 
-            if (IsUserExist(userIdentity, out user))
+            if (this.IsUserExist(userIdentity, out user))
             {
                 return user.Id;
             }
@@ -149,9 +154,9 @@
                     userRepository.SaveChanges();
                     update = true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //TODO: Write Data to log
+                    _logger.Error($"Ошибка редактирование профиля:\r\n{ex}");
                     throw;
                 }
             }
@@ -168,7 +173,7 @@
         {
             User user = null;
 
-            if (IsUserExist(userIdentity, out user))
+            if (this.IsUserExist(userIdentity, out user))
             {
                 string userEmail = user.Email;
 
@@ -211,10 +216,9 @@
 
                 update = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: write data to log
-                throw;
+                _logger.Error($"Произошла ошибка при изменении пароля:\r\n{ex}");
             }
 
             return update;
@@ -256,10 +260,9 @@
                         userRepository.SaveChanges();
                         update = true;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //TODO: Write data to log
-                        throw;
+                        _logger.Error($"Произошла ошибка при изменении пароля:\r\n{ex}");
                     } 
                 }
             }
@@ -290,10 +293,9 @@
                             userRepository.SaveChanges();
                             return true;
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            //TODO: write dala to log
-                            throw;
+                            _logger.Error($"Произошла ошибка при изменении логина:\r\n{ex}");
                         }
                     }
                 }
@@ -324,10 +326,9 @@
                             userRepository.SaveChanges();
                             return true;
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            //TODO: write data to log
-                            throw;
+                            _logger.Error($"Произошла ошибка при подтверждении адреса электронной почты:\r\n{ex}");
                         }
                     }
                 }
@@ -362,10 +363,9 @@
                         userRepository.SaveChanges();
                         deleted = true;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //TODO: write data to log
-                        throw;
+                        _logger.Error($"Произошла ошибка при удалении пользователя:\r\n{ex}");
                     }
                 }
             }

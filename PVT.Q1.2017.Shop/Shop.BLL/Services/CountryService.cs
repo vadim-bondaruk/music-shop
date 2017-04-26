@@ -3,6 +3,7 @@
     using System;
     using Common.Models;
     using Infrastructure;
+    using NLog;
     using Shop.DAL.Infrastruture;
 
     /// <summary>
@@ -10,6 +11,11 @@
     /// </summary>
     public class CountryService : BaseService, ICountryService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// 
         /// </summary>
@@ -38,9 +44,9 @@
                     countries.SaveChanges();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    _logger.Error($"Произошла ошибка при добавлении страны:\r\n{ex}");
                 }
             }
 
@@ -69,10 +75,9 @@
                     countryRepository.SaveChanges();
                     isDeleted = true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
-                    throw;
+                    _logger.Error($"Произошла ошибка при удалении страны:\r\n{ex}");
                 }
             }
 
@@ -105,9 +110,9 @@
                         countries.SaveChanges();
                         return true;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        throw;
+                        _logger.Error($"Произошла ошибка при редактировании страны:\r\n{ex}");
                     }
                 }
             }
