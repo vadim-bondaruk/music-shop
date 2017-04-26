@@ -187,6 +187,10 @@
                             ModelState.AddModelError(string.Empty, "Ошибка отправки сообщения");
                         }
                     }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Ошибка регистрации");
+                    }
                 }
                 catch (UserValidationException ex)
                 {
