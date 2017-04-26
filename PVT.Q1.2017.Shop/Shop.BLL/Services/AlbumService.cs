@@ -60,18 +60,20 @@
                 priceLevelId = ServiceHelper.GetDefaultPriceLevel(Factory);
             }
 
-            using (var repository = Factory.GetAlbumPriceRepository())
-            {
-                using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
-                {
-                    albumViewModel.Price =
-                        PriceHelper.GetAlbumPrice(repository, currencyRatesrepository, id, currencyCode.Value, priceLevelId.Value);
-                }
-            }
-
             using (var repository = Factory.GetAlbumTrackRelationRepository())
             {
-               albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
+                albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
+                if (albumViewModel.TracksCount > 0)
+                {
+                    using (var albumPriceRepository = Factory.GetAlbumPriceRepository())
+                    {
+                        using (var currencyRatesrepository = Factory.GetCurrencyRateRepository())
+                        {
+                            albumViewModel.Price =
+                                PriceHelper.GetAlbumPrice(albumPriceRepository, currencyRatesrepository, id, currencyCode.Value, priceLevelId.Value);
+                        }
+                    }
+                }
             }
 
             if (userId != null)
@@ -121,7 +123,7 @@
                 {
                     tracks = repository.GetAll(
                                                t => (t.OwnerId == null || t.OwnerId == ownerId) &&
-                                                    (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
+                                                    t.Albums.All(r => r.AlbumId != albumId),
                                                t => t.Artist);
                 }
                 else
@@ -129,7 +131,7 @@
                     tracks = repository.GetAll(
                                                t => t.ArtistId == albumTracksListViewModel.AlbumDetails.Artist.Id &&
                                                     (t.OwnerId == null || t.OwnerId == ownerId) &&
-                                                    (!t.Albums.Any() || t.Albums.All(r => r.AlbumId != albumId)),
+                                                    t.Albums.All(r => r.AlbumId != albumId),
                                                t => t.Artist);
                 }
             }
