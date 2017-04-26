@@ -695,8 +695,11 @@ li > input { width: 100% }
 
 .tracks-list .btn-play { float: left }
 
-.track-edit ul li input { height: 30px; }
+.tracks-list .right {
+      margin-top: 19px;
+}
 
+.track-edit ul li input { height: 30px; }
 
 .track-edit audio { width: 100%; }
 
