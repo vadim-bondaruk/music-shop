@@ -302,7 +302,6 @@
             {
                 throw new ArgumentNullException(nameof(model));
             }
-
             Delete(model.Id);
         }
 

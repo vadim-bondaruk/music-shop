@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using App_Start;
     using Helpers;
+    using NLog;
     using global::Shop.BLL.Exceptions;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.BLL.Utils;
@@ -13,6 +14,7 @@
     using global::Shop.Common.ViewModels;
     using Shop.Controllers;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
     using ViewModels;
 
     /// <summary>
@@ -24,8 +26,19 @@
         /// <summary>
         /// 
         /// </summary>
+        private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// 
+        /// </summary>
         private IAuthModule _authModule;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryFactory"></param>
+        /// <param name="serviceFactory"></param>
+        /// <param name="authModule"></param>
         public ManageController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory, IAuthModule authModule)
             : base(repositoryFactory, serviceFactory)
         {
@@ -98,6 +111,7 @@
                     return RedirectToAction("UpdatePersonal");
                 }
             }
+
             using (var countries = RepositoryFactory.GetCountryRepository())
             {
                 ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
@@ -209,10 +223,9 @@
                 HttpContext.Session.Abandon();
                 _authModule.LogOut();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO 
-                throw;
+                _logger.Error($"Ошибка удаления пользователя\r\n{ex}");
             }
 
             return RedirectToAction("Index", "Home", new { area = string.Empty });
@@ -234,6 +247,7 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ShopAuthorize(UserRoles.Admin)]
         public ActionResult UsersEdit(int id = 1)
         {
             int countPerPage = 10;
@@ -255,7 +269,7 @@
         {
             var userService = ServiceFactory.GetUserService();
             var list = userService.GetLastNameMatchingData(term);
-            return Json(list?.Select( u => new { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}), JsonRequestBehavior.AllowGet);
+            return Json(list?.Select(u => new {Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -264,6 +278,7 @@
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
+        [ShopAuthorize(UserRoles.Admin)]
         public ActionResult Edit(int id)
         {
             User user;
@@ -278,6 +293,7 @@
                 {
                     ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name", user.CountryId);
                 }
+
                 var editUser = UserMapper.GetUserEditView(user);
                 return View(editUser);
             }
@@ -308,10 +324,9 @@
                             repository.AddOrUpdate(userDB);
                             repository.SaveChanges();
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            //TODO: Write to log
-                            throw;
+                            _logger.Error($"Ошибка редактированиия пользователя\r\n{ex}");
                         }
                     }
                 }
@@ -321,6 +336,7 @@
         }
 
         [HttpGet]
+        [ShopAuthorize(UserRoles.Admin)]
         public ActionResult Delete(int? id)
         {
             if (id != null)
@@ -330,12 +346,12 @@
                     var userService = ServiceFactory.GetUserService();
                     userService.SoftDelete(id.Value);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // Write data to log
-                    throw;
+                    _logger.Error($"Ошибка удаления пользователя\r\n{ex}");
                 }
             }
+
             return RedirectToAction("UsersEdit", new { controller = "Manage", area = "User", id = Session["CurrentPage"] });
         }
     }

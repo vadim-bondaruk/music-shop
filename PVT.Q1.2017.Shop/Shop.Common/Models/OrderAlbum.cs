@@ -8,9 +8,9 @@
     public class OrderAlbum : BaseEntity
     {
         /// <summary>
-        /// Cart ID
+        /// User ID
         /// </summary>
-        public int CartId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Album ID
@@ -18,9 +18,9 @@
         public int AlbumId { get; set; }
 
         /// <summary>
-        /// Cart
+        /// UserData
         /// </summary>
-        public virtual Cart Cart { get; set; }
+        public virtual UserData User { get; set; }
 
         /// <summary>
         /// Album
