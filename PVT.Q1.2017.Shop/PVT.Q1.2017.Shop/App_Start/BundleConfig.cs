@@ -32,7 +32,7 @@
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.css", "~/Content/site.css"));
 
             bundles.Add(
-                new StyleBundle("~/Content/cssTracks").Include(
+                new StyleBundle("~/bundles/cssTracks").Include(
                     "~/Content/tracks.css",
                     "~/Content/ratingStars.css",
                     "~/Content/font-awesome.min.css"));
