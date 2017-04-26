@@ -3,7 +3,7 @@ namespace Shop.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddedNewRelationshipsBtwTracksAlbumsAndUserData : DbMigration
+    public partial class AddNewRelationshipsBtwTrackAlbumsAndUserData : DbMigration
     {
         public override void Up()
         {

@@ -7,13 +7,13 @@ namespace Shop.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedNewRelationshipsBtwTracksAlbumsAndUserData : IMigrationMetadata
+    public sealed partial class AddNewRelationshipsBtwTrackAlbumsAndUserData : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedNewRelationshipsBtwTracksAlbumsAndUserData));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddNewRelationshipsBtwTrackAlbumsAndUserData));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704242001588_AddedNewRelationshipsBtwTracksAlbumsAndUserData"; }
+            get { return "201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData"; }
         }
         
         string IMigrationMetadata.Source
