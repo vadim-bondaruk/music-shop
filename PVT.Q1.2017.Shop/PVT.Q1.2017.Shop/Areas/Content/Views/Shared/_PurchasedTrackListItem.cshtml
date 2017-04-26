@@ -3,14 +3,18 @@
 <li class="list-group-item">
     <div class="left">
         <img class="img-thumbnail" src="data:image;base64,@Convert.ToBase64String(Model.Image)" onerror="src = '/img/defuserpic.png'"/>
-        <div class="details">
-            <div>
+        <div class="details col-md-10">
+            <div class="track-header col-md-6">
                 <a class="track-name" href="@Url.Action("Details", "Tracks", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Name)</a>
                 <a class="artist-name" href="@Url.Action("Details", "Artists", new { area = "Content", id = Model.Id })">@Html.DisplayFor(i => Model.Artist.Name)</a>
+                <div class="btn-play">
+                    <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new {area = "Content", id = Model.Id, sampleOnly = true })', @Model.Id);">
+                        <i class="btn-prev fa fa-play" style="font-size: 16px; opacity: 0.4"></i>
+                    </a>
+                </div>
             </div>
-            <div>
+            <div class="rating-stars col-md-2">
                 @Html.Partial("_Rating", Model.Rating)
-                @Html.Partial("Audio/AudioSection", Url.Action("GetTrackAsStream", "Tracks", new { area = "Content", id = Model.Id }))
             </div>
         </div>
     </div>
