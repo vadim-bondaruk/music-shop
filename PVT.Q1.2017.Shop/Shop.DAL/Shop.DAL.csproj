@@ -157,6 +157,10 @@
     <Compile Include="Migrations\201704251751455_SomeChanges_1.Designer.cs">
       <DependentUpon>201704251751455_SomeChanges_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.cs" />
+    <Compile Include="Migrations\201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.Designer.cs">
+      <DependentUpon>201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -180,7 +184,6 @@
     <Compile Include="Repositories\AlbumRepository.cs" />
     <Compile Include="Repositories\AlbumTrackRelationRepository.cs" />
     <Compile Include="Repositories\BaseAddressRepository.cs" />
-    <Compile Include="Repositories\CartRepository.cs" />
     <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\CurrencyRateRepository.cs" />
     <Compile Include="Repositories\AlbumPriceRepository.cs" />
@@ -197,7 +200,6 @@
     <Compile Include="Infrastruture\IPriceLevelRepository.cs" />
     <Compile Include="Infrastruture\IRepositoryFactory.cs" />
     <Compile Include="Infrastruture\IUserDataRepository.cs" />
-    <Compile Include="Infrastruture\ICartRepository.cs" />
     <Compile Include="Repositories\OrderAlbumRepository.cs" />
     <Compile Include="Repositories\OrderTrackRepository.cs" />
     <Compile Include="Repositories\PaymentCardRepository.cs" />
@@ -297,14 +299,17 @@
     <EmbeddedResource Include="Migrations\201704251751455_SomeChanges_1.resx">
       <DependentUpon>201704251751455_SomeChanges_1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.resx">
+      <DependentUpon>201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
   -->
 </Project>

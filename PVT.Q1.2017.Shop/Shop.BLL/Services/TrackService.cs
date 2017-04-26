@@ -433,7 +433,7 @@
                 using (var repository = Factory.GetOrderTrackRepository())
                 {
                     trackViewModel.IsOrdered =
-                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
+                            repository.Exist(o => o.UserId == userId && o.TrackId == trackViewModel.Id);
                 }
 
                 using (var repository = Factory.GetPurchasedTrackRepository())

@@ -38,9 +38,6 @@
             Bind<IFeedbackRepository>()
                 .To<FeedbackRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetFeedbackRepository());
-            Bind<ICartRepository>()
-                .To<CartRepository>()
-                .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetCartRepository());
             Bind<IVoteRepository>()
                 .To<VoteRepository>()
                 .NamedLikeFactoryMethod((IRepositoryFactory f) => f.GetVoteRepository());

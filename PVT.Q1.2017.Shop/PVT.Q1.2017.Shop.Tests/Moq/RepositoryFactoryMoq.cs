@@ -17,7 +17,6 @@
         private readonly TrackPriceRepositoryMoq _trackPriceRepositoryMoq = new TrackPriceRepositoryMoq();
         private readonly UserDataRepositoryMoq _userDataRepositoryMoq = new UserDataRepositoryMoq();
         private readonly VoteRepositoryMoq _voteRepositoryMoq = new VoteRepositoryMoq();
-        private readonly CartRepositoryMoq _cartRepositoryMoq = new CartRepositoryMoq();
         private readonly AlbumTrackRelationRepositoryMoq _albumTrackRelationRepositoryMoq = new AlbumTrackRelationRepositoryMoq();
         private readonly UserRepositoryMoq _userRepositoryMoq = new UserRepositoryMoq();
         private readonly SettingRepositoryMoq _settingRepositoryMoq = new SettingRepositoryMoq();
@@ -102,11 +101,6 @@
         public IPaymentTransactionRepository GetPaymentTransactionRepository()
         {
             return _paymentTransactionRepositoryMoq.Repository;
-        }
-
-        public ICartRepository GetCartRepository()
-        {
-            return _cartRepositoryMoq.Repository;
         }
 
         public IUserRepository GetUserRepository()

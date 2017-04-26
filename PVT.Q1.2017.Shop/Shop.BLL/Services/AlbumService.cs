@@ -79,7 +79,7 @@
                 using (var repository = Factory.GetOrderAlbumRepository())
                 {
                     albumViewModel.IsOrdered =
-                            repository.Exist(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id);
+                            repository.Exist(o => o.UserId == userId && o.AlbumId == albumViewModel.Id);
                 }
 
                 using (var repository = Factory.GetPurchasedAlbumRepository())
