@@ -1,14 +1,16 @@
 ﻿namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using System.Web;
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
     using Helpers;
     using Infrastructure;
+    using Shop.Infrastructure.Enums;
     using Shop.Infrastructure.Models;
 
     /// <summary>
@@ -290,7 +292,9 @@
             using (var repository = Factory.GetPurchasedTrackRepository())
             {
                 var purchasedTracks = await repository.GetAllAsync(
-                                                          p => p.UserId == userId, p => p.Track, p => p.Track.Artist,
+                                                          p => p.UserId == userId,
+                                                          p => p.Track,
+                                                          p => p.Track.Artist,
                                                           p => p.Track.Genre)
                                                       .ConfigureAwait(false);
                 tracks = purchasedTracks.Select(p => p.Track).ToList();
@@ -364,6 +368,111 @@
             }
 
             return trackViewModel;
+        }
+
+        /// <summary>
+        /// Tries to get track by the specified id to listen by the specified user.
+        /// </summary>
+        /// <param name="id">
+        /// The track id.
+        /// </param>
+        /// <param name="userRole">
+        /// The user role.
+        /// </param>
+        /// <param name="userProfileId">
+        /// The user profile id.
+        /// </param>
+        /// <returns>
+        /// A track to listen by the specified user if there are enough rights for user or a track was purchased;
+        /// otherwise trimmed version is returned or <b>null</b> in case if a track doesn't exist.
+        /// </returns>
+        public MemoryStream GetTrackAsStream(int id, UserRoles userRole, int userProfileId)
+        {
+            if (id <= 0)
+            {
+                return null;
+            }
+
+            MemoryStream stream;
+            if (userRole == UserRoles.Admin)
+            {
+                stream = GetTrackStreamForAdmin(id);
+            }
+            else if (userRole == UserRoles.Seller)
+            {
+                stream = GetTrackStreamForSeller(id, userProfileId);
+            }
+            else
+            {
+                stream = GetTrackStreamForBuyer(id, userProfileId);
+            }
+
+            return stream;
+        }
+
+        private MemoryStream GetTrackStreamForAdmin(int trackId)
+        {
+            // мы можем дать скачать и послушать все треки админу
+            Track track;
+            using (var repository = Factory.GetTrackRepository())
+            {
+                track = repository.GetById(trackId, t => t.Artist);
+            }
+
+            if (track != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(track.Name, track.Artist.Name, track.TrackFile);
+            }
+
+            return null;
+        }
+
+        private MemoryStream GetTrackStreamForBuyer(int trackId, int userProfileId)
+        {
+            // мы можем дать скачать и послушать только купленные треки для обычных пользователей
+            var purchasedTrack = GetPurchasedTrack(trackId, userProfileId);
+            if (purchasedTrack != null && purchasedTrack.TrackFile != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(purchasedTrack.Name, purchasedTrack.Artist.Name, purchasedTrack.TrackFile);
+            }
+
+            return GetTrackSampleAsStream(trackId);
+        }
+
+        private MemoryStream GetTrackStreamForSeller(int trackId, int userProfileId)
+        {
+            // мы можем дать скачать и послушать свои треки продавцу
+            Track track;
+            using (var repository = Factory.GetTrackRepository())
+            {
+                track =
+                    repository.FirstOrDefault(
+                                              t => t.Id == trackId && (t.OwnerId == userProfileId || t.OwnerId == null),
+                                              t => t.Artist);
+            }
+
+            if (track != null && track.TrackFile != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(track.Name, track.Artist.Name, track.TrackFile);
+            }
+
+            return GetTrackSampleAsStream(trackId);
+        }
+
+        private MemoryStream GetTrackSampleAsStream(int trackId)
+        {
+            Track track;
+            using (var repository = Factory.GetTrackRepository())
+            {
+                track = repository.FirstOrDefault(t => t.Id == trackId, t => t.Artist);
+            }
+
+            if (track != null && track.TrackFile != null)
+            {
+                return Mp3StreamHelper.GetAudioStream(track.Name, track.Artist.Name, track.TrackFile, true);
+            }
+
+            return null;
         }
 
         private TrackAlbumsListViewModel CreateTrackAlbumsListViewModel(int trackId, int? currencyCode, int? priceLevel = null, int? userId = null)

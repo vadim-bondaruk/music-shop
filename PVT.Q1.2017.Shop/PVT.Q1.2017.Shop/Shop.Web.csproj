@@ -257,7 +257,11 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\tracks.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\1060281.png" />
+    <Content Include="img\20170224_201814.jpg" />
+    <Content Include="img\20170324_190839.jpg" />
     <Content Include="img\back.jpg" />
+    <Content Include="img\cropped.jpg" />
     <Content Include="img\failure.png" />
     <Content Include="Content\ratingStars.png" />
     <Content Include="Content\Site.css" />
@@ -329,6 +333,7 @@
     <Content Include="Areas\Payment\Views\PaymentTransaction\PayResult.cshtml" />
     <Content Include="Areas\Admin\Views\Country\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Country\Edit.cshtml" />
+    <Content Include="Areas\Payment\Views\Cart\_tableStyles.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

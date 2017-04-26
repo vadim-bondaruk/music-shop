@@ -14,16 +14,9 @@
     <title>Корзина</title>
 </head>
 <body>
-    <style type="text/css">
-        TABLE {
-                background: lightgray; /* Цвет фона таблицы */
-                color: black; /* Цвет текста */
-              }
 
-        TD {
-              background: white; /* Цвет фона ячеек */
-           }
-    </style>
+@Html.Partial("_tableStyles")
+
 @if (!Model.IsEmpty)
 {
     if (Model.Tracks.Count > 0)
