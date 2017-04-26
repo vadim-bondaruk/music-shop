@@ -15,13 +15,13 @@
         public UserPersonalValidator()
         {
             RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
-               .WithMessage("Используйте только буквы");
+               .WithMessage("Используйте только буквы и знак подчеркивания");
 
             RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
-                .WithMessage("Используйте только буквы");
+                .WithMessage("Используйте только буквы и знак подчеркивания");
 
             RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-120), DateTime.Today.AddYears(0))
-                .WithMessage("Дата рождения выбрана некорректно");
+                .WithMessage("Дата рождения выбрана некорректно (либо очень почетный возраст))");
 
             RuleFor(u => u.PhoneNumber)
                 .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")

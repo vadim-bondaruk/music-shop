@@ -2367,10 +2367,10 @@
                 context.Set<Country>().AddOrUpdate(
                     new Country[]
                     {
-                        new Country { Name = "Belarus" },
-                        new Country { Name = "Australia" },
-                        new Country { Name = "USA"},
-                        new Country { Name = "England" }
+                        new Country { Name = "Беларусь" },
+                        new Country { Name = "Австралия" },
+                        new Country { Name = "США"},
+                        new Country { Name = "Великобритания" }
                     }
                     );
             }

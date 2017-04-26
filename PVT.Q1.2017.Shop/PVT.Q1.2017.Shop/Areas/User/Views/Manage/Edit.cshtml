@@ -64,7 +64,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control datecontrol" , @type = "text" } })
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control",  @type = "text", @id = "input2", placeholder = "дд мм гг" } })
                 @Html.ValidationMessageFor(model => model.BirthDate, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
@@ -72,7 +72,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CountryId, ViewBag.Countries as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.CountryId, ViewBag.Countries as SelectList, string.Empty, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CountryName, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
@@ -107,6 +107,8 @@
     <script>
         $(document).ready(function () {
             $("#phone").inputmask("+(999 99)999-99-99");
+            $("#input2").inputmask("99.99.9999");
+
         });
     </script>
 }
