@@ -87,11 +87,6 @@
         public DbSet<Genre> Genres { get; set; }
 
         /// <summary>
-        /// Carts
-        /// </summary>
-        public DbSet<Cart> Carts { get; set; }
-
-        /// <summary>
         /// Ordered Tracks
         /// </summary>
         public DbSet<OrderTrack> OrderTracks { get; set; }
