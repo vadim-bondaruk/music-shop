@@ -32,22 +32,6 @@
 
             if (HttpContext.Current != null)
             {
-                var request = HttpContext.Current.Request;
-                if (request.Headers["Range"] != null)
-                {
-                    var range = request.Headers["Range"].Split('=', '-');
-                    startbyte = Convert.ToInt64(range[1]);
-                    if (range.Length > 2 && range[2] != string.Empty)
-                    {
-                        endbyte = Convert.ToInt64(range[2]);
-                    }
-
-                    if (startbyte != 0 || endbyte != fSize - 1 || range.Length > 2 && range[2] == string.Empty)
-                    {
-                        statusCode = 206;
-                    }
-                }
-
                 var response = HttpContext.Current.Response;
                 response.ContentType = "audio/mp3";
                 FillResponse(response, statusCode, trackArtistName, trackName, desSize, startbyte, endbyte, fSize);

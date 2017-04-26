@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
@@ -434,6 +435,60 @@
         }
 
         /// <summary>
+        /// Return all albums that the specified user have bought.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// All albums that the specified user have bought.
+        /// </returns>
+        public async Task<ICollection<PurchasedAlbumViewModel>> GetPurchasedAlbumsAsync(int userId)
+        {
+            ICollection<Album> albums;
+            using (var repository = Factory.GetPurchasedAlbumRepository())
+            {
+                var purchasedAlbums = await repository.GetAllAsync(
+                                                                   p => p.UserId == userId,
+                                                                   p => p.Album,
+                                                                   p => p.Album.Artist)
+                                                      .ConfigureAwait(false);
+                albums = purchasedAlbums.Select(p => p.Album).ToList();
+            }
+
+            // TODO: implement CreatePurchasedAlbumsListAsync method
+            var albumViewModels = CreatePurchasedAlbumsList(albums);
+            return albumViewModels;
+        }
+
+        /// <summary>
+        /// Return all albums that the specified user have bought.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// All albums that the specified user have bought.
+        /// </returns>
+        public PagedResult<PurchasedAlbumViewModel> GetPurchasedAlbums(int page, int pageSize, int userId)
+        {
+            PagedResult<PurchasedAlbum> albums;
+            using (var repository = Factory.GetPurchasedAlbumRepository())
+            {
+                albums = repository.GetAll(page, pageSize, p => p.UserId == userId, p => p.Album, p => p.Album.Artist);
+            }
+
+            var albumViewModels = CreatePurchasedAlbumsList(albums.Items.Select(t => t.Album).ToList());
+            return new PagedResult<PurchasedAlbumViewModel>(albumViewModels, pageSize, page, albums.TotalItemsCount);
+        }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="AlbumTracksListViewModel"/> type.
         /// </summary>
         /// <param name="albumId">
@@ -448,6 +503,27 @@
             {
                 AlbumDetails = GetAlbumDetails(albumId, currencyCode, priceLevel, userId)
             };
+        }
+
+        private ICollection<PurchasedAlbumViewModel> CreatePurchasedAlbumsList(ICollection<Album> albums)
+        {
+            var albumViewModels = new List<PurchasedAlbumViewModel>();
+            using (var repository = Factory.GetAlbumTrackRelationRepository())
+            {
+                foreach (var album in albums)
+                {
+                    var albumViewModel = ModelsMapper.GetPurchasedAlbumViewModel(album);
+                    if (albumViewModel != null)
+                    {
+                        albumViewModel.Tracks = repository.GetAll(r => r.AlbumId == album.Id, r => r.Track, r => r.Track.Artist, r => r.Track.Genre)
+                                                          .Select(r => ModelsMapper.GetPurchasedTrackViewModel(r.Track))
+                                                          .ToList();
+                        albumViewModels.Add(albumViewModel);
+                    }
+                }
+            }
+
+            return albumViewModels;
         }
     }
 }

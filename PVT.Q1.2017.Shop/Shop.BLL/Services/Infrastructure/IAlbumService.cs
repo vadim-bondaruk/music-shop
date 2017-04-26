@@ -1,6 +1,7 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Common.ViewModels;
     using Shop.Infrastructure.Models;
 
@@ -202,5 +203,33 @@
         /// All albums with price specified.
         /// </returns>
         PagedResult<AlbumViewModel> GetAlbumsWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
+
+        /// <summary>
+        /// Return all albums that the specified user have bought.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// All albums that the specified user have bought.
+        /// </returns>
+        Task<ICollection<PurchasedAlbumViewModel>> GetPurchasedAlbumsAsync(int userId);
+
+        /// <summary>
+        /// Return all albums that the specified user have bought.
+        /// </summary>
+        /// <param name="page">
+        /// Page number.
+        /// </param>
+        /// <param name="pageSize">
+        /// The number of the items on the page.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// All albums that the specified user have bought.
+        /// </returns>
+        PagedResult<PurchasedAlbumViewModel> GetPurchasedAlbums(int page, int pageSize, int userId);
     }
 }
