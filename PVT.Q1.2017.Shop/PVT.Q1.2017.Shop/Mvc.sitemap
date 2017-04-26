@@ -8,7 +8,13 @@
     <mvcSiteMapNode title= "Новости муз индустрии" controller="Music" action="Article" area="News" preservedRouteParameters="partialName" />
     <mvcSiteMapNode title="Вход" controller="Account" action="Login" area="User" />
     <mvcSiteMapNode title="Регистрация" controller="Account" action="Register" area="User"/>
+    
+    
     <mvcSiteMapNode title="Корзина"  action="Index" controller="Cart" area="Payment"/>
+    <mvcSiteMapNode title="Заказы"  action="Index" controller="PaymentTransaction" area="Payment">
+    <mvcSiteMapNode title="Детальная информация"  action="Details" controller="PaymentTransaction" area="Payment"/>
+      <mvcSiteMapNode title="Финансовые результаты"  action="PayResult" controller="PaymentTransaction" area="Payment"/>
+  </mvcSiteMapNode>
 
     <mvcSiteMapNode title="Пользователи" controller="Manage" action="UsersEdit" area="User"  >
       <mvcSiteMapNode title="Правка" controller="Manage" action="Edit" area="User" preservedRouteParameters="id" key="user-edit" />
