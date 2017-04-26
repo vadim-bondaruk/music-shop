@@ -344,16 +344,16 @@
 
         public PayResultsViewModel GetPaysForUser(CurrentUser currentUser, int currentUserCurrencyId)
         {
-            PayResultsViewModel pays = null;
-            if (currentUser.IsInRole(UserRoles.Seller.ToString())
+            PayResultsViewModel pays = new PayResultsViewModel() { Payments = new List<PayResultViewModel>() };
+            if (currentUser.IsInRole(UserRoles.Seller))
             {
                 pays = GetSellerPays(currentUser.Id, currentUserCurrencyId);
-            }
+            };
             if (currentUser.IsInRole(UserRoles.Admin))
             {
                 pays = GetAllPays(currentUserCurrencyId);
             }
-            return new PayResultsViewModel() { Payments = new List<PayResultViewModel>() };
+            return pays;
         }
 
         /// <summary>
