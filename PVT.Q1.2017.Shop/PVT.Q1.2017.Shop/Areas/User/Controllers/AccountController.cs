@@ -178,7 +178,7 @@
                                                     "Для завершения регистрации перейдите по ссылке:" +
                                                     "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
                             Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
-                        if (await MailDispatch.SendingMailAsync(userDB.Email, subject, body))
+                        if (await MailDispatch.SendingMailAsync(userDB.Email, subject, body).ConfigureAwait(false))
                         {
                             return RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
                         }
@@ -298,7 +298,7 @@
                     {
                         string subject = "Ваш пароль был изменен";
                         string body = "Новый пароль: " + newPassword;
-                        if (await MailDispatch.SendingMailAsync(usetEmail, subject, body))
+                        if (await MailDispatch.SendingMailAsync(usetEmail, subject, body).ConfigureAwait(false))
                         {
                             return this.RedirectToAction("ForgotPasswordSuccess");
                         }
