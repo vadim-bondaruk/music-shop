@@ -103,7 +103,7 @@
         public async Task<ActionResult> PurchasedList()
         {
             var trackService = ServiceFactory.GetTrackService();
-            var purchasedTracks = await trackService.GetPurchasedTracksAsync(this.CurrentUser.Id);
+            var purchasedTracks = await trackService.GetPurchasedTracksAsync(this.CurrentUser.Id).ConfigureAwait(false);
 
             if (purchasedTracks == null)
             {
@@ -118,13 +118,10 @@
         /// <param name="id">
         /// The id.
         /// </param>
-        /// <param name="sampleOnly">
-        /// The sample only.
-        /// </param>
         /// <returns>
         /// </returns>
-        [ShopAuthorize]
-        public FileStreamResult GetTrackAsStream(int id = 0, bool sampleOnly = false)
+        [ShopAuthorize, OutputCache(NoStore = true, Duration = 0)]
+        public FileStreamResult GetTrackAsStream(int id = 0)
         {
             if (id <= 0)
             {

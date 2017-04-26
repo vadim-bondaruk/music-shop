@@ -30,7 +30,7 @@
                     <div class="details">
                         <div class="details-left col-md-7">
                             <div class="btn-play">
-                                <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = track.Id, sampleOnly = true })', @track.Id);">
+                                <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = track.Id })', @track.Id);">
                                     <i class="btn-prev fa fa-play" style="font-size: 16px; opacity: 0.4"></i>
                                 </a>
                             </div>

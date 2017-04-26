@@ -93,6 +93,7 @@
     <Compile Include="ViewModels\PayResultsViewModel.cs" />
     <Compile Include="ViewModels\PayResultViewModel.cs" />
     <Compile Include="ViewModels\PriceViewModel.cs" />
+    <Compile Include="ViewModels\PurchasedAlbumViewModel.cs" />
     <Compile Include="ViewModels\RatingViewModel.cs" />
     <Compile Include="ViewModels\ArtistAlbumsListViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />

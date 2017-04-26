@@ -73,10 +73,10 @@
         /// <summary>
         /// Returns the album price in the specified currency and price level.
         /// </summary>
-        /// <param name="repository">
+        /// <param name="albumPriceRepository">
         /// The repository.
         /// </param>
-        /// <param name="currencyRatesrepository">
+        /// <param name="currencyRatesRepository">
         /// The currency rates repository.
         /// </param>
         /// <param name="albumId">
@@ -92,13 +92,13 @@
         /// The album price in the specified currency and price level or <b>null</b>.
         /// </returns>
         internal static PriceViewModel GetAlbumPrice(
-            IAlbumPriceRepository repository,
-            ICurrencyRateRepository currencyRatesrepository,
+            IAlbumPriceRepository albumPriceRepository,
+            ICurrencyRateRepository currencyRatesRepository,
             int albumId,
             int currencyCode,
             int priceLevelId)
         {
-            var price = repository.FirstOrDefault(
+            var price = albumPriceRepository.FirstOrDefault(
                                           p => p.AlbumId == albumId &&
                                                p.PriceLevelId == priceLevelId &&
                                                p.Currency.Code == currencyCode,
@@ -109,15 +109,15 @@
             // if price is not exist for the specified currency then we'll try to find price in any other currency
             if (price == null)
             {
-                price = repository.FirstOrDefault(
+                price = albumPriceRepository.FirstOrDefault(
                                                   p => p.AlbumId == albumId &&
-                                                       p.PriceLevelId == priceLevelId,
+                                                       p.PriceLevelId == priceLevelId ,
                                                   p => p.Currency);
                 if (price != null)
                 {
                     PriceViewModel targetPrice;
                     if (TryConvertToTargetPrice(
-                                                currencyRatesrepository,
+                                                currencyRatesRepository,
                                                 price.Price,
                                                 price.Currency.Code,
                                                 currencyCode,

@@ -55,6 +55,11 @@
             }
         }
 
+        public UserRoles UserRole
+        {
+            get { return _user.UserRole; }
+        }
+
         public int UserProfileId { get; }
 
         public int PriceLevelId { get; }
