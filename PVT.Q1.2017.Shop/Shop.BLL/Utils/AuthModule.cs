@@ -71,7 +71,7 @@
                     PriceLevelId = userData.PriceLevelId
                 };
                 if(!user.ConfirmedEmail)
-                {
+                { 
                     throw new UserValidationException("Не подтвержден email", "");
                 }
 
@@ -145,11 +145,11 @@
                 {
                     if (useridentity.Contains("@"))
                     {
-                        user = users.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                        user = users.FirstOrDefault(u => u.Email.Equals(useridentity, StringComparison.OrdinalIgnoreCase) && u.IsDeleted != true);
                     }
                     else
                     {
-                        user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase));
+                        user = users.FirstOrDefault(u => u.Login.Equals(useridentity, StringComparison.OrdinalIgnoreCase) && u.IsDeleted != true);
                     }
                 }
             }
