@@ -289,8 +289,6 @@
     <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
     <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
     <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
-    <Content Include="Areas\Payment\Views\Paypal\PaymentWithCreditCard.cshtml" />
-    <Content Include="Areas\Payment\Views\Paypal\Index.cshtml" />
     <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
     <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
@@ -302,7 +300,6 @@
     <Content Include="Areas\Payment\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Payment\Views\PaymentCard\Index.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Success.cshtml" />
     <Content Include="Areas\Payment\Views\Paypal\Failure.cshtml" />
     <Content Include="Areas\Content\Views\Shared\RatingStarsPartialView.cshtml" />
@@ -328,6 +325,10 @@
     <Content Include="Areas\News\Views\Shared\PianoboyRodina.cshtml" />
     <Content Include="Areas\News\Views\Shared\DepecheNewAlbum.cshtml" />
     <Content Include="Areas\Admin\Views\Currency\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Country\Index.cshtml" />
+    <Content Include="Areas\Payment\Views\PaymentTransaction\PayResult.cshtml" />
+    <Content Include="Areas\Admin\Views\Country\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Country\Edit.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -434,6 +435,7 @@
     <Compile Include="App_Start\ShopAuthorizeAttribute.cs" />
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CountryController.cs" />
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Helpers\AdminModelsMapper.cs" />
@@ -465,7 +467,6 @@
     <Compile Include="Areas\News\Controllers\MusicController.cs" />
     <Compile Include="Areas\News\NewsAreaRegistration.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />
-    <Compile Include="Areas\Payment\Controllers\PaymentCardController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentTransactionController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaypalController.cs" />
     <Compile Include="Areas\Payment\Helpers\PaymentMapper.cs" />
@@ -503,8 +504,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
-    <Content Include="Views\AdminTest\UserTest.cshtml" />
-    <Content Include="Views\AdminTest\AdminTest.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
@@ -513,8 +512,6 @@
     <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
-    <Content Include="Views\AdminTest\UserTest.cshtml" />
-    <Content Include="Views\AdminTest\AdminTest.cshtml" />
     <Content Include="Areas\Content\Views\Shared\Audio\PlayerPartial.cshtml" />
     <Content Include="Views\Shared\_Rating.cshtml" />
     <Content Include="Views\Shared\_UserCurrency.cshtml" />
@@ -532,7 +529,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\News\Models\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\User\Models\" />

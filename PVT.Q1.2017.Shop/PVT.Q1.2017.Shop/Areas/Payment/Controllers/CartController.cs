@@ -191,33 +191,18 @@
         /// <summary>
         /// Перемещает товары пользователя в купленные при успешной оплате
         /// </summary>
+        /// <param name="isAccepted"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
         public ActionResult AcceptPayment()
         {
             var isAccepted = false;
             if (Session["IsAccepted"] != null)
             {
                 isAccepted = (bool)Session["IsAccepted"];
-            }
-            
-            if (isAccepted)
-            {
                 Session.Remove("IsAccepted");
-                AcceptPayment(isAccepted);
             }
-            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
-        }
 
-        /// <summary>
-        /// Перемещает товары пользователя в купленные при успешной оплате
-        /// </summary>
-        /// <param name="isAccepted"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult AcceptPayment(bool isAccepted)
-        {
             if (isAccepted)
             {
                 var cartService = ServiceFactory.GetCartService();

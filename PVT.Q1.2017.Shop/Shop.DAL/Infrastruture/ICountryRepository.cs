@@ -1,14 +1,13 @@
-﻿using Shop.Common.Models;
-using Shop.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.DAL.Infrastruture
+﻿namespace Shop.DAL.Infrastruture
 {
+    using Shop.Common.Models;
+    using Shop.Infrastructure.Repositories;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ICountryRepository : IRepository<Country>
     {
+        void MarkAsDeleted(int id);
     }
 }

@@ -42,9 +42,6 @@
             <li>
                 <a href="@Url.Action("List", "Albums", new { area = "Content" })">Альбомы</a>
             </li>
-            <li>
-                <a href="@Url.Action("List", "Genres", new { area = "Content" })">Жанры</a>
-            </li>
         </ul>
     </div>
 </li>
@@ -63,6 +60,9 @@
                 </li>
                 <li>
                     <a href="@Url.Action("UsersEdit","Manage", new {area="User"})">Управление пользователями</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Country", new {area="Admin"})">Редактирование стран</a>
                 </li>
             </ul>
         </div>

@@ -1,28 +1,20 @@
-﻿using System.Web.Mvc;
-using Shop.BLL.Services.Infrastructure;
-using Shop.Common.ViewModels;
-using PVT.Q1._2017.Shop.Controllers;
+﻿
 
 namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
 {
+    using System;
+    using System.Web.Mvc;
     using App_Start;
+    using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.DAL.Infrastruture;
-    
+    using global::Shop.BLL.Services.Infrastructure;
+    using global::Shop.Common.ViewModels;
+
     [ShopAuthorize]
     public class PaypalController : BaseController
     {
         public PaypalController(IRepositoryFactory repositoryFactory, IServiceFactory serviceFactory) : base(repositoryFactory, serviceFactory)
         {
-        }
-
-        /// <summary>
-        /// стартовая страница для демо-методов
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
         }
 
         /// <summary>
@@ -32,8 +24,6 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         [Authorize]
         public RedirectToRouteResult Success()
         {
-            this.Session.Add("IsAccepted", true);
-            // return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
             return RedirectToAction("AcceptTransaction", "PaymentTransaction", new { Area = "Payment" });
         }
 
@@ -46,41 +36,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        [Authorize]
-        public ContentResult PaymentWithCreditCard()
-        {
-            var paymentService = ServiceFactory.GetPaymentService();
-            var viewName = paymentService.CreatePaymentWithCreditCard();
-            return Content(viewName); // View("SuccessView");
-        }
-
-        /// <summary>
-        /// Демо реализация платежей PayPal
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Authorize]
-        public ActionResult PaymentWithPaypalDemo()
-        {
-            var paymentService = ServiceFactory.GetPaymentService();
-            var status = paymentService.PaymentWithPaypalDemo(Request, Session);
-
-            if (status.StartsWith("http"))
-            {
-                return Redirect(status);
-            }
-            if (status == "Success")
-            {
-                return RedirectToAction("Success", "Paypal", new { Area = "Payment"});
-            }
-            else
-            {
-                return RedirectToAction("Failure", "Paypal", new { Area = "Payment" });
-            }
-        }
-
+        
         /// <summary>
         /// Метод вызывает диалог оплаты для пользователя на стороне PayPal
         /// </summary>
@@ -104,7 +60,7 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             {
                 return Redirect(status);
             }
-            if(status == "Success")
+            if(String.Compare(status,"Success", StringComparison.OrdinalIgnoreCase)==0)
             {
                 this.Session.Add("IsAccepted", true);
                 return RedirectToAction("Success", "Paypal", new { Area = "Payment" });
@@ -132,6 +88,10 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Controllers
             }
             else
             {
+                if (String.Compare(status, "Success", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    this.Session.Add("IsAccepted", true);
+                }
                 return RedirectToAction(status, "Paypal", new { Area = "Payment" });
             }
         }
