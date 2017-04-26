@@ -34,8 +34,8 @@
             this.AddDefaultPriceLevels(context);
             this.AddDefaultCountries(context);
 #if DEBUG
-            AddDefaultArtistsAndTracks(context);
             AddDefaultUsers(context);
+            AddDefaultArtistsAndTracks(context);
             AddDefaultPurchasedTracks(context);
 #endif
         }
@@ -371,11 +371,11 @@
             {
                 context.Set<Track>()
                     .AddOrUpdate(
-                        new Track { ArtistId = 1, Name = "Море", GenreId = 10 },
-                        new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 10 },
-                        new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 10 },
-                        new Track { Name = "Just be", ArtistId = 5, GenreId = 24 },
-                        new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24 },
+                        new Track { ArtistId = 1, Name = "Море", GenreId = 10, OwnerId = 104 },
+                        new Track { ArtistId = 1, Name = "Крыша дома твоего", GenreId = 10, OwnerId = 104 },
+                        new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Just be", ArtistId = 5, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24, OwnerId = 104 },
                         new Track { Name = "Traffic", ArtistId = 5, GenreId = 24 },
                         new Track { Name = "Fligth 643", ArtistId = 5, GenreId = 24 },
                         new Track { Name = "Dance for life", ArtistId = 5, GenreId = 24 },
@@ -2333,22 +2333,30 @@
 
         private void AddDefaultPurchasedTracks(ShopContext context)
         {
-            if (!context.Set<PurchasedTrack>().Any())
+            if (!context.Set<PaymentTransaction>().Any())
             {
-                var userData =
-                    context.Set<UserData>()
-                        .FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.CurrentCultureIgnoreCase));
-
-                if (userData != null)
+                var userData = context.Set<UserData>().FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.OrdinalIgnoreCase));
+                var tracks = context.Set<Track>().OrderBy(t => t.Id).Skip(5).Take(5).ToList();
+                var paymentTransaction = new PaymentTransaction()
                 {
-                    var userDataId = userData.Id;
-                    var tracks = context.Set<Track>().OrderBy(t => t.Id).Skip(5).Take(5).ToList();
-                    var purchasedTracks =
-                        tracks.Select(t => new PurchasedTrack { TrackId = t.Id, UserId = userDataId }).ToArray();
-
-                    context.Set<PurchasedTrack>().AddOrUpdate(purchasedTracks);
-                    context.SaveChanges();
-                }
+                    CurrencyId = userData.UserCurrency.Id,
+                    UserId = userData.UserId,
+                    Date = DateTime.Now,
+                    Amount = 11,
+                    PurchasedTrack =
+                    tracks.Select(t => new PurchasedTrack
+                        {
+                        TrackId = t.Id,
+                        UserId = userData.UserId,
+                        //CurrencyId = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().CurrencyId : 1,
+                        //Price = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().Price : 1
+                        CurrencyId = 1,
+                        Price = (decimal) 1.99
+                    }
+                    ).ToArray()
+                };
+                context.Set<PaymentTransaction>().AddOrUpdate(paymentTransaction);
+                context.SaveChanges();
             }
         }
 
@@ -2360,7 +2368,7 @@
                     new Country[]
                     {
                         new Country { Name = "Belarus" },
-                        new Country {Name = "Australia" },
+                        new Country { Name = "Australia" },
                         new Country { Name = "USA"},
                         new Country { Name = "England" }
                     }

@@ -105,7 +105,6 @@
     <Compile Include="AdminCurrencyControllerTests.cs" />
     <Compile Include="ArtistServiceTest.cs" />
     <Compile Include="AlbumServiceTest.cs" />
-    <Compile Include="CartControllerTests.cs" />
     <Compile Include="CartServiceTest.cs" />
     <Compile Include="CurrencyServiceTest.cs" />
     <Compile Include="ModelsMapperTest.cs" />
@@ -113,7 +112,6 @@
     <Compile Include="Moq\AlbumRepositoryMoq.cs" />
     <Compile Include="Moq\AlbumTrackRelationRepositoryMoq.cs" />
     <Compile Include="Moq\ArtistRepositoryMoq.cs" />
-    <Compile Include="Moq\CartRepositoryMoq.cs" />
     <Compile Include="Moq\CurrencyRateRepositorMoq.cs" />
     <Compile Include="Moq\CurrencyRepositoryMoq.cs" />
     <Compile Include="Moq\FeedbackRepositoryMoq.cs" />
