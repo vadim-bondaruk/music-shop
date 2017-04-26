@@ -734,15 +734,3 @@ li > input { width: 100% }
 #audio-hidden { width: 500px }
 
 .copyright { display: none; }
-
-.purchased-tracklist li {
-    padding-left: 5px !important;
-}
-
-.purchased-tracklist .track-header {
-    margin-top: 18px;
-}
-
-.purchased-tracklist .rating-stars {
-    margin-top: 17px;
-}
