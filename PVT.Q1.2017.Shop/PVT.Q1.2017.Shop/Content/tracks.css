@@ -305,7 +305,6 @@ li > input { width: 100% }
 
 .albums-list > ul > li img {
     float: left;
-    /*margin: 15px 15px 90px 15px;*/
     max-width: 100px;
     max-height: 100px;
     overflow: auto;
@@ -365,7 +364,7 @@ li > input { width: 100% }
 .albums-list .btn-align {
     vertical-align: top;
     text-align: right;
-    margin: 5px 0 0 60px;
+    margin: 20px 0 0 60px;
 }
 
 .albums-list .btn-align i {
