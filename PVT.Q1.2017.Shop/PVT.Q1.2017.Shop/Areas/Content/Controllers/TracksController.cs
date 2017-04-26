@@ -128,76 +128,20 @@
                 return null;
             }
 
-            MemoryStream stream = null;
+            var trackService = ServiceFactory.GetTrackService();
+            var trackContainer = trackService.GetTrackContainer(id, this.CurrentUser.UserRole, this.CurrentUser.UserProfileId);
 
-            var fileName = "unknown";
-            if (CurrentUser.IsInRole(UserRoles.Admin))
+            if (trackContainer?.AudioStream == null || trackContainer.FileName == null)
             {
-                // мы можем дать скачать и послушать все треки админу
-                Track track;
-                using (var repository = RepositoryFactory.GetTrackRepository())
-                {
-                    track = repository.GetById(id, t => t.Artist);
-                    fileName = track.FileName;
-                }
-
-                if (track != null)
-                {
-                    stream = Mp3StreamHelper.GetAudioStream(
-                        this.Response,
-                        this.Request,
-                        track.Name,
-                        track.Artist.Name,
-                        track.TrackFile);
-                }
-            }
-            else if (CurrentUser.IsInRole(UserRoles.Seller))
-            {
-                // мы можем дать скачать и послушать свои треки продавцу
-                Track track;
-                using (var repository = RepositoryFactory.GetTrackRepository())
-                {
-                    track =
-                        repository.FirstOrDefault(
-                            t => t.Id == id && (t.OwnerId == CurrentUser.UserProfileId || t.OwnerId == null),
-                            t => t.Artist);
-                }
-
-                if (track != null)
-                {
-                    stream = Mp3StreamHelper.GetAudioStream(
-                        this.Response,
-                        this.Request,
-                        track.Name,
-                        track.Artist.Name,
-                        track.TrackFile,
-                        sampleOnly);
-                }
-            }
-            else
-            {
-                var trackService = ServiceFactory.GetTrackService();
-
-                // мы можем дать скачать и послушать только купленные треки для обычных пользователей
-                var purchasedTrack = trackService.GetPurchasedTrack(id, CurrentUser.UserProfileId);
-                if (purchasedTrack != null)
-                {
-                    stream = Mp3StreamHelper.GetAudioStream(
-                        this.Response,
-                        this.Request,
-                        purchasedTrack.Name,
-                        purchasedTrack.Artist.Name,
-                        purchasedTrack.TrackFile);
-                    fileName = purchasedTrack.FileName;
-                }
+                return null;
             }
 
-            return stream == null
-                       ? null
-                       : new FileStreamResult(stream, this.Response.ContentType)
-                             {
-                                 FileDownloadName = fileName + ".mp3"
-                             };
+            return new FileStreamResult(trackContainer.AudioStream, this.Response.ContentType)
+            {
+                FileDownloadName =
+                               trackContainer
+                                   .FileName
+            };
         }
     }
 }
