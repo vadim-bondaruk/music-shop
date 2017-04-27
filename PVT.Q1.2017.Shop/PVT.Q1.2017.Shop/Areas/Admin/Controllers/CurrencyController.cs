@@ -1,5 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Admin.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Web.Mvc;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -11,6 +13,7 @@
     using Helpers;
     using Management.Helpers;
     using Shop.Controllers;
+    using ViewModels;
 
     /// <summary>
     /// The currency controller for admin
@@ -186,6 +189,79 @@
             }
 
             return View(model);
+        }
+
+        /// <summary>
+        /// Return list or rates
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Rates()
+        {
+            using (var curRepo = RepositoryFactory.GetCurrencyRepository())
+                using (var rateRepo = RepositoryFactory.GetCurrencyRateRepository())
+                {
+                    return View(rateRepo.GetAll().Select(r => new RateViewModel
+                    {
+                        Id = r.Id,
+                        FromId = r.CurrencyId,
+                        ToId = r.TargetCurrencyId,
+                        Date = r.Date,
+                        Value = r.CrossCourse,
+                        From = curRepo.GetAll(),
+                        To = curRepo.GetAll()
+                    }).ToList());
+                }
+        }
+
+        /// <summary>
+        /// Add rate
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult AddRate(RateViewModel rate)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var repo = RepositoryFactory.GetCurrencyRateRepository())
+                {
+                    repo.AddOrUpdate(new CurrencyRate
+                    {
+                        CurrencyId = rate.FromId,
+                        TargetCurrencyId = rate.ToId,
+                        CrossCourse = rate.Value,
+                        Date = rate.Date
+                    });
+                    repo.SaveChanges();
+                    return RedirectToAction("Rates");
+                }
+            }
+
+            using (var repo = RepositoryFactory.GetCurrencyRepository())
+            {
+                rate.From = repo.GetAll();
+                rate.To = repo.GetAll();
+            }
+
+            return View("AddRate", rate);
+        }
+
+        /// <summary>
+        /// Add new rate
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult AddRate()
+        {
+            using (var repo = RepositoryFactory.GetCurrencyRepository())
+            {
+                return View(new RateViewModel
+                {
+                    Date = DateTime.Now.Date,
+                    From = repo.GetAll(),
+                    To = repo.GetAll()
+                });
+            }
         }
     }
 }

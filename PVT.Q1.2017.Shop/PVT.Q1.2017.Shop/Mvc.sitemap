@@ -25,6 +25,8 @@
     <mvcSiteMapNode title="Валюта"  action="Index" controller="Currency" area="Admin" preservedRouteParameters="edit" key="сurr_edit">
       <mvcSiteMapNode title="Новая валюта"  action="Create" controller="Currency" area="Admin"/>
       <mvcSiteMapNode title="Правка"  action="Edit" controller="Currency" area="Admin" preservedRouteParameters="edit,id" key="сurr_id"/>
+      <mvcSiteMapNode title="Новый кросс-курс валют"  action="AddRate" controller="Currency" area="Admin" preservedRouteParameters="new-rate,id" key="сurr_new_rate_id"/>
+      <mvcSiteMapNode title="Кросс-курсы валют"  action="Rates" controller="Currency" area="Admin" preservedRouteParameters="edit-rate,id" key="сurr_rate_id"/>
     </mvcSiteMapNode>  
     
     <mvcSiteMapNode title="Страны"  action="Index" controller="Country" area="Admin" preservedRouteParameters="edit" key="country_edit">

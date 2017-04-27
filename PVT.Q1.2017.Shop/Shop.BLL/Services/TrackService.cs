@@ -1,10 +1,8 @@
 ﻿namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Web;
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;

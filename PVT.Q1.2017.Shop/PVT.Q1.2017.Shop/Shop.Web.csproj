@@ -287,12 +287,6 @@
     <Content Include="Areas\User\Views\Account\Success.cshtml" />
     <Content Include="Areas\User\Views\Account\ForgotPassword.cshtml" />
     <Content Include="Areas\User\Views\Manage\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Currency\EditCurrency.cshtml" />
-    <Content Include="Areas\Management\Views\Currency\All.cshtml" />
-    <Content Include="Areas\Management\Views\Currency\CreateCurrency.cshtml" />
-    <Content Include="Areas\Management\Views\Currency\Rates.cshtml" />
-    <Content Include="Areas\Management\Views\Currency\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Currency\AddRate.cshtml" />
     <Content Include="Areas\User\Views\Manage\UpdatePersonal.cshtml" />
     <Content Include="Areas\User\Views\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Areas\User\Views\Manage\ChangePassword.cshtml" />
@@ -336,6 +330,8 @@
     <Content Include="Areas\Payment\Views\Cart\_tableStyles.cshtml" />
     <Content Include="Areas\Content\Views\Albums\PurchasedList.cshtml" />
     <Content Include="Areas\Content\Views\Shared\_PurchasedAlbumListItem.cshtml" />
+    <Content Include="Areas\Admin\Views\Currency\Rates.cshtml" />
+    <Content Include="Areas\Admin\Views\Currency\AddRate.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -449,6 +445,7 @@
     <Compile Include="Areas\Admin\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Helpers\AdminModelsMapper.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\Content\ContentAreaRegistration.cs" />
     <Compile Include="Areas\Content\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Content\Controllers\ArtistsController.cs" />
@@ -460,7 +457,6 @@
     <Compile Include="Areas\Content\Controllers\FeedbacksController.cs" />
     <Compile Include="Areas\Management\Controllers\AlbumsController.cs" />
     <Compile Include="Areas\Management\Controllers\ArtistsController.cs" />
-    <Compile Include="Areas\Management\Controllers\CurrencyController.cs" />
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
     <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
@@ -474,7 +470,6 @@
     <Compile Include="Areas\Management\ViewModels\ArtistManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\GenreManagementViewModel.cs" />
     <Compile Include="Areas\Management\ViewModels\TrackManagementViewModel.cs" />
-    <Compile Include="Areas\Management\ViewModels\RateViewModel.cs" />
     <Compile Include="Areas\News\Controllers\MusicController.cs" />
     <Compile Include="Areas\News\NewsAreaRegistration.cs" />
     <Compile Include="Areas\Payment\Controllers\CartController.cs" />

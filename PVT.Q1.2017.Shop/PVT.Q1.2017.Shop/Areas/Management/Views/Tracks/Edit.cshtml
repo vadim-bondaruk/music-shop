@@ -12,8 +12,21 @@
 
     <div class="track-edit col-md-12">
         <div class="left col-md-3">
-            <img class="img-thumbnail col-md-12" id="details-img" onclick="document.formedit.PostedImage.click()"
-                 onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)"/>
+            @{
+                if (Model.Image != null)
+                {
+                    <img class="img-thumbnail col-md-12" id="details-img" onclick="document.formedit.PostedImage.click()"
+                         onerror="this.src = '/img/defuserpic.png'" src="data:image;base64,@Convert.ToBase64String(Model.Image)" />
+                }
+                else
+                {
+                    {
+                        <img class="img-thumbnail col-md-12" id="details-img" onclick="document.formedit.PostedImage.click()"
+                             onerror="this.src = '/img/defuserpic.png'" src="data:image;base64" />
+                    }
+                }
+            }
+            
         </div>
 
         <div class="right col-md-9">
@@ -39,7 +52,7 @@
                 <li class="list-group-item">
                     @Html.DisplayNameFor(m => m.GenreId)
                     @Html.DropDownListFor(model => model.GenreId, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Price)
+                    @Html.ValidationMessageFor(model => model.GenreId)
                 </li>
 
                 <li class="list-group-item">

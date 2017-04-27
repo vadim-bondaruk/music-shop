@@ -178,4 +178,9 @@ footer p {
     color: white !important;
 }
 
+.add-rate-container {
+    background: #fff;
+    border-radius: 15px;
+    opacity: 0.9;
+}
 .datecontrol { /* please do not remove this style;it is used for editing dates */ }
