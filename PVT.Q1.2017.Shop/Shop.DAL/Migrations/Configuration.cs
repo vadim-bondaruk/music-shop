@@ -264,7 +264,7 @@
             if (!context.Set<CurrencyRate>().Any())
             {
                 context.Set<CurrencyRate>()
-                    .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 1.2M });
+                    .AddOrUpdate(new CurrencyRate { CurrencyId = 2, TargetCurrencyId = 1, CrossCourse = 1.2M });
 
                 context.Set<CurrencyRate>()
                     .AddOrUpdate(new CurrencyRate { CurrencyId = 1, TargetCurrencyId = 2, CrossCourse = 0.9M });
