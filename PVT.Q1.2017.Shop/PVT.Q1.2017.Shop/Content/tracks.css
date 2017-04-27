@@ -665,7 +665,6 @@ li > input { width: 100% }
 .track-details .albums-list .edit-btn {
     position: absolute;
     height: 24px;
-    top: 10px;
     right: 10px;
 }
 
@@ -708,6 +707,8 @@ li > input { width: 100% }
     margin: 14px 15px !important;
     height: 18px
 }
+
+.album-details .tracks-list .btn-edit { margin: 0px 15px !important; }
 
 .tracks-list .details-left { margin-top: 20px; }
 

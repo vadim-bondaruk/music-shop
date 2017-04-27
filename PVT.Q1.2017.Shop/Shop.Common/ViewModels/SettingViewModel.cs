@@ -20,7 +20,7 @@ namespace Shop.Common.ViewModels
         /// <summary>
         /// For drop down list
         /// </summary>
-        [Display(Name = "Валюты")]
+        [Display(Name = "Валюта по умолчанию")]
         public ICollection<CurrencyViewModel> DefaultCurrencyViewModelList { get; set; }
     }
 }
