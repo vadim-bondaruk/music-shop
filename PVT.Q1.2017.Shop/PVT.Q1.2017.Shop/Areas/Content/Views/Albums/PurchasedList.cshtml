@@ -1,13 +1,13 @@
-﻿@model ICollection<Shop.Common.ViewModels.PurchasedTrackViewModel>
+﻿@model ICollection<Shop.Common.ViewModels.PurchasedAlbumViewModel>
 
-@{ ViewBag.Title = "Мои Треки"; }
+@{ ViewBag.Title = "Мои Альбомы"; }
 <audio controls controlsList="nodownload" id="audio-hidden" type="audio/mp3" autoplay="autoplay" style="display: none"></audio>
-<div class="purchased-tracklist">
+<div class="purchased-albumlist">
     <div class="tracks-list col-md-12">
         <ul class="list-group">
             @foreach (var item in Model)
             {
-                @Html.Partial("_PurchasedTrackListItem", item)
+                @Html.Partial("_PurchasedAlbumListItem", item)
             }
         </ul>
     </div>
@@ -18,5 +18,5 @@
 @section cssStyles{
     <link href="~/Content/tracks.css" rel="stylesheet" />
     <link href="~/Content/ratingStars.css" rel="stylesheet" />
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet"/>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 }
