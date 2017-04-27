@@ -2252,7 +2252,7 @@
                                         Password = "DCF05BF73C524F3E32C08ACF55BE3EC4170FFED5",
                                         Sex = "Мужской",
                                        CountryId = 1,
-                                        PhoneNumber = "(29) 227 02 83",
+                                        PhoneNumber = "(29) 227 02 83 376",
                                         IsDeleted = false,
                                         UserRole = UserRoles.Customer,
                                         ConfirmedEmail = true
@@ -2266,7 +2266,7 @@
                                         Password = "AA7130C1A9D96562ADE20DC00E38360B1C402975",
                                         Sex = "Мужской",
                                        CountryId = 1,
-                                        PhoneNumber = "(29) 227 02 83",
+                                        PhoneNumber = "(29) 227 02 83 376",
                                         IsDeleted = false,
                                         UserRole = UserRoles.Admin,
                                         ConfirmedEmail = true
