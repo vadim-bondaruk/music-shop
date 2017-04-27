@@ -9,6 +9,7 @@
     using Common.ViewModels;
     using Common.Models;
     using Shop.Infrastructure.Models;
+    using Utils;
 
     /// <summary>
     /// The payment service interface
@@ -20,12 +21,10 @@
         
         void CreatePaymentTransaction(CartViewModel cart);
 
-        IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID);
+        IEnumerable<PaymentTransaction> GetTransactionsByUserId(int? userID);
 
         PagedResult<PaymentTransaction> GetDataPerPage(int? userID, int pageNumber = 1, int count = 10);
 
-        PayResultsViewModel GetSellerPays(int userID, int currencyID);
-
-        PayResultsViewModel GetAllPays(int currencyID);
+        PayResultsViewModel GetPaysForUser(CurrentUser currentUser, int currentUserCurrencyId);
     }
 }

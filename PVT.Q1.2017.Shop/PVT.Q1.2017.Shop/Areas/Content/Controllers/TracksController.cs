@@ -129,8 +129,19 @@
             }
 
             var trackService = ServiceFactory.GetTrackService();
-            var stream = trackService.GetTrackAsStream(id, CurrentUser.UserRole, CurrentUser.UserProfileId);
-            return stream == null ? null : new FileStreamResult(stream, this.Response.ContentType);
+            var trackContainer = trackService.GetTrackContainer(id, this.CurrentUser.UserRole, this.CurrentUser.UserProfileId);
+
+            if (trackContainer?.AudioStream == null || trackContainer.FileName == null)
+            {
+                return null;
+            }
+
+            return new FileStreamResult(trackContainer.AudioStream, this.Response.ContentType)
+            {
+                FileDownloadName =
+                               trackContainer
+                                   .FileName
+            };
         }
     }
 }

@@ -113,6 +113,16 @@ body {
     width: 500px;
 }
 
+.album-new .buttons{margin-top: 10px;}
+
+.album-new .field-validation-error {
+    float: left;
+}
+
+.album-new li {
+    height: 70px;
+}
+
 #artist-img {
     width: 200px;
     height: 200px;
@@ -158,23 +168,25 @@ img {
     max-width: 700px;
     min-width: 700px;
 }
+
+.artist-new .buttons { height: 34px;position: absolute;bottom: 25px;}
+
 .artist-new .inner { display: inline-block; }
 
 .artist-new img { float: left; }
 
-.artist-new .row{ height: 600px !important;}
+.artist-new .row {
+    height: 600px !important;
+    position: relative;
+}
 
 .artist-new ul {
     width: 750px;
     display: inline-block;
     border: none;
-
 }
 
-.artist-new ul textarea {
-    height: 300px;
-    max-height: 300px;
-}
+.artist-new ul textarea { height: 300px; }
 
 .artist-new { text-align: left; }
 
@@ -186,7 +198,7 @@ img {
 
 .artists-list .list-group .list-group-item h3 {
     font-weight: bold;
-    margin-top: -38px;
+    margin-top: -5px;
     font-variant: small-caps;
 }
 
@@ -374,7 +386,7 @@ li > input { width: 100% }
 .albums-list .btn-align {
     vertical-align: top;
     text-align: right;
-    margin: 20px 0 0 60px;
+    margin: 33px 0 0 60px;
 }
 
 .albums-list .btn-align i {
@@ -551,8 +563,9 @@ li > input { width: 100% }
 }
 
 .order-block .buy-btn button,
+.order-block .buy-btn a,
 .buttons .buy-btn button {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100px;
     height: 25px;
     color: black;
@@ -676,9 +689,6 @@ li > input { width: 100% }
     height: 60px;
 }
 
-.tracks-list li a { color: black; }
-    
-
 .tracks-list #audio-hidden { width: 400px }
 
 .tracks-list .track-header {
@@ -694,7 +704,10 @@ li > input { width: 100% }
     margin-top: 4px;
 }
 
-.tracks-list .btn-edit { margin: 20px 15px !important; height: 18px }
+.tracks-list .btn-edit {
+    margin: 14px 15px !important;
+    height: 18px
+}
 
 .tracks-list .details-left { margin-top: 20px; }
 
@@ -727,6 +740,7 @@ li > input { width: 100% }
 .buttons {
     width: 100%;
     text-align: center !important;
+    
 }
 
 #preview-btn { cursor: pointer; }
@@ -734,3 +748,7 @@ li > input { width: 100% }
 #audio-hidden { width: 500px }
 
 .copyright { display: none; }
+
+.anonimus-price { margin-top: 18px; }
+
+.artist-tracks-count, .artist-albums-count { display: inline-block; }

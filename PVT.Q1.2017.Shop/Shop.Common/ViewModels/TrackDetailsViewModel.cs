@@ -3,6 +3,8 @@
     using System;
     using System.ComponentModel;
 
+    using Shop.Common.Validators.Infrastructure;
+
     /// <summary>
     /// The track view model.
     /// </summary>

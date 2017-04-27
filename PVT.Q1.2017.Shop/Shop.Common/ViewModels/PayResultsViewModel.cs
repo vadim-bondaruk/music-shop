@@ -19,6 +19,13 @@
         /// <summary>
         /// Total amount in current currency
         /// </summary>
+        [DisplayName("Продажи")]
         public decimal Total { get; set; }
+
+        /// <summary>
+        /// Currency royalties result (90%)
+        /// </summary>
+        [DisplayName("Авт. отчисления")]
+        public decimal Royalties { get; set; }
     }
 }
