@@ -25,14 +25,14 @@
     public class PaymentService : BaseService, IPaymentService
     {
         /// <summary>
-        /// PayPal payment
-        /// </summary>
-        private PayPal.Api.Payment payment;
-
-        /// <summary>
         /// logger
         /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// PayPal payment
+        /// </summary>
+        private PayPal.Api.Payment payment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentService"/> class.
@@ -43,7 +43,6 @@
         public PaymentService(IRepositoryFactory factory) : base(factory)
         {
         }
-               
        
         /// <summary>
         /// Create PayPal payment with PayPal account
@@ -55,6 +54,10 @@
             
             try
             {
+                if (cart == null)
+                {
+                    throw new ArgumentNullException("Cart is null!");
+                }
                 string payerId = request.Params["PayerID"];
 
                 if (string.IsNullOrEmpty(payerId)&&cart.TotalPrice>0)
@@ -127,102 +130,18 @@
 
             return "Success";
         }
-
-        /// <summary>
-        /// Creates PayPal payment 
-        /// </summary>
-        /// <param name="apiContext">PayPal API context</param>
-        /// <param name="redirectUrl">URL for redirecting after cancel of return from PayPal payment page</param>
-        /// <returns></returns>
-        private Payment CreatePayment(APIContext apiContext, string redirectUrl, CartViewModel cart)
-        {
-            
-            //similar to credit card create itemlist and add item objects to it
-            var itemList = new ItemList() { items = new List<Item>() };
-
-            foreach (var track in cart.Tracks)
-            {
-                var item = new Item();
-                item.currency = cart.CurrencyShortName;
-                item.name = track.Name;
-                item.price = track.Price.Amount.ToString().Replace(',','.');
-                item.quantity = "1";
-
-                itemList.items.Add(item);
-            }
-
-            var payer = new Payer()
-            {
-                payment_method = "paypal"                
-            };
-
-            // Configure Redirect Urls here with RedirectUrls object
-            var redirUrls = new RedirectUrls()
-            {
-                cancel_url = redirectUrl,
-                return_url = redirectUrl
-            };
-
-            // similar as we did for credit card, do here and create details object
-            var details = new Details()
-            {
-                tax = "0",
-                shipping = "0",
-                subtotal = cart.TotalPrice.ToString().Replace(',', '.')
-            };
-
-            // similar as we did for credit card, do here and create amount object
-            var amount = new Amount()
-            {
-                currency = cart.CurrencyShortName,
-                total = cart.TotalPrice.ToString().Replace(',','.'), // Total must be equal to sum of shipping, tax and subtotal.
-                details = details
-            };
-
-            var transactionList = new List<Transaction>();
-
-            transactionList.Add(new Transaction()
-            {
-                description = "Transaction description.",
-                invoice_number = (new Random()).Next(1000000).ToString(), // "your invoice number",
-                amount = amount,
-                item_list = itemList
-            });
-
-            payment = new Payment()
-            {
-                intent = "sale",
-                payer = payer,
-                transactions = transactionList,
-                redirect_urls = redirUrls
-            };
-
-            // Create a payment using a APIContext
-            return payment.Create(apiContext);
-        }
-
-        /// <summary>
-        /// Executes payment info by payerId and paymentId
-        /// </summary>
-        /// <param name="apiContext">PayPal API context</param>
-        /// <param name="payerId">Payer id</param>
-        /// <param name="paymentId">Payment id</param>
-        /// /// <param name="cart">cart with tracks</param>
-        /// <returns></returns>
-        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
-        {
-            var paymentExecution = new PaymentExecution() { payer_id = payerId };
-            payment = new Payment() { id = paymentId };
-            return payment.Execute(apiContext, paymentExecution);
-        }
-
+       
         /// <summary>
         /// Creates and saves instance of payment transaction in DB
         /// </summary>
         /// <param name="cart">cart with tracks or albums</param>
         public void CreatePaymentTransaction(CartViewModel cart)
         {
-            ////
+            if (cart == null)
+            {
+                throw new ArgumentNullException("Cart is null!");
+            }
+
             var userID = cart.CurrentUserId;
             UserData user;
             var currencyId = 0;
@@ -271,6 +190,7 @@
                             };
                             purchasedTrackRepository.AddOrUpdate(purchasedTrack);
                         }
+
                         transaction.PurchasedTrack.Add(purchasedTrack);
                     }
                 }
@@ -314,7 +234,7 @@
         public IEnumerable<PaymentTransaction> GetTransactionsByUserId(int? userID)
         {
             IEnumerable<PaymentTransaction> transactions = null;
-            if (userID!=null)
+            if (userID != null)
             {
                 using (var payRepo = Factory.GetPaymentTransactionRepository())
                 {
@@ -369,12 +289,12 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets all finance result for admin user
         /// </summary>
         /// <returns></returns>
         private PayResultsViewModel GetAllPays(int currencyID)
         {
-            using(var payTransRepo = Factory.GetPaymentTransactionRepository())
+            using (var payTransRepo = Factory.GetPaymentTransactionRepository())
             {
                 //var s = payTransRepo.GetAll(a => a.Currency).Sum(z => z.Totals);
                 var s = payTransRepo.GetAll(a => a.Currency)
@@ -383,15 +303,15 @@
                     {
                         Currency = g.Key,
                         Totals = g.Sum(t => t.Totals),
-                        Royalties = g.Sum(t => t.Totals)* (decimal).9,
+                        Royalties = g.Sum(t => t.Totals) * (decimal).9,
                         CurrencyID = g.Key.Id,
                         CrossCourse = Factory.GetCurrencyRateRepository()
-                            .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id)==null? 1:
+                            .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id) == null ? 1 :
                             Factory.GetCurrencyRateRepository()
                             .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id).CrossCourse,
                     }).ToArray();
 
-                if(s!=null)
+                if (s != null)
                 {
                     var result = new PayResultsViewModel()
                     {
@@ -485,6 +405,94 @@
             };
 
             return result;
+        }
+
+        /// <summary>
+        /// Creates PayPal payment 
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="redirectUrl">URL for redirecting after cancel of return from PayPal payment page</param>
+        /// <returns></returns>
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl, CartViewModel cart)
+        {
+
+            //similar to credit card create itemlist and add item objects to it
+            var itemList = new ItemList() { items = new List<Item>() };
+
+            foreach (var track in cart.Tracks)
+            {
+                var item = new Item();
+                item.currency = cart.CurrencyShortName;
+                item.name = track.Name;
+                item.price = track.Price.Amount.ToString().Replace(',', '.');
+                item.quantity = "1";
+
+                itemList.items.Add(item);
+            }
+
+            var payer = new Payer()
+            {
+                payment_method = "paypal"
+            };
+
+            // Configure Redirect Urls here with RedirectUrls object
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirectUrl,
+                return_url = redirectUrl
+            };
+
+            // similar as we did for credit card, do here and create details object
+            var details = new Details()
+            {
+                tax = "0",
+                shipping = "0",
+                subtotal = cart.TotalPrice.ToString().Replace(',', '.')
+            };
+
+            // similar as we did for credit card, do here and create amount object
+            var amount = new Amount()
+            {
+                currency = cart.CurrencyShortName,
+                total = cart.TotalPrice.ToString().Replace(',', '.'), // Total must be equal to sum of shipping, tax and subtotal.
+                details = details
+            };
+
+            var transactionList = new List<Transaction>();
+
+            transactionList.Add(new Transaction()
+            {
+                description = "Transaction description.",
+                invoice_number = (new Random()).Next(1000000).ToString(), // "your invoice number",
+                amount = amount,
+                item_list = itemList
+            });
+
+            payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls
+            };
+
+            // Create a payment using a APIContext
+            return payment.Create(apiContext);
+        }
+
+        /// <summary>
+        /// Executes payment info by payerId and paymentId
+        /// </summary>
+        /// <param name="apiContext">PayPal API context</param>
+        /// <param name="payerId">Payer id</param>
+        /// <param name="paymentId">Payment id</param>
+        /// /// <param name="cart">cart with tracks</param>
+        /// <returns></returns>
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExecution = new PaymentExecution() { payer_id = payerId };
+            payment = new Payment() { id = paymentId };
+            return payment.Execute(apiContext, paymentExecution);
         }
     }
 }
