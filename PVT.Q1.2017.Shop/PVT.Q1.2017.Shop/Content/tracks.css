@@ -158,22 +158,25 @@ img {
     max-width: 700px;
     min-width: 700px;
 }
+
+.artist-new .buttons { height: 34px;position: absolute;bottom: 25px;}
+
 .artist-new .inner { display: inline-block; }
 
 .artist-new img { float: left; }
 
-.artist-new .row{ height: 600px !important;}
+.artist-new .row {
+    height: 600px !important;
+    position: relative;
+}
 
 .artist-new ul {
     width: 750px;
     display: inline-block;
     border: none;
-
 }
 
-.artist-new ul textarea {
-    height: 300px;
-}
+.artist-new ul textarea { height: 300px; }
 
 .artist-new { text-align: left; }
 
@@ -675,9 +678,6 @@ li > input { width: 100% }
     height: 60px;
 }
 
-.tracks-list li a { color: black; }
-    
-
 .tracks-list #audio-hidden { width: 400px }
 
 .tracks-list .track-header {
@@ -693,7 +693,10 @@ li > input { width: 100% }
     margin-top: 4px;
 }
 
-.tracks-list .btn-edit { margin: 20px 15px !important; height: 18px }
+.tracks-list .btn-edit {
+    margin: 14px 15px !important;
+    height: 18px
+}
 
 .tracks-list .details-left { margin-top: 20px; }
 
@@ -734,10 +737,6 @@ li > input { width: 100% }
 
 .copyright { display: none; }
 
-.anonimus-price {
-    margin-top: 18px;    
-}
+.anonimus-price { margin-top: 18px; }
 
-.artist-tracks-count, .artist-albums-count {
-    display: inline-block;
-}
+.artist-tracks-count, .artist-albums-count { display: inline-block; }
