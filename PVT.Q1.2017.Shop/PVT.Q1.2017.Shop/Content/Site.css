@@ -137,7 +137,7 @@ footer p {
     color: white;
 }
 
-#curr-table, #users-table, .user-reg, .user-edit-center, #country-table {
+#curr-table, #users-table, .user-reg, .user-edit-center, #country-table, .paymens-table {
     background: #fff;
     opacity: 0.9;
     border-radius: 15px;
