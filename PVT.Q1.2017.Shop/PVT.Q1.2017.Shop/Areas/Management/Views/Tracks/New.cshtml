@@ -63,9 +63,9 @@
 
 @section scripts
 {
-    @System.Web.Optimization.Scripts.Render("~/bundles/content-management-scripts")
-    @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+    @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
+    @System.Web.Optimization.Scripts.Render("~/bundles/content-management-scripts")
 
     <script>
         function ClearTrackFile() {
@@ -74,7 +74,7 @@
 
         $(function () {
             convertToPriceTextbox('txtTrackPrice');
-            $("#duration").inputmask("00:00");
+            $("#duration").inputmask("99:99:99");
         });
     </script>
 }
