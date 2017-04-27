@@ -16,6 +16,7 @@
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Name)
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.ArtistName)
@@ -31,15 +32,11 @@
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Duration)
-                @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Продолжительность", type = "text", @class = "form-control" } })
+                @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Продолжительность", type = "text", @class = "form-control", id="duration" } })
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.PostedTrackFile)
                 <input placeholder="Файл" type="text" class="form-control" id="file-path" onclick="document.formreg.PostedTrackFile.click()"/>
-            </li>
-            <li class="list-group-item">
-                @Html.DisplayNameFor(m => m.PostedTrackSample)
-                <input placeholder="Sample" type="file" id="track-sample-file" name="PostedTrackSample" />
             </li>
             
             <li class="list-group-item">
@@ -54,6 +51,16 @@
     <input type="file" id="file" name="PostedImage" style="display: none"/>
     <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
 }
+
+@System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
+
+<script>
+    $(document).ready(function () {
+        $("#duration").inputmask("00:00");
+    });
+</script>
+
+@System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
 
 @section scripts
 {

@@ -47,7 +47,7 @@
 
                 <li class="list-group-item">
                     @Html.DisplayNameFor(m => m.Duration)
-                    @Html.TextBoxFor(m => m.Duration, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Duration, new { @class = "form-control", id= "track-duration" })
                     @Html.ValidationMessageFor(model => model.Duration)
                 </li>
 
@@ -76,8 +76,8 @@
         </div>
     </div>
 
-    <input type="file" id="file" name="PostedImage" style="display: none"/>
-    <input type="file" id="track-file" name="PostedTrackFile" style="display: none"/>
+    <input type="file" id="file" name="PostedImage" accept=".jpg, *.png" style="display: none"/>
+    <input type="file" id="track-file" name="PostedTrackFile" accept=".mp3" style="display: none"/>
 }
 </body>
 
@@ -90,8 +90,14 @@
             $("#file-path").val('');
         }
     </script>
+    
+<script type="text/javascript">
+        $(function () {
+            $(".track-duration").mask("00:00");
+        });
+</script>
 }
-
+<script src="~/Scripts/jquery.inputmask/inputmask.js"></script>
 @section cssStyles
 {
     <link href="~/Content/tracks.css" rel="stylesheet"/>

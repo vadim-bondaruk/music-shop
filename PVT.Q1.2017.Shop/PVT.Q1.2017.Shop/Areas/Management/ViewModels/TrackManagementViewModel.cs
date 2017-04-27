@@ -5,13 +5,12 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
-    using FluentValidation.Attributes;
     using global::Shop.Common.Models;
     using Validators;
 
     /// <summary>
     /// </summary>
-    [Validator(typeof(TrackManagementValidator))]
+    [FluentValidation.Attributes.Validator(typeof(TrackManagementValidator))]
     public class TrackManagementViewModel
     {
         /// <summary>
@@ -22,7 +21,6 @@
         /// <summary>
         /// The artist name.
         /// </summary>
-        [Required]
         [DisplayName("Исполнитель")]
         public string ArtistName { get; set; }
 
@@ -30,14 +28,12 @@
         ///     Gets or sets the duration.
         /// </summary>
         [DisplayName("Продолжительность")]
-        [Required]
         [DataType(DataType.Time)]
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
         /// Gets or sets the file name.
         /// </summary>
-        [Required]
         public string FileName { get; set; }
 
         /// <summary>
@@ -65,7 +61,6 @@
         ///     Gets or sets the name.
         /// </summary>
         [DisplayName("Название")]
-        [Required]
         public string Name { get; set; }
 
         /// <summary>
