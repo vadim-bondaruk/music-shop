@@ -1,4 +1,5 @@
-﻿@model Shop.Common.ViewModels.TrackAlbumsListViewModel
+﻿@using System.Web.Optimization
+@model Shop.Common.ViewModels.TrackAlbumsListViewModel
 @{
     ViewBag.Title = Model.TrackDetails.Name;
 }
@@ -22,7 +23,5 @@
 
 @section cssStyles
 {
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet"/>
-    <link href="~/Content/tracks.css" rel="stylesheet" />
-    <link href="~/Content/ratingStars.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/cssTracks")
 }
