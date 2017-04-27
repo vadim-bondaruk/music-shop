@@ -1,14 +1,10 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
-    using System.IO;
     using System.Threading.Tasks;
     using System.Web.Mvc;
 
     using App_Start;
-
-    using global::Shop.BLL.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
@@ -129,18 +125,16 @@
             }
 
             var trackService = ServiceFactory.GetTrackService();
-            var trackContainer = trackService.GetTrackContainer(id, this.CurrentUser.UserRole, this.CurrentUser.UserProfileId);
+            var trackAudio = trackService.GetTrackAudio(id, this.CurrentUser.UserRole, this.CurrentUser.UserProfileId);
 
-            if (trackContainer?.AudioStream == null || trackContainer.FileName == null)
+            if (trackAudio?.AudioStream == null || trackAudio.FileName == null)
             {
                 return null;
             }
 
-            return new FileStreamResult(trackContainer.AudioStream, this.Response.ContentType)
+            return new FileStreamResult(trackAudio.AudioStream, this.Response.ContentType)
             {
-                FileDownloadName =
-                               trackContainer
-                                   .FileName
+                FileDownloadName = trackAudio.FileName
             };
         }
     }

@@ -38,6 +38,7 @@
             var originalModel = FirstOrDefault(m => m.UserId == model.UserId && m.TrackId == model.TrackId);
             if (originalModel != null)
             {
+                model.Id = originalModel.Id;
                 Update(originalModel, model);
                 this.SetStateChanged();
             }
