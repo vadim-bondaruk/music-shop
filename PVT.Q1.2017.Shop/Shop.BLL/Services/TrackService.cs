@@ -292,7 +292,9 @@
             using (var repository = Factory.GetPurchasedTrackRepository())
             {
                 var purchasedTracks = await repository.GetAllAsync(
-                                                          p => p.UserId == userId, p => p.Track, p => p.Track.Artist,
+                                                          p => p.UserId == userId,
+                                                          p => p.Track,
+                                                          p => p.Track.Artist,
                                                           p => p.Track.Genre)
                                                       .ConfigureAwait(false);
                 tracks = purchasedTracks.Select(p => p.Track).ToList();
