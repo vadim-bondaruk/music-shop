@@ -3,6 +3,7 @@
     using System.Net;
     using System.Web.Mvc;
     using App_Start;
+    using Areas.Management.Helpers;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.DAL.Infrastruture;
 
@@ -19,8 +20,15 @@
             if (CurrentUserCurrency != null)
             {
                 ViewBag.SelectedCurrency = CurrentUserCurrency.Code;
-                var currencyService = ServiceFactory.GetCurrencyService();
-                return PartialView("_UserCurrency", currencyService.GetCurrencies());
+                var currencies = CacheHelper.GetCachedCurrencies();
+                if (currencies == null)
+                {
+                    var currencyService = ServiceFactory.GetCurrencyService();
+                    currencies = currencyService.GetCurrencies();
+                    CacheHelper.CacheCurrencies(currencies);
+                }
+
+                return PartialView("_UserCurrency", currencies);
             }
 
             return PartialView("_UserCurrency");

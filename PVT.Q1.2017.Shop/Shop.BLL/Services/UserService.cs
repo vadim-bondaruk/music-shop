@@ -40,6 +40,9 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity)
         {
+            if (string.IsNullOrEmpty(userIdentity))
+                return false;
+
             using (var userRepository = Factory.GetUserRepository())
             {
                 return userIdentity.Contains("@") ? userRepository.Exist(u => u.Email == userIdentity)
