@@ -308,7 +308,6 @@ li > input { width: 100% }
 }
 
 .albums-list > ul > li > div {
-    display: inline-block;
     margin-left: 10px;
 }
 
@@ -563,7 +562,7 @@ li > input { width: 100% }
 .order-block .buy-btn button,
 .order-block .buy-btn a,
 .buttons .buy-btn button {
-    width: 100px;
+    min-width: 100px;
     height: 35px;
     color: black;
     position: relative;
