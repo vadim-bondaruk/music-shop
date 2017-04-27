@@ -223,6 +223,6 @@
         /// </param>
         /// <returns>
         /// </returns>
-        TrackContainer GetTrackContainer(int id, UserRoles userRole, int userProfileId);
+        TrackAudio GetTrackAudio(int id, UserRoles userRole, int userProfileId);
     }
 }
