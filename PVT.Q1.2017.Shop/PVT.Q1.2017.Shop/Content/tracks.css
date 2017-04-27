@@ -565,7 +565,6 @@ li > input { width: 100% }
 .order-block .buy-btn button,
 .order-block .buy-btn a,
 .buttons .buy-btn button {
-    margin-top: 12px;
     width: 100px;
     height: 25px;
     color: black;
@@ -752,3 +751,11 @@ li > input { width: 100% }
 .anonimus-price { margin-top: 18px; }
 
 .artist-tracks-count, .artist-albums-count { display: inline-block; }
+
+.track-price-btn {
+    margin-top: 12px;
+}
+
+.track-my-btn {
+    margin-top: 12px;
+}

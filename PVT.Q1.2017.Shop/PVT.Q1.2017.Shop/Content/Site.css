@@ -47,8 +47,6 @@ input,
 select,
 textarea { max-width: 280px; }
 
-.btn { margin-bottom: 2px !important; }
-
 #main-cart-icon {
     border: none;
     background: #222;
