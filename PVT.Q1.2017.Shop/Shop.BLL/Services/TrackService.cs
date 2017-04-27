@@ -52,6 +52,11 @@
                 track = repository.GetById(id, t => t.Artist, t => t.Genre);
             }
 
+            if (track == null)
+            {
+                return null;
+            }
+
             return CreateTrackDetailsViewModel(track, currencyCode, priceLevelId, userId);
         }
 
@@ -113,134 +118,6 @@
 
             var trackViewModels = ServiceHelper.ConvertToTrackViewModels(Factory, tracks.Items, currencyCode, priceLevel, userId);
             return new PagedResult<TrackViewModel>(trackViewModels, tracks.PageSize, tracks.CurrentPage, tracks.TotalItemsCount);
-        }
-
-        /// <summary>
-        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All registered tracks with detailed information.
-        /// </returns>
-        public async Task<ICollection<TrackDetailsViewModel>> GetDetailedTracksListAsync(int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            ICollection<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = await repository.GetAllAsync(t => t.Artist, t => t.Genre).ConfigureAwait(false);
-            }
-
-            var detailedList = new List<TrackDetailsViewModel>();
-            foreach (var track in tracks)
-            {
-                // TODO: implement asyn version of the CreateTrackDetailsViewModelAsync
-                detailedList.Add(CreateTrackDetailsViewModel(track, currencyCode, priceLevel, userId));
-            }
-
-            return detailedList;
-        }
-
-        /// <summary>
-        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All registered tracks with detailed information.
-        /// </returns>
-        public PagedResult<TrackDetailsViewModel> GetDetailedTracksList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            PagedResult<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(page, pageSize, t => t.Artist, t => t.Genre);
-            }
-
-            var detailedList = new List<TrackDetailsViewModel>();
-            foreach (var track in tracks.Items)
-            {
-                detailedList.Add(GetTrackDetails(track.Id, currencyCode, priceLevel, userId));
-            }
-
-            return new PagedResult<TrackDetailsViewModel>(detailedList, tracks.PageSize, tracks.CurrentPage, tracks.TotalItemsCount);
-        }
-
-        /// <summary>
-        /// Returns all tracks which don't have price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <returns>
-        /// All tracks without price configured.
-        /// </returns>
-        public PagedResult<TrackViewModel> GetTracksWithoutPrice(int page, int pageSize)
-        {
-            PagedResult<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(page, pageSize, t => !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
-            }
-
-            var trackViewModels = tracks.Items.Select(ModelsMapper.GetTrackViewModel).ToList();
-            return new PagedResult<TrackViewModel>(trackViewModels, pageSize, page, tracks.TotalItemsCount);
-        }
-
-        /// <summary>
-        /// Returns all tracks with price specified using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All tracks with price specified.
-        /// </returns>
-        public PagedResult<TrackViewModel> GetTracksWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            PagedResult<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(page, pageSize, t => t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
-            }
-
-            var tracksViewModels = ServiceHelper.ConvertToTrackViewModels(Factory, tracks.Items, currencyCode, priceLevel, userId);
-            return new PagedResult<TrackViewModel>(tracksViewModels, pageSize, page, tracks.TotalItemsCount);
         }
 
         /// <summary>

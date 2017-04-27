@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Threading.Tasks;
 
     using Common.ViewModels;
@@ -72,83 +71,6 @@
         /// All registered tracks.
         /// </returns>
         PagedResult<TrackViewModel> GetTracks(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
-
-        /// <summary>
-        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All registered tracks with detailed information.
-        /// </returns>
-        Task<ICollection<TrackDetailsViewModel>> GetDetailedTracksListAsync(int? currencyCode = null, int? priceLevel = null, int? userId = null);
-
-        /// <summary>
-        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All registered tracks with detailed information.
-        /// </returns>
-        PagedResult<TrackDetailsViewModel> GetDetailedTracksList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
-
-        /// <summary>
-        /// Returns all tracks which don't have price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <returns>
-        /// All tracks without price configured.
-        /// </returns>
-        PagedResult<TrackViewModel> GetTracksWithoutPrice(int page, int pageSize);
-
-        /// <summary>
-        /// Returns all tracks with price specified using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All tracks with price specified.
-        /// </returns>
-        PagedResult<TrackViewModel> GetTracksWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null);
 
         /// <summary>
         /// Returns all albums which contain the specified track using the specified currency and price level.
