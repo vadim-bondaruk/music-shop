@@ -53,11 +53,14 @@
                     </table>
                 </div>
             }
-            else
+            else if (Model.AlbumDetails.Artist != null)
             {
                 <h4>У данного исполнителя нет доступных треков для добавления</h4>
                 <h4>Сначала добавьте новые треки</h4>
-                <a class="btn btn-primary" id="add-track" aria-label="Left Align" href="@Url.Action("New", "Tracks", new { area = "Management", artistId = Model.AlbumDetails.Artist.Id })"><span class="glyphicon glyphicon-plus"></span> Добавить новый?</a>
+                <a class="btn btn-primary" id="add-track" aria-label="Left Align"
+                href="@Url.Action("New", "Tracks", new { area = "Management", artistId = Model.AlbumDetails.Artist.Id })">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить новый
+                </a>
             }
         </div>
     </div>
