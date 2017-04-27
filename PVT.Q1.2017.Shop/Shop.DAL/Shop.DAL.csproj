@@ -161,6 +161,10 @@
     <Compile Include="Migrations\201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.Designer.cs">
       <DependentUpon>201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704270649182_ChangePaymentTransactionColumns.cs" />
+    <Compile Include="Migrations\201704270649182_ChangePaymentTransactionColumns.Designer.cs">
+      <DependentUpon>201704270649182_ChangePaymentTransactionColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Configurations\AlbumPriceConfiguration.cs" />
     <Compile Include="Migrations\Configurations\AlbumTrackRelationConfiguration.cs" />
@@ -301,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.resx">
       <DependentUpon>201704260715297_AddNewRelationshipsBtwTrackAlbumsAndUserData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704270649182_ChangePaymentTransactionColumns.resx">
+      <DependentUpon>201704270649182_ChangePaymentTransactionColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
