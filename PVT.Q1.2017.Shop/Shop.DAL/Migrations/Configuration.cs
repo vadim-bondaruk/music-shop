@@ -36,7 +36,7 @@
 #if DEBUG
             AddDefaultUsers(context);
             AddDefaultArtistsAndTracks(context);
-            AddDefaultPurchasedTracks(context);
+            AddDefaultPurchasedItems(context);
 #endif
         }
 
@@ -2331,29 +2331,37 @@
             }
         }
 
-        private void AddDefaultPurchasedTracks(ShopContext context)
+        private void AddDefaultPurchasedItems(ShopContext context)
         {
             if (!context.Set<PaymentTransaction>().Any())
             {
                 var userData = context.Set<UserData>().FirstOrDefault(u => u.User.Login.Equals("buyer", StringComparison.OrdinalIgnoreCase));
                 var tracks = context.Set<Track>().OrderBy(t => t.Id).Skip(5).Take(5).ToList();
+                var albums = context.Set<Album>().Where(a => a.Tracks.Any()).OrderBy(t => t.Id).Take(5).ToList();
                 var paymentTransaction = new PaymentTransaction()
                 {
                     CurrencyId = userData.UserCurrency.Id,
                     UserId = userData.UserId,
                     Date = DateTime.Now,
                     Totals = 11,
-                    PurchasedTrack =
-                    tracks.Select(t => new PurchasedTrack
-                        {
-                        TrackId = t.Id,
-                        UserId = userData.UserId,
-                        //CurrencyId = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().CurrencyId : 1,
-                        //Price = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().Price : 1
-                        CurrencyId = 1,
-                        Price = (decimal) 1.99
-                    }
-                    ).ToArray()
+                    PurchasedTrack = tracks.Select(t => new PurchasedTrack
+                                           {
+                                               TrackId = t.Id,
+                                               UserId = userData.UserId,
+                                               //CurrencyId = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().CurrencyId : 1,
+                                               //Price = t.TrackPrices.FirstOrDefault() != null ? t.TrackPrices.FirstOrDefault().Price : 1
+                                               CurrencyId = 1,
+                                               Price = (decimal) 1.99
+                                           })
+                                           .ToList(),
+                    PurchasedAlbum = albums.Select(a => new PurchasedAlbum
+                                           {
+                                               AlbumId = a.Id,
+                                               UserId = userData.Id,
+                                               CurrencyId = 1,
+                                               Price = 13.97m
+                                           })
+                                           .ToList()
                 };
                 context.Set<PaymentTransaction>().AddOrUpdate(paymentTransaction);
                 context.SaveChanges();

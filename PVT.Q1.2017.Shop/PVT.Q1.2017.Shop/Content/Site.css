@@ -47,8 +47,6 @@ input,
 select,
 textarea { max-width: 280px; }
 
-.btn { margin-bottom: 2px !important; }
-
 #main-cart-icon {
     border: none;
     background: #222;
@@ -121,7 +119,6 @@ dl dd { padding-left: 5px; }
 
 .empty-cart-message {
     color: white;
-    position: absolute;
     left: 780px;
     top: 450px;
     font-size: 45px;
@@ -132,7 +129,6 @@ footer {
 footer p {
     height: 18px;
     text-shadow: 1px 1px 10px white;
-    mix-blend-mode: difference;
     color: white;
 }
 
@@ -173,6 +169,13 @@ footer p {
 .email-confirmed {
     text-align: left;
     margin-left: 15px;
+}
+
+.user-dropdown-menu:hover {
+    color: white !important;
+}
+.media-menu:hover {
+    color: white !important;
 }
 
 .datecontrol { /* please do not remove this style;it is used for editing dates */ }

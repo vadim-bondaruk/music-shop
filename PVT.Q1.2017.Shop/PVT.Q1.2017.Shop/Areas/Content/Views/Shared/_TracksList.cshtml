@@ -25,12 +25,12 @@
         @foreach (var track in Model)
         {
             <li class="list-group-item" id="item-@track.Id">
-                <div class="left col-md-10">
+                <div class="left col-md-9">
                     <img src="data:image;base64,@Convert.ToBase64String(track.Image)" onerror="src = '/img/defuserpic.png'"/>
                     <div class="details">
                         <div class="details-left col-md-7">
                             <div class="btn-play">
-                                <a id="preview-btn col-md-12" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = track.Id })', @track.Id);">
+                                <a id="preview-btn" onclick="javascript:GetAudioPlayer('@Url.Action("GetTrackAsStream", "Tracks", new { id = track.Id })', @track.Id);">
                                     <i class="btn-prev fa fa-play" style="font-size: 16px; opacity: 0.4"></i>
                                 </a>
                             </div>
@@ -53,7 +53,7 @@
                     {
                         if (isAdmin || (isSeller && (track.OwnerId <= 0m || track.OwnerId == currentUserId)))
                         {
-                            <div class="buttons col-md-12">
+                            <div class="buttons album-details-buttons">
 
                                 <div class="btn-remove">
                                     @if (track.AlbumId > 0m)
@@ -64,8 +64,8 @@
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" value="@track.AlbumId" name="id"/>
                                             <input type="hidden" value="@track.Id" name="trackId"/>
-                                            <a href="javascript:document.forms[0].submit();">
-                                                <i class="fa fa-remove" style="color: red"> Удалить</i>
+                                            <a href="javascript:document.forms[0].submit();" class="btn btn-danger">
+                                              <span class="glyphicon glyphicon-remove"></span>   Удалить
                                             </a>
                                         }
                                     }
@@ -83,13 +83,13 @@
                                 <div class="buy-btn">
                                     @if (track.IsPurchased)
                                     {
-                                        @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Мои треки", 
+                                        @Html.ButtonWithIcon("track-my-btn btn btn-sm btn-default", "glyphicon glyphicon-music", "Мои треки", 
                                                              Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
                                     }
                                     else if (track.Price != null)
                                     {
                                         var price = string.Format("{0}{1}", track.Price.Amount, track.Price.Currency.Symbol ?? track.Price.Currency.ShortName);
-                                        @Html.BtnBuyTrack(track.Id, track.IsOrdered, price)
+                                        @Html.BtnBuyTrack(track.Id, track.IsOrdered, price, "track-price-btn btn btn-sm btn-success")
                                     }
                                 </div>
                             </div>

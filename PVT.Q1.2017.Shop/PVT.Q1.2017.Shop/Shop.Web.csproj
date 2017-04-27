@@ -334,6 +334,8 @@
     <Content Include="Areas\Admin\Views\Country\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Country\Edit.cshtml" />
     <Content Include="Areas\Payment\Views\Cart\_tableStyles.cshtml" />
+    <Content Include="Areas\Content\Views\Albums\PurchasedList.cshtml" />
+    <Content Include="Areas\Content\Views\Shared\_PurchasedAlbumListItem.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
