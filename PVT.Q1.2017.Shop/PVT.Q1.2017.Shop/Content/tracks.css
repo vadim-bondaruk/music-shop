@@ -113,6 +113,16 @@ body {
     width: 500px;
 }
 
+.album-new .buttons{margin-top: 10px;}
+
+.album-new .field-validation-error {
+    float: left;
+}
+
+.album-new li {
+    height: 70px;
+}
+
 #artist-img {
     width: 200px;
     height: 200px;
@@ -729,6 +739,7 @@ li > input { width: 100% }
 .buttons {
     width: 100%;
     text-align: center !important;
+    
 }
 
 #preview-btn { cursor: pointer; }
