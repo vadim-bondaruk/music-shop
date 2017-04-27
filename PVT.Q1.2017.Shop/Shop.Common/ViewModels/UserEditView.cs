@@ -30,7 +30,19 @@ namespace Shop.Common.ViewModels
         /// </summary>
         [Display(Name = "Пароль")]
         public string Password { get; set; }
-                
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Display(Name = "Логин")]
+        public string Login { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Display(Name = "Адрес почты")]
+        public string Email { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
