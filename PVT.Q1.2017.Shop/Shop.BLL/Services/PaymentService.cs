@@ -54,10 +54,6 @@
             
             try
             {
-                if (cart == null)
-                {
-                    throw new ArgumentNullException("Cart is null!");
-                }
                 string payerId = request.Params["PayerID"];
 
                 if (string.IsNullOrEmpty(payerId)&&cart.TotalPrice>0)
