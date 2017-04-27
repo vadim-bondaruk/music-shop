@@ -563,6 +563,7 @@ li > input { width: 100% }
 }
 
 .order-block .buy-btn button,
+.order-block .buy-btn a,
 .buttons .buy-btn button {
     margin-top: 12px;
     width: 100px;

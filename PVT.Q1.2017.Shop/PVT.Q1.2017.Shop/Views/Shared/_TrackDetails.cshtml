@@ -82,7 +82,7 @@
                         {
                             if (Model.IsPurchased)
                             {
-                                @Html.ButtonWithIcon("btn btn-sm btn-success", "glyphicon glyphicon-music", "Прослушать", Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
+                                @Html.ButtonWithIcon("btn btn-sm btn-success", "glyphicon glyphicon-music", "Мои треки", Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
                             }
                             else if (Model.Price != null)
                             {

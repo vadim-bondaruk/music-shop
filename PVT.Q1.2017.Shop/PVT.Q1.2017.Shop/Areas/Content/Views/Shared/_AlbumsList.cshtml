@@ -50,17 +50,20 @@
                         }
                         else if (isBuyer)
                         {
-                            if (album.IsPurchased)
-                            {
-                                @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Прослушать", Url.Action("PurchasedList", "Albums", new { area = "Content" }))
-                            }
-                            else if (album.Price != null)
-                            {
-                                var price = string.Format("{0}{1}", album.Price.Amount, album.Price.Currency.Symbol ?? album.Price.Currency.ShortName);
-                                <div class="order-block">
-                                    <div class="buy-btn">@Html.BtnBuyAlbum(album.Id, album.IsOrdered, price)</div>
+                            <div class="order-block">
+                                <div class="buy-btn">
+                                    @if (album.IsPurchased)
+                                    {
+                                        @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Мои альбомы",
+                                                             Url.Action("PurchasedList", "Albums", new { area = "Content" }))
+                                    }
+                                    else if (album.Price != null)
+                                    {
+                                        var price = string.Format("{0}{1}", album.Price.Amount, album.Price.Currency.Symbol ?? album.Price.Currency.ShortName);
+                                        @Html.BtnBuyAlbum(album.Id, album.IsOrdered, price)
+                                    }
                                 </div>
-                            }
+                            </div>
                         }
                     }
                     else if (album.Price != null)

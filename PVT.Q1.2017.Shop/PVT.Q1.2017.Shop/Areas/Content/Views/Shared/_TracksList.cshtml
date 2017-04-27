@@ -79,15 +79,20 @@
                         }
                         else if (isBuyer)
                         {
-                            if (track.Price != null)
-                            {
-                                var price = string.Format("{0}{1}", track.Price.Amount, track.Price.Currency.Symbol ?? track.Price.Currency.ShortName);
-                                <div class="order-block">
-                                    <div class="buy-btn">
+                            <div class="order-block">
+                                <div class="buy-btn">
+                                    @if (track.IsPurchased)
+                                    {
+                                        @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Мои треки", 
+                                                             Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
+                                    }
+                                    else if (track.Price != null)
+                                    {
+                                        var price = string.Format("{0}{1}", track.Price.Amount, track.Price.Currency.Symbol ?? track.Price.Currency.ShortName);
                                         @Html.BtnBuyTrack(track.Id, track.IsOrdered, price)
-                                    </div>
+                                    }
                                 </div>
-                            }
+                            </div>
                         }
                     }
                     else if (track.Price != null)

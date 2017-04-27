@@ -44,7 +44,7 @@
         {
             var settingService = ServiceFactory.GetSettingService();
             settingService.SaveSettingViewModel(defaultCurrencyId);
-            return Json("Saved", JsonRequestBehavior.AllowGet);
+            return Json("Запись успешно произведена", JsonRequestBehavior.AllowGet);
         }
     }
 }
