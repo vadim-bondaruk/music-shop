@@ -67,10 +67,9 @@
                 FillResponse(response, statusCode, trackArtistName, trackName, desSize, startbyte, endbyte, size);
             }
 
-            return new MemoryStream(audio, (int)startbyte, (int)desSize);
+            return startbyte > 0 && desSize > 0 ? new MemoryStream(audio, (int)startbyte, (int)desSize) : null;
         }
-
-
+        
         /// <summary>
         /// </summary>
         /// <param name="response">
