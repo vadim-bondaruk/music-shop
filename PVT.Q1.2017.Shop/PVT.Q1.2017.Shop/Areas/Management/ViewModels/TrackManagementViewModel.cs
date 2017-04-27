@@ -22,6 +22,7 @@
         /// <summary>
         /// The artist name.
         /// </summary>
+        [Required]
         [DisplayName("Исполнитель")]
         public string ArtistName { get; set; }
 
@@ -29,11 +30,14 @@
         ///     Gets or sets the duration.
         /// </summary>
         [DisplayName("Продолжительность")]
+        [Required]
+        [DataType(DataType.Time)]
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
         /// Gets or sets the file name.
         /// </summary>
+        [Required]
         public string FileName { get; set; }
 
         /// <summary>
@@ -61,6 +65,7 @@
         ///     Gets or sets the name.
         /// </summary>
         [DisplayName("Название")]
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
@@ -73,12 +78,6 @@
         /// </summary>
         [DisplayName("Файл")]
         public HttpPostedFileBase PostedTrackFile { get; set; }
-
-        /// <summary>
-        ///     The track sample.
-        /// </summary>
-        [DisplayName("Sample")]
-        public HttpPostedFileBase PostedTrackSample { get; set; }
 
         /// <summary>
         ///     Gets or sets the price.
@@ -98,10 +97,5 @@
         ///     Gets or sets the track file.
         /// </summary>
         public byte[] TrackFile { get; set; }
-
-        /// <summary>
-        /// The track sample. Optional.
-        /// </summary>
-        public byte[] TrackSample { get; set; }
     }
 }
