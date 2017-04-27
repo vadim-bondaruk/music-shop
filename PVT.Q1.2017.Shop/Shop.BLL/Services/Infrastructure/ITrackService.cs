@@ -5,6 +5,8 @@
     using System.Threading.Tasks;
 
     using Common.ViewModels;
+
+    using Shop.BLL.Helpers;
     using Shop.Infrastructure.Enums;
     using Shop.Infrastructure.Models;
 
@@ -209,10 +211,9 @@
         PurchasedTrackViewModel GetPurchasedTrack(int trackId, int userProfileId);
 
         /// <summary>
-        /// Tries to get track by the specified id to listen by the specified user.
         /// </summary>
         /// <param name="id">
-        /// The track id.
+        /// The id.
         /// </param>
         /// <param name="userRole">
         /// The user role.
@@ -221,9 +222,7 @@
         /// The user profile id.
         /// </param>
         /// <returns>
-        /// A track to listen by the specified user if there are enough rights for user or a track was purchased;
-        /// otherwise trimmed version is returned or <b>null</b> in case if a track doesn't exist.
         /// </returns>
-        MemoryStream GetTrackAsStream(int id, UserRoles userRole, int userProfileId);
+        TrackContainer GetTrackContainer(int id, UserRoles userRole, int userProfileId);
     }
 }

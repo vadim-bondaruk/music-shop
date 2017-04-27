@@ -142,11 +142,6 @@
                     viewModel.Image = currentTrack.Image;
                 }
 
-                if (viewModel.PostedTrackSample == null)
-                {
-                    viewModel.TrackSample = currentTrack.TrackSample;
-                }
-
                 var track = ManagementMapper.GetTrackModel(viewModel);
                 track.OwnerId = currentTrack.OwnerId;
                 using (var repository = this.RepositoryFactory.GetTrackRepository())

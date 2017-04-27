@@ -2342,7 +2342,7 @@
                     CurrencyId = userData.UserCurrency.Id,
                     UserId = userData.UserId,
                     Date = DateTime.Now,
-                    Amount = 11,
+                    Totals = 11,
                     PurchasedTrack =
                     tracks.Select(t => new PurchasedTrack
                         {

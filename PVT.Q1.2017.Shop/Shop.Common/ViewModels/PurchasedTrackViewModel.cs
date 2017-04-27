@@ -57,5 +57,10 @@
         /// The track image. Optional.
         /// </summary>
         public byte[] Image { get; set; }
+
+        /// <summary>
+        /// Gets or sets the track file name.
+        /// </summary>
+        public string FileName { get; set; }
     }
 }

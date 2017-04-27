@@ -16,6 +16,7 @@
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Name)
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.ArtistName)
@@ -31,7 +32,7 @@
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Duration)
-                @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Продолжительность", type = "text", @class = "form-control" } })
+                @Html.EditorFor(m => m.Duration, new { htmlAttributes = new { placeholder = "Продолжительность", type = "text", @class = "form-control", id="duration" } })
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Price)
@@ -63,6 +64,8 @@
 @section scripts
 {
     @System.Web.Optimization.Scripts.Render("~/bundles/content-management-scripts")
+    @System.Web.Optimization.Scripts.Render("~/bundles/inputmask")
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
 
     <script>
         function ClearTrackFile() {
@@ -71,6 +74,7 @@
 
         $(function () {
             convertToPriceTextbox('txtTrackPrice');
+            $("#duration").inputmask("00:00");
         });
     </script>
 }
