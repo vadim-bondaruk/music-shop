@@ -22,6 +22,7 @@
                                 }
                                 <li class="list-group-item">
                                     @Html.EditorFor(m => Model.Name, new { htmlAttributes = new { placeholder = "Название", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m=>m.Name, "", new {@class="text-danger"})
                                 </li>
                                 <li class="list-group-item">
                                     @Html.EditorFor(m => Model.ReleaseDate, new { htmlAttributes = new { id = "datep", placeholder = "Дата релиза", type = "text", @class = "form-control datecontrol" } })
@@ -34,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="file" id="file" name="PostedCover" style="display: none" />
+                <input type="file" id="file" name="PostedCover" accept=".mp3" style="display: none" />
             </div>
             <div class="buttons">
                 <a class="btn btn-primary" href="JavaScript:window.history.back(1)"><span class="glyphicon glyphicon-backward"></span> Назад</a>
