@@ -83,13 +83,13 @@
                                 <div class="buy-btn">
                                     @if (track.IsPurchased)
                                     {
-                                        @Html.ButtonWithIcon("btn btn-sm btn-default", "glyphicon glyphicon-music", "Мои треки", 
+                                        @Html.ButtonWithIcon("track-my-btn btn btn-sm btn-default", "glyphicon glyphicon-music", "Мои треки", 
                                                              Url.Action("PurchasedList", "Tracks", new { area = "Content" }))
                                     }
                                     else if (track.Price != null)
                                     {
                                         var price = string.Format("{0}{1}", track.Price.Amount, track.Price.Currency.Symbol ?? track.Price.Currency.ShortName);
-                                        @Html.BtnBuyTrack(track.Id, track.IsOrdered, price)
+                                        @Html.BtnBuyTrack(track.Id, track.IsOrdered, price, "track-price-btn btn btn-sm btn-success")
                                     }
                                 </div>
                             </div>
