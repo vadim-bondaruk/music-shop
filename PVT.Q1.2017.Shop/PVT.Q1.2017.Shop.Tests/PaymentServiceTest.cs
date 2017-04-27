@@ -30,7 +30,6 @@ namespace PVT.Q1._2017.Shop.Tests
         {
             var result = _paymentService.PaymentWithPaypal(null, null);
             Assert.AreSame("Failure", result);
-
         }
     }
 }
