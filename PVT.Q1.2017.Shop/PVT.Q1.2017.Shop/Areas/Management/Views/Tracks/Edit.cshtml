@@ -39,7 +39,7 @@
                 <li class="list-group-item">
                     @Html.DisplayNameFor(m => m.GenreId)
                     @Html.DropDownListFor(model => model.GenreId, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Price)
+                    @Html.ValidationMessageFor(model => model.GenreId)
                 </li>
 
                 <li class="list-group-item">
