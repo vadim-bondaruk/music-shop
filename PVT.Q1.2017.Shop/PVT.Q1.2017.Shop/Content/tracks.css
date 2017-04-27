@@ -761,3 +761,7 @@ li > input { width: 100% }
 .btn-artist-details-edit {
     margin-right: 20px;
 }
+
+.album-details-buttons {
+    width: 300px;
+}
