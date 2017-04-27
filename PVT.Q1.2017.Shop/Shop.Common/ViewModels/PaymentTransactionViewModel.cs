@@ -15,9 +15,9 @@ namespace Shop.Common.ViewModels
         public int Id { get; set; }
 
         /// <summary>
-        /// Total amount for current transaction
+        /// Totals for current transaction
         /// </summary>
-        public decimal Amount { get; set; }
+        public decimal Totals { get; set; }
 
         /// <summary>
         /// Date and time of transaction creation

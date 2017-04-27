@@ -15,17 +15,18 @@
     <table class="table">
         <tr>
             <th>
-                Валюта
+               Валюта
             </th>
             <th>
                 Сумма в валюте
             </th>
             <th>
+                Авторские отчисления
+            </th>
+            <th>
                 Кросс-курс
             </th>
-            @*<th>
-                Итог
-            </th>*@
+            
             <th></th>
         </tr>
 
@@ -36,14 +37,14 @@
                     @Html.DisplayFor(modelItem => item.Currency.ShortName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
+                    @Html.DisplayFor(modelItem => item.Totals)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Royalties)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CrossCourse)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Amount * item.CrossCourse)
-                </td>*@
                 @*<td>
                         @Html.ActionLink("Подробно", "Details", new { id = item.Id })
                     </td>*@
@@ -63,6 +64,18 @@
         </dd>
 
     </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Royalties) 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Royalties)
+        </dd>
+
+    </dl>
+
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

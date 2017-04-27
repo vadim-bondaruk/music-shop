@@ -14,7 +14,7 @@
             @Html.DropDownListFor(model => model.DefaultCurrencyId, new SelectList(Model.DefaultCurrencyViewModelList, "Id", "FullName"), htmlAttributes: new { @class = "form-control", @style = "width:200px; margin-right: 20px;" })
             @Html.ValidationMessageFor(model => model.DefaultCurrencyId, "", new { @class = "text-danger" })
         </td>
-        <td><input id="btnSave" type="button" value="Сохранить" class="btn btn-default" /></td>
+        <td><input id="btnSave" type="button" value="Сохранить" class="btn btn-primary" /></td>
     </tr>
     <tr><td colspan="3"><label id="ResultMsg"></label></td></tr>
 </table>
