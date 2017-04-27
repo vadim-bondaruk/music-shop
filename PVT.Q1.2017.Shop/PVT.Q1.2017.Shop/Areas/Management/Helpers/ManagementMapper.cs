@@ -202,11 +202,7 @@
                             .ForMember(
                                 dest => dest.Image,
                                 opt =>
-                                    opt.MapFrom(src => src.PostedImage != null ? src.PostedImage.ToBytes() : src.Image))
-                           .ForMember(
-                                      dest => dest.TrackSample,
-                                      opt =>
-                                          opt.MapFrom(src => src.PostedTrackSample != null ? src.PostedTrackSample.ToBytes() : src.TrackSample));
+                                    opt.MapFrom(src => src.PostedImage != null ? src.PostedImage.ToBytes() : src.Image));
 
                         cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>();
 

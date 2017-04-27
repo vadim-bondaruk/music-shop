@@ -77,51 +77,6 @@ namespace PVT.Q1._2017.Shop.Areas.Payment.Helpers
                         .ForMember(dest => dest.CurrencyShortName,
                                     opt => opt.MapFrom(src => src.Currency.ShortName))
                         ;
-
-
-                    //cfg.CreateMap<ArtistViewModel, Artist>();
-
-                    //cfg.CreateMap<ArtistManagementViewModel, Artist>()
-                    //    .ForMember(
-                    //        dest => dest.Photo,
-                    //        opt =>
-                    //            opt.MapFrom(src => src.PostedPhoto != null ? src.PostedPhoto.ToBytes() : src.Photo));
-
-                    //cfg.CreateMap<GenreViewModel, Genre>();
-                    //cfg.CreateMap<GenreDetailsViewModel, GenreManagementViewModel>();
-
-                    //cfg.CreateMap<Track, TrackManagementViewModel>();
-
-                    //cfg.CreateMap<TrackDetailsViewModel, TrackManagementViewModel>()
-                    //    .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.Price.Amount));
-
-                    //cfg.CreateMap<TrackManagementViewModel, Track>()
-                    //    .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                    //    .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                    //    .ForMember(
-                    //        dest => dest.TrackFile,
-                    //        opt =>
-                    //            opt.MapFrom(
-                    //                src =>
-                    //                    src.PostedTrackFile != null ? src.PostedTrackFile.ToBytes() : src.TrackFile))
-                    //    .ForMember(
-                    //        dest => dest.Image,
-                    //        opt =>
-                    //            opt.MapFrom(src => src.PostedImage != null ? src.PostedImage.ToBytes() : src.Image));
-
-                    //cfg.CreateMap<ArtistDetailsViewModel, ArtistManagementViewModel>()
-                    //    .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo));
-
-                    //cfg.CreateMap<Album, AlbumManagementViewModel>();
-
-                    //cfg.CreateMap<AlbumDetailsViewModel, AlbumManagementViewModel>();
-
-                    //cfg.CreateMap<AlbumManagementViewModel, Album>()
-                    //    .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                    //    .ForMember(
-                    //        dest => dest.Cover,
-                    //        opt =>
-                    //            opt.MapFrom(src => src.PostedCover == null ? src.Cover : src.PostedCover.ToBytes()));
                 });
 
             return managementConfiguration.CreateMapper();

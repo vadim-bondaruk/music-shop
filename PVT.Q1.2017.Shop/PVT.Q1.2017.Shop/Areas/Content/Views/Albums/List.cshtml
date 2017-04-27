@@ -1,4 +1,5 @@
-﻿@using PVT.Q1._2017.Shop.Helpers
+﻿@using System.Web.Optimization
+@using PVT.Q1._2017.Shop.Helpers
 @model Shop.Infrastructure.Models.PagedResult<Shop.Common.ViewModels.AlbumViewModel>
 @{
     ViewBag.Title = "Все альбомы";
@@ -11,6 +12,5 @@
 @Html.PageLinks(Model, i => Url.Action("List", "Albums", new { page = i, area = "Content" }))
 
 @section cssStyles{
-    <link href="~/Content/tracks.css" rel="stylesheet"/>
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet"/>
+    @Styles.Render("~/bundles/cssTracks")
 }

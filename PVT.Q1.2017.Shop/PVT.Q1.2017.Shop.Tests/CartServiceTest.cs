@@ -26,9 +26,9 @@ namespace PVT.Q1._2017.Shop.Tests
 		[TestMethod]
 		public void AddCartTest()
 		{
-            using (var repo = _factory.GetCartRepository())
+            using (var repo = _factory.GetUserDataRepository())
 			{
-				repo.AddOrUpdate(new Cart(1) {Id = 1});
+				repo.AddOrUpdate(new UserData() {UserId = 1});
 				repo.SaveChanges();
 
 				Assert.IsTrue(repo.GetAll().Any());
@@ -47,7 +47,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddTrack(1, 1);
             using (var repo = _factory.GetOrderTrackRepository())
             {
-                Assert.IsTrue(repo.Exist(r => r.CartId == 1 && r.TrackId == 1));
+                Assert.IsTrue(repo.Exist(r => r.UserId == 1 && r.TrackId == 1));
             }
         }
 
@@ -66,7 +66,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddTrack(1, trackIds);
             using (var repo = _factory.GetOrderTrackRepository())
             {
-                var result = repo.GetAll(r => r.CartId == 1);
+                var result = repo.GetAll(r => r.UserId == 1);
                 Assert.IsTrue(result.Count == 3);
             }
         }
@@ -83,7 +83,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddAlbum(1, 1);
             using (var repo = _factory.GetOrderAlbumRepository())
             {
-                Assert.IsTrue(repo.Exist(r => r.CartId == 1 && r.AlbumId == 1));
+                Assert.IsTrue(repo.Exist(r => r.UserId == 1 && r.AlbumId == 1));
             }
         }
 
@@ -102,7 +102,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.AddAlbum(1, albumIds);
             using (var repo = _factory.GetOrderAlbumRepository())
             {
-                var result = repo.GetAll(r => r.CartId == 1);
+                var result = repo.GetAll(r => r.UserId == 1);
                 Assert.IsTrue(result.Count == 3);
             }
         }
@@ -114,7 +114,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.RemoveTrack(1, 1);
 	        using (var repo = _factory.GetOrderTrackRepository())
 	        {
-	            Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.TrackId == 1));
+	            Assert.IsFalse(repo.Exist(r => r.UserId == 1 && r.TrackId == 1));
 	        }
 	    }
 
@@ -126,7 +126,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.RemoveTrack(1, trackIds);
 	        using (var repo = _factory.GetOrderTrackRepository())
 	        {
-	            var result = repo.GetAll(r => r.CartId == 1);
+	            var result = repo.GetAll(r => r.UserId == 1);
 	            Assert.IsFalse(result.Any());
 	        }
 	    }
@@ -138,7 +138,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.RemoveAlbum(1, 1);
 	        using (var repo = _factory.GetOrderAlbumRepository())
 	        {
-	            Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.AlbumId == 1));
+	            Assert.IsFalse(repo.Exist(r => r.UserId == 1 && r.AlbumId == 1));
 	        }
 	    }
 
@@ -150,7 +150,7 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.RemoveAlbum(1, albumIds);
 	        using (var repo = _factory.GetOrderAlbumRepository())
 	        {
-	            var result = repo.GetAll(r => r.CartId == 1);
+	            var result = repo.GetAll(r => r.UserId == 1);
                 Assert.IsFalse(result.Any());
 	        }
 	    }
@@ -201,13 +201,13 @@ namespace PVT.Q1._2017.Shop.Tests
             _cartService.RemoveAll(1);
 	        using (var repo = _factory.GetOrderTrackRepository())
 	        {
-	            var result = repo.GetAll(r => r.CartId == 1);
+	            var result = repo.GetAll(r => r.UserId == 1);
 	            Assert.IsFalse(result.Any());
 	        }
 
 	        using (var repo = _factory.GetOrderAlbumRepository())
 	        {
-	            var result = repo.GetAll(r => r.CartId == 1);
+	            var result = repo.GetAll(r => r.UserId == 1);
                 Assert.IsFalse(result.Any());
 	        }
 	    }
@@ -222,13 +222,14 @@ namespace PVT.Q1._2017.Shop.Tests
 	      
 	        using (var repo = _factory.GetOrderTrackRepository())
 	        {
-	            Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.TrackId == 1));
+	            Assert.IsFalse(repo.Exist(r => r.UserId == 1 && r.TrackId == 1));
 	        }
 
 	        using (var repo = _factory.GetOrderAlbumRepository())
 	        {
-                Assert.IsFalse(repo.Exist(r => r.CartId == 1 && r.AlbumId == 1));
+                Assert.IsFalse(repo.Exist(r => r.UserId == 1 && r.AlbumId == 1));
             }
 	    }
     }
+    //TODO: test Methods with invalid inputs
 }

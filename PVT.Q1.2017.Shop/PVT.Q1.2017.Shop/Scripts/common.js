@@ -1,17 +1,4 @@
 ﻿$(function () {
-    $.validator.methods.date = function (value, element) {
-        return this.optional(element) || moment(value, "DD.MM.YYYY", true).isValid();
-    }
-
-    $.validator.methods.range = function (value, element, param) {
-        var globalizedValue = value.replace(",", ".");
-        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
-    }
-
-    $.validator.methods.number = function (value, element) {
-        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
-    }
-
     var date = new Date();
     date.setDate(date.getDate());
     $(".datecontrol").datepicker({
@@ -28,12 +15,15 @@
         e.preventDefault();
         $(this).tab('show');
     });
+
+    updateOrdersCount();
 });
 
 function addAlbumToCart(sender, albumId, text, alternateText) {
     var btn = $(sender);
     btn.addClass('disabled');
     var root = getCurrentLocationRoot();
+
     $.post(root + "/Payment/Cart/AddAlbum", { albumId: albumId }, function () {
         updateOrdersCount();
 
@@ -43,9 +33,9 @@ function addAlbumToCart(sender, albumId, text, alternateText) {
             btn.find(".button-with-icon-text").text(alternateText);
         }
 
-        btn.off("click").on("click", function() {
+        sender.onclick = function() {
             removeAlbumFromCart(sender, albumId, alternateText, text);
-        });
+        };
     }).fail(function () {
         alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
     }).always(function () {
@@ -66,9 +56,9 @@ function removeAlbumFromCart(sender, albumId, text, alternateText) {
             btn.find(".button-with-icon-text").text(alternateText);
         }
 
-        btn.off("click").on("click", function () {
+        sender.onclick = function () {
             addAlbumToCart(sender, albumId, alternateText, text);
-        });
+        };
     }).fail(function () {
         alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
     }).always(function () {
@@ -89,9 +79,9 @@ function addTrackToCart(sender, trackId, text, alternateText) {
             btn.find(".button-with-icon-text").text(alternateText);
         }
 
-        btn.off("click").on("click", function () {
+        sender.onclick = function () {
             removeTrackFromCart(sender, trackId, alternateText, text);
-        });
+        };
     }).fail(function () {
         alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
     }).always(function () {
@@ -112,9 +102,9 @@ function removeTrackFromCart(sender, trackId, text, alternateText) {
             btn.find(".button-with-icon-text").text(alternateText);
         }
 
-        btn.off("click").on("click", function () {
+        sender.onclick = function () {
             addTrackToCart(sender, trackId, alternateText, text);
-        });
+        };
     }).fail(function () {
         alert("Ошибка! Извините, что-то пошло не так. Попробуйте позже.");
     }).always(function () {
@@ -139,7 +129,3 @@ function updateOrdersCount() {
 function getCurrentLocationRoot() {
     return window.location.origin;
 }
-
-$(function() {
-    updateOrdersCount();
-});

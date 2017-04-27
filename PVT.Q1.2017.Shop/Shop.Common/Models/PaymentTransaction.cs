@@ -2,9 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Shop.Infrastructure.Models;
 
     /// <summary>
@@ -16,7 +13,12 @@
         /// <summary>
         /// Total amount for current transaction
         /// </summary>
-        public decimal Amount { get; set; }
+        public decimal Totals { get; set; }
+
+        /// <summary>
+        /// Date and time of transaction creation
+        /// </summary>
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// User ID
@@ -27,16 +29,16 @@
         /// Currency ID
         /// </summary>
         public int CurrencyId { get; set; }
-        
-        /// <summary>
-        /// Transaction holder
-        /// </summary>
-        public virtual UserData User { get; set; }
 
         /// <summary>
         /// Currency for transaction
         /// </summary>
         public virtual Currency Currency { get; set; }
+
+        /// <summary>
+        /// Transaction holder
+        /// </summary>
+        public virtual UserData User { get; set; }
 
         /// <summary>
         /// Purchased tracks

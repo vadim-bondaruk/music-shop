@@ -16,5 +16,36 @@
         public OrderTrackRepository(DbContext dbContext) : base(dbContext)
         {
         }
+
+        /// <summary>
+        /// Delete Order Track from Repository
+        /// </summary>
+        /// <param name="model">OrderTrack to remove</param>
+        public override void Delete(OrderTrack model)
+        {
+            if (model == null) return;
+            this.CurrentDbSet.Remove(model);
+            this.SetStateChanged();
+        }
+
+        /// <summary>
+        /// Add or Update OrderTrack to Repository
+        /// </summary>
+        /// <param name="model">OrderTrack to Add or Update</param>
+        public override void AddOrUpdate(OrderTrack model)
+        {
+            // if the model exists in Db then we have to update it
+            var originalModel = FirstOrDefault(m => m.UserId == model.UserId && m.TrackId == model.TrackId);
+            if (originalModel != null)
+            {
+                Update(originalModel, model);
+                this.SetStateChanged();
+            }
+            else
+            {
+                Add(model);
+                this.SetStateChanged();
+            }
+        }
     }
 }

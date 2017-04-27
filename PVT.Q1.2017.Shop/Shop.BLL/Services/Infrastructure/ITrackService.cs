@@ -1,9 +1,13 @@
 ﻿namespace Shop.BLL.Services.Infrastructure
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading.Tasks;
 
     using Common.ViewModels;
+
+    using Shop.BLL.Helpers;
+    using Shop.Infrastructure.Enums;
     using Shop.Infrastructure.Models;
 
     /// <summary>
@@ -205,5 +209,20 @@
         /// A track with the specified id purchased by the specified user if exists or <b>null</b>.
         /// </returns>
         PurchasedTrackViewModel GetPurchasedTrack(int trackId, int userProfileId);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="userRole">
+        /// The user role.
+        /// </param>
+        /// <param name="userProfileId">
+        /// The user profile id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        TrackContainer GetTrackContainer(int id, UserRoles userRole, int userProfileId);
     }
 }

@@ -10,9 +10,10 @@
 
 @Html.PageLinks(Model, i => Url.Action("List", "Tracks", new { page = i, area = "Content" }))
 
-@section cssStyles{
-    <link href="~/Content/tracks.css" rel="stylesheet"/>
-    <link href="~/Content/ratingStars.css" rel="stylesheet"/>
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet"/>
+@section cssStyles {
+    @System.Web.Optimization.Styles.Render("~/bundles/cssTracks")
 }
-<script src="~/Scripts/get-audio.js"></script>
+
+@section scripts {
+    <script src="~/Scripts/get-audio.js"></script>
+}

@@ -65,5 +65,15 @@
         /// Purchased Albums
         /// </summary>
         public virtual ICollection<PurchasedAlbum> PurchasedAlbums { get; set; }
+
+        /// <summary>
+        /// Collection of tracks for purchase
+        /// </summary>
+        public virtual ICollection<OrderTrack> OrderTracks { get; set; }
+
+        /// <summary>
+        /// Collection of albums for purchase
+        /// </summary>
+        public virtual ICollection<OrderAlbum> OrderAlbums { get; set; }
     }
 }

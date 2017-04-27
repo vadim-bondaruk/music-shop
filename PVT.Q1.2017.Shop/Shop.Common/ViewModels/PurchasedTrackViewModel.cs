@@ -3,8 +3,6 @@
     using System;
     using System.ComponentModel;
 
-    using Shop.Common.Models;
-
     /// <summary>
     /// The purchased track view model.
     /// </summary>
@@ -59,5 +57,10 @@
         /// The track image. Optional.
         /// </summary>
         public byte[] Image { get; set; }
+
+        /// <summary>
+        /// Gets or sets the track file name.
+        /// </summary>
+        public string FileName { get; set; }
     }
 }

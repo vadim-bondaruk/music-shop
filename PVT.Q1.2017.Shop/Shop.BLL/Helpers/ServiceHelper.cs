@@ -89,29 +89,28 @@
             }
 
             List<AlbumViewModel> albumViewModels = new List<AlbumViewModel>();
-            using (var repository = factory.GetAlbumPriceRepository())
-            {
-                using (var currencyRatesrepository = factory.GetCurrencyRateRepository())
-                {
-                    foreach (var album in albums)
-                    {
-                        var albumViewModel = ModelsMapper.GetAlbumViewModel(album);
-                        if (albumViewModel != null)
-                        {
-                            albumViewModel.Price =
-                                PriceHelper.GetAlbumPrice(
-                                    repository, currencyRatesrepository, albumViewModel.Id, currencyCode.Value, priceLevel.Value);
-                            albumViewModels.Add(albumViewModel);
-                        }
-                    }
-                }
-            }
-
             using (var repository = factory.GetAlbumTrackRelationRepository())
             {
-                foreach (var albumViewModel in albumViewModels)
+                using (var albumPriceRepository = factory.GetAlbumPriceRepository())
                 {
-                    albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
+                    using (var currencyRatesrepository = factory.GetCurrencyRateRepository())
+                    {
+                        foreach (var album in albums)
+                        {
+                            var albumViewModel = ModelsMapper.GetAlbumViewModel(album);
+                            if (albumViewModel != null)
+                            {
+                                albumViewModel.TracksCount = repository.Count(r => r.AlbumId == albumViewModel.Id);
+                                if (albumViewModel.TracksCount > 0)
+                                {
+                                    albumViewModel.Price =
+                                        PriceHelper.GetAlbumPrice(albumPriceRepository, currencyRatesrepository, albumViewModel.Id, currencyCode.Value, priceLevel.Value);
+                                }
+
+                                albumViewModels.Add(albumViewModel);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -122,7 +121,7 @@
                     foreach (var albumViewModel in albumViewModels)
                     {
                         albumViewModel.IsOrdered =
-                            repository.Exist(o => o.Cart.UserId == userId && o.AlbumId == albumViewModel.Id);
+                            repository.Exist(o => o.UserId == userId && o.AlbumId == albumViewModel.Id);
                     }
                 }
 
@@ -214,7 +213,7 @@
                     foreach (var trackViewModel in trackViewModels)
                     {
                         trackViewModel.IsOrdered =
-                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
+                            repository.Exist(o => o.UserId == userId && o.TrackId == trackViewModel.Id);
                     }
                 }
 

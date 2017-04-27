@@ -1,10 +1,12 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Content.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
-
+    using App_Start;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.ViewModels;
     using global::Shop.DAL.Infrastruture;
+    using global::Shop.Infrastructure.Enums;
     using PVT.Q1._2017.Shop.Controllers;
 
     /// <summary>
@@ -66,9 +68,18 @@
             return this.View(albumService.GetAlbums(page, pageSize));
         }
 
-        public ActionResult PurchasedList()
+        [ShopAuthorize(UserRoles.Buyer, UserRoles.Customer)]
+        public async Task<ActionResult> PurchasedList()
         {
-            throw new System.NotImplementedException();
+            var albumService = ServiceFactory.GetAlbumService();
+            var purchasedAlbums = await albumService.GetPurchasedAlbumsAsync(this.CurrentUser.Id).ConfigureAwait(false);
+
+            if (purchasedAlbums == null)
+            {
+                return this.HttpNotFound("У вас нет приобретенных товаров");
+            }
+
+            return this.View(purchasedAlbums);
         }
     }
 }

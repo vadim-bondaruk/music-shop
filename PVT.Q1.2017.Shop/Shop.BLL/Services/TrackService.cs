@@ -1,14 +1,16 @@
 ﻿namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using System.Web;
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
     using Helpers;
     using Infrastructure;
+    using Shop.Infrastructure.Enums;
     using Shop.Infrastructure.Models;
 
     /// <summary>
@@ -136,7 +138,7 @@
                 tracks = await repository.GetAllAsync(t => t.Artist, t => t.Genre).ConfigureAwait(false);
             }
 
-            List<TrackDetailsViewModel> detailedList = new List<TrackDetailsViewModel>();
+            var detailedList = new List<TrackDetailsViewModel>();
             foreach (var track in tracks)
             {
                 // TODO: implement asyn version of the CreateTrackDetailsViewModelAsync
@@ -175,7 +177,7 @@
                 tracks = repository.GetAll(page, pageSize, t => t.Artist, t => t.Genre);
             }
 
-            List<TrackDetailsViewModel> detailedList = new List<TrackDetailsViewModel>();
+            var detailedList = new List<TrackDetailsViewModel>();
             foreach (var track in tracks.Items)
             {
                 detailedList.Add(GetTrackDetails(track.Id, currencyCode, priceLevel, userId));
@@ -259,18 +261,20 @@
         /// </returns>
         public TrackAlbumsListViewModel GetAlbums(int trackId, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
-            TrackAlbumsListViewModel trackAlbumsListViewModel = CreateTrackAlbumsListViewModel(trackId, currencyCode, priceLevelId, userId);
+            var trackAlbumsListViewModel = CreateTrackAlbumsListViewModel(trackId, currencyCode, priceLevelId, userId);
 
-            if (trackAlbumsListViewModel.TrackDetails.AlbumsCount > 0)
+            if (trackAlbumsListViewModel.TrackDetails.AlbumsCount <= 0)
             {
-                ICollection<Album> albums;
-                using (var repository = Factory.GetAlbumRepository())
-                {
-                    albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackId), a => a.Artist);
-                }
-
-                trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(Factory, albums, currencyCode, priceLevelId, userId);
+                return trackAlbumsListViewModel;
             }
+
+            ICollection<Album> albums;
+            using (var repository = this.Factory.GetAlbumRepository())
+            {
+                albums = repository.GetAll(a => a.Tracks.Any(t => t.TrackId == trackId), a => a.Artist);
+            }
+
+            trackAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(this.Factory, albums, currencyCode, priceLevelId, userId);
 
             return trackAlbumsListViewModel;
         }
@@ -290,7 +294,9 @@
             using (var repository = Factory.GetPurchasedTrackRepository())
             {
                 var purchasedTracks = await repository.GetAllAsync(
-                                                          p => p.UserId == userId, p => p.Track, p => p.Track.Artist,
+                                                          p => p.UserId == userId,
+                                                          p => p.Track,
+                                                          p => p.Track.Artist,
                                                           p => p.Track.Genre)
                                                       .ConfigureAwait(false);
                 tracks = purchasedTracks.Select(p => p.Track).ToList();
@@ -366,6 +372,190 @@
             return trackViewModel;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="userRole">
+        /// The user role.
+        /// </param>
+        /// <param name="userProfileId">
+        /// The user profile id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public TrackContainer GetTrackContainer(int id, UserRoles userRole, int userProfileId)
+        {
+            if (id <= 0)
+            {
+                return null;
+            }
+
+            TrackContainer trackContainer = null;
+            if (userRole == UserRoles.Admin)
+            {
+                trackContainer = this.GetTrackContainerForAdmin(id);
+            }
+            else if (userRole == UserRoles.Seller)
+            {
+                trackContainer = this.GetTrackContainerForSeller(id, userProfileId);
+            }
+            else
+            {
+                trackContainer = this.GetTrackContainerForBuyer(id, userProfileId);
+            }
+
+            return trackContainer;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private TrackContainer GetTrackContainerForAdmin(int trackId)
+        {
+            // мы можем дать скачать и послушать все треки админу
+            Track track;
+            using (var repository = Factory.GetTrackRepository())
+            {
+                track = repository.GetById(trackId, t => t.Artist);
+            }
+
+            if (track != null)
+            {
+                return new TrackContainer()
+                {
+                    AudioStream =
+                                   Mp3StreamHelper.GetAudioStream(
+                                       track.Name,
+                                       track.Artist.Name,
+                                       track.TrackFile),
+                    FileName = track.FileName
+                };
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="userProfileId">
+        /// The user profile id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private TrackContainer GetTrackContainerForBuyer(int trackId, int userProfileId)
+        {
+            // мы можем дать скачать и послушать только купленные треки для обычных пользователей
+            var purchasedTrack = GetPurchasedTrack(trackId, userProfileId);
+            if (purchasedTrack != null && purchasedTrack.TrackFile != null)
+            {
+                return new TrackContainer()
+                {
+                    AudioStream =
+                                   Mp3StreamHelper.GetAudioStream(
+                                       purchasedTrack.Name,
+                                       purchasedTrack.Artist.Name,
+                                       purchasedTrack.TrackFile),
+                    FileName = purchasedTrack.FileName
+                };
+            }
+
+            return GetTrackSample(trackId);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="userProfileId">
+        /// The user profile id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private TrackContainer GetTrackContainerForSeller(int trackId, int userProfileId)
+        {
+            // мы можем дать скачать и послушать свои треки продавцу
+            Track track;
+            using (var repository = Factory.GetTrackRepository())
+            {
+                track =
+                    repository.FirstOrDefault(
+                                              t => t.Id == trackId && (t.OwnerId == userProfileId || t.OwnerId == null),
+                                              t => t.Artist);
+            }
+
+            if (track != null && track.TrackFile != null)
+            {
+                return new TrackContainer()
+                {
+                    AudioStream =
+                                   Mp3StreamHelper.GetAudioStream(
+                                       track.Name,
+                                       track.Artist.Name,
+                                       track.TrackFile),
+                    FileName = track.FileName
+                };
+            }
+
+            return GetTrackSample(trackId);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private TrackContainer GetTrackSample(int trackId)
+        {
+            Track track;
+            using (var repository = Factory.GetTrackRepository())
+            {
+                track = repository.FirstOrDefault(t => t.Id == trackId, t => t.Artist);
+            }
+
+            if (track != null && track.TrackFile != null)
+            {
+                return new TrackContainer()
+                {
+                    AudioStream = Mp3StreamHelper.GetAudioStream(
+                                   track.Name,
+                                   track.Artist.Name,
+                                   track.TrackFile,
+                                   true),
+                    FileName = track.FileName
+                };
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="trackId">
+        /// The track id.
+        /// </param>
+        /// <param name="currencyCode">
+        /// The currency code.
+        /// </param>
+        /// <param name="priceLevel">
+        /// The price level.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// </returns>
         private TrackAlbumsListViewModel CreateTrackAlbumsListViewModel(int trackId, int? currencyCode, int? priceLevel = null, int? userId = null)
         {
             return new TrackAlbumsListViewModel
@@ -374,6 +564,13 @@
             };
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="tracks">
+        /// The tracks.
+        /// </param>
+        /// <returns>
+        /// </returns>
         private ICollection<PurchasedTrackViewModel> CreatePurchasedTracksList(ICollection<Track> tracks)
         {
             var trackViewModels = new List<PurchasedTrackViewModel>();
@@ -382,17 +579,35 @@
                 foreach (var track in tracks)
                 {
                     var trackViewModel = ModelsMapper.GetPurchasedTrackViewModel(track);
-                    if (trackViewModel != null)
+                    if (trackViewModel == null)
                     {
-                        trackViewModel.Rating = repository.GetAverageMark(track.Id);
-                        trackViewModels.Add(trackViewModel);
+                        continue;
                     }
+
+                    trackViewModel.Rating = repository.GetAverageMark(track.Id);
+                    trackViewModels.Add(trackViewModel);
                 }
             }
 
             return trackViewModels;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="track">
+        /// The track.
+        /// </param>
+        /// <param name="currencyCode">
+        /// The currency code.
+        /// </param>
+        /// <param name="priceLevelId">
+        /// The price level id.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// </returns>
         private TrackDetailsViewModel CreateTrackDetailsViewModel(Track track, int? currencyCode = null, int? priceLevelId = null, int? userId = null)
         {
             if (track == null)
@@ -401,7 +616,7 @@
             }
 
             var trackViewModel = ModelsMapper.GetTrackDetailsViewModel(track);
-            
+
             if (currencyCode == null)
             {
                 currencyCode = ServiceHelper.GetDefaultCurrency(Factory).Code;
@@ -433,7 +648,7 @@
                 using (var repository = Factory.GetOrderTrackRepository())
                 {
                     trackViewModel.IsOrdered =
-                            repository.Exist(o => o.Cart.UserId == userId && o.TrackId == trackViewModel.Id);
+                            repository.Exist(o => o.UserId == userId && o.TrackId == trackViewModel.Id);
                 }
 
                 using (var repository = Factory.GetPurchasedTrackRepository())

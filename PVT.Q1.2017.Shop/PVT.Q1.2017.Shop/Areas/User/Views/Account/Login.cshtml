@@ -50,3 +50,8 @@
         @Html.ActionLink("Регистрация", "Register") | @Html.ActionLink("Забыли пароль?", "ForgotPassword", "Account")
     </div>
 </section>
+
+@section scripts{
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+}

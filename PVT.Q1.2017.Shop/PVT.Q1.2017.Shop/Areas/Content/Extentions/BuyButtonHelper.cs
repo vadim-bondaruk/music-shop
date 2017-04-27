@@ -135,6 +135,10 @@
             {
                 @class = isOrdered ? "ordered " + DEFAULT_BUY_BUTTON_CSS_CLASS : DEFAULT_BUY_BUTTON_CSS_CLASS;
             }
+            else if (isOrdered)
+            {
+                @class += " ordered ";
+            }
 
             if (string.IsNullOrWhiteSpace(iconClass))
             {

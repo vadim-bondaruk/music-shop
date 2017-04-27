@@ -9,6 +9,7 @@
     using global::Shop.BLL.Helpers;
     using global::Shop.Infrastructure.Enums;
     using Helpers;
+    using Management.Helpers;
     using Shop.Controllers;
 
     /// <summary>
@@ -84,6 +85,8 @@
                 {
                     currencyRepository.AddOrUpdate(currency);
                     currencyRepository.SaveChanges();
+
+                    CacheHelper.ClearCachedCurrencies();
                     return RedirectToAction("Index", "Currency", new { area = "Admin" });
                 }
             }
@@ -131,6 +134,8 @@
                     {
                         currencyRepository.Delete(currency);
                         currencyRepository.SaveChanges();
+
+                        CacheHelper.ClearCachedCurrencies();
                         return RedirectToAction("Index", "Currency", new { area = "Admin" });
                     }
                     catch
@@ -171,6 +176,7 @@
                         currencyRepository.SaveChanges();
                     }
 
+                    CacheHelper.ClearCachedCurrencies();
                     return RedirectToAction("Index");
                 }
             }

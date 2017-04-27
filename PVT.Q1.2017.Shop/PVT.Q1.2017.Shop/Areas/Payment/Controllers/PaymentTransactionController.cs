@@ -6,8 +6,9 @@
     using global::Shop.DAL.Infrastruture;
     using PVT.Q1._2017.Shop.Controllers;
     using global::Shop.Common.ViewModels;
-    using global::Shop.BLL.Services.Infrastructure;
     using Helpers;
+    using global::Shop.Infrastructure.Enums;
+    using System.Web;
 
     [ShopAuthorize]
     public class PaymentTransactionController : BaseController
@@ -18,30 +19,33 @@
         }
 
         /// <summary>
-        /// Action for 
+        /// Action to view payment transactions
         /// </summary>
         /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Get|HttpVerbs.Post)]
         [Authorize]
         public ActionResult Index(int pageId = 1)
         {
-            if (CurrentUser != null && CurrentUser.Identity.IsAuthenticated)
+            int countPerPage = 10;
+            this.TempData["CurrentPage"] = pageId;
+            if (CurrentUser.IsInRole(UserRoles.Admin))
             {
-                int countPerPage = 10;
-                this.TempData["CurrentPage"] = pageId;
-                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, pageId, countPerPage);
+                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(null, pageId, countPerPage);
                 return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
-
-                //var transactions = _paymentService.GetTransactionsByUserId(CurrentUser.Id);
-                //var transactionsViewModels = PaymentMapper.GetPaymentTransactionViewModels(transactions);
-                //return View(transactionsViewModels);
             }
             else
             {
-                return HttpNotFound();
+                var transactions = ServiceFactory.GetPaymentService().GetDataPerPage(CurrentUser.Id, pageId, countPerPage);
+                return this.View(PaymentMapper.GetPaymentTransactionsToEdit(transactions));
             }
+            
         }
 
+        /// <summary>
+        /// Action for watching details of payment transaction
+        /// </summary>
+        /// <param name="transactionID"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult Details(int? transactionID)
@@ -55,7 +59,10 @@
             return View();
         }
 
-
+        /// <summary>
+        /// Action for accepting payment transaction
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult AcceptTransaction()
@@ -64,22 +71,28 @@
             if (Session["IsAccepted"] != null)
             {
                 accept = (bool)Session["IsAccepted"];
-                AcceptTransaction(accept);
+                if (accept)
+                {
+                    CartViewModel cart = (CartViewModel)TempData["cart"];
+                    if(cart!=null)
+                    {
+                        ServiceFactory.GetPaymentService().CreatePaymentTransaction(cart);
+                    }
+                }
             }
             return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
-
         }
 
-        [HttpPost]
-        [Authorize]
-        public ActionResult AcceptTransaction(bool accept)
+        /// <summary>
+        /// Action for watching money results
+        /// </summary>
+        /// <returns></returns>
+        [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
+        public ViewResult PayResult()
         {
-            CartViewModel cart = (CartViewModel)TempData["cart"];
-            if(accept)
-            {
-                ServiceFactory.GetPaymentService().CreatePaymentTransaction(cart);
-            }
-            return RedirectToAction("AcceptPayment", "Cart", new { Area = "Payment" });
+            var pays = ServiceFactory.GetPaymentService().GetPaysForUser(CurrentUser, CurrentUserCurrency.Id);
+            
+            return View(pays);
         }
     }
 }

@@ -41,7 +41,7 @@
         {
             var userService = ServiceFactory.GetUserService();
             var isUnique = !userService.IsUserExist(login);
-            
+
             return Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
@@ -120,7 +120,7 @@
                 }
             }
 
-            return RedirectToRoute( new {controller = "Home", action = "Index", area = string.Empty });
+            return RedirectToRoute(new { controller = "Home", action = "Index", area = string.Empty });
         }
 
         /// <summary>
@@ -143,7 +143,7 @@
         /// <returns></returns>
         public ActionResult Register()
         {
-            using(var countries = RepositoryFactory.GetCountryRepository())
+            using (var countries = RepositoryFactory.GetCountryRepository())
             {
                 ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
             }
@@ -163,34 +163,29 @@
                                                     Email")] UserViewModel user)
         {
             bool result = false;
-            
+
             if (ModelState.IsValid)
             {
-                try
+                var userDB = UserMapper.GetUserModel(user);
+                var userService = ServiceFactory.GetUserService();
+                result = userService.RegisterUser(userDB);
+                if (!result)
                 {
-                    var userDB = UserMapper.GetUserModel(user);
-                    var userService = ServiceFactory.GetUserService();
-                    result = userService.RegisterUser(userDB);
-                    if (result)
-                    {
-                        string subject = "Подтверждение регистрации";
-                        string body = string.Format(
-                                                    "Для завершения регистрации перейдите по ссылке:" +
-                                                    "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
-                            Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
-                        if (await MailDispatch.SendingMailAsync(userDB.Email, subject, body))
-                        {
-                            return RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
-                        }
-                        else
-                        {
-                            ModelState.AddModelError(string.Empty, "Ошибка отправки сообщения");
-                        }
-                    }
+                    ModelState.AddModelError(string.Empty, "Ошибка регистрации");
+                    return View(user);
                 }
-                catch (UserValidationException ex)
+                string subject = "Подтверждение регистрации";
+                string body = string.Format(
+                                            "Для завершения регистрации перейдите по ссылке:" +
+                                            "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
+                    Url.Action("ConfirmEmail", "Account", new { Token = userDB.Id, Email = userDB.Email }, Request.Url.Scheme));
+                if (await MailDispatch.SendingMailAsync(userDB.Email, subject, body).ConfigureAwait(false))
                 {
-                    ModelState.AddModelError(ex.UserProperty, ex.Message);
+                    return RedirectToAction("Confirm", "Account", new { Email = userDB.Email });
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Ошибка отправки сообщения");
                 }
             }
             else
@@ -201,8 +196,8 @@
             {
                 ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
             }
-            return View(user);
 
+            return View(user);
         }
 
         /// <summary>
@@ -224,12 +219,12 @@
         public ActionResult Confirm(string Email)
         {
             if (Email != null)
-                {
+            {
                 ViewBag.Message = "На почтовый адрес " + Email + " Вам высланы дальнейшие " +
                     "инструкции по завершению регистрации";
-                }
-            return View();
             }
+            return View();
+        }
 
         /// <summary>
         /// GET: User/Account/ConfirmEmail
@@ -256,7 +251,7 @@
                 return RedirectToAction("Success", "Account", new { area = "User" });
             }
 
-            return RedirectToAction("Confirm", "Account", new { Email = "" });
+            return RedirectToAction("Confirm", "Account", new { Email = string.Empty });
         }
 
         /// <summary>
@@ -287,20 +282,16 @@
                 try
                 {
                     var userService = ServiceFactory.GetUserService();
-                    string usetEmail = userService.GetEmailByUserIdentity(model.UserIdentity);
-                    int id = userService.GetIdOflogin(usetEmail);
+                    string userEmail = userService.GetEmailByUserIdentity(model.UserIdentity);
+                    int id = userService.GetIdOflogin(userEmail);
                     string newPassword = PasswordEncryptor.RendomPassword();
                     if (userService.UpdatePassword(id, newPassword))
                     {
                         string subject = "Ваш пароль был изменен";
                         string body = "Новый пароль: " + newPassword;
-                        if (await MailDispatch.SendingMailAsync(usetEmail, subject, body))
+                        if (await MailDispatch.SendingMailAsync(userEmail, subject, body).ConfigureAwait(false))
                         {
                             return this.RedirectToAction("ForgotPasswordSuccess");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError(string.Empty, "Ошибка отправки");
                         }
                     }
                 }
@@ -311,9 +302,11 @@
                 }
             }
             else
-        {
+            {
+                ModelState.AddModelError(string.Empty, "Ошибка восстановления пароля");
                 return View();
-        }
+            }
+
             return View();
         }
 

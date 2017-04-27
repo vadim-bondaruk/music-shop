@@ -315,6 +315,20 @@
         }
 
         /// <summary>
+        /// Executes a mapping from the <see cref="Album"/> model to a new <see cref="PurchasedAlbumViewModel"/> model.
+        /// </summary>
+        /// <param name="album">
+        /// The album DTO model.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="PurchasedAlbumViewModel"/> model.
+        /// </returns>
+        public static PurchasedAlbumViewModel GetPurchasedAlbumViewModel(Album album)
+        {
+            return _modelDetailsMapper.Map<PurchasedAlbumViewModel>(album);
+        }
+
+        /// <summary>
         /// Executes a mapping from the <see cref="Track"/> model to a new <see cref="TrackFeedbacksListViewModel"/> model.
         /// </summary>
         /// <param name="track">
@@ -466,6 +480,10 @@
                 cfg.CreateMap<Track, PurchasedTrackViewModel>()
                    .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
                    .ForMember(dest => dest.Genre, opt => opt.MapFrom(t => t.Genre));
+
+                cfg.CreateMap<Album, PurchasedAlbumViewModel>()
+                   .ForMember(dest => dest.Artist, opt => opt.MapFrom(t => t.Artist))
+                   .ForMember(dest => dest.Tracks, opt => opt.Ignore());
             });
 
             return detailsMapperConfiguration.CreateMapper();

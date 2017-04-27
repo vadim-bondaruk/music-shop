@@ -113,7 +113,6 @@
     <Compile Include="Moq\AlbumRepositoryMoq.cs" />
     <Compile Include="Moq\AlbumTrackRelationRepositoryMoq.cs" />
     <Compile Include="Moq\ArtistRepositoryMoq.cs" />
-    <Compile Include="Moq\CartRepositoryMoq.cs" />
     <Compile Include="Moq\CurrencyRateRepositorMoq.cs" />
     <Compile Include="Moq\CurrencyRepositoryMoq.cs" />
     <Compile Include="Moq\FeedbackRepositoryMoq.cs" />

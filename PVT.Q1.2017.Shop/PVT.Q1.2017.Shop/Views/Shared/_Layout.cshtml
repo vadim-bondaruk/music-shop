@@ -1,5 +1,4 @@
-﻿@using Shop.BLL.Utils
-@using Shop.Infrastructure.Enums
+﻿@using Shop.Infrastructure.Enums
 
 @{
     var isAuthenticated = Request.IsAuthenticated;
@@ -43,58 +42,58 @@
                     @Html.Partial("_MenuPartial")
                 </ul>
                 @if (isAuthenticated && !isSeller && !isAdmin)
-            {
+                {
                     <ul class="nav navbar-nav" style="display: inline-block">
                         <li>
                             <a>@{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }</a>
                         </li>
                     </ul>
-                                using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
-                                {
-                                    @Html.AntiForgeryToken()
+                    using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-                                    <ul class="nav navbar-nav navbar-right">
-                                        @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString()))
-                                        {
-                                            <li>
-                                                @Html.Partial("_UserMenuPartial", User.Identity.Name)
-                                            </li>
+                        <ul class="nav navbar-nav navbar-right">
+                            @if (User.IsInRole(UserRoles.Buyer.ToString()) || User.IsInRole(UserRoles.Customer.ToString()))
+                            {
+                                <li>
+                                    @Html.Partial("_UserMenuPartial", User.Identity.Name)
+                                </li>
 
-                                            <li>
-                                                <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
-                                                   title="Нажмите, чтобы перейти в Вашу корзину">
-                                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                                    <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
-                                                </a>
-                                            </li>
-                                        }
-                                    </ul>
-                                    }
-                                }
-                                else
-                                {
-                                    if (!isAuthenticated)
-                                    {
-                                        <ul class="nav navbar-nav navbar-right">
-                                            <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, new { id = "registerLink" })</li>
-                                            <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, new { id = "loginLink" })</li>
-                                        </ul>
-                                    }
-                                    else
-                                    {
-                                        using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <ul class="nav navbar-nav navbar-right">
-                                                <li><label class="navbar-text">Привет, @User.Identity.Name</label></li>
-                                                <li><input type="submit" value="Выйти" class="btn btn-link navbar-btn" /></li>
-                                            </ul>
+                                <li>
+                                    <a class="btn btn-sm btn-default" id="main-cart-icon" href="@Url.Action("Index", "Cart", new { area = "Payment" })"
+                                        title="Нажмите, чтобы перейти в Вашу корзину">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                                        <span id="cart-itemsCount" class="badge">@Session["OrdersCount"]</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                        }
+                    }
+                    else
+                    {
+                        if (!isAuthenticated)
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "User" }, new { id = "registerLink" })</li>
+                                <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "User" }, new { id = "loginLink" })</li>
+                            </ul>
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("LogOut", "Account", new { area = "User" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", style = "display: inline-block" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><label class="navbar-text">Привет, @User.Identity.Name</label></li>
+                                    <li><input type="submit" value="Выйти" class="btn btn-link navbar-btn" /></li>
+                                </ul>
                                            
                                             
-                                        }
-                                    }
+                            }
+                        }
 
-                                }
+                    }
             </div>
         </div>
     </div>
@@ -114,7 +113,7 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
-    <script src="~/Scripts/common.js"></script>
+    <script src="~/Scripts/common.js?v=3"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -49,21 +49,10 @@
         [HttpGet]
         public ViewResult Index()
         {
-            using (var cartRepository = RepositoryFactory.GetCartRepository())
-            {
-
-                if (cartRepository.GetByUserId(CurrentUser.Id) == null)
-                {
-                    cartRepository.AddOrUpdate(new Cart(CurrentUser.Id));
-                    cartRepository.SaveChanges();
-                }
-
-                var cartService = ServiceFactory.GetCartService();
-                _viewModel.Tracks = cartService.GetOrderTracks(CurrentUser.Id, CurrentUserCurrency?.Code);
-                _viewModel.Albums = cartService.GetOrderAlbums(CurrentUser.Id, CurrentUserCurrency?.Code);
-                _viewModel.CurrentUserId = CurrentUser.Id;
-            }
-
+            var cartService = ServiceFactory.GetCartService();
+            _viewModel.Tracks = cartService.GetOrderTracks(CurrentUser.Id, CurrentUserCurrency?.Code);
+            _viewModel.Albums = cartService.GetOrderAlbums(CurrentUser.Id, CurrentUserCurrency?.Code);
+            _viewModel.CurrentUserId = CurrentUser.Id;
             // Установка текущей валюты пользователя и пересчёт суммы к оплате
             if (CurrentUser.Id > 0)
             {
@@ -88,8 +77,9 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AddAlbum(CurrentUser.Id, albumId);
+                Session["IsModifiedOrdersCount"] = true;
             }
-            catch (InvalidAlbumIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе альбома произошла ошибка! Попробуйте позже!");
@@ -116,8 +106,9 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.RemoveAlbum(CurrentUser.Id, albumId);
+                Session["IsModifiedOrdersCount"] = true;
             }
-            catch (InvalidAlbumIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении альбома произошла ошибка! Попробуйте позже!");
@@ -144,8 +135,9 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AddTrack(CurrentUser.Id, trackId);
+                Session["IsModifiedOrdersCount"] = true;
             }
-            catch (InvalidTrackIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при выборе трэка произошла ошибка! Попробуйте позже!");
@@ -172,8 +164,9 @@
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.RemoveTrack(CurrentUser.Id, trackId);
+                Session["IsModifiedOrdersCount"] = true;
             }
-            catch (InvalidTrackIdException ex)
+            catch (CartServiceException ex)
             {
                 _logger.Error("Error : " + ex.Message);
                 return HttpNotFound($"Извините, при удалении трэка произошла ошибка! Попробуйте позже!");
@@ -196,29 +189,8 @@
         {
             var cartService = ServiceFactory.GetCartService();
             cartService.RemoveAll(CurrentUser.Id);
+            Session["IsModifiedOrdersCount"] = true;
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
-        }
-
-        /// <summary>
-        /// Перемещает товары пользователя в купленные при успешной оплате
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Authorize]
-        public ActionResult AcceptPayment()
-        {
-            var isAccepted = false;
-            if (Session["IsAccepted"] != null)
-            {
-                isAccepted = (bool)Session["IsAccepted"];
-            }
-            
-            if (isAccepted)
-            {
-                Session.Remove("IsAccepted");
-                AcceptPayment(isAccepted);
-            }
-            return this.RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
         /// <summary>
@@ -226,15 +198,24 @@
         /// </summary>
         /// <param name="isAccepted"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult AcceptPayment(bool isAccepted)
+        [HttpGet]
+        public ActionResult AcceptPayment()
         {
+            var isAccepted = false;
+            if (Session["IsAccepted"] != null)
+            {
+                isAccepted = (bool)Session["IsAccepted"];
+                Session.Remove("IsAccepted");
+            }
+
             if (isAccepted)
             {
                 var cartService = ServiceFactory.GetCartService();
                 cartService.AcceptPayment(CurrentUser.Id);
+                Session["IsModifiedOrdersCount"] = true;
                 return RedirectToAction("Index", "Home", new { Area = string.Empty });
             }
+
             return RedirectToAction("Index", "Cart", new { Area = "Payment" });
         }
 
@@ -244,18 +225,29 @@
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public JsonResult GetOrdersCount()
         {
-            int count = 0;
-
-            using (var cartRepository = RepositoryFactory.GetCartRepository())
+            if (Session["IsModifiedOrdersCount"] == null)
             {
-                var cart = cartRepository.GetByUserId(CurrentUser.Id);
-                if (cart != null)
+                Session["IsModifiedOrdersCount"] = true;
+            }
+
+            int count = 0;
+            if (!(bool)Session["IsModifiedOrdersCount"])
+            {
+                count = (int)Session["OrdersCount"];
+                return Json(new { Count = count }, JsonRequestBehavior.AllowGet);
+            }
+
+            using (var userDataRepository = RepositoryFactory.GetUserDataRepository())
+            {
+                var user = userDataRepository.GetById(CurrentUser.Id);
+                if (user != null)
                 {
-                    count += cart.OrderTracks.Count;
-                    count += cart.OrderAlbums.Count;
+                    count += user.OrderTracks.Count;
+                    count += user.OrderAlbums.Count;
                     if (Session != null)
                     {
                         Session["OrdersCount"] = count;
+                        Session["IsModifiedOrdersCount"] = false;
                     }
                 }
             }
