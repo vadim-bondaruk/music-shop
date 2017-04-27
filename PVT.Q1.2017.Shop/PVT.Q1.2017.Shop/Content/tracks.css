@@ -557,8 +557,6 @@ li > input { width: 100% }
 
 .order-block {
     display: block;
-    text-align: center;
-    padding-top: 7px;
     margin-top: -2px;
 }
 
@@ -566,7 +564,7 @@ li > input { width: 100% }
 .order-block .buy-btn a,
 .buttons .buy-btn button {
     width: 100px;
-    height: 25px;
+    height: 35px;
     color: black;
     position: relative;
 }
