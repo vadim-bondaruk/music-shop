@@ -53,6 +53,7 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\OrderAlbum.cs" />
     <Compile Include="Models\OrderTrack.cs" />
+    <Compile Include="ViewModels\TrackAudio.cs" />
     <Compile Include="Validators\ChangeLoginValidator.cs" />
     <Compile Include="Models\PaymentTransaction.cs" />
     <Compile Include="Models\PurchasedAlbum.cs" />

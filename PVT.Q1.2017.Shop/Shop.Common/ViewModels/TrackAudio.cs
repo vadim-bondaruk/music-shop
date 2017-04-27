@@ -1,4 +1,4 @@
-﻿namespace Shop.BLL.Helpers
+﻿namespace Shop.Common.ViewModels
 {
     using System.IO;
 
