@@ -1,7 +1,6 @@
 ﻿namespace Shop.BLL.Services
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Common.Models;
     using Common.ViewModels;
     using DAL.Infrastruture;
@@ -144,108 +143,6 @@
             }
 
             return artistContentViewModel;
-        }
-
-        /// <summary>
-        /// Returns all tracks for the specified artist without price.
-        /// </summary>
-        /// <param name="artistId">The artist id.</param>
-        /// <returns>
-        /// All tracks for the specified artist without price.
-        /// </returns>
-        public ArtistTracksListViewModel GetTracksWithoutPrice(int artistId)
-        {
-            ArtistTracksListViewModel artistTracksListViewModel = CreateArtistTracksListViewModel(artistId);
-
-            ICollection<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(t => t.ArtistId == artistId && !t.TrackPrices.Any());
-            }
-
-            artistTracksListViewModel.Tracks = tracks.Select(ModelsMapper.GetTrackViewModel).ToList();
-            return artistTracksListViewModel;
-        }
-
-        /// <summary>
-        /// Returns all tracks for the specified artist with price specified using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="artistId">The artist id.</param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All tracks for the specified artist without price specified.
-        /// </returns>
-        public ArtistTracksListViewModel GetTracksWithPrice(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            ArtistTracksListViewModel artistTracksListViewModel = CreateArtistTracksListViewModel(artistId);
-
-            ICollection<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(t => t.ArtistId == artistId && t.TrackPrices.Any());
-            }
-
-            artistTracksListViewModel.Tracks = ServiceHelper.ConvertToTrackViewModels(Factory, tracks, currencyCode, priceLevel, userId);
-            return artistTracksListViewModel;
-        }
-
-        /// <summary>
-        /// Returns all albums for the specified artist without price.
-        /// </summary>
-        /// <param name="artistId">The artist id.</param>
-        /// <returns>
-        /// All albums for the specified artist without price.
-        /// </returns>
-        public ArtistAlbumsListViewModel GetAlbumsWithoutPrice(int artistId)
-        {
-            ArtistAlbumsListViewModel artistAlbumsListViewModel = CreateArtistAlbumsListViewModel(artistId);
-
-            ICollection<Album> albums;
-            using (var repository = Factory.GetAlbumRepository())
-            {
-                albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId && !a.AlbumPrices.Any());
-            }
-
-            artistAlbumsListViewModel.Albums = albums.Select(ModelsMapper.GetAlbumViewModel).ToList();
-            return artistAlbumsListViewModel;
-        }
-
-        /// <summary>
-        /// Returns all albums for the specified artist with price specified using the specified currency and price level for album price.
-        /// </summary>
-        /// <param name="artistId">The artist id.</param>
-        /// <param name="currencyCode">
-        /// The currency code for album price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for album price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All albums for the specified artist without price specified.
-        /// </returns>
-        public ArtistAlbumsListViewModel GetAlbumsWithPrice(int artistId, int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            ArtistAlbumsListViewModel artistAlbumsListViewModel = CreateArtistAlbumsListViewModel(artistId);
-
-            ICollection<Album> albums;
-            using (var repository = Factory.GetAlbumRepository())
-            {
-                albums = repository.GetAll(a => a.ArtistId != null && a.ArtistId.Value == artistId && !a.AlbumPrices.Any());
-            }
-
-            artistAlbumsListViewModel.Albums = ServiceHelper.ConvertToAlbumViewModels(Factory, albums, currencyCode, priceLevel, userId);
-            return artistAlbumsListViewModel;
         }
 
         /// <summary>

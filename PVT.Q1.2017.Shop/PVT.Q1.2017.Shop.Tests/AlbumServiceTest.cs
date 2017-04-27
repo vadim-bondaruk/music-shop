@@ -1,10 +1,8 @@
 ﻿namespace PVT.Q1._2017.Shop.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using global::Shop.BLL;
     using global::Shop.BLL.Services;
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -84,102 +82,6 @@
 
             Mock.Get(_factory.GetAlbumRepository())
                 .Verify(m => m.GetById(It.IsAny<int>(), It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void GetAlbumsWithPriceConfiguredTest()
-        {
-            AddAlbumTest();
-
-            var album = _albumService.GetAlbums().FirstOrDefault();
-            Assert.IsNotNull(album);
-
-            Assert.IsTrue(_albumService.GetAlbumsWithPrice(1, 10).Items.Any());
-
-            Mock.Get(_factory.GetAlbumRepository())
-                .Verify(
-                        m =>
-                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>(),
-                                     It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void GetAlbumsWithoutPriceConfiguredTest()
-        {
-            AddAlbumTest();
-            Assert.IsTrue(_albumService.GetAlbumsWithoutPrice(1, 10).Items.Any());
-
-            Mock.Get(_factory.GetAlbumRepository())
-                .Verify(
-                        m =>
-                            m.GetAll(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<Album, bool>>>(),
-                                     It.IsAny<Expression<Func<Album, BaseEntity>>[]>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void GetTracksWithPriceConfiguredTest()
-        {
-            AddAlbumTest();
-
-            using (var repository = _factory.GetTrackRepository())
-            {
-                repository.AddOrUpdate(new Track { Name = "Some track" });
-                repository.SaveChanges();
-            }
-
-            using (var repository = _factory.GetAlbumTrackRelationRepository())
-            {
-                repository.AddOrUpdate(new AlbumTrackRelation
-                {
-                    TrackId = 1,
-                    Track = new Track
-                    {
-                        Id = 1,
-                        Name = "Some track",
-                        TrackPrices = new List<TrackPrice> { new TrackPrice { Price = 1.99m } }
-                    },
-                    AlbumId = 2,
-                    Album = new Album { Id = 2, Name = "Some album" }
-                });
-                repository.SaveChanges();
-            }
-
-            Assert.IsNotNull(_albumService.GetTracksWithPrice(1));
-
-            Mock.Get(_factory.GetAlbumTrackRelationRepository())
-                .Verify(
-                        m =>
-                            m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>(),
-                                     It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void GetTracksWithoutPriceConfiguredTest()
-        {
-            AddAlbumTest();
-
-            using (var repository = _factory.GetTrackRepository())
-            {
-                repository.AddOrUpdate(new Track { Name = "Some track" });
-                repository.SaveChanges();
-            }
-
-            using (var repository = _factory.GetAlbumTrackRelationRepository())
-            {
-                repository.AddOrUpdate(new AlbumTrackRelation
-                {
-                    TrackId = 1,
-                    AlbumId = 2
-                });
-            }
-
-            Assert.IsNotNull(_albumService.GetTracksWithoutPrice(1));
-
-            Mock.Get(_factory.GetAlbumTrackRelationRepository())
-                .Verify(
-                        m =>
-                            m.GetAll(It.IsAny<Expression<Func<AlbumTrackRelation, bool>>>(),
-                                     It.IsAny<Expression<Func<AlbumTrackRelation, BaseEntity>>[]>()), Times.Once);
         }
     }
 }
