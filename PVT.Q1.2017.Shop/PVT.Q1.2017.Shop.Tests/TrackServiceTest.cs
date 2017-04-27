@@ -70,26 +70,6 @@
         }
 
         [TestMethod]
-        public void GetTracksWithPriceTest()
-        {
-            AddTrackTest();
-
-            var track = _trackService.GetTracks(1, 10).Items.FirstOrDefault();
-            Assert.IsNotNull(track);
-
-            track.Price = new PriceViewModel { Amount = 1.99m, Currency = new CurrencyViewModel { Code = 840, ShortName = "USD" } };
-
-            Assert.IsNotNull(_trackService.GetTracksWithPrice(1, 10));
-        }
-
-        [TestMethod]
-        public void GetTracksWithoutPriceTest()
-        {
-            AddTrackTest();
-            Assert.IsTrue(_trackService.GetTracksWithoutPrice(1, 10).Items.Any());
-        }
-
-        [TestMethod]
         public void GetAlbumsListTest()
         {
             AddTrackTest();

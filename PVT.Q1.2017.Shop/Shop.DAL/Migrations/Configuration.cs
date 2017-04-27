@@ -49,44 +49,44 @@
         {
             if (!context.Set<Album>().Any())
             {
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 1, Name = "Крыша дома твоего" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 5, Name = "Elements of life" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 5, Name = "Kaleidoscope" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 5, Name = "Just be" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 6, Name = "Delirium" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 7, Name = "More life" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 7, Name = "Views" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 7, Name = "Take care" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 8, Name = "Daydream" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 8, Name = "Emotions" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 8, Name = "Rainbow" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 15, Name = "Illuminate" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 15, Name = "Handwritten" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 15, Name = "Don`t be a fool" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 16, Name = "Joanne" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 16, Name = "Artpop" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 16, Name = "The fame" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 17, Name = "Sacred love" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 17, Name = "Ten summoners tales" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 17, Name = "The soul cage" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 18, Name = "Load" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 18, Name = "Garage inc." });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 18, Name = "S&M" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 19, Name = "Imagine" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 19, Name = "Mirage" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 19, Name = "Intence" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 20, Name = "Motion" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 20, Name = "18 month" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 20, Name = "I created disco" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 21, Name = "Girl" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 21, Name = "In my mind" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 21, Name = "Out of my mind" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 22, Name = "Organik" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 22, Name = "23am" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 22, Name = "Dreamland" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 23, Name = "Crossroads" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 23, Name = "I still do" });
-                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 23, Name = "Blues" });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 1, Name = "Крыша дома твоего", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 5, Name = "Elements of life", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 5, Name = "Kaleidoscope", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 5, Name = "Just be", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 6, Name = "Delirium", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 7, Name = "More life", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 7, Name = "Views", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 7, Name = "Take care", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 8, Name = "Daydream", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 8, Name = "Emotions", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 8, Name = "Rainbow", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 15, Name = "Illuminate", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 15, Name = "Handwritten", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 15, Name = "Don`t be a fool", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 16, Name = "Joanne", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 16, Name = "Artpop", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 16, Name = "The fame", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 17, Name = "Sacred love", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 17, Name = "Ten summoners tales", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 17, Name = "The soul cage", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 18, Name = "Load", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 18, Name = "Garage inc.", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 18, Name = "S&M", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 19, Name = "Imagine", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 19, Name = "Mirage", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 19, Name = "Intence", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 20, Name = "Motion", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 20, Name = "18 month", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 20, Name = "I created disco", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 21, Name = "Girl", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 21, Name = "In my mind", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 21, Name = "Out of my mind", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 22, Name = "Organik", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 22, Name = "23am", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 22, Name = "Dreamland", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 23, Name = "Crossroads", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 23, Name = "I still do", OwnerId = 104 });
+                context.Set<Album>().AddOrUpdate(new Album { ArtistId = 23, Name = "Blues", OwnerId = 104 });
                 context.SaveChanges();
 
                 context.Set<AlbumTrackRelation>()
@@ -376,44 +376,44 @@
                         new Track { ArtistId = 2, Name = "Песня о тревожной молодости", GenreId = 10, OwnerId = 104 },
                         new Track { Name = "Just be", ArtistId = 5, GenreId = 24, OwnerId = 104 },
                         new Track { Name = "Adagio for strings", ArtistId = 5, GenreId = 24, OwnerId = 104 },
-                        new Track { Name = "Traffic", ArtistId = 5, GenreId = 24 },
-                        new Track { Name = "Fligth 643", ArtistId = 5, GenreId = 24 },
-                        new Track { Name = "Dance for life", ArtistId = 5, GenreId = 24 },
-                        new Track { Name = "Breda 8pm", ArtistId = 5, GenreId = 24 },
-                        new Track { Name = "Music", ArtistId = 4, GenreId = 10 },
-                        new Track { Name = "Umbrella", ArtistId = 4, GenreId = 10 },
-                        new Track { Name = "Work", ArtistId = 4, GenreId = 10 },
-                        new Track { Name = "Rude boy", ArtistId = 4, GenreId = 10 },
-                        new Track { Name = "S&M", ArtistId = 4, GenreId = 10 },
-                        new Track { Name = "Kiss it better", ArtistId = 4, GenreId = 10 },
-                        new Track { Name = "Disturbia", ArtistId = 4, GenreId = 10 },
-                        new Track { Name = "Love me like you do", ArtistId = 8, GenreId = 10 },
-                        new Track { Name = "Your song", ArtistId = 8, GenreId = 10 },
-                        new Track { Name = "Lights", ArtistId = 8, GenreId = 10 },
-                        new Track { Name = "TKO", ArtistId = 14, GenreId = 10 },
-                        new Track { Name = "Hair up", ArtistId = 14, GenreId = 10 },
-                        new Track { Name = "My love", ArtistId = 14, GenreId = 10 },
-                        new Track { Name = "Mercy", ArtistId = 15, GenreId = 10 },
-                        new Track { Name = "Ruin", ArtistId = 15, GenreId = 10 },
-                        new Track { Name = "Imagination", ArtistId = 15, GenreId = 10 },
-                        new Track { Name = "Alejandro", ArtistId = 16, GenreId = 10 },
-                        new Track { Name = "Paparazzi", ArtistId = 16, GenreId = 10 },
-                        new Track { Name = "Just dance", ArtistId = 16, GenreId = 10 },
-                        new Track { Name = "Shape of my heart", ArtistId = 17, GenreId = 10 },
-                        new Track { Name = "Fields of gold", ArtistId = 17, GenreId = 10 },
-                        new Track { Name = "Fragile", ArtistId = 17, GenreId = 10 },
-                        new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "The unforgiven", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "Fade to black", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "One", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "Hardwired", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "Until it sleeps", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "Mama said", ArtistId = 18, GenreId = 24 },
-                        new Track { Name = "Englishman in New York", ArtistId = 17, GenreId = 10 },
-                        new Track { Name = "Orbion", ArtistId = 19, GenreId = 10 },
-                        new Track { Name = "Intence", ArtistId = 19, GenreId = 10 },
-                        new Track { Name = "Freefall", ArtistId = 19, GenreId = 10 });
+                        new Track { Name = "Traffic", ArtistId = 5, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Fligth 643", ArtistId = 5, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Dance for life", ArtistId = 5, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Breda 8pm", ArtistId = 5, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Music", ArtistId = 4, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Umbrella", ArtistId = 4, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Work", ArtistId = 4, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Rude boy", ArtistId = 4, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "S&M", ArtistId = 4, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Kiss it better", ArtistId = 4, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Disturbia", ArtistId = 4, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Love me like you do", ArtistId = 8, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Your song", ArtistId = 8, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Lights", ArtistId = 8, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "TKO", ArtistId = 14, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Hair up", ArtistId = 14, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "My love", ArtistId = 14, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Mercy", ArtistId = 15, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Ruin", ArtistId = 15, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Imagination", ArtistId = 15, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Alejandro", ArtistId = 16, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Paparazzi", ArtistId = 16, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Just dance", ArtistId = 16, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Shape of my heart", ArtistId = 17, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Fields of gold", ArtistId = 17, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Fragile", ArtistId = 17, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "The unforgiven", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Fade to black", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "One", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Hardwired", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Until it sleeps", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Enter sandman", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Mama said", ArtistId = 18, GenreId = 24, OwnerId = 104 },
+                        new Track { Name = "Englishman in New York", ArtistId = 17, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Orbion", ArtistId = 19, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Intence", ArtistId = 19, GenreId = 10, OwnerId = 104 },
+                        new Track { Name = "Freefall", ArtistId = 19, GenreId = 10, OwnerId = 104 });
                 context.SaveChanges();
             }
         }

@@ -80,7 +80,7 @@
         public void IsUserUnique_EmailExist_ReturnTrue()
         {
             string email = "test@gmail.com";
-            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Email = email });
+            Mock.Get(_factory.GetUserRepository()).Setup(m => m.Exist(It.IsAny<Expression<Func<User, bool>>>())).Returns(true);
 
             var result = _service.IsUserExist(email);
 
@@ -91,7 +91,7 @@
         public void IsUserUnique_LoginExist_ReturnTrue()
         {
             string login = "Test";
-            Mock.Get(_factory.GetUserRepository()).Setup(m => m.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Login = login });
+            Mock.Get(_factory.GetUserRepository()).Setup(m => m.Exist(It.IsAny<Expression<Func<User, bool>>>())).Returns(true);
 
             var result = _service.IsUserExist(login);
 

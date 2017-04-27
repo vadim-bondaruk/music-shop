@@ -52,6 +52,11 @@
                 track = repository.GetById(id, t => t.Artist, t => t.Genre);
             }
 
+            if (track == null)
+            {
+                return null;
+            }
+
             return CreateTrackDetailsViewModel(track, currencyCode, priceLevelId, userId);
         }
 
@@ -113,134 +118,6 @@
 
             var trackViewModels = ServiceHelper.ConvertToTrackViewModels(Factory, tracks.Items, currencyCode, priceLevel, userId);
             return new PagedResult<TrackViewModel>(trackViewModels, tracks.PageSize, tracks.CurrentPage, tracks.TotalItemsCount);
-        }
-
-        /// <summary>
-        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All registered tracks with detailed information.
-        /// </returns>
-        public async Task<ICollection<TrackDetailsViewModel>> GetDetailedTracksListAsync(int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            ICollection<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = await repository.GetAllAsync(t => t.Artist, t => t.Genre).ConfigureAwait(false);
-            }
-
-            var detailedList = new List<TrackDetailsViewModel>();
-            foreach (var track in tracks)
-            {
-                // TODO: implement asyn version of the CreateTrackDetailsViewModelAsync
-                detailedList.Add(CreateTrackDetailsViewModel(track, currencyCode, priceLevel, userId));
-            }
-
-            return detailedList;
-        }
-
-        /// <summary>
-        /// Returns all registered tracks with detailed information using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All registered tracks with detailed information.
-        /// </returns>
-        public PagedResult<TrackDetailsViewModel> GetDetailedTracksList(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            PagedResult<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(page, pageSize, t => t.Artist, t => t.Genre);
-            }
-
-            var detailedList = new List<TrackDetailsViewModel>();
-            foreach (var track in tracks.Items)
-            {
-                detailedList.Add(GetTrackDetails(track.Id, currencyCode, priceLevel, userId));
-            }
-
-            return new PagedResult<TrackDetailsViewModel>(detailedList, tracks.PageSize, tracks.CurrentPage, tracks.TotalItemsCount);
-        }
-
-        /// <summary>
-        /// Returns all tracks which don't have price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <returns>
-        /// All tracks without price configured.
-        /// </returns>
-        public PagedResult<TrackViewModel> GetTracksWithoutPrice(int page, int pageSize)
-        {
-            PagedResult<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(page, pageSize, t => !t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
-            }
-
-            var trackViewModels = tracks.Items.Select(ModelsMapper.GetTrackViewModel).ToList();
-            return new PagedResult<TrackViewModel>(trackViewModels, pageSize, page, tracks.TotalItemsCount);
-        }
-
-        /// <summary>
-        /// Returns all tracks with price specified using the specified currency and price level for track price.
-        /// </summary>
-        /// <param name="page">
-        /// Page number.
-        /// </param>
-        /// <param name="pageSize">
-        /// The number of the items on the page.
-        /// </param>
-        /// <param name="currencyCode">
-        /// The currency code for track price. If it doesn't specified than default currency is used.
-        /// </param>
-        /// <param name="priceLevel">
-        /// The price level for track price. If it doesn't specified than default price level is used.
-        /// </param>
-        /// <param name="userId">
-        /// The current user id.
-        /// </param>
-        /// <returns>
-        /// All tracks with price specified.
-        /// </returns>
-        public PagedResult<TrackViewModel> GetTracksWithPrice(int page, int pageSize, int? currencyCode = null, int? priceLevel = null, int? userId = null)
-        {
-            PagedResult<Track> tracks;
-            using (var repository = Factory.GetTrackRepository())
-            {
-                tracks = repository.GetAll(page, pageSize, t => t.TrackPrices.Any(), t => t.Artist, t => t.Genre);
-            }
-
-            var tracksViewModels = ServiceHelper.ConvertToTrackViewModels(Factory, tracks.Items, currencyCode, priceLevel, userId);
-            return new PagedResult<TrackViewModel>(tracksViewModels, pageSize, page, tracks.TotalItemsCount);
         }
 
         /// <summary>
@@ -385,28 +262,28 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public TrackContainer GetTrackContainer(int id, UserRoles userRole, int userProfileId)
+        public TrackAudio GetTrackAudio(int id, UserRoles userRole, int userProfileId)
         {
             if (id <= 0)
             {
                 return null;
             }
 
-            TrackContainer trackContainer = null;
+            TrackAudio trackAudio;
             if (userRole == UserRoles.Admin)
             {
-                trackContainer = this.GetTrackContainerForAdmin(id);
+                trackAudio = this.GetTrackAudioForAdmin(id);
             }
             else if (userRole == UserRoles.Seller)
             {
-                trackContainer = this.GetTrackContainerForSeller(id, userProfileId);
+                trackAudio = this.GetTrackAudioForSeller(id, userProfileId);
             }
             else
             {
-                trackContainer = this.GetTrackContainerForBuyer(id, userProfileId);
+                trackAudio = this.GetTrackAudioForBuyer(id, userProfileId);
             }
 
-            return trackContainer;
+            return trackAudio;
         }
 
         /// <summary>
@@ -416,7 +293,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackContainerForAdmin(int trackId)
+        private TrackAudio GetTrackAudioForAdmin(int trackId)
         {
             // мы можем дать скачать и послушать все треки админу
             Track track;
@@ -427,7 +304,7 @@
 
             if (track != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream =
                                    Mp3StreamHelper.GetAudioStream(
@@ -451,13 +328,13 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackContainerForBuyer(int trackId, int userProfileId)
+        private TrackAudio GetTrackAudioForBuyer(int trackId, int userProfileId)
         {
             // мы можем дать скачать и послушать только купленные треки для обычных пользователей
             var purchasedTrack = GetPurchasedTrack(trackId, userProfileId);
             if (purchasedTrack != null && purchasedTrack.TrackFile != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream =
                                    Mp3StreamHelper.GetAudioStream(
@@ -481,7 +358,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackContainerForSeller(int trackId, int userProfileId)
+        private TrackAudio GetTrackAudioForSeller(int trackId, int userProfileId)
         {
             // мы можем дать скачать и послушать свои треки продавцу
             Track track;
@@ -495,7 +372,7 @@
 
             if (track != null && track.TrackFile != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream =
                                    Mp3StreamHelper.GetAudioStream(
@@ -516,7 +393,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackSample(int trackId)
+        private TrackAudio GetTrackSample(int trackId)
         {
             Track track;
             using (var repository = Factory.GetTrackRepository())
@@ -526,7 +403,7 @@
 
             if (track != null && track.TrackFile != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream = Mp3StreamHelper.GetAudioStream(
                                    track.Name,
