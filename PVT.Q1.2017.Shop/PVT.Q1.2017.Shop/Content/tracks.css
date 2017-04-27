@@ -55,7 +55,7 @@
 
 .genre-edit .btn { display: inline-block; }
 
-.genre-details, .track-edit {
+.genre-details, .track-edit, .artist-details-container {
     padding: 20px;
     background: #fff;
     opacity: 0.9;
@@ -557,17 +557,14 @@ li > input { width: 100% }
 
 .order-block {
     display: block;
-    text-align: center;
-    padding-top: 7px;
     margin-top: -2px;
 }
 
 .order-block .buy-btn button,
 .order-block .buy-btn a,
 .buttons .buy-btn button {
-    margin-top: 12px;
     width: 100px;
-    height: 25px;
+    height: 35px;
     color: black;
     position: relative;
 }
@@ -639,7 +636,7 @@ li > input { width: 100% }
 
 .track-details .container .panel-heading {
     position: relative;
-    width: 900px;
+    width: 850px;
 }
 
 .track-details .container .panel .panel-body .center, .album-details .panel .panel-body .center {
@@ -757,3 +754,19 @@ li > input { width: 100% }
 .anonimus-price { margin-top: 18px; }
 
 .artist-tracks-count, .artist-albums-count { display: inline-block; }
+
+.track-price-btn {
+    margin-top: 12px;
+}
+
+.track-my-btn {
+    margin-top: 12px;
+}
+
+.btn-artist-details-edit {
+    margin-right: 20px;
+}
+
+.album-details-buttons {
+    width: 300px;
+}

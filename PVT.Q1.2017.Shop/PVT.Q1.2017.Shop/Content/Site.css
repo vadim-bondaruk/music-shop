@@ -47,8 +47,6 @@ input,
 select,
 textarea { max-width: 280px; }
 
-.btn { margin-bottom: 2px !important; }
-
 #main-cart-icon {
     border: none;
     background: #222;
@@ -173,6 +171,13 @@ footer p {
 .email-confirmed {
     text-align: left;
     margin-left: 15px;
+}
+
+.user-dropdown-menu:hover {
+    color: white !important;
+}
+.media-menu:hover {
+    color: white !important;
 }
 
 .datecontrol { /* please do not remove this style;it is used for editing dates */ }
