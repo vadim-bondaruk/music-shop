@@ -50,7 +50,7 @@
                                         string biography = string.Empty;
                                         if (!string.IsNullOrWhiteSpace(artist.Biography))
                                         {
-                                            biography = string.Format("{0}...", artist.Biography.Substring(0,Math.Min(biography.Length, 400)));
+                                            biography = string.Format("{0}...", artist.Biography.Substring(0,Math.Min(artist.Biography.Length, 400)));
                                         }
                                     }
                                     <div>@biography</div>
