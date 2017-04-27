@@ -55,7 +55,7 @@
 
 .genre-edit .btn { display: inline-block; }
 
-.genre-details, .track-edit {
+.genre-details, .track-edit, .artist-details-container {
     padding: 20px;
     background: #fff;
     opacity: 0.9;
@@ -756,4 +756,8 @@ li > input { width: 100% }
 
 .track-my-btn {
     margin-top: 12px;
+}
+
+.btn-artist-details-edit {
+    margin-right: 20px;
 }
