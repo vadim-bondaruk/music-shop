@@ -50,6 +50,7 @@
         <mvcSiteMapNode title= "Детальная информация" action="Details" area="Content" preservedRouteParameters="details,id" key="track-id" />
         <mvcSiteMapNode title= "Правка" action="Edit" area="Management" preservedRouteParameters="edit,id" key="edit-track-id" />
         <mvcSiteMapNode title= "Удаление" action="Delete" area="Management" preservedRouteParameters="delete,id" key="track-delete-id" />
+        <mvcSiteMapNode title= "Новый трек" action="New" area="Management" preservedRouteParameters="new,id" key="track-new-id" />
         <mvcSiteMapNode title="Отзывы" controller="Feedbacks" action="Details" area="Content">
           <mvcSiteMapNode title= "Отзывы о треке" action="Details" area="Content" preservedRouteParameters="details,id" key="edit-feedback-id" />
         </mvcSiteMapNode>
