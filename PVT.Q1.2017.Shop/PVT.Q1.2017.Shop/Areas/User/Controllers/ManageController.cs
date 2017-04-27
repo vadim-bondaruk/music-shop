@@ -106,16 +106,14 @@
                 var userService = ServiceFactory.GetUserService();
                 result = userService.UpdatePersonal(userDB, CurrentUser.Id);
 
-                if (result)
-                {
-                    return RedirectToAction("UpdatePersonal");
-                }
+                TempData["userMsg"] = "ok";
             }
 
             using (var countries = RepositoryFactory.GetCountryRepository())
             {
                 ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
             }
+          
             return View(user);
         }
 

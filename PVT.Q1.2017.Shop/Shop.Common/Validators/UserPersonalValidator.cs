@@ -20,11 +20,11 @@
             RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я_.-]*$")
                 .WithMessage("Используйте только буквы и знак подчеркивания");
 
-            RuleFor(u => u.BirthDate).ExclusiveBetween(DateTime.Today.AddYears(-120), DateTime.Today.AddYears(0))
-                .WithMessage("Дата рождения выбрана некорректно (либо очень почетный возраст))");
+            RuleFor(u => u.BirthDate).Must(c => c <= DateTime.Now.AddYears(-5))
+                .WithMessage("Дата рождения выбрана некорректно (вам должно быть минимум 5 лет))");
 
             RuleFor(u => u.PhoneNumber)
-                .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$")
+                .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){12,14}(\s*)?$")
                 .WithMessage("Некорректный номер");
         }
     }
