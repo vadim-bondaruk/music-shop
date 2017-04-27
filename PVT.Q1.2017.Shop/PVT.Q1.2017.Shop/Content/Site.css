@@ -170,4 +170,11 @@ footer p {
     margin-left: 15px;
 }
 
+.user-dropdown-menu:hover {
+    color: white !important;
+}
+.media-menu:hover {
+    color: white !important;
+}
+
 .datecontrol { /* please do not remove this style;it is used for editing dates */ }
