@@ -3,12 +3,18 @@
     using System;
     using System.Net.Mail;
     using System.Threading.Tasks;
+    using NLog;
 
     /// <summary>
     /// Class for sending mail
     /// </summary>
     public static class MailDispatch
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// From the email you are sending
         /// </summary>
@@ -51,9 +57,9 @@
                 smtp.Send(message);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: write data to log
+                _logger.Warn($"Проблема при отправке письма пользователю\r\n{ex}");
                 return false;
             }            
         }
@@ -75,9 +81,9 @@
                 await smtp.SendMailAsync(message).ConfigureAwait(false);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: write data to log
+                _logger.Warn($"Проблема при отправке письма пользователю\r\n{ex}");
                 return false;
             }
         }

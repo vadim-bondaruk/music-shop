@@ -2245,28 +2245,28 @@
                                     },
                                 new User
                                     {
-                                        FirstName = "test_user",
-                                        LastName = "test_user",
+                                        FirstName = "test",
+                                        LastName = "user",
                                         Email = "test_user@gmail.com",
                                         Login = "test_user",
                                         Password = "DCF05BF73C524F3E32C08ACF55BE3EC4170FFED5",
                                         Sex = "Мужской",
                                        CountryId = 1,
-                                        PhoneNumber = "(29) 227 02 83",
+                                        PhoneNumber = "(29) 227 02 83 376",
                                         IsDeleted = false,
                                         UserRole = UserRoles.Customer,
                                         ConfirmedEmail = true
                                     },
                                 new User
                                     {
-                                        FirstName = "test_admin",
-                                        LastName = "test_admin",
+                                        FirstName = "test",
+                                        LastName = "admin",
                                         Email = "test_admin@gmail.com",
                                         Login = "test_admin",
                                         Password = "AA7130C1A9D96562ADE20DC00E38360B1C402975",
                                         Sex = "Мужской",
                                        CountryId = 1,
-                                        PhoneNumber = "(29) 227 02 83",
+                                        PhoneNumber = "(29) 227 02 83 376",
                                         IsDeleted = false,
                                         UserRole = UserRoles.Admin,
                                         ConfirmedEmail = true
@@ -2367,10 +2367,10 @@
                 context.Set<Country>().AddOrUpdate(
                     new Country[]
                     {
-                        new Country { Name = "Belarus" },
-                        new Country { Name = "Australia" },
-                        new Country { Name = "USA"},
-                        new Country { Name = "England" }
+                        new Country { Name = "Беларусь" },
+                        new Country { Name = "Австралия" },
+                        new Country { Name = "США"},
+                        new Country { Name = "Великобритания" }
                     }
                     );
             }

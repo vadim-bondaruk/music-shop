@@ -47,8 +47,6 @@ input,
 select,
 textarea { max-width: 280px; }
 
-.btn { margin-bottom: 2px !important; }
-
 #main-cart-icon {
     border: none;
     background: #222;
@@ -87,7 +85,7 @@ body { background-color: #dadada; }
     border-bottom-right-radius: 10px;
 }
 
-#currency-dropdown {
+a #currency-dropdown {
     margin-top: -2px;
     height: 25px;
     border: none;
@@ -96,6 +94,10 @@ body { background-color: #dadada; }
     font-size: 11px;
     color: #999;
     box-shadow: 1px 1px 10px #ff6347;
+}
+
+#currency-dropdown {
+    max-width: 70px !important;
 }
 
 #bc-override {
@@ -122,14 +124,9 @@ dl dd { padding-left: 5px; }
     top: 450px;
     font-size: 45px;
 }
-
 footer {
-    font-size: 18px;
-    height: 18px;
     text-align: center;
-    opacity: 0.7;
 }
-
 footer p {
     height: 18px;
     text-shadow: 1px 1px 10px white;
@@ -137,7 +134,7 @@ footer p {
     color: white;
 }
 
-#curr-table, #users-table, .user-reg, .user-edit-center, #country-table {
+#curr-table, #users-table, .user-reg, .user-edit-center, #country-table, .paymens-table {
     background: #fff;
     opacity: 0.9;
     border-radius: 15px;
@@ -174,6 +171,13 @@ footer p {
 .email-confirmed {
     text-align: left;
     margin-left: 15px;
+}
+
+.user-dropdown-menu:hover {
+    color: white !important;
+}
+.media-menu:hover {
+    color: white !important;
 }
 
 .datecontrol { /* please do not remove this style;it is used for editing dates */ }

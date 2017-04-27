@@ -142,9 +142,32 @@
                 {
                     albumRepo.AddOrUpdate(album);
                     albumRepo.SaveChanges();
-
-                    return RedirectToAction("Details", "Albums", new { id = album.Id, area = "Content" });
                 }
+
+                if (viewModel.Price != null)
+                {
+                    using (var priceRepository = RepositoryFactory.GetAlbumPriceRepository())
+                    {
+                        var albumPrice = priceRepository.FirstOrDefault(p => p.AlbumId == album.Id &&
+                                                                             p.CurrencyId == CurrentUserCurrency.Id &&
+                                                                             p.PriceLevelId == CurrentUser.PriceLevelId);
+                        if (albumPrice == null)
+                        {
+                            albumPrice = new AlbumPrice
+                            {
+                                AlbumId = album.Id,
+                                CurrencyId = CurrentUserCurrency.Id,
+                                PriceLevelId = CurrentUser.PriceLevelId
+                            };
+                        }
+
+                        albumPrice.Price = viewModel.Price.Value;
+                        priceRepository.AddOrUpdate(albumPrice);
+                        priceRepository.SaveChanges();
+                    }
+                }
+
+                return RedirectToAction("Details", "Albums", new { id = album.Id, area = "Content" });
             }
 
             return View(viewModel);
@@ -201,6 +224,21 @@
                 {
                     albumRepo.AddOrUpdate(album);
                     albumRepo.SaveChanges();
+                }
+
+                if (viewModel.Price != null && CurrentUser != null)
+                {
+                    using (var priceRepository = RepositoryFactory.GetAlbumPriceRepository())
+                    {
+                        priceRepository.AddOrUpdate(new AlbumPrice
+                        {
+                            AlbumId = album.Id,
+                            CurrencyId = CurrentUserCurrency.Id,
+                            PriceLevelId = CurrentUser.PriceLevelId,
+                            Price = viewModel.Price.Value
+                        });
+                        priceRepository.SaveChanges();
+                    }
                 }
 
                 return RedirectToAction("Details", new { area = "Content", Controller = "Albums", id = album.Id });

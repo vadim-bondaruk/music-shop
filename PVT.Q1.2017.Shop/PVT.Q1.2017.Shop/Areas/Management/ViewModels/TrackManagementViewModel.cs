@@ -5,13 +5,12 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
-    using FluentValidation.Attributes;
     using global::Shop.Common.Models;
     using Validators;
 
     /// <summary>
     /// </summary>
-    [Validator(typeof(TrackManagementValidator))]
+    [FluentValidation.Attributes.Validator(typeof(TrackManagementValidator))]
     public class TrackManagementViewModel
     {
         /// <summary>
@@ -29,6 +28,7 @@
         ///     Gets or sets the duration.
         /// </summary>
         [DisplayName("Продолжительность")]
+        [DataType(DataType.Time)]
         public TimeSpan? Duration { get; set; }
 
         /// <summary>
@@ -75,12 +75,6 @@
         public HttpPostedFileBase PostedTrackFile { get; set; }
 
         /// <summary>
-        ///     The track sample.
-        /// </summary>
-        [DisplayName("Sample")]
-        public HttpPostedFileBase PostedTrackSample { get; set; }
-
-        /// <summary>
         ///     Gets or sets the price.
         /// </summary>
         [DisplayName("Стоимость")]
@@ -98,10 +92,5 @@
         ///     Gets or sets the track file.
         /// </summary>
         public byte[] TrackFile { get; set; }
-
-        /// <summary>
-        /// The track sample. Optional.
-        /// </summary>
-        public byte[] TrackSample { get; set; }
     }
 }

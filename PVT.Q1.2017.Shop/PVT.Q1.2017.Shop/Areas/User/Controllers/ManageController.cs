@@ -106,16 +106,14 @@
                 var userService = ServiceFactory.GetUserService();
                 result = userService.UpdatePersonal(userDB, CurrentUser.Id);
 
-                if (result)
-                {
-                    return RedirectToAction("UpdatePersonal");
-                }
+                TempData["userMsg"] = "ok";
             }
 
             using (var countries = RepositoryFactory.GetCountryRepository())
             {
                 ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name");
             }
+          
             return View(user);
         }
 
@@ -310,6 +308,14 @@
         [ValidateAntiForgeryToken]
         public ActionResult Update(UserEditView model)
         {
+            if (!ModelState.IsValid)
+            {
+                using (var countries = RepositoryFactory.GetCountryRepository())
+                {
+                    ViewBag.Countries = new SelectList(countries.GetAll(), "Id", "Name", model.CountryId);
+                }
+                return View("Edit",model);
+            }
             if (model != null)
             {
                 var userDB = UserMapper.GetUserByUserEditView(model);
@@ -320,7 +326,10 @@
                     {
                         try
                         {
-                            userDB.Password = repository.GetById(userDB.Id).Password;
+                            var user = repository.GetById(userDB.Id);
+                            userDB.Password = user.Password;
+                            userDB.Login = user.Login;
+                            userDB.Email = user.Email;
                             repository.AddOrUpdate(userDB);
                             repository.SaveChanges();
                         }

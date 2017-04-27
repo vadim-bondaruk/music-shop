@@ -1,16 +1,15 @@
-﻿using Shop.Common.Models;
-using Shop.Infrastructure.Enums;
+﻿using Shop.Infrastructure.Enums;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Common.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
+    using Validators;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    [FluentValidation.Attributes.Validator(typeof(UserEditValidator))]
     public class UserEditView
     {
         public int Id { get; set; }
@@ -31,18 +30,7 @@ namespace Shop.Common.ViewModels
         /// </summary>
         [Display(Name = "Пароль")]
         public string Password { get; set; }
-
-        /// <summary>
-        /// Users login (nickname)
-        /// </summary>
-        [Display(Name = "Логин")]
-        public string Login { get; set; }
-
-        /// <summary>
-        /// Users e-mail
-        /// </summary>
-        public string Email { get; set; }
-
+                
         /// <summary>
         /// 
         /// </summary>
@@ -84,7 +72,7 @@ namespace Shop.Common.ViewModels
         /// <summary>
         /// Verification of email confirmation
         /// </summary>
-        [Display(Name = "Подтверждение Email")]
+        [Display(Name = "Активация/деактивация аккаунта")]
         public bool ConfirmedEmail { get; set; }
     }
 }
