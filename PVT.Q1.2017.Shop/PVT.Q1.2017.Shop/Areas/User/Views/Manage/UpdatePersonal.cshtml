@@ -69,19 +69,19 @@
         </div>
 
         <div class="form-group">
+            <div class="alert alert-success alert-autocloseable-success" style="display:none">
+                Изменения успешно сохранены.
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="autoclosable-btn-success" class="btn btn-primary btn-success btn-block" value="Сохранить"/>
+                <input type="submit" id="autoclosable-btn-success" class="btn btn-primary btn-success btn-block" value="Сохранить" />
             </div>
         </div>
 
     </div>
 }
-
-<div class="form-group">
-    <div class="alert alert-success alert-autocloseable-success" style="display:none">
-        Изменения успешно сохранены.
-    </div>
-</div>
 
 <div >
     @Html.ActionLink("На главную", "Index", new { area = "", controller = "Home" })
@@ -103,14 +103,13 @@
             $('#autoclosable-btn-success').prop("disabled", true);
             $('.alert-autocloseable-success').show();
 
-            $('.alert-autocloseable-success').delay(4000).fadeOut("slow", function() {
+            $('.alert-autocloseable-success').delay(3000).fadeOut("slow", function() {
                 $('#autoclosable-btn-success').prop("disabled", false);
             });
         }
 
        });
 
-
-        </script>
+</script>
 
 }
