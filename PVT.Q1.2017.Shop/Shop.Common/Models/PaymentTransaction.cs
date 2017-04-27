@@ -13,7 +13,7 @@
         /// <summary>
         /// Total amount for current transaction
         /// </summary>
-        public decimal Amount { get; set; }
+        public decimal Totals { get; set; }
 
         /// <summary>
         /// Date and time of transaction creation

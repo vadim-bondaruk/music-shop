@@ -8,6 +8,7 @@
     using global::Shop.Common.ViewModels;
     using Helpers;
     using global::Shop.Infrastructure.Enums;
+    using System.Web;
 
     [ShopAuthorize]
     public class PaymentTransactionController : BaseController
@@ -89,15 +90,8 @@
         [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
         public ViewResult PayResult()
         {
-            PayResultsViewModel pays = null;
-            if(CurrentUser.IsInRole(UserRoles.Seller))
-            {
-                pays = ServiceFactory.GetPaymentService().GetSellerPays(CurrentUser.Id, CurrentUserCurrency.Id);
-            }
-            if (CurrentUser.IsInRole(UserRoles.Admin))
-            {
-                pays = ServiceFactory.GetPaymentService().GetAllPays(CurrentUserCurrency.Id);
-            }
+            var pays = ServiceFactory.GetPaymentService().GetPaysForUser(CurrentUser, CurrentUserCurrency.Id);
+            
             return View(pays);
         }
     }

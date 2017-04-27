@@ -15,6 +15,9 @@
     using Common.Models;
     using Exceptions;
     using Shop.Infrastructure.Models;
+    using Shop.Infrastructure.Enums;
+    using Utils;
+    using NLog;
 
     /// <summary>
     /// The payment service class
@@ -25,6 +28,11 @@
         /// PayPal payment
         /// </summary>
         private PayPal.Api.Payment payment;
+
+        /// <summary>
+        /// logger
+        /// </summary>
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentService"/> class.
@@ -111,10 +119,9 @@
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: LOGGER
-                // Logger.log("Error " + ex.Message);
+                _logger.Error($"Произошла ошибка при оплате:\r\n{ex}");
                 return "Failure";
             }
 
@@ -224,6 +231,7 @@
                 user = userDataRepository.FirstOrDefault(u => u.UserId == userID);
                 if (user == null)
                 {
+                    _logger.Error($"Пользователь с ID={userID} не найден");
                     throw new InvalidUserIdException($"Пользователь с ID={userID} не найден");
                 }
                 else
@@ -239,7 +247,7 @@
                     PurchasedTrack = new List<PurchasedTrack>(),
                     PurchasedAlbum = new List<PurchasedAlbum>(),
                     Date = DateTime.Now,
-                    Amount = cart.TotalPrice,
+                    Totals = cart.TotalPrice,
                     CurrencyId = currencyId,
                     UserId = userID
                 };
@@ -303,10 +311,10 @@
         /// </summary>
         /// <param name="userID">user ID</param>
         /// <returns></returns>
-        public IEnumerable<PaymentTransaction> GetTransactionsByUserId(int userID)
+        public IEnumerable<PaymentTransaction> GetTransactionsByUserId(int? userID)
         {
             IEnumerable<PaymentTransaction> transactions = null;
-            if (userID!=0)
+            if (userID!=null)
             {
                 using (var payRepo = Factory.GetPaymentTransactionRepository())
                 {
@@ -341,25 +349,46 @@
         }
 
         /// <summary>
+        /// Gets financial result for admin or seller user in certain currency
+        /// </summary>
+        /// <param name="currentUser">user</param>
+        /// <param name="currentUserCurrencyId">target currency id</param>
+        /// <returns></returns>
+        public PayResultsViewModel GetPaysForUser(CurrentUser currentUser, int currentUserCurrencyId)
+        {
+            PayResultsViewModel pays = new PayResultsViewModel() { Payments = new List<PayResultViewModel>() };
+            if (currentUser.IsInRole(UserRoles.Seller))
+            {
+                pays = GetSellerPays(currentUser.Id, currentUserCurrencyId);
+            };
+            if (currentUser.IsInRole(UserRoles.Admin))
+            {
+                pays = GetAllPays(currentUserCurrencyId);
+            }
+            return pays;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public PayResultsViewModel GetAllPays(int currencyID)
+        private PayResultsViewModel GetAllPays(int currencyID)
         {
             using(var payTransRepo = Factory.GetPaymentTransactionRepository())
             {
-                //var s = payTransRepo.GetAll(a => a.Currency).Sum(z => z.Amount);
+                //var s = payTransRepo.GetAll(a => a.Currency).Sum(z => z.Totals);
                 var s = payTransRepo.GetAll(a => a.Currency)
                     .GroupBy(z => z.Currency)
                     .Select(g => new PayResultViewModel
                     {
                         Currency = g.Key,
-                        Amount = g.Sum(t => t.Amount),
+                        Totals = g.Sum(t => t.Totals),
+                        Royalties = g.Sum(t => t.Totals)* (decimal).9,
                         CurrencyID = g.Key.Id,
                         CrossCourse = Factory.GetCurrencyRateRepository()
                             .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id)==null? 1:
                             Factory.GetCurrencyRateRepository()
-                            .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id).CrossCourse
+                            .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id).CrossCourse,
                     }).ToArray();
 
                 if(s!=null)
@@ -367,7 +396,8 @@
                     var result = new PayResultsViewModel()
                     {
                         Payments = s,
-                        Total = s.Sum(t => t.Amount * t.CrossCourse)
+                        Total = s.Sum(t => t.Totals * t.CrossCourse),
+                        Royalties = s.Sum(t => t.Totals * t.CrossCourse * (decimal)0.9)
                     };
                     return result;
                 }
@@ -381,21 +411,23 @@
         /// <param name="userID">seller user id</param>
         /// <param name="currencyID">current currency id</param>
         /// <returns></returns>
-        public PayResultsViewModel GetSellerPays(int userID, int currencyID)
+        private PayResultsViewModel GetSellerPays(int userID, int currencyID)
         {
             var result = new PayResultsViewModel()
             {
                 Payments = new List<PayResultViewModel>(),
-                Total = 0
+                Total = 0,
+                Royalties = 0
             };
             using (var purchasedItems = Factory.GetPurchasedAlbumRepository())
             {
-                var s = purchasedItems.GetAll(a => a.UserId == userID, a => a.Currency)
+                var s = purchasedItems.GetAll(a => a.Album.OwnerId == userID, a => a.Currency)
                     .GroupBy(z => z.Currency)
                     .Select(g => new PayResultViewModel
                     {
                         Currency = g.Key,
-                        Amount = g.Sum(t => t.Price),
+                        Totals = g.Sum(t => t.Price),
+                        Royalties = g.Sum(t => t.Price) * (decimal).9,
                         CurrencyID = g.Key.Id,
                         CrossCourse = Factory.GetCurrencyRateRepository()
                             .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id) == null ? 1 :
@@ -408,19 +440,21 @@
                     result = new PayResultsViewModel()
                     {
                         Payments = s,
-                        Total = s.Sum(t => t.Amount * t.CrossCourse)
+                        Total = s.Sum(t => t.Totals * t.CrossCourse),
+                        Royalties = s.Sum(t => t.Totals * t.CrossCourse * (decimal)0.9)
                     };
                 }
             };
 
             using (var purchasedItems = Factory.GetPurchasedTrackRepository())
             {
-                var s = purchasedItems.GetAll(a => a.UserId == userID, a => a.Currency)
+                var s = purchasedItems.GetAll(a => a.Track.OwnerId == userID, a => a.Currency)
                     .GroupBy(z => z.Currency)
                     .Select(g => new PayResultViewModel
                     {
                         Currency = g.Key,
-                        Amount = g.Sum(t => t.Price),
+                        Totals = g.Sum(t => t.Price),
+                        Royalties = g.Sum(t => t.Price) * (decimal).9,
                         CurrencyID = g.Key.Id,
                         CrossCourse = Factory.GetCurrencyRateRepository()
                             .FirstOrDefault(Rate => Rate.TargetCurrencyId == currencyID && Rate.CurrencyId == g.Key.Id) == null ? 1 :
@@ -435,14 +469,16 @@
                         var s1 = result.Payments.ToList();
                         s1.AddRange(s);
                         result.Payments = s1;
-                        result.Total = result.Payments.Sum(a => a.Amount * a.CrossCourse);
+                        result.Total = result.Payments.Sum(a => a.Totals * a.CrossCourse);
+                        result.Royalties = result.Payments.Sum(a => a.Royalties * a.CrossCourse);
                     }
                     else
                     {
                         result = new PayResultsViewModel()
                         {
                             Payments = s,
-                            Total = s.Sum(t => t.Amount * t.CrossCourse)
+                            Total = s.Sum(t => t.Totals * t.CrossCourse),
+                            Royalties = s.Sum(t => t.Totals * t.CrossCourse * (decimal)0.9)
                         };
                     }
                 }
