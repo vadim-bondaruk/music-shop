@@ -1,11 +1,7 @@
 ﻿namespace PVT.Q1._2017.Shop.Areas.Management.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Web.Caching;
     using System.Web.Mvc;
-
-    using AutoMapper;
 
     using global::Shop.BLL.Services.Infrastructure;
     using global::Shop.Common.Models;
@@ -22,8 +18,6 @@
     [ShopAuthorize(UserRoles.Admin, UserRoles.Seller)]
     public class TracksController : BaseController
     {
-        private const string GENRES_CACHE_KEY = "Genres_Cache";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TracksController"/> class.
         /// </summary>
@@ -237,14 +231,13 @@
 
         private ICollection<Genre> GetGenres()
         {
-            ICollection<Genre> genres = System.Web.HttpContext.Current.Cache[GENRES_CACHE_KEY] as ICollection<Genre>;
+            ICollection<Genre> genres = CacheHelper.GetCachedGenres();
             if (genres == null)
             {
                 using (var repo = this.RepositoryFactory.GetGenreRepository())
                 {
                     genres = repo.GetAll();
-                    System.Web.HttpContext.Current.Cache.Add(GENRES_CACHE_KEY, genres, null, DateTime.Now.AddHours(2),
-                                                             Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                    CacheHelper.CacheGenres(genres);
                 }
             }
 
