@@ -15,46 +15,23 @@
         /// </summary>
         public int Id { get; set; }
 
-        [Display(Name = "Currency")]
-
-        /// <summary>
-        /// List of currency to select 
-        /// </summary>
+        [Display(Name = "Валюта")]
         public IEnumerable<Currency> From { get; set; }
 
         [Required]
-
-        /// <summary>
-        /// From id
-        /// </summary>
         public int FromId { get; set; }
 
-        [Display(Name = "Target currency")]
-
-        /// <summary>
-        /// List of currency to select 
-        /// </summary>
+        [Display(Name = "Целевая валюта")]
         public IEnumerable<Currency> To { get; set; }
 
         [Required]
-
-        /// <summary>
-        /// To id
-        /// </summary>
         public int ToId { get; set; }
 
         [Required]
-
-        /// <summary>
-        /// Cross course
-        /// </summary>
+        [Display(Name = "Кросс-курс")]
         public decimal Value { get; set; }
 
-        [Display(Name = "Date"), Required]
-
-        /// <summary>
-        /// Date of currencies rate
-        /// </summary>
+        [Display(Name = "Дата"), Required]
         public DateTime Date { get; set; }
     }
 }
