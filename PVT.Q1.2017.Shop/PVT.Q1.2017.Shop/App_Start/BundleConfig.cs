@@ -31,6 +31,11 @@
             bundles.Add(
                 new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js", "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/content-management-scripts").Include(
+                                                                                         "~/Scripts/file-change.js",
+                                                                                         "~/Scripts/numeric_input.min.js",
+                                                                                         "~/Scripts/price.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.css", "~/Content/site.css"));
 
             bundles.Add(

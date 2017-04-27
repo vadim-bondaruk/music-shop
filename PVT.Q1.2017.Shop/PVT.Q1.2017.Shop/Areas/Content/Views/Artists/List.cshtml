@@ -61,12 +61,10 @@
                                         if (isAdmin || isSeller)
                                         {
                                             <div class="btn-align">
-                                                <div class="order-block">
-                                                    <div class="buy-btn">
-                                                        <a class="btn btn-primary" href="@Url.Action("Edit", "Artists", new { Area = "Management", id = artist.Id })">
-                                                            <span class="glyphicon glyphicon-pencil"></span> Правка
-                                                        </a>
-                                                    </div>
+                                                <div class="buy-btn">
+                                                    <a class="btn btn-primary" href="@Url.Action("Edit", "Artists", new { Area = "Management", id = artist.Id })">
+                                                        <span class="glyphicon glyphicon-pencil"></span> Правка
+                                                    </a>
                                                 </div>
                                             </div>
                                         }
