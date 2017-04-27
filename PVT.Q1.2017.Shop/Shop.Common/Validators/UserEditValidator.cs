@@ -18,10 +18,10 @@
         {
            
             RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я-]*$")
-               .WithMessage("Используйте только буквы и дефиз");
+               .WithMessage("Используйте только буквы и дефис");
 
             RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я-]*$")
-                .WithMessage("Используйте только буквы и дефиз");
+                .WithMessage("Используйте только буквы и дефис");
 
             RuleFor(u => u.BirthDate).Must(c => c != null ?c <= DateTime.Now.AddYears(-5) : true)
                 .WithMessage("Пользователю должно быть минимум 5 лет");
