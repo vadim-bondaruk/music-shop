@@ -186,7 +186,7 @@ img {
 
 .artists-list .list-group .list-group-item h3 {
     font-weight: bold;
-    margin-top: -38px;
+    margin-top: -5px;
     font-variant: small-caps;
 }
 
@@ -552,7 +552,7 @@ li > input { width: 100% }
 
 .order-block .buy-btn button,
 .buttons .buy-btn button {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100px;
     height: 25px;
     color: black;
@@ -734,3 +734,11 @@ li > input { width: 100% }
 #audio-hidden { width: 500px }
 
 .copyright { display: none; }
+
+.anonimus-price {
+    margin-top: 18px;    
+}
+
+.artist-tracks-count, .artist-albums-count {
+    display: inline-block;
+}
