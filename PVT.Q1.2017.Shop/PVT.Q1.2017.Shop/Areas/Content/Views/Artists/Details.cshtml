@@ -14,6 +14,9 @@
     }
 
 }
+
+<audio controls controlsList="nodownload" id="audio-hidden" type="audio/mp3" autoplay="autoplay" style="display: none"></audio>
+
 <div class="artist-details-container">
     <div class="artist-details">
         <div class="inner">
@@ -84,6 +87,7 @@
 @section scripts
 {
     <script src="/Scripts/del-artist.js" type="text/javascript"></script>
+    <script src="~/Scripts/get-audio.js"></script>
 }
 
 @section cssStyles {
