@@ -40,9 +40,15 @@
         /// <returns></returns>
         public bool IsUserExist(string userIdentity)
         {
-            User user = this.GetUserByUserIdentity(userIdentity);
+            if (string.IsNullOrEmpty(userIdentity))
+                return false;
 
-            return user != null;
+            using (var userRepository = Factory.GetUserRepository())
+            {
+                return userIdentity.Contains("@") ? userRepository.Exist(u => u.Email == userIdentity)
+                                                  : userRepository.Exist(u => u.Login == userIdentity);
+               
+            }          
         }
 
         /// <summary>

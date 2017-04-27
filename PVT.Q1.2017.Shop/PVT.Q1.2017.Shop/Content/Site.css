@@ -85,7 +85,7 @@ body { background-color: #dadada; }
     border-bottom-right-radius: 10px;
 }
 
-#currency-dropdown {
+a #currency-dropdown {
     margin-top: -2px;
     height: 25px;
     border: none;
@@ -94,6 +94,10 @@ body { background-color: #dadada; }
     font-size: 11px;
     color: #999;
     box-shadow: 1px 1px 10px #ff6347;
+}
+
+#currency-dropdown {
+    max-width: 70px !important;
 }
 
 #bc-override {
@@ -121,7 +125,6 @@ dl dd { padding-left: 5px; }
     font-size: 45px;
 }
 footer {
-    margin-top: 50px;
     text-align: center;
 }
 footer p {

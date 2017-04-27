@@ -2,23 +2,26 @@
 {
     using System;
     using FluentValidation;
-    using PVT.Q1._2017.Shop.ViewModels;
+    using ViewModels;
+    using System.Web.Mvc;
+    using Infrastructure;
 
     /// <summary>
-    /// Defines rules for UserPersonalViewModel (change personal data in account)
+    /// Defines rules for UserEditModel (change personal data in account)
     /// </summary>
-    public class UserPersonalValidator : AbstractValidator<UserPersonalViewModel>
+    public class UserEditValidator : AbstractValidator<UserEditView>
     {
         /// <summary>
         /// 
         /// </summary>
-        public UserPersonalValidator()
+        public UserEditValidator()
         {
+           
             RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я-]*$")
-               .WithMessage("Используйте только буквыи дефис");
+               .WithMessage("Используйте только буквы и дефиз");
 
             RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я-]*$")
-                .WithMessage("Используйте только буквы и дефис");
+                .WithMessage("Используйте только буквы и дефиз");
 
             RuleFor(u => u.BirthDate).Must(c => c <= DateTime.Now.AddYears(-5))
                 .WithMessage("Пользователю должно быть минимум 5 лет");
@@ -26,6 +29,7 @@
             RuleFor(u => u.PhoneNumber)
                 .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){12,14}(\s*)?$")
                 .WithMessage("Некорректный номер");
+
         }
     }
 }

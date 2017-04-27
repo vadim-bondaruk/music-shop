@@ -40,7 +40,7 @@
                     .WithMessage("Пароли не совпадают. Повторите попытку");
 
             RuleFor(u => u.Email).EmailAddress()
-                .WithMessage("Адрес введен некорректно");
+                .WithMessage("Адрес электронной почты введен некорректно");
             RuleFor(u => u.Email).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");
             RuleFor(u => u.Email).Must(email => !validator.IsUserExist(email))

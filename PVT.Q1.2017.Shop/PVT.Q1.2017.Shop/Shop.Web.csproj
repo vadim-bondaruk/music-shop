@@ -337,6 +337,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\numeric_input.min.js" />
+    <Content Include="Scripts\price.js" />
     <Content Include="Scripts\validator.configuration.js" />
     <Content Include="Views\Shared\_AlbumDetails.cshtml" />
     <Content Include="Areas\Management\Views\Albums\Delete.cshtml" />
@@ -460,6 +462,7 @@
     <Compile Include="Areas\Management\Controllers\GenresController.cs" />
     <Compile Include="Areas\Management\Controllers\TracksController.cs" />
     <Compile Include="Areas\Management\Extensions\HttpPostedFileBaseExtensions.cs" />
+    <Compile Include="Areas\Management\Helpers\CacheHelper.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Areas\Management\Helpers\ManagementMapper.cs" />
     <Compile Include="Areas\Management\Validators\AlbumManagementValidator.cs" />
