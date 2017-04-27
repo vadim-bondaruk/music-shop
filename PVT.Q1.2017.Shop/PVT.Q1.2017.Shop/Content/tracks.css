@@ -173,7 +173,6 @@ img {
 
 .artist-new ul textarea {
     height: 300px;
-    max-height: 300px;
 }
 
 .artist-new { text-align: left; }
@@ -374,7 +373,7 @@ li > input { width: 100% }
 .albums-list .btn-align {
     vertical-align: top;
     text-align: right;
-    margin: 20px 0 0 60px;
+    margin: 33px 0 0 60px;
 }
 
 .albums-list .btn-align i {
