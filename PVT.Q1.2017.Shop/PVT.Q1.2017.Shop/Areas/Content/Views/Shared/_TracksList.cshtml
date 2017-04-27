@@ -40,9 +40,6 @@
                             </div>
                         </div>
                         <div class="details-right col-md-3">
-                            @*<div class="albums-count">
-                                Альбомов <span class="badge">@track.AlbumsCount</span>
-                            </div>*@
                             <div class="stars">
                                 @Html.Partial("_Rating", track.Rating)
 
@@ -51,7 +48,7 @@
                     </div>
                 </div>
 
-                <div class="right col-md-2">
+               <div class="right col-md-2">
                     @if (isAuthenticated)
                     {
                         if (isAdmin || (isSeller && (track.OwnerId <= 0m || track.OwnerId == currentUserId)))
@@ -74,8 +71,8 @@
                                     }
                                 </div>
                                 <div class="btn-edit">
-                                    <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })">
-                                        <i class="fa fa-pencil"> Правка</i>
+                                    <a href="@Url.Action("Edit", "Tracks", new { Area = "Management", id = track.Id })" class="btn btn-primary">
+                                         <span class="glyphicon glyphicon-pencil"></span> Правка
                                     </a>
                                 </div>
                             </div>
@@ -100,7 +97,7 @@
                     }
                     else if (track.Price != null)
                     {
-                        @Html.DisplayFor(m => track.Price)
+                       <div class="anonimus-price"> @Html.DisplayFor(m => track.Price)</div>
                     }
                 </div>
             </li>
