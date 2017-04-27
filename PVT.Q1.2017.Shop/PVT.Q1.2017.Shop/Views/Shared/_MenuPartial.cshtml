@@ -18,7 +18,7 @@
 
 <li class="dropdown-item" style="display: inline-block; height: 50px;">
     <div class="dropdown" id="purple-dropdown" style="padding: 15px 15px 15px 15px">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle" style="background-color: #222222; color: #999; text-decoration: none">Медиаконтент<b class="caret" style="border-color: #222222"></b></a>
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle media-menu" style="background-color: #222222; color: #999; text-decoration: none">Медиаконтент<b class="caret" style="border-color: #222222"></b></a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             @if (isAdmin || isSeller)
             {
@@ -56,8 +56,6 @@
                 <li>
                     <a href="@Url.Action("PayResult", "PaymentTransaction", new { area = "Payment" })">Финансовые результаты</a>
                 </li>
-                @*<li role="separator" class="divider"></li>*@
-            
             </ul>
         </div>
     </li>

@@ -61,6 +61,7 @@
     <Compile Include="Validators\FeedbackValidator.cs" />
     <Compile Include="Validators\Infrastructure\IUserValidator.cs" />
     <Compile Include="Validators\LoginViewValidator.cs" />
+    <Compile Include="Validators\UserEditValidator.cs" />
     <Compile Include="Validators\UserRegistrationValidator.cs" />
     <Compile Include="ViewModels\AlbumDetailsViewModel.cs" />
     <Compile Include="Models\Setting.cs" />

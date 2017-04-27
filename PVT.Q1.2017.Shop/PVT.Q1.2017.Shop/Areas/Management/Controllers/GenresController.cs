@@ -2,10 +2,7 @@
 {
     using System.Web.Mvc;
 
-    using AutoMapper;
-
     using global::Shop.BLL.Services.Infrastructure;
-    using global::Shop.Common.Models;
     using global::Shop.DAL.Infrastruture;
     using global::Shop.Infrastructure.Enums;
 
@@ -40,6 +37,7 @@
                 repository.SaveChanges();
             }
 
+            CacheHelper.ClearCachedGenres();
             return RedirectToAction("List", "Genres", new { Area = "Content" });
         }
 
@@ -81,6 +79,7 @@
                 repo.SaveChanges();
             }
 
+            CacheHelper.ClearCachedGenres();
             return RedirectToAction("Details", "Genres", new { Area = "Content", id = viewModel.Id });
         }
 
@@ -114,6 +113,7 @@
                 repository.SaveChanges();
             }
 
+            CacheHelper.ClearCachedGenres();
             return RedirectToAction("Details", "Genres", new { area = "Content", id = genre.Id });
         }
     }

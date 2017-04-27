@@ -4,7 +4,7 @@
 
     /// <summary>
     /// </summary>
-    public class TrackContainer
+    public class TrackAudio
     {
         /// <summary>
         /// Gets or sets the audio stream.

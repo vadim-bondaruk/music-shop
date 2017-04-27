@@ -385,28 +385,28 @@
         /// </param>
         /// <returns>
         /// </returns>
-        public TrackContainer GetTrackContainer(int id, UserRoles userRole, int userProfileId)
+        public TrackAudio GetTrackAudio(int id, UserRoles userRole, int userProfileId)
         {
             if (id <= 0)
             {
                 return null;
             }
 
-            TrackContainer trackContainer = null;
+            TrackAudio trackAudio;
             if (userRole == UserRoles.Admin)
             {
-                trackContainer = this.GetTrackContainerForAdmin(id);
+                trackAudio = this.GetTrackAudioForAdmin(id);
             }
             else if (userRole == UserRoles.Seller)
             {
-                trackContainer = this.GetTrackContainerForSeller(id, userProfileId);
+                trackAudio = this.GetTrackAudioForSeller(id, userProfileId);
             }
             else
             {
-                trackContainer = this.GetTrackContainerForBuyer(id, userProfileId);
+                trackAudio = this.GetTrackAudioForBuyer(id, userProfileId);
             }
 
-            return trackContainer;
+            return trackAudio;
         }
 
         /// <summary>
@@ -416,7 +416,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackContainerForAdmin(int trackId)
+        private TrackAudio GetTrackAudioForAdmin(int trackId)
         {
             // мы можем дать скачать и послушать все треки админу
             Track track;
@@ -427,7 +427,7 @@
 
             if (track != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream =
                                    Mp3StreamHelper.GetAudioStream(
@@ -451,13 +451,13 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackContainerForBuyer(int trackId, int userProfileId)
+        private TrackAudio GetTrackAudioForBuyer(int trackId, int userProfileId)
         {
             // мы можем дать скачать и послушать только купленные треки для обычных пользователей
             var purchasedTrack = GetPurchasedTrack(trackId, userProfileId);
             if (purchasedTrack != null && purchasedTrack.TrackFile != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream =
                                    Mp3StreamHelper.GetAudioStream(
@@ -481,7 +481,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackContainerForSeller(int trackId, int userProfileId)
+        private TrackAudio GetTrackAudioForSeller(int trackId, int userProfileId)
         {
             // мы можем дать скачать и послушать свои треки продавцу
             Track track;
@@ -495,7 +495,7 @@
 
             if (track != null && track.TrackFile != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream =
                                    Mp3StreamHelper.GetAudioStream(
@@ -516,7 +516,7 @@
         /// </param>
         /// <returns>
         /// </returns>
-        private TrackContainer GetTrackSample(int trackId)
+        private TrackAudio GetTrackSample(int trackId)
         {
             Track track;
             using (var repository = Factory.GetTrackRepository())
@@ -526,7 +526,7 @@
 
             if (track != null && track.TrackFile != null)
             {
-                return new TrackContainer()
+                return new TrackAudio()
                 {
                     AudioStream = Mp3StreamHelper.GetAudioStream(
                                    track.Name,
