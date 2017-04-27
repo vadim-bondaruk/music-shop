@@ -722,6 +722,10 @@ li > input { width: 100% }
 
 .new-track > .list-group > .list-group-item { height: 84px; }
 
+.new-track input, select {
+    max-width: initial !important;
+}
+
 
 #aPlayer > audio { width: 100% }
 

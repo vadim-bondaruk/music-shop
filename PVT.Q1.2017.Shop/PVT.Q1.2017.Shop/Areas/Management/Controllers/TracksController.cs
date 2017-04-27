@@ -155,6 +155,29 @@
                     repository.SaveChanges();
                 }
 
+                if (viewModel.Price != null)
+                {
+                    using (var priceRepository = RepositoryFactory.GetTrackPriceRepository())
+                    {
+                        var trackPrice = priceRepository.FirstOrDefault(p => p.TrackId == track.Id &&
+                                                                             p.CurrencyId == CurrentUserCurrency.Id &&
+                                                                             p.PriceLevelId == CurrentUser.PriceLevelId);
+                        if (trackPrice == null)
+                        {
+                            trackPrice = new TrackPrice
+                            {
+                                TrackId = track.Id,
+                                CurrencyId = CurrentUserCurrency.Id,
+                                PriceLevelId = CurrentUser.PriceLevelId
+                            };
+                        }
+
+                        trackPrice.Price = viewModel.Price.Value;
+                        priceRepository.AddOrUpdate(trackPrice);
+                        priceRepository.SaveChanges();
+                    }
+                }
+
                 return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });
             }
 
@@ -221,6 +244,21 @@
                 {
                     repository.AddOrUpdate(track);
                     repository.SaveChanges();
+                }
+
+                if (viewModel.Price != null && CurrentUser != null)
+                {
+                    using (var priceRepository = RepositoryFactory.GetTrackPriceRepository())
+                    {
+                        priceRepository.AddOrUpdate(new TrackPrice
+                        {
+                            TrackId = track.Id,
+                            CurrencyId = CurrentUserCurrency.Id,
+                            PriceLevelId = CurrentUser.PriceLevelId,
+                            Price = viewModel.Price.Value
+                        });
+                        priceRepository.SaveChanges();
+                    }
                 }
 
                 return this.RedirectToAction("Details", "Tracks", new { id = track.Id, area = "Content" });

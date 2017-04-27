@@ -35,7 +35,14 @@
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.Price)
-                @Html.TextBoxFor(m => m.Price, new { id = "txtTrackPrice", @class = "form-control" })
+                <div class="row">
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Price, new { id = "txtTrackPrice", @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        @{ Html.RenderAction("UserCurrency", "Currency", new { area = string.Empty }); }
+                    </div>
+                </div>
             </li>
             <li class="list-group-item">
                 @Html.DisplayNameFor(m => m.PostedTrackFile)
