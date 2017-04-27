@@ -14,14 +14,14 @@
         /// </summary>
         public UserPersonalValidator()
         {
-            RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я]*$")
-               .WithMessage("Используйте только буквы");
+            RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я-]*$")
+               .WithMessage("Используйте только буквыи дефис");
 
-            RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я]*$")
-                .WithMessage("Используйте только буквы");
+            RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я-]*$")
+                .WithMessage("Используйте только буквы и дефис");
 
             RuleFor(u => u.BirthDate).Must(c => c <= DateTime.Now.AddYears(-5))
-                .WithMessage("Дата рождения выбрана некорректно (вам должно быть минимум 5 лет))");
+                .WithMessage("Пользователю должно быть минимум 5 лет");
 
             RuleFor(u => u.PhoneNumber)
                 .Matches(@"^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){12,14}(\s*)?$")
