@@ -24,6 +24,8 @@
                 .WithMessage("Только буквы латинского алфавита, цифры и знак подчеркивания");
             RuleFor(u => u.Login).Must(login => !validator.IsUserExist(login))
                 .WithMessage("Пользователь с таким логином уже существует");
+            RuleFor(u => u.Login).Length(4, 50)
+                .WithMessage("Логин должен содержать не менее 4 символов");
 
             RuleFor(u => u.Password).NotEmpty()
                 .WithMessage("Поле обязательно должно быть заполнено");

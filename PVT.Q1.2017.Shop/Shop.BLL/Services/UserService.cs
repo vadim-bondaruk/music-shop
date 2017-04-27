@@ -258,7 +258,7 @@
                     }
                     else
                     {
-                        throw new UserValidationException("Старый пароль введён не верно", "OldPassword");
+                        throw new UserValidationException("Старый пароль введён неверно", "OldPassword");
                     }
 
                     try

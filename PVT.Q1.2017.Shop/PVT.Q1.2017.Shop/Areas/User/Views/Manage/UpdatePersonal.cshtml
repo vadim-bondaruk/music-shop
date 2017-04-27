@@ -47,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @id = "input2", type = "text", placeholder = "дд мм гг", data_val_date = "Не валидный формат даты (дд.мм.гггг)" } })
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @id = "input2", type = "text", placeholder = "дд мм гггг", data_val_date = "Не валидный формат даты (дд.мм.гггг)" } })
                 @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
             </div>
         </div>

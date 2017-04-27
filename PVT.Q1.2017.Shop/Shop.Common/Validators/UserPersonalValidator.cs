@@ -15,7 +15,7 @@
         public UserPersonalValidator()
         {
             RuleFor(u => u.FirstName).Matches("^[a-zA-Zа-яА-Я-]*$")
-               .WithMessage("Используйте только буквыи дефис");
+               .WithMessage("Используйте только буквы и дефис");
 
             RuleFor(u => u.LastName).Matches("^[a-zA-Zа-яА-Я-]*$")
                 .WithMessage("Используйте только буквы и дефис");
